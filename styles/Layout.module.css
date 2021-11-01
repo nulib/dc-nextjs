@@ -1,0 +1,20 @@
+.container {
+  background: tan;
+}
+
+.header {
+  background-color: teal;
+  height: 10vh;
+  padding: 1rem;
+}
+
+.main {
+  height: 80vh;
+  padding: 2rem;
+}
+
+.footer {
+  height: 10vh;
+  background-color: tomato;
+  padding: 1rem;
+}
