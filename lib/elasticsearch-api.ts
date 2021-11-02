@@ -1,4 +1,10 @@
 const API_ENDPOINT = "https://jsonplaceholder.typicode.com/posts/";
+export interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 
 export async function getData() {
   const res = await fetch(API_ENDPOINT);
@@ -9,7 +15,7 @@ export async function getData() {
 export async function getAllWorkIds() {
   const res = await fetch(API_ENDPOINT);
   const data = await res.json();
-  return data.map((item: any) => ({
+  return data.map((item: Post) => ({
     params: {
       id: item.id.toString(),
     },
