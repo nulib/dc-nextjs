@@ -1,20 +1,20 @@
 import type { NextPage } from "next";
 import Layout from "components/layout";
-import { getData } from "lib/elasticsearch-api";
+import { getData, makeIIIFEndpoint } from "lib/art-institute-api";
 import styles from "styles/StaticPage.module.css";
+import Link from "next/link";
 
-interface Post {
-  userId: number;
-  id: number;
+interface Item {
+  id: string;
   title: string;
-  body: string;
+  image_id: string;
 }
 
 interface MyProps {
-  Posts: Array<Post>;
+  items: Array<Item>;
 }
 
-const StaticPage: NextPage<MyProps> = ({ posts }) => {
+const StaticPage: NextPage<MyProps> = ({ items }) => {
   return (
     <Layout>
       <h1>I am a static page</h1>
@@ -47,12 +47,17 @@ const StaticPage: NextPage<MyProps> = ({ posts }) => {
       </p>
 
       <h2>Here's some data I fetched</h2>
-      <code>https://jsonplaceholder.typicode.com/posts</code>
+      <code>https://api.artic.edu/api/v1/artworks</code>
       <ul className={styles.grid}>
-        {posts.map((post: Post) => (
-          <li key={post.id}>
-            <p>{post.title}</p>
-            <p>{post.body}</p>
+        {items.map((item: Item) => (
+          <li key={item.id}>
+            <Link href={`/works/${item.id}`}>
+              <a>
+                <img src={makeIIIFEndpoint(item.image_id)} alt="an image" />
+                <p>{item.title}</p>
+                <p>{item.image_id}</p>
+              </a>
+            </Link>
           </li>
         ))}
       </ul>
@@ -62,12 +67,12 @@ const StaticPage: NextPage<MyProps> = ({ posts }) => {
 
 export async function getStaticProps() {
   // Get external data from the file system, API, DB, etc.
-  const posts = await getData();
+  const items = await getData();
 
   // The value of the `props` key will be
   //  passed to the `Home` component
   return {
-    props: { posts },
+    props: { items },
   };
 }
 

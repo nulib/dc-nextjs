@@ -1,14 +1,24 @@
 import Layout from "components/layout";
 import { NextPage } from "next";
-import { getAllWorkIds, getWorkData } from "lib/elasticsearch-api";
+import {
+  getAllWorkIds,
+  getWorkData,
+  makeIIIFEndpoint,
+  Work,
+} from "lib/art-institute-api";
 
-const Work: NextPage = ({ workData }) => {
+interface WorkProps {
+  workData: Work;
+}
+
+const Work: NextPage<WorkProps> = ({ workData: { id, image_id, title } }) => {
   return (
     <Layout>
-      <h1>Dynamic page</h1>
-      <h2>{workData.title}</h2>
-      <p>Id: {workData.id}</p>
-      <p>{workData.body}</p>
+      <h2>I am a dynamic page which has been pre-rendered</h2>
+      <img src={makeIIIFEndpoint(image_id)} />
+      <h1>{title}</h1>
+      <h2></h2>
+      <p>Id: {id}</p>
     </Layout>
   );
 };

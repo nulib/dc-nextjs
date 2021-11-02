@@ -3,3 +3,11 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
+
+.grid li {
+  list-style: none;
+}
+
+.grid img {
+  max-width: 300px;
+}
