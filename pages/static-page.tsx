@@ -3,19 +3,18 @@ import Layout from "components/layout";
 import { getData } from "lib/elasticsearch-api";
 import styles from "styles/StaticPage.module.css";
 
-interface Photo {
-  albumId: number;
+interface Post {
+  userId: number;
   id: number;
-  thumbnailUrl: string;
   title: string;
-  url: string;
+  body: string;
 }
 
 interface MyProps {
-  photos: Array<Photo>;
+  Posts: Array<Post>;
 }
 
-const StaticPage: NextPage<MyProps> = ({ photos }) => {
+const StaticPage: NextPage<MyProps> = ({ posts }) => {
   return (
     <Layout>
       <h1>I am a static page</h1>
@@ -48,12 +47,12 @@ const StaticPage: NextPage<MyProps> = ({ photos }) => {
       </p>
 
       <h2>Here's some data I fetched</h2>
-      <code>https://jsonplaceholder.typicode.com/albums/1/photos</code>
+      <code>https://jsonplaceholder.typicode.com/posts</code>
       <ul className={styles.grid}>
-        {photos.map((photo: Photo) => (
-          <li key={photo.id}>
-            <p>{photo.title}</p>
-            <img src={photo.thumbnailUrl} alt={photo.title} />
+        {posts.map((post: Post) => (
+          <li key={post.id}>
+            <p>{post.title}</p>
+            <p>{post.body}</p>
           </li>
         ))}
       </ul>
@@ -63,12 +62,12 @@ const StaticPage: NextPage<MyProps> = ({ photos }) => {
 
 export async function getStaticProps() {
   // Get external data from the file system, API, DB, etc.
-  const photos = await getData();
+  const posts = await getData();
 
   // The value of the `props` key will be
   //  passed to the `Home` component
   return {
-    props: { photos },
+    props: { posts },
   };
 }
 
