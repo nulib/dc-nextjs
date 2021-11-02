@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import styles from "styles/Layout.module.css";
+import Header from "components/header";
 
 export const siteTitle = "Next.js Sample Website";
 
@@ -22,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>Header here</header>
+      <Header />
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>Footer here</footer>
     </div>

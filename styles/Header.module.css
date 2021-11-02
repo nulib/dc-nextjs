@@ -1,0 +1,9 @@
+.header {
+  background-color: teal;
+  height: 10vh;
+  padding: 1rem;
+}
+
+.nav a {
+  padding: 0 1rem;
+}

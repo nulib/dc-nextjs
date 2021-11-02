@@ -2,14 +2,7 @@
   background: tan;
 }
 
-.header {
-  background-color: teal;
-  height: 10vh;
-  padding: 1rem;
-}
-
 .main {
-  height: 80vh;
   padding: 2rem;
 }
 
