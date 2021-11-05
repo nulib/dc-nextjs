@@ -1,5 +1,5 @@
 .container {
-  background: tan;
+  /* background: tan; */
 }
 
 .main {
@@ -8,6 +8,6 @@
 
 .footer {
   height: 10vh;
-  background-color: tomato;
+  /* background-color: tomato; */
   padding: 1rem;
 }
