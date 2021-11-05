@@ -102,8 +102,8 @@ const Overlay = styled(Dialog.Overlay, {
   position: "fixed",
   width: "100%",
   height: "100%",
-  backgroundColor: "#333d",
-  backdropFilter: "blur(12px)",
+  backgroundColor: "#342F2Ecc",
+  backdropFilter: "blur(8px)",
 });
 
 const Content = styled(Dialog.Content, {

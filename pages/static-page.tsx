@@ -40,20 +40,32 @@ const StaticPage: NextPage<MyProps> = ({ items }) => {
                 <nav>
                   <a>
                     <figure>
-                      <img />
+                      <span></span>
                       <figcaption>Africa</figcaption>
                     </figure>
                   </a>
                   <a>
                     <figure>
-                      <img />
-                      <figcaption>Advertisements</figcaption>
+                      <span></span>
+                      <figcaption>Baez, Joan</figcaption>
                     </figure>
                   </a>
                   <a>
                     <figure>
-                      <img />
+                      <span></span>
                       <figcaption>Historical Maps</figcaption>
+                    </figure>
+                  </a>
+                  <a>
+                    <figure>
+                      <span></span>
+                      <figcaption>Nez Percé</figcaption>
+                    </figure>
+                  </a>
+                  <a>
+                    <figure>
+                      <span></span>
+                      <figcaption>Washington, D.C.</figcaption>
                     </figure>
                   </a>
                 </nav>
@@ -143,14 +155,36 @@ const Filters = styled("div", {});
 
 const OfInterest = styled("div", {
   display: "flex",
+  fontWeight: "300",
+
+  label: {
+    fontSize: "0.7222rem",
+    textTransform: "uppercase",
+    lineHeight: "21px",
+    color: "#777",
+  },
 
   nav: {
     display: "flex",
 
+    a: {
+      display: "flex",
+      marginLeft: "1rem",
+    },
+
     figure: {
+      span: {
+        display: "block",
+        width: "21px",
+        height: "21px",
+        backgroundColor: "#aaa",
+        borderRadius: "100%",
+        marginRight: "0.5rem",
+      },
       display: "flex",
       padding: "0",
       margin: "0",
+      lineHeight: "21px",
     },
   },
 });
