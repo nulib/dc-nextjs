@@ -1,11 +1,12 @@
 import Layout from "components/layout";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import {
   getAllWorkIds,
   getWorkData,
   makeIIIFEndpoint,
   Work,
 } from "lib/art-institute-api";
+import { ParsedUrlQuery } from "querystring";
 
 interface WorkProps {
   workData: Work;
@@ -26,16 +27,22 @@ const Work: NextPage<WorkProps> = ({ workData: { id, image_id, title } }) => {
 export default Work;
 
 /**
- * Grab individual dynamic page content
+ * Grab individual dynamic page content from an external API.
+ * This will never run on the client side, and won't be included with the JS bundle for the browser.
  */
-export async function getStaticProps({ params }) {
-  const workData = await getWorkData(params.id);
+interface IParams extends ParsedUrlQuery {
+  id: string;
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params as IParams;
+  const workData = await getWorkData(id);
   return {
     props: {
       workData,
     },
   };
-}
+};
 
 /**
  * This function is what creates all the dynamic pages when NextJS builds
