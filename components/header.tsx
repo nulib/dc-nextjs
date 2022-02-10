@@ -7,7 +7,8 @@ const Header: React.FC = () => {
       <nav className={styles.nav}>
         <Link href="/">Home</Link>
         <Link href="/static-page">Static Page</Link>
-        <Link href="/collection/list">Collection</Link>
+        <Link href="/collection/list">Collections</Link>
+        <Link href="/local-api">Local API</Link>
       </nav>
     </header>
   );
