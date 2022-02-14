@@ -1,49 +1,28 @@
 import fetch from "node-fetch";
 import { RequestInit } from "node-fetch";
 import { Collection } from "types";
+import { SearchResponse } from "types/elasticsearch";
+import { GetGetResult } from "@elastic/elasticsearch/api/types";
 
 const ES_PROXY = `https://dcapi.stack.rdc-staging.library.northwestern.edu`;
 const PAGE_SIZE = 500;
 
-// More info here at: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html
-// Complete definition of the Search response
-interface ShardsResponse {
-  total: number;
-  successful: number;
-  failed: number;
-  skipped: number;
-}
-
-interface Explanation {
-  value: number;
-  description: string;
-  details: Explanation[];
-}
-interface SearchResponse {
-  took: number;
-  timed_out: boolean;
-  _scroll_id?: string;
-  _shards: ShardsResponse;
-  hits: {
-    total: number;
-    max_score: number;
-    hits: Array<{
-      _index: string;
-      _type: string;
-      _id: string;
-      _score: number;
-      _source: Collection;
-      _version?: number;
-      _explanation?: Explanation;
-      fields?: any;
-      highlight?: any;
-      inner_hits?: any;
-      matched_queries?: string[];
-      sort?: string[];
-    }>;
-  };
-  aggregations?: any;
-}
+const queryCollections = {
+  bool: {
+    must: [
+      {
+        match: {
+          "model.name": "Collection",
+        },
+      },
+      {
+        match: {
+          "model.application": "Meadow",
+        },
+      },
+    ],
+  },
+};
 
 /**
  * API Network request default config
@@ -59,8 +38,8 @@ const defaultRequestConfig = {
  * Wrapper for Elasticsearch API /search network requests
  */
 async function search(
-  requestConfig: RequestInit
-): Promise<Array<SearchResponse>> {
+  requestConfig: RequestInit | any
+): Promise<SearchResponse> {
   const url = `${ES_PROXY}/search/meadow/_search`;
   const body = JSON.stringify(requestConfig.body || {});
 
@@ -69,7 +48,7 @@ async function search(
       ...requestConfig,
       body,
     });
-    const data = await response.json();
+    const data: any = await response.json();
     return data;
   } catch (err) {
     throw new Error(`Error in elasticsearch-api.js: ${err}`);
@@ -80,26 +59,11 @@ export async function getAllCollections(
   numResults: number = PAGE_SIZE
 ): Promise<Array<Collection>> {
   try {
-    const response: SearchResponse = await search({
+    const response = await search({
       ...defaultRequestConfig,
       body: {
         size: numResults,
-        query: {
-          bool: {
-            must: [
-              {
-                match: {
-                  "model.name": "Collection",
-                },
-              },
-              {
-                match: {
-                  "model.application": "Meadow",
-                },
-              },
-            ],
-          },
-        },
+        query: queryCollections,
         sort: {
           "title.keyword": "asc",
         },
@@ -109,5 +73,36 @@ export async function getAllCollections(
   } catch (error) {
     console.error("Error in getAllCollections", error);
     return Promise.resolve([]);
+  }
+}
+
+export async function getAllCollectionIds(): Promise<Array<string>> {
+  try {
+    const res = await search({
+      ...defaultRequestConfig,
+      body: {
+        size: 10000,
+        query: queryCollections,
+      },
+    });
+    const ids = res.hits.hits.map((hit) => hit._id);
+    return ids;
+  } catch (error) {
+    console.error("Error getting Collection Ids:", error);
+  }
+  return [];
+}
+
+export async function getCollectionData(id: string): Promise<Collection> {
+  try {
+    const response = await fetch(`${ES_PROXY}/search/meadow/_all/${id}`, {
+      ...defaultRequestConfig,
+      method: "GET",
+    });
+    const data = (await response.json()) as GetGetResult;
+    return data._source as Collection;
+  } catch (error) {
+    console.error("Error in elasticsearch-api.js > getCollectionData", error);
+    return Promise.reject(new Error(`No collection with id ${id}`));
   }
 }

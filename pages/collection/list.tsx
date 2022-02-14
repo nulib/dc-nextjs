@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "components/layout";
 import { getAllCollections } from "lib/elasticsearch-api";
 import { Collection } from "types";
+import Link from "next/link";
 
 export async function getStaticProps() {
   const response = await getAllCollections();
@@ -25,7 +26,11 @@ const CollectionList: React.FC<CollectionListProps> = ({ collections }) => {
       <p>Num results: {collections.length}</p>
       <ul>
         {collections.map((collection: Collection) => (
-          <li key={collection.id}>{collection.title}</li>
+          <li key={collection.id}>
+            <Link href={`/collection/${collection.id}`}>
+              {collection.title}
+            </Link>
+          </li>
         ))}
       </ul>
     </Layout>
