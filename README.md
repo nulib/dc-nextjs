@@ -22,18 +22,16 @@ To test a static deploy, run:
 // Build static files to the /out directory
 npm run export
 
-// Serve locally
+// Serve locally from the /out directory
 cd out
 npx serve
 
-// Open up your locally hosted url and test
+// Open up your locally hosted url and view the static site
 
 ```
 
 ## API
 
-TODO: Investigate this more
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+There is a sample `/api/collection` endpoint which just returns a mock object. You can see this in action at: `http://localhost:3000/local-api`

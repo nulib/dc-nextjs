@@ -1,9 +1,10 @@
-import Layout from "components/layout";
+import Layout from "components/Layout";
 import { GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getAllCollectionIds, getCollectionData } from "lib/elasticsearch-api";
 import { Collection } from "types/index";
 import { useEffect, useState } from "react";
+import Container from "components/Container";
 
 // Gets called at build time
 export async function getStaticPaths() {
@@ -51,21 +52,22 @@ const Collection: NextPage<CollectionProps> = ({ data }) => {
 
   return (
     <Layout>
-      <pre>Data pulled in at build time</pre>
-      <h1>{data.title}</h1>
-      <p>{description}</p>
-      <p>Published? {published ? "YES" : "NO"}</p>
-      <p>Visibility: {visibility.label}</p>
-
-      <hr />
-      <pre>Data pulled in client side </pre>
-      {mockData && (
-        <ul>
-          <li>Id: {mockData.id}</li>
-          <li>Title: {mockData.title}</li>
-          <li>Body: {mockData.body}</li>
-        </ul>
-      )}
+      <Container>
+        <pre>Data pulled in at build time</pre>
+        <h1>{data.title}</h1>
+        <p>{description}</p>
+        <p>Published? {published ? "YES" : "NO"}</p>
+        <p>Visibility: {visibility.label}</p>
+        <hr />
+        <pre>Data pulled in client side </pre>
+        {mockData && (
+          <ul>
+            <li>Id: {mockData.id}</li>
+            <li>Title: {mockData.title}</li>
+            <li>Body: {mockData.body}</li>
+          </ul>
+        )}
+      </Container>
     </Layout>
   );
 };
