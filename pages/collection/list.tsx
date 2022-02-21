@@ -4,6 +4,7 @@ import { getAllCollections } from "lib/elasticsearch-api";
 import { Collection } from "types";
 import Link from "next/link";
 import Container from "components/Container";
+import { NextPage } from "next";
 
 export async function getStaticProps() {
   const response = await getAllCollections();
@@ -19,7 +20,7 @@ interface CollectionListProps {
   collections: Array<Collection>;
 }
 
-const CollectionList: React.FC<CollectionListProps> = ({ collections }) => {
+const CollectionList: NextPage<CollectionListProps> = ({ collections }) => {
   return (
     <Layout>
       <Container>

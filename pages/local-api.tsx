@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "components/Layout";
+import { NextPage } from "next";
 
 export async function getStaticProps() {
   const response = await fetch("http://localhost:3000/api/collection");
@@ -17,7 +18,7 @@ interface CollectionData {
   name: string;
 }
 
-const CollectionList: React.FC<CollectionListProps> = ({ data }) => {
+const CollectionList: NextPage<CollectionListProps> = ({ data }) => {
   return (
     <Layout>
       <h1>Local API</h1>
