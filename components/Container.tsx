@@ -1,10 +1,10 @@
 import { styled } from "stitches.config";
 
 const ContainerStyled = styled("div", {
-  maxWidth: "calc(90vw + 2rem)",
+  maxWidth: "90vw",
   position: "relative",
   zIndex: "0",
-  margin: "auto calc(5vw - 1rem)",
+  margin: "auto 5vw",
 });
 
 const Container: React.FC = ({ children }) => {

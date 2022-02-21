@@ -69,7 +69,7 @@ export async function getAllCollections(
         },
       },
     });
-    return response.hits.hits.map((hit) => ({ id: hit._id, ...hit._source }));
+    return response.hits.hits.map((hit) => ({ ...hit._source, id: hit._id }));
   } catch (error) {
     console.error("Error in getAllCollections", error);
     return Promise.resolve([]);
