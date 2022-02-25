@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 import { RequestInit } from "node-fetch";
 import { Collection } from "types";
 import { SearchResponse } from "types/elasticsearch";
@@ -104,5 +104,55 @@ export async function getCollectionData(id: string): Promise<Collection> {
   } catch (error) {
     console.error("Error in elasticsearch-api.js > getCollectionData", error);
     return Promise.reject(new Error(`No collection with id ${id}`));
+  }
+}
+
+export async function getCollectionItems(
+  id: string,
+  numResults: number = PAGE_SIZE
+) {
+  try {
+    const response = await search({
+      ...defaultRequestConfig,
+      body: {
+        size: numResults,
+        query: {
+          function_score: {
+            query: {
+              bool: {
+                must: [
+                  { match: { "model.name": "Work" } },
+                  { match: { "collection.id": id } },
+                ],
+              },
+            },
+            boost: "5",
+            random_score: {},
+            boost_mode: "multiply",
+          },
+        },
+      },
+    });
+    console.log("response", response);
+    return response.hits.hits.map((hit) => hit._source);
+    return [];
+  } catch (error) {
+    console.error("Error in getCollectionItems()", error);
+    return Promise.resolve([]);
+  }
+}
+
+export async function getWork(id: string): Promise<any> {
+  try {
+    const response = await fetch(`${ES_PROXY}/search/meadow/_all/${id}`, {
+      ...defaultRequestConfig,
+      method: "GET",
+    });
+    const data = (await response.json()) as GetGetResult;
+    console.log("data", data);
+    return data._source;
+  } catch (error) {
+    console.error("Error in elasticsearch-api.js > getWork", error);
+    return Promise.reject(new Error(`No work with id ${id}`));
   }
 }

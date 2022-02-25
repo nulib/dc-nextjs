@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "components/Layout";
-import { getAllCollections } from "lib/elasticsearch-api";
+import { getAllCollections, foo } from "lib/elasticsearch-api";
 import { Collection } from "types";
 import Link from "next/link";
 import Container from "components/Container";

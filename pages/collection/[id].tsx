@@ -1,10 +1,15 @@
 import Layout from "components/Layout";
 import { GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
-import { getAllCollectionIds, getCollectionData } from "lib/elasticsearch-api";
+import {
+  getAllCollectionIds,
+  getCollectionData,
+  getCollectionItems,
+} from "lib/elasticsearch-api";
 import { Collection } from "types/index";
 import { useEffect, useState } from "react";
 import Container from "components/Container";
+import Link from "next/link";
 
 // Gets called at build time
 export async function getStaticPaths() {
@@ -30,43 +35,39 @@ interface IParams extends ParsedUrlQuery {
 // Gets called at build time
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params as IParams;
-  const data = await getCollectionData(id);
-  return { props: { data } };
+  const collection = await getCollectionData(id);
+  const collectionItems = await getCollectionItems(id, 5000);
+
+  return { props: { collection, items: collectionItems } };
 };
 
 interface CollectionProps {
-  data: Collection;
+  collection: Collection;
+  items: Array<any>;
 }
 
-const Collection: NextPage<CollectionProps> = ({ data }) => {
-  const [mockData, setMockData] = useState();
-
+const Collection: NextPage<CollectionProps> = ({ collection, items }) => {
+  console.log("items", items);
   const { description, id, published, representativeImage, title, visibility } =
-    data;
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts/1")
-      .then((response) => response.json())
-      .then((json) => setMockData(json));
-  }, []);
+    collection;
 
   return (
     <Layout>
       <Container>
         <pre>Data pulled in at build time</pre>
-        <h1>{data.title}</h1>
+        <h1>{title}</h1>
         <p>{description}</p>
         <p>Published? {published ? "YES" : "NO"}</p>
         <p>Visibility: {visibility.label}</p>
         <hr />
-        <pre>Data pulled in client side </pre>
-        {mockData && (
-          <ul>
-            <li>Id: {mockData.id}</li>
-            <li>Title: {mockData.title}</li>
-            <li>Body: {mockData.body}</li>
-          </ul>
-        )}
+        <h2>Collection items</h2>
+        <ul>
+          {items.map(({ id, descriptiveMetadata }) => (
+            <li key={id}>
+              <Link href={`/works/${id}`}>{descriptiveMetadata.title}</Link>
+            </li>
+          ))}
+        </ul>
       </Container>
     </Layout>
   );

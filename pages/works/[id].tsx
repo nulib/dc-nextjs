@@ -1,56 +1,39 @@
+import React from "react";
 import Layout from "components/Layout";
-import { GetStaticProps, NextPage } from "next";
-import {
-  getAllWorkIds,
-  getWorkData,
-  makeIIIFEndpoint,
-  Work,
-} from "lib/art-institute-api";
-import { ParsedUrlQuery } from "querystring";
+import { NextPage } from "next";
+import { getWork, foo } from "lib/elasticsearch-api";
+import { useRouter } from "next/router";
+import Container from "components/Container";
 
-interface WorkProps {
-  workData: Work;
-}
+const Work: NextPage = () => {
+  const [work, setWork] = React.useState();
+  const router = useRouter();
+  const { id } = router.query;
 
-const Work: NextPage<WorkProps> = ({ workData: { id, image_id, title } }) => {
+  React.useEffect(() => {
+    const fn = async () => {
+      const result = await getWork(id as string);
+      setWork(result);
+    };
+    fn();
+  }, [id]);
+
   return (
     <Layout>
-      <h2>I am a dynamic page which has been pre-rendered</h2>
-      <img src={makeIIIFEndpoint(image_id)} />
-      <h1>{title}</h1>
-      <h2></h2>
-      <p>Id: {id}</p>
+      <Container>
+        <h1>{work?.descriptiveMetadata?.title}</h1>
+        {work && (
+          <dl>
+            <dt>Accession Number</dt>
+            <dd>{work.accessionNumber}</dd>
+            <dt>Create Date</dt>
+            <dd>{work.createDate}</dd>
+            ...more here
+          </dl>
+        )}
+      </Container>
     </Layout>
   );
 };
 
 export default Work;
-
-/**
- * Grab individual dynamic page content from an external API.
- * This will never run on the client side, and won't be included with the JS bundle for the browser.
- */
-interface IParams extends ParsedUrlQuery {
-  id: string;
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as IParams;
-  const workData = await getWorkData(id);
-  return {
-    props: {
-      workData,
-    },
-  };
-};
-
-/**
- * This function is what creates all the dynamic pages when NextJS builds
- */
-export async function getStaticPaths() {
-  const paths = await getAllWorkIds();
-  return {
-    paths,
-    fallback: false,
-  };
-}
