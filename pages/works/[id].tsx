@@ -1,23 +1,46 @@
 import React from "react";
 import Layout from "components/Layout";
-import { NextPage } from "next";
-import { getWork, foo } from "lib/elasticsearch-api";
-import { useRouter } from "next/router";
+import { GetStaticProps, NextPage } from "next";
+import { getWork, getWorkIds } from "lib/elasticsearch-api";
 import Container from "components/Container";
+import { ParsedUrlQuery } from "querystring";
 
-const Work: NextPage = () => {
-  const [work, setWork] = React.useState();
-  const router = useRouter();
-  const { id } = router.query;
+interface IParams extends ParsedUrlQuery {
+  id: string;
+}
 
-  React.useEffect(() => {
-    const fn = async () => {
-      const result = await getWork(id as string);
-      setWork(result);
-    };
-    fn();
-  }, [id]);
+/**
+ * Pre-build all Work routes at build time
+ */
+export async function getStaticPaths() {
+  const ids = await getWorkIds();
+  const paths = ids.map((id) => ({
+    params: {
+      id: id,
+    },
+  }));
 
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+/**
+ * Get individual Work data at build time
+ */
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params as IParams;
+  const work = await getWork(id);
+
+  return { props: { work }, revalidate: 10 };
+};
+
+interface WorkProps {
+  work: any;
+}
+
+const Work: NextPage<WorkProps> = ({ work }) => {
   return (
     <Layout>
       <Container>

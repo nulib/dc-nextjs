@@ -47,7 +47,6 @@ interface CollectionProps {
 }
 
 const Collection: NextPage<CollectionProps> = ({ collection, items }) => {
-  console.log("items", items);
   const { description, id, published, representativeImage, title, visibility } =
     collection;
 

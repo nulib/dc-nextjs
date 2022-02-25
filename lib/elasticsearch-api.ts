@@ -133,7 +133,6 @@ export async function getCollectionItems(
         },
       },
     });
-    console.log("response", response);
     return response.hits.hits.map((hit) => hit._source);
     return [];
   } catch (error) {
@@ -149,10 +148,41 @@ export async function getWork(id: string): Promise<any> {
       method: "GET",
     });
     const data = (await response.json()) as GetGetResult;
-    console.log("data", data);
     return data._source;
   } catch (error) {
     console.error("Error in elasticsearch-api.js > getWork", error);
     return Promise.reject(new Error(`No work with id ${id}`));
   }
+}
+
+export async function getWorkIds(): Promise<Array<string>> {
+  try {
+    const res = await search({
+      ...defaultRequestConfig,
+      body: {
+        size: 10000,
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  "model.name": "Work",
+                },
+              },
+              {
+                match: {
+                  "model.application": "Meadow",
+                },
+              },
+            ],
+          },
+        },
+      },
+    });
+    const ids = res.hits.hits.map((hit) => hit._id);
+    return ids;
+  } catch (error) {
+    console.error("Error getting Work Ids:", error);
+  }
+  return [];
 }
