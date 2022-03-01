@@ -1,56 +1,62 @@
-import Layout from "components/layout";
+import React from "react";
+import Layout from "components/Layout";
 import { GetStaticProps, NextPage } from "next";
-import {
-  getAllWorkIds,
-  getWorkData,
-  makeIIIFEndpoint,
-  Work,
-} from "lib/art-institute-api";
+import { getWork, getWorkIds } from "lib/elasticsearch-api";
+import Container from "components/Container";
 import { ParsedUrlQuery } from "querystring";
 
-interface WorkProps {
-  workData: Work;
-}
-
-const Work: NextPage<WorkProps> = ({ workData: { id, image_id, title } }) => {
-  return (
-    <Layout>
-      <h2>I am a dynamic page which has been pre-rendered</h2>
-      <img src={makeIIIFEndpoint(image_id)} />
-      <h1>{title}</h1>
-      <h2></h2>
-      <p>Id: {id}</p>
-    </Layout>
-  );
-};
-
-export default Work;
-
-/**
- * Grab individual dynamic page content from an external API.
- * This will never run on the client side, and won't be included with the JS bundle for the browser.
- */
 interface IParams extends ParsedUrlQuery {
   id: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as IParams;
-  const workData = await getWorkData(id);
-  return {
-    props: {
-      workData,
-    },
-  };
-};
-
 /**
- * This function is what creates all the dynamic pages when NextJS builds
+ * Pre-build all Work routes at build time
  */
 export async function getStaticPaths() {
-  const paths = await getAllWorkIds();
+  const ids = await getWorkIds();
+  const paths = ids.map((id) => ({
+    params: {
+      id: id,
+    },
+  }));
+
   return {
     paths,
     fallback: false,
   };
 }
+
+/**
+ * Get individual Work data at build time
+ */
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params as IParams;
+  const work = await getWork(id);
+
+  return { props: { work }, revalidate: 10 };
+};
+
+interface WorkProps {
+  work: any;
+}
+
+const Work: NextPage<WorkProps> = ({ work }) => {
+  return (
+    <Layout>
+      <Container>
+        <h1>{work?.descriptiveMetadata?.title}</h1>
+        {work && (
+          <dl>
+            <dt>Accession Number</dt>
+            <dd>{work.accessionNumber}</dd>
+            <dt>Create Date</dt>
+            <dd>{work.createDate}</dd>
+            ...more here
+          </dl>
+        )}
+      </Container>
+    </Layout>
+  );
+};
+
+export default Work;

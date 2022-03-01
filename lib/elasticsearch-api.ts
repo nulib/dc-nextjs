@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 import { RequestInit } from "node-fetch";
 import { Collection } from "types";
 import { SearchResponse } from "types/elasticsearch";
@@ -69,7 +69,7 @@ export async function getAllCollections(
         },
       },
     });
-    return response.hits.hits.map((hit) => ({ id: hit._id, ...hit._source }));
+    return response.hits.hits.map((hit) => ({ ...hit._source, id: hit._id }));
   } catch (error) {
     console.error("Error in getAllCollections", error);
     return Promise.resolve([]);
@@ -105,4 +105,84 @@ export async function getCollectionData(id: string): Promise<Collection> {
     console.error("Error in elasticsearch-api.js > getCollectionData", error);
     return Promise.reject(new Error(`No collection with id ${id}`));
   }
+}
+
+export async function getCollectionItems(
+  id: string,
+  numResults: number = PAGE_SIZE
+) {
+  try {
+    const response = await search({
+      ...defaultRequestConfig,
+      body: {
+        size: numResults,
+        query: {
+          function_score: {
+            query: {
+              bool: {
+                must: [
+                  { match: { "model.name": "Work" } },
+                  { match: { "collection.id": id } },
+                ],
+              },
+            },
+            boost: "5",
+            random_score: {},
+            boost_mode: "multiply",
+          },
+        },
+      },
+    });
+    return response.hits.hits.map((hit) => hit._source);
+    return [];
+  } catch (error) {
+    console.error("Error in getCollectionItems()", error);
+    return Promise.resolve([]);
+  }
+}
+
+export async function getWork(id: string): Promise<any> {
+  try {
+    const response = await fetch(`${ES_PROXY}/search/meadow/_all/${id}`, {
+      ...defaultRequestConfig,
+      method: "GET",
+    });
+    const data = (await response.json()) as GetGetResult;
+    return data._source;
+  } catch (error) {
+    console.error("Error in elasticsearch-api.js > getWork", error);
+    return Promise.reject(new Error(`No work with id ${id}`));
+  }
+}
+
+export async function getWorkIds(): Promise<Array<string>> {
+  try {
+    const res = await search({
+      ...defaultRequestConfig,
+      body: {
+        size: 10000,
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  "model.name": "Work",
+                },
+              },
+              {
+                match: {
+                  "model.application": "Meadow",
+                },
+              },
+            ],
+          },
+        },
+      },
+    });
+    const ids = res.hits.hits.map((hit) => hit._id);
+    return ids;
+  } catch (error) {
+    console.error("Error getting Work Ids:", error);
+  }
+  return [];
 }

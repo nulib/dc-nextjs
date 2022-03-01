@@ -1,13 +1,12 @@
 import React from "react";
 import Head from "next/head";
-import styles from "styles/Layout.module.css";
-import Header from "components/header";
+import Header from "components/Header/Header";
 
-export const siteTitle = "Next.js Sample Website";
+export const siteTitle = "Digital Collections v2";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -24,8 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Header />
-      <main className={styles.main}>{children}</main>
-      <footer className={styles.footer}>Footer here</footer>
+      <main>{children}</main>
     </div>
   );
 }
