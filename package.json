@@ -6,6 +6,7 @@
     "dev": "next dev",
     "export": "next build && next export",
     "lint": "next lint",
+    "ts-lint": "tsc --noEmit --incremental --watch",
     "start": "next start"
   },
   "dependencies": {

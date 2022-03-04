@@ -1,28 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ChangeEvent, FocusEvent } from "react";
 import { Button, Clear, Input, Wrapper } from "./Search.styled";
 
-export default function Search({ isSearchActive }) {
-  const search = useRef(null);
+interface SearchProps {
+  isSearchActive: (value: boolean) => void;
+}
+
+const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
+  const search = useRef<HTMLInputElement>(null);
 
   const [searchValue, setSearchValue] = useState("");
   const [searchFocus, setSearchFocus] = useState(false);
 
-  const handleSearchFocus = (e) => {
+  const handleSearchFocus = (e: FocusEvent) => {
     e.type === "focus" ? setSearchFocus(true) : setSearchFocus(false);
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   const clearSearchResults = () => {
     setSearchValue("");
-    search.current.value = "";
+    if (search.current) {
+      search.current.value = "";
+    }
   };
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
-  }, [searchFocus, searchValue]);
+  }, [searchFocus, searchValue, isSearchActive]);
 
   return (
     <Wrapper>
@@ -49,4 +55,6 @@ export default function Search({ isSearchActive }) {
       )}
     </Wrapper>
   );
-}
+};
+
+export default Search;

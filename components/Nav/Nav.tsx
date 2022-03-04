@@ -1,5 +1,7 @@
 import { NavStyled } from "./Nav.styled";
 
-export default function Nav({ children }) {
+const Nav: React.FC = ({ children }) => {
   return <NavStyled>{children}</NavStyled>;
-}
+};
+
+export default Nav;

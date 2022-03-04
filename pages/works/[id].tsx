@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "components/Layout";
+import Layout from "components/layout";
 import { GetStaticProps, NextPage } from "next";
 import { getWork, getWorkIds } from "lib/elasticsearch-api";
 import Container from "components/Container";

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Layout from "components/Layout";
+import Layout from "components/layout";
 import { getData, makeIIIFEndpoint } from "lib/art-institute-api";
 import styles from "styles/StaticPage.module.css";
 import Link from "next/link";

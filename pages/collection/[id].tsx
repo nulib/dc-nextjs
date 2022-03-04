@@ -1,4 +1,4 @@
-import Layout from "components/Layout";
+import Layout from "components/layout";
 import { GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import {

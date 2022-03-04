@@ -3,7 +3,6 @@ import { results } from "mocks/results";
 import { GridControls, GridFilter, GridItem, GridStyled } from "./Grid.styled";
 import Topics from "components/Topics/Topics";
 import Sticky from "react-sticky-el";
-import * as Dialog from "@radix-ui/react-dialog";
 import Filter from "components/Filter/Filter";
 
 export default function Grid() {

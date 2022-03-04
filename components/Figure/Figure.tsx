@@ -1,8 +1,7 @@
 import { FigureStyled, Image, Title, Type } from "./Figure.styled";
 
 interface Figure {
-  alt?: string;
-  height: number;
+  height: string;
   title: string;
   type: string;
 }
@@ -11,7 +10,7 @@ interface FigureProps {
 }
 
 const Figure: React.FC<FigureProps> = ({ data }) => {
-  const { alt = data.title, height, title, type } = data;
+  const { height, title, type } = data;
   return (
     <FigureStyled>
       {/* eslint-disable-next-line */}

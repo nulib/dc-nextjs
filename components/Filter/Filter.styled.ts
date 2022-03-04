@@ -8,7 +8,6 @@ const FilterTrigger = styled(Dialog.Trigger, {
   backgroundColor: "$slate12",
   border: "0",
   color: "$slate1",
-  cursor: "pointer",
   fontSize: "1rem",
 });
 
