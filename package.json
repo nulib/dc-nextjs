@@ -7,7 +7,9 @@
     "export": "next build && next export",
     "lint": "next lint",
     "ts-lint": "tsc --noEmit --incremental --watch",
-    "start": "next start"
+    "ts-lint-commit-hook": "tsc --noEmit --incremental",
+    "start": "next start",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@radix-ui/colors": "^0.1.8",
@@ -30,6 +32,7 @@
     "eslint": "^8.8.0",
     "eslint-config-next": "^12.0.10",
     "eslint-config-prettier": "^8.4.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "husky": "^7.0.0"
   }
 }
