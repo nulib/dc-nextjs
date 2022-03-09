@@ -48,7 +48,21 @@ const SearchPage: NextPage = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleFacetChange = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.dataset.facet);
+    console.log(e.target.dataset.label);
+
+    // {
+    //   genre: [
+    //     "", ""
+    //   ],
+    //   subject: [],
+    // }
+  };
+
   const facets = Object.entries(esData.aggregations).map((facet) => {
+    console.log(`facet`, facet);
     return { facetLabel: facet[0], ...facet[1] };
   });
 
@@ -74,9 +88,15 @@ const SearchPage: NextPage = () => {
                       <li>
                         <input
                           type="checkbox"
+                          id={`${facet.facetLabel}-${index}`}
                           name={`${facet.facetLabel}-${index}`}
+                          data-label={bucket.key}
+                          data-facet={facet.facetLabel}
+                          onChange={handleFacetChange}
                         />
-                        {bucket.key} ({bucket.doc_count})
+                        <label htmlFor={`${facet.facetLabel}-${index}`}>
+                          {bucket.key} ({bucket.doc_count})
+                        </label>
                       </li>
                     ))}
                 </ul>
