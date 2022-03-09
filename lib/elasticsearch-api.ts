@@ -49,6 +49,7 @@ async function search(
       body,
     });
     const data: any = await response.json();
+    console.log("data", data);
     return data;
   } catch (err) {
     throw new Error(`Error in elasticsearch-api.js: ${err}`);
