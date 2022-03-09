@@ -20,19 +20,19 @@ const useApiSearch = () => {
       },
     },
     aggs: {
-      "descriptiveMetadata.genre.displayFacet": {
+      genre: {
         terms: {
           field: "descriptiveMetadata.genre.displayFacet",
-          size: 250,
+          size: 10,
           order: {
             _count: "desc",
           },
         },
       },
-      "descriptiveMetadata.subject.displayFacet": {
+      subject: {
         terms: {
           field: "descriptiveMetadata.subject.displayFacet",
-          size: 250,
+          size: 10,
           order: {
             _count: "desc",
           },

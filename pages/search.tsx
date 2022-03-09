@@ -41,12 +41,16 @@ const SearchPage: NextPage = () => {
         console.log("moreData", moreData);
         setEsData(moreData);
       });
-  }, [searchTerm, updateSearch]);
+  }, [searchTerm]);
 
   // TODO: Put a debounce on this
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const facets = Object.entries(esData.aggregations).map((facet) => {
+    return { facetLabel: facet[0], ...facet[1] };
+  });
 
   return (
     <Layout>
@@ -57,21 +61,27 @@ const SearchPage: NextPage = () => {
         <button>Submit</button>
 
         <h2>Facets</h2>
+
         <ul>
-          <li>
-            Subject
-            <input name="subject-filter" />
-            <ul>
+          {facets &&
+            facets.map((facet) => (
               <li>
-                <input type="checkbox" name="subject1" />
-                Black and white negatives (1)
+                {facet.facetLabel}
+                <input name={`${facet.facetLabel}-filter`} />
+                <ul>
+                  {facet.buckets &&
+                    facet.buckets.map((bucket, index) => (
+                      <li>
+                        <input
+                          type="checkbox"
+                          name={`${facet.facetLabel}-${index}`}
+                        />
+                        {bucket.key} ({bucket.doc_count})
+                      </li>
+                    ))}
+                </ul>
               </li>
-              <li>
-                <input type="checkbox" name="subject2" />
-                Something else (3)
-              </li>
-            </ul>
-          </li>
+            ))}
         </ul>
 
         <h2>Search Results</h2>
