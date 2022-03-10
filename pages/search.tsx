@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Layout from "components/layout";
 import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
+import Facet from "components/Facet/Facet";
 
 const ALL_FACETS = ["subject", "genre"];
 const url = `https://dcapi.stack.rdc-staging.library.northwestern.edu/search/meadow/_search`;
@@ -44,7 +45,7 @@ const SearchPage: NextPage = () => {
     if (!esData?.aggregations) return;
     setAggregatedFacets(
       Object.entries(esData.aggregations).map((facet) => {
-        return { facetLabel: facet[0], ...facet[1] };
+        return { label: facet[0], ...facet[1] };
       })
     );
   }, [esData]);
@@ -83,35 +84,10 @@ const SearchPage: NextPage = () => {
         <button>Submit</button>
 
         <h2>Facets</h2>
-
-        <ul>
+        <div>
           {aggregatedFacets &&
-            aggregatedFacets.map((facet) => (
-              <li key={facet.label}>
-                {facet.facetLabel}
-                <input name={`${facet.facetLabel}-filter`} />
-                <ul>
-                  {facet.buckets &&
-                    facet.buckets.map((bucket, index) => (
-                      <li key={index}>
-                        <input
-                          type="checkbox"
-                          id={`${facet.facetLabel}-${index}`}
-                          name={`${facet.facetLabel}`}
-                          data-label={bucket.key}
-                          data-facet={facet.facetLabel}
-                          onChange={handleFacetChange}
-                          value={bucket.key}
-                        />
-                        <label htmlFor={`${facet.facetLabel}-${index}`}>
-                          {bucket.key} ({bucket.doc_count})
-                        </label>
-                      </li>
-                    ))}
-                </ul>
-              </li>
-            ))}
-        </ul>
+            aggregatedFacets.map((facet) => <Facet data={facet} />)}
+        </div>
 
         <h2>Search Results</h2>
         <ul>
