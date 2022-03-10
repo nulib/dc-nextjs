@@ -87,7 +87,11 @@ const SearchPage: NextPage = () => {
         <div>
           {aggregatedFacets &&
             aggregatedFacets.map((facet: FacetProps) => (
-              <Facet {...facet} key={facet.label} />
+              <Facet
+                {...facet}
+                key={facet.label}
+                handleFacetChange={handleFacetChange}
+              />
             ))}
         </div>
 

@@ -7,13 +7,10 @@ interface FacetBuckets {
 export interface FacetProps {
   label: string;
   buckets: FacetBuckets[];
+  handleFacetChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Facet: React.FC<FacetProps> = ({ label, buckets }) => {
-  const handleFacetChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e);
-  };
-
+const Facet: React.FC<FacetProps> = ({ label, buckets, handleFacetChange }) => {
   return (
     <div key={label}>
       <h3>{label}</h3>
