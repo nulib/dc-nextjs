@@ -86,7 +86,7 @@ const SearchPage: NextPage = () => {
         <h2>Facets</h2>
         <div>
           {aggregatedFacets &&
-            aggregatedFacets.map((facet) => <Facet data={facet} />)}
+            aggregatedFacets.map((facet) => <Facet {...facet} />)}
         </div>
 
         <h2>Search Results</h2>
