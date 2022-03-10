@@ -5,25 +5,16 @@ import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
 
 const ALL_FACETS = ["subject", "genre"];
-
-const requestBody = {
-  query: {
-    simple_query_string: {
-      query: '"fried eggs" +(eggplant | potato) -frittata',
-      fields: ["title^5", "body"],
-      default_operator: "and",
-    },
-  },
-};
-
-//const stringBody = JSON.stringify();
-
 const url = `https://dcapi.stack.rdc-staging.library.northwestern.edu/search/meadow/_search`;
 
 const SearchPage: NextPage = () => {
   const [esData, setEsData] = React.useState();
-  const { defaultQuery, updateSearch } = useApiSearch();
+  const [aggregatedFacets, setAggregatedFacets] = React.useState([]);
+  const { defaultQuery, facetQuery, filteredQuery, updateSearch } =
+    useApiSearch();
   const [searchTerm, setSearchTerm] = React.useState("");
+
+  const [userFacets, setUserFacets] = React.useState({});
 
   React.useEffect(() => {
     fetch(url, {
@@ -31,7 +22,8 @@ const SearchPage: NextPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updateSearch(searchTerm)),
+      // body: JSON.stringify(updateSearch(searchTerm)),
+      body: JSON.stringify(facetQuery),
     })
       .then((response) => {
         const data = response.json();
@@ -41,7 +33,16 @@ const SearchPage: NextPage = () => {
         console.log("moreData", moreData);
         setEsData(moreData);
       });
-  }, [searchTerm]);
+  }, [searchTerm, userFacets]);
+
+  React.useEffect(() => {
+    if (!esData?.aggregations) return;
+    setAggregatedFacets(
+      Object.entries(esData.aggregations).map((facet) => {
+        return { facetLabel: facet[0], ...facet[1] };
+      })
+    );
+  }, [esData]);
 
   // TODO: Put a debounce on this
   const handleSearchChange = (e) => {
@@ -49,22 +50,24 @@ const SearchPage: NextPage = () => {
   };
 
   const handleFacetChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.dataset.facet);
-    console.log(e.target.dataset.label);
+    console.log("e", e.target.checked);
+    const newObj = { ...userFacets };
+    const { checked, name, value } = e.target;
 
-    // {
-    //   genre: [
-    //     "", ""
-    //   ],
-    //   subject: [],
-    // }
+    // Check on
+    if (checked) {
+      if (!newObj[name]) {
+        newObj[name] = [value];
+      } else {
+        newObj[name].push(value);
+      }
+    } else {
+      // Remove item from the array
+      newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
+    }
+
+    setUserFacets(newObj);
   };
-
-  const facets = Object.entries(esData.aggregations).map((facet) => {
-    console.log(`facet`, facet);
-    return { facetLabel: facet[0], ...facet[1] };
-  });
 
   return (
     <Layout>
@@ -77,22 +80,23 @@ const SearchPage: NextPage = () => {
         <h2>Facets</h2>
 
         <ul>
-          {facets &&
-            facets.map((facet) => (
-              <li>
+          {aggregatedFacets &&
+            aggregatedFacets.map((facet) => (
+              <li key={facet.label}>
                 {facet.facetLabel}
                 <input name={`${facet.facetLabel}-filter`} />
                 <ul>
                   {facet.buckets &&
                     facet.buckets.map((bucket, index) => (
-                      <li>
+                      <li key={index}>
                         <input
                           type="checkbox"
                           id={`${facet.facetLabel}-${index}`}
-                          name={`${facet.facetLabel}-${index}`}
+                          name={`${facet.facetLabel}`}
                           data-label={bucket.key}
                           data-facet={facet.facetLabel}
                           onChange={handleFacetChange}
+                          value={bucket.key}
                         />
                         <label htmlFor={`${facet.facetLabel}-${index}`}>
                           {bucket.key} ({bucket.doc_count})
