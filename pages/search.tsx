@@ -51,11 +51,11 @@ const SearchPage: NextPage = () => {
   }, [esData]);
 
   // TODO: Put a debounce on this
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleFacetChange = (e) => {
+  const handleFacetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("e", e.target.checked);
     const newObj = { ...userFacets };
     const { checked, name, value } = e.target;
