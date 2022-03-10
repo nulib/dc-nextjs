@@ -4,7 +4,7 @@ interface FacetBuckets {
   key: string;
   doc_count: string;
 }
-interface FacetProps {
+export interface FacetProps {
   label: string;
   buckets: FacetBuckets[];
 }

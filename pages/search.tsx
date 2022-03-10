@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Layout from "components/layout";
 import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
-import Facet from "components/Facet/Facet";
+import Facet, { FacetProps } from "components/Facet/Facet";
 
 const ALL_FACETS = ["subject", "genre"];
 const url = `https://dcapi.stack.rdc-staging.library.northwestern.edu/search/meadow/_search`;
@@ -86,7 +86,9 @@ const SearchPage: NextPage = () => {
         <h2>Facets</h2>
         <div>
           {aggregatedFacets &&
-            aggregatedFacets.map((facet) => <Facet {...facet} />)}
+            aggregatedFacets.map((facet: FacetProps) => (
+              <Facet {...facet} key={facet.label} />
+            ))}
         </div>
 
         <h2>Search Results</h2>
