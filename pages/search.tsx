@@ -10,8 +10,13 @@ const url = `https://dcapi.stack.rdc-staging.library.northwestern.edu/search/mea
 const SearchPage: NextPage = () => {
   const [esData, setEsData] = React.useState();
   const [aggregatedFacets, setAggregatedFacets] = React.useState([]);
-  const { defaultQuery, facetQuery, filteredQuery, updateSearch } =
-    useApiSearch();
+  const {
+    defaultQuery,
+    facetQuery,
+    filteredQuery,
+    filteredQuery2,
+    updateSearch,
+  } = useApiSearch();
   const [searchTerm, setSearchTerm] = React.useState("");
 
   const [userFacets, setUserFacets] = React.useState({});
