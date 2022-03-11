@@ -1,4 +1,14 @@
-const FACETS_CREATOR = {
+interface FacetsInstance {
+  id: string;
+  field: string;
+  label: string;
+}
+interface FacetsGroup {
+  label: string;
+  facets: FacetsInstance[];
+}
+
+const FACETS_CREATOR: FacetsGroup = {
   label: "Creator and Contributor",
   facets: [
     {
@@ -14,7 +24,7 @@ const FACETS_CREATOR = {
   ],
 };
 
-const FACETS_RIGHTS_USAGE = {
+const FACETS_RIGHTS_USAGE: FacetsGroup = {
   label: "Rights and Usage",
   facets: [
     {
@@ -25,7 +35,7 @@ const FACETS_RIGHTS_USAGE = {
   ],
 };
 
-const FACETS_DESCRIPTIVE = {
+const FACETS_DESCRIPTIVE: FacetsGroup = {
   label: "Subjects and Descriptive",
   facets: [
     {
@@ -66,7 +76,7 @@ const FACETS_DESCRIPTIVE = {
   ],
 };
 
-const FACETS_LOCATION = {
+const FACETS_LOCATION: FacetsGroup = {
   label: "Location",
   facets: [
     {
@@ -107,7 +117,7 @@ const FACETS_LOCATION = {
   ],
 };
 
-export const FACETS = [
+export const FACETS: FacetsGroup[] = [
   FACETS_CREATOR,
   FACETS_DESCRIPTIVE,
   FACETS_LOCATION,
