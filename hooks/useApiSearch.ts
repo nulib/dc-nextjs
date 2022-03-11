@@ -1,13 +1,10 @@
 import { defaultQuery } from "mocks/defaultQuery";
 import { buildSearchQuery, querySearchTemplate } from "lib/queries/search";
 import { buildFacetPart } from "lib/queries/facet";
+import { UserFacets } from "types";
 
 const useApiSearch = () => {
-  interface FacetObject {
-    [key: string]: [string];
-  }
-
-  function updateQuery(term: string, userFacets: FacetObject) {
+  function updateQuery(term: string, userFacets: UserFacets) {
     const newQuery = { ...querySearchTemplate };
 
     /**
