@@ -5,10 +5,9 @@ import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
 import Facet, { FacetProps } from "components/Facet/Facet";
 import { API_PRODUCTION_URL } from "lib/queries/endpoints";
-import { UserFacets } from "types";
+import { UserFacets, FilteredFacets, FacetFilterValues } from "types";
 import ActiveFacets from "components/ActiveFacets/ActiveFacets";
-
-const ALL_FACETS = ["subject", "genre"];
+import { facetFilterQuery } from "lib/queries/facet-filter";
 
 const SearchPage: NextPage = () => {
   const [esData, setEsData] = React.useState();
@@ -16,6 +15,7 @@ const SearchPage: NextPage = () => {
   const [userFacets, setUserFacets] = React.useState({});
   const { updateQuery } = useApiSearch();
   const [searchTerm, setSearchTerm] = React.useState("");
+  const [facetFilterResults, setFacetFilterResults] = React.useState({});
 
   const getAPIData = React.useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {
@@ -26,6 +26,8 @@ const SearchPage: NextPage = () => {
       body: JSON.stringify(updateQuery(searchTerm, userFacets)),
     });
     const data = await response.json();
+    clearFacetFilters();
+
     return data;
   }, [searchTerm, userFacets]);
 
@@ -34,6 +36,7 @@ const SearchPage: NextPage = () => {
       const data = await getAPIData();
       console.log("data", data);
       setEsData(data);
+
       setAggregatedFacets(
         Object.entries(data?.aggregations).map((facet) => {
           return { label: facet[0], ...facet[1] };
@@ -65,7 +68,40 @@ const SearchPage: NextPage = () => {
       newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
     }
 
+    console.log("userFacets", newObj);
+
     setUserFacets(newObj);
+  };
+
+  const clearFacetFilters = () => {
+    setFacetFilterResults({});
+  };
+
+  const handleFacetFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (value === "") {
+      return;
+    } else {
+      fetch(API_PRODUCTION_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          facetFilterQuery(searchTerm, name, value, userFacets)
+        ),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((facetFilterData) => {
+          const newObj: FilteredFacets = { ...facetFilterResults };
+          newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
+          setFacetFilterResults(newObj);
+          return;
+        });
+    }
   };
 
   return (
@@ -88,7 +124,9 @@ const SearchPage: NextPage = () => {
                   {...facet}
                   key={facet.label}
                   activeValues={userFacets[facet.label] || []}
+                  facetFilterResults={facetFilterResults[facet.label] || []}
                   handleFacetChange={handleFacetChange}
+                  handleFacetFilterChange={handleFacetFilterChange}
                 />
               );
             })}

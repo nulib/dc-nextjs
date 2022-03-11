@@ -73,3 +73,19 @@ export interface Work {
   descriptiveMetadata: any;
   // Do we really need this?
 }
+
+export interface FilteredFacets {
+  [key: string]: [FacetBucketAgg];
+}
+export interface FilteredFacet {
+  facetId: string;
+  buckets: Array<FacetBucketAgg>;
+}
+export interface FacetBucketAgg {
+  key: string;
+  doc_count: number;
+}
+
+export interface FacetFilterValues {
+  [key: string]: string;
+}
