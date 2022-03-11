@@ -1,4 +1,4 @@
-import { aggs } from "./aggs";
+import { aggs } from "../lib/queries/aggs";
 
 export const filteredQuery = {
   query: {

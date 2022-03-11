@@ -1,6 +1,7 @@
-import { aggs } from "./aggs";
+import { aggs } from "../lib/queries/aggs";
 
 export const defaultQuery = {
+  size: 10000,
   query: {
     simple_query_string: {
       /**

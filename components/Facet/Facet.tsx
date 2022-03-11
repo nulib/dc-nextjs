@@ -5,12 +5,18 @@ interface FacetBuckets {
   doc_count: string;
 }
 export interface FacetProps {
+  activeValues: [string];
   label: string;
   buckets: FacetBuckets[];
   handleFacetChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Facet: React.FC<FacetProps> = ({ label, buckets, handleFacetChange }) => {
+const Facet: React.FC<FacetProps> = ({
+  activeValues,
+  label,
+  buckets,
+  handleFacetChange,
+}) => {
   return (
     <div key={label}>
       <h3>{label}</h3>
@@ -25,6 +31,7 @@ const Facet: React.FC<FacetProps> = ({ label, buckets, handleFacetChange }) => {
                 onChange={handleFacetChange}
                 type="checkbox"
                 value={bucket.key}
+                checked={activeValues?.includes(bucket.key)}
               />
               <label htmlFor={`${label}-${index}`}>
                 {bucket.key} ({bucket.doc_count})

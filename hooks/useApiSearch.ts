@@ -1,25 +1,33 @@
-import { aggs } from "mocks/aggs";
 import { defaultQuery } from "mocks/defaultQuery";
-import { facetQuery } from "mocks/facetQuery";
-import { filteredQuery, filteredQuery2 } from "mocks/filterQuery";
+import { buildSearchQuery, querySearchTemplate } from "lib/queries/search";
+import { buildFacetPart } from "lib/queries/facet";
 
 const useApiSearch = () => {
-  function updateSearch(term: string) {
-    const newQuery = {
-      ...defaultQuery,
-    };
-    newQuery.query.simple_query_string.query = `${term}~1 | ${term}*`;
+  interface FacetObject {
+    [key: string]: [string];
+  }
+
+  function updateQuery(term: string, userFacets: FacetObject) {
+    const newQuery = { ...querySearchTemplate };
+
+    /**
+     * Add search term to the API query
+     */
+    if (term) {
+      newQuery.query.bool.must.push(buildSearchQuery(term));
+    }
+
+    /**
+     * Add facets to the API query
+     */
+    for (const [key, value] of Object.entries(userFacets)) {
+      newQuery.query.bool.must.push(buildFacetPart(key, value));
+    }
+
     return newQuery;
   }
 
-  function updateFacet() {
-    return "foo";
-  }
-
-  // TODO: Adam wire this up
-  function updateQuery(term: string, userFacets: any) {}
-
-  return { defaultQuery, facetQuery, filteredQuery, updateSearch, updateFacet };
+  return { defaultQuery, updateQuery };
 };
 
 export default useApiSearch;

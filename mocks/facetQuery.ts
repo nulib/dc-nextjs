@@ -1,4 +1,20 @@
-import { aggs } from "./aggs";
+import { aggs } from "../lib/queries/aggs";
+
+const querySearchPart = {
+  simple_query_string: {
+    query: "dylan~1 | dylan*",
+    fields: [
+      "all_titles^5",
+      "description^2",
+      "all_subjects^2",
+      "full_text",
+      "legacy_identifier",
+      "accession_number",
+      "id",
+    ],
+    default_operator: "or",
+  },
+};
 
 export const facetQuery = {
   size: 100,
@@ -6,19 +22,7 @@ export const facetQuery = {
     bool: {
       must: [
         {
-          simple_query_string: {
-            query: "dylan~1 | dylan*",
-            fields: [
-              "all_titles^5",
-              "description^2",
-              "all_subjects^2",
-              "full_text",
-              "legacy_identifier",
-              "accession_number",
-              "id",
-            ],
-            default_operator: "or",
-          },
+          ...querySearchPart,
         },
         {
           bool: {
