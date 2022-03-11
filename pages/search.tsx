@@ -5,6 +5,8 @@ import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
 import Facet, { FacetProps } from "components/Facet/Facet";
 import { API_PRODUCTION_URL } from "lib/queries/endpoints";
+import { UserFacets } from "types";
+import ActiveFacets from "components/ActiveFacets/ActiveFacets";
 
 const ALL_FACETS = ["subject", "genre"];
 
@@ -47,7 +49,7 @@ const SearchPage: NextPage = () => {
   };
 
   const handleFacetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newObj = { ...userFacets };
+    const newObj: UserFacets = { ...userFacets };
     const { checked, name, value } = e.target;
 
     // Checkbox is checked
@@ -58,9 +60,8 @@ const SearchPage: NextPage = () => {
         newObj[name].push(value);
       }
     }
-    // Not checked
+    // Not checked, remove value from the array
     else {
-      // Remove value from the array
       newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
     }
 
@@ -74,6 +75,9 @@ const SearchPage: NextPage = () => {
         <label>Search term:</label>
         <input type="text" name="search" onChange={handleSearchChange} />
         <button>Submit</button>
+
+        <h2>Active Facets</h2>
+        <ActiveFacets userFacets={userFacets} />
 
         <h2>Facets</h2>
         <div>
@@ -90,7 +94,7 @@ const SearchPage: NextPage = () => {
             })}
         </div>
 
-        <h2>Search Results</h2>
+        <h2>Search Results ({esData?.hits.total})</h2>
         <ul>
           {esData &&
             esData.hits.hits.map((hit) => (

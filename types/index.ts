@@ -36,6 +36,10 @@ export interface RepresentativeImage {
   workId: string;
 }
 
+export interface UserFacets {
+  [key: string]: [string];
+}
+
 enum VisibilityID {
   Authenticated = "AUTHENTICATED",
   Open = "OPEN",
