@@ -4,36 +4,27 @@ import Layout from "components/layout";
 import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
 import Facet, { FacetProps } from "components/Facet/Facet";
+import { API_PRODUCTION_URL } from "lib/queries/endpoints";
 
 const ALL_FACETS = ["subject", "genre"];
-const url = `https://dcapi.stack.rdc-staging.library.northwestern.edu/search/meadow/_search`;
 
 const SearchPage: NextPage = () => {
   const [esData, setEsData] = React.useState();
   const [aggregatedFacets, setAggregatedFacets] = React.useState([]);
-  const {
-    defaultQuery,
-    facetQuery,
-    filteredQuery,
-    filteredQuery2,
-    updateSearch,
-  } = useApiSearch();
+  const [userFacets, setUserFacets] = React.useState({});
+  const { updateQuery } = useApiSearch();
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  const [userFacets, setUserFacets] = React.useState({});
-
   React.useEffect(() => {
-    fetch(url, {
+    fetch(API_PRODUCTION_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      // body: JSON.stringify(updateSearch(searchTerm)),
-      body: JSON.stringify(facetQuery),
+      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
     })
       .then((response) => {
-        const data = response.json();
-        return data;
+        return response.json();
       })
       .then((moreData) => {
         console.log("moreData", moreData);
@@ -48,7 +39,7 @@ const SearchPage: NextPage = () => {
         return { label: facet[0], ...facet[1] };
       })
     );
-  }, [esData]);
+  }, [esData, userFacets]);
 
   // TODO: Put a debounce on this
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,19 +47,20 @@ const SearchPage: NextPage = () => {
   };
 
   const handleFacetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("e", e.target.checked);
     const newObj = { ...userFacets };
     const { checked, name, value } = e.target;
 
-    // Check on
+    // Checkbox is checked
     if (checked) {
       if (!newObj[name]) {
         newObj[name] = [value];
       } else {
         newObj[name].push(value);
       }
-    } else {
-      // Remove item from the array
+    }
+    // Not checked
+    else {
+      // Remove value from the array
       newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
     }
 
@@ -86,13 +78,16 @@ const SearchPage: NextPage = () => {
         <h2>Facets</h2>
         <div>
           {aggregatedFacets &&
-            aggregatedFacets.map((facet: FacetProps) => (
-              <Facet
-                {...facet}
-                key={facet.label}
-                handleFacetChange={handleFacetChange}
-              />
-            ))}
+            aggregatedFacets.map((facet: FacetProps) => {
+              return (
+                <Facet
+                  {...facet}
+                  key={facet.label}
+                  activeValues={userFacets[facet.label] || []}
+                  handleFacetChange={handleFacetChange}
+                />
+              );
+            })}
         </div>
 
         <h2>Search Results</h2>
