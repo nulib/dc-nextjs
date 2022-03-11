@@ -17,31 +17,31 @@ const SearchPage: NextPage = () => {
   const { updateQuery } = useApiSearch();
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  React.useEffect(() => {
-    fetch(API_PRODUCTION_URL, {
+  const getAPIData = React.useCallback(async () => {
+    const response = await fetch(API_PRODUCTION_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updateQuery(searchTerm, userFacets)),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((moreData) => {
-        console.log("moreData", moreData);
-        setEsData(moreData);
-      });
+    });
+    const data = await response.json();
+    return data;
   }, [searchTerm, userFacets]);
 
   React.useEffect(() => {
-    if (!esData?.aggregations) return;
-    setAggregatedFacets(
-      Object.entries(esData.aggregations).map((facet) => {
-        return { label: facet[0], ...facet[1] };
-      })
-    );
-  }, [esData, userFacets]);
+    async function fn() {
+      const data = await getAPIData();
+      console.log("data", data);
+      setEsData(data);
+      setAggregatedFacets(
+        Object.entries(data?.aggregations).map((facet) => {
+          return { label: facet[0], ...facet[1] };
+        })
+      );
+    }
+    fn();
+  }, [getAPIData]);
 
   // TODO: Put a debounce on this
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
