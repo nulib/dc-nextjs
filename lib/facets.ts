@@ -3,7 +3,7 @@ interface FacetsInstance {
   field: string;
   label: string;
 }
-interface FacetsGroup {
+export interface FacetsGroup {
   label: string;
   facets: FacetsInstance[];
 }
@@ -49,7 +49,7 @@ const FACETS_DESCRIPTIVE: FacetsGroup = {
       label: "Language",
     },
     {
-      id: "Location",
+      id: "location",
       field: "descriptiveMetadata.location.displayFacet",
       label: "Location",
     },
