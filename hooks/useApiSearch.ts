@@ -5,7 +5,7 @@ import { UserFacets } from "types";
 
 const useApiSearch = () => {
   function updateQuery(term: string, userFacets: UserFacets) {
-    const newQuery = { ...querySearchTemplate };
+    const newQuery = JSON.parse(JSON.stringify(querySearchTemplate));
 
     /**
      * Add search term to the API query
@@ -18,7 +18,9 @@ const useApiSearch = () => {
      * Add facets to the API query
      */
     for (const [key, value] of Object.entries(userFacets)) {
-      newQuery.query.bool.must.push(buildFacetPart(key, value));
+      if (value?.length > 0) {
+        newQuery.query.bool.must.push(buildFacetPart(key, value));
+      }
     }
 
     return newQuery;
