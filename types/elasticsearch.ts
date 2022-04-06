@@ -1,4 +1,11 @@
-import { Collection } from "./index";
+import {
+  Client,
+  // Object that contains the type definitions of every API method
+  RequestParams,
+  // Interface of the generic API response
+  ApiResponse,
+} from "@elastic/elasticsearch";
+import { Collection, WorkType } from "./index";
 
 // More info here at: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/typescript.html
 // Complete definition of the Search response
@@ -14,7 +21,7 @@ export interface Explanation {
   description: string;
   details: Explanation[];
 }
-export interface SearchResponse {
+export interface SearchResponse<T> {
   took: number;
   timed_out: boolean;
   _scroll_id?: string;
@@ -27,7 +34,7 @@ export interface SearchResponse {
       _type: string;
       _id: string;
       _score: number;
-      _source: Collection;
+      _source: T;
       _version?: number;
       _explanation?: Explanation;
       fields?: any;
@@ -38,4 +45,13 @@ export interface SearchResponse {
     }>;
   };
   aggregations?: any;
+}
+
+export interface Source {
+  accessionNumber: string;
+  id: string;
+  iiifManifest: string;
+  thumbnail: string;
+  title: string;
+  workType: WorkType;
 }

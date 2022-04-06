@@ -36,6 +36,10 @@ export interface RepresentativeImage {
   workId: string;
 }
 
+export interface UserFacets {
+  [key: string]: string[];
+}
+
 enum VisibilityID {
   Authenticated = "AUTHENTICATED",
   Open = "OPEN",
@@ -68,4 +72,24 @@ export interface Work {
   description: Array<string>;
   descriptiveMetadata: any;
   // Do we really need this?
+}
+
+export interface WorkType {
+  label: "Image" | "Audio" | "Video";
+}
+
+export interface FacetBucketAgg {
+  key: string;
+  doc_count: number;
+}
+export interface FilteredFacets {
+  [key: string]: [FacetBucketAgg];
+}
+export interface FilteredFacet {
+  facetId: string;
+  buckets: Array<FacetBucketAgg>;
+}
+
+export interface FacetFilterValues {
+  [key: string]: string;
 }
