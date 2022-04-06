@@ -25,7 +25,6 @@ export const facetFilterQuery = (
       userFacets
     ),
   };
-  console.log(newQuery);
   return newQuery;
 };
 
@@ -115,7 +114,7 @@ const buildSearchQuery = (term: string) => {
   };
 };
 
-const buildFacetPart = (name: string, values: [string]) => {
+const buildFacetPart = (name: string, values: string[]) => {
   const obj = {
     bool: {
       should: [

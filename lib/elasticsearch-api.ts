@@ -37,9 +37,9 @@ const defaultRequestConfig = {
 /**
  * Wrapper for Elasticsearch API /search network requests
  */
-async function search(
+async function search<T>(
   requestConfig: RequestInit | any
-): Promise<SearchResponse> {
+): Promise<SearchResponse<T>> {
   const url = `${ES_PROXY}/search/meadow/_search`;
   const body = JSON.stringify(requestConfig.body || {});
 
@@ -48,8 +48,7 @@ async function search(
       ...requestConfig,
       body,
     });
-    const data: any = await response.json();
-    console.log("data", data);
+    const data = await response.json();
     return data;
   } catch (err) {
     throw new Error(`Error in elasticsearch-api.js: ${err}`);
@@ -60,7 +59,7 @@ export async function getAllCollections(
   numResults: number = PAGE_SIZE
 ): Promise<Array<Collection>> {
   try {
-    const response = await search({
+    const response: SearchResponse<Collection> = await search({
       ...defaultRequestConfig,
       body: {
         size: numResults,

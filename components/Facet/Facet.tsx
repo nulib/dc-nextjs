@@ -7,7 +7,7 @@ interface FacetBuckets {
   doc_count: string;
 }
 export interface FacetProps {
-  activeValues: [string];
+  activeValues: string[];
   label: string;
   buckets: FacetBuckets[];
   facetFilterResults: FacetBucketAgg[];

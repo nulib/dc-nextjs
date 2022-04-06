@@ -3,19 +3,32 @@ import { NextPage } from "next";
 import Layout from "components/layout";
 import Container from "components/Container";
 import useApiSearch from "hooks/useApiSearch";
-import Facet, { FacetProps } from "components/Facet/Facet";
+import Facet from "components/Facet/Facet";
 import { API_PRODUCTION_URL } from "lib/queries/endpoints";
-import { UserFacets, FilteredFacets, FacetFilterValues } from "types";
+import { UserFacets, FilteredFacets } from "types";
+import { SearchResponse, Source } from "types/elasticsearch";
 import ActiveFacets from "components/ActiveFacets/ActiveFacets";
 import { facetFilterQuery } from "lib/queries/facet-filter";
 
+interface FacetNoLabel {
+  buckets: Array<any>;
+  doc_count_error_upper_bound?: number;
+  sum_other_doc_count: number;
+}
+export interface AggregatedFacets extends FacetNoLabel {
+  label: string;
+}
+
 const SearchPage: NextPage = () => {
-  const [esData, setEsData] = React.useState();
-  const [aggregatedFacets, setAggregatedFacets] = React.useState([]);
-  const [userFacets, setUserFacets] = React.useState({});
-  const { updateQuery } = useApiSearch();
+  const [esData, setEsData] = React.useState<SearchResponse<Source>>();
+  const [aggregatedFacets, setAggregatedFacets] = React.useState<
+    Array<AggregatedFacets>
+  >([]);
+  const [userFacets, setUserFacets] = React.useState<UserFacets>({});
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [facetFilterResults, setFacetFilterResults] = React.useState({});
+  const [facetFilterResults, setFacetFilterResults] =
+    React.useState<FilteredFacets>({});
+  const { updateQuery } = useApiSearch();
 
   const getAPIData = React.useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {
@@ -25,7 +38,7 @@ const SearchPage: NextPage = () => {
       },
       body: JSON.stringify(updateQuery(searchTerm, userFacets)),
     });
-    const data = await response.json();
+    const data: SearchResponse<Source> = await response.json();
     clearFacetFilters();
 
     return data;
@@ -34,12 +47,11 @@ const SearchPage: NextPage = () => {
   React.useEffect(() => {
     async function fn() {
       const data = await getAPIData();
-      console.log("data", data);
       setEsData(data);
 
       setAggregatedFacets(
         Object.entries(data?.aggregations).map((facet) => {
-          return { label: facet[0], ...facet[1] };
+          return { label: facet[0], ...(facet[1] as FacetNoLabel) };
         })
       );
     }
@@ -67,8 +79,6 @@ const SearchPage: NextPage = () => {
     else {
       newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
     }
-
-    console.log("userFacets", newObj);
 
     setUserFacets(newObj);
   };
@@ -118,7 +128,7 @@ const SearchPage: NextPage = () => {
         <h2>Facets</h2>
         <div>
           {aggregatedFacets &&
-            aggregatedFacets.map((facet: FacetProps) => {
+            aggregatedFacets.map((facet) => {
               return (
                 <Facet
                   {...facet}

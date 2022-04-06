@@ -37,7 +37,7 @@ export interface RepresentativeImage {
 }
 
 export interface UserFacets {
-  [key: string]: [string];
+  [key: string]: string[];
 }
 
 enum VisibilityID {
@@ -74,16 +74,20 @@ export interface Work {
   // Do we really need this?
 }
 
+export interface WorkType {
+  label: "Image" | "Audio" | "Video";
+}
+
+export interface FacetBucketAgg {
+  key: string;
+  doc_count: number;
+}
 export interface FilteredFacets {
   [key: string]: [FacetBucketAgg];
 }
 export interface FilteredFacet {
   facetId: string;
   buckets: Array<FacetBucketAgg>;
-}
-export interface FacetBucketAgg {
-  key: string;
-  doc_count: number;
 }
 
 export interface FacetFilterValues {

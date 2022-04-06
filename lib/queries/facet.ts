@@ -1,4 +1,4 @@
-const buildFacetPart = (name: string, values: [string]) => {
+const buildFacetPart = (name: string, values: string[]) => {
   const obj = {
     bool: {
       should: [
