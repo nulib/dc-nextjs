@@ -1,6 +1,6 @@
 import { styled } from "../../stitches.config";
 
-const HeadingStyled = styled("span", {
+const HeadingStyled = styled("h1", {
   variants: {
     isHidden: {
       true: {

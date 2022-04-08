@@ -8,7 +8,7 @@ const SearchPage: NextPage = () => {
   return (
     <Layout>
       <Container>
-        <Heading title="Search" isHidden />
+        <Heading element="h1" title="Search" />
       </Container>
     </Layout>
   );
