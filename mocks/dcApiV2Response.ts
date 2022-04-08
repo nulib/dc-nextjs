@@ -6,25 +6,18 @@ export const dc_api_v2_response = {
   api_link:
     "https://dcapi.stack.rdc-staging.library.northwestern.edu/api/v2/works/156a8f8e-549b-4982-86cc-375bf04104ff",
   ark: "ark:/99999/fk47h32p0m",
-  batch_update_ids: ["a846a5f2-da57-49e6-a138-f5462d113a55"],
   box_names: ["The name of a box"],
   box_numbers: ["88"],
   captions: ["Can't wait to tell all my friends"],
   catalog_keys: ["MS-1984-1982-1989"],
   collection_id: "7c50096c-89eb-43e8-b357-5836a788ddeb",
   collection_title: "TEST Canary Records",
-  contributor_facet: [
-    "http://id.loc.gov/authorities/names/n91114928|ctg|Metallica (Musical group) (Cartographer)",
-  ],
   contributor_ids: ["http://id.loc.gov/authorities/names/n91114928"],
   contributors: ["Metallica (Musical group)"],
   contributors_with_roles: ["Metallica (Musical group) (Cartographer)"],
   contributor_roles: ["Cartographer"],
   contributorVariants: [],
   create_date: "2022-03-02T20:38:29.813494Z",
-  creator_facets: [
-    "http://id.loc.gov/authorities/names/no2011059409||Dessa (Vocalist)|",
-  ],
   creator_ids: "http://id.loc.gov/authorities/names/no2011059409",
   creators: "Dessa (Vocalist)",
   creator_variants: [
@@ -208,10 +201,6 @@ export const dc_api_v2_response = {
   ],
   folder_names: ["Blue folder"],
   folder_numbers: ["88"],
-  genre_facets: [
-    "http://vocab.getty.edu/aat/300435283|stencil prints",
-    "http://vocab.getty.edu/aat/300026904|love letters",
-  ],
   genre_ids: [
     "http://vocab.getty.edu/aat/300435283",
     "http://vocab.getty.edu/aat/300026904",
@@ -222,14 +211,7 @@ export const dc_api_v2_response = {
   identifiers: ["555"],
   iiif_manifest:
     "https://iiif.stack.rdc-staging.library.northwestern.edu/public/15/6a/8f/8e/-5/49/b-/49/82/-8/6c/c-/37/5b/f0/41/04/ff-manifest.json",
-  ingest_project_id: "156a8f8e-549b-4982-86cc-375bf04104ff",
-  ingest_project_label: "The Project Name",
-  ingest_sheet_id: "156a8f8e-549b-4982-86cc-375bf04104ff",
-  ingest_sheet_label: "filename.csv",
   keywords: ["leaves"],
-  language_facets: [
-    "http://id.loc.gov/vocabulary/languages/crh|Crimean Tartar",
-  ],
   language_ids: ["http://id.loc.gov/vocabulary/languages/crh"],
   language_labels: ["Crimean Tartar"],
   language_variants: [],
@@ -238,13 +220,8 @@ export const dc_api_v2_response = {
   library_unit_labels:
     "Charles Deering McCormick Library of Special Collections",
   license: null,
-  location_facets: ["https://sws.geonames.org/4999069/|Leland Township"],
   location_ids: ["https://sws.geonames.org/4999069/"],
   locations: ["Leland Township"],
-  metadata_update_job_ids: [
-    "5753101a-42fa-4838-9b71-f1594a5b1d5f",
-    "6b46db60-6f6a-45e8-8b8d-ab0029a1e8fe",
-  ],
   modifiedDate: "2022-03-02T22:14:05.682833Z",
   notes: ["Here are some notes", "Awards type", "Biographical note"],
   note_types: ["General Note", "Awards", "Biographical/Historical Note"],
@@ -252,12 +229,6 @@ export const dc_api_v2_response = {
   physical_description_size: ["16 x 24 inches"],
   preservation_level_id: "1",
   preservation_level_label: "Level 1",
-  project_cycle: "2020",
-  project_description: ["This is a description"],
-  project_manager: ["Nicole Finzer"],
-  project_name: ["Canary Project t"],
-  project_proposer: ["Carolyn Caizzi"],
-  project_task_number: ["P0000"],
   provenances: [
     "Artist; sold to Mr. Blank in 1955; sold to Lancelot in 2017; gifted to Northwestern University in 2019",
   ],
@@ -288,18 +259,9 @@ export const dc_api_v2_response = {
   sources: ["Mars"],
   status_id: "DONE",
   status_label: "Done",
-  style_period_facet: [
-    "http://vocab.getty.edu/aat/300018478||Qing (dynastic styles and periods)|",
-  ],
   style_period_ids: ["http://vocab.getty.edu/aat/300018478"],
   style_periods: ["Qing (dynastic styles and periods)"],
   style_period_variants: [],
-  subject_facet: [
-    "http://id.worldcat.org/fast/1902713|TOPICAL|Cats on postage stamps (Topical)",
-    "info:nul/6cba23b5-a91a-4c13-8398-54967b329d48|TOPICAL|Test Record Canary (Topical)",
-    "http://vocab.getty.edu/tgn/2000971|GEOGRAPHICAL|Leelanau (Geographical)",
-    "http://id.loc.gov/authorities/subjects/sh85148273|TOPICAL|(Topical)",
-  ],
   subject_ids: [
     "http://id.worldcat.org/fast/1902713",
     "info:nul/6cba23b5-a91a-4c13-8398-54967b329d48",
@@ -328,9 +290,6 @@ export const dc_api_v2_response = {
     ],
   ],
   table_of_contents: ["1. cats; 2. dogs"],
-  technique_facets: [
-    "http://vocab.getty.edu/aat/300053228||drypoint (printing process)|",
-  ],
   technique_ids: ["http://vocab.getty.edu/aat/300053228"],
   techniques: ["drypoint (printing process)"],
   technique_variants: [],

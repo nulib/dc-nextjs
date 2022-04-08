@@ -1,6 +1,6 @@
-import { styled } from "../../stitches.config";
+import { Button, Input, Wrapper } from "../Search/Search.styled";
 import { NavStyled } from "../Nav/Nav.styled";
-import { Wrapper, Input, Button } from "../Search/Search.styled";
+import { styled } from "../../stitches.config";
 
 const Lockup = styled("div", {
   alignItems: "center",

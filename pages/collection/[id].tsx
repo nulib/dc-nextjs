@@ -1,15 +1,14 @@
-import Layout from "components/layout";
 import { GetStaticProps, NextPage } from "next";
-import { ParsedUrlQuery } from "querystring";
 import {
   getAllCollectionIds,
   getCollectionData,
   getCollectionItems,
 } from "lib/elasticsearch-api";
 import { Collection } from "types/index";
-import { useEffect, useState } from "react";
 import Container from "components/Container";
+import Layout from "components/layout";
 import Link from "next/link";
+import { ParsedUrlQuery } from "querystring";
 
 // Gets called at build time
 export async function getStaticPaths() {
@@ -47,8 +46,7 @@ interface CollectionProps {
 }
 
 const Collection: NextPage<CollectionProps> = ({ collection, items }) => {
-  const { description, id, published, representativeImage, title, visibility } =
-    collection;
+  const { description, published, title, visibility } = collection;
 
   return (
     <Layout>

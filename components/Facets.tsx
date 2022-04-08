@@ -1,8 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
-import * as Popover from "@radix-ui/react-popover";
 import * as Dialog from "@radix-ui/react-dialog";
+import * as Popover from "@radix-ui/react-popover";
 import { styled } from "@stitches/react";
-import Input from "./Input";
 
 const Facets: React.FC = () => {
   return (

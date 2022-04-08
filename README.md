@@ -1,4 +1,4 @@
-# NextJS throwaway playground
+# Digital Collections v2 NextJS App
 
 This is a work in progress, for experimenting with NextJS, AWS Amplify and various ways of building / data fetching / hosting.
 
@@ -43,15 +43,29 @@ npx serve
 
 ```
 
-## Testing
+## Code Quality
 
-Unit tests are not wired up yet, but since we're using TypeScript we can/should run checks against type errors before building:
+The app uses ESLint with a plugin for TypeScript support.
+
+```bash
+npm run lint
+```
+
+Or run Typescript's `tsc` compiler for type-checking directly.
 
 ```bash
 npm run ts-lint
 ```
 
-A pre-commit hook will automatically run type checking as well.
+A pre-commit hook will ensure code is linted before committed.
+
+## Testing
+
+To run [Jest](https://jestjs.io/) w/ [React Testing-Library](https://testing-library.com/docs/react-testing-library/intro/) support, run:
+
+```bash
+npm run test
+```
 
 ## API
 

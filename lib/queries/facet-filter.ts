@@ -1,11 +1,11 @@
+import { ALL_FACETS, FacetsInstance } from "lib/facets";
 import { UserFacets } from "types";
-import { FacetsInstance, ALL_FACETS } from "lib/facets";
 
 const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-const facetFilter = (facetLabel: string, facets: Array<FacetsInstance>) => {
+const facetFilter = (facets: Array<FacetsInstance>, facetLabel: string) => {
   return facets.find(({ id }) => id === facetLabel)?.field;
 };
 

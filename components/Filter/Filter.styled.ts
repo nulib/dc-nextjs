@@ -1,5 +1,5 @@
-import { styled } from "../../stitches.config";
 import * as Dialog from "@radix-ui/react-dialog";
+import { styled } from "../../stitches.config";
 
 const FilterTrigger = styled(Dialog.Trigger, {
   width: "81px",

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, ChangeEvent, FocusEvent } from "react";
 import { Button, Clear, Input, Wrapper } from "./Search.styled";
+import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from "react";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;

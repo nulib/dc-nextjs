@@ -5,7 +5,7 @@ export const buildAggs = (facets: FacetsGroup[]) => {
 
   facets.forEach((groups) => {
     groups.facets.forEach((facet) => {
-      let terms = Object.create({});
+      const terms = Object.create({});
       terms.field = facet.field;
       terms.size = 20;
       terms.order = {

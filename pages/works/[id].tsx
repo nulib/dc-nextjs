@@ -1,9 +1,9 @@
-import React from "react";
-import Layout from "components/layout";
 import { GetStaticProps, NextPage } from "next";
 import { getWork, getWorkIds } from "lib/elasticsearch-api";
 import Container from "components/Container";
+import Layout from "components/layout";
 import { ParsedUrlQuery } from "querystring";
+import React from "react";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
