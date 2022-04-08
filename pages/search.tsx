@@ -1,13 +1,14 @@
 import Container from "@/components/Container";
 import Layout from "@/components/layout";
 import { NextPage } from "next";
+import Heading from "@/components/Heading/Heading";
 import React from "react";
 
 const SearchPage: NextPage = () => {
   return (
     <Layout>
       <Container>
-        <h1>Search</h1>
+        <Heading title="Search" isHidden />
       </Container>
     </Layout>
   );
