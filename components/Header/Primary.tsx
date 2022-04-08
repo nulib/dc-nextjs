@@ -1,9 +1,9 @@
-import { useState } from "react";
-import Sticky from "react-sticky-el";
-import { Primary } from "components/Header/Header.styled";
-import Nav from "components/Nav/Nav";
-import Search from "components/Search/Search";
 import Link from "next/link";
+import Nav from "@/components/Nav/Nav";
+import { Primary } from "@/components/Header/Header.styled";
+import Search from "@/components/Search/Search";
+import Sticky from "react-sticky-el";
+import { useState } from "react";
 
 const HeaderPrimary: React.FC = () => {
   const [searchActive, setSearchActive] = useState(false);

@@ -1,10 +1,10 @@
-import React from "react";
-import Layout from "components/layout";
-import { getAllCollections } from "lib/elasticsearch-api";
 import { Collection } from "types";
-import Link from "next/link";
 import Container from "components/Container";
+import Layout from "components/layout";
+import Link from "next/link";
 import { NextPage } from "next";
+import React from "react";
+import { getAllCollections } from "lib/elasticsearch-api";
 
 export async function getStaticProps() {
   const response = await getAllCollections();

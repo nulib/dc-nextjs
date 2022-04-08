@@ -1,8 +1,7 @@
-//import fetch from "node-fetch";
-import { RequestInit } from "node-fetch";
 import { Collection } from "types";
-import { SearchResponse } from "types/elasticsearch";
 import { GetGetResult } from "@elastic/elasticsearch/api/types";
+import { RequestInit } from "node-fetch";
+import { SearchResponse } from "types/elasticsearch";
 
 const ES_PROXY = `https://dcapi.stack.rdc-staging.library.northwestern.edu`;
 const PAGE_SIZE = 500;

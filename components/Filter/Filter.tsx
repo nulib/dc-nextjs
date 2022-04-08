@@ -1,5 +1,5 @@
-import { FilterContent, FilterOverlay, FilterTrigger } from "./Filter.styled";
 import * as Dialog from "@radix-ui/react-dialog";
+import { FilterContent, FilterOverlay, FilterTrigger } from "./Filter.styled";
 
 export default function Filter() {
   return (

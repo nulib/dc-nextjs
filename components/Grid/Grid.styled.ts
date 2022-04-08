@@ -1,6 +1,6 @@
-import { styled } from "stitches.config";
 import * as Dialog from "@radix-ui/react-dialog";
 import Masonry from "react-masonry-css";
+import { styled } from "@/stitches.config";
 
 const GridControls = styled("div", {
   display: "flex",

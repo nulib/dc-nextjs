@@ -1,9 +1,13 @@
-import Figure from "components/Figure/Figure";
-import { results } from "mocks/results";
-import { GridControls, GridFilter, GridItem, GridStyled } from "./Grid.styled";
-import Topics from "components/Topics/Topics";
+import {
+  GridControls,
+  GridItem,
+  GridStyled,
+} from "@/components/Grid/Grid.styled";
+import Figure from "@/components/Figure/Figure";
+import Filter from "@/components/Filter/Filter";
 import Sticky from "react-sticky-el";
-import Filter from "components/Filter/Filter";
+import Topics from "@/components/Topics/Topics";
+import { results } from "@/mocks/results";
 
 export default function Grid() {
   return (

@@ -1,5 +1,5 @@
-import Nav from "components/Nav/Nav";
-import { Super } from "components/Header/Header.styled";
+import Nav from "@/components/Nav/Nav";
+import { Super } from "@/components/Header/Header.styled";
 
 export default function HeaderSuper() {
   return (

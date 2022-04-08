@@ -1,6 +1,6 @@
-import React from "react";
 import Head from "next/head";
 import Header from "components/Header/Header";
+import React from "react";
 
 export const siteTitle = "Digital Collections v2";
 

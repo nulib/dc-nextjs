@@ -1,6 +1,6 @@
-import React from "react";
-import FacetFilter from "../FacetFilter/FacetFilter";
 import { FacetBucketAgg } from "types";
+import FacetFilter from "../FacetFilter/FacetFilter";
+import React from "react";
 
 interface FacetBuckets {
   key: string;

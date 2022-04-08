@@ -1,8 +1,8 @@
 import * as Accordion from "@radix-ui/react-accordion";
-import * as Popover from "@radix-ui/react-popover";
 import * as Dialog from "@radix-ui/react-dialog";
-import { styled } from "@stitches/react";
+import * as Popover from "@radix-ui/react-popover";
 import Input from "./Input";
+import { styled } from "@stitches/react";
 
 const FilterWorks: React.FC = () => {
   return (
@@ -99,11 +99,11 @@ const Trigger = styled(Dialog.Trigger, {
 });
 
 const Overlay = styled(Dialog.Overlay, {
+  backdropFilter: "blur(8px)",
+  backgroundColor: "#342F2Ecc",
+  height: "100%",
   position: "fixed",
   width: "100%",
-  height: "100%",
-  backgroundColor: "#342F2Ecc",
-  backdropFilter: "blur(8px)",
 });
 
 const Content = styled(Dialog.Content, {
