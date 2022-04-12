@@ -9,7 +9,11 @@ const Grid: React.FC<GridProps> = ({ hits }) => {
   if (!hits) return <span>Loading...</span>;
 
   return (
-    <GridStyled breakpointCols={4}>
+    <GridStyled
+      breakpointCols={4}
+      className="can-grid"
+      columnClassName="can-grid-column"
+    >
       {hits.hits.map((hit: Hit) => (
         <GridItem key={hit._source.accessionNumber}>
           <Figure

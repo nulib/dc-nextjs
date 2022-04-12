@@ -1,11 +1,11 @@
-import Layout from "@/components/layout";
-import { NextPage } from "next";
-import Heading from "@/components/Heading/Heading";
 import React from "react";
-import { SearchResponse, Source } from "types/elasticsearch";
-import { API_PRODUCTION_URL } from "lib/queries/endpoints";
-import useApiSearch from "hooks/useApiSearch";
+import { NextPage } from "next";
+import { SearchResponse, Source } from "@/types/elasticsearch";
+import { API_PRODUCTION_URL } from "@/lib/queries/endpoints";
+import useApiSearch from "@/hooks/useApiSearch";
 import Grid from "@/components/Grid/Grid";
+import Heading from "@/components/Heading/Heading";
+import Layout from "@/components/layout";
 
 const SearchPage: NextPage = () => {
   const searchTerm = '"nez perce"';
