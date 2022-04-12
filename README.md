@@ -19,9 +19,8 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 ### NextJS Environment
 
-Commits to the `deploy/staging` branch will trigger a build in an AWS Amplify Hosting solution:
+Commits to the `deploy/staging` branch will trigger a build in an AWS Amplify Hosting solution.
 
-https://deploy-staging.d1nveexiit96fe.amplifyapp.com/
 
 ### Static build
 
