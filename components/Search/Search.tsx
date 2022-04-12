@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { Button, Clear, Input, Wrapper } from "./Search.styled";
 
 interface SearchProps {
@@ -14,6 +14,8 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
+  const router = useRouter();
+
   const search = useRef<HTMLInputElement>(null);
 
   const [searchValue, setSearchValue] = useState<string>("");
@@ -22,8 +24,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     let query = "";
-    if (searchValue)
-      query = `?q="${encodeURI(searchValue.replace(/ /g, "+"))}"`;
+    if (searchValue) query = `?q=${encodeURI(searchValue.replace(/ /g, "+"))}`;
     Router.push(`/search${query}`);
   };
 
@@ -38,6 +39,13 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     setSearchValue("");
     if (search.current) search.current.value = "";
   };
+
+  useEffect(() => {
+    if (router) {
+      const { q } = router.query;
+      if (q && search.current) search.current.value = q as string;
+    }
+  }, []);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
