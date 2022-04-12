@@ -60,76 +60,16 @@ const SearchPage: NextPage = () => {
     fn();
   }, [getAPIData]);
 
-  // TODO: Put a debounce on this
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleFacetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newObj: UserFacets = { ...userFacets };
-    const { checked, name, value } = e.target;
-
-    // Checkbox is checked
-    if (checked) {
-      if (!newObj[name]) {
-        newObj[name] = [value];
-      } else {
-        newObj[name].push(value);
-      }
-    }
-    // Not checked, remove value from the array
-    else {
-      newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
-    }
-
-    setUserFacets(newObj);
-  };
-
   const clearFacetFilters = () => {
     setFacetFilterResults({});
-  };
-
-  const handleFacetFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (value === "") {
-      return;
-    } else {
-      fetch(API_PRODUCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          facetFilterQuery(searchTerm, name, value, userFacets)
-        ),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((facetFilterData) => {
-          const newObj: FilteredFacets = { ...facetFilterResults };
-          newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
-          setFacetFilterResults(newObj);
-          return;
-        });
-    }
   };
 
   return (
     <Layout>
       <Heading as="h1" title="Search" isHidden />
-      <ResultCount count={esData?.hits.total} />
-      {esData && <Grid hits={esData.hits} />}
+      {esData && <Grid hits={esData?.hits} />}
     </Layout>
   );
 };
-
-/**
- *
- * @param count
- * @returns
- */
-const ResultCount = ({ count }) => <span>{count}</span>;
 
 export default SearchPage;

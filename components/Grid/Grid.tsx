@@ -1,13 +1,16 @@
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
+import { HitsResponse, Hit } from "@/types/elasticsearch";
 
-export default function Grid({ hits }) {
-  console.log(hits);
+interface GridProps {
+  hits: HitsResponse;
+}
+const Grid: React.FC<GridProps> = ({ hits }) => {
   if (!hits) return <span>Loading...</span>;
 
   return (
     <GridStyled breakpointCols={4}>
-      {hits.hits.map((hit) => (
+      {hits.hits.map((hit: Hit) => (
         <GridItem key={hit._source.accessionNumber}>
           <Figure
             data={{
@@ -20,4 +23,6 @@ export default function Grid({ hits }) {
       ))}
     </GridStyled>
   );
-}
+};
+
+export default Grid;
