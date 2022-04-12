@@ -16,30 +16,27 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const search = useRef<HTMLInputElement>(null);
 
-  const [searchValue, setSearchValue] = useState("");
-  const [searchFocus, setSearchFocus] = useState(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchFocus, setSearchFocus] = useState<boolean>(false);
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     let query = "";
-    if (search.current)
-      query = `?q="${encodeURI(search.current.value.replace(/ /g, "+"))}"`;
+    if (searchValue)
+      query = `?q="${encodeURI(searchValue.replace(/ /g, "+"))}"`;
     Router.push(`/search${query}`);
   };
 
-  const handleSearchFocus = (e: FocusEvent) => {
+  const handleSearchFocus = (e: FocusEvent) =>
     e.type === "focus" ? setSearchFocus(true) : setSearchFocus(false);
-  };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(e.target.value);
-  };
 
   const clearSearchResults = () => {
+    Router.push(`/search`);
     setSearchValue("");
-    if (search.current) {
-      search.current.value = "";
-    }
+    if (search.current) search.current.value = "";
   };
 
   useEffect(() => {
