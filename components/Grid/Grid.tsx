@@ -1,30 +1,23 @@
-import {
-  GridControls,
-  GridItem,
-  GridStyled,
-} from "@/components/Grid/Grid.styled";
+import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
-import Filter from "@/components/Filter/Filter";
-import Sticky from "react-sticky-el";
-import Topics from "@/components/Topics/Topics";
 
 export default function Grid({ hits }) {
-  return (
-    <>
-      <GridControls>
-        <Sticky topOffset={-81} stickyClassName="sticky-filter">
-          <Filter />
-        </Sticky>
-        <Topics />
-      </GridControls>
+  console.log(hits);
+  if (!hits) return <span>Loading...</span>;
 
-      <GridStyled breakpointCols={4}>
-        {hits.hits.map((hit) => (
-          <GridItem key={hit._source.accessionNumber}>
-            <Figure data={{ height: "200", title: "garbage", type: "stuff" }} />
-          </GridItem>
-        ))}
-      </GridStyled>
-    </>
+  return (
+    <GridStyled breakpointCols={4}>
+      {hits.hits.map((hit) => (
+        <GridItem key={hit._source.accessionNumber}>
+          <Figure
+            data={{
+              title: hit._source.title,
+              type: hit._source.accessionNumber,
+              src: hit._source.thumbnail,
+            }}
+          />
+        </GridItem>
+      ))}
+    </GridStyled>
   );
 }
