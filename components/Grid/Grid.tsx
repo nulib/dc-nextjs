@@ -7,9 +7,8 @@ import Figure from "@/components/Figure/Figure";
 import Filter from "@/components/Filter/Filter";
 import Sticky from "react-sticky-el";
 import Topics from "@/components/Topics/Topics";
-import { results } from "@/mocks/results";
 
-export default function Grid() {
+export default function Grid({ hits }) {
   return (
     <>
       <GridControls>
@@ -18,10 +17,11 @@ export default function Grid() {
         </Sticky>
         <Topics />
       </GridControls>
+
       <GridStyled breakpointCols={4}>
-        {results.map((result, index) => (
-          <GridItem key={index}>
-            <Figure data={result} />
+        {hits.hits.map((hit) => (
+          <GridItem key={hit._source.accessionNumber}>
+            <Figure data={{ height: "200", title: "garbage", type: "stuff" }} />
           </GridItem>
         ))}
       </GridStyled>
