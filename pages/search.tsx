@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { SearchResponse, Source } from "@/types/elasticsearch";
 import { API_PRODUCTION_URL } from "@/lib/queries/endpoints";
@@ -12,17 +12,21 @@ const SearchPage: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isQueried, setIsQueried] = useState(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const userFacets = {};
 
-  const [esData, setEsData] = React.useState<SearchResponse<Source>>();
+  const [esData, setEsData] = useState<SearchResponse<Source>>();
   const { updateQuery } = useApiSearch();
 
   useEffect(() => {
-    if (searchTerm !== q) setSearchTerm(q);
+    if (searchTerm !== q) {
+      setSearchTerm(q as string);
+      setIsQueried(false);
+    }
   }, [q]);
 
-  const getAPIData = React.useCallback(async () => {
+  const getAPIData = useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {
       method: "POST",
       headers: {
@@ -31,16 +35,19 @@ const SearchPage: NextPage = () => {
       body: JSON.stringify(updateQuery(searchTerm, userFacets)),
     });
     const data: SearchResponse<Source> = await response.json();
-
-    return data;
+    console.log(data);
+    if (esData !== data) return data;
   }, [searchTerm, userFacets]);
 
-  React.useEffect(() => {
-    async function fn() {
-      const data = await getAPIData();
-      setEsData(data);
+  useEffect(() => {
+    if (!isQueried) {
+      async function fn() {
+        const data = await getAPIData();
+        setIsQueried(true);
+        setEsData(data);
+      }
+      fn();
     }
-    fn();
   }, [getAPIData]);
 
   return (

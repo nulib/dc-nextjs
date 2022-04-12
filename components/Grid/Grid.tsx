@@ -11,8 +11,8 @@ const Grid: React.FC<GridProps> = ({ hits }) => {
   return (
     <GridStyled
       breakpointCols={4}
-      className="can-grid"
-      columnClassName="can-grid-column"
+      className="dc-grid"
+      columnClassName="dc-grid-column"
     >
       {hits.hits.map((hit: Hit) => (
         <GridItem key={hit._source.accessionNumber}>
