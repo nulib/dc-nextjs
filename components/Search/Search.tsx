@@ -44,6 +44,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     if (router) {
       const { q } = router.query;
       if (q && search.current) search.current.value = q as string;
+      setSearchValue(q as string);
     }
   }, []);
 
