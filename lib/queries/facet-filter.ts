@@ -15,7 +15,7 @@ export const facetFilterQuery = (
   term: any,
   userFacets: UserFacets
 ) => {
-  const facetFilterKey = facetFilter(facetLabel, ALL_FACETS.facets);
+  const facetFilterKey = facetFilter(ALL_FACETS.facets, facetLabel);
   const newQuery = {
     ...buildFacetFilterQuery(
       searchTerm,
