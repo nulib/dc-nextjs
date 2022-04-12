@@ -22,7 +22,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     let query = "";
-    if (search.current) query = `?q=${encodeURI(search.current.value)}`;
+    if (search.current)
+      query = `?q="${encodeURI(search.current.value.replace(/ /g, "+"))}"`;
     Router.push(`/search${query}`);
   };
 
