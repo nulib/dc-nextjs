@@ -22,14 +22,10 @@ export interface AggregatedFacets extends FacetNoLabel {
 }
 
 const SearchPage: NextPage = () => {
+  const searchTerm = '"nez perce"';
+  const userFacets = {};
+
   const [esData, setEsData] = React.useState<SearchResponse<Source>>();
-  const [aggregatedFacets, setAggregatedFacets] = React.useState<
-    Array<AggregatedFacets>
-  >([]);
-  const [userFacets, setUserFacets] = React.useState<UserFacets>({});
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [facetFilterResults, setFacetFilterResults] =
-    React.useState<FilteredFacets>({});
   const { updateQuery } = useApiSearch();
 
   const getAPIData = React.useCallback(async () => {
@@ -41,7 +37,6 @@ const SearchPage: NextPage = () => {
       body: JSON.stringify(updateQuery(searchTerm, userFacets)),
     });
     const data: SearchResponse<Source> = await response.json();
-    clearFacetFilters();
 
     return data;
   }, [searchTerm, userFacets]);
@@ -50,19 +45,9 @@ const SearchPage: NextPage = () => {
     async function fn() {
       const data = await getAPIData();
       setEsData(data);
-
-      setAggregatedFacets(
-        Object.entries(data?.aggregations).map((facet) => {
-          return { label: facet[0], ...(facet[1] as FacetNoLabel) };
-        })
-      );
     }
     fn();
   }, [getAPIData]);
-
-  const clearFacetFilters = () => {
-    setFacetFilterResults({});
-  };
 
   return (
     <Layout>
