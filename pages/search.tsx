@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { SearchResponse, Source } from "@/types/elasticsearch";
 import { API_PRODUCTION_URL } from "@/lib/queries/endpoints";
@@ -6,13 +6,21 @@ import useApiSearch from "@/hooks/useApiSearch";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
+import { useRouter } from "next/router";
 
 const SearchPage: NextPage = () => {
-  const searchTerm = '"nez perce"';
+  const router = useRouter();
+  const { q } = router.query;
+
+  const [searchTerm, setSearchTerm] = useState("");
   const userFacets = {};
 
   const [esData, setEsData] = React.useState<SearchResponse<Source>>();
   const { updateQuery } = useApiSearch();
+
+  useEffect(() => {
+    if (searchTerm !== q) setSearchTerm(q);
+  }, [q]);
 
   const getAPIData = React.useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {

@@ -1,5 +1,13 @@
+import {
+  ChangeEvent,
+  FocusEvent,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import Router from "next/router";
 import { Button, Clear, Input, Wrapper } from "./Search.styled";
-import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from "react";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -10,6 +18,13 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [searchFocus, setSearchFocus] = useState(false);
+
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let query = "";
+    if (search.current) query = `?q=${encodeURI(search.current.value)}`;
+    Router.push(`/search${query}`);
+  };
 
   const handleSearchFocus = (e: FocusEvent) => {
     e.type === "focus" ? setSearchFocus(true) : setSearchFocus(false);
@@ -31,7 +46,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   }, [searchFocus, searchValue, isSearchActive]);
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit}>
       <Input
         placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
         onChange={handleSearchChange}
