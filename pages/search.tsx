@@ -51,7 +51,7 @@ const SearchPage: NextPage = () => {
   }, [getAPIData]);
 
   return (
-    <Layout>
+    <Layout data-testid="search-page-wrapper">
       <Heading as="h1" title="Search" isHidden />
       {esData && <Grid hits={esData?.hits} />}
     </Layout>
