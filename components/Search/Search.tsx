@@ -53,7 +53,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   }, [searchFocus, searchValue, isSearchActive]);
 
   return (
-    <Wrapper onSubmit={handleSubmit}>
+    <Wrapper onSubmit={handleSubmit} data-testid="search-ui-component">
       <Input
         placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
         onChange={handleSearchChange}
