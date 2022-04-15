@@ -1,6 +1,5 @@
-import { slate } from "@radix-ui/colors";
-
 import { createStitches } from "@stitches/react";
+import colors from "./stitches/colors";
 
 export const {
   styled,
@@ -14,7 +13,7 @@ export const {
 } = createStitches({
   theme: {
     colors: {
-      ...slate,
+      ...colors,
     },
     transitions: {
       all: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",

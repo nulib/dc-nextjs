@@ -10,7 +10,7 @@ const Grid: React.FC<GridProps> = ({ hits }) => {
 
   return (
     <GridStyled
-      breakpointCols={4}
+      breakpointCols={5}
       className="dc-grid"
       columnClassName="dc-grid-column"
     >

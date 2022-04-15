@@ -1,11 +1,12 @@
 import { styled } from "../../stitches.config";
 
-const Wrapper = styled("form", {
+const SearchStyled = styled("form", {
   position: "relative",
   display: "flex",
   flexShrink: "0",
   flexGrow: "1",
-  backgroundColor: "$slate3",
+  backgroundColor: "$gray6",
+  height: "50px",
 });
 
 const Input = styled("input", {
@@ -59,4 +60,4 @@ const Clear = styled("button", {
   },
 });
 
-export { Button, Clear, Input, Wrapper };
+export { Button, Clear, Input, SearchStyled };

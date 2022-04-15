@@ -5,7 +5,6 @@ import { styled } from "@/stitches.config";
 const GridControls = styled("div", {
   display: "flex",
   margin: "2.618rem 5vw 1.618rem",
-  maxWidth: "90vw",
   justifyContent: "space-between",
 
   div: {
@@ -38,10 +37,9 @@ const GridItem = styled("div", {
 
 const GridStyled = styled(Masonry as any, {
   display: "flex",
-  margin: "auto calc(5vw - 1rem)",
-  maxWidth: "calc(90vw + 2rem)",
   position: "relative",
   zIndex: "0",
+  margin: "2rem 1rem",
 });
 
 export { GridControls, GridFilter, GridItem, GridStyled };

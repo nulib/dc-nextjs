@@ -7,6 +7,7 @@ import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
 import { useRouter } from "next/router";
+import Container from "@/components/Container";
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -47,7 +48,9 @@ const SearchPage: NextPage = () => {
   return (
     <Layout data-testid="search-page-wrapper">
       <Heading as="h1" title="Search" isHidden />
-      {esData && <Grid hits={esData?.hits} />}
+      <Container containerType="wide">
+        {esData && <Grid hits={esData?.hits} />}
+      </Container>
     </Layout>
   );
 };

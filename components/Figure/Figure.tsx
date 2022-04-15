@@ -13,7 +13,7 @@ const Figure: React.FC<FigureProps> = ({ data }) => {
   const { title, type, src } = data;
   return (
     <FigureStyled>
-      <Image style={{ width: "100%", height: "200px" }} />
+      <Image src={src} style={{ width: "100%" }} />
       <Title>{title}</Title>
       <Type>{type}</Type>
     </FigureStyled>

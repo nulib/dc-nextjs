@@ -1,14 +1,32 @@
+import { ReactChildren } from "react";
 import { styled } from "@/stitches.config";
 
-const ContainerStyled = styled("div", {
-  maxWidth: "90vw",
-  position: "relative",
-  zIndex: "0",
-  margin: "auto 5vw",
-});
+export const ContainerStyled = styled("div", {
+  margin: "0 auto",
+  width: "100%",
 
-const Container: React.FC = ({ children }) => {
-  return <ContainerStyled>{children}</ContainerStyled>;
+  variants: {
+    containerType: {
+      default: {
+        maxWidth: "1120px",
+      },
+      wide: {
+        maxWidth: "1440px",
+      },
+    },
+  },
+});
+interface ContainerProps {
+  containerType?: "default" | "wide";
+}
+
+const Container: React.FC<ContainerProps> = ({
+  children,
+  containerType = "default",
+}) => {
+  return (
+    <ContainerStyled containerType={containerType}>{children}</ContainerStyled>
+  );
 };
 
 export default Container;
