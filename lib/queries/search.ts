@@ -1,4 +1,4 @@
-import { aggs } from "lib/queries/aggs";
+import { aggs } from "@/lib/queries/aggs";
 
 const querySearchTemplate = {
   size: 1000,

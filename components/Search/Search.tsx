@@ -1,37 +1,59 @@
+import {
+  ChangeEvent,
+  FocusEvent,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import Router, { useRouter } from "next/router";
 import { Button, Clear, Input, Wrapper } from "./Search.styled";
-import { ChangeEvent, FocusEvent, useEffect, useRef, useState } from "react";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
+  const router = useRouter();
+
   const search = useRef<HTMLInputElement>(null);
 
-  const [searchValue, setSearchValue] = useState("");
-  const [searchFocus, setSearchFocus] = useState(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchFocus, setSearchFocus] = useState<boolean>(false);
 
-  const handleSearchFocus = (e: FocusEvent) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let query = "";
+    if (searchValue) query = `?q=${encodeURI(searchValue.replace(/ /g, "+"))}`;
+    Router.push(`/search${query}`);
+  };
+
+  const handleSearchFocus = (e: FocusEvent) =>
     e.type === "focus" ? setSearchFocus(true) : setSearchFocus(false);
-  };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(e.target.value);
-  };
 
   const clearSearchResults = () => {
+    Router.push(`/search`);
     setSearchValue("");
-    if (search.current) {
-      search.current.value = "";
-    }
+    if (search.current) search.current.value = "";
   };
+
+  useEffect(() => {
+    if (router) {
+      const { q } = router.query;
+      if (q && search.current) search.current.value = q as string;
+      setSearchValue(q as string);
+    }
+  }, []);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
 
   return (
-    <Wrapper>
+    <Wrapper onSubmit={handleSubmit} data-testid="search-ui-component">
       <Input
         placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
         onChange={handleSearchChange}

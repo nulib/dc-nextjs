@@ -1,30 +1,32 @@
-import {
-  GridControls,
-  GridItem,
-  GridStyled,
-} from "@/components/Grid/Grid.styled";
+import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
-import Filter from "@/components/Filter/Filter";
-import Sticky from "react-sticky-el";
-import Topics from "@/components/Topics/Topics";
-import { results } from "@/mocks/results";
+import { HitsResponse, Hit } from "@/types/elasticsearch";
 
-export default function Grid() {
-  return (
-    <>
-      <GridControls>
-        <Sticky topOffset={-81} stickyClassName="sticky-filter">
-          <Filter />
-        </Sticky>
-        <Topics />
-      </GridControls>
-      <GridStyled breakpointCols={4}>
-        {results.map((result, index) => (
-          <GridItem key={index}>
-            <Figure data={result} />
-          </GridItem>
-        ))}
-      </GridStyled>
-    </>
-  );
+interface GridProps {
+  hits: HitsResponse;
 }
+const Grid: React.FC<GridProps> = ({ hits }) => {
+  if (!hits) return <span>Loading...</span>;
+
+  return (
+    <GridStyled
+      breakpointCols={4}
+      className="dc-grid"
+      columnClassName="dc-grid-column"
+    >
+      {hits.hits.map((hit: Hit) => (
+        <GridItem key={hit._source.accessionNumber}>
+          <Figure
+            data={{
+              title: hit._source.title,
+              type: hit._source.accessionNumber,
+              src: hit._source.thumbnail,
+            }}
+          />
+        </GridItem>
+      ))}
+    </GridStyled>
+  );
+};
+
+export default Grid;
