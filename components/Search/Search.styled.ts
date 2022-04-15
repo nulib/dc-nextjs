@@ -1,6 +1,6 @@
 import { styled } from "../../stitches.config";
 
-const Wrapper = styled("div", {
+const Wrapper = styled("form", {
   position: "relative",
   display: "flex",
   flexShrink: "0",

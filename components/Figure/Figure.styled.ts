@@ -7,7 +7,7 @@ const FigureStyled = styled("figure", {
   margin: "0",
 });
 
-const Image = styled("div", {
+const Image = styled("img", {
   backgroundColor: "$slate11",
 });
 
