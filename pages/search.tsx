@@ -47,7 +47,7 @@ const SearchPage: NextPage = () => {
 
   return (
     <Layout data-testid="search-page-wrapper">
-      <Heading as="h1" title="Search" isHidden 
+      <Heading as="h1" title="Search" isHidden />
       <Container containerType="wide">
         {esData && <Grid hits={esData?.hits} />}
       </Container>
