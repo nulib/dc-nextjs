@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
-import { Primary } from "@/components/Header/Header.styled";
+import { Primary, PrimaryInner } from "@/components/Header/Header.styled";
 import Search from "@/components/Search/Search";
-import Sticky from "react-sticky-el";
 import { useState } from "react";
+import Heading from "@/components/Heading/Heading";
+import Container from "../Container";
 
 const HeaderPrimary: React.FC = () => {
   const [searchActive, setSearchActive] = useState(false);
@@ -13,18 +14,20 @@ const HeaderPrimary: React.FC = () => {
   };
 
   return (
-    <Sticky stickyClassName="sticky-primary">
-      <Primary data-search-active={searchActive}>
-        <span>Northwestern</span>
-        <div>
-          <Nav>
-            <a>Items</a>
-            <Link href="/collection/list">Collections</Link>
-          </Nav>
+    <Primary
+      data-search-active={searchActive}
+      data-testid="header-primary-ui-component"
+    >
+      <Container>
+        <Heading as="span" title="Northwestern" />
+        <PrimaryInner>
           <Search isSearchActive={handleIsSearchActive} />
-        </div>
-      </Primary>
-    </Sticky>
+          <Nav>
+            <Link href="/collections">Browse Collections</Link>
+          </Nav>
+        </PrimaryInner>
+      </Container>
+    </Primary>
   );
 };
 

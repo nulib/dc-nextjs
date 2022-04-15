@@ -1,7 +1,7 @@
-import { aggs } from "lib/queries/aggs";
+import { aggs } from "@/lib/queries/aggs";
 
 const querySearchTemplate = {
-  size: 1000,
+  size: 20,
   _source: [
     "id",
     "accessionNumber",

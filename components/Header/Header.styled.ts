@@ -1,52 +1,61 @@
-import { Button, Input, Wrapper } from "../Search/Search.styled";
+import { Button, Input, SearchStyled } from "../Search/Search.styled";
 import { NavStyled } from "../Nav/Nav.styled";
+import { ContainerStyled } from "@/components/Container";
 import { styled } from "../../stitches.config";
 
 const Lockup = styled("div", {
-  alignItems: "center",
-  display: "flex",
-  padding: "31px 5vw 50px",
+  padding: "31px 0 50px",
   fontSize: "25px",
 });
 
+const PrimaryInner = styled("div", {
+  display: "flex",
+  flexGrow: "1",
+});
+
 const Primary = styled("div", {
-  backgroundColor: "white",
   color: "$slate12",
   display: "flex",
-  width: "90vw",
   margin: "0 auto",
-  height: "50px",
   zIndex: "1",
   transition: "$all",
-  justifyContent: "space-between",
 
-  "> span": {
+  [`& ${ContainerStyled}`]: {
     display: "flex",
-    width: "0",
-    opacity: "0",
-    justifyContent: "center",
-    textAlign: "center",
+    alignContent: "center",
     alignItems: "center",
-    flexGrow: "0",
-  },
-
-  "> div": {
-    display: "flex",
+    justifyContent: "space-between",
     flexGrow: "1",
+    backgroundColor: "white",
+
+    "> span": {
+      display: "flex",
+      width: "0",
+      opacity: "0",
+      justifyContent: "center",
+      textAlign: "center",
+      alignItems: "center",
+      flexGrow: "0",
+    },
+
+    [`& ${SearchStyled}`]: {},
   },
 });
 
 const Super = styled("div", {
-  backgroundColor: "$slate12",
+  backgroundColor: "$purple120",
   color: "$slate1",
-  height: "50px",
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "0 5vw",
+
+  [`& ${ContainerStyled}`]: {
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
 
   [`& ${NavStyled}`]: {
     fontSize: "12px",
+    height: "50px",
 
     a: {
       padding: "0 1rem",
@@ -59,9 +68,8 @@ const Super = styled("div", {
 });
 
 const StyledHeader = styled("header", {
-  backgroundColor: "$slate7",
-  color: "$slate12",
-  display: "flex",
+  backgroundColor: "$purple",
+  color: "$white",
   flexDirection: "column",
   marginBottom: "5px",
 
@@ -126,10 +134,10 @@ const StyledHeader = styled("header", {
       marginRight: "1rem",
     },
 
-    [`& ${Wrapper}`]: {
+    [`& ${SearchStyled}`]: {
       backgroundColor: "unset",
     },
   },
 });
 
-export { Lockup, Primary, Super, StyledHeader };
+export { Lockup, Primary, PrimaryInner, StyledHeader, Super };
