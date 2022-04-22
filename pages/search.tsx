@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { SearchResponse, Source } from "@/types/elasticsearch";
-import { API_PRODUCTION_URL } from "@/lib/queries/endpoints";
+import { DC_API_SEARCH_URL } from "@/lib/queries/endpoints";
 import useApiSearch from "@/hooks/useApiSearch";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
@@ -23,20 +23,22 @@ const SearchPage: NextPage = () => {
   const { updateQuery } = useApiSearch();
 
   const getAPIData = useCallback(async () => {
-    const response = await fetch(API_PRODUCTION_URL, {
-      method: "POST",
+    const response = await fetch(DC_API_SEARCH_URL, {
+      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
+      method: "POST",
     });
-    const data: SearchResponse<Source> = await response.json();
+    console.log("response", response);
+    const data: any = await response.json();
+    console.log("data", data);
     if (esData !== data) return data;
   }, [searchTerm]);
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
-  }, [q]);
+  }, [q, searchTerm]);
 
   useEffect(() => {
     const getData = async () => await getAPIData();
