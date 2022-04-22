@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
-import { SearchResponse, Source } from "@/types/elasticsearch";
 import { DC_API_SEARCH_URL } from "@/lib/queries/endpoints";
 import useApiSearch from "@/hooks/useApiSearch";
 import Grid from "@/components/Grid/Grid";
@@ -12,6 +11,7 @@ import Container from "@/components/Container";
 const SearchPage: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
+  console.log("q", q);
 
   /**
    * @todo: make getUseFacets() a hook.
@@ -37,7 +37,7 @@ const SearchPage: NextPage = () => {
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
-  }, [q, searchTerm]);
+  }, [q]);
 
   useEffect(() => {
     const getData = async () => await getAPIData();

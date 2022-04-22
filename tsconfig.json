@@ -18,6 +18,7 @@
     "paths": {
       "@/*": ["*"],
       "@/components/*": ["components/*"],
+      "@/context/*": ["context/*"],
       "@/mocks/*": ["mocks/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"]
