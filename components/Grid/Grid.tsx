@@ -1,12 +1,12 @@
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
-import { HitsResponse, Hit } from "@/types/elasticsearch";
 
 interface GridProps {
-  hits: HitsResponse;
+  data: any[];
+  info: { total?: number };
 }
-const Grid: React.FC<GridProps> = ({ hits }) => {
-  if (!hits) return <span>Loading...</span>;
+const Grid: React.FC<GridProps> = ({ data = [], info }) => {
+  if (!data) return <span>Loading...</span>;
 
   return (
     <GridStyled
@@ -14,13 +14,13 @@ const Grid: React.FC<GridProps> = ({ hits }) => {
       className="dc-grid"
       columnClassName="dc-grid-column"
     >
-      {hits.hits.map((hit: Hit) => (
-        <GridItem key={hit._source.accessionNumber}>
+      {data.map((item: any) => (
+        <GridItem key={item.accession_number}>
           <Figure
             data={{
-              title: hit._source.title,
-              type: hit._source.accessionNumber,
-              src: hit._source.thumbnail,
+              title: item.title,
+              type: item.accession_number,
+              src: item.thumbnail,
             }}
           />
         </GridItem>

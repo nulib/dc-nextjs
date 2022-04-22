@@ -27,7 +27,7 @@ const querySearchTemplate = {
       ],
     },
   },
-  ...aggs,
+  //...aggs,
 };
 
 const buildSearchQuery = (term: string) => {

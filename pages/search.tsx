@@ -18,7 +18,7 @@ const SearchPage: NextPage = () => {
    */
   const userFacets = {};
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
-  const [esData, setEsData] = useState<SearchResponse<Source>>();
+  const [searchResponse, setSearchResponse] = useState<any>();
 
   const { updateQuery } = useApiSearch();
 
@@ -30,10 +30,9 @@ const SearchPage: NextPage = () => {
       },
       method: "POST",
     });
-    console.log("response", response);
     const data: any = await response.json();
     console.log("data", data);
-    if (esData !== data) return data;
+    if (searchResponse !== data) return data;
   }, [searchTerm]);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const SearchPage: NextPage = () => {
   useEffect(() => {
     const getData = async () => await getAPIData();
     getData()
-      .then((data) => setEsData(data))
+      .then((data) => setSearchResponse(data))
       .catch(console.error);
   }, [getAPIData]);
 
@@ -51,7 +50,7 @@ const SearchPage: NextPage = () => {
     <Layout data-testid="search-page-wrapper">
       <Heading as="h1" title="Search" isHidden />
       <Container containerType="wide">
-        {esData && <Grid hits={esData?.hits} />}
+        {searchResponse && <Grid {...searchResponse} />}
       </Container>
     </Layout>
   );
