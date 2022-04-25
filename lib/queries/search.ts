@@ -1,14 +1,14 @@
-import { aggs } from "@/lib/queries/aggs";
+// import { aggs } from "@/lib/queries/aggs";
+import { DefaultSearchRequest, SearchSimpleQueryString } from "@/types/search";
 
-const querySearchTemplate = {
-  size: 20,
+const querySearchTemplate: DefaultSearchRequest = {
   _source: [
-    "id",
     "accessionNumber",
+    "id",
     "iiifManifest",
     "title",
-    "workType.label",
     "thumbnail",
+    "workType.label",
   ],
   query: {
     bool: {
@@ -27,24 +27,27 @@ const querySearchTemplate = {
       ],
     },
   },
+  size: 20,
   //...aggs,
 };
 
 const buildSearchQuery = (term: string) => {
+  const simple_query_string: SearchSimpleQueryString = {
+    default_operator: "or",
+    fields: [
+      "all_titles^5",
+      "description^2",
+      "all_subjects^2",
+      "full_text",
+      "legacy_identifier",
+      "accession_number",
+      "id",
+    ],
+    query: term ? `${term}~1 | ${term}*` : "",
+  };
+
   return {
-    simple_query_string: {
-      query: term ? `${term}~1 | ${term}*` : "",
-      fields: [
-        "all_titles^5",
-        "description^2",
-        "all_subjects^2",
-        "full_text",
-        "legacy_identifier",
-        "accession_number",
-        "id",
-      ],
-      default_operator: "or",
-    },
+    simple_query_string: simple_query_string,
   };
 };
 

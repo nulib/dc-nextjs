@@ -2,10 +2,13 @@ import { defaultQuery } from "@/mocks/defaultQuery";
 import { buildSearchQuery, querySearchTemplate } from "@/lib/queries/search";
 import { buildFacetPart } from "@/lib/queries/facet";
 import { UserFacets } from "types";
+import { DefaultSearchRequest } from "@/types/search";
 
 const useApiSearch = () => {
   function updateQuery(term: string, userFacets: UserFacets) {
-    const newQuery = JSON.parse(JSON.stringify(querySearchTemplate));
+    const newQuery: DefaultSearchRequest = JSON.parse(
+      JSON.stringify(querySearchTemplate)
+    );
 
     /**
      * Add search term to the API query
@@ -17,11 +20,13 @@ const useApiSearch = () => {
     /**
      * Add facets to the API query
      */
-    for (const [key, value] of Object.entries(userFacets)) {
-      if (value?.length > 0) {
-        newQuery.query.bool.must.push(buildFacetPart(key, value));
-      }
-    }
+    // for (const [key, value] of Object.entries(userFacets)) {
+    //   if (value?.length > 0) {
+    //     newQuery.query.bool.must.push(buildFacetPart(key, value));
+    //   }
+    // }
+
+    console.log(`newQuery`, newQuery);
 
     return newQuery;
   }

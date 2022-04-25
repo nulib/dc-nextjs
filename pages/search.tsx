@@ -37,7 +37,7 @@ const SearchPage: NextPage = () => {
     getData()
       .then((data) => setSearchResponse(data))
       .catch(console.error);
-  }, [buildBody, updateQuery]);
+  }, [buildBody]);
 
   return (
     <Layout data-testid="search-page-wrapper">
