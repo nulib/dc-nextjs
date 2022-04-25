@@ -1,50 +1,43 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { NextPage } from "next";
-import { DC_API_SEARCH_URL } from "@/lib/queries/endpoints";
 import useApiSearch from "@/hooks/useApiSearch";
+import Container from "@/components/Container";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
-import { useRouter } from "next/router";
-import Container from "@/components/Container";
+import { getAPIData } from "@/lib/dc-api";
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
-  console.log("q", q);
 
   /**
    * @todo: make getUseFacets() a hook.
    */
-  const userFacets = {};
+
+  const [userFacets, setUserFacets] = useState<[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
   const [searchResponse, setSearchResponse] = useState<any>();
 
   const { updateQuery } = useApiSearch();
 
-  const getAPIData = useCallback(async () => {
-    const response = await fetch(DC_API_SEARCH_URL, {
-      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
-    const data: any = await response.json();
-    console.log("data", data);
-    if (searchResponse !== data) return data;
-  }, [searchTerm]);
+  const buildBody = useCallback(
+    (updateQuery) => updateQuery(searchTerm, userFacets),
+    [searchTerm, userFacets]
+  );
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
-  }, [q]);
+  }, [q, searchTerm]);
 
   useEffect(() => {
-    const getData = async () => await getAPIData();
+    const body: any = buildBody(updateQuery);
+    const getData = async () => await getAPIData(body);
     getData()
       .then((data) => setSearchResponse(data))
       .catch(console.error);
-  }, [getAPIData]);
+  }, [buildBody, updateQuery]);
 
   return (
     <Layout data-testid="search-page-wrapper">
