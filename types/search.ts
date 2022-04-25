@@ -1,4 +1,25 @@
 export type ModelName = "Collection" | "Work";
+
+export interface SearchModelName {
+  bool: {
+    must: [
+      {
+        match: {
+          "model.name": ModelName;
+        };
+      }
+    ];
+  };
+}
+
+export interface SearchSimpleQueryString {
+  simple_query_string: {
+    default_operator: string;
+    fields: string[];
+    query: string;
+  };
+}
+
 export type SearchSource = [
   "accessionNumber",
   "id",
@@ -8,33 +29,19 @@ export type SearchSource = [
   "workType.label"
 ];
 
-export interface SearchSimpleQueryString {
-  default_operator: string;
-  fields: string[];
-  query: string;
-}
-
 export interface DefaultSearchRequest {
   _source: SearchSource;
   query: {
     bool: {
-      must: [
-        {
-          bool: {
-            must: [
-              {
-                match: {
-                  "model.name": ModelName;
-                };
-              }
-            ];
-          };
-        },
-        {
-          simple_query_string?: SearchSimpleQueryString;
-        }
-      ];
+      must: [SearchModelName, SearchSimpleQueryString?];
     };
   };
   size: number;
+}
+
+export interface ApiResponse {
+  data: Array<any>;
+  info: {
+    total: number;
+  };
 }

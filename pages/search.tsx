@@ -7,6 +7,7 @@ import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
 import { getAPIData } from "@/lib/dc-api";
+import { DefaultSearchRequest } from "@/types/search";
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -16,14 +17,14 @@ const SearchPage: NextPage = () => {
    * @todo: make getUseFacets() a hook.
    */
 
-  const [userFacets, setUserFacets] = useState<[]>([]);
+  const [userFacets, setUserFacets] = useState({});
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
   const [searchResponse, setSearchResponse] = useState<any>();
 
   const { updateQuery } = useApiSearch();
 
   const buildBody = useCallback(
-    (updateQuery) => updateQuery(searchTerm, userFacets),
+    () => updateQuery(searchTerm, userFacets),
     [searchTerm, userFacets]
   );
 
@@ -32,7 +33,8 @@ const SearchPage: NextPage = () => {
   }, [q, searchTerm]);
 
   useEffect(() => {
-    const body: any = buildBody(updateQuery);
+    const body: DefaultSearchRequest = buildBody();
+    //const body: DefaultSearchRequest = updateQuery(searchTerm, userFacets);
     const getData = async () => await getAPIData(body);
     getData()
       .then((data) => setSearchResponse(data))

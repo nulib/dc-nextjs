@@ -1,4 +1,4 @@
-// import { aggs } from "@/lib/queries/aggs";
+import { aggs } from "@/lib/queries/aggs";
 import { DefaultSearchRequest, SearchSimpleQueryString } from "@/types/search";
 
 const querySearchTemplate: DefaultSearchRequest = {
@@ -28,26 +28,24 @@ const querySearchTemplate: DefaultSearchRequest = {
     },
   },
   size: 20,
-  //...aggs,
+  ...aggs,
 };
 
-const buildSearchQuery = (term: string) => {
-  const simple_query_string: SearchSimpleQueryString = {
-    default_operator: "or",
-    fields: [
-      "all_titles^5",
-      "description^2",
-      "all_subjects^2",
-      "full_text",
-      "legacy_identifier",
-      "accession_number",
-      "id",
-    ],
-    query: term ? `${term}~1 | ${term}*` : "",
-  };
-
+const buildSearchQuery = (term: string): SearchSimpleQueryString => {
   return {
-    simple_query_string: simple_query_string,
+    simple_query_string: {
+      default_operator: "or",
+      fields: [
+        "all_titles^5",
+        "description^2",
+        "all_subjects^2",
+        "full_text",
+        "legacy_identifier",
+        "accession_number",
+        "id",
+      ],
+      query: term ? `${term}~1 | ${term}*` : "",
+    },
   };
 };
 
