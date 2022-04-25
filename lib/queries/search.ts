@@ -1,7 +1,7 @@
 import { aggs } from "@/lib/queries/aggs";
-import { DefaultSearchRequest, SearchSimpleQueryString } from "@/types/search";
+import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
 
-const querySearchTemplate: DefaultSearchRequest = {
+const querySearchTemplate: ApiSearchRequest = {
   _source: [
     "accessionNumber",
     "id",

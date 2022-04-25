@@ -2,11 +2,11 @@ import { defaultQuery } from "@/mocks/defaultQuery";
 import { buildSearchQuery, querySearchTemplate } from "@/lib/queries/search";
 import { buildFacetPart } from "@/lib/queries/facet";
 import { UserFacets } from "types";
-import { DefaultSearchRequest } from "@/types/search";
+import { ApiSearchRequest } from "@/types/api/request";
 
 const useApiSearch = () => {
   function updateQuery(term: string, userFacets: UserFacets) {
-    const newQuery: DefaultSearchRequest = JSON.parse(
+    const newQuery: ApiSearchRequest = JSON.parse(
       JSON.stringify(querySearchTemplate)
     );
 

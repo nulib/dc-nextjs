@@ -1,10 +1,11 @@
 import { DC_API_SEARCH_URL } from "@/lib/queries/endpoints";
-import { ApiResponse, DefaultSearchRequest } from "@/types/search";
+import { ApiSearchResponse } from "@/types/api/response";
+import { ApiSearchRequest } from "@/types/api/request";
 
 /**
  * Wrapper for Elasticsearch API /search network requests
  */
-async function getAPIData(body: DefaultSearchRequest): Promise<ApiResponse> {
+async function getAPIData(body: ApiSearchRequest): Promise<ApiSearchResponse> {
   const response = await fetch(DC_API_SEARCH_URL, {
     body: JSON.stringify(body),
     headers: {
@@ -12,7 +13,7 @@ async function getAPIData(body: DefaultSearchRequest): Promise<ApiResponse> {
     },
     method: "POST",
   });
-  const data: ApiResponse = await response.json();
+  const data: ApiSearchResponse = await response.json();
   return data;
 }
 

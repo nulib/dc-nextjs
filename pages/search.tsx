@@ -7,7 +7,8 @@ import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
 import { getAPIData } from "@/lib/dc-api";
-import { DefaultSearchRequest } from "@/types/search";
+import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const SearchPage: NextPage = () => {
 
   const [userFacets, setUserFacets] = useState({});
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
-  const [searchResponse, setSearchResponse] = useState<any>();
+  const [searchResponse, setSearchResponse] = useState<ApiSearchResponse>();
 
   const { updateQuery } = useApiSearch();
 
@@ -33,8 +34,7 @@ const SearchPage: NextPage = () => {
   }, [q, searchTerm]);
 
   useEffect(() => {
-    const body: DefaultSearchRequest = buildBody();
-    //const body: DefaultSearchRequest = updateQuery(searchTerm, userFacets);
+    const body: ApiSearchRequest = buildBody();
     const getData = async () => await getAPIData(body);
     getData()
       .then((data) => setSearchResponse(data))
@@ -45,7 +45,9 @@ const SearchPage: NextPage = () => {
     <Layout data-testid="search-page-wrapper">
       <Heading as="h1" title="Search" isHidden />
       <Container containerType="wide">
-        {searchResponse && <Grid {...searchResponse} />}
+        {searchResponse && (
+          <Grid data={searchResponse.data} info={searchResponse.info} />
+        )}
       </Container>
     </Layout>
   );
