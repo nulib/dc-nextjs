@@ -26,8 +26,6 @@ const useApiSearch = () => {
     //   }
     // }
 
-    console.log(`newQuery`, newQuery);
-
     return newQuery;
   }
 

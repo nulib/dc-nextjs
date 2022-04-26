@@ -1,4 +1,4 @@
-export type ModelName = "Collection" | "Work";
+import { ModelName } from "@/types/api/generic";
 
 export interface SearchModelName {
   bool: {

@@ -1,9 +1,9 @@
-import { ApiResponseDataShape } from "@/types/api/response";
+import { SearchShape } from "@/types/api/response";
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
 
 interface GridProps {
-  data: ApiResponseDataShape[];
+  data: SearchShape[];
   info: { total?: number };
 }
 const Grid: React.FC<GridProps> = ({ data = [] }) => {
@@ -15,13 +15,13 @@ const Grid: React.FC<GridProps> = ({ data = [] }) => {
       className="dc-grid"
       columnClassName="dc-grid-column"
     >
-      {data.map((item: ApiResponseDataShape) => (
+      {data.map((item: SearchShape) => (
         <GridItem key={item.accession_number}>
           <Figure
             data={{
               src: item.thumbnail,
               title: item.title,
-              type: item.accession_number,
+              type: item.work_type_labels,
             }}
           />
         </GridItem>
