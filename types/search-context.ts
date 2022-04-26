@@ -1,13 +1,8 @@
-export interface SearchAction {
-  q: string;
-  type: string;
-}
-
 export interface SearchContextStore {
   q: string;
+  userFacets: UserFacets;
 }
 
-export interface SearchReducer {
-  action: SearchAction;
-  state: SearchContextStore;
+export interface UserFacets {
+  [key: string]: string[];
 }
