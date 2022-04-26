@@ -1,16 +1,26 @@
 import React from "react";
-import { SearchAction, SearchContextStore } from "@/types/search-context";
+import { SearchContextStore, UserFacets } from "@/types/search-context";
+
+type Action =
+  | { type: "updateSearch"; q: string }
+  | { type: "updateUserFacets"; userFacets: UserFacets };
+type Dispatch = (action: Action) => void;
+type State = SearchContextStore;
+type SearchProviderProps = {
+  children: React.ReactNode;
+  initialState?: SearchContextStore;
+};
 
 const defaultState: SearchContextStore = {
   q: "",
+  userFacets: {},
 };
 
-const SearchStateContext =
-  React.createContext<SearchContextStore>(defaultState);
-const SearchDispatchContext =
-  React.createContext<SearchContextStore>(defaultState);
+const SearchStateContext = React.createContext<
+  { searchState: State; searchDispatch: Dispatch } | undefined
+>(undefined);
 
-function searchReducer(state: SearchContextStore, action: SearchAction) {
+function searchReducer(state: State, action: Action) {
   switch (action.type) {
     case "updateSearch": {
       return {
@@ -18,35 +28,30 @@ function searchReducer(state: SearchContextStore, action: SearchAction) {
         q: action.q,
       };
     }
+    case "updateUserFacets": {
+      return {
+        ...state,
+        userFacets: action.userFacets,
+      };
+    }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type`);
     }
   }
 }
 
-interface SearchProviderProps {
-  initialState?: SearchContextStore;
-  children: React.ReactNode;
-}
-
-const SearchProvider: React.FC<SearchProviderProps> = ({
+function SearchProvider({
   initialState = defaultState,
   children,
-}) => {
-  const [state, dispatch] = React.useReducer<
-    React.Reducer<SearchContextStore, SearchAction>
-  >(searchReducer, initialState);
-
+}: SearchProviderProps) {
+  const [state, dispatch] = React.useReducer(searchReducer, initialState);
+  const value = { searchDispatch: dispatch, searchState: state };
   return (
-    <SearchStateContext.Provider value={state}>
-      <SearchDispatchContext.Provider
-        value={dispatch as unknown as SearchContextStore}
-      >
-        {children}
-      </SearchDispatchContext.Provider>
+    <SearchStateContext.Provider value={value}>
+      {children}
     </SearchStateContext.Provider>
   );
-};
+}
 
 function useSearchState() {
   const context = React.useContext(SearchStateContext);
@@ -56,12 +61,4 @@ function useSearchState() {
   return context;
 }
 
-function useSearchDispatch() {
-  const context = React.useContext(SearchDispatchContext);
-  if (context === undefined) {
-    throw new Error("useSearchDispatch must be used within a SearchProvider");
-  }
-  return context;
-}
-
-export { SearchProvider, useSearchState, useSearchDispatch };
+export { SearchProvider, useSearchState };

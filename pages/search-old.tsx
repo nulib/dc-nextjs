@@ -9,6 +9,7 @@ import { NextPage } from "next";
 import React from "react";
 import { facetFilterQuery } from "lib/queries/facet-filter";
 import useApiSearch from "hooks/useApiSearch";
+import { useSearchState } from "@/context/search-context";
 
 interface FacetNoLabel {
   buckets: Array<any>;
@@ -24,11 +25,14 @@ const SearchPage: NextPage = () => {
   const [aggregatedFacets, setAggregatedFacets] = React.useState<
     Array<AggregatedFacets>
   >([]);
-  const [userFacets, setUserFacets] = React.useState<UserFacets>({});
   const [searchTerm, setSearchTerm] = React.useState("");
   const [facetFilterResults, setFacetFilterResults] =
     React.useState<FilteredFacets>({});
   const { updateQuery } = useApiSearch();
+
+  // New context pattern
+  const { searchDispatch, searchState } = useSearchState();
+  const { userFacets } = searchState;
 
   const getAPIData = React.useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {
@@ -80,7 +84,10 @@ const SearchPage: NextPage = () => {
       newObj[name] = [...newObj[name]].filter((arrValue) => arrValue !== value);
     }
 
-    setUserFacets(newObj);
+    searchDispatch({
+      type: "updateUserFacets",
+      userFacets: newObj,
+    });
   };
 
   const clearFacetFilters = () => {
