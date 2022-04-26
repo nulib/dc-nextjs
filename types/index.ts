@@ -75,7 +75,7 @@ export interface Work {
 }
 
 export interface WorkType {
-  label: "Image" | "Audio" | "Video";
+  label: "Audio" | "Image" | "Video";
 }
 
 export interface FacetBucketAgg {
