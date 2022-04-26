@@ -1,12 +1,13 @@
+import { SearchShape } from "@/types/api/response";
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Figure from "@/components/Figure/Figure";
-import { HitsResponse, Hit } from "@/types/elasticsearch";
 
 interface GridProps {
-  hits: HitsResponse;
+  data: SearchShape[];
+  info: { total?: number };
 }
-const Grid: React.FC<GridProps> = ({ hits }) => {
-  if (!hits) return <span>Loading...</span>;
+const Grid: React.FC<GridProps> = ({ data = [] }) => {
+  if (!data) return <span>Loading...</span>;
 
   return (
     <GridStyled
@@ -14,13 +15,13 @@ const Grid: React.FC<GridProps> = ({ hits }) => {
       className="dc-grid"
       columnClassName="dc-grid-column"
     >
-      {hits.hits.map((hit: Hit) => (
-        <GridItem key={hit._source.accessionNumber}>
+      {data.map((item: SearchShape) => (
+        <GridItem key={item.accession_number}>
           <Figure
             data={{
-              title: hit._source.title,
-              type: hit._source.accessionNumber,
-              src: hit._source.thumbnail,
+              src: item.thumbnail,
+              title: item.title,
+              type: item.work_type_labels,
             }}
           />
         </GridItem>

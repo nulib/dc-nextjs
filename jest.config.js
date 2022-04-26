@@ -10,6 +10,7 @@ const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases
     "^@/components/(.*)$": "<rootDir>/components/$1",
+    "^@/context/(.*)$": "<rootDir>/context/$1",
     "^@/pages/(.*)$": "<rootDir>/pages/$1",
     "^@/mocks/(.*)$": "<rootDir>/mocks/$1",
     "^@/(.*)$": "<rootDir>/$1",

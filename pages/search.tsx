@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { NextPage } from "next";
-import { SearchResponse, Source } from "@/types/elasticsearch";
-import { API_PRODUCTION_URL } from "@/lib/queries/endpoints";
 import useApiSearch from "@/hooks/useApiSearch";
+import Container from "@/components/Container";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
-import { useRouter } from "next/router";
-import Container from "@/components/Container";
+import { getAPIData } from "@/lib/dc-api";
+import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
@@ -16,40 +17,37 @@ const SearchPage: NextPage = () => {
   /**
    * @todo: make getUseFacets() a hook.
    */
-  const userFacets = {};
+
+  const [userFacets, setUserFacets] = useState({});
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
-  const [esData, setEsData] = useState<SearchResponse<Source>>();
+  const [searchResponse, setSearchResponse] = useState<ApiSearchResponse>();
 
   const { updateQuery } = useApiSearch();
 
-  const getAPIData = useCallback(async () => {
-    const response = await fetch(API_PRODUCTION_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
-    });
-    const data: SearchResponse<Source> = await response.json();
-    if (esData !== data) return data;
-  }, [searchTerm]);
+  const buildBody = useCallback(
+    () => updateQuery(searchTerm, userFacets),
+    [searchTerm, userFacets]
+  );
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
-  }, [q]);
+  }, [q, searchTerm]);
 
   useEffect(() => {
-    const getData = async () => await getAPIData();
+    const body: ApiSearchRequest = buildBody();
+    const getData = async () => await getAPIData(body);
     getData()
-      .then((data) => setEsData(data))
+      .then((data) => setSearchResponse(data))
       .catch(console.error);
-  }, [getAPIData]);
+  }, [buildBody]);
 
   return (
     <Layout data-testid="search-page-wrapper">
       <Heading as="h1" title="Search" isHidden />
       <Container containerType="wide">
-        {esData && <Grid hits={esData?.hits} />}
+        {searchResponse && (
+          <Grid data={searchResponse.data} info={searchResponse.info} />
+        )}
       </Container>
     </Layout>
   );

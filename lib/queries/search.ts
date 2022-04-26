@@ -1,14 +1,14 @@
 import { aggs } from "@/lib/queries/aggs";
+import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
 
-const querySearchTemplate = {
-  size: 20,
+const querySearchTemplate: ApiSearchRequest = {
   _source: [
-    "id",
     "accessionNumber",
+    "id",
     "iiifManifest",
     "title",
-    "workType.label",
     "thumbnail",
+    "workType.label",
   ],
   query: {
     bool: {
@@ -27,13 +27,14 @@ const querySearchTemplate = {
       ],
     },
   },
+  size: 20,
   ...aggs,
 };
 
-const buildSearchQuery = (term: string) => {
+const buildSearchQuery = (term: string): SearchSimpleQueryString => {
   return {
     simple_query_string: {
-      query: term ? `${term}~1 | ${term}*` : "",
+      default_operator: "or",
       fields: [
         "all_titles^5",
         "description^2",
@@ -43,7 +44,7 @@ const buildSearchQuery = (term: string) => {
         "accession_number",
         "id",
       ],
-      default_operator: "or",
+      query: term ? `${term}~1 | ${term}*` : "",
     },
   };
 };

@@ -8,12 +8,14 @@ import {
 } from "react";
 import Router, { useRouter } from "next/router";
 import { Button, Clear, Input, SearchStyled } from "./Search.styled";
+import { useSearchDispatch } from "@/context/search-context";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
+  const dispatch: any = useSearchDispatch();
   const router = useRouter();
 
   const search = useRef<HTMLInputElement>(null);
@@ -26,6 +28,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     let query = "";
     if (searchValue) query = `?q=${encodeURI(searchValue.replace(/ /g, "+"))}`;
     Router.push(`/search${query}`);
+    dispatch({
+      q: searchValue,
+      type: "updateSearch",
+    });
   };
 
   const handleSearchFocus = (e: FocusEvent) =>
