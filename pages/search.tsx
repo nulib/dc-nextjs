@@ -17,6 +17,7 @@ const SearchPage: NextPage = () => {
   const {
     searchState: { userFacets },
   } = useSearchState();
+  console.log("userFacets", userFacets);
 
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
   const [searchResponse, setSearchResponse] = useState<ApiSearchResponse>();
@@ -26,10 +27,10 @@ const SearchPage: NextPage = () => {
   }, [q, searchTerm]);
 
   useEffect(() => {
+    console.log("EFFECTED");
     const body: ApiSearchRequest = buildQuery(searchTerm, userFacets);
-    const getData = async () => await getAPIData(body);
 
-    getData()
+    getAPIData(body)
       .then((data) => setSearchResponse(data))
       .catch(console.error);
   }, [searchTerm, userFacets]);

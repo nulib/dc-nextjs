@@ -2,16 +2,32 @@ import { useEffect, useState } from "react";
 import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/endpoints";
+import { UserFacets } from "@/types/search-context";
+import { buildQuery } from "@/lib/queries/builder";
 
-// WIP: Messing with this
-const useFetchApiData = (body: ApiSearchRequest, url = DC_API_SEARCH_URL) => {
-  const [data, setData] = useState<ApiSearchResponse | null>();
+type ApiData = ApiSearchResponse | null;
+type ApiError = string | null;
+type Response = {
+  data: ApiData;
+  error: ApiError;
+  loading: boolean;
+};
+
+const useFetchApiData = (
+  searchTerm: string,
+  userFacets: UserFacets
+): Response => {
+  const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<ApiError>(null);
 
   useEffect(() => {
     setLoading(true);
     setData(null);
+    setError(null);
+
+    const body: ApiSearchRequest = buildQuery(searchTerm, userFacets);
+
     fetch(DC_API_SEARCH_URL, {
       body: JSON.stringify(body),
       headers: {
@@ -21,6 +37,7 @@ const useFetchApiData = (body: ApiSearchRequest, url = DC_API_SEARCH_URL) => {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log("json", json);
         setLoading(false);
         setData(json);
       })
@@ -28,11 +45,10 @@ const useFetchApiData = (body: ApiSearchRequest, url = DC_API_SEARCH_URL) => {
         setLoading(false);
         setError("Error fetching API data");
         console.error("error fetching API data", err);
-        return Promise.reject();
       });
-  }, [body, url]);
+  }, [searchTerm, userFacets]);
 
-  return [data, error, loading];
+  return { data, error, loading };
 };
 
 export default useFetchApiData;
