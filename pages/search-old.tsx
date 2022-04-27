@@ -1,6 +1,6 @@
 import { FilteredFacets, UserFacets } from "types";
 import { SearchResponse, Source } from "types/elasticsearch";
-import { API_PRODUCTION_URL } from "lib/queries/endpoints";
+import { API_PRODUCTION_URL } from "@/lib/endpoints";
 import ActiveFacets from "components/ActiveFacets/ActiveFacets";
 import Container from "components/Container";
 import Facet from "components/Facet/Facet";
@@ -8,7 +8,7 @@ import Layout from "components/layout";
 import { NextPage } from "next";
 import React from "react";
 import { facetFilterQuery } from "lib/queries/facet-filter";
-import useApiSearch from "hooks/useApiSearch";
+import { buildQuery } from "@/lib/queries/builder";
 import { useSearchState } from "@/context/search-context";
 
 interface FacetNoLabel {
@@ -28,7 +28,6 @@ const SearchPage: NextPage = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [facetFilterResults, setFacetFilterResults] =
     React.useState<FilteredFacets>({});
-  const { updateQuery } = useApiSearch();
 
   // New context pattern
   const { searchDispatch, searchState } = useSearchState();
@@ -36,11 +35,11 @@ const SearchPage: NextPage = () => {
 
   const getAPIData = React.useCallback(async () => {
     const response = await fetch(API_PRODUCTION_URL, {
-      method: "POST",
+      body: JSON.stringify(buildQuery(searchTerm, userFacets)),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
+      method: "POST",
     });
     const data: SearchResponse<Source> = await response.json();
     clearFacetFilters();
@@ -100,24 +99,26 @@ const SearchPage: NextPage = () => {
     if (value === "") {
       return;
     } else {
-      fetch(API_PRODUCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          facetFilterQuery(searchTerm, name, value, userFacets)
-        ),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((facetFilterData) => {
-          const newObj: FilteredFacets = { ...facetFilterResults };
-          newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
-          setFacetFilterResults(newObj);
-          return;
-        });
+      const query = facetFilterQuery(searchTerm, name, value, userFacets);
+
+      // fetch(API_PRODUCTION_URL, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(
+      //     facetFilterQuery(searchTerm, name, value, userFacets)
+      //   ),
+      // })
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((facetFilterData) => {
+      //     const newObj: FilteredFacets = { ...facetFilterResults };
+      //     newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
+      //     setFacetFilterResults(newObj);
+      //     return;
+      //   });
     }
   };
 

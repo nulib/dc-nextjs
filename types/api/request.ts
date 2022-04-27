@@ -1,5 +1,24 @@
 import { ModelName } from "@/types/api/generic";
 
+export interface ApiSearchRequest {
+  _source: SearchSource;
+  query: {
+    bool: {
+      must: [SearchModelName, FacetTerms?, SearchSimpleQueryString?];
+    };
+  };
+  size: number;
+}
+
+export interface FacetTerms {
+  bool: {
+    should: Array<{
+      terms: {
+        [key: string]: string[];
+      };
+    }>;
+  };
+}
 export interface SearchModelName {
   bool: {
     must: [
@@ -11,17 +30,6 @@ export interface SearchModelName {
     ];
   };
 }
-
-export interface ApiSearchRequest {
-  _source: SearchSource;
-  query: {
-    bool: {
-      must: [SearchModelName, SearchSimpleQueryString?];
-    };
-  };
-  size: number;
-}
-
 export interface SearchSimpleQueryString {
   simple_query_string: {
     default_operator: string;

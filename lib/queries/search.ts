@@ -1,6 +1,9 @@
 import { aggs } from "@/lib/queries/aggs";
 import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
 
+/**
+ * Default Elasticsearch search query for a Work
+ */
 const querySearchTemplate: ApiSearchRequest = {
   _source: [
     "accessionNumber",
@@ -31,7 +34,7 @@ const querySearchTemplate: ApiSearchRequest = {
   ...aggs,
 };
 
-const buildSearchQuery = (term: string): SearchSimpleQueryString => {
+const buildSearchPart = (term: string): SearchSimpleQueryString => {
   return {
     simple_query_string: {
       default_operator: "or",
@@ -49,4 +52,4 @@ const buildSearchQuery = (term: string): SearchSimpleQueryString => {
   };
 };
 
-export { buildSearchQuery, querySearchTemplate };
+export { buildSearchPart, querySearchTemplate };
