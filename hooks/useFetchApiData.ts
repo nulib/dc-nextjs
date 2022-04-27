@@ -37,13 +37,13 @@ const useFetchApiData = (
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log("json", json);
         setLoading(false);
         setData(json);
       })
       .catch((err) => {
         setLoading(false);
         setError("Error fetching API data");
+
         console.error("error fetching API data", err);
       });
   }, [searchTerm, userFacets]);
