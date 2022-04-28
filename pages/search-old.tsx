@@ -81,24 +81,24 @@ const SearchPage: NextPage = () => {
     } else {
       const query = facetFilterQuery(searchTerm, name, value, userFacets);
 
-      // fetch(API_PRODUCTION_URL, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(
-      //     facetFilterQuery(searchTerm, name, value, userFacets)
-      //   ),
-      // })
-      //   .then((response) => {
-      //     return response.json();
-      //   })
-      //   .then((facetFilterData) => {
-      //     const newObj: FilteredFacets = { ...facetFilterResults };
-      //     newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
-      //     setFacetFilterResults(newObj);
-      //     return;
-      //   });
+      fetch(API_PRODUCTION_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          facetFilterQuery(searchTerm, name, value, userFacets)
+        ),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((facetFilterData) => {
+          const newObj: FilteredFacets = { ...facetFilterResults };
+          newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
+          setFacetFilterResults(newObj);
+          return;
+        });
     }
   };
 

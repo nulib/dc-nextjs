@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
 const SearchPage: NextPage = () => {
-  console.log("SearchPage render");
   const router = useRouter();
   const { q } = router.query;
   const {

@@ -1,16 +1,4 @@
-export interface FacetsInstance {
-  id: string;
-  field: string;
-  label: string;
-}
-export interface FacetsGroup {
-  label: string;
-  facets: FacetsInstance[];
-}
-
-export interface AllFacets {
-  facets: FacetsInstance[];
-}
+import { AllFacets, FacetsGroup } from "@/types/components/facets";
 
 export const ALL_FACETS: AllFacets = {
   facets: [
