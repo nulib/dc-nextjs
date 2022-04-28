@@ -1,20 +1,20 @@
-import React from "react";
-import { HeadingStyled } from "./Heading.styled";
+import React, { ReactNode } from "react";
+import { StyledHeading } from "./Heading.styled";
 
 interface HeadingProps {
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span";
   isHidden?: boolean;
-  title: string;
+  children: ReactNode | ReactNode[];
 }
 
 const Heading: React.FC<HeadingProps> = ({
   as = "h2",
   isHidden = false,
-  title,
+  children,
 }) => (
-  <HeadingStyled as={as} isHidden={isHidden}>
-    {title}
-  </HeadingStyled>
+  <StyledHeading as={as} isHidden={isHidden}>
+    <>{children}</>
+  </StyledHeading>
 );
 
 export default Heading;

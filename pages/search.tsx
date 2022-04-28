@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "@/components/Container";
+import Facets from "@/components/Facets/Facets";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
@@ -30,11 +31,18 @@ const SearchPage: NextPage = () => {
 
   return (
     <Layout data-testid="search-page-wrapper">
-      <Heading as="h1" title="Search" isHidden />
+      <Heading as="h1" isHidden>
+        Northwestern
+      </Heading>
       <Container containerType="wide">
         {loading && <p>loading...</p>}
         {error && <p>{error}</p>}
-        {apiData && <Grid data={apiData.data} info={apiData.info} />}
+        {apiData && (
+          <>
+            <Facets aggregations={apiData.aggregations} />
+            <Grid data={apiData.data} info={apiData.info} />
+          </>
+        )}
       </Container>
     </Layout>
   );

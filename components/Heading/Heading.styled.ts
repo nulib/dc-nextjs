@@ -1,6 +1,6 @@
 import { styled } from "../../stitches.config";
 
-const HeadingStyled = styled("h1", {
+const StyledHeading = styled("h2", {
   variants: {
     isHidden: {
       true: {
@@ -11,4 +11,4 @@ const HeadingStyled = styled("h1", {
   },
 });
 
-export { HeadingStyled };
+export { StyledHeading };

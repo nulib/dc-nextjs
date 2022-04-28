@@ -2,9 +2,9 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import { Primary, PrimaryInner } from "@/components/Header/Header.styled";
 import Search from "@/components/Search/Search";
-import { useState } from "react";
 import Heading from "@/components/Heading/Heading";
 import Container from "../Container";
+import { useState } from "react";
 
 const HeaderPrimary: React.FC = () => {
   const [searchActive, setSearchActive] = useState(false);
@@ -19,7 +19,7 @@ const HeaderPrimary: React.FC = () => {
       data-testid="header-primary-ui-component"
     >
       <Container>
-        <Heading as="span" title="Northwestern" />
+        <Heading as="span">Northwestern</Heading>
         <PrimaryInner>
           <Search isSearchActive={handleIsSearchActive} />
           <Nav>

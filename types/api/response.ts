@@ -12,7 +12,7 @@ export interface ApiResponseAggregation {
   id: string;
 }
 
-type ApiResponseBucket = {
+export type ApiResponseBucket = {
   doc_count: number;
   key: string;
 };

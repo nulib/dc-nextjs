@@ -1,13 +1,15 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { styled } from "../../stitches.config";
 
+/* eslint sort-keys: 0 */
+
 const FilterTrigger = styled(Dialog.Trigger, {
   width: "81px",
   height: "38px",
   cursor: "pointer",
-  backgroundColor: "$slate12",
+  backgroundColor: "$purple",
   border: "0",
-  color: "$slate1",
+  color: "$white",
   fontSize: "1rem",
 });
 
@@ -23,6 +25,22 @@ const FilterOverlay = styled(Dialog.Overlay, {
   overflowY: "auto",
 });
 
+const FilterBody = styled("div", {
+  padding: "1rem",
+});
+
+const FilterHeader = styled("header", {
+  padding: "1rem",
+  display: "flex",
+  justifyContent: "space-between",
+
+  h2: {
+    fontSize: "25px",
+    padding: "0",
+    margin: "0",
+  },
+});
+
 const FilterContent = styled(Dialog.Content, {
   width: "80vw",
   height: "60vh",
@@ -34,23 +52,12 @@ const FilterContent = styled(Dialog.Content, {
   bottom: 0,
   overflowY: "auto",
   zIndex: "1",
-
-  "> div": {
-    padding: "31px",
-
-    header: {
-      h2: {
-        fontSize: "25px",
-        padding: "0",
-        margin: "0",
-      },
-
-      "> div": {
-        display: "flex",
-        justifyContent: "space-between",
-      },
-    },
-  },
 });
 
-export { FilterContent, FilterOverlay, FilterTrigger };
+export {
+  FilterBody,
+  FilterContent,
+  FilterHeader,
+  FilterOverlay,
+  FilterTrigger,
+};
