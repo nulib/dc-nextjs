@@ -1,4 +1,4 @@
-import { styled } from "../../stitches.config";
+import { styled } from "@/stitches.config";
 import { StyledHeading } from "@/components/Heading/Heading.styled";
 
 /* eslint sort-keys: 0 */
