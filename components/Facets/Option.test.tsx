@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "@/test-utils";
+import { FacetOption } from "@/types/components/facets";
 import Option from "./Option";
 import React from "react";
-import { FacetOption } from "@/types/components/facets";
 import { mockAggregation } from "@/mocks/aggregation";
 
 const mockOption: FacetOption = {

@@ -1,4 +1,4 @@
-import { styled } from "../../stitches.config";
+import { styled } from "@/stitches.config";
 
 const SearchStyled = styled("form", {
   position: "relative",

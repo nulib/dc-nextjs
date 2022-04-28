@@ -1,7 +1,7 @@
 import { Button, Input, SearchStyled } from "../Search/Search.styled";
 import { NavStyled } from "../Nav/Nav.styled";
 import { ContainerStyled } from "@/components/Container";
-import { styled } from "../../stitches.config";
+import { styled } from "@/stitches.config";
 
 const Lockup = styled("div", {
   padding: "31px 0 50px",
