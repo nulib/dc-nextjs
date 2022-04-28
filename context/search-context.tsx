@@ -1,5 +1,5 @@
-import React from "react";
 import { SearchContextStore, UserFacets } from "@/types/search-context";
+import React from "react";
 
 type Action =
   | { type: "updateSearch"; q: string }

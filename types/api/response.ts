@@ -7,7 +7,7 @@ export interface ApiResponse {
   };
 }
 
-interface ApiResponseAggregation {
+export interface ApiResponseAggregation {
   buckets: ApiResponseBucket[];
   id: string;
 }
@@ -29,11 +29,11 @@ export interface ApiSearchResponse extends ApiResponse {
  */
 export interface ApiResponseDataShape {
   accession_number: string;
+  api_model: ModelName;
   id: string;
   iiif_manifest?: string;
-  title: string;
   thumbnail: string;
-  api_model: ModelName;
+  title: string;
 }
 
 /**

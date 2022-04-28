@@ -1,6 +1,6 @@
-import { DC_API_SEARCH_URL } from "@/lib/queries/endpoints";
-import { ApiSearchResponse } from "@/types/api/response";
 import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
+import { DC_API_SEARCH_URL } from "@/lib/endpoints";
 
 /**
  * Wrapper for Elasticsearch API /search network requests

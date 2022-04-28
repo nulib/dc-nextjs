@@ -1,66 +1,45 @@
 import { FilteredFacets, UserFacets } from "types";
 import { SearchResponse, Source } from "types/elasticsearch";
-import { API_PRODUCTION_URL } from "lib/queries/endpoints";
 import ActiveFacets from "components/ActiveFacets/ActiveFacets";
+import { API_PRODUCTION_URL } from "@/lib/endpoints";
+import { buildQuery } from "@/lib/queries/builder";
 import Container from "components/Container";
 import Facet from "components/Facet/Facet";
 import Layout from "components/layout";
 import { NextPage } from "next";
 import React from "react";
 import { facetFilterQuery } from "lib/queries/facet-filter";
-import useApiSearch from "hooks/useApiSearch";
 import { useSearchState } from "@/context/search-context";
+import useFetchApiData from "@/hooks/useFetchApiData";
+import { ApiResponseAggregation } from "@/types/api/response";
 
 interface FacetNoLabel {
   buckets: Array<any>;
   doc_count_error_upper_bound?: number;
   sum_other_doc_count: number;
 }
-export interface AggregatedFacets extends FacetNoLabel {
-  label: string;
-}
 
 const SearchPage: NextPage = () => {
-  const [esData, setEsData] = React.useState<SearchResponse<Source>>();
-  const [aggregatedFacets, setAggregatedFacets] = React.useState<
-    Array<AggregatedFacets>
-  >([]);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [facetFilterResults, setFacetFilterResults] =
     React.useState<FilteredFacets>({});
-  const { updateQuery } = useApiSearch();
 
-  // New context pattern
-  const { searchDispatch, searchState } = useSearchState();
-  const { userFacets } = searchState;
+  const {
+    searchDispatch,
+    searchState: { userFacets },
+  } = useSearchState();
 
-  const getAPIData = React.useCallback(async () => {
-    const response = await fetch(API_PRODUCTION_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateQuery(searchTerm, userFacets)),
-    });
-    const data: SearchResponse<Source> = await response.json();
-    clearFacetFilters();
-
-    return data;
-  }, [searchTerm, userFacets]);
+  const {
+    data: apiData,
+    error,
+    loading,
+  } = useFetchApiData(searchTerm, userFacets);
 
   React.useEffect(() => {
-    async function fn() {
-      const data = await getAPIData();
-      setEsData(data);
-
-      setAggregatedFacets(
-        Object.entries(data?.aggregations).map((facet) => {
-          return { label: facet[0], ...(facet[1] as FacetNoLabel) };
-        })
-      );
-    }
-    fn();
-  }, [getAPIData]);
+    console.log("apiData", apiData);
+    if (!apiData) return;
+    clearFacetFilters();
+  }, [apiData]);
 
   // TODO: Put a debounce on this
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,24 +79,26 @@ const SearchPage: NextPage = () => {
     if (value === "") {
       return;
     } else {
-      fetch(API_PRODUCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          facetFilterQuery(searchTerm, name, value, userFacets)
-        ),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((facetFilterData) => {
-          const newObj: FilteredFacets = { ...facetFilterResults };
-          newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
-          setFacetFilterResults(newObj);
-          return;
-        });
+      const query = facetFilterQuery(searchTerm, name, value, userFacets);
+
+      // fetch(API_PRODUCTION_URL, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(
+      //     facetFilterQuery(searchTerm, name, value, userFacets)
+      //   ),
+      // })
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((facetFilterData) => {
+      //     const newObj: FilteredFacets = { ...facetFilterResults };
+      //     newObj[name] = facetFilterData.aggregations.facetFilter.buckets;
+      //     setFacetFilterResults(newObj);
+      //     return;
+      //   });
     }
   };
 
@@ -134,27 +115,28 @@ const SearchPage: NextPage = () => {
 
         <h2>Facets</h2>
         <div>
-          {aggregatedFacets &&
-            aggregatedFacets.map((facet) => {
-              return (
-                <Facet
-                  {...facet}
-                  key={facet.label}
-                  activeValues={userFacets[facet.label] || []}
-                  facetFilterResults={facetFilterResults[facet.label] || []}
-                  handleFacetChange={handleFacetChange}
-                  handleFacetFilterChange={handleFacetFilterChange}
-                />
-              );
-            })}
+          {apiData?.aggregations?.map((facet) => {
+            return (
+              <Facet
+                buckets={facet.buckets}
+                key={facet.id}
+                activeValues={userFacets[facet.id] || []}
+                facetFilterResults={facetFilterResults[facet.id] || []}
+                handleFacetChange={handleFacetChange}
+                handleFacetFilterChange={handleFacetFilterChange}
+                label={facet.id}
+              />
+            );
+          })}
         </div>
 
-        <h2>Search Results ({esData?.hits.total})</h2>
+        <h2>Search Results ({apiData?.info.total})</h2>
+        {loading && <p>loading...</p>}
         <ul>
-          {esData &&
-            esData.hits.hits.map((hit) => (
-              <li key={hit._id}>
-                {hit._source.title} - {hit._source.accessionNumber}
+          {apiData &&
+            apiData.data.map((hit) => (
+              <li key={hit.id}>
+                {hit.title} - {hit.accession_number}
               </li>
             ))}
         </ul>

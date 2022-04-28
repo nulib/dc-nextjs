@@ -1,4 +1,4 @@
-import { FACETS, FacetsGroup } from "@/lib/facets";
+import { FACETS, FacetsGroup } from "@/lib/facets-model";
 
 export const buildAggs = (facets: FacetsGroup[]) => {
   const aggs: any = {};

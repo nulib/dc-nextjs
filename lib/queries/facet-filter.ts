@@ -1,5 +1,5 @@
-import { ALL_FACETS, FacetsInstance } from "lib/facets";
-import { UserFacets } from "types";
+import { ALL_FACETS, FacetsInstance } from "@/lib/facets-model";
+import { UserFacets } from "@/types/search-context";
 
 const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -12,7 +12,7 @@ const facetFilter = (facets: Array<FacetsInstance>, facetLabel: string) => {
 export const facetFilterQuery = (
   searchTerm: string,
   facetLabel: string,
-  term: any,
+  term: string,
   userFacets: UserFacets
 ) => {
   const facetFilterKey = facetFilter(ALL_FACETS.facets, facetLabel);
@@ -48,7 +48,7 @@ const buildFacetFilterQuery = (
    * Add search term to the API query
    */
   if (searchTerm) {
-    newQuery.query.bool.must.push(buildSearchQuery(searchTerm));
+    newQuery.query.bool.must.push(buildSearchPart(searchTerm));
   }
 
   /**
@@ -96,7 +96,7 @@ const baseQuery = (facetField: any, term: any, excludes: any) => {
   };
 };
 
-const buildSearchQuery = (term: string) => {
+const buildSearchPart = (term: string) => {
   return {
     simple_query_string: {
       query: term ? `${term}~1 | ${term}*` : "",
