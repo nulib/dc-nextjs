@@ -1,4 +1,3 @@
-import { ApiResponseAggregation } from "@/types/api/response";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   FilterBody,
@@ -7,13 +6,28 @@ import {
   FilterOverlay,
   FilterTrigger,
 } from "./Filter.styled";
+import { Filter } from "@/types/components/facets";
+import { FilterProvider } from "@/context/filter-context";
 import MultiFacet from "./MultiFacet";
 
-interface FilterProps {
-  aggregations: ApiResponseAggregation[];
-}
+const FilterModal: React.FC<Filter> = ({ aggregations }) => {
+  return (
+    <FilterProvider>
+      <FilterHeader>
+        <Dialog.Title>Filter</Dialog.Title>
+        <Dialog.Close>Close</Dialog.Close>
+      </FilterHeader>
+      <FilterBody>
+        {aggregations &&
+          aggregations.map((aggregation) => (
+            <MultiFacet {...aggregation} key={aggregation.id} />
+          ))}
+      </FilterBody>
+    </FilterProvider>
+  );
+};
 
-const FacetsFilter: React.FC<FilterProps> = ({ aggregations }) => {
+const FacetsFilter: React.FC<Filter> = ({ aggregations }) => {
   return (
     <Dialog.Root>
       <FilterTrigger>
@@ -22,16 +36,7 @@ const FacetsFilter: React.FC<FilterProps> = ({ aggregations }) => {
       <Dialog.Portal>
         <FilterOverlay />
         <FilterContent>
-          <FilterHeader>
-            <Dialog.Title>Filter</Dialog.Title>
-            <Dialog.Close>Close</Dialog.Close>
-          </FilterHeader>
-          <FilterBody>
-            {aggregations &&
-              aggregations.map((aggregation) => (
-                <MultiFacet {...aggregation} key={aggregation.id} />
-              ))}
-          </FilterBody>
+          <FilterModal aggregations={aggregations} />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>

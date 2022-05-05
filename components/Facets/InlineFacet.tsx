@@ -8,8 +8,6 @@ import { ApiResponseAggregation } from "@/types/api/response";
 import { StyledInlineFacet } from "./InlineFacet.styled";
 
 const FacetsInlineFacet: React.FC<ApiResponseAggregation> = (props) => {
-  console.log(props);
-
   const { id } = props;
   return (
     <StyledInlineFacet data-testid="facet-inline-component" id={`facet--${id}`}>

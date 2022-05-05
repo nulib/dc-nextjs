@@ -1,4 +1,4 @@
-import { ApiResponseBucket } from "../api/response";
+import { ApiResponseAggregation, ApiResponseBucket } from "../api/response";
 
 export interface AllFacets {
   facets: FacetsInstance[];
@@ -19,4 +19,7 @@ export interface FacetOption {
   facet: string;
   index: number;
   type: "checkbox" | "radio";
+}
+export interface Filter {
+  aggregations: ApiResponseAggregation[];
 }
