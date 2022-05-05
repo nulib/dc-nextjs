@@ -1,5 +1,27 @@
+import {
+  ApiSearchQuery,
+  ApiSearchRequest,
+  SearchSimpleQueryString,
+} from "@/types/api/request";
 import { aggs } from "@/lib/queries/aggs";
-import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
+
+export const queryModelPart: ApiSearchQuery = {
+  bool: {
+    must: [
+      {
+        bool: {
+          must: [
+            {
+              match: {
+                "model.name": "Work",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+};
 
 /**
  * Default Elasticsearch search query for a Work
@@ -13,23 +35,7 @@ const querySearchTemplate: ApiSearchRequest = {
     "thumbnail",
     "workType.label",
   ],
-  query: {
-    bool: {
-      must: [
-        {
-          bool: {
-            must: [
-              {
-                match: {
-                  "model.name": "Work",
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
-  },
+  query: queryModelPart,
   size: 20,
   ...aggs,
 };

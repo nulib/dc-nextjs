@@ -2,12 +2,14 @@ import { ModelName } from "@/types/api/generic";
 
 export interface ApiSearchRequest {
   _source: SearchSource;
-  query: {
-    bool: {
-      must: [SearchModelName, FacetTerms?, SearchSimpleQueryString?];
-    };
-  };
+  query: ApiSearchQuery;
   size: number;
+}
+
+export interface ApiSearchQuery {
+  bool: {
+    must: [SearchModelName, FacetTerms?, SearchSimpleQueryString?];
+  };
 }
 
 export interface FacetTerms {
