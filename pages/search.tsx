@@ -13,6 +13,7 @@ const SearchPage: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
   const {
+    searchDispatch,
     searchState: { userFacets },
   } = useSearchState();
 
@@ -29,7 +30,10 @@ const SearchPage: NextPage = () => {
   }, [q, searchTerm]);
 
   useEffect(() => {
-    // di
+    searchDispatch({
+      aggregations: apiData?.aggregations,
+      type: "updateAggregations",
+    });
   }, [apiData]);
 
   return (
@@ -42,7 +46,7 @@ const SearchPage: NextPage = () => {
         {error && <p>{error}</p>}
         {apiData && (
           <>
-            <Facets aggregations={apiData.aggregations} />
+            <Facets />
             <Grid data={apiData.data} info={apiData.info} />
           </>
         )}

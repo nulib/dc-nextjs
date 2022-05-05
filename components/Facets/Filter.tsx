@@ -6,11 +6,20 @@ import {
   FilterOverlay,
   FilterTrigger,
 } from "./Filter.styled";
-import { Filter } from "@/types/components/facets";
 import { FilterProvider } from "@/context/filter-context";
 import MultiFacet from "./MultiFacet";
+import { useSearchState } from "@/context/search-context";
+import useFetchApiData from "@/hooks/useFetchApiData";
 
-const FilterModal: React.FC<Filter> = ({ aggregations }) => {
+const FilterModal: React.FC = () => {
+  const {
+    searchState: { q, userFacets },
+  } = useSearchState();
+
+  const { data: apiData, error, loading } = useFetchApiData(q, userFacets);
+
+  console.log(`apiData`, apiData);
+
   return (
     <FilterProvider>
       <FilterHeader>
@@ -18,8 +27,8 @@ const FilterModal: React.FC<Filter> = ({ aggregations }) => {
         <Dialog.Close>Close</Dialog.Close>
       </FilterHeader>
       <FilterBody>
-        {aggregations &&
-          aggregations.map((aggregation) => (
+        {apiData?.aggregations &&
+          apiData.aggregations.map((aggregation) => (
             <MultiFacet {...aggregation} key={aggregation.id} />
           ))}
       </FilterBody>
@@ -27,7 +36,7 @@ const FilterModal: React.FC<Filter> = ({ aggregations }) => {
   );
 };
 
-const FacetsFilter: React.FC<Filter> = ({ aggregations }) => {
+const FacetsFilter: React.FC = () => {
   return (
     <Dialog.Root>
       <FilterTrigger>
@@ -36,7 +45,7 @@ const FacetsFilter: React.FC<Filter> = ({ aggregations }) => {
       <Dialog.Portal>
         <FilterOverlay />
         <FilterContent>
-          <FilterModal aggregations={aggregations} />
+          <FilterModal />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>
