@@ -18,17 +18,9 @@ describe("Facet Option UI component", () => {
     expect(option).toBeInTheDocument();
   });
 
-  it("Renders a facet option as a radio.", () => {
-    render(<Option {...mockOption} type="radio" />);
-    const option = screen.getByRole(`radio`);
-    expect(option).toBeInTheDocument();
-  });
-
   it("Renders a facet option with correct name and id.", () => {
     render(<Option {...mockOption} />);
     const option = screen.getByRole(`checkbox`);
-    expect(option).toHaveAttribute("name");
-    expect(option.getAttribute("name")).toBe("facet--foo");
     expect(option.getAttribute("id")).toBe("foo-0");
   });
 

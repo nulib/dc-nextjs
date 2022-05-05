@@ -31,10 +31,6 @@ describe("MultiFacet UI component", () => {
   it("Renders facet options as checkboxes.", () => {
     render(<MultiFacet {...mockAggregation} />);
     const options = screen.getByTestId(`facet-options`);
-    const checkboxes = within(options).getAllByRole("checkbox");
     expect(options).toBeInTheDocument();
-    checkboxes.forEach((checkbox) => {
-      expect(checkbox.getAttribute("name")).toBe("facet--foo");
-    });
   });
 });

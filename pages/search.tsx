@@ -28,6 +28,10 @@ const SearchPage: NextPage = () => {
     if (searchTerm !== q) setSearchTerm(q as string);
   }, [q, searchTerm]);
 
+  useEffect(() => {
+    // di
+  }, [apiData]);
+
   return (
     <Layout data-testid="search-page-wrapper">
       <Heading as="h1" isHidden>
