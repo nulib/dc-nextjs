@@ -1,8 +1,8 @@
-import React from "react";
+import { ApiResponseAggregation } from "@/types/api/response";
 import Container from "@/components/Container";
 import Filter from "@/components/Facets/Filter";
 import InlineFacet from "@/components/Facets/InlineFacet";
-import { ApiResponseAggregation } from "@/types/api/response";
+import React from "react";
 import { StyledFacets } from "./Facets.styled";
 
 interface FacetsProps {

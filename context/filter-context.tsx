@@ -5,7 +5,7 @@ import {
 import React from "react";
 
 type Action = {
-  type: "updateUserFacetsUnsubmitted";
+  type: "addUserFacet" | "removeUserFacet";
   userFacetsUnsubmitted: UserFacetsUnsubmitted;
 };
 type Dispatch = (action: Action) => void;
@@ -25,7 +25,13 @@ const FilterStateContext = React.createContext<
 
 function filterReducer(state: State, action: Action) {
   switch (action.type) {
-    case "updateUserFacetsUnsubmitted": {
+    case "addUserFacet": {
+      return {
+        ...state,
+        userFacetsUnsubmitted: action.userFacetsUnsubmitted,
+      };
+    }
+    case "removeUserFacet": {
       return {
         ...state,
         userFacetsUnsubmitted: action.userFacetsUnsubmitted,

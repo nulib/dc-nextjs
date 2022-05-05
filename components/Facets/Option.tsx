@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import * as Checkbox from "@radix-ui/react-checkbox";
+import React, { useEffect, useState } from "react";
 import { FacetOption } from "@/types/components/facets";
-import { UserFacetsUnsubmitted } from "@/types/filter-context";
 import { useFilterState } from "@/context/filter-context";
 import { useSearchState } from "@/context/search-context";
 
 const Option: React.FC<FacetOption> = ({ bucket, facet, index, type }) => {
-  const inputRef = useRef(null);
   const { doc_count, key } = bucket;
   const id = `${facet}-${index}`;
 
@@ -19,26 +18,24 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index, type }) => {
       if (userFacets[facet].includes(key)) setChecked(true);
   }, [searchState, facet, key]);
 
-  const handleChange = (e) => {
-    const facetOption: UserFacetsUnsubmitted = {
-      [facet]: [key],
-    };
-    setChecked(!checked);
+  const handleCheckedChange = (checkedStatus: boolean) => {
+    setChecked(checkedStatus);
     filterDispatch({
-      type: "updateUserFacetsUnsubmitted",
-      userFacetsUnsubmitted: facetOption,
+      type: checkedStatus ? "addUserFacet" : "removeUserFacet",
+      userFacetsUnsubmitted: { [facet]: [key] },
     });
   };
 
   return (
     <li>
-      <input
+      <Checkbox.Root
+        checked={checked}
         id={id}
         name={`facet--${facet}`}
-        type={type}
-        onChange={handleChange}
-        ref={inputRef}
-      />
+        onCheckedChange={handleCheckedChange}
+      >
+        <Checkbox.Indicator>{checked && <>x</>}</Checkbox.Indicator>
+      </Checkbox.Root>
       <label htmlFor={id}>{key}</label>
       <span>{doc_count}</span>
       {checked && (
