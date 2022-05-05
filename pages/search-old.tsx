@@ -8,7 +8,10 @@ import Facet from "components/Facet/Facet";
 import Layout from "components/layout";
 import { NextPage } from "next";
 import React from "react";
-import { facetFilterQuery } from "lib/queries/facet-filter";
+import {
+  buildFacetFilterQuery,
+  facetFilterQuery,
+} from "lib/queries/facet-filter";
 import { useSearchState } from "@/context/search-context";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { ApiResponseAggregation } from "@/types/api/response";
@@ -79,16 +82,14 @@ const SearchPage: NextPage = () => {
     if (value === "") {
       return;
     } else {
-      const query = facetFilterQuery(searchTerm, name, value, userFacets);
+      const query = buildFacetFilterQuery(searchTerm, name, value, userFacets);
 
       fetch(API_PRODUCTION_URL, {
-        method: "POST",
+        body: JSON.stringify(query),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(
-          facetFilterQuery(searchTerm, name, value, userFacets)
-        ),
+        method: "POST",
       })
         .then((response) => {
           return response.json();

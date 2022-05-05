@@ -4,48 +4,32 @@ import { FacetsInstance } from "@/types/components/facets";
 import { UserFacets } from "@/types/search-context";
 import { queryModelPart } from "@/lib/queries/search";
 
+type FacetFilterKey = string | undefined;
+
 const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-const facetFilter = (facets: Array<FacetsInstance>, facetLabel: string) => {
-  return facets.find(({ id }) => id === facetLabel)?.field;
-};
-
-export const facetFilterQuery = (
-  searchTerm: string,
-  facetLabel: string,
-  term: string,
-  userFacets: UserFacets
-) => {
-  const facetFilterKey = facetFilter(ALL_FACETS.facets, facetLabel);
-  const newQuery = {
-    ...buildFacetFilterQuery(
-      searchTerm,
-      facetFilterKey,
-      facetLabel,
-      term,
-      userFacets
-    ),
-  };
-  return newQuery;
+const facetFilter = (
+  facets: Array<FacetsInstance>,
+  facetId: string
+): FacetFilterKey => {
+  return facets.find(({ id }) => id === facetId)?.field;
 };
 
 export const buildFacetFilterQuery = (
   searchTerm: string,
-  facetField: any,
-  facetLabel: string,
-  term: any,
+  facetId: string,
+  term: string,
   userFacets: UserFacets
 ) => {
-  const regexp = userFacets[facetLabel];
+  const facetFilterKey = facetFilter(ALL_FACETS.facets, facetId);
+  const regexp = userFacets[facetId];
   const excludes = regexp
     ? regexp.map((string) => escapeRegExp(string)).join("|")
     : null;
 
-  let newQuery = JSON.parse(
-    JSON.stringify(baseQuery(facetField, term, excludes))
-  );
+  let newQuery = JSON.parse(JSON.stringify(baseQuery(facetFilterKey, term)));
 
   /**
    * Add search term to the API query
@@ -67,12 +51,12 @@ export const buildFacetFilterQuery = (
   return newQuery;
 };
 
-const baseQuery = (facetField: any, term: any, excludes: any) => {
+const baseQuery = (facetFilterKey: FacetFilterKey, term: string) => {
   return {
     aggs: {
       facetFilter: {
         terms: {
-          field: `${facetField}`,
+          field: `${facetFilterKey}`,
           include: `.*${term}.*`,
           size: 20,
         },
