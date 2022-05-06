@@ -6,10 +6,11 @@ import {
   FilterOverlay,
   FilterTrigger,
 } from "./Filter.styled";
+import FacetsGroupList from "./GroupList";
 import { FilterProvider } from "@/context/filter-context";
-import MultiFacet from "./MultiFacet";
-import { useSearchState } from "@/context/search-context";
+// import MultiFacet from "./MultiFacet";
 import useFetchApiData from "@/hooks/useFetchApiData";
+import { useSearchState } from "@/context/search-context";
 
 const FilterModal: React.FC = () => {
   const {
@@ -27,10 +28,11 @@ const FilterModal: React.FC = () => {
         <Dialog.Close>Close</Dialog.Close>
       </FilterHeader>
       <FilterBody>
-        {apiData?.aggregations &&
+        <FacetsGroupList />
+        {/* {apiData?.aggregations &&
           apiData.aggregations.map((aggregation) => (
             <MultiFacet {...aggregation} key={aggregation.id} />
-          ))}
+          ))} */}
       </FilterBody>
     </FilterProvider>
   );
