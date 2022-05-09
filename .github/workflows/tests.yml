@@ -9,3 +9,5 @@ jobs:
         run: npm install
       - name: Run tests
         run: npm run test:ci
+      - name: Test build
+        run: npm run build

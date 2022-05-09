@@ -6,10 +6,12 @@ import React from "react";
 import { StyledFacets } from "./Facets.styled";
 
 interface FacetsProps {
-  aggregations: ApiResponseAggregation[];
+  aggregations?: ApiResponseAggregation[];
 }
 
 const Facets: React.FC<FacetsProps> = ({ aggregations }) => {
+  if (!aggregations) return <></>;
+
   const workType = aggregations.filter((agg) => agg.id === "workType")[0];
   return (
     <Container>
