@@ -2,8 +2,8 @@ import { FacetsInstance } from "@/types/components/facets";
 import MultiFacet from "./MultiFacet";
 import React from "react";
 import useFetchApiData from "@/hooks/useFetchApiData";
-import { useSearchState } from "@/context/search-context";
 import { useFilterState } from "@/context/filter-context";
+import { useSearchState } from "@/context/search-context";
 
 interface FacetWrapperProps {
   facet: FacetsInstance;
@@ -13,7 +13,7 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
 
   const {
-    searchState: { q },
+    searchState: { q, userFacets },
   } = useSearchState();
 
   const {

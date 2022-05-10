@@ -24,6 +24,8 @@ export function buildQuery(
    */
   newQuery = addFacetsToQuery(newQuery, userFacets);
 
+  console.log(`newQuery`, newQuery);
+
   /**
    * what aggs do we want aggegations for?
    */

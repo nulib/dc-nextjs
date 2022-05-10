@@ -28,6 +28,8 @@ const useFetchApiData = (
     setData(null);
     setError(null);
 
+    // console.log(`userFacets useFetchApiData`, userFacets);
+
     const body: ApiSearchRequest = buildQuery(
       searchTerm,
       userFacets,
