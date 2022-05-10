@@ -1,8 +1,8 @@
 import { FacetsInstance } from "@/types/components/facets";
-import React, { useEffect, useState } from "react";
+import MultiFacet from "./MultiFacet";
+import React from "react";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { useSearchState } from "@/context/search-context";
-import MultiFacet from "./MultiFacet";
 
 interface FacetWrapperProps {
   facet: FacetsInstance;
@@ -15,19 +15,26 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
     searchState: { q, userFacets },
   } = useSearchState();
 
-  const {
-    data: apiData,
-    error,
-    loading,
-  } = useFetchApiData(q, userFacets, facetInstance);
+  const { data, error, loading } = useFetchApiData(
+    q,
+    userFacets,
+    facetInstance
+  );
 
-  if (!apiData) return <>loader...</>;
+  /**
+   * @todo: create fancy loader while request and response is occuring
+   */
 
-  const { aggregations } = apiData;
+  if (loading) return <>loader...</>;
 
-  if (!aggregations) return <>loader...</>;
+  if (error || !data || !data.aggregations) return <>friendly user error...</>;
 
-  return aggregations
+  /**
+   * return facet aggregation data for this facet instance
+   */
+  const { aggregations } = data;
+
+  const fileredAggregation = aggregations
     .filter((aggregation) => aggregation.id === facet.id)
     .map((aggregation) => (
       <MultiFacet
@@ -36,6 +43,8 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
         key={aggregation.id}
       />
     ));
+
+  return <>{fileredAggregation}</>;
 };
 
 export default FacetWrapper;
