@@ -8,6 +8,7 @@ import {
 } from "./Filter.styled";
 import FacetsGroupList from "./GroupList";
 import { FilterProvider } from "@/context/filter-context";
+import Preview from "./Preview";
 
 const FilterModal: React.FC = () => {
   return (
@@ -17,11 +18,13 @@ const FilterModal: React.FC = () => {
         <Dialog.Close>Close</Dialog.Close>
       </FilterHeader>
       <FilterBody>
-        <FacetsGroupList />
-        {/* {apiData?.aggregations &&
-          apiData.aggregations.filter((aggregation) => (
-            if () <MultiFacet {...aggregation} key={aggregation.id} />
-          ))} */}
+        <div>
+          <div>[active facet tray]</div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <FacetsGroupList />
+            <Preview />
+          </div>
+        </div>
       </FilterBody>
     </FilterProvider>
   );
