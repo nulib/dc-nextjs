@@ -1,6 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ALL_FACETS, FACETS } from "@/lib/facets-model";
+import FacetWrapper from "./FacetWrapper";
 
 const FacetsGroupList: React.FC = () => {
   return (
@@ -37,7 +38,7 @@ const FacetsGroupList: React.FC = () => {
         {ALL_FACETS.facets.map((facet) => {
           return (
             <Tabs.Content value={facet.id} key={facet.id}>
-              {facet.label} facet renders here.
+              <FacetWrapper facet={facet} />
             </Tabs.Content>
           );
         })}

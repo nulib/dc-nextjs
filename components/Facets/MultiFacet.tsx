@@ -12,6 +12,7 @@ import Option from "./Option";
 import { buildFacetFilterQuery } from "lib/queries/facet-filter";
 
 const MultiFacet: React.FC<ApiResponseAggregation> = ({ id, buckets }) => {
+  console.log(`id`, id);
   const handleFindChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("e.target.value", e.target.value);
     //const query = buildFacetFilterQuery();
@@ -43,4 +44,5 @@ const MultiFacet: React.FC<ApiResponseAggregation> = ({ id, buckets }) => {
     </StyledMultiFacet>
   );
 };
+
 export default MultiFacet;

@@ -1,9 +1,15 @@
 import { buildSearchPart, querySearchTemplate } from "@/lib/queries/search";
 import { ApiSearchRequest } from "@/types/api/request";
+import { FacetsInstance } from "@/types/components/facets";
 import { UserFacets } from "@/types/search-context";
+import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
-export function buildQuery(term: string, userFacets: UserFacets) {
+export function buildQuery(
+  term: string,
+  userFacets: UserFacets,
+  aggs?: FacetsInstance[]
+) {
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
@@ -17,6 +23,11 @@ export function buildQuery(term: string, userFacets: UserFacets) {
    * Add facets to the API query
    */
   newQuery = addFacetsToQuery(newQuery, userFacets);
+
+  /**
+   * what aggs do we want aggegations for?
+   */
+  if (aggs) newQuery.aggs = buildAggs(aggs);
 
   return newQuery;
 }

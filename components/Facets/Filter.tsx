@@ -8,19 +8,8 @@ import {
 } from "./Filter.styled";
 import FacetsGroupList from "./GroupList";
 import { FilterProvider } from "@/context/filter-context";
-// import MultiFacet from "./MultiFacet";
-import useFetchApiData from "@/hooks/useFetchApiData";
-import { useSearchState } from "@/context/search-context";
 
 const FilterModal: React.FC = () => {
-  const {
-    searchState: { q, userFacets },
-  } = useSearchState();
-
-  const { data: apiData, error, loading } = useFetchApiData(q, userFacets);
-
-  console.log(`apiData`, apiData);
-
   return (
     <FilterProvider>
       <FilterHeader>
@@ -30,8 +19,8 @@ const FilterModal: React.FC = () => {
       <FilterBody>
         <FacetsGroupList />
         {/* {apiData?.aggregations &&
-          apiData.aggregations.map((aggregation) => (
-            <MultiFacet {...aggregation} key={aggregation.id} />
+          apiData.aggregations.filter((aggregation) => (
+            if () <MultiFacet {...aggregation} key={aggregation.id} />
           ))} */}
       </FilterBody>
     </FilterProvider>

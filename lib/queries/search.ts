@@ -3,7 +3,7 @@ import {
   ApiSearchRequest,
   SearchSimpleQueryString,
 } from "@/types/api/request";
-import { aggs } from "@/lib/queries/aggs";
+import { aggs } from "./aggs";
 
 export const queryModelPart: ApiSearchQuery = {
   bool: {
