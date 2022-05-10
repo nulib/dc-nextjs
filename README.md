@@ -2,8 +2,6 @@
 
 This is a work in progress, for experimenting with NextJS, AWS Amplify and various ways of building / data fetching / hosting.
 
-Preview the site at: https://deploy-staging.d1nveexiit96fe.amplifyapp.com/
-
 ## Getting Started
 
 Install dependencies and run a NextJS development server:
