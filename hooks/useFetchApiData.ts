@@ -17,7 +17,8 @@ type Response = {
 const useFetchApiData = (
   searchTerm: string,
   userFacets: UserFacets,
-  activeFacets?: FacetsInstance[]
+  activeFacets?: FacetsInstance[],
+  size?: number
 ): Response => {
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,8 @@ const useFetchApiData = (
     const body: ApiSearchRequest = buildQuery(
       searchTerm,
       userFacets,
-      activeFacets
+      activeFacets,
+      size
     );
 
     fetch(DC_API_SEARCH_URL, {

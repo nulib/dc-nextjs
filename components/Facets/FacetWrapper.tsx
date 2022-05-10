@@ -23,7 +23,8 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const { data, error, loading } = useFetchApiData(
     q,
     userFacetsUnsubmitted,
-    facetInstance
+    facetInstance,
+    5
   );
 
   /**

@@ -8,11 +8,14 @@ import { buildFacetPart } from "@/lib/queries/facet";
 export function buildQuery(
   term: string,
   userFacets: UserFacets,
-  aggs?: FacetsInstance[]
+  aggs?: FacetsInstance[],
+  size?: number
 ) {
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
+
+  if (size) newQuery.size = size;
 
   /**
    * Add search term to the API query
