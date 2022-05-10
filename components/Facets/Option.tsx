@@ -1,9 +1,8 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import React, { useEffect, useState } from "react";
 import { FacetOption } from "@/types/components/facets";
+import React from "react";
 import { UserFacets } from "@/types";
 import { useFilterState } from "@/context/filter-context";
-import { useSearchState } from "@/context/search-context";
 
 const Option: React.FC<FacetOption> = ({ bucket, facet, index, type }) => {
   const { doc_count, key } = bucket;
