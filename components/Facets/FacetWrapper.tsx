@@ -3,6 +3,7 @@ import MultiFacet from "./MultiFacet";
 import React from "react";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { useSearchState } from "@/context/search-context";
+import { useFilterState } from "@/context/filter-context";
 
 interface FacetWrapperProps {
   facet: FacetsInstance;
@@ -12,12 +13,16 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
 
   const {
-    searchState: { q, userFacets },
+    searchState: { q },
   } = useSearchState();
+
+  const {
+    filterState: { userFacetsUnsubmitted },
+  } = useFilterState();
 
   const { data, error, loading } = useFetchApiData(
     q,
-    userFacets,
+    userFacetsUnsubmitted,
     facetInstance
   );
 
