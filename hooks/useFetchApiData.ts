@@ -14,12 +14,15 @@ type Response = {
   loading: boolean;
 };
 
-const useFetchApiData = (
-  searchTerm: string,
-  userFacets: UserFacets,
-  activeFacets?: FacetsInstance[],
-  size?: number
-): Response => {
+type HookArguments = {
+  searchTerm: string;
+  userFacets: UserFacets;
+  activeFacets?: FacetsInstance[];
+  size?: number;
+};
+
+const useFetchApiData = (obj: HookArguments): Response => {
+  const { activeFacets, searchTerm, size, userFacets } = obj;
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError>(null);

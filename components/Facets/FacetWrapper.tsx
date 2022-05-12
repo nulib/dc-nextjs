@@ -13,19 +13,19 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
 
   const {
-    searchState: { q, userFacets },
+    searchState: { q },
   } = useSearchState();
 
   const {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
 
-  const { data, error, loading } = useFetchApiData(
-    q,
-    userFacetsUnsubmitted,
-    facetInstance,
-    5
-  );
+  const { data, error, loading } = useFetchApiData({
+    activeFacets: facetInstance,
+    searchTerm: q,
+    size: 0,
+    userFacets: userFacetsUnsubmitted,
+  });
 
   /**
    * @todo: create fancy loader while request and response is occuring

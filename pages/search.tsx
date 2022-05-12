@@ -23,7 +23,7 @@ const SearchPage: NextPage = () => {
     data: apiData,
     error,
     loading,
-  } = useFetchApiData(searchTerm, userFacets);
+  } = useFetchApiData({ searchTerm, userFacets });
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
@@ -34,7 +34,7 @@ const SearchPage: NextPage = () => {
       aggregations: apiData?.aggregations,
       type: "updateAggregations",
     });
-  }, [apiData]);
+  }, [apiData, searchDispatch]);
 
   return (
     <Layout data-testid="search-page-wrapper">

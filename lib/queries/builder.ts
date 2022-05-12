@@ -15,7 +15,7 @@ export function buildQuery(
     JSON.stringify(querySearchTemplate)
   );
 
-  if (size) newQuery.size = size;
+  if (typeof size !== undefined) newQuery.size = size as number;
 
   /**
    * Add search term to the API query
@@ -26,8 +26,6 @@ export function buildQuery(
    * Add facets to the API query
    */
   newQuery = addFacetsToQuery(newQuery, userFacets);
-
-  console.log(`newQuery`, newQuery);
 
   /**
    * what aggs do we want aggegations for?
