@@ -1,9 +1,24 @@
 import { ModelName } from "@/types/api/generic";
 
+export interface Agg {
+  terms: {
+    field: string;
+    order: {
+      _count: string;
+    };
+    size: number;
+  };
+}
+
+export interface Aggs {
+  [key: string]: Agg;
+}
+
 export interface ApiSearchRequest {
   _source: SearchSource;
   query: ApiSearchQuery;
   size: number;
+  aggs?: Aggs;
 }
 
 export interface ApiSearchQuery {

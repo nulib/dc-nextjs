@@ -1,5 +1,3 @@
-import { aggs } from "../lib/queries/aggs";
-
 export const filteredQuery = {
   query: {
     filtered: {
@@ -72,5 +70,4 @@ export const filteredQuery2 = {
       },
     },
   },
-  ...aggs,
 };

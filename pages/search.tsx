@@ -13,6 +13,7 @@ const SearchPage: NextPage = () => {
   const router = useRouter();
   const { q } = router.query;
   const {
+    searchDispatch,
     searchState: { userFacets },
   } = useSearchState();
 
@@ -22,15 +23,18 @@ const SearchPage: NextPage = () => {
     data: apiData,
     error,
     loading,
-  } = useFetchApiData(searchTerm, userFacets);
+  } = useFetchApiData({ searchTerm, userFacets });
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
   }, [q, searchTerm]);
 
   useEffect(() => {
-    // di
-  }, [apiData]);
+    searchDispatch({
+      aggregations: apiData?.aggregations,
+      type: "updateAggregations",
+    });
+  }, [apiData, searchDispatch]);
 
   return (
     <Layout data-testid="search-page-wrapper">
@@ -42,7 +46,7 @@ const SearchPage: NextPage = () => {
         {error && <p>{error}</p>}
         {apiData && (
           <>
-            <Facets aggregations={apiData.aggregations} />
+            <Facets />
             <Grid data={apiData.data} info={apiData.info} />
           </>
         )}

@@ -6,11 +6,11 @@ import {
   FilterOverlay,
   FilterTrigger,
 } from "./Filter.styled";
-import { Filter } from "@/types/components/facets";
+import FacetsGroupList from "./GroupList";
 import { FilterProvider } from "@/context/filter-context";
-import MultiFacet from "./MultiFacet";
+import Preview from "./Preview";
 
-const FilterModal: React.FC<Filter> = ({ aggregations }) => {
+const FilterModal: React.FC = () => {
   return (
     <FilterProvider>
       <FilterHeader>
@@ -18,16 +18,19 @@ const FilterModal: React.FC<Filter> = ({ aggregations }) => {
         <Dialog.Close>Close</Dialog.Close>
       </FilterHeader>
       <FilterBody>
-        {aggregations &&
-          aggregations.map((aggregation) => (
-            <MultiFacet {...aggregation} key={aggregation.id} />
-          ))}
+        <div>
+          <div>[active facet tray]</div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <FacetsGroupList />
+            <Preview />
+          </div>
+        </div>
       </FilterBody>
     </FilterProvider>
   );
 };
 
-const FacetsFilter: React.FC<Filter> = ({ aggregations }) => {
+const FacetsFilter: React.FC = () => {
   return (
     <Dialog.Root>
       <FilterTrigger>
@@ -36,7 +39,7 @@ const FacetsFilter: React.FC<Filter> = ({ aggregations }) => {
       <Dialog.Portal>
         <FilterOverlay />
         <FilterContent>
-          <FilterModal aggregations={aggregations} />
+          <FilterModal />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>
