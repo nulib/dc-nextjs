@@ -3,7 +3,6 @@ import {
   ApiSearchRequest,
   SearchSimpleQueryString,
 } from "@/types/api/request";
-import { aggs } from "@/lib/queries/aggs";
 
 export const queryModelPart: ApiSearchQuery = {
   bool: {
@@ -37,7 +36,6 @@ const querySearchTemplate: ApiSearchRequest = {
   ],
   query: queryModelPart,
   size: 20,
-  ...aggs,
 };
 
 const buildSearchPart = (term: string): SearchSimpleQueryString => {

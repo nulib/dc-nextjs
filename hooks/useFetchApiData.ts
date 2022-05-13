@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/endpoints";
+import { FacetsInstance } from "@/types/components/facets";
 import { UserFacets } from "@/types/search-context";
 import { buildQuery } from "@/lib/queries/builder";
 
@@ -13,10 +14,15 @@ type Response = {
   loading: boolean;
 };
 
-const useFetchApiData = (
-  searchTerm: string,
-  userFacets: UserFacets
-): Response => {
+type HookArguments = {
+  searchTerm: string;
+  userFacets: UserFacets;
+  activeFacets?: FacetsInstance[];
+  size?: number;
+};
+
+const useFetchApiData = (obj: HookArguments): Response => {
+  const { activeFacets, searchTerm, size, userFacets } = obj;
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError>(null);
@@ -26,7 +32,14 @@ const useFetchApiData = (
     setData(null);
     setError(null);
 
-    const body: ApiSearchRequest = buildQuery(searchTerm, userFacets);
+    // console.log(`userFacets useFetchApiData`, userFacets);
+
+    const body: ApiSearchRequest = buildQuery(
+      searchTerm,
+      userFacets,
+      activeFacets,
+      size
+    );
 
     fetch(DC_API_SEARCH_URL, {
       body: JSON.stringify(body),

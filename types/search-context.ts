@@ -1,4 +1,7 @@
+import { ApiResponseAggregation } from "./api/response";
+
 export interface SearchContextStore {
+  aggregations?: ApiResponseAggregation[] | undefined;
   q: string;
   userFacets: UserFacets;
 }

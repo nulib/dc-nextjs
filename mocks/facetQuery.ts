@@ -1,5 +1,3 @@
-import { aggs } from "../lib/queries/aggs";
-
 const querySearchPart = {
   simple_query_string: {
     query: "dylan~1 | dylan*",
@@ -64,5 +62,4 @@ export const facetQuery = {
       ],
     },
   },
-  ...aggs,
 };
