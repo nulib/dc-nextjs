@@ -32,17 +32,19 @@ const FilterModal: React.FC = () => {
 
 const FacetsFilter: React.FC = () => {
   return (
-    <Dialog.Root>
-      <FilterTrigger>
-        <span>Filter</span>
-      </FilterTrigger>
-      <Dialog.Portal>
-        <FilterOverlay />
-        <FilterContent>
-          <FilterModal />
-        </FilterContent>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <>
+      <Dialog.Root>
+        <FilterTrigger>
+          <span>Filter</span>
+        </FilterTrigger>
+        <Dialog.Portal>
+          <FilterOverlay />
+          <FilterContent>
+            <FilterModal />
+          </FilterContent>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
   );
 };
 
