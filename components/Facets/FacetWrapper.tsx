@@ -11,6 +11,7 @@ interface FacetWrapperProps {
 
 const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
+  const [aggsFilterValue, setAggsFilterValue] = React.useState();
 
   const {
     searchState: { q },
@@ -22,6 +23,7 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
 
   const { data, error, loading } = useFetchApiData({
     activeFacets: facetInstance,
+    aggsFilterValue,
     searchTerm: q,
     size: 0,
     userFacets: userFacetsUnsubmitted,
@@ -48,6 +50,7 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
         id={aggregation.id}
         buckets={aggregation.buckets}
         key={aggregation.id}
+        setAggsFilterValue={setAggsFilterValue}
       />
     ));
 

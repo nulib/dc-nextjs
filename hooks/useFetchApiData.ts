@@ -16,13 +16,14 @@ type Response = {
 
 type HookArguments = {
   activeFacets?: FacetsInstance[];
+  aggsFilterValue?: string;
   searchTerm: string;
   size?: number;
   userFacets: UserFacets;
 };
 
 const useFetchApiData = (obj: HookArguments): Response => {
-  const { activeFacets, searchTerm, size, userFacets } = obj;
+  const { activeFacets, aggsFilterValue, searchTerm, size, userFacets } = obj;
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError>(null);
@@ -36,6 +37,7 @@ const useFetchApiData = (obj: HookArguments): Response => {
 
     const body: ApiSearchRequest = buildQuery({
       aggs: activeFacets,
+      aggsFilterValue,
       size,
       term: searchTerm,
       userFacets,
@@ -59,7 +61,7 @@ const useFetchApiData = (obj: HookArguments): Response => {
 
         console.error("error fetching API data", err);
       });
-  }, [searchTerm, userFacets]);
+  }, [aggsFilterValue, searchTerm, userFacets]);
 
   return { data, error, loading };
 };

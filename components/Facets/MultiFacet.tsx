@@ -5,39 +5,24 @@ import {
   StyledMultiFacet,
 } from "./MultiFacet.styled";
 import { ApiResponseAggregation } from "@/types/api/response";
-import { ApiSearchRequest } from "@/types/api/request";
 import { ChangeEvent } from "react";
-import { DC_API_SEARCH_URL } from "@/lib/endpoints";
 import Heading from "@/components/Heading/Heading";
 import { IconSearch } from "../SVG/Icons";
 import Option from "./Option";
 import React from "react";
-import { buildFacetFilterQuery } from "lib/queries/facet-filter";
 import { debounce } from "@/utils/debounce";
-import useFetch from "@/hooks/useFetch";
-import { useFilterState } from "@/context/filter-context";
-import { useSearchState } from "@/context/search-context";
 
-const MultiFacet: React.FC<ApiResponseAggregation> = ({ id, buckets }) => {
-  const { searchState } = useSearchState();
-  const { filterState } = useFilterState();
-  const [query, setQuery] = React.useState<ApiSearchRequest>();
+interface MultiFacetProps extends ApiResponseAggregation {
+  setAggsFilterValue: (arg0: string) => void;
+}
 
-  // const { data, error, loading } = useFetch({
-  //   body: query,
-  //   url: DC_API_SEARCH_URL,
-  // });
-
-  // console.log("data", data);
-
+const MultiFacet: React.FC<MultiFacetProps> = ({
+  id,
+  buckets,
+  setAggsFilterValue,
+}) => {
   const handleFindChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    // const query = buildFacetFilterQuery({
-    //   facetId: id,
-    //   filterTerm: e.target.value,
-    //   searchTerm: searchState.q,
-    //   userFacets: filterState.userFacetsUnsubmitted,
-    // });
-    // setQuery(query);
+    setAggsFilterValue(e.target.value);
   };
 
   const debouncedHandler = React.useCallback(

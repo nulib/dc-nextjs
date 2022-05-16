@@ -7,19 +7,28 @@ import { FacetsInstance } from "@/types/components/facets";
  * @param facets
  * @returns
  */
-export const buildAggs = (facets: FacetsInstance[]) => {
+export const buildAggs = (
+  facets: FacetsInstance[],
+  facetFilterValue: string | undefined
+) => {
   const aggs: Aggs = {};
 
   facets.forEach((facet) => {
-    const terms = Object.create({});
-    terms.field = facet.field;
-    terms.size = 20;
-    terms.order = {
-      _count: "desc",
+    const terms = {
+      field: facet.field,
+
+      // This line will filter returned aggs based on user text input
+      include: facetFilterValue ? `.*${facetFilterValue}.*` : undefined,
+
+      order: {
+        _count: "desc",
+      },
+      size: 20,
     };
 
-    aggs[facet.id] = Object.create({});
-    aggs[facet.id].terms = terms;
+    aggs[facet.id] = {
+      terms,
+    };
   });
 
   return aggs;

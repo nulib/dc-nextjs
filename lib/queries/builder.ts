@@ -6,14 +6,15 @@ import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
 type BuildQueryProps = {
+  aggs?: FacetsInstance[];
+  aggsFilterValue?: string;
+  size?: number;
   term: string;
   userFacets: UserFacets;
-  aggs?: FacetsInstance[];
-  size?: number;
 };
 
 export function buildQuery(obj: BuildQueryProps) {
-  const { term, userFacets, aggs, size } = obj;
+  const { aggs, aggsFilterValue, size, term, userFacets } = obj;
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
@@ -36,7 +37,7 @@ export function buildQuery(obj: BuildQueryProps) {
   /**
    * what aggs do we want aggegations for?
    */
-  if (aggs) newQuery.aggs = buildAggs(aggs);
+  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue);
 
   return newQuery;
 }
