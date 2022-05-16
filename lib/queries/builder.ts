@@ -5,15 +5,21 @@ import { UserFacets } from "@/types/search-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
-export function buildQuery(
-  term: string,
-  userFacets: UserFacets,
-  aggs?: FacetsInstance[],
-  size?: number
-) {
+type BuildQueryProps = {
+  term: string;
+  userFacets: UserFacets;
+  aggs?: FacetsInstance[];
+  size?: number;
+};
+
+export function buildQuery(obj: BuildQueryProps) {
+  const { term, userFacets, aggs, size } = obj;
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
+
+  console.log("userFacets", userFacets);
+  console.log("aggs", aggs);
 
   if (typeof size !== undefined) newQuery.size = size as number;
 

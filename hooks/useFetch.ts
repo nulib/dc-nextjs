@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/endpoints";
-import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/search-context";
-import { buildQuery } from "@/lib/queries/builder";
 
 type ApiData = ApiSearchResponse | null;
 type ApiError = string | null;
@@ -15,14 +12,12 @@ type Response = {
 };
 
 type HookArguments = {
-  activeFacets?: FacetsInstance[];
-  searchTerm: string;
-  size?: number;
-  userFacets: UserFacets;
+  body?: ApiSearchRequest;
+  url: string;
 };
 
-const useFetchApiData = (obj: HookArguments): Response => {
-  const { activeFacets, searchTerm, size, userFacets } = obj;
+const useFetch = (obj: HookArguments): Response => {
+  const { body, url } = obj;
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError>(null);
@@ -31,15 +26,6 @@ const useFetchApiData = (obj: HookArguments): Response => {
     setLoading(true);
     setData(null);
     setError(null);
-
-    // console.log(`userFacets useFetchApiData`, userFacets);
-
-    const body: ApiSearchRequest = buildQuery({
-      aggs: activeFacets,
-      size,
-      term: searchTerm,
-      userFacets,
-    });
 
     fetch(DC_API_SEARCH_URL, {
       body: JSON.stringify(body),
@@ -59,9 +45,9 @@ const useFetchApiData = (obj: HookArguments): Response => {
 
         console.error("error fetching API data", err);
       });
-  }, [searchTerm, userFacets]);
+  }, [body, url]);
 
   return { data, error, loading };
 };
 
-export default useFetchApiData;
+export default useFetch;

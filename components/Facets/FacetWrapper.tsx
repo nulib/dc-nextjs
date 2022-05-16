@@ -26,6 +26,7 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
     size: 0,
     userFacets: userFacetsUnsubmitted,
   });
+  console.log("data", data);
 
   /**
    * @todo: create fancy loader while request and response is occuring

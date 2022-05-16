@@ -17,19 +17,24 @@ const facetFilter = (
   return facets.find(({ id }) => id === facetId)?.field;
 };
 
-export const buildFacetFilterQuery = (
-  searchTerm: string,
-  facetId: string,
-  term: string,
-  userFacets: UserFacets
-) => {
+type BuildFacetFilterQueryParams = {
+  facetId: string;
+  filterTerm: string;
+  searchTerm: string;
+  userFacets: UserFacets;
+};
+export const buildFacetFilterQuery = (obj: BuildFacetFilterQueryParams) => {
+  const { facetId, filterTerm, searchTerm, userFacets } = obj;
+
   const facetFilterKey = facetFilter(ALL_FACETS.facets, facetId);
   const regexp = userFacets[facetId];
   const excludes = regexp
     ? regexp.map((string) => escapeRegExp(string)).join("|")
     : null;
 
-  let newQuery = JSON.parse(JSON.stringify(baseQuery(facetFilterKey, term)));
+  let newQuery = JSON.parse(
+    JSON.stringify(baseQuery(facetFilterKey, filterTerm))
+  );
 
   /**
    * Add search term to the API query
@@ -51,13 +56,13 @@ export const buildFacetFilterQuery = (
   return newQuery;
 };
 
-const baseQuery = (facetFilterKey: FacetFilterKey, term: string) => {
+const baseQuery = (facetFilterKey: FacetFilterKey, filterTerm: string) => {
   return {
     aggs: {
       facetFilter: {
         terms: {
           field: `${facetFilterKey}`,
-          include: `.*${term}.*`,
+          include: `.*${filterTerm}.*`,
           size: 20,
         },
       },
