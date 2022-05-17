@@ -13,10 +13,12 @@ import React from "react";
 import { debounce } from "@/utils/debounce";
 
 interface MultiFacetProps extends ApiResponseAggregation {
+  filterValue: string;
   setAggsFilterValue: (arg0: string) => void;
 }
 
 const MultiFacet: React.FC<MultiFacetProps> = ({
+  filterValue,
   id,
   buckets,
   setAggsFilterValue,
@@ -38,8 +40,9 @@ const MultiFacet: React.FC<MultiFacetProps> = ({
         <FindInput
           aria-label={`Find ${id}`}
           placeholder={`Find ${id}`}
-          onChange={debouncedHandler}
+          onChange={handleFindChange}
           type="text"
+          value={filterValue}
         />
       </Find>
       <Options className="facet-options" data-testid="facet-options">

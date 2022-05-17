@@ -11,7 +11,7 @@ interface FacetWrapperProps {
 
 const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
-  const [aggsFilterValue, setAggsFilterValue] = React.useState();
+  const [aggsFilterValue, setAggsFilterValue] = React.useState("");
 
   const {
     searchState: { q },
@@ -28,10 +28,9 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
     size: 0,
     userFacets: userFacetsUnsubmitted,
   });
-  console.log("data", data);
 
   /**
-   * @todo: create fancy loader while request and response is occuring
+   * @todo: create fancy loader while request and response is occurring
    */
 
   if (loading) return <>loader...</>;
@@ -42,19 +41,33 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
    * return facet aggregation data for this facet instance
    */
   const { aggregations } = data;
+  const userFacetsAggregation = aggregations.find(
+    (aggregation) => aggregation.id === "userFacets"
+  );
 
-  const fileredAggregation = aggregations
+  const filteredAggregation = aggregations
     .filter((aggregation) => aggregation.id === facet.id)
-    .map((aggregation) => (
-      <MultiFacet
-        id={aggregation.id}
-        buckets={aggregation.buckets}
-        key={aggregation.id}
-        setAggsFilterValue={setAggsFilterValue}
-      />
-    ));
+    .map((aggregation) => {
+      const userBuckets = userFacetsAggregation
+        ? userFacetsAggregation.buckets
+        : [];
+      const filteredAggBuckets = aggregation.buckets.filter((ab) => {
+        return !userBuckets.find((ub) => ub.key === ab.key);
+      });
+      const buckets = [...userBuckets, ...filteredAggBuckets];
 
-  return <>{fileredAggregation}</>;
+      return (
+        <MultiFacet
+          filterValue={aggsFilterValue}
+          id={aggregation.id}
+          buckets={buckets}
+          key={aggregation.id}
+          setAggsFilterValue={setAggsFilterValue}
+        />
+      );
+    });
+
+  return <>{filteredAggregation}</>;
 };
 
 export default FacetWrapper;

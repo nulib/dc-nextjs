@@ -19,9 +19,6 @@ export function buildQuery(obj: BuildQueryProps) {
     JSON.stringify(querySearchTemplate)
   );
 
-  console.log("userFacets", userFacets);
-  console.log("aggs", aggs);
-
   if (typeof size !== undefined) newQuery.size = size as number;
 
   /**
@@ -35,9 +32,9 @@ export function buildQuery(obj: BuildQueryProps) {
   newQuery = addFacetsToQuery(newQuery, userFacets);
 
   /**
-   * what aggs do we want aggegations for?
+   * Add aggregations to the API query
    */
-  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue);
+  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue, userFacets);
 
   return newQuery;
 }
