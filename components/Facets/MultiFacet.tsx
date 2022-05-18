@@ -27,10 +27,12 @@ const MultiFacet: React.FC<MultiFacetProps> = ({
     setAggsFilterValue(e.target.value);
   };
 
+  /* eslint-disable */
   const debouncedHandler = React.useCallback(
     debounce(handleFindChange, 1000),
     []
   );
+  /* eslint-enable */
 
   return (
     <StyledMultiFacet data-testid="facet-multi-component" id={`facet--${id}`}>

@@ -17,6 +17,9 @@ const Preview: React.FC = () => {
     userFacets: userFacetsUnsubmitted,
   });
 
+  if (error) return <p>Error</p>;
+  if (loading) return <p>Loading...</p>;
+
   return (
     <div>
       <p>[Preview]</p>

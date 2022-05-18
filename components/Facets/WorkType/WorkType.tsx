@@ -11,7 +11,7 @@ const WorkType: React.FC = () => {
   const { id } = FACETS_WORK_TYPE.facets[0];
 
   const { searchDispatch, searchState } = useSearchState();
-  const { q, userFacets } = searchState;
+  const { userFacets } = searchState;
 
   const workTypeFacet = userFacets[id];
 
