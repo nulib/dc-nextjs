@@ -43,7 +43,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
       transform: `translate(${
         itemBoundingBox.left - wrapperBoundingBox.left
       }px)`,
-      transitionDuration: isHoveredFromNull ? "0ms" : "100ms",
+      transitionDuration: isHoveredFromNull ? "0ms" : "200ms",
       width: `${itemBoundingBox.width}px`,
     };
   }

@@ -3,17 +3,21 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const Wrapper = styled(Radio.Root, { position: "relative" });
+const Wrapper = styled(Radio.Root, {
+  position: "relative",
+  height: "2rem",
+});
 
 const StyledWorkType = styled("ul", {
   display: "flex",
   justifyContent: "space-between",
   flexDirection: "row",
+  padding: "0",
+  margin: "0",
 
   li: {
     listStyle: "none",
     cursor: "pointer",
-    marginLeft: "0.25rem",
 
     button: {
       position: "relative",
@@ -24,13 +28,14 @@ const StyledWorkType = styled("ul", {
       fontSize: "1rem",
       fontFamily: "$sans",
       fontWeight: "700",
+      height: "2rem",
       zIndex: "1",
       padding: "0",
       transition: "all 200ms ease-in-out",
-      opacity: "0.5",
+      color: "$black50",
 
       [`&[aria-checked="true"]`]: {
-        opacity: "1",
+        color: "$black",
       },
 
       ["&:hover"]: {
@@ -39,8 +44,13 @@ const StyledWorkType = styled("ul", {
       },
 
       label: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        height: "2rem",
         cursor: "pointer",
-        padding: "0 0.75rem",
+        padding: "0 1rem",
       },
     },
   },
@@ -49,7 +59,7 @@ const StyledWorkType = styled("ul", {
 const Highlight = styled("div", {
   backgroundColor: "$purple",
   position: "absolute",
-  bottom: "10px",
+  top: "0",
   borderRadius: "1rem",
   height: "2rem",
   transition: "all 100ms ease-in-out",
