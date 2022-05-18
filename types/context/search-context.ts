@@ -1,4 +1,4 @@
-import { ApiResponseAggregation } from "./api/response";
+import { ApiResponseAggregation } from "../api/response";
 
 export interface SearchContextStore {
   aggregations?: ApiResponseAggregation[] | undefined;

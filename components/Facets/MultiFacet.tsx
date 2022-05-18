@@ -10,7 +10,7 @@ import Heading from "@/components/Heading/Heading";
 import { IconSearch } from "../SVG/Icons";
 import Option from "./Option";
 import React from "react";
-import { debounce } from "@/utils/debounce";
+import { debounce } from "@/lib/utils/debounce";
 
 interface MultiFacetProps extends ApiResponseAggregation {
   filterValue: string;

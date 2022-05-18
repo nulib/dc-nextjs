@@ -1,6 +1,6 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import * as Tabs from "@radix-ui/react-tabs";
-import { ALL_FACETS, FACETS } from "@/lib/facets-model";
+import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
 import FacetWrapper from "./FacetWrapper";
 
 const FacetsGroupList: React.FC = () => {

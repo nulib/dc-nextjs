@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Container from "@/components/Container";
-import { FACETS_WORK_TYPE } from "@/lib/facets-model";
 import Facets from "@/components/Facets/Facets";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";

@@ -1,6 +1,6 @@
 import { Aggs } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/search-context";
+import { UserFacets } from "@/types/context/search-context";
 
 /**
  * This constructs the `aggs` property as part of an elastic search query request

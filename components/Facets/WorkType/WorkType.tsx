@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { FACETS_WORK_TYPE } from "@/lib/facets-model";
+import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
 import RadioGroup from "./RadioGroup";
-import { UserFacets } from "@/types/search-context";
+import { UserFacets } from "@/types/context/search-context";
 import { WorkTypeOptions } from "@/types/components/facets";
 // import useFetchApiData from "@/hooks/useFetchApiData";
 import { useSearchState } from "@/context/search-context";

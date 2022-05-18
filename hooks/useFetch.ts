@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
-import { DC_API_SEARCH_URL } from "@/lib/endpoints";
+import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 
 type ApiData = ApiSearchResponse | null;
 type ApiError = string | null;

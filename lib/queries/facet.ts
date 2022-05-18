@@ -1,4 +1,4 @@
-import { ALL_FACETS } from "../facets-model";
+import { ALL_FACETS } from "../constants/facets-model";
 
 const buildFacetPart = (id: string, values: string[]) => {
   /**

@@ -23,7 +23,7 @@
       "@/mocks/*": ["mocks/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["lib/utils/*"]
     }
   },
   "include": [

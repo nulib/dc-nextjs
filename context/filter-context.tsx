@@ -1,7 +1,7 @@
 import {
   FilterContextStore,
   UserFacetsUnsubmitted,
-} from "@/types/filter-context";
+} from "@/types/context/filter-context";
 import React from "react";
 
 type Action = {

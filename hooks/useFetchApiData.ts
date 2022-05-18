@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
-import { DC_API_SEARCH_URL } from "@/lib/endpoints";
+import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/search-context";
+import { UserFacets } from "@/types/context/search-context";
 import { buildQuery } from "@/lib/queries/builder";
 
 type ApiData = ApiSearchResponse | null;

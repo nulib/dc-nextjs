@@ -1,4 +1,4 @@
-import colors from "./stitches/colors";
+import colors from "@/styles/colors";
 import { createStitches } from "@stitches/react";
 
 export const {

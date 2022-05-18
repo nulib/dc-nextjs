@@ -1,7 +1,7 @@
 import { buildSearchPart, querySearchTemplate } from "@/lib/queries/search";
 import { ApiSearchRequest } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/search-context";
+import { UserFacets } from "@/types/context/search-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
