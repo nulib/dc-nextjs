@@ -4,7 +4,7 @@ import React from "react";
 import { UserFacets } from "@/types";
 import { useFilterState } from "@/context/filter-context";
 
-const Option: React.FC<FacetOption> = ({ bucket, facet, index, type }) => {
+const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
   const { doc_count, key } = bucket;
   const id = `${facet}-${index}`;
 

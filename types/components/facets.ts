@@ -1,7 +1,12 @@
 import { ApiResponseBucket } from "../api/response";
 
-export interface AllFacets {
+export interface FacetsList {
   facets: FacetsInstance[];
+}
+
+export interface FacetsListWorkType extends FacetsList {
+  facets: FacetsInstance[];
+  options: string[];
 }
 
 export interface FacetsInstance {
@@ -20,3 +25,5 @@ export interface FacetOption {
   index: number;
   type: "checkbox" | "radio";
 }
+
+export type WorkTypeOptions = "All" | "Audio" | "Image" | "Video";
