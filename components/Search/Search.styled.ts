@@ -1,5 +1,7 @@
 import { styled } from "@/stitches.config";
 
+/* eslint sort-keys: 0 */
+
 const SearchStyled = styled("form", {
   position: "relative",
   display: "flex",

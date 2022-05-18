@@ -50,7 +50,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       if (q && search.current) search.current.value = q as string;
       setSearchValue(q as string);
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Container from "@/components/Container";
+import Link from "next/link";
 import { Lockup } from "@/components/Header/Header.styled";
 
 export default function HeaderLockup() {
