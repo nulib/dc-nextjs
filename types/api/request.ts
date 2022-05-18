@@ -3,6 +3,8 @@ import { ModelName } from "@/types/api/generic";
 export interface Agg {
   terms: {
     field: string;
+    exclude?: string[] | string;
+    include?: string[] | string;
     order: {
       _count: string;
     };

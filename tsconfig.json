@@ -19,9 +19,11 @@
       "@/*": ["*"],
       "@/components/*": ["components/*"],
       "@/context/*": ["context/*"],
+      "@/lib/*": ["lib/*"],
       "@/mocks/*": ["mocks/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/utils/*": ["utils/*"]
     }
   },
   "include": [

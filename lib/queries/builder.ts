@@ -5,12 +5,16 @@ import { UserFacets } from "@/types/search-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
-export function buildQuery(
-  term: string,
-  userFacets: UserFacets,
-  aggs?: FacetsInstance[],
-  size?: number
-) {
+type BuildQueryProps = {
+  aggs?: FacetsInstance[];
+  aggsFilterValue?: string;
+  size?: number;
+  term: string;
+  userFacets: UserFacets;
+};
+
+export function buildQuery(obj: BuildQueryProps) {
+  const { aggs, aggsFilterValue, size, term, userFacets } = obj;
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
@@ -28,9 +32,9 @@ export function buildQuery(
   newQuery = addFacetsToQuery(newQuery, userFacets);
 
   /**
-   * what aggs do we want aggegations for?
+   * Add aggregations to the API query
    */
-  if (aggs) newQuery.aggs = buildAggs(aggs);
+  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue, userFacets);
 
   return newQuery;
 }

@@ -9,14 +9,28 @@ import { ChangeEvent } from "react";
 import Heading from "@/components/Heading/Heading";
 import { IconSearch } from "../SVG/Icons";
 import Option from "./Option";
-import { buildFacetFilterQuery } from "lib/queries/facet-filter";
+import React from "react";
+import { debounce } from "@/utils/debounce";
 
-const MultiFacet: React.FC<ApiResponseAggregation> = ({ id, buckets }) => {
-  // console.log(`id`, id);
-  const handleFindChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log("e.target.value", e.target.value);
-    //const query = buildFacetFilterQuery();
+interface MultiFacetProps extends ApiResponseAggregation {
+  filterValue: string;
+  setAggsFilterValue: (arg0: string) => void;
+}
+
+const MultiFacet: React.FC<MultiFacetProps> = ({
+  filterValue,
+  id,
+  buckets,
+  setAggsFilterValue,
+}) => {
+  const handleFindChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    setAggsFilterValue(e.target.value);
   };
+
+  const debouncedHandler = React.useCallback(
+    debounce(handleFindChange, 1000),
+    []
+  );
 
   return (
     <StyledMultiFacet data-testid="facet-multi-component" id={`facet--${id}`}>
@@ -28,6 +42,7 @@ const MultiFacet: React.FC<ApiResponseAggregation> = ({ id, buckets }) => {
           placeholder={`Find ${id}`}
           onChange={handleFindChange}
           type="text"
+          value={filterValue}
         />
       </Find>
       <Options className="facet-options" data-testid="facet-options">
