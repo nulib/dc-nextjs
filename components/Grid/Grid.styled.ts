@@ -2,6 +2,8 @@ import * as Dialog from "@radix-ui/react-dialog";
 import Masonry from "react-masonry-css";
 import { styled } from "@/stitches.config";
 
+/* eslint sort-keys: 0 */
+
 const GridFilter = styled(Dialog.Trigger, {
   width: "81px",
   height: "38px",
@@ -17,7 +19,7 @@ const GridItem = styled("div", {
   zIndex: "1",
 });
 
-const GridStyled = styled(Masonry as any, {
+const GridStyled = styled(Masonry, {
   display: "flex",
   position: "relative",
   zIndex: "0",

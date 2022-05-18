@@ -1,4 +1,4 @@
-import { SearchContextStore, UserFacets } from "@/types/search-context";
+import { SearchContextStore, UserFacets } from "@/types/context/search-context";
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
 

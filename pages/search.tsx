@@ -19,11 +19,16 @@ const SearchPage: NextPage = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>(q as string);
 
+  /**
+   * set non-context search request params
+   */
+  const size = 40;
+
   const {
     data: apiData,
     error,
     loading,
-  } = useFetchApiData({ searchTerm, userFacets });
+  } = useFetchApiData({ searchTerm, size, userFacets });
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
@@ -41,16 +46,14 @@ const SearchPage: NextPage = () => {
       <Heading as="h1" isHidden>
         Northwestern
       </Heading>
-      <Container containerType="wide">
-        {loading && <p>loading...</p>}
-        {error && <p>{error}</p>}
-        {apiData && (
-          <>
-            <Facets />
-            <Grid data={apiData.data} info={apiData.info} />
-          </>
-        )}
-      </Container>
+      <Facets />
+      {loading && <p>loading...</p>}
+      {error && <p>{error}</p>}
+      {apiData && (
+        <Container containerType="wide">
+          <Grid data={apiData.data} info={apiData.info} />
+        </Container>
+      )}
     </Layout>
   );
 };

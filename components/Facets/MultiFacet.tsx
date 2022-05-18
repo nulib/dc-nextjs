@@ -10,7 +10,7 @@ import Heading from "@/components/Heading/Heading";
 import { IconSearch } from "../SVG/Icons";
 import Option from "./Option";
 import React from "react";
-import { debounce } from "@/utils/debounce";
+import { debounce } from "@/lib/utils/debounce";
 
 interface MultiFacetProps extends ApiResponseAggregation {
   filterValue: string;
@@ -27,10 +27,12 @@ const MultiFacet: React.FC<MultiFacetProps> = ({
     setAggsFilterValue(e.target.value);
   };
 
+  /* eslint-disable */
   const debouncedHandler = React.useCallback(
     debounce(handleFindChange, 1000),
     []
   );
+  /* eslint-enable */
 
   return (
     <StyledMultiFacet data-testid="facet-multi-component" id={`facet--${id}`}>

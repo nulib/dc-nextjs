@@ -1,6 +1,6 @@
+import Container from "../Container";
 import Nav from "@/components/Nav/Nav";
 import { Super } from "@/components/Header/Header.styled";
-import Container from "../Container";
 
 export default function HeaderSuper() {
   return (
