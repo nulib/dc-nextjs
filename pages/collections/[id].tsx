@@ -1,6 +1,6 @@
-import { NextPage } from "next";
 import Container from "components/Container";
 import Layout from "components/layout";
+import { NextPage } from "next";
 
 const Collection: NextPage = () => {
   return (

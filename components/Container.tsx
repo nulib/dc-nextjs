@@ -1,10 +1,7 @@
-import { ReactChildren } from "react";
 import { styled } from "@/stitches.config";
 
 export const ContainerStyled = styled("div", {
   margin: "0 auto",
-  width: "100%",
-
   variants: {
     containerType: {
       default: {
@@ -15,6 +12,7 @@ export const ContainerStyled = styled("div", {
       },
     },
   },
+  width: "100%",
 });
 interface ContainerProps {
   containerType?: "default" | "wide";
