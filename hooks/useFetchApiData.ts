@@ -8,7 +8,7 @@ import { buildQuery } from "@/lib/queries/builder";
 
 type ApiData = ApiSearchResponse | null;
 type ApiError = string | null;
-type Response = {
+export type UseFetchApiDataResponse = {
   data: ApiData;
   error: ApiError;
   loading: boolean;
@@ -22,7 +22,7 @@ type HookArguments = {
   userFacets: UserFacets;
 };
 
-const useFetchApiData = (obj: HookArguments): Response => {
+const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
   const { activeFacets, aggsFilterValue, searchTerm, size, userFacets } = obj;
   const [data, setData] = useState<ApiData>(null);
   const [loading, setLoading] = useState(false);

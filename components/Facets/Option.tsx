@@ -2,15 +2,17 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import { FacetOption } from "@/types/components/facets";
 import React from "react";
 import { UserFacets } from "@/types";
+import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
 
 const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
   const { doc_count, key } = bucket;
   const id = `${facet}-${index}`;
 
-  const { filterDispatch, filterState } = useFilterState();
-
-  const { userFacetsUnsubmitted } = filterState;
+  const {
+    filterDispatch,
+    filterState: { userFacetsUnsubmitted },
+  } = useFilterState();
 
   const isChecked =
     userFacetsUnsubmitted[facet] && userFacetsUnsubmitted[facet].includes(key);
@@ -18,16 +20,27 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
   const handleCheckedChange = (checkedStatus: boolean) => {
     const newObj: UserFacets = { ...userFacetsUnsubmitted };
 
-    // Checkbox is checked
+    /**
+     * Checkbox is checked
+     */
     if (checkedStatus) {
       if (!newObj[facet]) {
         newObj[facet] = [key];
       } else {
         newObj[facet].push(key);
       }
-    }
-    // Not checked, remove value from the array
-    else {
+
+      /**
+       * Update most recently selected Facet
+       */
+      const facetObject = getFacetById(facet);
+      if (facetObject) {
+        filterDispatch({ facet: facetObject, type: "updateRecentFacet" });
+      }
+    } else {
+    /**
+     * Not checked, remove value from the array
+     */
       newObj[facet] = [...newObj[facet]].filter((arrValue) => arrValue !== key);
     }
 

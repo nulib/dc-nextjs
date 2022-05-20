@@ -7,7 +7,7 @@ import React from "react";
 
 type Action =
   | {
-      type: "updateLastFacetViewed";
+      type: "updateRecentFacet";
       facet: FacetsInstance;
     }
   | {
@@ -22,7 +22,7 @@ type FilterProviderProps = {
 };
 
 const defaultState: FilterContextStore = {
-  lastFacetViewed: undefined,
+  recentFacet: undefined,
   userFacetsUnsubmitted: {},
 };
 
@@ -32,10 +32,10 @@ const FilterStateContext = React.createContext<
 
 function filterReducer(state: State, action: Action) {
   switch (action.type) {
-    case "updateLastFacetViewed": {
+    case "updateRecentFacet": {
       return {
         ...state,
-        lastFacetViewed: action.facet,
+        recentFacet: action.facet,
       };
     }
     case "updateUserFacets": {
