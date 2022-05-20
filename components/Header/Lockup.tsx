@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/Shared/Container";
 import Link from "next/link";
 import { Lockup } from "@/components/Header/Header.styled";
 

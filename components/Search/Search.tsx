@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { IconClear, IconSearch } from "../SVG/Icons";
+import { IconClear, IconSearch } from "../Shared/SVG/Icons";
 import Router, { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 interface SearchProps {

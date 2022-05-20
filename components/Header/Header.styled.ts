@@ -1,5 +1,5 @@
 import { Button, Input, SearchStyled } from "../Search/Search.styled";
-import { ContainerStyled } from "@/components/Container";
+import { ContainerStyled } from "@/components/Shared/Container";
 import { NavStyled } from "../Nav/Nav.styled";
 import { styled } from "@/stitches.config";
 

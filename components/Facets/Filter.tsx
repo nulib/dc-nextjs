@@ -1,14 +1,18 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import {
+  FilterActivate,
   FilterBody,
   FilterContent,
+  FilterFloating,
   FilterHeader,
   FilterOverlay,
-  FilterTrigger,
 } from "./Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
-import FacetsGroupList from "./GroupList";
+import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
+import FacetsGroupList from "@/components/Facets/GroupList";
 import FacetsSubmit from "@/components/Facets/Submit";
+import Icon from "@/components/Shared/Icon";
+import { IconFilter } from "@/components/Shared/SVG/Icons";
 import Preview from "./Preview";
 import React from "react";
 import { useSearchState } from "@/context/search-context";
@@ -28,7 +32,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ setIsModalOpen }) => {
       </FilterHeader>
       <FilterBody>
         <div>
-          <div>[active facet tray]</div>
+          <FacetsCurrentUser screen="modal" />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <FacetsGroupList />
             <Preview />
@@ -61,9 +65,15 @@ const DialogWrapper: React.FC = () => {
 
   return (
     <Dialog.Root open={isModalOpen} onOpenChange={handleDialogChange}>
-      <FilterTrigger>
-        <span>Filter</span>
-      </FilterTrigger>
+      <FilterFloating>
+        <FilterActivate>
+          <Icon>
+            <IconFilter />
+          </Icon>
+          Filter
+        </FilterActivate>
+        <FacetsCurrentUser screen="search" />
+      </FilterFloating>
       <Dialog.Portal>
         <FilterOverlay />
         <FilterContent>
