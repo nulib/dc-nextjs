@@ -1,5 +1,5 @@
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
-import Container from "@/components/Container";
+import Container from "@/components/Shared/Container";
 import Figure from "@/components/Figure/Figure";
 import { SearchShape } from "@/types/api/response";
 interface GridProps {

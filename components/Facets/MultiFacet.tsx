@@ -7,7 +7,7 @@ import {
 import { ApiResponseAggregation } from "@/types/api/response";
 import { ChangeEvent } from "react";
 import Heading from "@/components/Heading/Heading";
-import { IconSearch } from "../SVG/Icons";
+import { IconSearch } from "@/components/Shared/SVG/Icons";
 import Option from "./Option";
 import React from "react";
 import { debounce } from "@/lib/utils/debounce";

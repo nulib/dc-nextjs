@@ -1,5 +1,5 @@
 import { Primary, PrimaryInner } from "@/components/Header/Header.styled";
-import Container from "@/components/Container";
+import Container from "@/components/Shared/Container";
 import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";

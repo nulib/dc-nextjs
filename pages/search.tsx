@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Container from "@/components/Container";
+import Container from "@/components/Shared/Container";
 import Facets from "@/components/Facets/Facets";
 import Grid from "@/components/Grid/Grid";
 import Heading from "@/components/Heading/Heading";

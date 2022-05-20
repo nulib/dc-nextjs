@@ -1,4 +1,4 @@
-import Container from "../Container";
+import Container from "../Shared/Container";
 import Nav from "@/components/Nav/Nav";
 import { Super } from "@/components/Header/Header.styled";
 
