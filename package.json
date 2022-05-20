@@ -13,6 +13,7 @@
     "test:ci": "jest"
   },
   "dependencies": {
+    "@nulib/design-system": "^1.5.0",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-accordion": "^0.1.7-rc.10",
     "@radix-ui/react-checkbox": "^0.1.6-rc.8",

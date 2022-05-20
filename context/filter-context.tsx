@@ -2,12 +2,18 @@ import {
   FilterContextStore,
   UserFacetsUnsubmitted,
 } from "@/types/context/filter-context";
+import { FacetsInstance } from "@/types/components/facets";
 import React from "react";
 
-type Action = {
-  type: "updateUserFacets";
-  userFacetsUnsubmitted: UserFacetsUnsubmitted;
-};
+type Action =
+  | {
+      type: "updateLastFacetViewed";
+      facet: FacetsInstance;
+    }
+  | {
+      type: "updateUserFacets";
+      userFacetsUnsubmitted: UserFacetsUnsubmitted;
+    };
 type Dispatch = (action: Action) => void;
 type State = FilterContextStore;
 type FilterProviderProps = {
@@ -16,6 +22,7 @@ type FilterProviderProps = {
 };
 
 const defaultState: FilterContextStore = {
+  lastFacetViewed: undefined,
   userFacetsUnsubmitted: {},
 };
 
@@ -25,6 +32,12 @@ const FilterStateContext = React.createContext<
 
 function filterReducer(state: State, action: Action) {
   switch (action.type) {
+    case "updateLastFacetViewed": {
+      return {
+        ...state,
+        lastFacetViewed: action.facet,
+      };
+    }
     case "updateUserFacets": {
       return {
         ...state,
