@@ -36,6 +36,14 @@ resource "aws_amplify_app" "dc-next" {
   enable_basic_auth      = var.app_username != "" ? true : false
   basic_auth_credentials = base64encode("${var.app_username}:${var.app_password}")
 
+  enable_auto_branch_creation   = true
+  enable_branch_auto_build      = true
+  enable_auto_branch_deletion   = true
+  auto_branch_creation_patterns = ["preview/*"]
+  auto_branch_creation_config {
+
+  }
+
   build_spec = <<-EOT
     version: 1
     frontend:
@@ -64,6 +72,7 @@ resource "aws_amplify_app" "dc-next" {
   environment_variables = {
     ENV                        = var.environment_name
     NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
+    _LIVE_UPDATES              = [{ "name" : "Next.js version", "pkg" : "next-version", "type" : "internal", "version" : "latest" }]
   }
 }
 
