@@ -1,41 +1,25 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
-import { getFacetById, getFacetGroup } from "@/lib/utils/facet-helpers";
 import FacetWrapper from "./FacetWrapper";
+import { getFacetGroup } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
 
 const FacetsGroupList: React.FC = () => {
   const {
-    filterDispatch,
-    filterState: { lastFacetViewed, userFacetsUnsubmitted },
+    filterState: { recentFacet },
   } = useFilterState();
-  const currentUserFacets = Object.keys(userFacetsUnsubmitted);
 
   let defaultGroup;
   let defaultFacetId;
 
-  if (currentUserFacets.length > 0) {
-    const facetId = lastFacetViewed?.id;
-    if (facetId) {
-      defaultFacetId = facetId;
-      defaultGroup = getFacetGroup(facetId)?.label;
-    }
+  if (recentFacet && Object.keys(recentFacet).length > 0) {
+    defaultFacetId = recentFacet.id;
+    defaultGroup = getFacetGroup(defaultFacetId)?.label;
   }
 
-  const handleFacetChange = (value: string): void => {
-    const facet = getFacetById(value);
-    if (facet) {
-      filterDispatch({ facet, type: "updateLastFacetViewed" });
-    }
-  };
-
   return (
-    <Tabs.Root
-      defaultValue={defaultFacetId}
-      orientation="vertical"
-      onValueChange={handleFacetChange}
-    >
+    <Tabs.Root defaultValue={defaultFacetId} orientation="vertical">
       <div style={{ display: "flex" }} data-testid="facets-group-list">
         <Accordion.Root type="single" defaultValue={defaultGroup}>
           {FACETS.map((group) => {

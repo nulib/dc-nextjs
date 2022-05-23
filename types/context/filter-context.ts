@@ -1,6 +1,6 @@
 import { FacetsInstance } from "@/types/components/facets";
 export interface FilterContextStore {
-  lastFacetViewed?: FacetsInstance;
+  recentFacet?: FacetsInstance;
   userFacetsUnsubmitted: UserFacetsUnsubmitted;
 }
 
