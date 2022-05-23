@@ -9,8 +9,8 @@ import {
 } from "./Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
-import FacetsGroupList from "@/components/Facets/GroupList";
-import FacetsSubmit from "@/components/Facets/Submit";
+import FacetsGroupList from "@/components/Facets/Filter/GroupList";
+import FacetsSubmit from "@/components/Facets/Filter/Submit";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
 import Preview from "./Preview";

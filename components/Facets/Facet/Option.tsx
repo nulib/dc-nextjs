@@ -38,9 +38,9 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
         filterDispatch({ facet: facetObject, type: "updateRecentFacet" });
       }
     } else {
-    /**
-     * Not checked, remove value from the array
-     */
+      /**
+       * Not checked, remove value from the array
+       */
       newObj[facet] = [...newObj[facet]].filter((arrValue) => arrValue !== key);
     }
 

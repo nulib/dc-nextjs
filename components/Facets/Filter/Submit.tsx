@@ -1,5 +1,5 @@
 import { Button } from "@nulib/design-system";
-import { SetIsModalOpenType } from "@/components/Facets/Filter";
+import { SetIsModalOpenType } from "@/components/Facets/Filter/Filter";
 import { useFilterState } from "@/context/filter-context";
 import { useSearchState } from "@/context/search-context";
 

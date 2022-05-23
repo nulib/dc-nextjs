@@ -2,8 +2,8 @@ import {
   Find,
   FindInput,
   Options,
-  StyledMultiFacet,
-} from "./MultiFacet.styled";
+  StyledGenericFacet,
+} from "./GenericFacet.styled";
 import { ApiResponseAggregation } from "@/types/api/response";
 import { ChangeEvent } from "react";
 import Heading from "@/components/Heading/Heading";
@@ -12,12 +12,12 @@ import Option from "./Option";
 import React from "react";
 import { debounce } from "@/lib/utils/debounce";
 
-interface MultiFacetProps extends ApiResponseAggregation {
+interface GenericFacetProps extends ApiResponseAggregation {
   filterValue: string;
   setAggsFilterValue: (arg0: string) => void;
 }
 
-const MultiFacet: React.FC<MultiFacetProps> = ({
+const GenericFacet: React.FC<GenericFacetProps> = ({
   filterValue,
   id,
   buckets,
@@ -35,7 +35,7 @@ const MultiFacet: React.FC<MultiFacetProps> = ({
   /* eslint-enable */
 
   return (
-    <StyledMultiFacet data-testid="facet-multi-component" id={`facet--${id}`}>
+    <StyledGenericFacet data-testid="facet-multi-component" id={`facet--${id}`}>
       <Heading as="h4">{id}</Heading>
       <Find className="facet-find" data-testid="facet-find">
         <IconSearch />
@@ -49,17 +49,11 @@ const MultiFacet: React.FC<MultiFacetProps> = ({
       </Find>
       <Options className="facet-options" data-testid="facet-options">
         {buckets.map((bucket, index) => (
-          <Option
-            bucket={bucket}
-            facet={id}
-            index={index}
-            key={bucket.key}
-            type="checkbox"
-          />
+          <Option bucket={bucket} facet={id} index={index} key={bucket.key} />
         ))}
       </Options>
-    </StyledMultiFacet>
+    </StyledGenericFacet>
   );
 };
 
-export default MultiFacet;
+export default GenericFacet;

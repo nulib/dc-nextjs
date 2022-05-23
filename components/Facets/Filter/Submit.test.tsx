@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@/test-utils";
-import FacetsSubmit from "@/components/Facets/Submit";
+import FacetsSubmit from "@/components/Facets/Filter/Submit";
 
 const mockFn = jest.fn();
 

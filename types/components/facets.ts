@@ -23,7 +23,6 @@ export interface FacetOption {
   bucket: ApiResponseBucket;
   facet: string;
   index: number;
-  type: "checkbox" | "radio";
 }
 
 export type WorkTypeOptions = "All" | "Audio" | "Image" | "Video";

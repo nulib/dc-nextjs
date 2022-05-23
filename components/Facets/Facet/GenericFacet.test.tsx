@@ -1,5 +1,5 @@
 import { render, screen, within } from "@/test-utils";
-import MultiFacet from "./MultiFacet";
+import GenericFacet from "./GenericFacet";
 import React from "react";
 import { mockAggregation } from "@/mocks/aggregation";
 
@@ -8,22 +8,22 @@ const filterProps = {
   setAggsFilterValue: jest.fn(),
 };
 
-describe("MultiFacet UI component", () => {
+describe("GenericFacet UI component", () => {
   it("Renders a multi-select facet component.", () => {
-    render(<MultiFacet {...filterProps} {...mockAggregation} />);
+    render(<GenericFacet {...filterProps} {...mockAggregation} />);
     const facet = screen.getByTestId(`facet-multi-component`);
     expect(facet).toBeInTheDocument();
   });
 
   it("Renders the facet heading.", () => {
-    render(<MultiFacet {...filterProps} {...mockAggregation} />);
+    render(<GenericFacet {...filterProps} {...mockAggregation} />);
     const heading = screen.getByRole("heading", { level: 4 });
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent("foo");
   });
 
   it("Renders the find input.", () => {
-    render(<MultiFacet {...filterProps} {...mockAggregation} />);
+    render(<GenericFacet {...filterProps} {...mockAggregation} />);
     const find = screen.getByTestId(`facet-find`);
     const textInput = within(find).getByRole("textbox");
     expect(find).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe("MultiFacet UI component", () => {
   });
 
   it("Renders facet options as checkboxes.", () => {
-    render(<MultiFacet {...filterProps} {...mockAggregation} />);
+    render(<GenericFacet {...filterProps} {...mockAggregation} />);
     const options = screen.getByTestId(`facet-options`);
     expect(options).toBeInTheDocument();
   });

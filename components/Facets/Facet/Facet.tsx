@@ -1,15 +1,15 @@
 import { FacetsInstance } from "@/types/components/facets";
-import MultiFacet from "./MultiFacet";
+import GenericFacet from "@/components/Facets/Facet/GenericFacet";
 import React from "react";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { useFilterState } from "@/context/filter-context";
 import { useSearchState } from "@/context/search-context";
 
-interface FacetWrapperProps {
+interface FacetsFacetProps {
   facet: FacetsInstance;
 }
 
-const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
+const FacetsFacet: React.FC<FacetsFacetProps> = ({ facet }) => {
   const facetInstance = facet ? [facet] : undefined;
   const [aggsFilterValue, setAggsFilterValue] = React.useState("");
 
@@ -57,7 +57,7 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
       const buckets = [...userBuckets, ...filteredAggBuckets];
 
       return (
-        <MultiFacet
+        <GenericFacet
           filterValue={aggsFilterValue}
           id={aggregation.id}
           buckets={buckets}
@@ -70,4 +70,4 @@ const FacetWrapper: React.FC<FacetWrapperProps> = ({ facet }) => {
   return <>{filteredAggregation}</>;
 };
 
-export default FacetWrapper;
+export default FacetsFacet;

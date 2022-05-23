@@ -1,5 +1,5 @@
 import Container from "@/components/Shared/Container";
-import FacetsFilter from "@/components/Facets/Filter";
+import FacetsFilter from "@/components/Facets/Filter/Filter";
 import React from "react";
 import { StyledFacets } from "./Facets.styled";
 import WorkType from "@/components/Facets/WorkType/WorkType";

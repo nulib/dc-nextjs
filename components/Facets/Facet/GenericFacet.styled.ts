@@ -3,7 +3,7 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const StyledMultiFacet = styled("div", {
+const StyledGenericFacet = styled("div", {
   marginBottom: "2rem",
 
   [`${StyledHeading}`]: {
@@ -69,4 +69,4 @@ const Options = styled("ul", {
   },
 });
 
-export { Find, FindInput, Options, StyledMultiFacet };
+export { Find, FindInput, Options, StyledGenericFacet };

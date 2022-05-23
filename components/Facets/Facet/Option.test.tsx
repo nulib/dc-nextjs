@@ -8,7 +8,6 @@ const mockOption: FacetOption = {
   bucket: mockAggregation.buckets[0],
   facet: mockAggregation.id,
   index: 0,
-  type: "checkbox",
 };
 
 describe("Facet Option UI component", () => {
