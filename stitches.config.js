@@ -1,5 +1,6 @@
 import colors from "@/styles/colors";
 import { createStitches } from "@stitches/react";
+import media from "@/styles/media";
 
 export const {
   styled,
@@ -11,6 +12,9 @@ export const {
   createTheme,
   config,
 } = createStitches({
+  media: {
+    ...media,
+  },
   theme: {
     colors: {
       ...colors,
@@ -18,9 +22,6 @@ export const {
     transitions: {
       all: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",
     },
-  },
-  media: {
-    bp1: "(min-width: 480px)",
   },
   utils: {
     marginX: (value) => ({ marginLeft: value, marginRight: value }),
