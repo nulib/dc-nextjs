@@ -1,4 +1,5 @@
 import { ModelName } from "@/types/api/generic";
+import { WorkShape } from "@/types/components/works";
 
 export interface ApiResponse {
   data: ApiResponseData;
@@ -37,6 +38,13 @@ export interface ApiResponseDataShape {
 }
 
 /**
+ * Response shape coming back from [API URL GOES HERE]/works/{id}
+ */
+export interface ApiWorkResponse {
+  data: WorkShape;
+}
+
+/**
  * Defined shapes for API response data property
  */
 export interface CollectionShape extends ApiResponseDataShape {
@@ -45,8 +53,4 @@ export interface CollectionShape extends ApiResponseDataShape {
 
 export interface SearchShape extends ApiResponseDataShape {
   work_type_labels: string;
-}
-
-export interface WorkShape extends ApiResponseDataShape {
-  api_model: "Work";
 }

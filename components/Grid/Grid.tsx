@@ -1,6 +1,7 @@
 import { GridItem, GridStyled } from "@/components/Grid/Grid.styled";
 import Container from "@/components/Shared/Container";
 import Figure from "@/components/Figure/Figure";
+import Link from "next/link";
 import { SearchShape } from "@/types/api/response";
 interface GridProps {
   data: SearchShape[];
@@ -18,13 +19,17 @@ const Grid: React.FC<GridProps> = ({ data = [] }) => {
       >
         {data.map((item: SearchShape) => (
           <GridItem key={item.accession_number}>
-            <Figure
-              data={{
-                src: item.thumbnail,
-                title: item.title,
-                type: item.work_type_labels,
-              }}
-            />
+            <Link href={`/works/${item.id}`}>
+              <a>
+                <Figure
+                  data={{
+                    src: item.thumbnail,
+                    title: item.title,
+                    type: item.work_type_labels,
+                  }}
+                />
+              </a>
+            </Link>
           </GridItem>
         ))}
       </GridStyled>

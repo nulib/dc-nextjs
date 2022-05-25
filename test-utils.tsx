@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from "react";
-import { RenderOptions, render, screen } from "@testing-library/react";
+import { RenderOptions, render } from "@testing-library/react";
 import { FilterProvider } from "@/context/filter-context";
 import { SearchProvider } from "@/context/search-context";
 
@@ -17,4 +17,4 @@ const customRender = (
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
 export * from "@testing-library/react";
-export { customRender as render, screen };
+export { customRender as render };
