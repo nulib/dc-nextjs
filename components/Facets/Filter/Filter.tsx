@@ -1,53 +1,23 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   FilterActivate,
-  FilterBody,
   FilterContent,
   FilterFloating,
-  FilterHeader,
   FilterOverlay,
-} from "./Filter.styled";
+} from "@/components/Facets/Filter/Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
-import FacetsGroupList from "@/components/Facets/Filter/GroupList";
-import FacetsSubmit from "@/components/Facets/Filter/Submit";
+import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
-import Preview from "./Preview";
 import React from "react";
 import { useSearchState } from "@/context/search-context";
-
-export type SetIsModalOpenType = React.Dispatch<React.SetStateAction<boolean>>;
-
-type FilterModalProps = {
-  setIsModalOpen: SetIsModalOpenType;
-};
-
-const FilterModal: React.FC<FilterModalProps> = ({ setIsModalOpen }) => {
-  return (
-    <>
-      <FilterHeader>
-        <Dialog.Title>Filter</Dialog.Title>
-        <Dialog.Close>Close</Dialog.Close>
-      </FilterHeader>
-      <FilterBody>
-        <div>
-          <FacetsCurrentUser screen="modal" />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <FacetsGroupList />
-            <Preview />
-          </div>
-        </div>
-        <FacetsSubmit setIsModalOpen={setIsModalOpen} />
-      </FilterBody>
-    </>
-  );
-};
 
 const DialogWrapper: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
   const { filterDispatch } = useFilterState();
   const { searchState } = useSearchState();
+  const { q, userFacets } = searchState;
 
   const handleDialogChange = () => {
     /**
@@ -57,7 +27,7 @@ const DialogWrapper: React.FC = () => {
     if (!isModalOpen) {
       filterDispatch({
         type: "updateUserFacets",
-        userFacetsUnsubmitted: searchState.userFacets,
+        userFacetsUnsubmitted: userFacets,
       });
     }
     setIsModalOpen(!isModalOpen);
@@ -76,8 +46,8 @@ const DialogWrapper: React.FC = () => {
       </FilterFloating>
       <Dialog.Portal>
         <FilterOverlay />
-        <FilterContent>
-          <FilterModal setIsModalOpen={setIsModalOpen} />
+        <FilterContent data-testid="modal-content">
+          <FilterModal q={q} setIsModalOpen={setIsModalOpen} />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>
