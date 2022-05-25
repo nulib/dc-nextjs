@@ -13,6 +13,12 @@ const Image = styled("img", {
   backgroundColor: "$slate11",
 });
 
+const SupplementalInfo = styled("span", {
+  fontSize: "12px",
+  color: "$slate10",
+  marginTop: "6px",
+});
+
 const Title = styled("span", {
   marginTop: "0.618rem",
   fontSize: "15px",
@@ -20,10 +26,4 @@ const Title = styled("span", {
   color: "$slate12",
 });
 
-const Type = styled("span", {
-  fontSize: "12px",
-  color: "$slate10",
-  marginTop: "6px",
-});
-
-export { FigureStyled, Image, Title, Type };
+export { FigureStyled, Image, Title, SupplementalInfo };

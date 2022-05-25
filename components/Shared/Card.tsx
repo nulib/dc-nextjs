@@ -1,27 +1,30 @@
-import {
-  CardMetadata,
-  ImagePlaceholder,
-} from "@/components/Shared/Card.styled";
+import Figure from "@/components/Figure/Figure";
 import React from "react";
 
-interface CardProps {
+export interface CardProps {
   description?: string;
-  imageUrl?: string;
-  metadata?: Array<string>;
-  title?: string;
+  imageUrl: string;
+  supplementalInfo?: string;
+  title: string;
 }
 
-const Card: React.FC<CardProps> = ({ description, metadata, title }) => {
+const Card: React.FC<CardProps> = ({
+  description,
+  imageUrl,
+  supplementalInfo,
+  title,
+}) => {
+  const data = {
+    src: imageUrl,
+    supplementalInfo,
+    title,
+  };
+
   return (
     <div data-testid="card-wrapper">
-      <h3>{title}</h3>
-      <ImagePlaceholder />
-      <CardMetadata>
-        {metadata?.map((meta) => (
-          <span key={meta}>{meta}</span>
-        ))}
-      </CardMetadata>
-      <p>{description}</p>
+      <h3 data-testid="card-title">{title}</h3>
+      <Figure data={data} />
+      <p data-testid="card-description">{description}</p>
     </div>
   );
 };

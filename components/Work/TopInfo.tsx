@@ -36,7 +36,8 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ work }) => {
         <Card
           title={`Ima title`}
           description="Foo bar oh my"
-          metadata={["230 items", "another meta item?"]}
+          imageUrl={work.thumbnail}
+          supplementalInfo="230 items"
         />
       </div>
     </TopInfoWrapper>
