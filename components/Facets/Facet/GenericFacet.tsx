@@ -11,6 +11,7 @@ import { IconSearch } from "@/components/Shared/SVG/Icons";
 import Option from "./Option";
 import React from "react";
 import { debounce } from "@/lib/utils/debounce";
+import { getFacetById } from "@/lib/utils/facet-helpers";
 
 interface GenericFacetProps extends ApiResponseAggregation {
   filterValue: string;
@@ -23,6 +24,8 @@ const GenericFacet: React.FC<GenericFacetProps> = ({
   buckets,
   setAggsFilterValue,
 }) => {
+  const facet = getFacetById(id);
+
   const handleFindChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setAggsFilterValue(e.target.value);
   };
@@ -36,7 +39,7 @@ const GenericFacet: React.FC<GenericFacetProps> = ({
 
   return (
     <StyledGenericFacet data-testid="facet-multi-component" id={`facet--${id}`}>
-      <Heading as="h4">{id}</Heading>
+      <Heading as="h3">{facet ? facet.label : id}</Heading>
       <Find className="facet-find" data-testid="facet-find">
         <IconSearch />
         <FindInput

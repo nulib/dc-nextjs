@@ -1,5 +1,7 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { FacetOption } from "@/types/components/facets";
+import { IconCheck } from "@/components/Shared/SVG/Icons";
+import { Indicator } from "./GenericFacet.styled";
 import React from "react";
 import { UserFacets } from "@/types";
 import { getFacetById } from "@/lib/utils/facet-helpers";
@@ -58,10 +60,14 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
         name={`facet--${facet}`}
         onCheckedChange={handleCheckedChange}
       >
-        <Checkbox.Indicator>x</Checkbox.Indicator>
+        <Indicator>
+          <IconCheck />
+        </Indicator>
       </Checkbox.Root>
-      <label htmlFor={id}>{key}</label>
-      <span>{doc_count}</span>
+      <label htmlFor={id} data-selected={isChecked}>
+        {key}
+      </label>
+      <span>({doc_count})</span>
     </li>
   );
 };

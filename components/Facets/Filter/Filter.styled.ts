@@ -1,6 +1,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import {
+  PopoverToggle,
+  ValueWrapper,
+} from "@/components/Facets/UserFacets/UserFacets.styled";
 import { IconStyled } from "@/components/Shared/Icon";
-import { PopoverToggle } from "@/components/Facets/UserFacets/UserFacets.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -81,8 +84,24 @@ const FilterOverlay = styled(Dialog.Overlay, {
 
 const FilterBodyInner = styled("div", {
   display: "flex",
+  flexGrow: "1",
   justifyContent: "space-between",
   flexDirection: "row",
+  borderTop: "1px solid $black10",
+
+  "> div": {
+    "&:first-child": {
+      flexGrow: "1",
+      padding: "1rem 0",
+    },
+    "&:last-child": {
+      width: "300px",
+      minWidth: "200px",
+
+      "@sm": { display: "none" },
+    },
+    borderRight: "1px solid $black10",
+  },
 
   "@sm": {
     flexDirection: "column",
@@ -90,10 +109,16 @@ const FilterBodyInner = styled("div", {
 });
 
 const FilterBody = styled("div", {
-  padding: "1rem",
+  display: "flex",
+  flexDirection: "column",
   margin: "3.5rem 0 4.5rem",
   maxHeight: "calc(100% - 8rem)",
+  minHeight: "calc(100% - 8rem)",
   overflow: "scroll",
+
+  [`& ${ValueWrapper}`]: {
+    padding: "0 1rem",
+  },
 
   "&:before": {
     position: "absolute",
@@ -149,13 +174,13 @@ const FilterHeader = styled("header", {
   width: "100%",
   justifyContent: "space-between",
   backgroundColor: "$white",
-  boxShadow: "3px 3px 8px #0001",
 
   h2: {
-    fontSize: "1.5rem",
+    fontSize: "1rem",
     lineHeight: "1.5rem",
     padding: "0",
     margin: "0",
+    color: "$black50",
   },
 
   em: {

@@ -17,7 +17,7 @@ describe("GenericFacet UI component", () => {
 
   it("Renders the facet heading.", () => {
     render(<GenericFacet {...filterProps} {...mockAggregation} />);
-    const heading = screen.getByRole("heading", { level: 4 });
+    const heading = screen.getByRole("heading", { level: 3 });
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent("foo");
   });
