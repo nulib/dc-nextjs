@@ -22,7 +22,7 @@
     "@radix-ui/react-radio-group": "^0.1.6-rc.20",
     "@radix-ui/react-tabs": "^0.1.6-rc.13",
     "@samvera/clover-iiif": "^1.10.1",
-    "@samvera/nectar-iiif": "^0.0.4-alpha.1",
+    "@samvera/nectar-iiif": "^0.0.12",
     "@stitches/react": "^1.2.6",
     "next": "^12.0.10",
     "react": "^18.0.0",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@elastic/elasticsearch": "^7.17.0",
+    "@iiif/presentation-3": "^1.0.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^14.0.4",

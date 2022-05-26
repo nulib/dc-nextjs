@@ -40,7 +40,7 @@ export const sampleWork1: WorkShape = {
   genre_labels: [],
   genre_variants: [],
   id: "c16029ff-d027-496a-98b7-6f259395a8f7",
-  identifiers: [],
+  identifiers: ["MS 63"],
   iiif_manifest:
     "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json",
   keywords: [],

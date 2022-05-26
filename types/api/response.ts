@@ -41,7 +41,7 @@ export interface ApiResponseDataShape {
  * Response shape coming back from [API URL GOES HERE]/works/{id}
  */
 export interface ApiWorkResponse {
-  data: WorkShape;
+  data: WorkShape | undefined;
 }
 
 /**
