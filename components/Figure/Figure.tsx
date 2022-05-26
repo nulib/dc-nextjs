@@ -1,21 +1,23 @@
-import { FigureStyled, Image, Title, Type } from "./Figure.styled";
+import { FigureStyled, Image, SupplementalInfo, Title } from "./Figure.styled";
 
 interface Figure {
   title: string;
-  type: string;
   src: string;
+  supplementalInfo?: string;
 }
 interface FigureProps {
   data: Figure;
 }
 
 const Figure: React.FC<FigureProps> = ({ data }) => {
-  const { title, type, src } = data;
+  const { title, supplementalInfo, src } = data;
   return (
     <FigureStyled>
       <Image src={src} style={{ width: "100%" }} alt={title} />
       <Title>{title}</Title>
-      <Type>{type}</Type>
+      {supplementalInfo && (
+        <SupplementalInfo>{supplementalInfo}</SupplementalInfo>
+      )}
     </FigureStyled>
   );
 };
