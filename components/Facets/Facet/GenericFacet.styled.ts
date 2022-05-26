@@ -1,3 +1,4 @@
+import * as Checkbox from "@radix-ui/react-checkbox";
 import { StyledHeading } from "@/components/Heading/Heading.styled";
 import { styled } from "@/stitches.config";
 
@@ -7,7 +8,7 @@ const StyledGenericFacet = styled("div", {
   marginBottom: "2rem",
 
   [`${StyledHeading}`]: {
-    margin: "1rem 0",
+    margin: "0 0 1rem",
   },
 });
 
@@ -52,6 +53,15 @@ const Find = styled("div", {
   },
 });
 
+const Indicator = styled(Checkbox.Indicator, {
+  display: "flex",
+  width: "calc(0.9rem)",
+  height: "calc(0.9rem)",
+  backgroundColor: "$purple",
+  margin: "-1px 0 0 -1px",
+  borderRadius: "2px",
+});
+
 const Options = styled("ul", {
   margin: "0",
   padding: "0",
@@ -60,13 +70,55 @@ const Options = styled("ul", {
     margin: "0",
     padding: "0",
     listStyle: "none",
-    marginBottom: "0.25rem",
+    marginBottom: "0.35rem",
     display: "flex",
 
-    input: {
+    "> span": {
+      display: "block",
+      color: "$black50",
+      marginLeft: "0.25em",
+    },
+
+    label: {
+      cursor: "pointer",
+      color: "$black50",
+
+      "&:hover, &:focus": {
+        color: "$black",
+      },
+
+      [`&[data-selected=true]`]: {
+        color: "$black",
+        fontWeight: "700",
+      },
+    },
+
+    button: {
+      display: "flex",
       marginRight: "0.382rem",
+      width: "0.9rem",
+      height: "0.9rem",
+      flexGrow: "0",
+      flexShrink: "0",
+      backgroundColor: "$white",
+      border: "1px solid $black20",
+      marginTop: "3px",
+      padding: "0",
+      cursor: "pointer",
+      borderRadius: "2px",
+      color: "$purple30",
+
+      svg: {
+        padding: "1px",
+      },
+
+      "&:hover, &:focus": {
+        borderColor: "$black50",
+        boxShadow: "2px 2px 5px #0002",
+        color: "$white",
+      },
     },
   },
 });
 
-export { Find, FindInput, Options, StyledGenericFacet };
+export { Find, FindInput, Indicator, Options, StyledGenericFacet };

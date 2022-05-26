@@ -1,6 +1,15 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import * as Tabs from "@radix-ui/react-tabs";
 import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
+import {
+  Group,
+  GroupContent,
+  GroupHeader,
+  GroupToggle,
+  ItemContent,
+  ItemList,
+  ItemToggle,
+} from "./GroupList.styled";
 import Facet from "@/components/Facets/Facet/Facet";
 import { getFacetGroup } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
@@ -19,44 +28,41 @@ const FacetsGroupList: React.FC = () => {
   }
 
   return (
-    <Tabs.Root defaultValue={defaultFacetId} orientation="vertical">
-      <div style={{ display: "flex" }} data-testid="facets-group-list">
-        <Accordion.Root type="single" defaultValue={defaultGroup}>
-          {FACETS.map((group) => {
-            return (
-              <Accordion.Item value={group.label} key={group.label}>
-                <Accordion.Header>
-                  <Accordion.Trigger>{group.label}</Accordion.Trigger>
-                </Accordion.Header>
-                <Accordion.Content>
-                  <Tabs.List
-                    style={{ display: "flex", flexDirection: "column" }}
-                  >
-                    {group.facets.map((facet) => {
-                      return (
-                        <Tabs.Trigger
-                          value={facet.id}
-                          key={facet.id}
-                          style={{ backgroundColor: "white" }}
-                        >
-                          {facet.label}
-                        </Tabs.Trigger>
-                      );
-                    })}
-                  </Tabs.List>
-                </Accordion.Content>
-              </Accordion.Item>
-            );
-          })}
-        </Accordion.Root>
-        {ALL_FACETS.facets.map((facet) => {
+    <Tabs.Root
+      defaultValue={defaultFacetId}
+      orientation="vertical"
+      style={{ display: "flex" }}
+      data-testid="facets-group-list"
+    >
+      <Accordion.Root type="single" defaultValue={defaultGroup}>
+        {FACETS.map((group) => {
           return (
-            <Tabs.Content value={facet.id} key={facet.id}>
-              <Facet facet={facet} />
-            </Tabs.Content>
+            <Group value={group.label} key={group.label}>
+              <GroupHeader>
+                <GroupToggle>{group.label}</GroupToggle>
+              </GroupHeader>
+              <GroupContent>
+                <ItemList>
+                  {group.facets.map((facet) => {
+                    return (
+                      <ItemToggle value={facet.id} key={facet.id}>
+                        {facet.label}
+                      </ItemToggle>
+                    );
+                  })}
+                </ItemList>
+              </GroupContent>
+            </Group>
           );
         })}
-      </div>
+      </Accordion.Root>
+      {ALL_FACETS.facets.map((facet) => {
+        return (
+          <ItemContent value={facet.id} key={facet.id}>
+            <Facet facet={facet} />
+          </ItemContent>
+        );
+      })}
     </Tabs.Root>
   );
 };

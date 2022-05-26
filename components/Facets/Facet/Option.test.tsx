@@ -31,7 +31,7 @@ describe("Facet Option UI component", () => {
 
   it("Renders a facet option with document count.", () => {
     render(<Option {...mockOption} />);
-    const count = screen.getByText(`2`);
+    const count = screen.getByText(`(2)`);
     expect(count).toBeInTheDocument();
   });
 });
