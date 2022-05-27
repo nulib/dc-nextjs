@@ -56,7 +56,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
         <FacetsCurrentUser screen="modal" />
         <FilterBodyInner>
           <FacetsGroupList />
-          {!loading && apiData && <Preview data={apiData?.data} />}
+          {!loading && apiData && <Preview items={apiData?.data} />}
         </FilterBodyInner>
       </FilterBody>
       <FilterFooter role="menubar">
