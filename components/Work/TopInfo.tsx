@@ -3,32 +3,38 @@ import {
   MetadataWrapper,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
+import {
+  Label,
+  Metadata,
+  RequiredStatement,
+  Summary,
+} from "@samvera/nectar-iiif";
 import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
+import { Manifest } from "@iiif/presentation-3";
 import { WorkShape } from "@/types/components/works";
 
 interface TopInfoProps {
+  manifest?: Manifest;
   work: WorkShape;
 }
-const WorkTopInfo: React.FC<TopInfoProps> = ({ work }) => {
+const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
   if (!work) return null;
+  if (!manifest) return <p>Error grabbing manifest</p>;
 
-  const { descriptions, title } = work;
   return (
     <TopInfoWrapper>
       <div data-testid="work-top-info-wrapper">
-        <h1>{title}</h1>
-        {descriptions.length === 0 && <p>No description exists</p>}
-        {descriptions.map((d) => (
-          <p key={d}>{d}</p>
-        ))}
+        <Label label={manifest.label} as="h1" data-testid="title" />
+        <Summary summary={manifest.summary} as="p" data-testid="summary" />
         <ActionButtons>
           <Button>Find this item</Button>
           <Button>Cite this item</Button>
           <Button>Download and share</Button>
         </ActionButtons>
         <MetadataWrapper>
-          <p data-testid="metadata">Metadata displays here</p>
+          <Metadata metadata={manifest.metadata} data-testid="metadata" />
+          <RequiredStatement requiredStatement={manifest.requiredStatement} />
         </MetadataWrapper>
       </div>
       <div>
