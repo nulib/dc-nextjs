@@ -9,7 +9,7 @@ import {
   ItemContent,
   ItemList,
   ItemToggle,
-} from "./GroupList.styled";
+} from "@/components/Facets/Filter/GroupList.styled";
 import Facet from "@/components/Facets/Facet/Facet";
 import { getFacetGroup } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
@@ -31,7 +31,7 @@ const FacetsGroupList: React.FC = () => {
     <Tabs.Root
       defaultValue={defaultFacetId}
       orientation="vertical"
-      style={{ display: "flex" }}
+      style={{ display: "flex", padding: "1rem 0" }}
       data-testid="facets-group-list"
     >
       <Accordion.Root type="single" defaultValue={defaultGroup}>

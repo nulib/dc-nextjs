@@ -5,19 +5,23 @@ interface Figure {
   src: string;
   supplementalInfo?: string;
 }
+
 interface FigureProps {
   data: Figure;
+  orientation?: "horizontal" | "vertical";
 }
 
-const Figure: React.FC<FigureProps> = ({ data }) => {
+const Figure: React.FC<FigureProps> = ({ data, orientation = "vertical" }) => {
   const { title, supplementalInfo, src } = data;
   return (
-    <FigureStyled>
-      <Image src={src} style={{ width: "100%" }} alt={title} />
-      <Title>{title}</Title>
-      {supplementalInfo && (
-        <SupplementalInfo>{supplementalInfo}</SupplementalInfo>
-      )}
+    <FigureStyled data-orientation={orientation}>
+      <Image src={src} alt={title} />
+      <figcaption>
+        <Title>{title}</Title>
+        {supplementalInfo && (
+          <SupplementalInfo>{supplementalInfo}</SupplementalInfo>
+        )}
+      </figcaption>
     </FigureStyled>
   );
 };

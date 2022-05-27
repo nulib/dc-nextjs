@@ -7,10 +7,18 @@ const FigureStyled = styled("figure", {
   flexDirection: "column",
   paddingBottom: "1rem",
   margin: "0",
+  color: "transparent",
+
+  figcaption: { display: "flex", flexDirection: "column" },
+
+  [`&[data-orientation=horizontal]`]: {
+    flexDirection: "row",
+  },
 });
 
 const Image = styled("img", {
   backgroundColor: "$slate11",
+  width: "100%",
 });
 
 const SupplementalInfo = styled("span", {

@@ -1,20 +1,39 @@
+import { PreviewItem, PreviewList, StyledPreview } from "./Preview.styled";
+import Figure from "@/components/Figure/Figure";
+import Heading from "@/components/Heading/Heading";
+import Link from "next/link";
 import React from "react";
 import { SearchShape } from "@/types/api/response";
 
 interface PreviewProps {
-  data: SearchShape[];
+  items: SearchShape[];
 }
 
-const Preview: React.FC<PreviewProps> = ({ data }) => {
+const Preview: React.FC<PreviewProps> = ({ items }) => {
   return (
-    <div>
-      <p>[Preview]</p>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>{item.accession_number}</li>
-        ))}
-      </ul>
-    </div>
+    <StyledPreview>
+      <Heading as="h3">Top Results</Heading>
+      <PreviewList>
+        {items.map((item) => {
+          return (
+            <PreviewItem key={item.id} data-testid="facets-filter-preview-item">
+              <Link href={`/works/${item.id}`}>
+                <a>
+                  <Figure
+                    data={{
+                      src: item.thumbnail,
+                      supplementalInfo: item.work_type_labels,
+                      title: item.title ? item.title : item.accession_number,
+                    }}
+                    orientation="horizontal"
+                  />
+                </a>
+              </Link>
+            </PreviewItem>
+          );
+        })}
+      </PreviewList>
+    </StyledPreview>
   );
 };
 

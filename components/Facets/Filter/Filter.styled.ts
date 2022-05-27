@@ -92,11 +92,11 @@ const FilterBodyInner = styled("div", {
   "> div": {
     "&:first-child": {
       flexGrow: "1",
-      padding: "1rem 0",
     },
+
     "&:last-child": {
-      width: "300px",
-      minWidth: "200px",
+      width: "360px",
+      minWidth: "240px",
 
       "@sm": { display: "none" },
     },
