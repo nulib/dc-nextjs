@@ -20,7 +20,7 @@ export const buildMetadataValues = (metadata: MetadataInput[]) => {
 
 export const buildPres3Manifest = async (
   work: WorkShape
-): Promise<Manifest | undefined> => {
+): Promise<Manifest | null> => {
   const manifest = { ...manifestPres3Template };
   try {
     manifest.id = work.iiif_manifest;
@@ -60,7 +60,8 @@ export const buildPres3Manifest = async (
       },
     ]);
   } catch (err) {
-    throw new Error("Error building manifest locally");
+    console.error("Error building manifest locally");
+    return null;
   }
   return manifest;
 };

@@ -16,17 +16,22 @@ interface WorkPageProps {
   work: WorkShape;
 }
 const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
-  if (!work) {
-    return null;
-  }
-
   return (
     <Layout>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <WorkViewerWrapper manifestId={work.iiif_manifest} />
-        <Container>
-          <WorkTopInfo manifest={manifest} work={work} />
-        </Container>
+        {work && (
+          <>
+            <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            <Container>
+              <WorkTopInfo manifest={manifest} work={work} />
+            </Container>
+          </>
+        )}
+        {!work && (
+          <p style={{ padding: "2rem", textAlign: "center" }}>
+            Likely JSON error in the Work API response
+          </p>
+        )}
       </ErrorBoundary>
     </Layout>
   );
@@ -43,8 +48,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const work = params?.id ? await getWork(params.id as string) : undefined;
-  const manifest = work ? await buildPres3Manifest(work) : undefined;
+  const work = params?.id ? await getWork(params.id as string) : null;
+  const manifest = work ? await buildPres3Manifest(work) : null;
 
   return {
     props: { manifest, work },

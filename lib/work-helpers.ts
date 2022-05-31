@@ -3,11 +3,16 @@ import { getAPIData } from "@/lib/dc-api";
 import { queryModelPart } from "@/lib/queries/search";
 
 export async function getWork(id: string) {
-  const response = await getAPIData<ApiWorkResponse>({
-    method: "GET",
-    url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
-  });
-  return response?.data;
+  try {
+    const response = await getAPIData<ApiWorkResponse>({
+      method: "GET",
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
+    });
+    return response?.data;
+  } catch (err) {
+    console.log("Error getting the work", id);
+    return null;
+  }
 }
 
 export async function getWorkIds(): Promise<Array<string>> {
