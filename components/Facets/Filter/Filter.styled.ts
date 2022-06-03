@@ -69,19 +69,6 @@ const FilterFloating = styled("div", {
 
 const FilterClose = styled(Dialog.Close, {});
 
-const FilterOverlay = styled(Dialog.Overlay, {
-  background: "rgba(0 0 0 / 0.618)",
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  display: "grid",
-  placeItems: "center",
-  overflowY: "auto",
-  zIndex: "1",
-});
-
 const FilterBodyInner = styled("div", {
   display: "flex",
   flexGrow: "1",
@@ -252,5 +239,4 @@ export {
   FilterFloating,
   FilterFooter,
   FilterHeader,
-  FilterOverlay,
 };

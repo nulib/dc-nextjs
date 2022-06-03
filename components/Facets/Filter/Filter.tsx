@@ -3,9 +3,9 @@ import {
   FilterActivate,
   FilterContent,
   FilterFloating,
-  FilterOverlay,
 } from "@/components/Facets/Filter/Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
+import { DialogOverlay } from "@/components/Shared/Dialog.styled";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
 import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
@@ -45,7 +45,7 @@ const DialogWrapper: React.FC = () => {
         <FacetsCurrentUser screen="search" />
       </FilterFloating>
       <Dialog.Portal>
-        <FilterOverlay />
+        <DialogOverlay />
         <FilterContent data-testid="modal-content">
           <FilterModal q={q} setIsModalOpen={setIsModalOpen} />
         </FilterContent>

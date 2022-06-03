@@ -9,18 +9,47 @@ import {
   RequiredStatement,
   Summary,
 } from "@samvera/nectar-iiif";
+import React, { MouseEvent } from "react";
 import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { Manifest } from "@iiif/presentation-3";
+import WorkActionsDialog from "@/components/Work/ActionsDialog";
 import { WorkShape } from "@/types/components/works";
 
 interface TopInfoProps {
   manifest?: Manifest;
   work: WorkShape;
 }
+
+export interface ActionsDialog {
+  activeDialog: "CITE" | "DOWNLOAD" | "FIND" | undefined;
+}
+
 const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
+  const [actionsDialog, setActionsDialog] = React.useState<ActionsDialog>({
+    activeDialog: undefined,
+  });
+
   if (!work) return null;
   if (!manifest) return <p>Error grabbing manifest</p>;
+
+  const handleActionsButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const button = e.target as HTMLButtonElement;
+
+    switch (button.name) {
+      case "cite":
+        setActionsDialog({ activeDialog: "CITE" });
+        break;
+      case "find":
+        setActionsDialog({ activeDialog: "FIND" });
+        break;
+      case "download":
+        setActionsDialog({ activeDialog: "DOWNLOAD" });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <TopInfoWrapper>
@@ -28,10 +57,22 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
         <Label label={manifest.label} as="h1" data-testid="title" />
         <Summary summary={manifest.summary} as="p" data-testid="summary" />
         <ActionButtons>
-          <Button>Find this item</Button>
-          <Button>Cite this item</Button>
-          <Button>Download and share</Button>
+          <Button name="find" onClick={handleActionsButtonClick}>
+            Find this item
+          </Button>
+          <Button name="cite" onClick={handleActionsButtonClick}>
+            Cite this item
+          </Button>
+          <Button name="download" onClick={handleActionsButtonClick}>
+            Download and share
+          </Button>
         </ActionButtons>
+
+        <WorkActionsDialog
+          actionsDialog={actionsDialog}
+          close={() => setActionsDialog({ activeDialog: undefined })}
+        />
+
         <MetadataWrapper>
           <Metadata metadata={manifest.metadata} data-testid="metadata" />
           <RequiredStatement requiredStatement={manifest.requiredStatement} />
