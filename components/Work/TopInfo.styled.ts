@@ -7,6 +7,13 @@ const ActionButtons = styled("div", {
   flexDirection: "row",
   justifyContent: "space-around",
   padding: "1rem 0",
+
+  "@sm": {
+    flexDirection: "column",
+    "& button": {
+      marginRight: "0",
+    },
+  },
 });
 
 const MetadataWrapper = styled("div", {
