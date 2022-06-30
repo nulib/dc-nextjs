@@ -1,6 +1,5 @@
 import React from "react";
 import dynamic from "next/dynamic";
-//import CloverIIIF from "@samvera/clover-iiif";
 
 export const DynamicComponentWithNoSSR = dynamic(
   () => import("@samvera/clover-iiif"),
