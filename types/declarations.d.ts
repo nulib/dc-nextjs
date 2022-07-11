@@ -3,3 +3,5 @@
  * types exported with their package.  Without
  * this, TypeScript complains.
  */
+
+declare module "@samvera/bloom-iiif";

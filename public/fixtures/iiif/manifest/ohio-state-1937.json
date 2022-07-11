@@ -1,0 +1,213 @@
+{
+  "id": "http://localhost:3000/fixtures/iiif/manifest/ohio-state-1937.json",
+  "items": [
+    {
+      "annotations": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/a1",
+          "items": [
+            {
+              "body": {
+                "format": "text/vtt",
+                "id": "https://iiif.stack.rdc.library.northwestern.edu/public/vtt/df/13/39/6b/-4/6e/6-/47/e0/-a/a6/0-/3b/7a/7b/05/85/f4/df13396b-46e6-47e0-aa60-3b7a7b0585f4.vtt",
+                "label": {
+                  "en": ["Chapters"]
+                },
+                "language": "en",
+                "type": "Text"
+              },
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/2",
+              "motivation": "supplementing",
+              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "type": "Annotation"
+            }
+          ],
+          "type": "AnnotationPage"
+        }
+      ],
+      "duration": 791.125,
+      "height": 480,
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+      "items": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1",
+          "items": [
+            {
+              "body": {
+                "duration": 791.125,
+                "format": "video/mp4",
+                "height": 1536,
+                "id": "https://meadow-streaming.rdc.library.northwestern.edu/df/13/39/6b/-4/6e/6-/47/e0/-a/a6/0-/3b/7a/7b/05/85/f4/inu-fball_ac_1963_ohio-offense-r1.mov.m3u8",
+                "type": "Video",
+                "width": 2048
+              },
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/1",
+              "motivation": "painting",
+              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "type": "Annotation"
+            }
+          ],
+          "type": "AnnotationPage"
+        }
+      ],
+      "label": {
+        "en": ["First half offense"]
+      },
+      "thumbnail": [
+        {
+          "format": "image/jpeg",
+          "height": 300,
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4/full/!300,300/0/default.jpg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "type": "Image",
+          "width": 300
+        },
+        {
+          "duration": 30,
+          "format": "video/mp4",
+          "height": 1536,
+          "id": "https://meadow-streaming.rdc.library.northwestern.edu/df/13/39/6b/-4/6e/6-/47/e0/-a/a6/0-/3b/7a/7b/05/85/f4/inu-fball_ac_1963_ohio-offense-r1.mov.m3u8#t=100,130",
+          "type": "Video",
+          "width": 2048
+        }
+      ],
+      "type": "Canvas",
+      "width": 640
+    },
+    {
+      "duration": 470.792,
+      "height": 480,
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
+      "items": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1",
+          "items": [
+            {
+              "body": {
+                "duration": 470.792,
+                "format": "video/mp4",
+                "height": 1536,
+                "id": "https://meadow-streaming.rdc.library.northwestern.edu/dd/f2/9a/36/-3/b5/a-/46/85/-a/67/0-/45/1c/fc/75/3f/de/inu-fball_ac_1963_ohio-defense-r1.mov.m3u8",
+                "type": "Video",
+                "width": 2048
+              },
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1/annotation/1",
+              "motivation": "painting",
+              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
+              "type": "Annotation"
+            }
+          ],
+          "type": "AnnotationPage"
+        }
+      ],
+      "label": {
+        "en": ["First half defense"]
+      },
+      "thumbnail": [
+        {
+          "format": "image/jpeg",
+          "height": 300,
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde/full/!300,300/0/default.jpg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "type": "Image",
+          "width": 300
+        },
+        {
+          "duration": 30,
+          "format": "video/mp4",
+          "height": 1536,
+          "id": "https://meadow-streaming.rdc.library.northwestern.edu/dd/f2/9a/36/-3/b5/a-/46/85/-a/67/0-/45/1c/fc/75/3f/de/inu-fball_ac_1963_ohio-defense-r1.mov.m3u8#t=100,130",
+          "type": "Video",
+          "width": 2048
+        }
+      ],
+      "type": "Canvas",
+      "width": 640
+    },
+    {
+      "duration": 546.709,
+      "height": 480,
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+      "items": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1",
+          "items": [
+            {
+              "body": {
+                "duration": 546.709,
+                "format": "video/mp4",
+                "height": 1536,
+                "id": "https://meadow-streaming.rdc.library.northwestern.edu/70/60/2b/4e/-e/c3/a-/43/ad/-a/d5/1-/dd/04/c4/e6/65/ec/inu-fball_ac_1963_ohio-offense-r2.mov.m3u8",
+                "type": "Video",
+                "width": 2048
+              },
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1/annotation/1",
+              "motivation": "painting",
+              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+              "type": "Annotation"
+            }
+          ],
+          "type": "AnnotationPage"
+        }
+      ],
+      "label": {
+        "en": ["Second half offense"]
+      },
+      "thumbnail": [
+        {
+          "format": "image/jpeg",
+          "height": 300,
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/full/!300,300/0/default.jpg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "type": "Image",
+          "width": 300
+        },
+        {
+          "duration": 30,
+          "format": "video/mp4",
+          "height": 1536,
+          "id": "https://meadow-streaming.rdc.library.northwestern.edu/70/60/2b/4e/-e/c3/a-/43/ad/-a/d5/1-/dd/04/c4/e6/65/ec/inu-fball_ac_1963_ohio-offense-r2.mov.m3u8#t=100,130",
+          "type": "Video",
+          "width": 2048
+        }
+      ],
+      "type": "Canvas",
+      "width": 640
+    }
+  ],
+  "label": {
+    "en": ["Northwestern Football vs. Ohio State, 1963"]
+  },
+  "requiredStatement": {
+    "label": {
+      "en": ["Attribution"]
+    },
+    "value": {
+      "en": ["Courtesy of Northwestern University Libraries"]
+    }
+  },
+  "rights": "http://rightsstatements.org/vocab/InC-EDU/1.0/",
+  "summary": {
+    "en": ["Final score, NU: 17, Ohio State: 8. Coach: Ara Parseghian."]
+  },
+  "type": "Manifest",
+  "@context": "http://iiif.io/api/presentation/3/context.json"
+}
