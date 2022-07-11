@@ -6,6 +6,7 @@ import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
+import RelatedItems from "@/components/Shared/RelatedItems";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
@@ -13,9 +14,11 @@ import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
 
 interface WorkPageProps {
   manifest?: Manifest;
+  related?: string[];
   work: WorkShape;
 }
-const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
+
+const WorkPage: NextPage<WorkPageProps> = ({ manifest, related, work }) => {
   return (
     <Layout>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -24,6 +27,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
             <WorkViewerWrapper manifestId={work.iiif_manifest} />
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
+              <RelatedItems collections={related} title="Explore Further" />
             </Container>
           </>
         )}
@@ -51,8 +55,16 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
   const manifest = work ? await buildPres3Manifest(work) : null;
 
+  /**
+   * @todo: replace these hardcoded URIs with a method to get related collection URIs
+   */
+  const related = [
+    "http://localhost:3000/fixtures/iiif/collection/masks.json",
+    "http://localhost:3000/fixtures/iiif/collection/football.json",
+  ];
+
   return {
-    props: { manifest, work },
+    props: { manifest, related, work },
     revalidate: 10, // In seconds
   };
 }

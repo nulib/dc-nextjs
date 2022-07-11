@@ -1,9 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-export const DynamicComponentWithNoSSR = dynamic(
+export const CloverIIIF: React.ComponentType<{ manifestId: string }> = dynamic(
   () => import("@samvera/clover-iiif"),
-  { ssr: false }
+  {
+    ssr: false,
+  }
 );
 
 interface WrapperProps {
@@ -13,7 +15,7 @@ interface WrapperProps {
 const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
   return (
     <section data-testid="work-viewer-wrapper">
-      {manifestId && <DynamicComponentWithNoSSR manifestId={manifestId} />}
+      {manifestId && <CloverIIIF manifestId={manifestId} />}
     </section>
   );
 };

@@ -1,0 +1,293 @@
+{
+  "@context": ["http://iiif.io/api/presentation/3/context.json"],
+  "id": "http://localhost:3000/fixtures/iiif/collection/masks.json",
+  "type": "Collection",
+  "label": {
+    "none": ["Commedia dell'Arte: The Masks of Antonio Fava"]
+  },
+  "summary": {
+    "none": [
+      "The Commedia dell'Arte, the famous improvisational theatre style born in Renaissance Italy, remains a major influence in today's theatre. Antonio Fava is an actor, comedian, author, director, musician, mask maker and Internationally renowned Maestro of Commedia dell'Arte."
+    ]
+  },
+  "homepage": [
+    {
+      "id": "https://dc.library.northwestern.edu/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd",
+      "type": "Text",
+      "label": { "none": ["Commedia dell'Arte: The Masks of Antonio Fava"] },
+      "format": "text/html"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Pantalone classico"] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/180682c9-dfaf-4881-b7b6-1f2f21092d4f/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/180682c9-dfaf-4881-b7b6-1f2f21092d4f",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/7298fdce-adc1-4501-9e14-9e8bd985e149",
+          "type": "Text",
+          "label": { "none": ["Pantalone classico"] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/a0/37/a4/fb/-a/dd/4-/40/af/-8/ad/d-/9a/02/e5/57/34/71-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Francatrippa"] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/42d07b28-083e-4dfb-a3e9-88f2dfc3a571/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/42d07b28-083e-4dfb-a3e9-88f2dfc3a571",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/a037a4fb-add4-40af-8add-9a02e5573471",
+          "type": "Text",
+          "label": { "none": ["Francatrippa"] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Pulcinella \"Stronzo\" o \"Arcigno\""] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/052bb6f0-b6f5-4590-951b-ffdf49ffaf03",
+          "type": "Text",
+          "label": { "none": ["Pulcinella \"Stronzo\" o \"Arcigno\""] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/71/15/33/79/-4/28/3-/43/be/-8/b0/f-/4e/7e/3b/fd/a2/75-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Zagna \"lunga\""] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/44d0ad4d-6a0d-4632-82a3-b6ab8fd4e5b7/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/44d0ad4d-6a0d-4632-82a3-b6ab8fd4e5b7",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/71153379-4283-43be-8b0f-4e7e3bfda275",
+          "type": "Text",
+          "label": { "none": ["Zagna \"lunga\""] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/8b/04/ee/13/-e/69/6-/4b/eb/-8/a3/3-/a9/d1/1c/de/e5/9b-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Grande Zanni"] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/04f87867-903f-465f-81b8-c41a1d6957fa/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/04f87867-903f-465f-81b8-c41a1d6957fa",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/8b04ee13-e696-4beb-8a33-a9d11cdee59b",
+          "type": "Text",
+          "label": { "none": ["Grande Zanni"] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/a3/c6/40/28/-d/1d/c-/4e/97/-8/2b/b-/1e/23/af/95/f5/e3-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Bravazzo"] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/38062d63-cbf3-421f-ba74-49081beb2ff6/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/38062d63-cbf3-421f-ba74-49081beb2ff6",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/a3c64028-d1dc-4e97-82bb-1e23af95f5e3",
+          "type": "Text",
+          "label": { "none": ["Bravazzo"] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/eb/b4/94/ad/-1/d5/6-/4a/d4/-9/77/2-/f2/28/06/7d/5a/79-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Arlecchino \"Scimmia\""] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/47ba6136-4c7f-48a5-9bfb-11c2f86026f8/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/47ba6136-4c7f-48a5-9bfb-11c2f86026f8",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/ebb494ad-1d56-4ad4-9772-f228067d5a79",
+          "type": "Text",
+          "label": { "none": ["Arlecchino \"Scimmia\""] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/2d/e0/35/5c/-8/e4/8-/44/78/-9/3a/f-/8c/bd/14/37/bd/16-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Pulcinella \"tiepolano\""] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/3d42aceb-73ad-44cc-817e-459993a50be6/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/3d42aceb-73ad-44cc-817e-459993a50be6",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/2de0355c-8e48-4478-93af-8cbd1437bd16",
+          "type": "Text",
+          "label": { "none": ["Pulcinella \"tiepolano\""] },
+          "format": "text/html"
+        }
+      ]
+    },
+    {
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/f9/12/a5/81/-d/9e/8-/43/d6/-a/7c/8-/a8/d4/6e/ff/75/17-manifest.json",
+      "type": "Manifest",
+      "label": { "none": ["Dottor Plus Quam Perfectus"] },
+      "summary": { "none": ["Image"] },
+      "thumbnail": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/156b56cf-fcc5-457c-86cc-5f806b7c280a/full/200,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/156b56cf-fcc5-457c-86cc-5f806b7c280a",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "homepage": [
+        {
+          "id": "https://dc.library.northwestern.edu/items/f912a581-d9e8-43d6-a7c8-a8d46eff7517",
+          "type": "Text",
+          "label": { "none": ["Dottor Plus Quam Perfectus"] },
+          "format": "text/html"
+        }
+      ]
+    }
+  ]
+}
