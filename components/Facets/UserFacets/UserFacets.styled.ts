@@ -1,9 +1,9 @@
-import * as Popover from "@radix-ui/react-popover";
+import * as Dropdown from "@radix-ui/react-dropdown-menu";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const PopoverToggle = styled(Popover.Trigger, {
+const DropdownToggle = styled(Dropdown.Trigger, {
   display: "flex",
   padding: "0 1rem",
   border: "none",
@@ -130,7 +130,7 @@ const ValueWrapper = styled("div", {
   },
 });
 
-const PopoverContent = styled(Popover.Content, {
+const DropdownContent = styled(Dropdown.Content, {
   [`& ${StyledValue}`]: {
     padding: "0.35rem 0.5rem",
     backgroundColor: "$white",
@@ -151,4 +151,11 @@ const PopoverContent = styled(Popover.Content, {
   },
 });
 
-export { PopoverToggle, PopoverContent, Icon, StyledValue, Text, ValueWrapper };
+export {
+  DropdownToggle,
+  DropdownContent,
+  Icon,
+  StyledValue,
+  Text,
+  ValueWrapper,
+};

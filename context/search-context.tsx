@@ -8,6 +8,7 @@ type Action =
       aggregations: ApiResponseAggregation[] | undefined;
     }
   | { type: "updateSearch"; q: string }
+  | { type: "updateSearchFixed"; searchFixed: boolean }
   | { type: "updateUserFacets"; userFacets: UserFacets };
 
 type Dispatch = (action: Action) => void;
@@ -20,6 +21,7 @@ type SearchProviderProps = {
 const defaultState: SearchContextStore = {
   aggregations: [],
   q: "",
+  searchFixed: false,
   userFacets: {},
 };
 
@@ -39,6 +41,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         q: action.q,
+      };
+    }
+    case "updateSearchFixed": {
+      return {
+        ...state,
+        searchFixed: action.searchFixed,
       };
     }
     case "updateUserFacets": {

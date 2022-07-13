@@ -1,15 +1,28 @@
 import { styled } from "@/stitches.config";
 
 interface ContainerProps {
+  children: React.ReactNode | React.ReactNode[];
+  className?: string;
   containerType?: "default" | "wide";
+  maxWidth?: number;
 }
 
 const Container: React.FC<ContainerProps> = ({
   children,
+  className,
   containerType = "default",
+  maxWidth,
 }) => {
+  const manualWidth = maxWidth ? { maxWidth: maxWidth } : {};
+
   return (
-    <ContainerStyled containerType={containerType}>{children}</ContainerStyled>
+    <ContainerStyled
+      className={className}
+      containerType={containerType}
+      css={manualWidth}
+    >
+      {children}
+    </ContainerStyled>
   );
 };
 
