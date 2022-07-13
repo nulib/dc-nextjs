@@ -5,16 +5,16 @@ import {
   FilterFloating,
 } from "@/components/Facets/Filter/Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
+import React, { useState } from "react";
 import { DialogOverlay } from "@/components/Shared/Dialog.styled";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
 import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
-import React from "react";
 import { useSearchState } from "@/context/search-context";
 
 const DialogWrapper: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { filterDispatch } = useFilterState();
   const { searchState } = useSearchState();
   const { q, userFacets } = searchState;

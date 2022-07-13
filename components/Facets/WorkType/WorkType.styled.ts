@@ -6,6 +6,8 @@ import { styled } from "@/stitches.config";
 const Wrapper = styled(Radio.Root, {
   position: "relative",
   height: "2rem",
+  opacity: "1",
+  transition: "$all",
 });
 
 const StyledWorkType = styled("ul", {

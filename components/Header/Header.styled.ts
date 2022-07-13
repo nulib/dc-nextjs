@@ -1,6 +1,6 @@
-import { Button, Input, SearchStyled } from "../Search/Search.styled";
 import { ContainerStyled } from "@/components/Shared/Container";
 import { NavStyled } from "../Nav/Nav.styled";
+import { SearchStyled } from "../Search/Search.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -21,6 +21,9 @@ const Primary = styled("div", {
   margin: "0 auto",
   zIndex: "1",
   transition: "$all",
+  position: "relative",
+  top: "unset",
+  height: "50px",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -29,6 +32,7 @@ const Primary = styled("div", {
     justifyContent: "space-between",
     flexGrow: "1",
     backgroundColor: "white",
+    transition: "$all",
 
     "> span": {
       display: "flex",
@@ -42,6 +46,93 @@ const Primary = styled("div", {
 
     [`& ${SearchStyled}`]: {},
   },
+
+  "&[data-search-fixed='true']": {
+    [`& ${ContainerStyled}`]: {
+      position: "fixed",
+      top: "0",
+      maxWidth: "100%",
+      backgroundColor: "white",
+      boxShadow: "0px 3px 11px #0003",
+
+      "> span": {
+        opacity: "1",
+        width: "auto",
+        padding: "0 1rem",
+      },
+
+      [`& ${NavStyled}`]: {
+        width: "0",
+        opacity: "0",
+      },
+    },
+  },
+
+  // ".sticky-primary": {
+  //   zIndex: "1",
+
+  //   [`& ${Primary}`]: {
+  //     backgroundColor: "$slate12",
+  //     color: "$slate1",
+  //     width: "100vw",
+  //     justifyContent: "space-between",
+
+  //     "> span": {
+  //       opacity: "1",
+  //       width: "auto",
+  //       padding: "0 1rem",
+  //       transition: "$all",
+  //     },
+
+  //     "> div": {
+  //       flexGrow: "0",
+  //     },
+
+  //     "&[data-search-active='true']": {
+  //       "> span": {
+  //         opacity: "0",
+  //         padding: "0",
+  //         width: "0",
+  //       },
+
+  //       "> div": {
+  //         flexGrow: "1",
+  //       },
+
+  //       [`& ${NavStyled}`]: {
+  //         width: "0",
+  //         opacity: "0",
+  //       },
+
+  //       [`& ${Input}`]: {
+  //         width: "100%",
+  //         padding: "0 2.618rem",
+  //         color: "$slate1",
+  //         cursor: "unset",
+  //         opacity: "1",
+  //         marginRight: "0",
+  //       },
+
+  //       [`& ${Button}`]: {
+  //         left: "0",
+  //       },
+  //     },
+  //   },
+
+  //   [`& ${Input}`]: {
+  //     width: "50px",
+  //     backgroundColor: "transparent",
+  //     color: "$slate1",
+  //     cursor: "pointer",
+  //     padding: "0",
+  //     opacity: "0",
+  //     marginRight: "1rem",
+  //   },
+
+  //   [`& ${SearchStyled}`]: {
+  //     backgroundColor: "unset",
+  //   },
+  // },
 });
 
 const Super = styled("div", {
@@ -74,72 +165,6 @@ const StyledHeader = styled("header", {
   color: "$white",
   flexDirection: "column",
   marginBottom: "5px",
-
-  ".sticky-primary": {
-    zIndex: "1",
-
-    [`& ${Primary}`]: {
-      backgroundColor: "$slate12",
-      color: "$slate1",
-      width: "100vw",
-      justifyContent: "space-between",
-
-      "> span": {
-        opacity: "1",
-        width: "auto",
-        padding: "0 1rem",
-        transition: "$all",
-      },
-
-      "> div": {
-        flexGrow: "0",
-      },
-
-      "&[data-search-active='true']": {
-        "> span": {
-          opacity: "0",
-          padding: "0",
-          width: "0",
-        },
-
-        "> div": {
-          flexGrow: "1",
-        },
-
-        [`& ${NavStyled}`]: {
-          width: "0",
-          opacity: "0",
-        },
-
-        [`& ${Input}`]: {
-          width: "100%",
-          padding: "0 2.618rem",
-          color: "$slate1",
-          cursor: "unset",
-          opacity: "1",
-          marginRight: "0",
-        },
-
-        [`& ${Button}`]: {
-          left: "0",
-        },
-      },
-    },
-
-    [`& ${Input}`]: {
-      width: "50px",
-      backgroundColor: "transparent",
-      color: "$slate1",
-      cursor: "pointer",
-      padding: "0",
-      opacity: "0",
-      marginRight: "1rem",
-    },
-
-    [`& ${SearchStyled}`]: {
-      backgroundColor: "unset",
-    },
-  },
 });
 
 export { Lockup, Primary, PrimaryInner, StyledHeader, Super };

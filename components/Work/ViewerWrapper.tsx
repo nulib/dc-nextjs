@@ -1,4 +1,5 @@
 import React from "react";
+import { ViewerWrapperStyled } from "@/components/Work/ViewerWrapper.styled";
 import dynamic from "next/dynamic";
 
 export const CloverIIIF: React.ComponentType<{ manifestId: string }> = dynamic(
@@ -14,9 +15,9 @@ interface WrapperProps {
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
   return (
-    <section data-testid="work-viewer-wrapper">
+    <ViewerWrapperStyled data-testid="work-viewer-wrapper">
       {manifestId && <CloverIIIF manifestId={manifestId} />}
-    </section>
+    </ViewerWrapperStyled>
   );
 };
 

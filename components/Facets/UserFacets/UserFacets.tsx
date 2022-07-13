@@ -1,11 +1,11 @@
-import * as Popover from "@radix-ui/react-popover";
+import * as Dropdown from "@radix-ui/react-dropdown-menu";
 import {
-  PopoverContent,
-  PopoverToggle,
+  DropdownContent,
+  DropdownToggle,
   ValueWrapper,
 } from "./UserFacets.styled";
 import { useEffect, useState } from "react";
-import FacetsCurrentUserValue from "./Value";
+import FacetsCurrentUserValue from "@/components/Facets/UserFacets/Value";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { UserFacets } from "@/types/context/search-context";
 import { getFacetById } from "@/lib/utils/facet-helpers";
@@ -106,19 +106,20 @@ const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
   return (
     <ValueWrapper data-testid="facet-user-component">
       {screen === "search" && (
-        <Popover.Root>
-          <PopoverToggle data-testid="facet-user-component-popover-toggle">
+        <Dropdown.Root modal={false}>
+          <DropdownToggle data-testid="facet-user-component-popover-toggle">
             <IconChevronDown />
             <span>{currentOptions.length}</span>
-          </PopoverToggle>
-          <PopoverContent
+          </DropdownToggle>
+          <DropdownContent
             align="start"
             alignOffset={-95}
+            portalled={true}
             data-testid="facet-user-component-popover-content"
           >
             {currentFacets}
-          </PopoverContent>
-        </Popover.Root>
+          </DropdownContent>
+        </Dropdown.Root>
       )}
       {screen === "modal" && currentFacets}
     </ValueWrapper>
