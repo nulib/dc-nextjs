@@ -18,6 +18,7 @@
   "rules": {
     "sort-keys": "error",
     "sort-imports": "error",
+    "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/sort-type-union-intersection-members": "error"
