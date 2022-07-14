@@ -13,7 +13,7 @@ export const sampleWork1: WorkShape = {
   captions: [],
   catalog_keys: [],
   collection_id: "51d4475f-5a0a-42a4-8901-bde73a1fae99",
-  collection_title: "51d4475f-5a0a-42a4-8901-bde73a1fae99",
+  collection_title: "Jim Roberts Photographs, 1968-1972",
   contributor_ids: ["http://id.loc.gov/authorities/names/n83209441"],
   contributor_labels: ["Roberts, James S."],
   contributors_with_roles: ["Roberts, James S. (Photographer)"],

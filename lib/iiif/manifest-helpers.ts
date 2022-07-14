@@ -51,14 +51,11 @@ export const buildPres3Manifest = async (
         value: [...work.subject_labels],
       },
       {
-        label: "Accession Number",
-        value: work.accession_number,
-      },
-      {
-        label: "Terms of Use",
-        value: work.terms_of_use,
+        label: "Genre",
+        value: [...work.genre_labels],
       },
     ]);
+    manifest.requiredStatement?.value.none?.push(work.terms_of_use);
   } catch (err) {
     console.error("Error building manifest locally");
     return null;

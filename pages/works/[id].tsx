@@ -11,14 +11,16 @@ import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
+import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 
 interface WorkPageProps {
   manifest?: Manifest;
-  related?: string[];
   work: WorkShape;
 }
 
-const WorkPage: NextPage<WorkPageProps> = ({ manifest, related, work }) => {
+const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
+  const related = getRelatedCollections(work);
+
   return (
     <Layout>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -55,17 +57,9 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
   const manifest = work ? await buildPres3Manifest(work) : null;
 
-  /**
-   * @todo: replace these hardcoded URIs with a method to get related collection URIs
-   */
-  const related = [
-    "http://localhost:3000/fixtures/iiif/collection/masks.json",
-    "http://localhost:3000/fixtures/iiif/collection/football.json",
-  ];
-
   return {
-    props: { manifest, related, work },
-    revalidate: 10, // In seconds
+    props: { manifest, work },
+    revalidate: 10, // seconds
   };
 }
 
