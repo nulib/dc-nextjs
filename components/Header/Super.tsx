@@ -3,6 +3,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import React from "react";
 import { Super } from "@/components/Header/Header.styled";
+import { UserContext } from "@/pages/_app";
 
 const nav = [
   {
@@ -17,13 +18,11 @@ const nav = [
     href: "/contact",
     label: "Contact",
   },
-  {
-    href: "/#",
-    label: "Sign In",
-  },
 ];
 
 export default function HeaderSuper() {
+  const userAuthContext = React.useContext(UserContext);
+
   return (
     <Super>
       <Container>
@@ -34,6 +33,19 @@ export default function HeaderSuper() {
               <a>{label}</a>
             </Link>
           ))}
+          {!userAuthContext?.user && (
+            <Link href="/api/auth/login">
+              <a>Sign in</a>
+            </Link>
+          )}
+          {userAuthContext?.user && (
+            <>
+              <a onClick={userAuthContext.logout} style={{ cursor: "pointer" }}>
+                Logout
+              </a>
+              <span>{userAuthContext.user.displayName}</span>
+            </>
+          )}
         </Nav>
       </Container>
     </Super>
