@@ -71,9 +71,10 @@ resource "aws_amplify_app" "dc-next" {
   }
 
   environment_variables = {
-    ENV                        = var.environment_name
-    NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
-    _LIVE_UPDATES              = "[{ \"name\" : \"Next.js version\", \"pkg\" : \"next-version\", \"type\" : \"internal\", \"version\" : \"latest\" }]"
+    ENV                                = var.environment_name
+    NEXT_PUBLIC_DCAPI_ENDPOINT         = var.next_public_dcapi_endpoint
+    NEXT_PUBLIC_DC_API_SEARCH_IIIF_URL = var.next_public_dc_api_search_iiif_url
+    _LIVE_UPDATES                      = "[{ \"name\" : \"Next.js version\", \"pkg\" : \"next-version\", \"type\" : \"internal\", \"version\" : \"latest\" }]"
   }
 }
 

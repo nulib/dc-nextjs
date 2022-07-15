@@ -29,6 +29,10 @@ variable "next_public_dcapi_endpoint" {
   type = string
 }
 
+variable "next_public_dc_api_search_iiif_url" {
+  type = string
+}
+
 variable "production_branch" {
   type = string
 }
