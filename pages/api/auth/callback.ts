@@ -5,13 +5,14 @@ import {
 } from "@/lib/constants/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { UserNUSSO } from "@/types/context/user";
+
 const { redeemSsoToken, token } = require("./utils");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET": {
-      redeemSsoToken(req).then((user) => {
-        console.log("user", user);
+      redeemSsoToken(req).then((user: UserNUSSO) => {
         if (!user) {
           deleteCookie(API_TOKEN_COOKIE as string, {
             domain: AUTH_DOMAIN,
@@ -19,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
           });
         } else {
-          console.log(`${user.mail} successfully authenticated`);
           const jwtToken = token(user, process.env.JWT_TOKEN_SECRET);
 
           /**

@@ -6,8 +6,6 @@ const jwt = require("jsonwebtoken");
 async function redeemSsoToken(req) {
   let nussoToken = getCookie(NUSSO_COOKIE, { req });
 
-  console.log("nussoToken", nussoToken);
-
   return new Promise((resolve) => {
     if (nussoToken != null) {
       axios
@@ -21,7 +19,6 @@ async function redeemSsoToken(req) {
           }
         )
         .then(function (response) {
-          console.log("results", response.data.results[0]);
           resolve(response.data.results[0]);
         })
         .catch(function (error) {

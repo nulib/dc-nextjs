@@ -6,10 +6,7 @@ import { setCookie } from "cookies-next";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET": {
-      console.log("NUSSO_BASE_URL", process.env.NUSSO_BASE_URL);
-      // Construct callback URL
       const callbackUrl = `https://${req.headers.host}/api/auth/callback`;
-      console.log("callbackUrl", callbackUrl);
 
       // Save user's current url so we can redirect them back
       setCookie(NUSSO_REDIRECT_URL as string, req.headers.referer, {
@@ -25,8 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         })
         .then((response) => {
-          //console.log("response", response);
-
           res.redirect(response.data.redirecturl);
         });
 
