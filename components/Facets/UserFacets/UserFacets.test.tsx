@@ -8,12 +8,14 @@ import UserFacets from "./UserFacets";
 const searchStateDefault = {
   aggregations: [],
   q: "",
+  searchFixed: false,
   userFacets: {},
 };
 
 const searchState = {
   aggregations: [],
   q: "",
+  searchFixed: false,
   userFacets: { genre: ["Foo"] },
 };
 

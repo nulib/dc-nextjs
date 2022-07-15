@@ -1,9 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  PopoverToggle,
-  ValueWrapper,
-} from "@/components/Facets/UserFacets/UserFacets.styled";
 import { IconStyled } from "@/components/Shared/Icon";
+import { ValueWrapper } from "@/components/Facets/UserFacets/UserFacets.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -54,16 +51,16 @@ const FilterFloating = styled("div", {
     backgroundColor: "$purple10",
     boxShadow: "2px 2px 5px #0004",
 
-    [`& ${PopoverToggle}`]: {
-      fill: "$purple",
+    // [`& ${PopoverToggle}`]: {
+    //   fill: "$purple",
 
-      svg: {
-        color: "$purple",
-        fill: "$purple",
-        marginTop: "-2px",
-        transform: "rotate(-90deg)",
-      },
-    },
+    //   svg: {
+    //     color: "$purple",
+    //     fill: "$purple",
+    //     marginTop: "-2px",
+    //     transform: "rotate(-90deg)",
+    //   },
+    // },
   },
 });
 

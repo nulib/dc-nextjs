@@ -1,9 +1,13 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, ReactNode } from "react";
 import { RenderOptions, render } from "@testing-library/react";
 import { FilterProvider } from "@/context/filter-context";
 import { SearchProvider } from "@/context/search-context";
 
-const AllTheProviders: FC = ({ children }) => {
+interface AllTheProvidersProps {
+  children: ReactNode;
+}
+
+const AllTheProviders: FC<AllTheProvidersProps> = ({ children }) => {
   return (
     <SearchProvider>
       <FilterProvider>{children}</FilterProvider>

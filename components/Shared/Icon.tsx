@@ -1,6 +1,11 @@
+import { ReactNode } from "react";
 import { styled } from "@/stitches.config";
 
-const Icon: React.FC = ({ children }) => {
+interface IconProps {
+  children: ReactNode;
+}
+
+const Icon: React.FC<IconProps> = ({ children }) => {
   return <IconStyled>{children}</IconStyled>;
 };
 

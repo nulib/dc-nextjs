@@ -1,6 +1,11 @@
 import { NavStyled } from "./Nav.styled";
+import { ReactNode } from "react";
 
-const Nav: React.FC = ({ children }) => {
+interface NavProps {
+  children: ReactNode;
+}
+
+const Nav: React.FC<NavProps> = ({ children }) => {
   return <NavStyled>{children}</NavStyled>;
 };
 

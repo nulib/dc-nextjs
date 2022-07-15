@@ -6,7 +6,7 @@ import { sampleWork1 } from "@/mocks/sample-work1";
 describe("WorkTopInfo component", () => {
   async function renderHelper() {
     const manifest = await buildPres3Manifest(sampleWork1);
-    return render(<WorkTopInfo manifest={manifest} work={sampleWork1} />);
+    return render(<WorkTopInfo manifest={manifest!} work={sampleWork1} />);
   }
 
   it("renders", async () => {

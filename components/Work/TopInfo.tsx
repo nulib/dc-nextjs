@@ -55,7 +55,9 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
     <TopInfoWrapper>
       <div data-testid="work-top-info-wrapper">
         <Label label={manifest.label} as="h1" data-testid="title" />
-        <Summary summary={manifest.summary} as="p" data-testid="summary" />
+        {manifest?.summary && (
+          <Summary summary={manifest.summary} as="p" data-testid="summary" />
+        )}
         <ActionButtons>
           <Button name="find" onClick={handleActionsButtonClick}>
             Find this item
@@ -74,8 +76,12 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
         />
 
         <MetadataWrapper>
-          <Metadata metadata={manifest.metadata} data-testid="metadata" />
-          <RequiredStatement requiredStatement={manifest.requiredStatement} />
+          {manifest?.metadata && (
+            <Metadata metadata={manifest.metadata} data-testid="metadata" />
+          )}
+          {manifest?.requiredStatement && (
+            <RequiredStatement requiredStatement={manifest.requiredStatement} />
+          )}
         </MetadataWrapper>
       </div>
       <div>
