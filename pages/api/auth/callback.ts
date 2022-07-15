@@ -36,6 +36,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
           });
 
+          console.log("redirectUrl", redirectUrl);
+
           deleteCookie(NUSSO_REDIRECT_URL as string, { req, res });
 
           /**
