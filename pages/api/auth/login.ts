@@ -6,7 +6,8 @@ import { setCookie } from "cookies-next";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET": {
-      const host = req.headers["x-forwarded-for"] || req.headers.host;
+      console.log("req", req);
+      const host = req.headers["x-forwarded-host"] || req.headers.host;
       const callbackUrl = `https://${host}/api/auth/callback`;
 
       // Save user's current url so we can redirect them back
