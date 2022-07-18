@@ -3,6 +3,8 @@ import { DC_API_SEARCH_IIIF_URL } from "@/lib/constants/endpoints";
 import { WorkShape } from "@/types/components/works";
 
 export const getRelatedCollections = (work: WorkShape) => {
+  if (!work) return;
+
   let related = [];
 
   /**

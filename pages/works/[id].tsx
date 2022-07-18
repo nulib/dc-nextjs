@@ -11,7 +11,7 @@ import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
-//import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
+import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 
 interface WorkPageProps {
   manifest?: Manifest;
@@ -19,8 +19,14 @@ interface WorkPageProps {
 }
 
 const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
-  //const related = getRelatedCollections(work);
-  const related = ["foo"];
+  if (!work || !manifest)
+    return (
+      <Layout>
+        <Container>Aw, shucks. Something went wrong.</Container>
+      </Layout>
+    );
+
+  const related = getRelatedCollections(work);
 
   return (
     <Layout>
