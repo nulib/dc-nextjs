@@ -1,6 +1,10 @@
-import { API_TOKEN_COOKIE, AUTH_DOMAIN } from "@/lib/constants/auth";
+import {
+  API_TOKEN_COOKIE,
+  AUTH_DOMAIN,
+  NUSSO_REDIRECT_URL,
+} from "@/lib/constants/auth";
 import { NextApiRequest, NextApiResponse } from "next";
-import { deleteCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { UserNUSSO } from "@/types/context/user";
 
 const { redeemSsoToken, token } = require("./utils");
@@ -29,15 +33,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             res,
           });
 
-          // const redirectUrl = getCookie(NUSSO_REDIRECT_URL as string, {
-          //   req,
-          //   res,
-          // });
+          const redirectUrl = getCookie(NUSSO_REDIRECT_URL as string, {
+            req,
+            res,
+          });
 
-          const redirectUrl =
-            "https://auth.dc-next.rdc-staging.library.northwestern.edu/";
-
-          // deleteCookie(NUSSO_REDIRECT_URL as string, { req, res });
+          deleteCookie(NUSSO_REDIRECT_URL as string, { req, res });
 
           /**
            * Redirect user to DC v2 app
