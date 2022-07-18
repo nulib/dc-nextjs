@@ -1,6 +1,5 @@
 import {
   ActionButtons,
-  MetadataWrapper,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
 import {
@@ -12,6 +11,7 @@ import {
 import React, { MouseEvent } from "react";
 import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
+import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import { Manifest } from "@iiif/presentation-3";
 import WorkActionsDialog from "@/components/Work/ActionsDialog";
 import { WorkShape } from "@/types/components/works";
@@ -73,16 +73,17 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
         <WorkActionsDialog
           actionsDialog={actionsDialog}
           close={() => setActionsDialog({ activeDialog: undefined })}
+          work={work}
         />
 
-        <MetadataWrapper>
+        <DefinitionListWrapper>
           {manifest?.metadata && (
             <Metadata metadata={manifest.metadata} data-testid="metadata" />
           )}
           {manifest?.requiredStatement && (
             <RequiredStatement requiredStatement={manifest.requiredStatement} />
           )}
-        </MetadataWrapper>
+        </DefinitionListWrapper>
       </div>
       <div>
         <h2>Collection</h2>

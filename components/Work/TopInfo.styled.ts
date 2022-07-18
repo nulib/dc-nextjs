@@ -16,19 +16,6 @@ const ActionButtons = styled("div", {
   },
 });
 
-const MetadataWrapper = styled("div", {
-  "& dt": {
-    fontSize: "0.75rem",
-    fontWeight: "bold",
-    paddingBottom: "0.5rem",
-    textTransform: "uppercase",
-  },
-  "& dd": {
-    marginInlineStart: "0",
-    paddingBottom: "1.25rem",
-  },
-});
-
 const TopInfoWrapper = styled("section", {
   display: "grid",
   gap: "2rem",
@@ -40,4 +27,4 @@ const TopInfoWrapper = styled("section", {
   },
 });
 
-export { ActionButtons, MetadataWrapper, TopInfoWrapper };
+export { ActionButtons, TopInfoWrapper };
