@@ -7,6 +7,7 @@
     "export": "next build && next export",
     "lint": "next lint",
     "ts-lint": "tsc --noEmit --incremental --watch",
+    "ts-lint-commit-hook": "tsc --noEmit",
     "start": "next start",
     "prepare": "husky install",
     "test": "jest --watch",
