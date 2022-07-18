@@ -10,6 +10,6 @@ describe("PlaceholderBlock component", () => {
     expect(navItems[0]).toHaveTextContent("Libraries");
     expect(navItems[1]).toHaveTextContent("About");
     expect(navItems[2]).toHaveTextContent("Contact");
-    expect(navItems[3]).toHaveTextContent("Sign In");
+    expect(navItems[3]).toHaveTextContent("Sign in");
   });
 });
