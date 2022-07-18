@@ -104,6 +104,17 @@ const DialogContent = styled(Dialog.Content, {
     top: "0.5rem",
     left: "0.5rem",
   },
+
+  variants: {
+    size: {
+      large: {
+        top: "5rem",
+        left: "5rem",
+        width: "calc(100vw - 10rem)",
+        height: "calc(100vh - 10rem)",
+      },
+    },
+  },
 });
 
 export { DialogBody, DialogClose, DialogContent, DialogHeader, DialogOverlay };

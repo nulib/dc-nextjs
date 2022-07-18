@@ -13,12 +13,14 @@ interface SharedDialogProps {
   children: ReactNode;
   handleCloseClick: () => void;
   isOpen: boolean;
+  large?: boolean;
   title: string;
 }
 
 const SharedDialog: React.FC<SharedDialogProps> = ({
   children,
   handleCloseClick,
+  large,
   isOpen,
   title,
 }) => {
@@ -26,7 +28,10 @@ const SharedDialog: React.FC<SharedDialogProps> = ({
     <Dialog.Root open={isOpen}>
       <Dialog.Portal>
         <DialogOverlay />
-        <DialogContent onInteractOutside={handleCloseClick}>
+        <DialogContent
+          onInteractOutside={handleCloseClick}
+          {...(large && { size: "large" })}
+        >
           <DialogHeader>
             <Dialog.Title>{title}</Dialog.Title>
             <DialogClose
