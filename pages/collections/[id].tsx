@@ -4,14 +4,20 @@ import {
   HeroImageStyled,
   HeroStyled,
   HeroStyledWrapper,
+  ItemsLabel,
 } from "@/components/Collection/Collection.styled";
 import { Button } from "@nulib/design-system";
 import CollectionNavTabs from "@/components/Collection/NavTabs";
 import Container from "@/components/Shared/Container";
 import Layout from "components/layout";
 import { NextPage } from "next";
+import RelatedItems from "@/components/Shared/RelatedItems";
+import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
+import { sampleWork2 } from "@/mocks/sample-work2";
 
 const Collection: NextPage = () => {
+  const stubRelated = getRelatedCollections(sampleWork2);
+
   return (
     <Layout>
       <HeroStyledWrapper>
@@ -19,7 +25,7 @@ const Collection: NextPage = () => {
           <HeroStyled>
             <HeroContent>
               <h1>Edward S. Curtis&apos;s The North American Indian</h1>
-              <div>2336 Items</div>
+              <ItemsLabel>2336 Items</ItemsLabel>
               <p>
                 Edward Sheriff Curtis published The North American Indian
                 between 1907 and 1930 with the intent to record traditional
@@ -58,6 +64,7 @@ const Collection: NextPage = () => {
           </p>
         </CulturalContextStyled>
         <CollectionNavTabs />
+        <RelatedItems collections={stubRelated} title="Stub Related Content" />
       </Container>
     </Layout>
   );

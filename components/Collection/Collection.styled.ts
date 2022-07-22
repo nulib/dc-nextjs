@@ -40,10 +40,16 @@ const HeroImageStyled = styled("div", {
   },
 });
 
+const ItemsLabel = styled("p", {
+  fontSize: "0.75rem",
+  textTransform: "uppercase",
+});
+
 export {
   CulturalContextStyled,
   HeroContent,
   HeroImageStyled,
   HeroStyled,
   HeroStyledWrapper,
+  ItemsLabel,
 };
