@@ -22,7 +22,6 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div data-testid="card-wrapper">
-      <h3 data-testid="card-title">{title}</h3>
       <Figure data={data} />
       <p data-testid="card-description">{description}</p>
     </div>

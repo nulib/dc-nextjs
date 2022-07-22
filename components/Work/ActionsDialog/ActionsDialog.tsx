@@ -1,19 +1,18 @@
 import { ActionsDialog } from "@/components/Work/TopInfo";
+import DownloadAndShare from "@/components/Work/ActionsDialog/DownloadAndShare";
+import Find from "@/components/Work/ActionsDialog/Find";
 import React from "react";
 import SharedDialog from "@/components/Shared/Dialog";
-import WorkDialogCite from "@/components/Work/Dialog/Cite";
-import { WorkShape } from "types/components/works";
+import WorkDialogCite from "@/components/Work/ActionsDialog/Cite";
 
 export interface WorkActionsDialogProps {
   actionsDialog: ActionsDialog;
   close: () => void;
-  work: WorkShape;
 }
 
 const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
   actionsDialog: { activeDialog },
   close,
-  work,
 }) => {
   function renderTitle() {
     switch (activeDialog) {
@@ -28,6 +27,17 @@ const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
     }
   }
 
+  function renderContent() {
+    switch (activeDialog) {
+      case "CITE":
+        return <WorkDialogCite />;
+      case "FIND":
+        return <Find />;
+      case "DOWNLOAD":
+        return <DownloadAndShare />;
+    }
+  }
+
   return (
     <div data-testid="work-actions-dialog">
       <SharedDialog
@@ -36,9 +46,7 @@ const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
         large
         title={renderTitle()}
       >
-        {activeDialog === "CITE" && <WorkDialogCite work={work} />}
-        {activeDialog === "FIND" && <>Find content goes here</>}
-        {activeDialog === "DOWNLOAD" && <>Download content goes here</>}
+        {renderContent()}
       </SharedDialog>
     </div>
   );

@@ -7,6 +7,7 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
+import { WorkProvider } from "@/context/work-context";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
@@ -30,22 +31,15 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
 
   return (
     <Layout>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {work && (
-          <>
-            <WorkViewerWrapper manifestId={work.iiif_manifest} />
-            <Container>
-              <WorkTopInfo manifest={manifest} work={work} />
-              <RelatedItems collections={related} title="Explore Further" />
-            </Container>
-          </>
-        )}
-        {!work && (
-          <p style={{ padding: "2rem", textAlign: "center" }}>
-            Likely JSON error in the Work API response
-          </p>
-        )}
-      </ErrorBoundary>
+      <WorkProvider initialState={{ manifest: manifest, work: work }}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <WorkViewerWrapper manifestId={work.iiif_manifest} />
+          <Container>
+            <WorkTopInfo manifest={manifest} work={work} />
+            <RelatedItems collections={related} title="Explore Further" />
+          </Container>
+        </ErrorBoundary>
+      </WorkProvider>
     </Layout>
   );
 };

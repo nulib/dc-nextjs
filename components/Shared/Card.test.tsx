@@ -16,6 +16,5 @@ describe("Card component", () => {
       "Ima description"
     );
     expect(screen.getByText("123 items"));
-    expect(screen.getByTestId("card-title")).toHaveTextContent(props.title);
   });
 });
