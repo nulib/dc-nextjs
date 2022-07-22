@@ -13,7 +13,7 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import { Manifest } from "@iiif/presentation-3";
-import WorkActionsDialog from "@/components/Work/ActionsDialog";
+import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import { WorkShape } from "@/types/components/works";
 
 interface TopInfoProps {
@@ -73,7 +73,6 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
         <WorkActionsDialog
           actionsDialog={actionsDialog}
           close={() => setActionsDialog({ activeDialog: undefined })}
-          work={work}
         />
 
         <DefinitionListWrapper>
@@ -88,10 +87,10 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
       <div>
         <h2>Collection</h2>
         <Card
-          title={`Ima title`}
-          description="Foo bar oh my"
+          title={work.collection_title}
+          description="Collection description"
           imageUrl={work.thumbnail}
-          supplementalInfo="230 items"
+          supplementalInfo="Collection work count as number"
         />
       </div>
     </TopInfoWrapper>

@@ -1,15 +1,20 @@
-import { CiteStyled, ContentCol } from "@/components/Work/Dialog/Cite.styled";
+import {
+  ActionsDialogStyled,
+  Content,
+} from "@/components/Work/ActionsDialog/ActionsDialog.styled";
+import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import React from "react";
-import { WorkShape } from "types/components/works";
+import { useWorkState } from "@/context/work-context";
 
 const nul = "Northwestern University Libraries";
 const today = new Date().toDateString();
-export interface WorkDialogCiteProps {
-  work: WorkShape;
-}
 
-const WorkDialogCite: React.FC<WorkDialogCiteProps> = ({ work }) => {
+const WorkDialogCite: React.FC = () => {
+  const { workState } = useWorkState();
+
+  if (!workState?.work) return <></>;
+
   const {
     ark,
     collection_title,
@@ -18,10 +23,8 @@ const WorkDialogCite: React.FC<WorkDialogCiteProps> = ({ work }) => {
     identifiers,
     library_unit,
     terms_of_use,
-    thumbnail,
     title,
-    work_type_labels,
-  } = work;
+  } = workState.work;
 
   const dateObj: Date = new Date(create_date);
   const formattedDate = dateObj.toDateString();
@@ -41,13 +44,9 @@ const WorkDialogCite: React.FC<WorkDialogCiteProps> = ({ work }) => {
     ["MLA Format", mlaFormat],
   ];
   return (
-    <CiteStyled>
-      <div data-testid="thumbnail-col-wrapper">
-        <img src={thumbnail} alt={`${title} thumbnail`} />
-        <h2>{title}</h2>
-        <p>{work_type_labels}</p>
-      </div>
-      <ContentCol>
+    <ActionsDialogStyled>
+      <ActionsDialogAside />
+      <Content>
         <DefinitionListWrapper>
           <dl data-testid="metadata" style={{ marginTop: "0" }}>
             {metadata.map((item) => (
@@ -62,8 +61,8 @@ const WorkDialogCite: React.FC<WorkDialogCiteProps> = ({ work }) => {
             </dd>
           </dl>
         </DefinitionListWrapper>
-      </ContentCol>
-    </CiteStyled>
+      </Content>
+    </ActionsDialogStyled>
   );
 };
 

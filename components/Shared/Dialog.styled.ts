@@ -19,9 +19,9 @@ const DialogOverlay = styled(Dialog.Overlay, {
 });
 
 const DialogBody = styled("div", {
-  margin: "3.5rem 0 4.5rem",
-  maxHeight: "calc(100% - 8rem)",
-  minHeight: "calc(100% - 8rem)",
+  margin: "3.5rem 0 0",
+  maxHeight: "calc(100% - 3.5rem)",
+  minHeight: "calc(100% - 3.5rem)",
   overflow: "scroll",
   padding: "1rem",
 
