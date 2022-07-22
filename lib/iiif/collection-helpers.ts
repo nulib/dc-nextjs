@@ -10,7 +10,7 @@ export const getRelatedCollections = (work: WorkShape) => {
   /**
    * Append `2` subject based IIIF collections
    */
-  const subjects = shuffle(work?.subject_labels).filter(
+  const subjects = shuffle([work?.subject_labels]).filter(
     (label: string, index: number) => index < 2 && label
   );
   related.push(
@@ -24,17 +24,19 @@ export const getRelatedCollections = (work: WorkShape) => {
    * Append genre based IIIF collection
    */
   const genre = sample(work?.genre_labels);
-  related.push(
-    `${DC_API_SEARCH_IIIF_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre`
-  );
+  genre &&
+    related.push(
+      `${DC_API_SEARCH_IIIF_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre`
+    );
 
   /**
    * Append work type IIIF collection
    */
   const type = work?.work_type_labels;
-  related.push(
-    `${DC_API_SEARCH_IIIF_URL}?query=workType.label.keyword:"${type}" AND NOT id:"${work.id}"&collectionLabel=${type}&collectionSummary=Work Type`
-  );
+  type &&
+    related.push(
+      `${DC_API_SEARCH_IIIF_URL}?query=workType.label.keyword:"${type}" AND NOT id:"${work.id}"&collectionLabel=${type}&collectionSummary=Work Type`
+    );
 
   /**
    * Add some variance and shuffle the deck
