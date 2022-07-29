@@ -1,9 +1,9 @@
 import { ActionsDialog } from "@/components/Work/TopInfo";
 import DownloadAndShare from "@/components/Work/ActionsDialog/DownloadAndShare";
-import Find from "@/components/Work/ActionsDialog/Find";
 import React from "react";
 import SharedDialog from "@/components/Shared/Dialog";
 import WorkDialogCite from "@/components/Work/ActionsDialog/Cite";
+import WorkDialogFind from "@/components/Work/ActionsDialog/Find";
 
 export interface WorkActionsDialogProps {
   actionsDialog: ActionsDialog;
@@ -32,7 +32,7 @@ const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
       case "CITE":
         return <WorkDialogCite />;
       case "FIND":
-        return <Find />;
+        return <WorkDialogFind />;
       case "DOWNLOAD":
         return <DownloadAndShare />;
     }

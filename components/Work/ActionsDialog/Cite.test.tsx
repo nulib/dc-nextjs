@@ -1,12 +1,20 @@
-import { render, screen, within } from "@/test-utils";
+import { render, screen, within } from "@testing-library/react";
 import WorkDialogCite from "@/components/Work/ActionsDialog/Cite";
+import { WorkProvider } from "@/context/work-context";
 import { sampleWork1 } from "@/mocks/sample-work1";
 
-xdescribe("WorkDialogCite", () => {
+describe("WorkDialogCite", () => {
+  function setup() {
+    return render(
+      <WorkProvider initialState={{ manifest: undefined, work: sampleWork1 }}>
+        <WorkDialogCite />
+      </WorkProvider>
+    );
+  }
   it("renders thumbnail column content", async () => {
-    render(<WorkDialogCite />);
-    const div = screen.getByTestId("thumbnail-col-wrapper");
-    expect(within(div).getByAltText(`${sampleWork1.title} thumbnail`));
+    setup();
+    const div = screen.getByTestId("actions-dialog-aside");
+    expect(within(div).getByAltText(`${sampleWork1.title}`));
     expect(within(div).getByText(sampleWork1.work_type_labels));
   });
 
@@ -15,7 +23,7 @@ xdescribe("WorkDialogCite", () => {
 
     const metadataValues = [ark, identifiers.join(", "), terms_of_use, title];
 
-    render(<WorkDialogCite />);
+    setup();
     const div = screen.getByTestId("metadata");
 
     // <dt>s

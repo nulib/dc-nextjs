@@ -13,7 +13,7 @@ const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
   const { work } = workState;
 
   return (
-    <ActionsDialogAsideStyled>
+    <ActionsDialogAsideStyled data-testid="actions-dialog-aside">
       {work && (
         <Card
           title={work.title}
