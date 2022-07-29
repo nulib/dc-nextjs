@@ -7,4 +7,14 @@ const ImagePlaceholder = styled("div", {
   height: "200px",
 });
 
-export { ImagePlaceholder };
+const LinkedAnchor = styled("a", {
+  cursor: "pointer",
+  display: "inline-block",
+  transition: "transform .2s",
+
+  "&:hover": {
+    transform: "scale(1.05)",
+  },
+});
+
+export { ImagePlaceholder, LinkedAnchor };
