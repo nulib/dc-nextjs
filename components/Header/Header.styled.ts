@@ -6,8 +6,9 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const Lockup = styled("div", {
-  padding: "31px 0 50px",
-  fontSize: "25px",
+  padding: "$4 0 $5",
+  fontSize: "$6",
+  fontFamily: "$sansLight",
 });
 
 const PrimaryInner = styled("div", {
@@ -67,72 +68,6 @@ const Primary = styled("div", {
       },
     },
   },
-
-  // ".sticky-primary": {
-  //   zIndex: "1",
-
-  //   [`& ${Primary}`]: {
-  //     backgroundColor: "$slate12",
-  //     color: "$slate1",
-  //     width: "100vw",
-  //     justifyContent: "space-between",
-
-  //     "> span": {
-  //       opacity: "1",
-  //       width: "auto",
-  //       padding: "0 1rem",
-  //       transition: "$all",
-  //     },
-
-  //     "> div": {
-  //       flexGrow: "0",
-  //     },
-
-  //     "&[data-search-active='true']": {
-  //       "> span": {
-  //         opacity: "0",
-  //         padding: "0",
-  //         width: "0",
-  //       },
-
-  //       "> div": {
-  //         flexGrow: "1",
-  //       },
-
-  //       [`& ${NavStyled}`]: {
-  //         width: "0",
-  //         opacity: "0",
-  //       },
-
-  //       [`& ${Input}`]: {
-  //         width: "100%",
-  //         padding: "0 2.618rem",
-  //         color: "$slate1",
-  //         cursor: "unset",
-  //         opacity: "1",
-  //         marginRight: "0",
-  //       },
-
-  //       [`& ${Button}`]: {
-  //         left: "0",
-  //       },
-  //     },
-  //   },
-
-  //   [`& ${Input}`]: {
-  //     width: "50px",
-  //     backgroundColor: "transparent",
-  //     color: "$slate1",
-  //     cursor: "pointer",
-  //     padding: "0",
-  //     opacity: "0",
-  //     marginRight: "1rem",
-  //   },
-
-  //   [`& ${SearchStyled}`]: {
-  //     backgroundColor: "unset",
-  //   },
-  // },
 });
 
 const Super = styled("div", {
@@ -144,6 +79,11 @@ const Super = styled("div", {
     alignContent: "center",
     alignItems: "center",
     justifyContent: "space-between",
+
+    svg: {
+      height: "21px",
+      fill: "$white",
+    },
   },
 
   [`& ${NavStyled}`]: {
@@ -164,7 +104,6 @@ const StyledHeader = styled("header", {
   backgroundColor: "$purple",
   color: "$white",
   flexDirection: "column",
-  marginBottom: "5px",
 });
 
 export { Lockup, Primary, PrimaryInner, StyledHeader, Super };

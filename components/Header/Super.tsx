@@ -1,6 +1,7 @@
 import Container from "../Shared/Container";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
+import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
 import { Super } from "@/components/Header/Header.styled";
 
@@ -27,7 +28,11 @@ export default function HeaderSuper() {
   return (
     <Super>
       <Container>
-        <a>Northwestern</a>
+        <Link href="https://www.northwestern.edu/">
+          <a>
+            <NorthwesternWordmark />
+          </a>
+        </Link>
         <Nav>
           {nav.map(({ href, label }) => (
             <Link key={label} href={href}>

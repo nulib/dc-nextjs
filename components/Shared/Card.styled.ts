@@ -17,4 +17,13 @@ const LinkedAnchor = styled("a", {
   },
 });
 
-export { ImagePlaceholder, LinkedAnchor };
+const CardStyled = styled("div", {
+  p: {
+    margin: "0 0 $4",
+    fontFamily: "$sansRegular",
+    fontSize: "$4",
+    lineHeight: "1.47em",
+  },
+});
+
+export { CardStyled, ImagePlaceholder, LinkedAnchor };

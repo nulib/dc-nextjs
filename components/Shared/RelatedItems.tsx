@@ -1,6 +1,7 @@
 import BloomIIIF from "@samvera/bloom-iiif";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
+import { RelatedItemsStyled } from "@/components/Shared/RelatedItems.styled";
 
 export interface RelatedItemsProps {
   collections?: string[];
@@ -11,7 +12,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
   if (collections && collections.length === 0) return <></>;
 
   return (
-    <section data-testid="related-items">
+    <RelatedItemsStyled data-testid="related-items">
       <h2>{title}</h2>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {collections &&
@@ -19,7 +20,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
             <BloomIIIF collectionId={collectionId} key={collectionId} />
           ))}
       </ErrorBoundary>
-    </section>
+    </RelatedItemsStyled>
   );
 };
 export default RelatedItems;
