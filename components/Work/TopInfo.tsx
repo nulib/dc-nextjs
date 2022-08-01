@@ -1,5 +1,6 @@
 import {
   ActionButtons,
+  TopInfoCollection,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
 import {
@@ -53,19 +54,34 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
 
   return (
     <TopInfoWrapper>
-      <div data-testid="work-top-info-wrapper">
+      <header>
         <Label label={manifest.label} as="h1" data-testid="title" />
         {manifest?.summary && (
           <Summary summary={manifest.summary} as="p" data-testid="summary" />
         )}
         <ActionButtons>
-          <Button name="find" onClick={handleActionsButtonClick}>
+          <Button
+            name="find"
+            onClick={handleActionsButtonClick}
+            isLowercase
+            isPrimary
+          >
             Find this item
           </Button>
-          <Button name="cite" onClick={handleActionsButtonClick}>
+          <Button
+            name="cite"
+            onClick={handleActionsButtonClick}
+            isLowercase
+            isPrimary
+          >
             Cite this item
           </Button>
-          <Button name="download" onClick={handleActionsButtonClick}>
+          <Button
+            name="download"
+            onClick={handleActionsButtonClick}
+            isLowercase
+            isPrimary
+          >
             Download and share
           </Button>
         </ActionButtons>
@@ -74,25 +90,30 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
           actionsDialog={actionsDialog}
           close={() => setActionsDialog({ activeDialog: undefined })}
         />
-
-        <DefinitionListWrapper>
-          {manifest?.metadata && (
-            <Metadata metadata={manifest.metadata} data-testid="metadata" />
-          )}
-          {manifest?.requiredStatement && (
-            <RequiredStatement requiredStatement={manifest.requiredStatement} />
-          )}
-        </DefinitionListWrapper>
-      </div>
+      </header>
       <div>
-        <h2>Collection</h2>
-        <Card
-          title={work.collection_title}
-          description="Collection description"
-          href={`/collections/${work.collection_id}`}
-          imageUrl={work.thumbnail}
-          supplementalInfo="Collection work count as number"
-        />
+        <div data-testid="work-top-info-wrapper">
+          <DefinitionListWrapper>
+            {manifest?.metadata && (
+              <Metadata metadata={manifest.metadata} data-testid="metadata" />
+            )}
+            {manifest?.requiredStatement && (
+              <RequiredStatement
+                requiredStatement={manifest.requiredStatement}
+              />
+            )}
+          </DefinitionListWrapper>
+        </div>
+        <TopInfoCollection>
+          <h2>Collection</h2>
+          <Card
+            title={work.collection_title}
+            description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
+            href={`/collections/${work.collection_id}`}
+            imageUrl={work.thumbnail}
+            supplementalInfo="678 Works"
+          />
+        </TopInfoCollection>
       </div>
     </TopInfoWrapper>
   );

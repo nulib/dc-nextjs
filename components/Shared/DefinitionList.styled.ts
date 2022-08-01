@@ -3,15 +3,17 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const DefinitionListWrapper = styled("div", {
+  lineHeight: "1.47em",
+
   "& dt": {
-    fontSize: "0.75rem",
-    fontWeight: "bold",
-    paddingBottom: "0.5rem",
-    textTransform: "uppercase",
+    fontSize: "$3",
+    color: "$black",
+    fontFamily: "$displayBold",
+    paddingBottom: "$1",
   },
   "& dd": {
     marginInlineStart: "0",
-    paddingBottom: "1.25rem",
+    paddingBottom: "$3",
   },
 });
 
