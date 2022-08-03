@@ -1,9 +1,9 @@
 import { styled } from "@/stitches.config";
 
 const PlaceholderBlock = styled("section", {
-  background: "LightGray",
-  margin: "2rem 0",
-  padding: "5rem",
+  background: "$black10",
+  margin: "0",
+  padding: "$2 0",
   textAlign: "center",
 });
 

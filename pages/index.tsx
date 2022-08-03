@@ -5,7 +5,7 @@ const HomePage: React.FC = () => {
   return (
     <div data-testid="home-page-wrapper">
       <Header isHero />
-      <PlaceholderBlock>Home page</PlaceholderBlock>
+      <PlaceholderBlock css={{ height: "200vh" }}>...</PlaceholderBlock>
     </div>
   );
 };

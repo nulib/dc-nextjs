@@ -6,8 +6,8 @@ import { SearchStyled } from "../Search/Search.styled";
 /* eslint sort-keys: 0 */
 
 const Lockup = styled("div", {
-  padding: "$4 0 $5",
-  fontSize: "$6",
+  padding: "$6 0 $7",
+  fontSize: "$7",
   fontFamily: "$sansLight",
 });
 
@@ -17,14 +17,14 @@ const PrimaryInner = styled("div", {
 });
 
 const Primary = styled("div", {
-  color: "$slate12",
+  color: "$black",
   display: "flex",
   margin: "0 auto",
   zIndex: "1",
   transition: "$all",
   position: "relative",
   top: "unset",
-  height: "50px",
+  height: "$7",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -32,7 +32,7 @@ const Primary = styled("div", {
     alignItems: "center",
     justifyContent: "space-between",
     flexGrow: "1",
-    backgroundColor: "white",
+    backgroundColor: "$white",
     transition: "$all",
 
     "> span": {
@@ -58,8 +58,7 @@ const Primary = styled("div", {
 
       "> span": {
         opacity: "1",
-        width: "auto",
-        padding: "0 1rem",
+        width: "$7",
       },
 
       [`& ${NavStyled}`]: {
@@ -72,7 +71,7 @@ const Primary = styled("div", {
 
 const Super = styled("div", {
   backgroundColor: "$purple120",
-  color: "$slate1",
+  color: "$purple10",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -81,17 +80,17 @@ const Super = styled("div", {
     justifyContent: "space-between",
 
     svg: {
-      height: "21px",
+      height: "$4",
       fill: "$white",
     },
   },
 
   [`& ${NavStyled}`]: {
-    fontSize: "12px",
-    height: "50px",
+    fontSize: "$3",
+    height: "$7",
 
     a: {
-      padding: "0 1rem",
+      padding: "0 $3",
 
       "&:last-child": {
         paddingRight: "0",
@@ -109,7 +108,8 @@ const HeaderStyled = styled("header", {
     isHero: {
       true: {
         height: "100vh",
-        maxHeight: "600px",
+        minHeight: "500px",
+        maxHeight: "800px",
       },
     },
   },
