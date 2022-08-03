@@ -1,7 +1,7 @@
+import { VariantProps, styled } from "@/stitches.config";
 import { ContainerStyled } from "@/components/Shared/Container";
 import { NavStyled } from "../Nav/Nav.styled";
 import { SearchStyled } from "../Search/Search.styled";
-import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
@@ -100,10 +100,21 @@ const Super = styled("div", {
   },
 });
 
-const StyledHeader = styled("header", {
+const HeaderStyled = styled("header", {
   backgroundColor: "$purple",
   color: "$white",
   flexDirection: "column",
+
+  variants: {
+    isHero: {
+      true: {
+        height: "100vh",
+        maxHeight: "600px",
+      },
+    },
+  },
 });
 
-export { Lockup, Primary, PrimaryInner, StyledHeader, Super };
+export type HeaderVariants = VariantProps<typeof HeaderStyled>;
+
+export { Lockup, Primary, PrimaryInner, HeaderStyled, Super };
