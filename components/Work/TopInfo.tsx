@@ -1,6 +1,7 @@
 import {
   ActionButtons,
   TopInfoCollection,
+  TopInfoContent,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
 import {
@@ -13,6 +14,7 @@ import React, { MouseEvent } from "react";
 import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
+import Expand from "@/components/Shared/Expand/Expand";
 import { Manifest } from "@iiif/presentation-3";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import { WorkShape } from "@/types/components/works";
@@ -91,30 +93,32 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
           close={() => setActionsDialog({ activeDialog: undefined })}
         />
       </header>
-      <div>
-        <div data-testid="work-top-info-wrapper">
-          <DefinitionListWrapper>
-            {manifest?.metadata && (
-              <Metadata metadata={manifest.metadata} data-testid="metadata" />
-            )}
-            {manifest?.requiredStatement && (
-              <RequiredStatement
-                requiredStatement={manifest.requiredStatement}
-              />
-            )}
-          </DefinitionListWrapper>
-        </div>
-        <TopInfoCollection>
-          <h2>Collection</h2>
-          <Card
-            title={work.collection_title}
-            description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
-            href={`/collections/${work.collection_id}`}
-            imageUrl={work.thumbnail}
-            supplementalInfo="678 Works"
-          />
-        </TopInfoCollection>
-      </div>
+      <Expand initialHeight={600} buttonText="Show More">
+        <TopInfoContent>
+          <div data-testid="work-top-info-wrapper">
+            <DefinitionListWrapper>
+              {manifest?.metadata && (
+                <Metadata metadata={manifest.metadata} data-testid="metadata" />
+              )}
+              {manifest?.requiredStatement && (
+                <RequiredStatement
+                  requiredStatement={manifest.requiredStatement}
+                />
+              )}
+            </DefinitionListWrapper>
+          </div>
+          <TopInfoCollection>
+            <h2>Collection</h2>
+            <Card
+              title={work.collection_title}
+              description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
+              href={`/collections/${work.collection_id}`}
+              imageUrl={work.thumbnail}
+              supplementalInfo="678 Works"
+            />
+          </TopInfoCollection>
+        </TopInfoContent>
+      </Expand>
     </TopInfoWrapper>
   );
 };

@@ -41,6 +41,8 @@ const FigureStyled = styled("figure", {
   variants: {
     isPromoted: {
       true: {
+        [`& ${Image}`]: { maxHeight: "200px" },
+
         [`& ${Title}`]: {
           fontSize: "$5",
           fontFamily: "$displayBold",

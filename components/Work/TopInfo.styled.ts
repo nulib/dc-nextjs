@@ -23,6 +23,13 @@ const ActionButtons = styled("div", {
   },
 });
 
+const TopInfoContent = styled("div", {
+  display: "grid",
+  gap: "$7",
+  gridTemplateColumns: "618fr 382fr",
+  margin: "$3 0",
+});
+
 const TopInfoWrapper = styled("section", {
   margin: "$6 0",
 
@@ -55,17 +62,6 @@ const TopInfoWrapper = styled("section", {
       lineHeight: "1.47em",
     },
   },
-
-  [`> div`]: {
-    display: "grid",
-    gap: "$7",
-    gridTemplateColumns: "618fr 382fr",
-    margin: "$3 0",
-  },
-
-  "@md": {
-    gridTemplateColumns: "1fr",
-  },
 });
 
 const TopInfoCollection = styled("div", {
@@ -78,4 +74,4 @@ const TopInfoCollection = styled("div", {
   },
 });
 
-export { ActionButtons, TopInfoCollection, TopInfoWrapper };
+export { ActionButtons, TopInfoCollection, TopInfoContent, TopInfoWrapper };
