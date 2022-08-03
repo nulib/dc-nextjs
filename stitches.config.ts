@@ -18,7 +18,7 @@ export const {
 } = createStitches({
   media: media,
   theme: {
-    colors: colors,
+    colors: { ...colors },
     fontSizes: {
       1: "0.611rem",
       2: "0.722rem",
@@ -30,9 +30,9 @@ export const {
       8: `calc(1rem * ${gr(2)})`,
       9: `calc(1rem * ${gr(3)})`,
     },
-    fonts: fonts,
-    sizes: sizes,
-    space: sizes,
+    fonts: { ...fonts },
+    sizes: { ...sizes },
+    space: { ...sizes },
     transitions: {
       all: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",
     },

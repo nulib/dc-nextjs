@@ -6,8 +6,8 @@ import { SearchStyled } from "../Search/Search.styled";
 /* eslint sort-keys: 0 */
 
 const Lockup = styled("div", {
-  padding: "$6 0 $7",
-  fontSize: "$7",
+  padding: "$4 0 $5",
+  fontSize: "$6",
   fontFamily: "$sansLight",
 });
 
@@ -24,7 +24,7 @@ const Primary = styled("div", {
   transition: "$all",
   position: "relative",
   top: "unset",
-  height: "$7",
+  height: "$5",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -58,7 +58,7 @@ const Primary = styled("div", {
 
       "> span": {
         opacity: "1",
-        width: "$7",
+        width: "$5",
       },
 
       [`& ${NavStyled}`]: {
@@ -80,14 +80,14 @@ const Super = styled("div", {
     justifyContent: "space-between",
 
     svg: {
-      height: "$4",
+      height: "$3",
       fill: "$white",
     },
   },
 
   [`& ${NavStyled}`]: {
     fontSize: "$3",
-    height: "$7",
+    height: "$5",
 
     a: {
       padding: "0 $3",
