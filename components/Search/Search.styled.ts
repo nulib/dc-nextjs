@@ -8,7 +8,7 @@ const SearchStyled = styled("form", {
   flexShrink: "0",
   flexGrow: "1",
   backgroundColor: "$gray6",
-  height: "50px",
+  height: "$5",
 });
 
 const Input = styled("input", {
@@ -17,17 +17,18 @@ const Input = styled("input", {
   width: "100%",
   border: "none",
   backgroundColor: "transparent",
-  padding: "0 2.618rem",
-  fontSize: "15px",
+  padding: "3px $5 0",
+  fontSize: "$3",
   zIndex: "1",
+  fontFamily: "$sansRegular",
 });
 
 const Button = styled("button", {
   position: "absolute",
   display: "flex",
   left: "0",
-  height: "50px",
-  width: "50px",
+  height: "$5",
+  width: "$5",
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
@@ -37,8 +38,8 @@ const Button = styled("button", {
   zIndex: "0",
 
   svg: {
-    fill: "$slate9",
-    padding: "10px",
+    fill: "$black50",
+    padding: "$1",
   },
 });
 
@@ -46,8 +47,8 @@ const Clear = styled("button", {
   position: "absolute",
   display: "flex",
   right: "0",
-  height: "50px",
-  width: "50px",
+  height: "$5",
+  width: "$5",
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
@@ -57,8 +58,8 @@ const Clear = styled("button", {
   zIndex: "1",
 
   svg: {
-    fill: "$slate9",
-    padding: "10px",
+    fill: "$black50",
+    padding: "$1",
   },
 });
 

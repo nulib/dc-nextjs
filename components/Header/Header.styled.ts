@@ -1,14 +1,16 @@
+import { VariantProps, styled } from "@/stitches.config";
 import { ContainerStyled } from "@/components/Shared/Container";
-import { NavStyled } from "../Nav/Nav.styled";
-import { SearchStyled } from "../Search/Search.styled";
-import { styled } from "@/stitches.config";
+import { NavStyled } from "@/components/Nav/Nav.styled";
+import { SearchStyled } from "@/components/Search/Search.styled";
 
 /* eslint sort-keys: 0 */
 
 const Lockup = styled("div", {
+  position: "relative",
   padding: "$4 0 $5",
   fontSize: "$6",
   fontFamily: "$sansLight",
+  zIndex: "1",
 });
 
 const PrimaryInner = styled("div", {
@@ -17,14 +19,14 @@ const PrimaryInner = styled("div", {
 });
 
 const Primary = styled("div", {
-  color: "$slate12",
+  color: "$black",
   display: "flex",
   margin: "0 auto",
   zIndex: "1",
   transition: "$all",
   position: "relative",
   top: "unset",
-  height: "50px",
+  height: "$5",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -32,7 +34,7 @@ const Primary = styled("div", {
     alignItems: "center",
     justifyContent: "space-between",
     flexGrow: "1",
-    backgroundColor: "white",
+    backgroundColor: "$white",
     transition: "$all",
 
     "> span": {
@@ -58,8 +60,7 @@ const Primary = styled("div", {
 
       "> span": {
         opacity: "1",
-        width: "auto",
-        padding: "0 1rem",
+        width: "$5",
       },
 
       [`& ${NavStyled}`]: {
@@ -71,8 +72,10 @@ const Primary = styled("div", {
 });
 
 const Super = styled("div", {
+  position: "relative",
   backgroundColor: "$purple120",
-  color: "$slate1",
+  color: "$purple10",
+  zIndex: "1",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -81,17 +84,17 @@ const Super = styled("div", {
     justifyContent: "space-between",
 
     svg: {
-      height: "21px",
+      height: "$3",
       fill: "$white",
     },
   },
 
   [`& ${NavStyled}`]: {
-    fontSize: "12px",
-    height: "50px",
+    fontSize: "$3",
+    height: "$5",
 
     a: {
-      padding: "0 1rem",
+      padding: "0 $3",
 
       "&:last-child": {
         paddingRight: "0",
@@ -100,10 +103,33 @@ const Super = styled("div", {
   },
 });
 
-const StyledHeader = styled("header", {
+const HeaderStyled = styled("header", {
   backgroundColor: "$purple",
   color: "$white",
   flexDirection: "column",
+
+  variants: {
+    isHero: {
+      true: {
+        height: "100vh",
+        minHeight: "500px",
+        maxHeight: "800px",
+        backgroundColor: "$black",
+        position: "relative",
+        zIndex: "1",
+
+        [`& ${Lockup}`]: {
+          textShadow: "1px 1px 3px #0003",
+        },
+
+        [`& ${PrimaryInner}`]: {
+          boxShadow: "12px 12px 19px #0003",
+        },
+      },
+    },
+  },
 });
 
-export { Lockup, Primary, PrimaryInner, StyledHeader, Super };
+export type HeaderVariants = VariantProps<typeof HeaderStyled>;
+
+export { Lockup, Primary, PrimaryInner, HeaderStyled, Super };
