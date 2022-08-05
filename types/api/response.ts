@@ -1,5 +1,10 @@
+import { CollectionShape } from "@/types/components/collections";
 import { ModelName } from "@/types/api/generic";
 import { WorkShape } from "@/types/components/works";
+
+export interface ApiCollectionResponse {
+  data: CollectionShape | null;
+}
 
 export interface ApiResponse {
   data: ApiResponseData;
@@ -47,10 +52,6 @@ export interface ApiWorkResponse {
 /**
  * Defined shapes for API response data property
  */
-export interface CollectionShape extends ApiResponseDataShape {
-  api_model: "Collection";
-}
-
 export interface SearchShape extends ApiResponseDataShape {
   work_type_labels: string;
 }

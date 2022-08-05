@@ -9,13 +9,11 @@ const CulturalContextStyled = styled("div", {
   padding: "1rem",
 });
 
-const HeroStyledWrapper = styled("section", {
-  background: "$black50",
-  color: "$white",
-});
-
 const HeroStyled = styled("div", {
+  background: "$black80",
+  color: "$white",
   display: "grid",
+  gap: "10px",
   gridAutoColumns: "1fr",
   gridAutoFlow: "column",
 
@@ -25,13 +23,19 @@ const HeroStyled = styled("div", {
 });
 
 const HeroContent = styled("div", {
-  padding: "$",
+  padding: "$4",
+});
+
+const HeroContentWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
 });
 
 const HeroImageStyled = styled("div", {
-  backgroundPositionX: "center",
+  backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "contain",
+  backgroundSize: "cover",
   minHeight: "300px",
 
   "@sm": {
@@ -48,8 +52,8 @@ const ItemsLabel = styled("p", {
 export {
   CulturalContextStyled,
   HeroContent,
+  HeroContentWrapper,
   HeroImageStyled,
   HeroStyled,
-  HeroStyledWrapper,
   ItemsLabel,
 };
