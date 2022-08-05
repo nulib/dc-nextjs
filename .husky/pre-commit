@@ -3,4 +3,3 @@
 
 npm run ts-lint-commit-hook
 npm run lint && npm run test:ci
-npm run build

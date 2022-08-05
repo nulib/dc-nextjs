@@ -21,7 +21,6 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 Commits to the `deploy/staging` branch will trigger a build in an AWS Amplify Hosting solution.
 
-
 ### Static build
 
 This app could be deployed statically, but will not support [these NextJS features](https://nextjs.org/docs/advanced-features/static-html-export#unsupported-features).
@@ -66,6 +65,10 @@ npm run test
 
 ## API
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+In a local dev environment, to view API data coming from the index (for now), run the following:
 
-There is a sample `/api/collection` endpoint which just returns a mock object. You can see this in action in local development environment at: `http://localhost:3000/local-api`
+```
+export AWS_PROFILE=staging
+aws-adfs login --profile $AWS_PROFILE
+es-proxy
+```
