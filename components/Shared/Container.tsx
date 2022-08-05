@@ -1,6 +1,7 @@
 import { styled } from "@/stitches.config";
 
 interface ContainerProps {
+  isFlex?: boolean;
   children: React.ReactNode | React.ReactNode[];
   className?: string;
   containerType?: "default" | "wide";
@@ -11,6 +12,7 @@ const Container: React.FC<ContainerProps> = ({
   children,
   className,
   containerType = "default",
+  isFlex = false,
   maxWidth,
 }) => {
   const manualWidth = maxWidth ? { maxWidth: maxWidth } : {};
@@ -20,6 +22,7 @@ const Container: React.FC<ContainerProps> = ({
       className={className}
       containerType={containerType}
       css={manualWidth}
+      isFlex={isFlex}
     >
       {children}
     </ContainerStyled>
@@ -35,6 +38,12 @@ export const ContainerStyled = styled("div", {
       },
       wide: {
         maxWidth: "1440px",
+      },
+    },
+    isFlex: {
+      false: {},
+      true: {
+        display: "flex",
       },
     },
   },
