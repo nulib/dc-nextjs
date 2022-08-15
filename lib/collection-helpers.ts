@@ -2,21 +2,17 @@ import { ApiCollectionResponse, ApiSearchResponse } from "@/types/api/response";
 import { CollectionShape } from "@/types/components/collections";
 import { getAPIData } from "@/lib/dc-api";
 
-// TODO: Just temp patch.  To be replaced by "process.env.NEXT_PUBLIC_DCAPI_ENDPOINT" when updated
-export const v2TempEndpoint =
-  "https://f3sfdthuaf.execute-api.us-east-1.amazonaws.com/v2/";
-
 export async function getCollection(
   id: string
 ): Promise<CollectionShape | null> {
   try {
     const response = await getAPIData<ApiCollectionResponse>({
       method: "GET",
-      url: `${v2TempEndpoint}/collections/${id}`,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${id}`,
     });
     return response ? response.data : null;
   } catch (err) {
-    console.log("Error getting the work", id);
+    console.error("Error getting the work", id);
     return null;
   }
 }
@@ -49,16 +45,20 @@ export async function getCollectionIds(): Promise<Array<string>> {
     size: 0,
   };
 
-  const response = await getAPIData<ApiSearchResponse>({
-    body,
-    url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
-  });
+  try {
+    const response = await getAPIData<ApiSearchResponse>({
+      body,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+    });
 
-  if (response?.aggregations) {
-    return response.aggregations[0].buckets.map((bucket) => bucket.key);
+    if (response?.aggregations) {
+      return response.aggregations.allIds.buckets.map((bucket) => bucket.key);
+    }
+    return [];
+  } catch (err) {
+    console.error("Error getting all Collection Ids", err);
+    return [];
   }
-
-  return [];
 }
 
 export async function getMetadataAggs(id: string, field: string) {
@@ -80,11 +80,6 @@ export async function getMetadataAggs(id: string, field: string) {
         must: [
           {
             match: {
-              "model.name": "Work",
-            },
-          },
-          {
-            match: {
               "collection.id": id,
             },
           },
@@ -94,13 +89,17 @@ export async function getMetadataAggs(id: string, field: string) {
     size: 0,
   };
 
-  const response = await getAPIData<ApiSearchResponse>({
-    body,
-    url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
-  });
+  try {
+    const response = await getAPIData<ApiSearchResponse>({
+      body,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+    });
 
-  if (response?.aggregations) {
-    return response.aggregations[0].buckets;
+    if (response?.aggregations) {
+      return response.aggregations.collectionSubjects.buckets;
+    }
+    return null;
+  } catch (err) {
+    console.error("Error getting Collection subjects", err);
   }
-  return null;
 }

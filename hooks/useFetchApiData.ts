@@ -33,8 +33,6 @@ const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
     setData(null);
     setError(null);
 
-    // console.log(`userFacets useFetchApiData`, userFacets);
-
     const body: ApiSearchRequest = buildQuery({
       aggs: activeFacets,
       aggsFilterValue,

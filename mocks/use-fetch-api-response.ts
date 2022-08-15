@@ -1,7 +1,7 @@
 export const response = {
   data: {
-    aggregations: [
-      {
+    aggregations: {
+      genre: {
         buckets: [
           {
             doc_count: 36,
@@ -26,12 +26,10 @@ export const response = {
         ],
         id: "genre",
       },
-    ],
+    },
     data: [],
     info: {
       total: 185,
     },
   },
-  error: "",
-  loading: "",
 };

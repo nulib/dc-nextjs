@@ -1,7 +1,7 @@
 import { ApiResponseAggregation } from "../api/response";
 
 export interface SearchContextStore {
-  aggregations?: ApiResponseAggregation[] | undefined;
+  aggregations?: ApiResponseAggregation;
   q: string;
   userFacets: UserFacets;
   searchFixed: boolean;

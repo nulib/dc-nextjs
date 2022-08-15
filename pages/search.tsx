@@ -30,6 +30,7 @@ const SearchPage: NextPage = () => {
     loading,
   } = useFetchApiData({ searchTerm, size, userFacets });
 
+
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);
   }, [q, searchTerm]);

@@ -24,7 +24,7 @@ const Grid: React.FC<GridProps> = ({ data = [] }) => {
                 <Figure
                   data={{
                     src: item.thumbnail,
-                    supplementalInfo: item.work_type_labels,
+                    supplementalInfo: item.work_type,
                     title: item.title ? item.title : item.accession_number,
                   }}
                 />

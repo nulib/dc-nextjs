@@ -36,7 +36,6 @@
     "swiper": "^8.3.2"
   },
   "devDependencies": {
-    "@elastic/elasticsearch": "^7.17.0",
     "@iiif/presentation-3": "^2.0.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.0",

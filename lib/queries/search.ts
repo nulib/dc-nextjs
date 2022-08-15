@@ -7,17 +7,17 @@ import {
 export const queryModelPart: ApiSearchQuery = {
   bool: {
     must: [
-      {
-        bool: {
-          must: [
-            {
-              match: {
-                "model.name": "Work",
-              },
-            },
-          ],
-        },
-      },
+      // {
+      //   bool: {
+      //     must: [
+      //       {
+      //         match: {
+      //           "model.name": "Work",
+      //         },
+      //       },
+      //     ],
+      //   },
+      // },
     ],
   },
 };
@@ -27,14 +27,18 @@ export const queryModelPart: ApiSearchQuery = {
  */
 const querySearchTemplate: ApiSearchRequest = {
   _source: [
-    "accessionNumber",
+    "accession_number",
     "id",
-    "iiifManifest",
+    "iiif_manifest",
     "title",
     "thumbnail",
-    "workType.label",
+    "work_type",
   ],
-  query: queryModelPart,
+  query: {
+    bool: {
+      must: [],
+    },
+  },
   size: 20,
 };
 
@@ -42,15 +46,8 @@ const buildSearchPart = (term: string): SearchSimpleQueryString => {
   return {
     simple_query_string: {
       default_operator: "or",
-      fields: [
-        "all_titles^5",
-        "description^2",
-        "all_subjects^2",
-        "full_text",
-        "legacy_identifier",
-        "accession_number",
-        "id",
-      ],
+      // Reference at: https://github.com/nulib/meadow/blob/deploy/staging/app/priv/elasticsearch/v2/settings/work.json
+      fields: ["title^5", "all_text", "all_controlled_labels", "all_ids"],
       query: term ? `${term}~1 | ${term}*` : "",
     },
   };

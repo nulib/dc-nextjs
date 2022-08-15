@@ -7,87 +7,77 @@ import {
 export const ALL_FACETS: FacetsList = {
   facets: [
     {
-      field: "descriptiveMetadata.contributor.displayFacet",
+      field: "contributor.label_with_role",
       id: "contributor",
       label: "Contributor",
     },
     {
-      field: "descriptiveMetadata.creator.displayFacet",
+      field: "creator.label",
       id: "creator",
       label: "Creator",
     },
     {
-      field: "descriptiveMetadata.rightsStatement.label.keyword",
+      field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
     },
     {
-      field: "descriptiveMetadata.genre.displayFacet",
+      field: "genre.label",
       id: "genre",
       label: "Genre",
     },
     {
-      field: "descriptiveMetadata.language.displayFacet",
-      id: "language",
-      label: "Language",
-    },
-    {
-      field: "descriptiveMetadata.location.displayFacet",
-      id: "location",
-      label: "Location",
-    },
-    {
-      field: "descriptiveMetadata.stylePeriod.displayFacet",
+      field: "style_period.label",
       id: "stylePeriod",
       label: "Style Period",
     },
     {
-      field: "descriptiveMetadata.subject.term.label.keyword",
+      field: "subject.label",
       id: "subject",
       label: "Subject",
     },
     {
-      field: "descriptiveMetadata.technique.displayFacet",
+      field: "technique.label",
       id: "technique",
       label: "Technique",
     },
     {
-      field: "workType.label.keyword",
+      field: "workType",
       id: "workType",
       label: "Work Type",
     },
     {
-      field: "administrativeMetadata.libraryUnit.label.keyword",
+      field: "library_unit",
       id: "libraryDepartment",
       label: "Library Department",
     },
     {
-      field: "collection.title.keyword",
+      field: "collection.title",
       id: "collection",
       label: "Collection",
     },
     {
-      field: "descriptiveMetadata.boxName.keyword",
+      field: "box_name",
       id: "boxName",
       label: "Box Name",
     },
     {
-      field: "descriptiveMetadata.boxNumber.keyword",
+      field: "box_number",
       id: "boxNumber",
       label: "Box Number",
     },
     {
-      field: "descriptiveMetadata.folderName.keyword",
+      field: "folder_name",
       id: "folderName",
       label: "Folder Name",
     },
     {
-      field: "descriptiveMetadata.folderNumber.keyword",
+      field: "folder_number",
       id: "folderNumber",
       label: "Folder Number",
     },
     {
-      field: "descriptiveMetadata.series.keyword",
+      field: "series",
       id: "series",
       label: "Series",
     },
@@ -97,7 +87,7 @@ export const ALL_FACETS: FacetsList = {
 export const FACETS_WORK_TYPE: FacetsListWorkType = {
   facets: [
     {
-      field: "workType.label.keyword",
+      field: "work_type",
       id: "workType",
       label: "Work Type",
     },
@@ -108,12 +98,12 @@ export const FACETS_WORK_TYPE: FacetsListWorkType = {
 const FACETS_CREATOR: FacetsGroup = {
   facets: [
     {
-      field: "descriptiveMetadata.contributor.displayFacet",
+      field: "contributor.label",
       id: "contributor",
       label: "Contributor",
     },
     {
-      field: "descriptiveMetadata.creator.displayFacet",
+      field: "creator.label",
       id: "creator",
       label: "Creator",
     },
@@ -124,7 +114,7 @@ const FACETS_CREATOR: FacetsGroup = {
 const FACETS_RIGHTS_USAGE: FacetsGroup = {
   facets: [
     {
-      field: "descriptiveMetadata.rightsStatement.label.keyword",
+      field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
     },
@@ -135,37 +125,27 @@ const FACETS_RIGHTS_USAGE: FacetsGroup = {
 const FACETS_DESCRIPTIVE: FacetsGroup = {
   facets: [
     {
-      field: "descriptiveMetadata.genre.displayFacet",
+      field: "genre.label",
       id: "genre",
       label: "Genre",
     },
     {
-      field: "descriptiveMetadata.language.displayFacet",
-      id: "language",
-      label: "Language",
-    },
-    {
-      field: "descriptiveMetadata.location.displayFacet",
-      id: "location",
-      label: "Location",
-    },
-    {
-      field: "descriptiveMetadata.stylePeriod.displayFacet",
+      field: "style_period.label",
       id: "stylePeriod",
       label: "Style Period",
     },
     {
-      field: "descriptiveMetadata.subject.term.label.keyword",
+      field: "subject.label",
       id: "subject",
       label: "Subject",
     },
     {
-      field: "descriptiveMetadata.technique.displayFacet",
+      field: "technique.label",
       id: "technique",
       label: "Technique",
     },
     {
-      field: "workType.label.keyword",
+      field: "work_type",
       id: "workType",
       label: "Work Type",
     },
@@ -176,37 +156,37 @@ const FACETS_DESCRIPTIVE: FacetsGroup = {
 const FACETS_LOCATION: FacetsGroup = {
   facets: [
     {
-      field: "administrativeMetadata.libraryUnit.label.keyword",
+      field: "library_unit",
       id: "libraryDepartment",
       label: "Library Department",
     },
     {
-      field: "collection.title.keyword",
+      field: "collection.title",
       id: "collection",
       label: "Collection",
     },
     {
-      field: "descriptiveMetadata.boxName.keyword",
+      field: "box_name",
       id: "boxName",
       label: "Box Name",
     },
     {
-      field: "descriptiveMetadata.boxNumber.keyword",
+      field: "box_number",
       id: "boxNumber",
       label: "Box Number",
     },
     {
-      field: "descriptiveMetadata.folderName.keyword",
+      field: "folder_names",
       id: "folderName",
       label: "Folder Name",
     },
     {
-      field: "descriptiveMetadata.folderNumber.keyword",
+      field: "folder_numbers",
       id: "folderNumber",
       label: "Folder Number",
     },
     {
-      field: "descriptiveMetadata.series.keyword",
+      field: "series",
       id: "series",
       label: "Series",
     },

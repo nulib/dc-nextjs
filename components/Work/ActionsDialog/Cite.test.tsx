@@ -15,13 +15,13 @@ describe("WorkDialogCite", () => {
     setup();
     const div = screen.getByTestId("actions-dialog-aside");
     expect(within(div).getByAltText(`${sampleWork1.title}`));
-    expect(within(div).getByText(sampleWork1.work_type_labels));
+    expect(within(div).getByText(sampleWork1.work_type));
   });
 
   it("renders expected metadata content", () => {
-    const { ark, identifiers, terms_of_use, title } = sampleWork1;
+    const { ark, identifier, terms_of_use, title } = sampleWork1;
 
-    const metadataValues = [ark, identifiers.join(", "), terms_of_use, title];
+    const metadataValues = [ark, identifier.join(", "), terms_of_use, title];
 
     setup();
     const div = screen.getByTestId("metadata");
