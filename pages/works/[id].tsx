@@ -27,6 +27,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
       </Layout>
     );
 
+  console.log("work", work);
   const related = getRelatedCollections(work);
 
   return (

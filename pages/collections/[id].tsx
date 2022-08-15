@@ -41,11 +41,10 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
   if (!collection) return null;
   const { description, representative_image, title } = collection;
 
-  // TODO: Temp bg image placeholder
-  const collectionBgImage =
-    representative_image && Object.keys(representative_image).length > 0
-      ? representative_image
-      : "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3dff9186-99a8-4836-9a08-9e1db0fede05/full/1000,1000/0/default.jpg";
+  // TODO: Should representative_image.url contain the full path?
+  const collectionBgImage = representative_image.url
+    ? `${representative_image.url}/full/!300,300/0/default.jpg`
+    : "";
 
   const handleSearchClick = () => {
     searchDispatch({
@@ -136,7 +135,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const collection = id ? await getCollection(params.id as string) : null;
   const metadata =
     id && collection
-      ? await getMetadataAggs(id as string, "subject.keyword")
+      ? await getMetadataAggs(id as string, "subject.label")
       : null;
 
   return {

@@ -28,7 +28,6 @@ export async function getWorkIds(): Promise<Array<string>> {
         },
       },
     },
-    //query: queryModelPart,
     size: 0,
   };
 

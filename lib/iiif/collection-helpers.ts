@@ -10,24 +10,28 @@ export const getRelatedCollections = (work: WorkShape) => {
   /**
    * Append `2` subject based IIIF collections
    */
-  const subjects = shuffle([work?.subject.map((s) => s.label)]).filter(
-    (label: string, index: number) => index < 2 && label
-  );
-  related.push(
-    ...subjects.map(
-      (subject: string) =>
-        `${DC_API_SEARCH_IIIF_URL}?query=subject:"${subject}" AND NOT id:"${work.id}"&collectionLabel=${subject}&collectionSummary=Subject`
-    )
-  );
+  if (work.subject) {
+    const subjects = shuffle([work?.subject.map((s) => s.label)]).filter(
+      (label: string, index: number) => index < 2 && label
+    );
+    related.push(
+      ...subjects.map(
+        (subject: string) =>
+          `${DC_API_SEARCH_IIIF_URL}?query=subject:"${subject}" AND NOT id:"${work.id}"&collectionLabel=${subject}&collectionSummary=Subject`
+      )
+    );
+  }
 
   /**
    * Append genre based IIIF collection
    */
-  const genre = sample(work?.genre[0].label);
-  genre &&
-    related.push(
-      `${DC_API_SEARCH_IIIF_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre`
-    );
+  if (work.genre) {
+    const genre = sample(work?.genre[0].label);
+    genre &&
+      related.push(
+        `${DC_API_SEARCH_IIIF_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre`
+      );
+  }
 
   /**
    * Append work type IIIF collection
