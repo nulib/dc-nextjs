@@ -13,22 +13,22 @@ const WorkDialogFind: React.FC = () => {
 
   const {
     accession_number,
-    box_names,
-    box_numbers,
-    catalog_keys,
+    box_name,
+    box_number,
+    catalog_key,
     folder_names,
     folder_numbers,
   } = workState.work;
 
   const primoLink =
-    catalog_keys.length > 0
-      ? `https://search.library.northwestern.edu/primo-explore/search?field=any&query=any,contains,${catalog_keys[0]}&query=&institution=01NWU&vid=NULVNEW&search_scope=NWU`
+    catalog_key.length > 0
+      ? `https://search.library.northwestern.edu/primo-explore/search?field=any&query=any,contains,${catalog_key[0]}&query=&institution=01NWU&vid=NULVNEW&search_scope=NWU`
       : "";
 
   const metadata = [
     ["Accession", accession_number],
-    ["Box Name", box_names.join(", ")],
-    ["Box Number", box_numbers.join(", ")],
+    ["Box Name", box_name.join(", ")],
+    ["Box Number", box_number.join(", ")],
     ["Citation", "not on the API"],
     ["Folder Name", folder_names.join(", ")],
     ["Folder Number", folder_numbers.join(", ")],
@@ -50,7 +50,7 @@ const WorkDialogFind: React.FC = () => {
               <>
                 <dt>NUsearch</dt>
                 <dd>
-                  <a href={primoLink}>{catalog_keys[0]}</a>
+                  <a href={primoLink}>{catalog_key[0]}</a>
                 </dd>
               </>
             )}

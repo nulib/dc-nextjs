@@ -14,8 +14,9 @@ export interface ApiResponse {
 }
 
 export interface ApiResponseAggregation {
-  buckets: ApiResponseBucket[];
-  id: string;
+  [key: string]: {
+    buckets: ApiResponseBucket[];
+  };
 }
 
 export type ApiResponseBucket = {
@@ -26,7 +27,7 @@ export type ApiResponseBucket = {
 export type ApiResponseData = CollectionShape | SearchShape[] | WorkShape;
 
 export interface ApiSearchResponse extends ApiResponse {
-  aggregations?: ApiResponseAggregation[];
+  aggregations?: ApiResponseAggregation;
   data: SearchShape[];
 }
 

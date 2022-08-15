@@ -15,7 +15,7 @@ interface MetadataInput {
   value: string[] | string;
 }
 export const buildMetadataValues = (metadata: MetadataInput[]) => {
-  return metadata.map(({ label, value }) => ({
+  return metadata.map(({ label, value = "" }) => ({
     label: {
       none: [label],
     },
@@ -34,22 +34,19 @@ export const buildPres3Manifest = async (
   try {
     manifest.id = work.iiif_manifest;
     manifest.label.none = [work.title];
-    manifest.summary &&
-      (manifest.summary.none = work.descriptions.map(
-        (description) => description
-      ));
+    manifest.summary && (manifest.summary.none = work.abstract);
     manifest.metadata = buildMetadataValues([
       {
         label: "Contributor",
-        value: [...work.contributor_labels],
+        value: work.contributor?.map((item) => item.label).join(", "),
       },
       {
         label: "Date",
-        value: [...work.dates_created],
+        value: [work.create_date],
       },
       {
         label: "Identifier",
-        value: [...work.identifiers],
+        value: [...work.identifier],
       },
       {
         label: "Library Unit",
@@ -57,17 +54,17 @@ export const buildPres3Manifest = async (
       },
       {
         label: "Subjects",
-        value: [...work.subject_labels],
+        value: work.subject?.map((item) => item.label).join(", "),
       },
       {
         label: "Genre",
-        value: [...work.genre_labels],
+        value: work.genre?.map((item) => item.label).join(", "),
       },
     ]);
     manifest.requiredStatement?.value.none?.push(work.terms_of_use);
     manifest.items = items;
   } catch (err) {
-    console.error("Error building manifest locally");
+    console.error("Error building manifest locally", err);
     return null;
   }
   return manifest;

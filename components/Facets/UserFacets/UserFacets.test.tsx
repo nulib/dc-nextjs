@@ -6,14 +6,14 @@ import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
 const searchStateDefault = {
-  aggregations: [],
+  aggregations: {},
   q: "",
   searchFixed: false,
   userFacets: {},
 };
 
 const searchState = {
-  aggregations: [],
+  aggregations: {},
   q: "",
   searchFixed: false,
   userFacets: { genre: ["Foo"] },

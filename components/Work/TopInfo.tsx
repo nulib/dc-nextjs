@@ -110,9 +110,9 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
           <TopInfoCollection>
             <h2>Collection</h2>
             <Card
-              title={work.collection_title}
+              title={work.collection?.title}
               description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
-              href={`/collections/${work.collection_id}`}
+              href={`/collections/${work.collection?.id}`}
               imageUrl={work.thumbnail}
               supplementalInfo="678 Works"
             />
