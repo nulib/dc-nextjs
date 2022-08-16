@@ -1,88 +1,97 @@
 export interface FileSet {
-  accession_number: string;
-  description: string;
   id: string;
   label: string;
+  mime_type: string;
+  poster_offset: number | null;
   rank: string;
+  representative_image_url: string;
+  role: string;
+  streaming_url: string | null;
+}
+
+type GenericIdLabel = {
+  id: string;
+  label: string;
+};
+
+export interface Contributor {
+  id: string;
+  label: string;
+  label_with_role: string;
+  role: string;
+}
+
+export interface RelatedUrl {
+  label: string;
+  url: string;
+}
+
+export interface Subject {
+  id: string;
+  label: string;
+  label_with_role: string;
   role: string;
 }
 
 export interface WorkShape {
   id: string;
-  abstracts: Array<string>;
+  abstract: Array<string>;
   accession_number: string;
   alternate_titles: Array<string>;
   api_model: "Work";
   api_link: string;
   ark: string;
-  box_names: Array<string>;
-  box_numbers: Array<string>;
-  captions: Array<string>;
-  catalog_keys: Array<string>;
-  collection_id: string;
-  collection_title: string;
-  contributor_ids: Array<string>;
-  contributor_labels: Array<string>;
-  contributors_with_roles: Array<string>;
+  box_name: Array<string>;
+  box_number: Array<string>;
+  caption: Array<string>;
+  catalog_key: Array<string>;
+  collection: {
+    id: string;
+    title: string;
+  };
+  contributor: Array<Contributor>;
   create_date: string;
-  creator_ids: Array<string>;
-  creator_labels: Array<string>;
-  creator_variants: Array<string>;
+  creator: Array<GenericIdLabel>;
   cultural_contexts: Array<string>;
-  dates_created: Array<string>;
-  descriptions: Array<string>;
   file_sets: Array<FileSet>;
   folder_names: Array<string>;
   folder_numbers: Array<string>;
-  genre_ids: Array<string>;
-  genre_labels: Array<string>;
-  genre_variants: Array<string>;
-  identifiers: Array<string>;
+  genre: Array<GenericIdLabel>;
+  identifier: Array<string>;
   iiif_manifest: string;
+  indexed_at: string;
   keywords: Array<string>;
-  legacy_identifiers: Array<string>;
+  legacy_identifier: Array<string>;
   library_unit: string;
-  license_id: string;
-  license_label: string;
+  license: GenericIdLabel;
   modified_date: string;
   notes: Array<string>;
-  note_types: Array<string>;
   physical_description_material: Array<string>;
   physical_description_size: Array<string>;
-  preservation_level_id: string;
-  preservation_level_label: string;
-  provenances: Array<string>;
+  preservation_level: "Level 1" | "Level 2" | "Level 3";
+  provenance: Array<string>;
   published: boolean;
-  publishers: Array<string>;
+  publisher: Array<string>;
   reading_room: boolean;
-  related_materials: Array<string>;
-  related_url_labels: Array<string>;
-  related_urls: Array<string>;
-  representative_file_set: string;
-  representative_file_set_url: string;
-  rights_holders: Array<string>;
-  rights_statement_id: string;
-  rights_statement_label: string;
+  related_material: Array<string>;
+  related_url: Array<RelatedUrl>;
+  representative_file_set: {
+    fileSetId: string;
+    url: string;
+  };
+  rights_holder: Array<string>;
+  rights_statement: GenericIdLabel;
   scope_and_contents: Array<string>;
   series: Array<string>;
-  sources: Array<string>;
-  subject_ids: Array<string>;
-  subject_labels: Array<string>;
-  subjects_with_roles: Array<string>;
-  status_ids: string;
-  status_labels: string;
-  style_period_ids: Array<string>;
-  style_period_labels: Array<string>;
-  style_period_variants: Array<string>;
+  source: Array<string>;
+  subject: Array<Subject>;
+  status: "Done" | "In Progress" | "Not Started";
+  style_period: Array<GenericIdLabel>;
   table_of_contents: Array<string>;
-  technique_ids: Array<string>;
-  technique_labels: Array<string>;
-  technique_variants: Array<string>;
+  technique: Array<GenericIdLabel>;
   terms_of_use: string;
   thumbnail: string;
   title: string;
-  visibility_ids: string;
-  visibility_labels: string;
-  work_type_ids: string;
-  work_type_labels: string;
+  visibility: "Institution" | "Private" | "Public";
+  work_type: "Audio" | "Image" | "Video";
 }

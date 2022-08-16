@@ -1,6 +1,5 @@
 import { ApiSearchResponse, ApiWorkResponse } from "@/types/api/response";
 import { getAPIData } from "@/lib/dc-api";
-import { queryModelPart } from "@/lib/queries/search";
 
 export async function getWork(id: string) {
   try {
@@ -10,7 +9,7 @@ export async function getWork(id: string) {
     });
     return response?.data;
   } catch (err) {
-    console.log("Error getting the work", id);
+    console.error("Error getting the work", id);
     return null;
   }
 }
@@ -29,7 +28,6 @@ export async function getWorkIds(): Promise<Array<string>> {
         },
       },
     },
-    query: queryModelPart,
     size: 0,
   };
 
@@ -38,8 +36,8 @@ export async function getWorkIds(): Promise<Array<string>> {
     url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
   });
 
-  if (response?.aggregations) {
-    return response.aggregations[0].buckets.map((bucket) => bucket.key);
+  if (response?.aggregations?.allIds) {
+    return response.aggregations.allIds.buckets.map((bucket) => bucket.key);
   }
 
   return [];

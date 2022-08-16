@@ -65,10 +65,34 @@ npm run test
 
 ## API
 
+The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo.
+
 In a local dev environment, to view API data coming from the index (for now), run the following:
 
 ```
 export AWS_PROFILE=staging
 aws-adfs login --profile $AWS_PROFILE
 es-proxy
+```
+
+The API supports both POST for searching and GET for Work and Collection items.
+
+### Search examples
+
+```
+# Search Works (default)
+curl -X POST 'http://127.0.0.1:3000/search' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
+
+# Search Collections
+curl -X POST 'http://127.0.0.1:3000/search/collections' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
+```
+
+### Work / Collection examples
+
+```
+https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/works/4359936f-9091-499b-893f-b8e900db49ec
+
+https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7
+
+https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/file-sets/ce1f6d18-8563-4f70-aabc-d4ce1688d8dc
 ```

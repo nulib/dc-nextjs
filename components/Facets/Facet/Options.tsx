@@ -39,42 +39,33 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
    * return facet aggregation data for this facet instance
    */
   const { aggregations } = data;
-  const userFacetsAggregation = aggregations.find(
-    (aggregation) => aggregation.id === "userFacets"
-  );
 
-  const filteredAggregations = aggregations.filter(
-    (aggregation) => aggregation.id === facet.id
-  );
+  const userFacetsAggregation = aggregations.userFacets;
+  const userBuckets = userFacetsAggregation
+    ? userFacetsAggregation.buckets
+    : [];
+
+  const filteredAggBuckets = aggregations[facet.id].buckets.filter((bucket) => {
+    return !userBuckets.find((userBucket) => userBucket.key == bucket.key);
+  });
+
+  const buckets = [...userBuckets, ...filteredAggBuckets];
 
   return (
-    <>
-      {filteredAggregations.map((aggregation) => {
-        const userBuckets = userFacetsAggregation
-          ? userFacetsAggregation.buckets
-          : [];
-        const filteredAggBuckets = aggregation.buckets.filter((ab) => {
-          return !userBuckets.find((ub) => ub.key === ab.key);
-        });
-        const buckets = [...userBuckets, ...filteredAggBuckets];
-        return (
-          <Options
-            key={aggregation.id}
-            className="facet-options skeleton-loader"
-            data-testid="facet-options"
-          >
-            {buckets.map((bucket, index) => (
-              <Option
-                bucket={bucket}
-                facet={facet.id}
-                index={index}
-                key={bucket.key}
-              />
-            ))}
-          </Options>
-        );
-      })}
-    </>
+    <Options
+      key={facet.id}
+      className="facet-options skeleton-loader"
+      data-testid="facet-options"
+    >
+      {buckets.map((bucket, index) => (
+        <Option
+          bucket={bucket}
+          facet={facet.id}
+          index={index}
+          key={bucket.key}
+        />
+      ))}
+    </Options>
   );
 };
 

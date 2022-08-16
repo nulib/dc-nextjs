@@ -1,5 +1,3 @@
-import { ModelName } from "@/types/api/generic";
-
 export interface Agg {
   terms: {
     field: string;
@@ -25,7 +23,7 @@ export interface ApiSearchRequest {
 
 export interface ApiSearchQuery {
   bool: {
-    must: [SearchModelName, FacetTerms?, SearchSimpleQueryString?];
+    must: [FacetTerms?, SearchSimpleQueryString?];
   };
 }
 
@@ -38,17 +36,7 @@ export interface FacetTerms {
     }>;
   };
 }
-export interface SearchModelName {
-  bool: {
-    must: [
-      {
-        match: {
-          "model.name": ModelName;
-        };
-      }
-    ];
-  };
-}
+
 export interface SearchSimpleQueryString {
   simple_query_string: {
     default_operator: string;
@@ -58,10 +46,10 @@ export interface SearchSimpleQueryString {
 }
 
 export type SearchSource = [
-  "accessionNumber",
+  "accession_number",
   "id",
-  "iiifManifest",
+  "iiif_manifest",
   "title",
   "thumbnail",
-  "workType.label"
+  "work_type"
 ];

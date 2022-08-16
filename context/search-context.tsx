@@ -5,7 +5,7 @@ import React from "react";
 type Action =
   | {
       type: "updateAggregations";
-      aggregations: ApiResponseAggregation[] | undefined;
+      aggregations: ApiResponseAggregation | undefined;
     }
   | { type: "updateSearch"; q: string }
   | { type: "updateSearchFixed"; searchFixed: boolean }
@@ -19,7 +19,7 @@ type SearchProviderProps = {
 };
 
 const defaultState: SearchContextStore = {
-  aggregations: [],
+  aggregations: {},
   q: "",
   searchFixed: false,
   userFacets: {},

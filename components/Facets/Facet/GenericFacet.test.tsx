@@ -11,7 +11,7 @@ describe("Facet GenericFacet UI component", () => {
     return render(
       <GenericFacet
         facet={{
-          field: "descriptiveMetadata.genre.displayFacet",
+          field: "genre.label",
           id: "genre",
           label: "Genre",
         }}

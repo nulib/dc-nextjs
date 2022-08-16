@@ -5,8 +5,8 @@ import React from "react";
 import { mockAggregation } from "@/mocks/aggregation";
 
 const mockOption: FacetOption = {
-  bucket: mockAggregation.buckets[0],
-  facet: mockAggregation.id,
+  bucket: mockAggregation.subject.buckets[0],
+  facet: "subject",
   index: 0,
 };
 
@@ -20,7 +20,7 @@ describe("Facet Option UI component", () => {
   it("Renders a facet option with correct name and id.", () => {
     render(<Option {...mockOption} />);
     const option = screen.getByRole(`checkbox`);
-    expect(option.getAttribute("id")).toBe("foo-0");
+    expect(option.getAttribute("id")).toBe(`${mockOption.facet}-0`);
   });
 
   it("Renders a facet option with correct label.", () => {
