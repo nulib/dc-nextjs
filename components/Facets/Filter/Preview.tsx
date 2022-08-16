@@ -22,7 +22,7 @@ const Preview: React.FC<PreviewProps> = ({ items }) => {
                   <Figure
                     data={{
                       src: item.thumbnail,
-                      supplementalInfo: item.work_type_labels,
+                      supplementalInfo: item.work_type,
                       title: item.title ? item.title : item.accession_number,
                     }}
                     orientation="horizontal"

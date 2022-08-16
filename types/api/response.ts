@@ -54,5 +54,5 @@ export interface ApiWorkResponse {
  * Defined shapes for API response data property
  */
 export interface SearchShape extends ApiResponseDataShape {
-  work_type_labels: string;
+  work_type: string;
 }
