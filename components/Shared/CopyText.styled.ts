@@ -6,12 +6,12 @@ const StyledStatus = styled("span", {
   display: "flex",
   alignContent: "center",
   alignItems: "center",
-  padding: "0 $1",
-  marginLeft: "$2",
+  padding: "0 $gr1",
+  marginLeft: "$gr1",
   backgroundColor: "$darkBlueA",
   color: "$white",
   borderRadius: "3px",
-  fontSize: "$1",
+  fontSize: "$gr1",
   textTransform: "uppercase",
 });
 

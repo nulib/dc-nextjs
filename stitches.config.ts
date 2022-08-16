@@ -6,28 +6,20 @@ import media from "@/styles/media";
 
 export type { VariantProps } from "@stitches/react";
 
-export const {
-  styled,
-  css,
-  keyframes,
-  getCssText,
-  theme,
-  createTheme,
-  config,
-} = createStitches({
+export const { styled, keyframes } = createStitches({
   media: media,
   theme: {
     colors: { ...colors },
     fontSizes: {
-      1: "0.611rem",
-      2: "0.722rem",
-      3: "0.833rem",
-      4: "1rem",
-      5: `1.177rem`,
-      6: `1.318rem`,
-      7: `calc(1rem * ${gr(1)})`,
-      8: `calc(1rem * ${gr(2)})`,
-      9: `calc(1rem * ${gr(3)})`,
+      gr1: "0.611rem",
+      gr2: "0.722rem",
+      gr3: "0.833rem",
+      gr4: "1rem",
+      gr5: `1.177rem`,
+      gr6: `1.318rem`,
+      gr7: `calc(1rem * ${gr(1)})`,
+      gr8: `calc(1rem * ${gr(2)})`,
+      gr9: `calc(1rem * ${gr(3)})`,
     },
     fonts: { ...fonts },
     sizes: { ...sizes },

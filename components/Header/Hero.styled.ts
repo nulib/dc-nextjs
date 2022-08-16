@@ -15,8 +15,8 @@ const HeroSliderItem = styled(SwiperSlide, {});
 const HeroStyled = styled("div", {
   position: "absolute",
   width: "100%",
-  height: `calc(100% - $5)`,
-  top: "$5",
+  height: `calc(100% - $gr5)`,
+  top: "$gr5",
   zIndex: "0",
 
   ".swiper": {
@@ -98,27 +98,27 @@ const HeroStyled = styled("div", {
         figcaption: {
           position: "absolute",
           zIndex: "1",
-          bottom: "$6",
+          bottom: "$gr6",
           color: "$white",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-end",
           textShadow: "2px 2px 2px #000",
-          maxWidth: "$11",
-          marginRight: "$5",
+          maxWidth: "$gr11",
+          marginRight: "$gr5",
           textAlign: "right",
 
           ".slide-label": {
             fontFamily: "$displayBold",
-            fontSize: "$7",
+            fontSize: "$gr7",
             display: "block",
-            margin: "0 0 $1",
+            margin: "0 0 $gr1",
             lineHeight: "1em",
           },
 
           ".slide-summary": {
             fontFamily: "$sansLightItalic",
-            fontSize: "$4",
+            fontSize: "$gr4",
             display: "block",
             color: "$black20",
             lineHeight: "1.15em",

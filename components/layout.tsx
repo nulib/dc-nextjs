@@ -5,9 +5,14 @@ import React from "react";
 
 export const siteTitle = "Digital Collections v2";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  header?: "default" | "hero";
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -23,9 +28,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Header />
+      <Header isHero={header === "hero"} />
       <main>{children}</main>
       <Footer />
-    </div>
+    </>
   );
-}
+};
+
+export default Layout;

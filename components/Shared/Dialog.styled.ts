@@ -23,7 +23,7 @@ const DialogBody = styled("div", {
   maxHeight: "calc(100% - 3.5rem)",
   minHeight: "calc(100% - 3.5rem)",
   overflow: "scroll",
-  padding: "1rem",
+  padding: "$gr3",
 
   "&:before": {
     position: "absolute",
@@ -45,17 +45,18 @@ const DialogHeader = styled("header", {
   backgroundColor: "$white",
 
   h2: {
-    fontSize: "1rem",
+    fontSize: "$gr4",
     lineHeight: "1.5rem",
     padding: "0",
     margin: "0",
     color: "$black50",
+    fontWeight: "400",
   },
 
   em: {
     color: "$black80",
     lineHeight: "1.5rem",
-    fontSize: "0.8333rem",
+    fontSize: "$gr1",
   },
 
   [`& ${DialogClose}`]: {
