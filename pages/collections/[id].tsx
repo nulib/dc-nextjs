@@ -1,12 +1,11 @@
+import { GetStaticPropsContext, NextPage } from "next";
 import {
-  CulturalContextStyled,
   HeroContent,
   HeroContentWrapper,
   HeroImageStyled,
   HeroStyled,
   ItemsLabel,
 } from "@/components/Collection/Collection.styled";
-import { GetStaticPropsContext, NextPage } from "next";
 import {
   NavTabTitle,
   Tabs,
@@ -83,19 +82,6 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
       </Container>
 
       <Container>
-        <CulturalContextStyled>
-          <p>
-            Content on this site is drawn from a historical source which
-            includes materials that may contain offensive images or language
-            reflecting the nature of Settler Colonialism in America. Such
-            materials should be viewed in the context of the time and place in
-            which they were created. The images and text in this site are
-            presented as specific, original artifacts recording the attitudes,
-            perspectives and beliefs of a different era. Northwestern University
-            does not endorse the views expressed in this collection which may
-            contain images and text offensive to some researchers.
-          </p>
-        </CulturalContextStyled>
         <Tabs defaultValue="metadata">
           <TabsList aria-label="Explore">
             <TabsTrigger value="explore">
