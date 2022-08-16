@@ -29,7 +29,7 @@ const SearchPage: NextPage = () => {
     error,
     loading,
   } = useFetchApiData({ searchTerm, size, userFacets });
-  console.log("apiData", apiData);
+
 
   useEffect(() => {
     if (searchTerm !== q) setSearchTerm(q as string);

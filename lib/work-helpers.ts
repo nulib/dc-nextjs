@@ -9,7 +9,7 @@ export async function getWork(id: string) {
     });
     return response?.data;
   } catch (err) {
-    console.log("Error getting the work", id);
+    console.error("Error getting the work", id);
     return null;
   }
 }

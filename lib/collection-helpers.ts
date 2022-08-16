@@ -12,7 +12,7 @@ export async function getCollection(
     });
     return response ? response.data : null;
   } catch (err) {
-    console.log("Error getting the work", id);
+    console.error("Error getting the work", id);
     return null;
   }
 }

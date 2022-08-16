@@ -85,25 +85,30 @@ export const getThumbnails = async (id: string) => {
  * temporary functionality to build presentation 3 manifest items with thumbnails
  */
 export const getCanvases = async (id: string) => {
-  return axios(id).then((manifest) =>
-    convertPresentation2(manifest.data).items.map((item) => {
-      if (!item?.thumbnail || Array.isArray(item?.thumbnail.length === 0)) {
-        const infoResponse = getInfoResponse(item as Canvas);
-        if (infoResponse)
-          item.thumbnail = [
-            {
-              format: "image/jpeg",
-              height: 200,
-              id: `${infoResponse}/full/!200,200/0/default.jpg`,
-              type: "Image",
-              width: 200,
-            },
-          ];
-      }
+  const manifest = await axios(id);
+  const converted = convertPresentation2(manifest.data);
+  if (!converted.items) {
+    return [];
+  }
 
-      return item;
-    })
-  );
+  converted.items.map((item) => {
+    if (!item?.thumbnail || Array.isArray(item?.thumbnail.length === 0)) {
+      const infoResponse = getInfoResponse(item as Canvas);
+      if (infoResponse)
+        item.thumbnail = [
+          {
+            format: "image/jpeg",
+            height: 200,
+            id: `${infoResponse}/full/!200,200/0/default.jpg`,
+            type: "Image",
+            width: 200,
+          },
+        ];
+    }
+
+    return item;
+  });
+  return converted;
 };
 
 export const getInfoResponse = (canvas: Canvas) => {
