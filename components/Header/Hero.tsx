@@ -2,7 +2,7 @@ import { Autoplay, EffectFade, Keyboard, Navigation, Pagination } from "swiper";
 import { Label, Summary, Thumbnail } from "@samvera/nectar-iiif";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Container from "@/components/Shared/Container";
-import { HeroCollection } from "@/lib/constants/homepage-hero";
+import { HeroCollection } from "@/lib/constants/homepage";
 import { HeroStyled } from "@/components/Header/Hero.styled";
 import React from "react";
 

@@ -3,24 +3,30 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const RelatedItemsStyled = styled("section", {
-  marginBottom: "$5",
+  marginBottom: "$gr5",
 
   "> h2": {
     color: "$black50",
+    fontSize: "$gr4",
     fontFamily: "$displayExtraLight",
-    fontSize: "$5",
     fontWeight: "400",
-    marginBottom: "$5",
+    marginBottom: "$gr5",
   },
 
   "> div": {
-    padding: "0 0 $4",
+    padding: "0 0 $gr4",
   },
 
   [`& .bloom-header-label`]: {
     display: "block",
     color: "$purple",
-    fontFamily: "$displayBold",
+    fontFamily: "$displayBold !important",
+    fontSize: "$gr5 !important",
+  },
+
+  [`& .bloom-header-summary`]: {
+    display: "block",
+    fontSize: "$gr3 !important",
   },
 
   figcaption: {
@@ -28,13 +34,13 @@ const RelatedItemsStyled = styled("section", {
     fontWeight: "400",
 
     "> span": {
-      fontSize: "$2",
+      fontSize: "$gr2",
       color: "$black50",
       marginTop: "6px",
     },
 
     "> span:first-child": {
-      fontSize: "$3",
+      fontSize: "$gr3",
       color: "$purple",
       fontWeight: "400",
       lineHeight: "1.15em",

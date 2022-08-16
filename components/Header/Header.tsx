@@ -6,7 +6,7 @@ import HeaderHero from "@/components/Header/Hero";
 import HeaderLockup from "@/components/Header/Lockup";
 import HeaderPrimary from "@/components/Header/Primary";
 import HeaderSuper from "@/components/Header/Super";
-import { heroCollection } from "@/lib/constants/homepage-hero";
+import { heroCollection } from "@/lib/constants/homepage";
 
 interface HeaderProps {
   isHero?: boolean;

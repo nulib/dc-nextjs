@@ -7,8 +7,8 @@ import { SearchStyled } from "@/components/Search/Search.styled";
 
 const Lockup = styled("div", {
   position: "relative",
-  padding: "$4 0 $5",
-  fontSize: "$6",
+  padding: "$gr4 0 $gr5",
+  fontSize: "$gr6",
   fontFamily: "$sansLight",
   zIndex: "1",
 });
@@ -26,7 +26,7 @@ const Primary = styled("div", {
   transition: "$all",
   position: "relative",
   top: "unset",
-  height: "$5",
+  height: "$gr5",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -60,7 +60,7 @@ const Primary = styled("div", {
 
       "> span": {
         opacity: "1",
-        width: "$5",
+        width: "$gr5",
       },
 
       [`& ${NavStyled}`]: {
@@ -84,17 +84,17 @@ const Super = styled("div", {
     justifyContent: "space-between",
 
     svg: {
-      height: "$3",
+      height: "$gr3",
       fill: "$white",
     },
   },
 
   [`& ${NavStyled}`]: {
-    fontSize: "$3",
-    height: "$5",
+    fontSize: "$gr2",
+    height: "$gr5",
 
     a: {
-      padding: "0 $3",
+      padding: "0 $gr3",
 
       "&:last-child": {
         paddingRight: "0",

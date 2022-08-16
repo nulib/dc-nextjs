@@ -224,3 +224,96 @@ export const heroCollection: HeroCollection = {
     },
   ],
 };
+
+export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
+  [
+    {
+      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/461,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/092b31cb-810a-4ab8-8d65-7cf9a61ca2fe",
+          profile: "http://iiif.io/api/image/2/level2.json",
+          type: "ImageService2",
+        },
+      ],
+      width: 461,
+      height: 641,
+    },
+  ],
+  [
+    {
+      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150//full/384,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150",
+          profile: "http://iiif.io/api/image/2/level2.json",
+          type: "ImageService2",
+        },
+      ],
+      width: 494,
+      height: 744,
+    },
+  ],
+  [
+    {
+      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/618,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05",
+          profile: "http://iiif.io/api/image/2/level2.json",
+          type: "ImageService2",
+        },
+      ],
+      width: 618,
+      height: 382,
+    },
+  ],
+  [
+    {
+      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd/full/384,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd",
+          profile: "http://iiif.io/api/image/2/level2.json",
+          type: "ImageService2",
+        },
+      ],
+      width: 384,
+      height: 307,
+    },
+  ],
+  [
+    {
+      duration: 15,
+      format: "video/mp4",
+      id: "https://meadow-streaming.rdc.library.northwestern.edu/3e/e5/e3/bb/-a/c7/b-/46/0f/-9/d1/3-/af/a4/bc/c6/54/1f/74-110-1.m3u8#t=152,167",
+      type: "Video",
+      width: 382,
+      height: 382,
+    },
+  ],
+  [
+    {
+      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a/full/446,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a",
+          profile: "http://iiif.io/api/image/2/level2.json",
+          type: "ImageService2",
+        },
+      ],
+      width: 446,
+      height: 365,
+    },
+  ],
+];

@@ -6,14 +6,13 @@ const DefinitionListWrapper = styled("div", {
   lineHeight: "1.47em",
 
   "& dt": {
-    fontSize: "$3",
+    fontSize: "$gr3",
     color: "$black",
     fontFamily: "$displayBold",
-    paddingBottom: "$1",
   },
   "& dd": {
     marginInlineStart: "0",
-    paddingBottom: "$3",
+    paddingBottom: "$gr2",
   },
 });
 

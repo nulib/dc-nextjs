@@ -19,9 +19,9 @@ const LinkedAnchor = styled("a", {
 
 const CardStyled = styled("div", {
   p: {
-    margin: "0 0 $4",
+    margin: "0 0 $gr4",
     fontFamily: "$sansRegular",
-    fontSize: "$4",
+    fontSize: "$gr3",
     lineHeight: "1.47em",
   },
 });
