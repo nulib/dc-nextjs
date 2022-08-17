@@ -70,9 +70,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           <IconClear />
         </Clear>
       )}
-      <Button type="submit">
-        <IconSearch />
-      </Button>
+      <Button type="submit">Search</Button>
+      <IconSearch />
     </SearchStyled>
   );
 };

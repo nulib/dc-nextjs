@@ -16,6 +16,7 @@ const Lockup = styled("div", {
 const PrimaryInner = styled("div", {
   display: "flex",
   flexGrow: "1",
+  alignItems: "center",
 });
 
 const Primary = styled("div", {
@@ -34,8 +35,24 @@ const Primary = styled("div", {
     alignItems: "center",
     justifyContent: "space-between",
     flexGrow: "1",
-    backgroundColor: "$white",
     transition: "$all",
+
+    [`& ${NavStyled}`]: {
+      backgroundColor: "$gray6",
+      color: "$purple",
+      fontSize: "$gr4",
+      fontFamily: "$sansBold",
+      paddingTop: "2px",
+      display: "flex",
+      height: "$gr5",
+
+      a: {
+        display: "flex",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+    },
 
     "> span": {
       display: "flex",
@@ -122,8 +139,10 @@ const HeaderStyled = styled("header", {
           textShadow: "1px 1px 3px #0003",
         },
 
-        [`& ${PrimaryInner}`]: {
-          boxShadow: "12px 12px 19px #0003",
+        [`& ${Primary}`]: {
+          [`& ${SearchStyled}, & ${NavStyled}`]: {
+            boxShadow: "3px 8px 19px #0003",
+          },
         },
       },
     },

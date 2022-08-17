@@ -2,14 +2,14 @@
  * Northwestern typography imported in @/styles/globals
  */
 
-const generic = `Arial, Helvetica, sans-serif`;
+const generic = `AkkuratProRegular, Arial, Helvetica, sans-serif`;
 
 const sans = {
-  sansBold: `AkkuratProBold, ${generic}`,
-  sansBoldItalic: `AkkuratProBoldItali, ${generic}`,
-  sansItalic: `AkkuratProItalic, ${generic}`,
-  sansLight: `AkkuratProLight, ${generic}`,
-  sansLightItalic: `AkkuratProLightItalic, ${generic}`,
+  sansBold: `AkkuratProBold, AkkuratProRegular, ${generic}`,
+  sansBoldItalic: `AkkuratProBoldItalic, AkkuratProRegular, ${generic}`,
+  sansItalic: `AkkuratProItalic, AkkuratProRegular, ${generic}`,
+  sansLight: `AkkuratProLight, AkkuratProRegular, ${generic}`,
+  sansLightItalic: `AkkuratProLightItalic, AkkuratProRegular, ${generic}`,
   sansRegular: `AkkuratProRegular, ${generic}`,
 };
 

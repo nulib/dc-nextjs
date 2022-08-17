@@ -9,7 +9,7 @@ const NavStyled = styled("nav", {
   flexGrow: "0",
 
   a: {
-    padding: "0 1.618rem",
+    padding: "0 $gr3",
   },
 });
 
