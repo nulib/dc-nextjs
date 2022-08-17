@@ -2,13 +2,6 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const CulturalContextStyled = styled("div", {
-  border: "1px solid $black10",
-  color: "$black50",
-  margin: "2rem 0",
-  padding: "1rem",
-});
-
 const HeroStyled = styled("div", {
   background: "$black80",
   color: "$white",
@@ -50,7 +43,6 @@ const ItemsLabel = styled("p", {
 });
 
 export {
-  CulturalContextStyled,
   HeroContent,
   HeroContentWrapper,
   HeroImageStyled,
