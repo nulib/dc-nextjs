@@ -68,7 +68,9 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
               <Radio.Item
                 id={optionId}
                 value={option}
-                onMouseOver={(e) => repositionHighlight(e, option)}
+                onMouseOver={(e: MouseEvent<HTMLButtonElement>) =>
+                  repositionHighlight(e, option)
+                }
               >
                 <label htmlFor={optionId}>{option}</label>
               </Radio.Item>
