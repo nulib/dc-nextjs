@@ -7,6 +7,21 @@ import {
 export const ALL_FACETS: FacetsList = {
   facets: [
     {
+      field: "box_name",
+      id: "boxName",
+      label: "Box Name",
+    },
+    {
+      field: "box_number",
+      id: "boxNumber",
+      label: "Box Number",
+    },
+    {
+      field: "collection.title",
+      id: "collection",
+      label: "Collection",
+    },
+    {
       field: "contributor.label_with_role",
       id: "contributor",
       label: "Contributor",
@@ -17,14 +32,34 @@ export const ALL_FACETS: FacetsList = {
       label: "Creator",
     },
     {
+      field: "genre.label",
+      id: "genre",
+      label: "Genre",
+    },
+    {
+      field: "folder_name",
+      id: "folderName",
+      label: "Folder Name",
+    },
+    {
+      field: "folder_number",
+      id: "folderNumber",
+      label: "Folder Number",
+    },
+    {
+      field: "library_unit",
+      id: "libraryDepartment",
+      label: "Library Department",
+    },
+    {
       field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
     },
     {
-      field: "genre.label",
-      id: "genre",
-      label: "Genre",
+      field: "series",
+      id: "series",
+      label: "Series",
     },
     {
       field: "style_period.label",
@@ -42,44 +77,9 @@ export const ALL_FACETS: FacetsList = {
       label: "Technique",
     },
     {
-      field: "workType",
+      field: "work_type",
       id: "workType",
       label: "Work Type",
-    },
-    {
-      field: "library_unit",
-      id: "libraryDepartment",
-      label: "Library Department",
-    },
-    {
-      field: "collection.title",
-      id: "collection",
-      label: "Collection",
-    },
-    {
-      field: "box_name",
-      id: "boxName",
-      label: "Box Name",
-    },
-    {
-      field: "box_number",
-      id: "boxNumber",
-      label: "Box Number",
-    },
-    {
-      field: "folder_name",
-      id: "folderName",
-      label: "Folder Name",
-    },
-    {
-      field: "folder_number",
-      id: "folderNumber",
-      label: "Folder Number",
-    },
-    {
-      field: "series",
-      id: "series",
-      label: "Series",
     },
   ],
 };
