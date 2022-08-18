@@ -5,7 +5,7 @@
 const generic = `AkkuratProRegular, Arial, Helvetica, sans-serif`;
 
 const sans = {
-  sansBold: `AkkuratProBold, AkkuratProRegular, ${generic}`,
+  sansBold: `AkkuratProBold, AkkuratProRegular, ${generic} `,
   sansBoldItalic: `AkkuratProBoldItalic, AkkuratProRegular, ${generic}`,
   sansItalic: `AkkuratProItalic, AkkuratProRegular, ${generic}`,
   sansLight: `AkkuratProLight, AkkuratProRegular, ${generic}`,

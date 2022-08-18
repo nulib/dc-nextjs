@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Header from "@/components/Header/Header";
+import Message from "@/components/Shared/Message/Message";
 import React from "react";
 
 export const siteTitle = "Digital Collections v2";
@@ -31,6 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
       <Header isHero={header === "hero"} />
       <main>{children}</main>
       <Footer />
+      <Message />
     </>
   );
 };
