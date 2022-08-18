@@ -28,7 +28,7 @@ const WorkDialogCite: React.FC = () => {
 
   const dateObj: Date = new Date(create_date);
   const formattedDate = dateObj.toDateString();
-  const itemLink = `${window.location.origin}/works/${id}`;
+  const itemLink = `${window.location.origin}/items/${id}`;
   const apaFormat = `${library_unit}, ${nul}. (${formattedDate}). ${title}, Retrieved from ${itemLink}`;
   const chicagoTurabianFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} Accessed ${today}. ${itemLink}`;
   const mlaFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} ${formattedDate}. ${window.location.origin}/items/${id}`;

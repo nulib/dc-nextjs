@@ -30,7 +30,7 @@ describe("Submit component", () => {
     expect(links.length).toBe(2);
     links.forEach((link, index) => {
       expect(link.getAttribute("href")).toBe(
-        `/works/${sampleSearchShape[index].id}`
+        `/items/${sampleSearchShape[index].id}`
       );
     });
   });
