@@ -19,7 +19,7 @@ const Grid: React.FC<GridProps> = ({ data = [] }) => {
       >
         {data.map((item: SearchShape) => (
           <GridItem key={item.accession_number}>
-            <Link href={`/works/${item.id}`}>
+            <Link href={`/items/${item.id}`}>
               <a>
                 <Figure
                   data={{

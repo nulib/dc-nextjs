@@ -17,7 +17,7 @@ const Preview: React.FC<PreviewProps> = ({ items }) => {
         {items.map((item) => {
           return (
             <PreviewItem key={item.id} data-testid="facets-filter-preview-item">
-              <Link href={`/works/${item.id}`}>
+              <Link href={`/items/${item.id}`}>
                 <a>
                   <Figure
                     data={{
