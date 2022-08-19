@@ -44,7 +44,6 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
     <div>
       <ActionHeader>
         <h2>Subjects</h2>
-        <div>Filter links here</div>
       </ActionHeader>
       <GroupedList>
         {Object.keys(grouped).map((letter) => (

@@ -87,7 +87,7 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
               <NavTabTitle>Explore</NavTabTitle>
             </TabsTrigger>
             <TabsTrigger value="metadata">
-              <NavTabTitle>Metadata</NavTabTitle>
+              <NavTabTitle>Subjects</NavTabTitle>
             </TabsTrigger>
             <TabsTrigger value="organization">
               <NavTabTitle>Collection Organization</NavTabTitle>
