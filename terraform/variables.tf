@@ -25,11 +25,23 @@ variable "environment_name" {
   type = string
 }
 
+variable "jwt_token_secret" {
+  type = string
+}
+
 variable "next_public_dcapi_endpoint" {
   type = string
 }
 
 variable "next_public_dc_api_search_iiif_url" {
+  type = string
+}
+
+variable "nusso_base_url" {
+  type = string
+}
+
+variable "nusso_api_key" {
   type = string
 }
 
