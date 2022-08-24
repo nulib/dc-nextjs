@@ -55,7 +55,7 @@ const Button = styled("button", {
 const Clear = styled("button", {
   position: "absolute",
   display: "flex",
-  right: "0",
+  right: "5rem",
   height: "$gr5",
   width: "$gr5",
   justifyContent: "center",
