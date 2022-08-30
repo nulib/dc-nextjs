@@ -20,6 +20,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const search = useRef<HTMLInputElement>(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +44,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     setSearchValue("");
     if (search.current) search.current.value = "";
   };
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (router) {
@@ -71,7 +76,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         </Clear>
       )}
       <Button type="submit">Search</Button>
-      <IconSearch />
+      {isLoaded && <IconSearch />}
     </SearchStyled>
   );
 };
