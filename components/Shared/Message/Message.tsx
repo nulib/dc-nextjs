@@ -4,14 +4,16 @@ import {
   MessageText,
   MessageTitle,
 } from "@/components/Shared/Message/Message.styled";
+import { useEffect, useState } from "react";
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
-import { useEffect } from "react";
 import useSessionStorage from "@/hooks/useSessionStorage";
 
 const Message = () => {
   const current = Date.now() / 1000;
   const interval = 86400; // 24 hours
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const [status, setStatus] = useSessionStorage("message_status", true);
   const [timestamp, setTimestamp] = useSessionStorage(
@@ -25,15 +27,19 @@ const Message = () => {
   };
 
   useEffect(() => {
+    setIsVisible(status);
+  }, [status]);
+
+  useEffect(() => {
     if (current > timestamp + interval) {
       setStatus(true);
     }
   }, [setStatus, current, timestamp]);
 
-  if (!status) return <></>;
+  if (!isVisible) return <></>;
 
   return (
-    <MessageStyled data-nosnippet status={status}>
+    <MessageStyled data-nosnippet status={isVisible}>
       <Container>
         <MessageContent>
           <div>
