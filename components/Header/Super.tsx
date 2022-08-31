@@ -25,13 +25,17 @@ const nav = [
 ];
 
 export default function HeaderSuper() {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
     <Super>
       <Container>
         <Link href="https://www.northwestern.edu/">
-          <a>
-            <NorthwesternWordmark />
-          </a>
+          <a>{isLoaded && <NorthwesternWordmark />}</a>
         </Link>
         <Nav>
           {nav.map(({ href, label }) => (

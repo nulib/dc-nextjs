@@ -12,8 +12,16 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  if (!isLoaded) return null;
+
   return (
-    <>
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -33,7 +41,7 @@ const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
       <main>{children}</main>
       <Footer />
       <Message />
-    </>
+    </div>
   );
 };
 
