@@ -29,6 +29,7 @@ export type ApiResponseData = CollectionShape | SearchShape[] | WorkShape;
 export interface ApiSearchResponse extends ApiResponse {
   aggregations?: ApiResponseAggregation;
   data: SearchShape[];
+  pagination: Pagination;
 }
 
 /**
@@ -48,6 +49,17 @@ export interface ApiResponseDataShape {
  */
 export interface ApiWorkResponse {
   data: WorkShape | undefined;
+}
+
+export interface Pagination {
+  query_url: string;
+  current_page: number;
+  limit: number;
+  offset: number;
+  total_hits: number;
+  total_pages: number;
+  prev_url?: string;
+  next_url?: string;
 }
 
 /**
