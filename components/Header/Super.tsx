@@ -1,9 +1,10 @@
+import { Super, User } from "@/components/Header/Header.styled";
 import Container from "../Shared/Container";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
-import { Super } from "@/components/Header/Header.styled";
+import { UserContext } from "@/pages/_app";
 
 const nav = [
   {
@@ -18,10 +19,6 @@ const nav = [
     href: "/contact",
     label: "Contact",
   },
-  {
-    href: "/#",
-    label: "Sign In",
-  },
 ];
 
 export default function HeaderSuper() {
@@ -30,6 +27,8 @@ export default function HeaderSuper() {
   React.useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const userAuthContext = React.useContext(UserContext);
 
   return (
     <Super>
@@ -43,6 +42,26 @@ export default function HeaderSuper() {
               <a>{label}</a>
             </Link>
           ))}
+          {!userAuthContext?.user && (
+            <Link href="/api/auth/login">
+              <a>Sign in</a>
+            </Link>
+          )}
+          {userAuthContext?.user && (
+            <>
+              <User>{userAuthContext.user.displayName}</User>
+              <a
+                onClick={userAuthContext.logout}
+                style={{
+                  cursor: "pointer",
+                  paddingLeft: "8px",
+                  textDecoration: "underline",
+                }}
+              >
+                Logout
+              </a>
+            </>
+          )}
         </Nav>
       </Container>
     </Super>
