@@ -7,10 +7,6 @@ const NavStyled = styled("nav", {
   alignItems: "center",
   flexShrink: "1",
   flexGrow: "0",
-
-  a: {
-    padding: "0 $gr3",
-  },
 });
 
 export { NavStyled };

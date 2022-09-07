@@ -111,12 +111,20 @@ const Super = styled("div", {
     height: "$gr5",
 
     a: {
-      padding: "0 $gr3",
+      padding: "0 $gr2",
 
       "&:last-child": {
         paddingRight: "0",
       },
     },
+  },
+});
+
+const User = styled("span", {
+  "&:before": {
+    content: "-",
+    display: "inline-block",
+    paddingRight: "$gr2",
   },
 });
 
@@ -151,4 +159,4 @@ const HeaderStyled = styled("header", {
 
 export type HeaderVariants = VariantProps<typeof HeaderStyled>;
 
-export { Lockup, Primary, PrimaryInner, HeaderStyled, Super };
+export { Lockup, Primary, PrimaryInner, HeaderStyled, Super, User };
