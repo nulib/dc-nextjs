@@ -1,6 +1,6 @@
 import { Aggs } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/context/search-context";
+import { UrlFacets } from "@/types/context/filter-context";
 
 /**
  * This constructs the `aggs` property as part of an elastic search query request
@@ -9,7 +9,7 @@ import { UserFacets } from "@/types/context/search-context";
 export const buildAggs = (
   facets: FacetsInstance[],
   facetFilterValue: string | undefined,
-  userFacets: UserFacets
+  userFacets: UrlFacets
 ) => {
   const aggs: Aggs = {};
 

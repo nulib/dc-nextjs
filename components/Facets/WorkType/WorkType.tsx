@@ -1,33 +1,18 @@
 import { useEffect, useState } from "react";
 import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
 import RadioGroup from "./RadioGroup";
-import { UserFacets } from "@/types/context/search-context";
 import { WorkTypeOptions } from "@/types/components/facets";
-// import useFetchApiData from "@/hooks/useFetchApiData";
-import { useSearchState } from "@/context/search-context";
+import useQueryParams from "@/hooks/useQueryParams";
+import { useRouter } from "next/router";
 
 const WorkType: React.FC = () => {
+  const router = useRouter();
   const [currentValue, setCurrentValue] = useState<WorkTypeOptions>("All");
   const { id } = FACETS_WORK_TYPE.facets[0];
+  const { urlFacets } = useQueryParams();
+  const { query: q } = router;
 
-  const { searchDispatch, searchState } = useSearchState();
-  const { userFacets } = searchState;
-
-  const workTypeFacet = userFacets[id];
-
-  /**
-   * set non-context search request params
-   */
-  // const size = 0;
-  // const activeFacets = FACETS_WORK_TYPE.facets;
-  // const searchTerm = q;
-
-  // const { data } = useFetchApiData({
-  //   activeFacets,
-  //   searchTerm,
-  //   size,
-  //   userFacets,
-  // });
+  const workTypeFacet = urlFacets[id];
 
   useEffect(() => {
     if (workTypeFacet && workTypeFacet.length > 0) {
@@ -38,7 +23,7 @@ const WorkType: React.FC = () => {
   }, [workTypeFacet]);
 
   const handleValueChange = (value: string) => {
-    const newObj: UserFacets = { ...userFacets };
+    const newObj = { ...urlFacets };
 
     switch (value) {
       case "All":
@@ -49,9 +34,9 @@ const WorkType: React.FC = () => {
         break;
     }
 
-    searchDispatch({
-      type: "updateUserFacets",
-      userFacets: newObj,
+    router.push({
+      pathname: "/search",
+      query: { ...(q && q), ...newObj },
     });
 
     return;

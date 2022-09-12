@@ -1,32 +1,44 @@
 import { Button } from "@nulib/design-system";
 import { SetIsModalOpenType } from "@/components/Facets/Filter/Modal";
 import { useFilterState } from "@/context/filter-context";
-import { useSearchState } from "@/context/search-context";
+import useQueryParams from "@/hooks/useQueryParams";
+import { useRouter } from "next/router";
 
-interface FacetsSubmitProps {
+interface FacetsFilterSubmitProps {
   setIsModalOpen: SetIsModalOpenType;
   total?: number;
 }
 
-const FacetsSubmit: React.FC<FacetsSubmitProps> = ({
+const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
   setIsModalOpen,
   total,
 }) => {
+  const router = useRouter();
+  const { query: q } = router;
+  const { urlFacets } = useQueryParams();
+
   const {
     filterDispatch,
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
-  const { searchDispatch } = useSearchState();
 
   const handleSubmit = () => {
-    searchDispatch({
-      type: "updateUserFacets",
-      userFacets: userFacetsUnsubmitted,
-    });
     filterDispatch({
       type: "updateUserFacets",
       userFacetsUnsubmitted: {},
     });
+
+    const newQueryObj = {
+      ...(q && q),
+      ...urlFacets,
+      ...userFacetsUnsubmitted,
+    };
+
+    router.push({
+      pathname: "/search",
+      query: newQueryObj,
+    });
+
     setIsModalOpen(false);
   };
 
@@ -39,4 +51,4 @@ const FacetsSubmit: React.FC<FacetsSubmitProps> = ({
   );
 };
 
-export default FacetsSubmit;
+export default FacetsFilterSubmit;

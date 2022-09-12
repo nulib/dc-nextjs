@@ -1,6 +1,6 @@
-import { SearchContextStore, UserFacets } from "@/types/context/search-context";
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
+import { SearchContextStore } from "@/types/context/search-context";
 
 type Action =
   | {
@@ -8,8 +8,7 @@ type Action =
       aggregations: ApiResponseAggregation | undefined;
     }
   | { type: "updateSearch"; q: string }
-  | { type: "updateSearchFixed"; searchFixed: boolean }
-  | { type: "updateUserFacets"; userFacets: UserFacets };
+  | { type: "updateSearchFixed"; searchFixed: boolean };
 
 type Dispatch = (action: Action) => void;
 type State = SearchContextStore;
@@ -22,7 +21,6 @@ const defaultState: SearchContextStore = {
   aggregations: {},
   q: "",
   searchFixed: false,
-  userFacets: {},
 };
 
 const SearchStateContext = React.createContext<
@@ -47,12 +45,6 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         searchFixed: action.searchFixed,
-      };
-    }
-    case "updateUserFacets": {
-      return {
-        ...state,
-        userFacets: action.userFacets,
       };
     }
     default: {

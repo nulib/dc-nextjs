@@ -34,7 +34,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
   } = useFetchApiData({
     searchTerm: q,
     size: 5,
-    userFacets: userFacetsUnsubmitted,
+    urlFacets: userFacetsUnsubmitted,
   });
 
   if (error) console.warn(error);

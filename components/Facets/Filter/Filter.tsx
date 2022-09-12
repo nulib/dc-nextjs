@@ -11,13 +11,15 @@ import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
 import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
+import useQueryParams from "@/hooks/useQueryParams";
 import { useSearchState } from "@/context/search-context";
 
 const DialogWrapper: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { filterDispatch } = useFilterState();
   const { searchState } = useSearchState();
-  const { q, userFacets } = searchState;
+  const { q } = searchState;
+  const { urlFacets } = useQueryParams();
 
   const handleDialogChange = () => {
     /**
@@ -27,7 +29,7 @@ const DialogWrapper: React.FC = () => {
     if (!isModalOpen) {
       filterDispatch({
         type: "updateUserFacets",
-        userFacetsUnsubmitted: userFacets,
+        userFacetsUnsubmitted: urlFacets,
       });
     }
     setIsModalOpen(!isModalOpen);
@@ -42,7 +44,7 @@ const DialogWrapper: React.FC = () => {
           </Icon>
           Filter
         </FilterActivate>
-        <FacetsCurrentUser screen="search" />
+        <FacetsCurrentUser screen="search" urlFacets={urlFacets} />
       </FilterFloating>
       <Dialog.Portal>
         <DialogOverlay />

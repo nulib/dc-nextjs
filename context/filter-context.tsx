@@ -1,7 +1,4 @@
-import {
-  FilterContextStore,
-  UserFacetsUnsubmitted,
-} from "@/types/context/filter-context";
+import { FilterContextStore, UrlFacets } from "@/types/context/filter-context";
 import { FacetsInstance } from "@/types/components/facets";
 import React from "react";
 
@@ -12,7 +9,7 @@ type Action =
     }
   | {
       type: "updateUserFacets";
-      userFacetsUnsubmitted: UserFacetsUnsubmitted;
+      userFacetsUnsubmitted: UrlFacets;
     };
 type Dispatch = (action: Action) => void;
 type State = FilterContextStore;
