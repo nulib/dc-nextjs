@@ -67,6 +67,9 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
   function handleRemoval(instance: CurrentFacet) {
     if (instance && facets) {
       const { id, value } = instance;
+      const {
+        query: { q },
+      } = router;
       const newObj: UrlFacets = { ...facets };
 
       newObj[id] = newObj[id].filter((key) => key !== value);
@@ -74,7 +77,7 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       if (screen === "search")
         router.push({
           pathname: "/search",
-          query: { ...router.query, ...newObj },
+          query: { ...(q && { q }), ...newObj },
         });
 
       if (screen === "modal")

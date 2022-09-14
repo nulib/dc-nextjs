@@ -1,0 +1,8 @@
+{
+  "plugins": ["cypress"],
+  "extends": ["plugin:cypress/recommended"],
+  "rules": {
+    // overrides
+    "@typescript-eslint/ban-ts-comment": "warn"
+  }
+}

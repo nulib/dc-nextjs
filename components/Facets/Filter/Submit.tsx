@@ -14,7 +14,9 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
   total,
 }) => {
   const router = useRouter();
-  const { query: q } = router;
+  const {
+    query: { q },
+  } = router;
   const { urlFacets } = useQueryParams();
 
   const {
@@ -29,10 +31,12 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
     });
 
     const newQueryObj = {
-      ...(q && q),
+      ...(q && { q }),
       ...urlFacets,
       ...userFacetsUnsubmitted,
     };
+
+    console.log("newQueryObj", newQueryObj);
 
     router.push({
       pathname: "/search",

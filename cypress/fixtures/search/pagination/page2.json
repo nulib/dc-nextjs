@@ -1,0 +1,335 @@
+{
+  "data": [
+    {
+      "accession_number": "P0036_Aldridge_OF1_F03_001",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/b74385b0-1083-45b6-9838-633ba1927e70/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/15/1c/09/42/-3/4e/9-/49/ae/-8/84/6-/b4/8f/65/26/8f/75-manifest.json",
+      "work_type": "Image",
+      "id": "151c0942-34e9-49ae-8846-b48f65268f75",
+      "title": null
+    },
+    {
+      "accession_number": "Accession:JR_054_38",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/4485c7e9-8cf4-41f5-9bbf-8db5d32098a3/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/55/e5/5e/e3/-a/68/1-/4f/cf/-b/b7/c-/06/49/37/92/4e/65-manifest.json",
+      "work_type": "Image",
+      "id": "55e55ee3-a681-4fcf-bb7c-064937924e65",
+      "title": "Woman with braid"
+    },
+    {
+      "accession_number": "0.066396245",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/04/e7/98/f0/-a/21/d-/41/31/-9/80/8-/cc/86/20/21/a0/24-manifest.json",
+      "work_type": "Audio",
+      "id": "04e798f0-a21d-4131-9808-cc862021a024",
+      "title": null
+    },
+    {
+      "accession_number": "0.173163484",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/28/99/99/0b/-d/ee/8-/43/15/-9/7e/2-/0c/38/84/42/94/24-manifest.json",
+      "work_type": "Video",
+      "id": "2899990b-dee8-4315-97e2-0c3884429424",
+      "title": null
+    },
+    {
+      "accession_number": "0.949040201",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/f1/40/eb/49/-f/db/a-/48/59/-b/14/d-/3e/01/d5/f4/0e/c0-manifest.json",
+      "work_type": "Video",
+      "id": "f140eb49-fdba-4859-b14d-3e01d5f40ec0",
+      "title": "Canary Record TEST 2"
+    },
+    {
+      "accession_number": "Accession:JR_115_24",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/890f03fd-aecd-4da8-9a46-b123c8a79255/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/6a/a0/e4/8e/-d/51/d-/48/be/-b/b5/3-/9a/42/c1/e8/f3/11-manifest.json",
+      "work_type": "Image",
+      "id": "6aa0e48e-d51d-48be-bb53-9a42c1e8f311",
+      "title": "Science lecture"
+    },
+    {
+      "accession_number": "2022_03_24_07",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/c7/b5/2b/f3/-3/4a/5-/42/a2/-9/85/3-/04/aa/e3/d5/ad/ea-manifest.json",
+      "work_type": "Video",
+      "id": "c7b52bf3-34a5-42a2-9853-04aae3d5adea",
+      "title": null
+    },
+    {
+      "accession_number": "Voyager:248224",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/e9a7a4b6-e333-42e8-a885-72c4e50dd7e1/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/70/0b/cd/8e/-3/e7/9-/4b/c4/-8/5b/d-/d8/ad/1e/af/5c/42-manifest.json",
+      "work_type": "Image",
+      "id": "700bcd8e-3e79-4bc4-85bd-d8ad1eaf5c42",
+      "title": "Colored plate"
+    },
+    {
+      "accession_number": "0.254219184",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/fe/09/bc/be/-6/91/1-/4d/ec/-a/87/4-/be/6d/4c/63/c6/1b-manifest.json",
+      "work_type": "Audio",
+      "id": "fe09bcbe-6911-4dec-a874-be6d4c63c61b",
+      "title": "Canary Record TEST 2"
+    },
+    {
+      "accession_number": "Voyager:Mff2175",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/517b89e6-db04-499f-abc5-2ece3bc2eb69/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/95/80/a5/83/-0/e0/c-/4e/55/-9/fa/b-/4d/b8/b6/1c/c2/9b-manifest.json",
+      "work_type": "Image",
+      "id": "9580a583-0e0c-4e55-9fab-4db8b61cc29b",
+      "title": "Triumph of Death (after Pieter Brueghel the Elder). landsknechts resisting, Death attacking party of aristocrats"
+    },
+    {
+      "accession_number": "Voyager:inumckaygh43",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/544ede66-79da-4f91-9ddf-eaa384824881/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/9f/94/1b/7d/-1/02/3-/44/b4/-9/0c/4-/fa/eb/6b/a3/be/cf-manifest.json",
+      "work_type": "Image",
+      "id": "9f941b7d-1023-44b4-90c4-faeb6ba3becf",
+      "title": "Juvenile Delinquency in the Gold Coast"
+    },
+    {
+      "accession_number": "Voyager:150213",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/6f18f97a-6b81-4888-a115-6d8a9c9d680d/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/ad/9e/05/a5/-0/29/1-/44/dd/-b/47/c-/f2/1e/aa/f7/8b/cb-manifest.json",
+      "work_type": "Image",
+      "id": "ad9e05a5-0291-44dd-b47c-f21eaaf78bcb",
+      "title": "The Little Metropole Cathedral. Exterior"
+    },
+    {
+      "accession_number": "Accession:313555",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/fd0e1283-e3bb-4131-835f-495a18554c8b/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/d3/8c/41/af/-d/15/5-/46/62/-8/3a/c-/e6/37/8e/5f/f7/5b-manifest.json",
+      "work_type": "Image",
+      "id": "d38c41af-d155-4662-83ac-e6378e5ff75b",
+      "title": "Vairocana with eight bodhisattvas or Vajraraga-Manjusri mandala. Detail: four bodhisattvas above Vairocana's proper left shoulder"
+    },
+    {
+      "accession_number": "Voyager:305507",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ddb115eb-a4f0-4709-87be-171ce1a95aa8/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/bd/71/d0/eb/-e/50/9-/45/fd/-9/36/1-/d2/83/89/92/59/36-manifest.json",
+      "work_type": "Image",
+      "id": "bd71d0eb-e509-45fd-9361-d28389925936",
+      "title": "Wall hanging"
+    },
+    {
+      "accession_number": "Voyager:252924",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/4fce0559-0ea8-4ed5-a33a-1fdd4377bfde/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/03/c0/d4/71/-5/4c/e-/4f/d5/-a/a2/0-/9f/8f/12/db/89/08-manifest.json",
+      "work_type": "Image",
+      "id": "03c0d471-54ce-4fd5-aa20-9f8f12db8908",
+      "title": "Die gluckliche hand. Stage design, scene 1: the Chorus"
+    },
+    {
+      "accession_number": "Voyager:313234",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/078e5344-e9d2-46f8-8058-21019e565025/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/05/90/9b/83/-f/25/f-/4b/4a/-a/20/b-/97/c4/76/6f/47/03-manifest.json",
+      "work_type": "Image",
+      "id": "05909b83-f25f-4b4a-a20b-97c4766f4703",
+      "title": "Chapelle du Rosaire Vence The garden and the pond"
+    },
+    {
+      "accession_number": "Voyager:Mfb0052",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/09417625-2c19-4804-9a56-ca0142f39f18/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/09/1e/c2/ed/-7/31/0-/44/99/-b/e8/a-/a5/0e/a9/0e/38/0a-manifest.json",
+      "work_type": "Image",
+      "id": "091ec2ed-7310-4499-be8a-a50ea90e380a",
+      "title": "Place Vendome. NE corner elevation"
+    },
+    {
+      "accession_number": "322677",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/deb8cce8-e91d-416b-886e-4e632a4a5ede/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/0a/4e/41/de/-b/b1/4-/4c/38/-8/91/8-/9e/3d/7b/eb/dd/4c-manifest.json",
+      "work_type": "Image",
+      "id": "0a4e41de-bb14-4c38-8918-9e3d7bebdd4c",
+      "title": "Kayseri"
+    },
+    {
+      "accession_number": "Voyager:RL01375",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/39f9fda4-d81f-475f-8263-484ccd5c2a61/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/34/5e/e4/14/-2/b7/a-/43/0a/-b/84/8-/e1/80/0c/2c/56/22-manifest.json",
+      "work_type": "Image",
+      "id": "345ee414-2b7a-430a-b848-e1800c2c5622",
+      "title": "Yungang. Cave 20. Buddha. Detail"
+    },
+    {
+      "accession_number": "Voyager:Nvd0039",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7edc5068-9a06-4593-b9a0-9814356b8232/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/0d/93/cd/61/-2/e9/a-/43/d9/-a/a5/b-/3c/24/d7/b4/99/d5-manifest.json",
+      "work_type": "Image",
+      "id": "0d93cd61-2e9a-43d9-aa5b-3c24d7b499d5",
+      "title": "Tomb of Pius VIII Castiglione (b.Cingoli, 253rd Pope, r.1829-30). full figure of St. Peter"
+    },
+    {
+      "accession_number": "Voyager:32861",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/369880b6-b6c0-46f7-9d0a-b0b37a6d9865/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/10/89/bc/19/-6/aa/a-/42/92/-b/62/f-/88/b1/9d/57/b9/80-manifest.json",
+      "work_type": "Image",
+      "id": "1089bc19-6aaa-4292-b62f-88b19d57b980",
+      "title": "Ekoi headdress mask"
+    },
+    {
+      "accession_number": "Voyager:Pub0310",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/2646b3e6-68dd-41a2-a1be-ddf53cac7230/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/39/f5/97/31/-9/07/7-/45/b3/-9/c6/a-/48/22/b6/94/e3/11-manifest.json",
+      "work_type": "Image",
+      "id": "39f59731-9077-45b3-9c6a-4822b694e311",
+      "title": "American Center in Paris (1994). interior detail: main lobby at entrance level, view 2"
+    },
+    {
+      "accession_number": "Voyager:Lff1053",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a3ec1c0e-4792-450f-b590-54f170ade404/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/17/0a/36/77/-e/33/7-/48/d4/-a/d7/8-/e2/15/1e/ac/b9/e4-manifest.json",
+      "work_type": "Image",
+      "id": "170a3677-e337-48d4-ad78-e2151eacb9e4",
+      "title": "Triumph of Death. cart of skulls and king"
+    },
+    {
+      "accession_number": "Voyager:141385",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/9fcc206e-077d-4d39-86b2-45175c8ea3ff/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/24/87/4d/c0/-2/59/7-/42/7b/-a/f0/4-/70/4f/7c/c2/e3/18-manifest.json",
+      "work_type": "Image",
+      "id": "24874dc0-2597-427b-af04-704f7cc2e318",
+      "title": "Crouching Aphrodite"
+    },
+    {
+      "accession_number": "Voyager:154951",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d707fc90-01b3-4a74-9719-aabe4ad3ed43/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/d3/7d/63/03/-3/eb/9-/48/71/-b/61/f-/3b/36/73/6f/1f/34-manifest.json",
+      "work_type": "Image",
+      "id": "d37d6303-3eb9-4871-b61f-3b36736f1f34",
+      "title": "House near the Farnesina. Wall decorated with trompe-l'oeil architectural motifs"
+    },
+    {
+      "accession_number": "Voyager:Kgw0014",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d7756234-56e9-4248-8c97-39872de9fb32/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2b/36/22/c8/-0/05/c-/45/30/-9/34/8-/cc/24/cd/3a/c0/17-manifest.json",
+      "work_type": "Image",
+      "id": "2b3622c8-005c-4530-9348-cc24cd3ac017",
+      "title": "The Imperial Bursa of St. Stephen. Overall from right front"
+    },
+    {
+      "accession_number": "Voyager:Lgm0015",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/dcacee74-be1a-45b1-b380-dff473f8f683/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2c/b0/54/2b/-0/d6/4-/4f/54/-b/07/4-/f4/70/b9/1f/4f/6a-manifest.json",
+      "work_type": "Image",
+      "id": "2cb0542b-0d64-4f54-b074-f470b91f4f6a",
+      "title": "Knight, Death and the Devil.. the devil"
+    },
+    {
+      "accession_number": "Voyager:Kba0025",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/b49a00d6-a718-44c8-b618-829481d5f474/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2d/bc/94/80/-2/62/3-/4c/b4/-a/9d/7-/d1/c3/f8/f2/c3/d6-manifest.json",
+      "work_type": "Image",
+      "id": "2dbc9480-2623-4cb4-a9d7-d1c3f8f2c3d6",
+      "title": "Basilica of Holy Blood. det: portrait roundel of countess"
+    },
+    {
+      "accession_number": "Voyager:211374",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/2cec5f7e-edfa-42db-b981-48e06f973af4/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2e/73/8c/79/-f/77/2-/45/ae/-8/ee/b-/0c/23/a6/91/f6/8c-manifest.json",
+      "work_type": "Image",
+      "id": "2e738c79-f772-45ae-8eeb-0c23a691f68c",
+      "title": "Forbidden City. Palace of Tranquil Longevity, Pavillion of the Carpenters' Square, side view of the Gallery of the Square Rule"
+    },
+    {
+      "accession_number": "Voyager:Kfa0269",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/35bdd2d4-8db6-4f13-a223-ae5bdfff3f25/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2f/01/16/41/-d/a5/f-/45/21/-9/c9/8-/7a/dc/b4/bc/e8/88-manifest.json",
+      "work_type": "Image",
+      "id": "2f011641-da5f-4521-9c98-7adcb4bce888",
+      "title": "Benedictine Abbey and Cloister of Saint Pierre at Moissac. det: W wall of porch: Punishment of Female Unchastity"
+    },
+    {
+      "accession_number": "Voyager:Lif0869",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/25a3099d-42bf-423f-97de-ed30f575929e/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2f/84/c4/5b/-3/e6/9-/4c/ae/-b/f2/0-/30/bb/99/45/29/5a-manifest.json",
+      "work_type": "Image",
+      "id": "2f84c45b-3e69-4cae-bf20-30bb9945295a",
+      "title": "Martyrdom of the 10,000. center detail"
+    },
+    {
+      "accession_number": "Voyager:Mif1727",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/38c9efba-69ca-4308-9cc1-4c15411eb597/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/35/94/63/87/-0/ea/4-/4c/2c/-9/00/c-/61/24/36/82/8b/af-manifest.json",
+      "work_type": "Image",
+      "id": "35946387-0ea4-4c2c-900c-612436828baf",
+      "title": "Diana and Endymion. Diana and the sleeping Endymion"
+    },
+    {
+      "accession_number": "Voyager:1608",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/09a434c5-4eba-4ee0-8c43-36d59a68af60/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/39/55/fe/ea/-0/d5/6-/43/e0/-b/8d/3-/7a/a8/84/45/fa/2c-manifest.json",
+      "work_type": "Image",
+      "id": "3955feea-0d56-43e0-b8d3-7aa88445fa2c",
+      "title": "Capitol Dome. Interior"
+    },
+    {
+      "accession_number": "Voyager:242058",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/0cf47633-6e44-4d4f-ba4f-ccb1f930010f/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/41/6d/96/b9/-0/38/b-/40/e8/-9/27/b-/00/41/39/c3/b4/e6-manifest.json",
+      "work_type": "Image",
+      "id": "416d96b9-038b-40e8-927b-004139c3b4e6",
+      "title": "Joliette Quarter, block #8. Exterior: view of windows"
+    },
+    {
+      "accession_number": "Voyager:Lga0052",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1a7508b6-2aab-4af2-9bf8-a533e1d74105/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/cb/82/28/06/-f/9e/f-/43/fd/-8/4b/1-/45/b8/c6/8d/bf/b5-manifest.json",
+      "work_type": "Image",
+      "id": "cb822806-f9ef-43fd-84b1-45b8c68dbfb5",
+      "title": "Platz at Tiergartner Gate. view E with Pilatus House, 1489-1520"
+    },
+    {
+      "accession_number": "Voyager:170068",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/961490ac-0286-486c-b0cf-e20a9963d658/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/4b/f8/92/22/-2/9d/f-/44/f2/-8/8e/e-/c7/c7/ee/4e/17/ed-manifest.json",
+      "work_type": "Image",
+      "id": "4bf89222-29df-44f2-88ee-c7c7ee4e17ed",
+      "title": "Villa Schwob. Exterior"
+    },
+    {
+      "accession_number": "Voyager:Mff0167",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ad9f1ea1-966f-461c-b7c4-c07c1e84e67f/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/4e/3e/c3/13/-6/ff/3-/49/e1/-a/20/c-/66/ab/53/81/ce/12-manifest.json",
+      "work_type": "Image",
+      "id": "4e3ec313-6ff3-49e1-a20c-66ab5381ce12",
+      "title": "The Forge of Vulcan. central detail"
+    },
+    {
+      "accession_number": "Voyager:305257",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/f50206d8-1d15-4490-bfe8-6f8c03f878c6/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/52/f6/03/11/-f/18/e-/4f/b3/-8/cb/f-/ce/d5/7e/ad/86/cf-manifest.json",
+      "work_type": "Image",
+      "id": "52f60311-f18e-4fb3-8cbf-ced57ead86cf",
+      "title": "Lagoon and Fishermen"
+    },
+    {
+      "accession_number": "Accession:JR_124_39",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/bc06b92c-ab6e-4821-b8e5-f5aa84c7bd2f/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/de/7c/89/5f/-b/b7/b-/46/08/-9/55/e-/4f/a4/71/b6/dc/48-manifest.json",
+      "work_type": "Image",
+      "id": "de7c895f-bb7b-4608-955e-4fa471b6dc48",
+      "title": "Student rental house on Maple Avenue"
+    },
+    {
+      "accession_number": "Voyager:Lff0316",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/4870017d-529e-4689-8a0a-bbcadeb3eea9/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/53/8f/69/de/-9/b2/e-/42/b0/-8/42/c-/fb/74/ec/dc/5d/79-manifest.json",
+      "work_type": "Image",
+      "id": "538f69de-9b2e-42b0-842c-fb74ecdc5d79",
+      "title": "Market Scene with Christ in the House of Mary and Martha. Still life detail"
+    }
+  ],
+  "pagination": {
+    "query_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA",
+    "current_page": 2,
+    "limit": 40,
+    "offset": 40,
+    "total_hits": 575,
+    "total_pages": 15,
+    "prev_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA&page=1",
+    "next_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA&page=3"
+  },
+  "info": {}
+}

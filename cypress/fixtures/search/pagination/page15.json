@@ -1,0 +1,134 @@
+{
+  "data": [
+    {
+      "accession_number": "Accession:JR_004_38",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3f4f1a98-0353-4918-b42b-dc385adb495c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/a0/f2/dd/d0/-4/97/d-/4c/49/-b/62/d-/ad/9b/3d/2d/a2/fe-manifest.json",
+      "work_type": "Image",
+      "id": "a0f2ddd0-497d-4c49-b62d-ad9b3d2da2fe",
+      "title": "Northwestern anti-war rally"
+    },
+    {
+      "accession_number": "Voyager:265063",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/8c26d233-a69f-41cf-ad90-8d67ed38c742/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/a6/76/12/e1/-5/1b/a-/46/ad/-a/9d/0-/cc/83/0f/ed/0f/dc-manifest.json",
+      "work_type": "Image",
+      "id": "a67612e1-51ba-46ad-a9d0-cc830fed0fdc",
+      "title": "Sistine Chapel Ceiling. The Expulsion"
+    },
+    {
+      "accession_number": "Accession:B03F01_C003a_85R",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/39ea6571-0354-455e-adc5-862038e6cfb6/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/af/62/14/ec/-5/41/c-/42/a2/-b/c2/2-/d9/a5/2c/a2/57/c8-manifest.json",
+      "work_type": "Image",
+      "id": "af6214ec-541c-42a2-bc22-d9a52ca257c8",
+      "title": "Suscinio Castle"
+    },
+    {
+      "accession_number": "Voyager:Mhf0481",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/73ad6af8-f1ae-4b0d-8176-0352c2fe1dd5/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/b0/8d/f7/a7/-b/65/3-/4c/b3/-8/9e/0-/10/3d/57/4a/fe/d7-manifest.json",
+      "work_type": "Image",
+      "id": "b08df7a7-b653-4cb3-89e0-103d574afed7",
+      "title": "Dutch Harbor and Cityscape"
+    },
+    {
+      "accession_number": "Voyager:236791",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/fe9a360c-09d9-48ba-b65f-d91c1e4fcd5f/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/b8/37/73/d9/-0/ec/f-/41/a3/-8/80/f-/30/eb/48/80/44/bf-manifest.json",
+      "work_type": "Image",
+      "id": "b83773d9-0ecf-41a3-880f-30eb488044bf",
+      "title": "Improvision"
+    },
+    {
+      "accession_number": "Voyager:176883",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/5eeb7a1e-f66a-4617-8ebc-1c4645e094af/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c7/01/9d/e4/-9/33/a-/40/37/-8/d9/1-/80/f8/1a/f7/4e/45-manifest.json",
+      "work_type": "Image",
+      "id": "c7019de4-933a-4037-8d91-80f81af74e45",
+      "title": "Building of the Patriots Association. Exterior: corner view"
+    },
+    {
+      "accession_number": "Voyager:115448",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/2550a584-ebf6-48a8-84f9-d3de1f96f660/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c9/95/e7/ff/-f/a7/d-/4d/db/-b/96/6-/26/78/23/46/5f/52-manifest.json",
+      "work_type": "Image",
+      "id": "c995e7ff-fa7d-4ddb-b966-267823465f52",
+      "title": "The Manger"
+    },
+    {
+      "accession_number": "Voyager:47096",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3cd7ced9-cad2-486d-8c2f-fa32f2bcb50e/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/ca/56/b7/f5/-d/35/6-/4d/6e/-8/08/d-/a7/c3/ef/e5/cd/5c-manifest.json",
+      "work_type": "Image",
+      "id": "ca56b7f5-d356-4d6e-808d-a7c3efe5cd5c",
+      "title": "Ancestor figure. 3/4 view"
+    },
+    {
+      "accession_number": "Voyager:Msf0386",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/85b84e15-8e37-4f68-9d7d-d5626856febe/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/d5/73/fd/16/-5/9c/6-/42/8c/-b/ab/a-/53/24/a2/5e/dc/4c-manifest.json",
+      "work_type": "Image",
+      "id": "d573fd16-59c6-428c-baba-5324a25edc4c",
+      "title": "Saint Casilda"
+    },
+    {
+      "accession_number": "Voyager:60647",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/2c79e577-3a3f-4ebb-b57e-5227184d2d6e/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/e2/43/5c/81/-1/6d/8-/4a/33/-a/05/d-/ae/16/a7/87/44/fa-manifest.json",
+      "work_type": "Image",
+      "id": "e2435c81-16d8-4a33-a05d-ae16a78744fa",
+      "title": "Humanoid head and neck with skull necklace. Front"
+    },
+    {
+      "accession_number": "Accession:B02F06_0025a_005",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/79d55f3c-d74a-4710-8fee-5b29280398af/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/f2/b8/af/41/-f/4e/a-/4a/b3/-8/ae/2-/9f/6a/5d/5e/1c/af-manifest.json",
+      "work_type": "Image",
+      "id": "f2b8af41-f4ea-4ab3-8ae2-9f6a5d5e1caf",
+      "title": "Man rowing boat"
+    },
+    {
+      "accession_number": "Voyager:150208",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/63a3b500-fb6e-429e-afef-84c1e8beefd0/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/f4/ed/6c/f1/-7/e5/c-/4f/4a/-b/ce/e-/cb/69/8f/1d/b6/6b-manifest.json",
+      "work_type": "Image",
+      "id": "f4ed6cf1-7e5c-4f4a-bcee-cb698f1db66b",
+      "title": "Sotira Lykodimou Church. Exterior"
+    },
+    {
+      "accession_number": "Voyager:Nff0884",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/badbedc3-089f-4bb0-a8c1-65ebd1ef2cd1/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/f7/e3/b1/92/-f/ce/6-/4e/9f/-b/b1/d-/26/ad/f8/6d/dd/38-manifest.json",
+      "work_type": "Image",
+      "id": "f7e3b192-fce6-4e9f-bb1d-26adf86ddd38",
+      "title": "Young Girls at the Sea. reclining, pensive nude"
+    },
+    {
+      "accession_number": "Voyager:Jia0477",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d0795326-9f53-4c41-bf86-aa3cf1a7c608/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/fe/d0/90/60/-1/36/f-/41/f9/-9/c9/9-/17/8a/24/4a/d5/d1-manifest.json",
+      "work_type": "Image",
+      "id": "fed09060-136f-41f9-9c99-178a244ad5d1",
+      "title": "S. Maria in Trastevere. det: upper register with Popes and mosaic"
+    },
+    {
+      "accession_number": "Canary_003",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/2ac97d66-a921-4edb-9999-8d246856c91c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/ad/83/01/81/-b/65/8-/4e/74/-9/04/5-/d0/73/d2/fb/83/0e-manifest.json",
+      "work_type": "Audio",
+      "id": "ad830181-b658-4e74-9045-d073d2fb830e",
+      "title": "Canary Record TEST 2"
+    }
+  ],
+  "pagination": {
+    "query_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA",
+    "current_page": 15,
+    "limit": 40,
+    "offset": 560,
+    "total_hits": 575,
+    "total_pages": 15,
+    "prev_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA&page=14"
+  },
+  "info": {}
+}

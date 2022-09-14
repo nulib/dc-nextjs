@@ -47,7 +47,7 @@ The app uses ESLint with a plugin for TypeScript support.
 npm run lint
 ```
 
-Or run Typescript's `tsc` compiler for type-checking directly.
+Run Typescript's `tsc` compiler for type-checking directly.
 
 ```bash
 npm run ts-lint
@@ -56,6 +56,31 @@ npm run ts-lint
 A pre-commit hook will ensure code is linted before committed.
 
 ## Testing
+
+### End to end tests
+
+E2E tests use [Cypress](https://docs.cypress.io/), and are linted with [Cypress ESLint Plugin](https://github.com/cypress-io/eslint-plugin-cypress)
+
+To run the text suite:
+
+```
+npm run cypress:open
+```
+
+#### Fixtures
+
+E2E JSON API response fixtures are located in `/cypress/fixtures
+
+### Unit tests
+
+Unit tests use Jest and Testing Library React. Convention is to write tests alongside their respective components:
+
+```
+// Sample directory
+/components/search/Search.tsx
+/components/search/Search.test.tsx
+...
+```
 
 To run [Jest](https://jestjs.io/) w/ [React Testing-Library](https://testing-library.com/docs/react-testing-library/intro/) support, run:
 
