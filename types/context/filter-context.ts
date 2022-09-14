@@ -1,9 +1,13 @@
 import { FacetsInstance } from "@/types/components/facets";
 export interface FilterContextStore {
   recentFacet?: FacetsInstance;
-  userFacetsUnsubmitted: UserFacetsUnsubmitted;
+  userFacetsUnsubmitted: UrlFacets;
 }
 
-export interface UserFacetsUnsubmitted {
-  [key: string]: string[];
-}
+export type UrlFacets =
+  | {
+      [key: string]: never;
+    }
+  | {
+      [key: string]: string[];
+    };

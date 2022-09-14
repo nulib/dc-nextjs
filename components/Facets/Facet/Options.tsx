@@ -29,7 +29,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
     aggsFilterValue,
     searchTerm: q,
     size: 0,
-    userFacets: userFacetsUnsubmitted,
+    urlFacets: userFacetsUnsubmitted,
   });
 
   if (loading) return <SpinLoader />;

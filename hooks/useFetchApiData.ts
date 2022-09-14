@@ -3,7 +3,8 @@ import { ApiSearchRequest } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/context/search-context";
+import { UrlFacets } from "@/types/context/filter-context";
+import axios from "axios";
 import { buildQuery } from "@/lib/queries/builder";
 
 type ApiData = ApiSearchResponse | null;
@@ -19,49 +20,56 @@ type HookArguments = {
   aggsFilterValue?: string;
   searchTerm: string;
   size?: number;
-  userFacets: UserFacets;
+  urlFacets: UrlFacets;
 };
 
 const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
-  const { activeFacets, aggsFilterValue, searchTerm, size, userFacets } = obj;
-  const [data, setData] = useState<ApiData>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<ApiError>(null);
+  const { activeFacets, aggsFilterValue, searchTerm, size, urlFacets } = obj;
+  const [request, setRequest] = useState<{
+    data: ApiData;
+    error: ApiError;
+    loading: boolean;
+  }>({
+    data: null,
+    error: null,
+    loading: false,
+  });
 
   useEffect(() => {
-    setLoading(true);
-    setData(null);
-    setError(null);
+    async function doRequest() {
+      try {
+        setRequest({
+          ...request,
+          loading: true,
+        });
 
-    const body: ApiSearchRequest = buildQuery({
-      aggs: activeFacets,
-      aggsFilterValue,
-      size,
-      term: searchTerm,
-      userFacets,
-    });
+        const body: ApiSearchRequest = buildQuery({
+          aggs: activeFacets,
+          aggsFilterValue,
+          size,
+          term: searchTerm,
+          urlFacets,
+        });
 
-    fetch(DC_API_SEARCH_URL, {
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setLoading(false);
-        setData(json);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError("Error fetching API data");
-
+        const response = await axios.post(DC_API_SEARCH_URL, body);
+        setRequest({
+          ...request,
+          data: response.data,
+          loading: false,
+        });
+      } catch (err) {
+        setRequest({
+          ...request,
+          error: "Error loading data from useFetchApi",
+        });
         console.error("error fetching API data", err);
-      });
-  }, [aggsFilterValue, searchTerm, userFacets]);
+      }
+    }
 
-  return { data, error, loading };
+    doRequest();
+  }, [aggsFilterValue, searchTerm, size, urlFacets]);
+
+  return { ...request };
 };
 
 export default useFetchApiData;

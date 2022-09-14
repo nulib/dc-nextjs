@@ -5,7 +5,6 @@ import {
 import { ApiResponseBucket } from "@/types/api/response";
 import React from "react";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 interface CollectionTabsMetadataProps {
   metadata: ApiResponseBucket[];
@@ -19,7 +18,6 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
 }) => {
   const router = useRouter();
   const grouped: Groups = {};
-  const { searchDispatch } = useSearchState();
 
   /**
    * Make the flat list of metadata aggs into an alphabetized, grouped list
@@ -31,13 +29,7 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
   });
 
   const handleMetadataClick = (key: string) => {
-    searchDispatch({
-      type: "updateUserFacets",
-      userFacets: {
-        subject: [key],
-      },
-    });
-    router.push("/search");
+    router.push({ pathname: "/search", query: { subject: [key] } });
   };
 
   return (

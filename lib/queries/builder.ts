@@ -1,7 +1,7 @@
 import { buildSearchPart, querySearchTemplate } from "@/lib/queries/search";
 import { ApiSearchRequest } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
-import { UserFacets } from "@/types/context/search-context";
+import { UrlFacets } from "@/types/context/filter-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetPart } from "@/lib/queries/facet";
 
@@ -10,11 +10,11 @@ type BuildQueryProps = {
   aggsFilterValue?: string;
   size?: number;
   term: string;
-  userFacets: UserFacets;
+  urlFacets: UrlFacets;
 };
 
 export function buildQuery(obj: BuildQueryProps) {
-  const { aggs, aggsFilterValue, size, term, userFacets } = obj;
+  const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   let newQuery: ApiSearchRequest = JSON.parse(
     JSON.stringify(querySearchTemplate)
   );
@@ -29,21 +29,21 @@ export function buildQuery(obj: BuildQueryProps) {
   /**
    * Add facets to the API query
    */
-  newQuery = addFacetsToQuery(newQuery, userFacets);
+  newQuery = addFacetsToQuery(newQuery, urlFacets);
 
   /**
    * Add aggregations to the API query
    */
-  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue, userFacets);
+  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue, urlFacets);
 
   return newQuery;
 }
 
 export function addFacetsToQuery(
   query: ApiSearchRequest,
-  userFacets: UserFacets
+  urlFacets: UrlFacets
 ) {
-  for (const [key, value] of Object.entries(userFacets)) {
+  for (const [key, value] of Object.entries(urlFacets)) {
     if (value?.length > 0) {
       query.query.bool.must.push(buildFacetPart(key, value));
     }

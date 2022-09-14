@@ -7,13 +7,14 @@ import {
 import { useEffect, useState } from "react";
 import FacetsCurrentUserValue from "@/components/Facets/UserFacets/Value";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
-import { UserFacets } from "@/types/context/search-context";
+import { UrlFacets } from "@/types/context/filter-context";
 import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
-import { useSearchState } from "@/context/search-context";
+import { useRouter } from "next/router";
 
 interface FacetsCurrentUserProps {
   screen: "modal" | "search";
+  urlFacets?: UrlFacets;
 }
 
 export interface CurrentFacet {
@@ -22,17 +23,19 @@ export interface CurrentFacet {
   value: string;
 }
 
-const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
+const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
+  screen,
+  urlFacets,
+}) => {
   const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
-
-  const { searchDispatch, searchState } = useSearchState();
+  const router = useRouter();
   const { filterDispatch, filterState } = useFilterState();
 
-  let facets: UserFacets | undefined;
+  let facets: UrlFacets | undefined;
 
   switch (screen) {
     case "search":
-      facets = searchState.userFacets;
+      facets = urlFacets;
       break;
     case "modal":
       facets = filterState.userFacetsUnsubmitted;
@@ -52,9 +55,10 @@ const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
       const facet = getFacetById(facetId);
       if (facet) {
         const { id, label } = facet;
-        facetKeys.forEach((value) => {
-          current.push({ id, label, value });
-        });
+        facetKeys &&
+          facetKeys.forEach((value) => {
+            current.push({ id, label, value });
+          });
       }
     }
     setCurrentOptions(current);
@@ -63,14 +67,14 @@ const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
   function handleRemoval(instance: CurrentFacet) {
     if (instance && facets) {
       const { id, value } = instance;
-      const newObj: UserFacets = { ...facets };
+      const newObj: UrlFacets = { ...facets };
 
       newObj[id] = newObj[id].filter((key) => key !== value);
 
       if (screen === "search")
-        searchDispatch({
-          type: "updateUserFacets",
-          userFacets: newObj,
+        router.push({
+          pathname: "/search",
+          query: { ...router.query, ...newObj },
         });
 
       if (screen === "modal")
@@ -83,7 +87,7 @@ const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
   }
 
   /**
-   * If user has no selected facet options, return an empty fragement.
+   * If user has no selected facet options, return an empty fragment.
    */
 
   if (currentOptions.length === 0) return <></>;
@@ -126,4 +130,4 @@ const FacetsUserFacets: React.FC<FacetsCurrentUserProps> = ({ screen }) => {
   );
 };
 
-export default FacetsUserFacets;
+export default FacetsCurrentUser;

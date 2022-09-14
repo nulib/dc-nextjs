@@ -26,7 +26,6 @@ import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import Container from "@/components/Shared/Container";
 import Layout from "components/layout";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 interface CollectionProps {
   collection: CollectionShape | null;
@@ -34,7 +33,6 @@ interface CollectionProps {
 }
 
 const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
-  const { searchDispatch } = useSearchState();
   const router = useRouter();
 
   if (!collection) return null;
@@ -46,13 +44,7 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
     : "";
 
   const handleSearchClick = () => {
-    searchDispatch({
-      type: "updateUserFacets",
-      userFacets: {
-        collection: [title],
-      },
-    });
-    router.push("/search");
+    router.push({ pathname: "/search", query: { collection: [title] } });
   };
 
   return (

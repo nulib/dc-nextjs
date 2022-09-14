@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { IconClear, IconSearch } from "../Shared/SVG/Icons";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -24,12 +24,15 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let query = "";
-    if (searchValue) query = `?q=${encodeURI(searchValue.replace(/ /g, "+"))}`;
-    Router.push(`/search${query}`);
     searchDispatch({
       q: searchValue,
       type: "updateSearch",
+    });
+    router.push({
+      pathname: "/search",
+      query: {
+        q: searchValue,
+      },
     });
   };
 
@@ -40,7 +43,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     setSearchValue(e.target.value);
 
   const clearSearchResults = () => {
-    Router.push(`/search`);
+    router.push(`/search`);
     setSearchValue("");
     if (search.current) search.current.value = "";
   };

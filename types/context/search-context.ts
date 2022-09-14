@@ -1,12 +1,11 @@
-import { ApiResponseAggregation } from "../api/response";
+import { ApiResponseAggregation } from "@/types/api/response";
 
 export interface SearchContextStore {
   aggregations?: ApiResponseAggregation;
   q: string;
-  userFacets: UserFacets;
   searchFixed: boolean;
 }
 
 export interface UserFacets {
-  [key: string]: string[];
+  [key: string]: string[] | undefined;
 }

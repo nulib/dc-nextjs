@@ -1,6 +1,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { render, screen } from "@/test-utils";
+import { act, render, screen } from "@/test-utils";
 import FilterModal from "@/components/Facets/Filter/Modal";
+import mockRouter from "next-router-mock";
+import singletonRouter from "next/router";
 
 jest.mock("@/hooks/useFetchApiData", () => {
   return jest.fn(() => ({
@@ -10,7 +12,15 @@ jest.mock("@/hooks/useFetchApiData", () => {
   }));
 });
 
+jest.mock("next/router", () => require("next-router-mock"));
+// This is needed for mocking 'next/link':
+jest.mock("next/dist/client/router", () => require("next-router-mock"));
+
 describe("FilterModal component while `open`", () => {
+  beforeEach(() => {
+    mockRouter.setCurrentUrl("/search");
+  });
+
   const renderHelper = () =>
     render(
       <Dialog.Root open={true}>
@@ -22,12 +32,19 @@ describe("FilterModal component while `open`", () => {
       </Dialog.Root>
     );
 
-  it("Has text rendering the search query param.", () => {
+  it("Has text rendering the search query param.", async () => {
+    await singletonRouter.push("/search?q=joan");
     renderHelper();
+
     const content = screen.getByTestId("modal-content");
     expect(content).toContainHTML(
       `<em>Results for “<strong>joan</strong>”</em>`
     );
+    expect(singletonRouter).toMatchObject({
+      asPath: "/search?q=joan",
+      pathname: "/search",
+      query: { q: "joan" },
+    });
   });
 
   it("Has cancel button(s) with aria labels of `Cancel`.", () => {
@@ -42,5 +59,27 @@ describe("FilterModal component while `open`", () => {
     renderHelper();
     const submit = screen.getByTestId("facets-submit");
     expect(submit).toHaveTextContent("View Results (20)");
+  });
+
+  it("Updates the url with applied user facets", () => {
+    renderHelper();
+
+    act(() => {
+      // Mimic what the search button would/should do
+      singletonRouter.push({
+        pathname: "/search",
+        query: {
+          foo: "bar",
+        },
+      });
+    });
+
+    expect(singletonRouter).toMatchObject({
+      asPath: "/search?foo=bar",
+      pathname: "/search",
+      query: {
+        foo: "bar",
+      },
+    });
   });
 });
