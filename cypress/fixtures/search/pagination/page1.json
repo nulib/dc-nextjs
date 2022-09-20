@@ -1,0 +1,334 @@
+{
+  "data": [
+    {
+      "accession_number": "BFMF_B03_F19_005_001n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ac987e48-b6a5-4d34-b5e0-1d2006996a44/full/!300,300/0!/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/8d/71/0f/86/-e/c5/4-/43/cf/-9/ec/4-/eb/71/b1/c9/0c/5dD-manifest.json",
+      "work_type": "Image",
+      "id": "8d710f86-ec54-43cf-9ec4-eb71b1c90c5d",
+      "title": "Mimi Farina"
+    },
+    {
+      "accession_number": "BFMF_B19_F11_006_010n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/95b354c0-c03b-4e41-ab7f-429e654159fe/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/75/2c/bc/86/-4/b3/5-/4a/20/-b/06/a-/b8/70/88/c1/64/cc-manifest.json",
+      "work_type": "Image",
+      "id": "752cbc86-4b35-4a20-b06a-b87088c164cc",
+      "title": "Sam Hinton, Richmond Festival of the Arts folk song concert"
+    },
+    {
+      "accession_number": "BFMF_B06_F11_010_020n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3dff9186-99a8-4836-9a08-9e1db0fede05/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/43/89/ed/19/-c/21/a-/46/70/-8/8d/8-/8e/d9/19/72/d9/8f-manifest.json",
+      "work_type": "Image",
+      "id": "4389ed19-c21a-4670-88d8-8ed91972d98f",
+      "title": "Kathy and Carol"
+    },
+    {
+      "accession_number": "BFMF_B33_F05_031",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d673dfb7-505b-4a81-9d77-da01b1ccc5cc/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/ca/90/1f/24/-e/52/6-/48/ef/-9/86/e-/b2/0c/ef/36/2b/2a-manifest.json",
+      "work_type": "Image",
+      "id": "ca901f24-e526-48ef-986e-b20cef362b2a",
+      "title": "'Tiny Alice': Is it a hoax, a curdled brew of mysticism"
+    },
+    {
+      "accession_number": "BFMF_B33_F13_006",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a1e186b9-043a-4e75-af6a-096678d3a2a8/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/e6/4c/63/e6/-d/ff/8-/43/9f/-9/30/f-/08/36/c4/ee/f5/6b-manifest.json",
+      "work_type": "Image",
+      "id": "e64c63e6-dff8-439f-930f-0836c4eef56b",
+      "title": "VITA - Archie Green"
+    },
+    {
+      "accession_number": "BFMF_B31_F04_040",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/46086c41-0fc0-4cc2-b2da-cdbbc0db7ab5/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/f1/8a/02/ba/-4/20/e-/45/94/-a/c4/9-/33/d3/e6/ec/d5/9b-manifest.json",
+      "work_type": "Image",
+      "id": "f18a02ba-420e-4594-ac49-33d3e6ecd59b",
+      "title": "Cowboy singer Slim Critchlow dies in Oakland"
+    },
+    {
+      "accession_number": "BFMF_B05_F08_006",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/812edd1e-e767-4ed3-919d-46d7afe161f8/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/fa/55/da/0d/-8/b3/7-/4f/08/-8/49/1-/a1/a5/32/1e/44/23-manifest.json",
+      "work_type": "Image",
+      "id": "fa55da0d-8b37-4f08-8491-a1a5321e4423",
+      "title": "Roscoe Holcomb"
+    },
+    {
+      "accession_number": "BFMF_B56_F13_010",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/6444cf38-da9a-4f66-8128-a58189ab5613/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/cf/4a/ef/d2/-7/fa/a-/42/ce/-b/89/d-/46/48/9e/c1/19/36-manifest.json",
+      "work_type": "Image",
+      "id": "cf4aefd2-7faa-42ce-b89d-46489ec11936",
+      "title": "Budweiser ad"
+    },
+    {
+      "accession_number": "BFMF_B09_F20_047_024n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/97a8bea4-74d9-4227-91da-1b28f5207d83/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/41/9b/d5/45/-6/1e/f-/45/32/-9/0d/3-/62/3d/d7/5d/5e/26-manifest.json",
+      "work_type": "Image",
+      "id": "419bd545-61ef-4532-90d3-623dd75d5e26",
+      "title": "Jean Redpath"
+    },
+    {
+      "accession_number": "BFMF_B09_F17_009",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/5a843953-83bd-416f-b4b4-92284f9b5c42/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/4e/40/34/4a/-5/d1/2-/43/de/-9/bb/7-/75/c2/16/b0/e6/03-manifest.json",
+      "work_type": "Image",
+      "id": "4e40344a-5d12-43de-9bb7-75c216b0e603",
+      "title": "Pine Valley Boys, El Cerrito Plaza"
+    },
+    {
+      "accession_number": "BFMF_B48_F08_047",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/39802352-ed19-4256-a9f3-eb76ff93ad67/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/b8/94/95/36/-6/71/4-/44/6e/-9/3d/3-/e2/86/60/e7/46/c7-manifest.json",
+      "work_type": "Image",
+      "id": "b8949536-6714-446e-93d3-e28660e746c7",
+      "title": "Memo to Arita Press about ticket printing"
+    },
+    {
+      "accession_number": "BFMF_B45_F02_078",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/05d68a65-aadb-402f-b90c-070a3a2cf612/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/d8/c9/03/dd/-f/02/9-/46/98/-a/c6/b-/00/c3/0d/3c/b2/d3-manifest.json",
+      "work_type": "Image",
+      "id": "d8c903dd-f029-4698-ac6b-00c30d3cb2d3",
+      "title": "Letter from Jane Welch to Barry Olivier"
+    },
+    {
+      "accession_number": "BFMF_B32_F07_047",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7c6523c9-b855-473c-81f9-a252b70268b1/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/fe/27/38/ff/-6/13/6-/46/52/-8/bc/c-/cc/08/aa/a8/4b/b2-manifest.json",
+      "work_type": "Image",
+      "id": "fe2738ff-6136-4652-8bcc-cc08aaa84bb2",
+      "title": "Billy Faier flier"
+    },
+    {
+      "accession_number": "StreamingTestPublic",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/b6/5d/e0/cc/-9/77/6-/44/66/-b/b9/7-/83/64/f9/e7/d3/67-manifest.json",
+      "work_type": "Video",
+      "id": "b65de0cc-9776-4466-bb97-8364f9e7d367",
+      "title": "StreamingTestPublic"
+    },
+    {
+      "accession_number": "BFMF_B46_F16_058",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/f26a2c04-a1d8-4632-83f5-4376968ae030/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/de/86/f4/37/-6/24/6-/4c/ed/-a/b3/8-/a2/ce/34/6a/fa/c5-manifest.json",
+      "work_type": "Image",
+      "id": "de86f437-6246-4ced-ab38-a2ce346afac5",
+      "title": "Critical commentary on the 1967 Berkeley Folk Music Festival"
+    },
+    {
+      "accession_number": "BFMF_B13_F01_022_021n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/66e2843d-5159-4948-b38b-4bac496562db/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/e8/04/de/37/-f/7d/3-/43/7d/-a/b1/7-/5b/53/5c/66/50/ab-manifest.json",
+      "work_type": "Image",
+      "id": "e804de37-f7d3-437d-ab17-5b535c6650ab",
+      "title": "Sam Hinton, UCLA Folk Festival"
+    },
+    {
+      "accession_number": "BFMF_B06_F11_008_008n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/435693a1-3969-42f0-a757-ec98c0042c4f/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/8e/2d/6b/c5/-3/f0/0-/45/d1/-8/80/b-/a4/58/cd/df/0c/1c-manifest.json",
+      "work_type": "Image",
+      "id": "8e2d6bc5-3f00-45d1-880b-a458cddf0c1c",
+      "title": "Kathy, Carol, and Charles"
+    },
+    {
+      "accession_number": "BFMF_B19_F08_008_027n",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/37d8b390-525d-4258-849e-009cddba33be/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/32/44/e1/cb/-d/e4/b-/4b/e3/-a/73/9-/b3/dd/8f/6c/2a/49-manifest.json",
+      "work_type": "Image",
+      "id": "3244e1cb-de4b-4be3-a739-b3dd8f6c2a49",
+      "title": "Clouds"
+    },
+    {
+      "accession_number": "BFMF_B09_F12_029",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/585c22a1-7abf-425c-a15c-d1a7139a4b65/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/0e/35/3a/1d/-4/03/8-/4e/5b/-b/6c/9-/7e/8b/12/df/30/3b-manifest.json",
+      "work_type": "Image",
+      "id": "0e353a1d-4038-4e5b-b6c9-7e8b12df303b",
+      "title": "Caroline and Sandy Paton"
+    },
+    {
+      "accession_number": "Voyager:Lif1849",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a10bc580-4ebe-46d8-91c3-7d4c0535c92c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/2f/d3/4c/54/-b/67/3-/42/51/-b/43/6-/d3/9c/ae/0f/68/27-manifest.json",
+      "work_type": "Image",
+      "id": "2fd34c54-b673-4251-b436-d39cae0f6827",
+      "title": "The Annunciation Altar (total with predella). Predella: presentation in Temple"
+    },
+    {
+      "accession_number": "Voyager:243193",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/21d2e632-1420-4731-8830-04670049cf16/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/82/d1/ca/cb/-0/8c/b-/48/d1/-8/b4/7-/1a/95/be/b3/d4/e6-manifest.json",
+      "work_type": "Image",
+      "id": "82d1cacb-08cb-48d1-8b47-1a95beb3d4e6",
+      "title": "Church of Sao Francisco de Assis. Interior"
+    },
+    {
+      "accession_number": "Voyager:Mvd0652",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/0816716c-d2db-40e2-800d-4c747b5b0ecc/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/a4/bf/61/8f/-9/c9/d-/4a/e5/-9/0c/c-/a5/33/0a/c3/35/01-manifest.json",
+      "work_type": "Image",
+      "id": "a4bf618f-9c9d-4ae5-90cc-a5330ac33501",
+      "title": "Altar of the Holy Sacrament. very close detail of the central pediment surmounted by female allegorical figures"
+    },
+    {
+      "accession_number": "Voyager:159157",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/0df98eb2-f8ac-40ec-b4b8-71176a29367e/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/db/3c/77/ce/-8/46/5-/43/03/-9/c6/6-/55/09/c0/fd/45/13-manifest.json",
+      "work_type": "Image",
+      "id": "db3c77ce-8465-4303-9c66-5509c0fd4513",
+      "title": "Inner Shrine. Exterior: Festival Shrine"
+    },
+    {
+      "accession_number": "Voyager:Lgf0413",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/6fe4735a-a45d-4970-a8df-69e98d21ca2c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/92/52/ea/1e/-2/f8/8-/4d/83/-9/39/e-/c2/0b/77/39/95/82-manifest.json",
+      "work_type": "Image",
+      "id": "9252ea1e-2f88-4d83-939e-c20b77399582",
+      "title": "St. Valentin with Kneeling Donor. Saint and crosier"
+    },
+    {
+      "accession_number": "Voyager:inudilcsmi1116",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25f394-1a7c-447c-8004-6ed1595a460d/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/93/7f/ee/e7/-9/a2/c-/41/9e/-8/83/b-/4a/83/5d/63/23/f4-manifest.json",
+      "work_type": "Image",
+      "id": "937feee7-9a2c-419e-883b-4a835d6323f4",
+      "title": "Coast in Winter"
+    },
+    {
+      "accession_number": "Accession:JR_163_32",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d0314464-4ac1-4266-b14d-ab701b072c53/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/02/45/f0/1c/-e/bf/8-/4d/31/-9/27/8-/cd/a8/13/16/4e/3c-manifest.json",
+      "work_type": "Image",
+      "id": "0245f01c-ebf8-4d31-9278-cda813164e3c",
+      "title": "Intramural football championship"
+    },
+    {
+      "accession_number": "Voyager:Mia2060",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/6040357c-9783-4868-830a-3deeaec70409/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/03/bd/b3/01/-0/fd/d-/46/00/-9/51/6-/df/7c/53/25/48/0d-manifest.json",
+      "work_type": "Image",
+      "id": "03bdb301-0fdd-4600-9516-df7c5325480d",
+      "title": "Jami Mosque (Masjid). Architecture. Close detail: decoration of arcade with inlaid Persian inscriptions"
+    },
+    {
+      "accession_number": "inu-wint-43-2-79-2A",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/32106332-9e1d-4beb-872f-a370e6218624/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/0b/34/c6/19/-e/5d/0-/48/a1/-8/90/9-/b0/40/1d/81/6f/d6-manifest.json",
+      "work_type": "Image",
+      "id": "0b34c619-e5d0-48a1-8909-b0401d816fd6",
+      "title": "Kisumu Market, Kenya"
+    },
+    {
+      "accession_number": "Sull_0536",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/37a27b1d-ea5a-4bbe-b38a-fcd2f5904f25/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/16/87/26/a0/-3/c7/6-/4f/68/-8/38/e-/28/a0/34/7f/40/e5-manifest.json",
+      "work_type": "Image",
+      "id": "168726a0-3c76-4f68-838e-28a0347f40e5",
+      "title": "4603/74, Brickyard"
+    },
+    {
+      "accession_number": "Accession:314827",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/5f8e4223-9bee-4782-b5be-221a8d53780e/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/16/a6/d5/e6/-3/fa/3-/4e/a6/-b/81/2-/9e/ad/a6/ce/0f/1b-manifest.json",
+      "work_type": "Image",
+      "id": "16a6d5e6-3fa3-4ea6-b812-9eada6ce0f1b",
+      "title": "Bhutadamara. View: front"
+    },
+    {
+      "accession_number": "Accession:320275",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a5e1ae54-822d-4cd4-ab54-2abc63fbc4fe/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/1e/63/bd/7e/-9/a4/2-/43/d4/-b/75/2-/af/e9/2e/23/f2/70-manifest.json",
+      "work_type": "Image",
+      "id": "1e63bd7e-9a42-43d4-b752-afe92e23f270",
+      "title": "La Caricature, (1883), cover"
+    },
+    {
+      "accession_number": "Voyager:299097",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/188a4376-8a76-4ecf-87cb-bd33cec86d7c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/36/fe/94/77/-7/12/c-/4b/d9/-9/15/5-/f1/43/e3/b5/9f/20-manifest.json",
+      "work_type": "Image",
+      "id": "36fe9477-712c-4bd9-9155-f143e3b59f20",
+      "title": "Cutting the Rice"
+    },
+    {
+      "accession_number": "0.003196864",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/c4/83/bc/c2/-a/4b/e-/41/75/-a/2d/7-/b2/bc/b1/e2/4d/28-manifest.json",
+      "work_type": "Audio",
+      "id": "c483bcc2-a4be-4175-a2d7-b2bcb1e24d28",
+      "title": null
+    },
+    {
+      "accession_number": "0.635415315",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a76e5b8c-3104-4050-b267-91e56d36add1/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/69/05/e1/a0/-5/a3/4-/46/b7/-b/60/e-/90/d0/81/64/64/ae-manifest.json",
+      "work_type": "Image",
+      "id": "6905e1a0-5a34-46b7-b60e-90d0816464ae",
+      "title": null
+    },
+    {
+      "accession_number": "0.533456561",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a687ef55-9de2-4869-b7f6-6aed003bab5d/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/ed/81/77/ec/-0/bf/3-/45/be/-9/24/e-/a5/90/6a/aa/01/c7-manifest.json",
+      "work_type": "Image",
+      "id": "ed8177ec-0bf3-45be-924e-a5906aaa01c7",
+      "title": null
+    },
+    {
+      "accession_number": "5-23-010",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/a3/44/c1/0a/-c/5b/8-/4d/9a/-b/ee/5-/17/6f/bd/62/24/d7-manifest.json",
+      "work_type": "Audio",
+      "id": "a344c10a-c5b8-4d9a-bee5-176fbd6224d7",
+      "title": null
+    },
+    {
+      "accession_number": "5-23-013",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ba8659de-593e-47f9-aa91-0b0857f2190a/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/42/5c/27/40/-3/19/2-/46/c0/-8/e5/9-/5c/4f/15/09/9f/30-manifest.json",
+      "work_type": "Image",
+      "id": "425c2740-3192-46c0-8e59-5c4f15099f30",
+      "title": null
+    },
+    {
+      "accession_number": "0.219590227",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/58/c7/1f/0e/-0/77/7-/4a/65/-8/fb/d-/d0/b2/e6/40/a5/1b-manifest.json",
+      "work_type": "Video",
+      "id": "58c71f0e-0777-4a65-8fbd-d0b2e640a51b",
+      "title": null
+    },
+    {
+      "accession_number": "0.865461908",
+      "thumbnail": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/a6e7a5a8-7dd5-49d3-8dfb-935bbd11494c/full/!300,300/0/default.jpg",
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/af/d4/0c/d3/-c/e7/d-/4f/c3/-9/ec/3-/54/ed/2e/89/c6/ba-manifest.json",
+      "work_type": "Image",
+      "id": "afd40cd3-ce7d-4fc3-9ec3-54ed2e89c6ba",
+      "title": null
+    },
+    {
+      "accession_number": "0.64960007",
+      "thumbnail": null,
+      "iiif_manifest": "https://iiif.stack.rdc-staging.library.northwestern.edu/public/iiif3/6e/01/49/85/-d/d9/9-/4c/9f/-b/ac/5-/69/77/71/54/3a/99-manifest.json",
+      "work_type": "Audio",
+      "id": "6e014985-dd99-4c9f-bac5-697771543a99",
+      "title": null
+    }
+  ],
+  "pagination": {
+    "query_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA",
+    "current_page": 1,
+    "limit": 40,
+    "offset": 0,
+    "total_hits": 575,
+    "total_pages": 15,
+    "next_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQFgAwBoQB9JCAVwCcBjLeAbRAEMqalUIA7IjsgWzAwUQhFFGEgUkgGZFejDiikYkAF3EqUKgDZZCKgBZ8wHRii3iA7hAoBrIipgAHLAF1CARzKC4icBAjmvrxkqgh0LgC%2BUYS80BhaSGEgVraJbiBS1nJq8CBQGFKMZFpqhBCOGpyJiFFAA&page=2"
+  },
+  "info": {}
+}

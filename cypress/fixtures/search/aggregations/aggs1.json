@@ -1,0 +1,44 @@
+{
+  "data": [],
+  "pagination": {
+    "query_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQBgDQgH0kIBXAJwGMt4BtEAQwqqVQgDsC2SBbMDMkPhRRBIFOIBmBbvTYoJGJABdRSlEoA2WfEoAWPMG3ooNogO4QyAawJKYABywBdfAEcS-OInAQIp79wkygg0TgC%2BEfjc0BgaSCEgFtbxLiASljIq8CBQGBL0JBoq%2BBD2auzxiBFAA",
+    "current_page": 1,
+    "limit": 10,
+    "offset": 0,
+    "total_hits": 575,
+    "total_pages": 58,
+    "next_url": "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search?searchToken=N4IgRg9gJgniBcoDOBLAXgUwQBgDQgH0kIBXAJwGMt4BtEAQwqqVQgDsC2SBbMDMkPhRRBIFOIBmBbvTYoJGJABdRSlEoA2WfEoAWPMG3ooNogO4QyAawJKYABywBdfAEcS-OInAQIp79wkygg0TgC%2BEfjc0BgaSCEgFtbxLiASljIq8CBQGBL0JBoq%2BBD2auzxiBFAA&page=2"
+  },
+  "info": {},
+  "aggregations": {
+    "subject": {
+      "doc_count_error_upper_bound": 5,
+      "sum_other_doc_count": 842,
+      "buckets": [
+        { "key": "Adam", "doc_count": 88 },
+        { "key": "Painting", "doc_count": 80 },
+        { "key": "Berkeley (Calif.)", "doc_count": 12 },
+        { "key": "Buddhist art", "doc_count": 11 },
+        { "key": "Northwestern University (Evanston, Ill.)", "doc_count": 11 },
+        { "key": "Church architecture", "doc_count": 10 },
+        { "key": "Giant panda", "doc_count": 10 },
+        { "key": "Olivier, Barry, 1935-", "doc_count": 10 },
+        { "key": "Illinois--Evanston", "doc_count": 8 },
+        { "key": "19th century", "doc_count": 7 },
+        { "key": "College students", "doc_count": 7 },
+        { "key": "Architecture, Domestic", "doc_count": 6 },
+        {
+          "key": "Berkeley Folk Music Festival (6th : 1963 : Berkeley, Calif.)",
+          "doc_count": 6
+        },
+        { "key": "Hinton, Sam, 1917-2009", "doc_count": 5 },
+        { "key": "Peace movements", "doc_count": 5 },
+        { "key": "San Francisco (Calif.)", "doc_count": 5 },
+        { "key": "San Francisco chronicle", "doc_count": 5 },
+        { "key": "University of California, Berkeley", "doc_count": 5 },
+        { "key": "20th century", "doc_count": 4 },
+        { "key": "Anti-war demonstrations", "doc_count": 4 }
+      ]
+    }
+  }
+}

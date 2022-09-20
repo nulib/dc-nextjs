@@ -23,8 +23,7 @@ type RequestState = {
 const SearchPage: NextPage = () => {
   const size = 40;
   const router = useRouter();
-  const { q, page } = router.query;
-  const [searchTerm, setSearchTerm] = useState<string>(q as string);
+  const { page } = router.query;
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
@@ -34,40 +33,16 @@ const SearchPage: NextPage = () => {
   /**
    * Direct request to the search API endpoint
    */
-  const doSearchRequest = React.useCallback(async () => {
-    try {
-      setRequestState((prevRequestState) => ({
-        ...prevRequestState,
-        loading: true,
-      }));
-      const urlFacets = parseUrlFacets(router.query);
-      const body: ApiSearchRequest = buildQuery({
-        size,
-        term: searchTerm,
-        urlFacets,
-      });
-
-      return axios.post(DC_API_SEARCH_URL, body);
-    } catch (err) {
-      let message;
-      if (err instanceof Error) message = err.message;
-      else message = String(err);
-      console.error("error fetching API data", message);
-      setRequestState({
-        data: null,
-        error: message,
-        loading: false,
-      });
-    }
-  }, [router.query, searchTerm]);
-
-  /**
-   * Handle initial call to get search data
-   */
-  const apiRequest = React.useCallback(
+  useEffect(() => {
     async function doRequest() {
       try {
-        const response = await doSearchRequest();
+        const urlFacets = parseUrlFacets(router.query);
+        const body: ApiSearchRequest = buildQuery({
+          size,
+          term: router.query.q as string,
+          urlFacets,
+        });
+        const response = await axios.post(DC_API_SEARCH_URL, body);
         setRequestState({
           data: response?.data,
           error: "",
@@ -76,38 +51,31 @@ const SearchPage: NextPage = () => {
       } catch (err) {
         handleErrors(err);
       }
-    },
-    [doSearchRequest]
-  );
+    }
+    if (!router.isReady) return;
+    doRequest();
+  }, [router.isReady, router.query]);
 
   /**
    * Pagination request
    */
-  const paginationRequest = React.useCallback(async () => {
-    try {
-      const apiResponse = await doSearchRequest();
-      const url = `${apiResponse?.data?.pagination.query_url}/&page=${page}`;
-      const response = await axios.get(url);
-      setRequestState({
-        data: response.data,
-        error: "",
-        loading: false,
-      });
-    } catch (err) {
-      handleErrors(err);
-    }
-  }, [doSearchRequest, page]);
-
-  /**
-   * Handle decision whether to grab fresh search
-   * data or paginated results data
-   */
   useEffect(() => {
-    if (!router.query) return;
-
-    if (page) paginationRequest();
-    else apiRequest();
-  }, [apiRequest, page, paginationRequest, router.query]);
+    async function doPaginationRequest() {
+      try {
+        const url = `${requestState?.data?.pagination.query_url}/&page=${page}`;
+        const response = await axios.get(url);
+        setRequestState({
+          data: response.data,
+          error: "",
+          loading: false,
+        });
+      } catch (err) {
+        handleErrors(err);
+      }
+    }
+    if (!requestState.data?.pagination.query_url || !page) return;
+    doPaginationRequest();
+  }, [page, requestState.data?.pagination.query_url]);
 
   /**
    * Handle any network errors
@@ -117,7 +85,7 @@ const SearchPage: NextPage = () => {
 
     if (err instanceof Error) message = err.message;
     else message = String(err);
-    console.error("Error getting paginated data", message);
+    console.error("Error getting data", message);
 
     setRequestState((prevState) => ({
       ...prevState,
@@ -125,13 +93,6 @@ const SearchPage: NextPage = () => {
       loading: false,
     }));
   }
-
-  /**
-   * Handle search input change
-   */
-  useEffect(() => {
-    if (searchTerm !== q) setSearchTerm(q as string);
-  }, [q, searchTerm]);
 
   const { data: apiData, error, loading } = requestState;
 
@@ -145,7 +106,9 @@ const SearchPage: NextPage = () => {
       {error && <p>{error}</p>}
       {apiData && (
         <Container containerType="wide">
-          <p>Total hits: {apiData.pagination.total_hits}</p>
+          <p style={{ margin: "0 1rem" }}>
+            Total hits: {apiData.pagination.total_hits}
+          </p>
           <Grid data={apiData.data} info={apiData.info} />
           <Pagination pagination={apiData.pagination} />
         </Container>
