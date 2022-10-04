@@ -1,5 +1,5 @@
 import { sample, shuffle } from "@/lib/utils/array-helpers";
-import { DC_API_SEARCH_IIIF_URL } from "@/lib/constants/endpoints";
+import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { WorkShape } from "@/types/components/works";
 
 export const getRelatedCollections = (work: WorkShape) => {
@@ -17,7 +17,7 @@ export const getRelatedCollections = (work: WorkShape) => {
     related.push(
       ...subjects.map(
         (subject: string) =>
-          `${DC_API_SEARCH_IIIF_URL}?query=subject:"${subject}" AND NOT id:"${work.id}"&collectionLabel=${subject}&collectionSummary=Subject`
+          `${DC_API_SEARCH_URL}?query=subject:"${subject}" AND NOT id:"${work.id}"&collectionLabel=${subject}&collectionSummary=Subject&as=iiif`
       )
     );
   }
@@ -29,7 +29,7 @@ export const getRelatedCollections = (work: WorkShape) => {
     const genre = sample(work?.genre[0].label);
     genre &&
       related.push(
-        `${DC_API_SEARCH_IIIF_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre`
+        `${DC_API_SEARCH_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre&as=iiif`
       );
   }
 
@@ -39,7 +39,7 @@ export const getRelatedCollections = (work: WorkShape) => {
   const type = work?.work_type;
   type &&
     related.push(
-      `${DC_API_SEARCH_IIIF_URL}?query=workType.label.keyword:"${type}" AND NOT id:"${work.id}"&collectionLabel=${type}&collectionSummary=Work Type`
+      `${DC_API_SEARCH_URL}?query=workType.label.keyword:"${type}" AND NOT id:"${work.id}"&collectionLabel=${type}&collectionSummary=Work Type&as=iiif`
     );
 
   /**
@@ -52,7 +52,7 @@ export const getRelatedCollections = (work: WorkShape) => {
    */
   const collection = work?.collection?.title;
   related.unshift(
-    `${DC_API_SEARCH_IIIF_URL}?query=collection.title.keyword:"${collection}" AND NOT id:"${work.id}"&collectionLabel=${collection}&collectionSummary=Collection`
+    `${DC_API_SEARCH_URL}?query=collection.title.keyword:"${collection}" AND NOT id:"${work.id}"&collectionLabel=${collection}&collectionSummary=Collection&as=iiif`
   );
 
   return related;
