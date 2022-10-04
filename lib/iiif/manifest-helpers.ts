@@ -108,7 +108,7 @@ export const getCanvases = async (id: string) => {
 
     return item;
   });
-  return converted;
+  return converted.items;
 };
 
 export const getInfoResponse = (canvas: Canvas) => {
