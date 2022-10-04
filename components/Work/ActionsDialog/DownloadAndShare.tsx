@@ -51,12 +51,16 @@ const DownloadAndShare: React.FC = () => {
           <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
         </EmbedViewer>
 
-        <h3>Download and Embed</h3>
-        <div>
-          {manifest.items.map((item) => (
-            <Item item={item} key={item.id} />
-          ))}
-        </div>
+        {Array.isArray(manifest?.items) && (
+          <>
+            <h3>Download and Embed</h3>
+            <div>
+              {manifest.items.map((item) => (
+                <Item item={item} key={item.id} />
+              ))}
+            </div>
+          </>
+        )}
       </Content>
     </ActionsDialogStyled>
   );
