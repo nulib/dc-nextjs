@@ -11,6 +11,7 @@ import { WorkProvider } from "@/context/work-context";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
+import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
 import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 
@@ -30,7 +31,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
   const related = getRelatedCollections(work);
 
   return (
-    <Layout>
+    <Layout title={work.title}>
       <WorkProvider initialState={{ manifest: manifest, work: work }}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <WorkViewerWrapper manifestId={work.iiif_manifest} />
@@ -58,8 +59,34 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
   const manifest = work ? await buildPres3Manifest(work) : null;
 
+  /**
+   * Add to GTM dataLayer
+   */
+  const creators = work?.creator.map((creator) => creator.label);
+  const contributors = work?.contributor.map(
+    (contributor) => contributor.label
+  );
+  const creatorsContributors = [];
+  if (creators && creators.length > 0) {
+    creatorsContributors.push(...creators);
+  }
+  if (contributors && contributors.length > 0) {
+    creatorsContributors.push(...contributors);
+  }
+
+  const dataLayer = buildDataLayer({
+    adminset: work?.library_unit,
+    collections: work?.collection.title,
+    creatorsContributors,
+    isLoggedIn: false,
+    pageTitle: work?.title || "",
+    rightsStatement: work?.rights_statement.label,
+    subjects: work?.subject.map((subject) => subject.label),
+    visibility: work?.visibility,
+  });
+
   return {
-    props: { manifest, work },
+    props: { dataLayer, manifest, work },
     revalidate: 10, // seconds
   };
 }

@@ -10,6 +10,7 @@ import Layout from "@/components/layout";
 import { NextPage } from "next";
 import { Pagination } from "@/components/Search/Pagination";
 import axios from "axios";
+import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useRouter } from "next/router";
@@ -116,5 +117,15 @@ const SearchPage: NextPage = () => {
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const dataLayer = buildDataLayer({
+    pageTitle: "Search page",
+  });
+
+  return {
+    props: { dataLayer },
+  };
+}
 
 export default SearchPage;
