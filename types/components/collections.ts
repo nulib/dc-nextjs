@@ -12,7 +12,7 @@ export interface CollectionShape {
   published: boolean;
   representative_image: {
     url: string;
-    workId: string;
+    work_id: string;
   };
   title: string;
   visibility: "Institution" | "Private" | "Public";

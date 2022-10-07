@@ -25,7 +25,9 @@ import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import Container from "@/components/Shared/Container";
 import Layout from "components/layout";
+import Script from "next/script";
 import { buildDataLayer } from "@/lib/ga/data-layer";
+import { loadCollectionStructuredData } from "@/lib/json-ld";
 import { useRouter } from "next/router";
 
 interface CollectionProps {
@@ -49,53 +51,69 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
   };
 
   return (
-    <Layout>
-      <Container containerType="wide">
-        <HeroStyled>
-          <HeroContentWrapper>
-            <HeroContent>
-              <h1>{title}</h1>
-              <ItemsLabel>2336 Items</ItemsLabel>
-              <p>{description}</p>
-              <div>
-                <Button isPrimary onClick={handleSearchClick}>
-                  Search Collection
-                </Button>
-                <Button>Browse Collection</Button>
-              </div>
-            </HeroContent>
-          </HeroContentWrapper>
-          <HeroImageStyled
-            css={{
-              backgroundImage: `url(${collectionBgImage})`,
-            }}
-          />
-        </HeroStyled>
-      </Container>
+    <>
+      <Script
+        id="app-ld-json"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            loadCollectionStructuredData(
+              collection,
+              `/colllections/${collection.id}`
+            ),
+            null,
+            "\t"
+          ),
+        }}
+      />
+      <Layout>
+        <Container containerType="wide">
+          <HeroStyled>
+            <HeroContentWrapper>
+              <HeroContent>
+                <h1>{title}</h1>
+                <ItemsLabel>2336 Items</ItemsLabel>
+                <p>{description}</p>
+                <div>
+                  <Button isPrimary onClick={handleSearchClick}>
+                    Search Collection
+                  </Button>
+                  <Button>Browse Collection</Button>
+                </div>
+              </HeroContent>
+            </HeroContentWrapper>
+            <HeroImageStyled
+              css={{
+                backgroundImage: `url(${collectionBgImage})`,
+              }}
+            />
+          </HeroStyled>
+        </Container>
 
-      <Container>
-        <Tabs defaultValue="metadata">
-          <TabsList aria-label="Explore">
-            <TabsTrigger value="explore">
-              <NavTabTitle>Explore</NavTabTitle>
-            </TabsTrigger>
-            <TabsTrigger value="metadata">
-              <NavTabTitle>Subjects</NavTabTitle>
-            </TabsTrigger>
-            <TabsTrigger value="organization">
-              <NavTabTitle>Collection Organization</NavTabTitle>
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="explore">
-            <CollectionTabsExplore />
-          </TabsContent>
-          <TabsContent value="metadata">
-            <CollectionTabsMetadata metadata={metadata} />
-          </TabsContent>
-          <TabsContent value="organization">Yo</TabsContent>
-        </Tabs>
-      </Container>
-    </Layout>
+        <Container>
+          <Tabs defaultValue="metadata">
+            <TabsList aria-label="Explore">
+              <TabsTrigger value="explore">
+                <NavTabTitle>Explore</NavTabTitle>
+              </TabsTrigger>
+              <TabsTrigger value="metadata">
+                <NavTabTitle>Subjects</NavTabTitle>
+              </TabsTrigger>
+              <TabsTrigger value="organization">
+                <NavTabTitle>Collection Organization</NavTabTitle>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="explore">
+              <CollectionTabsExplore />
+            </TabsContent>
+            <TabsContent value="metadata">
+              <CollectionTabsMetadata metadata={metadata} />
+            </TabsContent>
+            <TabsContent value="organization">Yo</TabsContent>
+          </Tabs>
+        </Container>
+      </Layout>
+    </>
   );
 };
 

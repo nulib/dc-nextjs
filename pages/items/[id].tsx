@@ -7,6 +7,7 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
+import Script from "next/script";
 import { WorkProvider } from "@/context/work-context";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
@@ -14,6 +15,7 @@ import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
 import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
+import { loadItemStructuredData } from "@/lib/json-ld";
 
 interface WorkPageProps {
   manifest?: Manifest;
@@ -31,17 +33,30 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
   const related = getRelatedCollections(work);
 
   return (
-    <Layout title={work.title}>
-      <WorkProvider initialState={{ manifest: manifest, work: work }}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <WorkViewerWrapper manifestId={work.iiif_manifest} />
-          <Container>
-            <WorkTopInfo manifest={manifest} work={work} />
-            <RelatedItems collections={related} title="Explore Further" />
-          </Container>
-        </ErrorBoundary>
-      </WorkProvider>
-    </Layout>
+    <>
+      <Script
+        id="app-ld-json"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            loadItemStructuredData(work, `/items/${work.id}`),
+            null,
+            "\t"
+          ),
+        }}
+      />
+      <Layout title={work.title}>
+        <WorkProvider initialState={{ manifest: manifest, work: work }}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            <Container>
+              <WorkTopInfo manifest={manifest} work={work} />
+              <RelatedItems collections={related} title="Explore Further" />
+            </Container>
+          </ErrorBoundary>
+        </WorkProvider>
+      </Layout>
+    </>
   );
 };
 
