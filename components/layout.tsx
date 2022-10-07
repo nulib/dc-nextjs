@@ -9,9 +9,14 @@ export const siteTitle = "Digital Collections v2";
 interface LayoutProps {
   children: React.ReactNode;
   header?: "default" | "hero";
+  title?: string;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  header = "default",
+  title,
+}) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -24,10 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
     <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Learn how to build a personal website using Next.js"
-        />
+        <meta name="description" content="NUL Digital Collections v2" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
@@ -36,6 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ children, header = "default" }) => {
         />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
+        <title>{title}</title>
       </Head>
       <Header isHero={header === "hero"} />
       <main>{children}</main>

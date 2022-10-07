@@ -25,6 +25,7 @@ import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import Container from "@/components/Shared/Container";
 import Layout from "components/layout";
+import { buildDataLayer } from "@/lib/ga/data-layer";
 import { useRouter } from "next/router";
 
 interface CollectionProps {
@@ -116,9 +117,14 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       ? await getMetadataAggs(id as string, "subject.label")
       : null;
 
+  const dataLayer = buildDataLayer({
+    pageTitle: "Homepage",
+  });
+
   return {
     props: {
       collection,
+      dataLayer,
       metadata,
     },
   };

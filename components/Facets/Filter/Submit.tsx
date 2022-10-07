@@ -36,8 +36,6 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
       ...userFacetsUnsubmitted,
     };
 
-    console.log("newQueryObj", newQueryObj);
-
     router.push({
       pathname: "/search",
       query: newQueryObj,

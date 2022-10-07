@@ -1,7 +1,7 @@
 import Container from "@/components/Shared/Container";
 import Layout from "components/layout";
 import { NextPage } from "next";
-import React from "react";
+import { buildDataLayer } from "@/lib/ga/data-layer";
 
 const CollectionList: NextPage = () => {
   return (
@@ -10,5 +10,15 @@ const CollectionList: NextPage = () => {
     </Layout>
   );
 };
+
+export async function getStaticProps() {
+  const dataLayer = buildDataLayer({
+    pageTitle: "Collections page",
+  });
+
+  return {
+    props: { dataLayer },
+  };
+}
 
 export default CollectionList;
