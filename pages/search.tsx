@@ -5,6 +5,7 @@ import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import Facets from "@/components/Facets/Facets";
 import Grid from "@/components/Grid/Grid";
+import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
 import { NextPage } from "next";
@@ -12,6 +13,7 @@ import { Pagination } from "@/components/Search/Pagination";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
+import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useRouter } from "next/router";
 
@@ -98,23 +100,37 @@ const SearchPage: NextPage = () => {
   const { data: apiData, error, loading } = requestState;
 
   return (
-    <Layout data-testid="search-page-wrapper">
-      <Heading as="h1" isHidden>
-        Northwestern
-      </Heading>
-      <Facets />
-      {loading && <p>loading...</p>}
-      {error && <p>{error}</p>}
-      {apiData && (
-        <Container containerType="wide">
-          <p style={{ margin: "0 1rem" }}>
-            Total hits: {apiData.pagination.total_hits}
-          </p>
-          <Grid data={apiData.data} info={apiData.info} />
-          <Pagination pagination={apiData.pagination} />
-        </Container>
-      )}
-    </Layout>
+    <>
+      {/* Google Structured Data via JSON-LD */}
+      <Head>
+        <script
+          key="app-ld-json"
+          id="app-ld-json"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(loadDefaultStructuredData(), null, "\t"),
+          }}
+        />
+      </Head>
+
+      <Layout data-testid="search-page-wrapper">
+        <Heading as="h1" isHidden>
+          Northwestern
+        </Heading>
+        <Facets />
+        {loading && <p>loading...</p>}
+        {error && <p>{error}</p>}
+        {apiData && (
+          <Container containerType="wide">
+            <p style={{ margin: "0 1rem" }}>
+              Total hits: {apiData.pagination.total_hits}
+            </p>
+            <Grid data={apiData.data} info={apiData.info} />
+            <Pagination pagination={apiData.pagination} />
+          </Container>
+        )}
+      </Layout>
+    </>
   );
 };
 

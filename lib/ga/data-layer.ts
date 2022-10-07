@@ -1,10 +1,10 @@
 interface DataLayer {
   adminset?: string;
-  collections?: string;
+  collections?: string | null;
   creatorsContributors?: Array<string>;
   isLoggedIn?: boolean;
   pageTitle: string;
-  rightsStatement?: string;
+  rightsStatement?: string | null;
   subjects?: Array<string>;
   visibility?: string;
 }
