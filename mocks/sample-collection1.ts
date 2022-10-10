@@ -15,7 +15,7 @@ export const sampleCollection1 = {
   published: true,
   representative_image: {
     url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/bdafc6a1-0924-457d-959b-043bda37f2cd",
-    workId: "f75840a5-3bce-4184-b807-6a10d6dceb7c",
+    work_id: "f75840a5-3bce-4184-b807-6a10d6dceb7c",
   },
   title: "Rosenthal Art Slides",
   visibility: "Institution",

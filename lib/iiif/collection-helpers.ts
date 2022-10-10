@@ -10,7 +10,7 @@ export const getRelatedCollections = (work: WorkShape) => {
   /**
    * Append `2` subject based IIIF collections
    */
-  if (work.subject) {
+  if (work.subject.length > 0) {
     const subjects = shuffle([work?.subject.map((s) => s.label)]).filter(
       (label: string, index: number) => index < 2 && label
     );
@@ -25,7 +25,7 @@ export const getRelatedCollections = (work: WorkShape) => {
   /**
    * Append genre based IIIF collection
    */
-  if (work.genre) {
+  if (work.genre.length > 0) {
     const genre = sample(work?.genre[0].label);
     genre &&
       related.push(

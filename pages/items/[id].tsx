@@ -3,6 +3,7 @@ import { getWork, getWorkIds } from "@/lib/work-helpers";
 import Container from "@/components/Shared/Container";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
+import Head from "next/head";
 import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
@@ -14,6 +15,7 @@ import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
 import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
+import { loadItemStructuredData } from "@/lib/json-ld";
 
 interface WorkPageProps {
   manifest?: Manifest;
@@ -31,17 +33,35 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
   const related = getRelatedCollections(work);
 
   return (
-    <Layout title={work.title}>
-      <WorkProvider initialState={{ manifest: manifest, work: work }}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <WorkViewerWrapper manifestId={work.iiif_manifest} />
-          <Container>
-            <WorkTopInfo manifest={manifest} work={work} />
-            <RelatedItems collections={related} title="Explore Further" />
-          </Container>
-        </ErrorBoundary>
-      </WorkProvider>
-    </Layout>
+    <>
+      {/* Google Structured Data via JSON-LD */}
+      <Head>
+        <script
+          key="app-ld-json"
+          id="app-ld-json"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              loadItemStructuredData(work, `/items/${work.id}`),
+              null,
+              "\t"
+            ),
+          }}
+        ></script>
+      </Head>
+
+      <Layout title={work.title}>
+        <WorkProvider initialState={{ manifest: manifest, work: work }}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            <Container>
+              <WorkTopInfo manifest={manifest} work={work} />
+              <RelatedItems collections={related} title="Explore Further" />
+            </Container>
+          </ErrorBoundary>
+        </WorkProvider>
+      </Layout>
+    </>
   );
 };
 
@@ -60,7 +80,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const manifest = work ? await buildPres3Manifest(work) : null;
 
   /**
-   * Add to GTM dataLayer
+   * Add values to GTM's dataLayer object
    */
   const creators = work?.creator.map((creator) => creator.label);
   const contributors = work?.contributor.map(
@@ -73,15 +93,21 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   if (contributors && contributors.length > 0) {
     creatorsContributors.push(...contributors);
   }
+  const subjects =
+    work?.subject && work?.subject.length > 0
+      ? work?.subject.map((subject) => subject.label)
+      : [];
 
   const dataLayer = buildDataLayer({
     adminset: work?.library_unit,
-    collections: work?.collection.title,
+    collections: work?.collection?.title ? work.collection.title : null,
     creatorsContributors,
     isLoggedIn: false,
     pageTitle: work?.title || "",
-    rightsStatement: work?.rights_statement.label,
-    subjects: work?.subject.map((subject) => subject.label),
+    rightsStatement: work?.rights_statement?.label
+      ? work.rights_statement.label
+      : null,
+    subjects,
     visibility: work?.visibility,
   });
 
