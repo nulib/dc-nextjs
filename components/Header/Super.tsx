@@ -1,5 +1,6 @@
 import { Super, User } from "@/components/Header/Header.styled";
 import Container from "../Shared/Container";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
@@ -43,7 +44,7 @@ export default function HeaderSuper() {
             </Link>
           ))}
           {!userAuthContext?.user && (
-            <Link href="/api/auth/login">
+            <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
               <a>Sign in</a>
             </Link>
           )}
