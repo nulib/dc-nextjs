@@ -7,7 +7,7 @@ export const CloverIIIF: React.ComponentType<{
     colors: { [key: string]: string };
     fonts: { [key: string]: string };
   };
-  manifestId: string;
+  id: string;
   options: { [key: string]: boolean | string };
 }> = dynamic(() => import("@samvera/clover-iiif"), {
   ssr: false,
@@ -39,7 +39,9 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
   const options = {
     canvasBackgroundColor: "$black",
     canvasHeight: "640px",
+    renderAbout: false,
     showIIIFBadge: false,
+    showInformationToggle: false,
     showTitle: false,
   };
 
@@ -48,7 +50,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
       {manifestId && (
         <CloverIIIF
           customTheme={customTheme}
-          manifestId={manifestId}
+          id={manifestId}
           options={options}
         />
       )}

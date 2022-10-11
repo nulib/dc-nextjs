@@ -12,7 +12,7 @@ const Heading: React.FC<HeadingProps> = ({
   isHidden = false,
   children,
 }) => (
-  <StyledHeading as={as} isHidden={isHidden}>
+  <StyledHeading as={as} isHidden={isHidden} data-level={as}>
     <>{children}</>
   </StyledHeading>
 );

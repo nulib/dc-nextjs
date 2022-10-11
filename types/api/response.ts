@@ -6,6 +6,11 @@ export interface ApiCollectionResponse {
   data: CollectionShape | null;
 }
 
+export interface ApiCollectionListResponse {
+  data: CollectionShape[] | null;
+  pagination: Pagination;
+}
+
 export interface ApiResponse {
   data: ApiResponseData;
   info: {
