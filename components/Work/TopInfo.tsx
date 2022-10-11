@@ -113,7 +113,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
               title={work.collection?.title}
               description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
               href={`/collections/${work.collection?.id}`}
-              imageUrl={work.thumbnail}
+              imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail`}
               supplementalInfo="678 Works"
             />
           </TopInfoCollection>
