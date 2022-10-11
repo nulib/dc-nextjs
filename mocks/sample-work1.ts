@@ -27,6 +27,7 @@ export const sampleWork1: WorkShape = {
   create_date: "2021-03-16T15:52:00.377715Z",
   creator: [],
   cultural_contexts: [],
+  description: ["Ima description"],
   file_sets: [
     {
       id: "93d75ffe-20d8-48ea-9206-8db9114f2731",

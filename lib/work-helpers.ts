@@ -42,3 +42,11 @@ export async function getWorkIds(): Promise<Array<string>> {
 
   return [];
 }
+
+export function isImageType(work_type: string | undefined) {
+  return work_type === "Image";
+}
+
+export function isPublicWork(visibility: string | undefined) {
+  return visibility === "Public";
+}

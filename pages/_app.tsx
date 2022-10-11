@@ -3,19 +3,29 @@ import { User, UserContextInterface } from "@/types/context/user";
 import { deleteCookie, getCookie } from "cookies-next";
 import type { AppProps } from "next/app";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import Head from "next/head";
+import { ObjectLiteral } from "@/types";
 import React from "react";
 import Script from "next/script";
 import { SearchProvider } from "@/context/search-context";
 import Transition from "@/components/Transition";
 import axios from "axios";
+import { defaultOpenGraphData } from "@/lib/open-graph";
 import globalStyles from "@/styles/global";
 
 export const UserContext = React.createContext<UserContextInterface | null>(
   null
 );
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface MyAppProps extends AppProps {
+  pageProps: ObjectLiteral;
+}
+
+function MyApp({ Component, pageProps }: MyAppProps) {
   globalStyles();
+
+  const { openGraphData = {} } = pageProps;
+  const ogData = { ...defaultOpenGraphData, ...openGraphData };
 
   const [user, setUser] = React.useState<User | null>(null);
 
@@ -41,6 +51,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, []);
 
+  {
+    /** Add GTM (Google Tag Manager) data */
+  }
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       // @ts-ignore
@@ -53,15 +66,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [pageProps]);
 
   const logout = () => {
-    // Remove user from client context
     setUser(null);
-
     // Delete cookie - Maybe move to new /logout API route if we want to delete NUSSO cookie
     deleteCookie(API_TOKEN_COOKIE, { domain: AUTH_DOMAIN });
   };
 
   return (
     <>
+      <Head>
+        {/* Add Open Graph <meta></meta> tags here */}
+        {Object.keys(ogData).map((key) => (
+          // @ts-ignore
+          <meta property={key} content={ogData[key]} key={key} />
+        ))}
+      </Head>
+
       <UserContext.Provider value={{ logout, user }}>
         <Transition>
           <SearchProvider>

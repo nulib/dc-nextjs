@@ -134,15 +134,38 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       ? await getMetadataAggs(id as string, "subject.label")
       : null;
 
+  /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
-    pageTitle: "Homepage",
+    adminset: "",
+    collections: "",
+    creatorsContributors: "",
+    isLoggedIn: false,
+    pageTitle: collection?.title as string,
+    rightsStatement: "",
+    subjects: "",
+    visibility: collection?.visibility,
   });
+
+  /** Populate OpenGraph data */
+  const imageUrl = `${collection?.representative_image.url}/full/600,600/0/default.jpg`;
+  const openGraphData = !collection
+    ? {}
+    : {
+        "og:description": collection.description,
+        "og:image": imageUrl,
+        "og:image:secure_url": imageUrl,
+        "og:site_name": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
+        "og:title": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
+        "og:type": "website",
+        "og:url": `${process.env.DC_URL}/collections/${collection.id}`,
+      };
 
   return {
     props: {
       collection,
       dataLayer,
       metadata,
+      openGraphData,
     },
   };
 }

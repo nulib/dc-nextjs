@@ -1,9 +1,9 @@
 import { CollectionShape } from "@/types/components/collections";
+import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { WorkShape } from "@/types/components/works";
 
 const acquireLicensePage =
   "https://www.library.northwestern.edu/about/administration/policies/rights-permissions.html";
-const productionUrl = "https://digitalcollections.library.northwestern.edu";
 
 /**
  * Load default values for Google Structured Data
@@ -33,7 +33,7 @@ export function loadCollectionStructuredData(
     "@context": "https://schema.org/",
     "@type": "Collection",
     name: collection.title,
-    url: `${productionUrl}${pathname}`,
+    url: `${PRODUCTION_URL}${pathname}`,
     ...(collection.description && { description: collection.description }),
     thumbnail: `${collection.representative_image?.url}/full/!300,300/0/default.jpg`,
   };
@@ -65,7 +65,7 @@ export function loadItemStructuredData(item: WorkShape, pathname: string) {
     image: item.representative_file_set?.url,
     ...(title && { name: title }),
     thumbnail,
-    url: `${productionUrl}${pathname}`,
+    url: `${PRODUCTION_URL}${pathname}`,
     ...(subject.length > 0 && { about: subject?.map((x) => x.label) }),
     acquireLicensePage,
     ...(creator.length > 0 && {

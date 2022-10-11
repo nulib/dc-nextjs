@@ -9,6 +9,7 @@ import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
 import { NextPage } from "next";
+import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { Pagination } from "@/components/Search/Pagination";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
@@ -139,8 +140,12 @@ export async function getStaticProps() {
     pageTitle: "Search page",
   });
 
+  const openGraphData = {
+    "og:url": `${PRODUCTION_URL}/contact`,
+  };
+
   return {
-    props: { dataLayer },
+    props: { dataLayer, openGraphData },
   };
 }
 
