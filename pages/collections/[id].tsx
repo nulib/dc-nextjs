@@ -26,6 +26,7 @@ import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import Container from "@/components/Shared/Container";
 import Head from "next/head";
 import Layout from "components/layout";
+import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 import { useRouter } from "next/router";
@@ -39,7 +40,7 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
   const router = useRouter();
 
   if (!collection) return null;
-  const { description, representative_image, title } = collection;
+  const { description, id, representative_image, title } = collection;
 
   // TODO: Should representative_image.url contain the full path?
   const collectionBgImage = representative_image.url
@@ -47,7 +48,7 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
     : "";
 
   const handleSearchClick = () => {
-    router.push({ pathname: "/search", query: { collection: [title] } });
+    router.push({ pathname: "/search", query: { q: id } });
   };
 
   return (
@@ -58,10 +59,7 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(
-              loadCollectionStructuredData(
-                collection,
-                `/colllections/${collection.id}`
-              ),
+              loadCollectionStructuredData(collection, `/colllections/${id}`),
               null,
               "\t"
             ),
@@ -75,12 +73,11 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
               <HeroContent>
                 <h1>{title}</h1>
                 <ItemsLabel>2336 Items</ItemsLabel>
-                <p>{description}</p>
-                <div>
-                  <Button isPrimary onClick={handleSearchClick}>
-                    Search Collection
-                  </Button>
-                  <Button>Browse Collection</Button>
+
+                <ReadMore text={description} words={40} />
+                <div style={{ paddingTop: "1.5rem" }}>
+                  <Button onClick={handleSearchClick}>Search Collection</Button>
+                  {/* <Button>Browse Collection</Button> */}
                 </div>
               </HeroContent>
             </HeroContentWrapper>

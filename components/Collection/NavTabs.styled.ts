@@ -12,18 +12,25 @@ const StyledTabs = styled(TabsPrimitive.Root, {
 const StyledList = styled(TabsPrimitive.List, {
   flexShrink: 0,
   display: "flex",
+  marginTop: "$gr4",
 });
 
 const StyledTrigger = styled(TabsPrimitive.Trigger, {
-  background: "$black50",
-  color: "$white",
+  background: "$black10",
+  border: "none",
+  color: "$black80",
   cursor: "pointer",
   display: "flex",
+  fontSize: "$gr4",
   flexDirection: "column",
   justifyContent: "flex-end",
-  height: "10rem",
   margin: "0",
   width: "100%",
+
+  "&[data-state='active']": {
+    background: "$purple",
+    color: "$white",
+  },
 });
 
 const StyledContent = styled(TabsPrimitive.Content, {
