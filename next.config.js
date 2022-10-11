@@ -6,7 +6,11 @@ module.exports = {
     NUSSO_BASE_URL: process.env.NUSSO_BASE_URL,
   },
   images: {
-    domains: ["iiif.stack.rdc.library.northwestern.edu"],
+    domains: [
+      "dcapi.rdc.library.northwestern.edu",
+      "dcapi.rdc-staging.library.northwestern.edu",
+      "iiif.stack.rdc.library.northwestern.edu",
+    ],
   },
   reactStrictMode: true,
   swcMinify: false,
