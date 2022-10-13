@@ -4,19 +4,22 @@ import {
 } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
 import { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
 import {
+  EmbedHTML,
+  EmbedHTMLActionRow,
   EmbedViewer,
   ItemActions,
   ItemContent,
+  ItemRow,
   ItemStyled,
   ItemThumbnail,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import CopyText from "@/components/Shared/CopyText";
-
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import React from "react";
 import SharedSocial from "@/components/Shared/Social";
+import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import { getInfoResponse } from "@/lib/iiif/manifest-helpers";
 import { useWorkState } from "@/context/work-context";
 
@@ -67,31 +70,102 @@ const DownloadAndShare: React.FC = () => {
 };
 
 const Item: React.FC<Record<"item", Canvas>> = ({ item }) => {
+  const [embedHTMLOpen, setEmbedHTMLOpen] = React.useState(false);
+  const [color, setColor] = React.useState("default");
+  const [width, setWidth] = React.useState(3000);
+
+  const colors = [
+    {
+      label: "Default",
+      value: "default",
+    },
+    {
+      label: "Bitonal",
+      value: "bitonal",
+    },
+    {
+      label: "Gray",
+      value: "gray",
+    },
+  ];
+
+  const widths = [
+    {
+      label: "3000px - 100%",
+      value: 3000,
+    },
+    {
+      label: "1800px - 50%",
+      value: 1800,
+    },
+    {
+      label: "900px - 25%",
+      value: 900,
+    },
+    {
+      label: "450px - 12.5%",
+      value: 450,
+    },
+  ];
+
+  const embedHTMLString = `<img src="https://iiif.stack.rdc.library.northwestern.edu/iiif/2/017962ae-0cc5-4e1f-899d-ab102aad71b7/full/${width},/0/${color}.jpg" alt="inu-dil-8ab680fc-4940-4c8e-a0bf-96844a27f5a5.tif" />`;
+
   return (
     <ItemStyled>
-      <ItemThumbnail>
-        {item.thumbnail && (
-          <Thumbnail thumbnail={item.thumbnail as IIIFExternalWebResource[]} />
-        )}
-      </ItemThumbnail>
-      <ItemContent>
-        {item.label && <Label label={item.label} as="span" />}
-        <ItemActions>
-          <li>
-            <a
-              href={`${getInfoResponse(item)}/full/1000,/0/default.jpg`}
-              download
-              rel="noreferrer"
-              target="_blank"
-            >
-              Download JPG
-            </a>
-          </li>
-          <li>
-            <a href="">Embed HTML</a>
-          </li>
-        </ItemActions>
-      </ItemContent>
+      <ItemRow>
+        <ItemThumbnail>
+          {item.thumbnail && (
+            <Thumbnail
+              thumbnail={item.thumbnail as IIIFExternalWebResource[]}
+            />
+          )}
+        </ItemThumbnail>
+        <ItemContent>
+          {item.label && <Label label={item.label} as="span" />}
+          <ItemActions>
+            <li>
+              <a
+                href={`${getInfoResponse(item)}/full/1000,/0/default.jpg`}
+                download
+                rel="noreferrer"
+                target="_blank"
+              >
+                Download JPG
+              </a>
+            </li>
+            <li>
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={() => setEmbedHTMLOpen(!embedHTMLOpen)}
+              >
+                Embed HTML
+              </a>
+            </li>
+          </ItemActions>
+        </ItemContent>
+      </ItemRow>
+      {embedHTMLOpen && (
+        <EmbedHTML>
+          <pre>{embedHTMLString}</pre>
+          <EmbedHTMLActionRow>
+            <CopyText textPrompt="Copy" textToCopy={embedHTMLString} />
+            <SimpleSelect onChange={(e) => setWidth(parseInt(e.target.value))}>
+              {widths.map((width) => (
+                <option key={width.value} value={width.value}>
+                  {width.label}
+                </option>
+              ))}
+            </SimpleSelect>
+            <SimpleSelect onChange={(e) => setColor(e.target.value)}>
+              {colors.map((color) => (
+                <option key={color.value} value={color.value}>
+                  {color.label}
+                </option>
+              ))}
+            </SimpleSelect>
+          </EmbedHTMLActionRow>
+        </EmbedHTML>
+      )}
     </ItemStyled>
   );
 };
