@@ -51,7 +51,6 @@ describe("collection structured data", () => {
     expect(obj).toHaveProperty("name");
     expect(obj).toHaveProperty("description");
     expect(obj).toHaveProperty("url");
-    expect(obj).toHaveProperty("thumbnail");
   });
 
   it("does not add empty values", () => {
