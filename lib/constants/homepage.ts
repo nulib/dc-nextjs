@@ -4,21 +4,23 @@ import {
   IIIFExternalWebResource,
   InternationalString,
 } from "@iiif/presentation-3";
+import { DC_URL } from "./endpoints";
 
-export interface HeroCollectionHomepage {
+export interface HeroCollectionWebResource {
   id: string;
   type: "Text";
-  format: string;
-  label: InternationalString;
+  format?: string;
+  label?: InternationalString;
 }
 
 export interface HeroCollectionItem {
   id: string;
   type: "Collection" | "Manifest";
   label: InternationalString;
-  summary: InternationalString;
+  summary?: InternationalString;
   thumbnail: IIIFExternalWebResource[];
-  homepage: HeroCollectionHomepage[];
+  homepage: HeroCollectionWebResource[];
+  seeAlso?: HeroCollectionWebResource[];
   nul_hero_region?: string;
 }
 
@@ -30,7 +32,7 @@ export interface HeroCollection {
   items: HeroCollectionItem[];
 }
 
-export const heroCollection: HeroCollection = {
+export const defaultCollection: HeroCollection = {
   "@context": "http://iiif.io/api/presentation/3/context.json",
   id: "https://devbox.library.northwestern.edu:3000/homepage-hero.json",
   type: "Collection",
@@ -63,10 +65,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/7298fdce-adc1-4501-9e14-9e8bd985e149",
+          id: `${DC_URL}/collections/55ff2504-dd53-4943-b2cb-aeea46e77bc3`,
           type: "Text",
-          label: { none: ["Pantalone classico"] },
-          format: "text/html",
         },
       ],
       nul_hero_region: "210,210,2650,1720",
@@ -96,10 +96,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/7298fdce-adc1-4501-9e14-9e8bd985e149",
+          id: `${DC_URL}/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7`,
           type: "Text",
-          label: { none: ["Pantalone classico"] },
-          format: "text/html",
         },
       ],
     },
@@ -122,10 +120,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/7298fdce-adc1-4501-9e14-9e8bd985e149",
+          id: `${DC_URL}/collections/8cdf83c9-3831-4211-acd7-122bca9b89da`,
           type: "Text",
-          label: { none: ["Pantalone classico"] },
-          format: "text/html",
         },
       ],
     },
@@ -152,10 +148,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/052bb6f0-b6f5-4590-951b-ffdf49ffaf03",
+          id: `${DC_URL}/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd`,
           type: "Text",
-          label: { none: ['Pulcinella "Stronzo" o "Arcigno"'] },
-          format: "text/html",
         },
       ],
     },
@@ -184,10 +178,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/7298fdce-adc1-4501-9e14-9e8bd985e149",
+          id: `${DC_URL}/collections/51d4475f-5a0a-42a4-8901-bde73a1fae99`,
           type: "Text",
-          label: { none: ["Pantalone classico"] },
-          format: "text/html",
         },
       ],
     },
@@ -214,10 +206,8 @@ export const heroCollection: HeroCollection = {
       ],
       homepage: [
         {
-          id: "https://dc.library.northwestern.edu/items/052bb6f0-b6f5-4590-951b-ffdf49ffaf03",
+          id: `${DC_URL}/collections/faf4f60e-78e0-4fbf-96ce-4ca8b4df597a`,
           type: "Text",
-          label: { none: ['Pulcinella "Stronzo" o "Arcigno"'] },
-          format: "text/html",
         },
       ],
       nul_hero_region: "100,450,1600,1200",

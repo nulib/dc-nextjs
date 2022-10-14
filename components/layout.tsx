@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({
   if (!isLoaded) return null;
 
   return (
-    <div>
+    <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="NUL Digital Collections v2" />
@@ -36,7 +36,7 @@ const Layout: React.FC<LayoutProps> = ({
       <main>{children}</main>
       <Footer />
       <Message />
-    </div>
+    </>
   );
 };
 

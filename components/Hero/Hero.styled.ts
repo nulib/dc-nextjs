@@ -1,37 +1,29 @@
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/lazy";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const HeroSlider = styled(Swiper, {});
-
-const HeroSliderItem = styled(SwiperSlide, {});
-
 const HeroStyled = styled("div", {
   position: "absolute",
   width: "100%",
-  height: `calc(100% - $gr5)`,
-  top: "$gr5",
+  height: "calc(100% + 156px)",
+  marginTop: "-156px",
   zIndex: "0",
+  backgroundColor: "$black",
 
   ".swiper": {
     backgroundColor: "transparent",
     width: "100%",
     height: "100%",
+    position: "relative",
 
     ".swiper-wrapper": {
       "&::before": {
         content: "",
         display: "flex",
         width: "100%",
-        height: "100%",
+        height: "300px",
         background:
-          "linear-gradient(173deg, $purple 0%, #4E2A84dd 12%, #0000 31%)",
+          "linear-gradient(173deg, $purple 0%, #4E2A84cc 19%, #0000 61.8%)",
         position: "absolute",
         zIndex: "1",
       },
@@ -57,6 +49,7 @@ const HeroStyled = styled("div", {
         position: "relative",
         margin: "0",
         padding: "0",
+        backgroundColor: "$black",
 
         "&::after": {
           content: "",
@@ -64,7 +57,7 @@ const HeroStyled = styled("div", {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(300deg, #000 0%, #0006 38.2%, #0000 100%)",
+            "linear-gradient(300deg, #000e 0%, #0006 38.2%, #0000 100%)",
           position: "absolute",
           zIndex: "0",
           bottom: "0",
@@ -75,7 +68,7 @@ const HeroStyled = styled("div", {
           display: "flex",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(7deg, #000 0%, #0000 15%)",
+          background: "linear-gradient(7deg, #000e 0%, #0000 61.8%)",
           position: "absolute",
           zIndex: "1",
           bottom: "0",
@@ -89,24 +82,20 @@ const HeroStyled = styled("div", {
           top: "0",
           left: "0",
           objectFit: "cover",
-        },
-
-        ".slide-inner": {
-          justifyContent: "flex-end",
+          opacity: "0.618",
         },
 
         figcaption: {
           position: "absolute",
           zIndex: "1",
-          bottom: "$gr6",
+          bottom: "$gr5",
           color: "$white",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end",
+          alignItems: "flex-start",
           textShadow: "2px 2px 2px #000",
           maxWidth: "$gr11",
-          marginRight: "$gr5",
-          textAlign: "right",
+          textAlign: "left",
 
           ".slide-label": {
             fontFamily: "$displayBold",
@@ -123,9 +112,16 @@ const HeroStyled = styled("div", {
             color: "$black20",
             lineHeight: "1.15em",
           },
+
+          ".slide-see-also": {
+            marginTop: "$gr2",
+            fontSize: "$gr4",
+            textShadow: "none",
+            textTransform: "none",
+          },
         },
       },
     },
   },
 });
-export { HeroSlider, HeroSliderItem, HeroStyled };
+export { HeroStyled };

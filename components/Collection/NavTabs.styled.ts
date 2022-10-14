@@ -3,33 +3,52 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const StyledTabs = styled(TabsPrimitive.Root, {
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-});
+const StyledTabs = styled(TabsPrimitive.Root, {});
 
 const StyledList = styled(TabsPrimitive.List, {
-  flexShrink: 0,
   display: "flex",
-  marginTop: "$gr4",
+  margin: "$gr4 0",
+  borderBottom: "4px solid $gray6",
+  flexGrow: "0",
+  flexShrink: "1",
 });
 
 const StyledTrigger = styled(TabsPrimitive.Trigger, {
-  background: "$black10",
+  background: "$white",
   border: "none",
   color: "$black80",
   cursor: "pointer",
   display: "flex",
   fontSize: "$gr4",
+  fontFamily: "$displayBook",
   flexDirection: "column",
-  justifyContent: "flex-end",
+  justifyContent: "center",
   margin: "0",
-  width: "100%",
+  height: "$gr5",
+  padding: "0 1rem",
+  flexGrow: "0",
+  flexShrink: "1",
+  position: "relative",
+
+  "&::before": {
+    content: "",
+    height: "4px",
+    width: "0 ",
+    backgroundColor: "$gray6",
+    position: "absolute",
+    bottom: "-4px",
+    left: "0",
+    transition: "$all",
+  },
 
   "&[data-state='active']": {
-    background: "$purple",
-    color: "$white",
+    fontFamily: "$displayBold",
+    color: "$purple",
+
+    "&::before": {
+      width: "100% ",
+      backgroundColor: "$purple",
+    },
   },
 });
 
@@ -47,24 +66,8 @@ const StyledContent = styled(TabsPrimitive.Content, {
     cursor: "pointer",
   },
 });
-const NavTab = styled(TabsPrimitive.Trigger, {
-  background: "$black50",
-  color: "$white",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-end",
-  height: "10rem",
-  width: "100%",
-});
-
-const NavTabTitle = styled("span", {
-  display: "inline-block",
-  padding: "1rem",
-});
 
 export {
-  NavTab,
-  NavTabTitle,
   StyledContent as TabsContent,
   StyledList as TabsList,
   StyledTabs as Tabs,

@@ -9,7 +9,7 @@ const SearchStyled = styled("form", {
   flexGrow: "1",
   backgroundColor: "$white",
   height: "$gr5",
-  marginRight: "$4",
+  marginRight: "$gr5",
   boxShadow: "inset 0 -1px 0 #f0f0f0",
 
   svg: {
