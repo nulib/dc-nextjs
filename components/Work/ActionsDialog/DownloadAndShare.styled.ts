@@ -27,6 +27,20 @@ const EmbedViewer = styled("div", {
   },
 });
 
+const EmbedHTML = styled(EmbedViewer, {
+  marginTop: "$gr3",
+  transition: "all 0.5s ease-in-out",
+});
+
+const EmbedHTMLActionRow = styled("div", {
+  display: "flex",
+  alignItems: "center",
+
+  "& select": {
+    marginLeft: "$gr3",
+  },
+});
+
 const ItemActions = styled("ul", {
   display: "flex",
   padding: "0",
@@ -56,6 +70,11 @@ const ItemContent = styled("div", {
   fontWeight: "700",
 });
 
+const ItemRow = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+});
+
 const ItemThumbnail = styled("div", {
   display: "flex",
   width: "100px",
@@ -74,7 +93,17 @@ const ItemThumbnail = styled("div", {
 
 const ItemStyled = styled("div", {
   display: "flex",
+  flexDirection: "column",
   margin: "$4 0 0",
 });
 
-export { EmbedViewer, ItemActions, ItemContent, ItemStyled, ItemThumbnail };
+export {
+  EmbedHTML,
+  EmbedHTMLActionRow,
+  EmbedViewer,
+  ItemActions,
+  ItemContent,
+  ItemRow,
+  ItemStyled,
+  ItemThumbnail,
+};
