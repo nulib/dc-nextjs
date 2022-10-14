@@ -1,5 +1,11 @@
+import {
+  DCAPI_ENDPOINT,
+  DC_API_SEARCH_URL,
+  DC_URL,
+} from "@/lib/constants/endpoints";
 import { sample, shuffle } from "@/lib/utils/array-helpers";
-import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import { CollectionShape } from "@/types/components/collections";
+import { HeroCollection } from "@/lib/constants/homepage";
 import { WorkShape } from "@/types/components/works";
 
 export const getRelatedCollections = (work: WorkShape) => {
@@ -56,4 +62,49 @@ export const getRelatedCollections = (work: WorkShape) => {
   );
 
   return related;
+};
+
+export const getHeroCollection = (collection: CollectionShape) => {
+  const { id, representative_image, title } = collection;
+
+  const thumbnailId = representative_image.url
+    ? `${representative_image.url}/full/1200,/0/default.jpg`
+    : "";
+
+  return {
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    id: "https://devbox.library.northwestern.edu:3000/collection.json",
+    items: [
+      {
+        homepage: [
+          {
+            id: `${DC_URL}/collections/${id}`,
+            type: "Text",
+          },
+        ],
+        id: `${DCAPI_ENDPOINT}`,
+        label: { none: [title] },
+        seeAlso: [
+          {
+            id: `${DC_URL}/search?q=${id}`,
+            type: "Text",
+          },
+        ],
+        thumbnail: [
+          {
+            format: "image/jpeg",
+            height: 1200,
+            id: thumbnailId,
+            type: "Image",
+            width: 1200,
+          },
+        ],
+        type: "Collection",
+      },
+    ],
+    label: {
+      none: [title],
+    },
+    type: "Collection",
+  } as HeroCollection;
 };

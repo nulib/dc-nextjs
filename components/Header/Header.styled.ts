@@ -1,5 +1,6 @@
 import { VariantProps, styled } from "@/stitches.config";
 import { ContainerStyled } from "@/components/Shared/Container";
+import { HeroStyled } from "@/components/Hero/Hero.styled";
 import { NavStyled } from "@/components/Nav/Nav.styled";
 import { SearchStyled } from "@/components/Search/Search.styled";
 
@@ -51,6 +52,7 @@ const Primary = styled("div", {
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
+        padding: "0 $gr3",
       },
     },
 
@@ -63,8 +65,6 @@ const Primary = styled("div", {
       alignItems: "center",
       flexGrow: "0",
     },
-
-    [`& ${SearchStyled}`]: {},
   },
 
   "&[data-search-fixed='true']": {
@@ -83,6 +83,10 @@ const Primary = styled("div", {
       [`& ${NavStyled}`]: {
         width: "0",
         opacity: "0",
+      },
+
+      [`& ${SearchStyled}`]: {
+        marginRight: "0",
       },
     },
   },
@@ -150,6 +154,38 @@ const HeaderStyled = styled("header", {
         [`& ${Primary}`]: {
           [`& ${SearchStyled}, & ${NavStyled}`]: {
             boxShadow: "3px 8px 19px #0003",
+          },
+        },
+
+        [`& ${HeroStyled}`]: {
+          height: `calc(100% - 50px) !important`,
+          top: "50px !important",
+          marginTop: "0 !important",
+
+          ".swiper": {
+            ".swiper-wrapper::before": {
+              background:
+                "linear-gradient(173deg, $purple 0%, #4E2A84dd 12%, #0000 31%)",
+            },
+
+            ".slide-inner": {
+              justifyContent: "flex-end",
+            },
+
+            ".swiper-slide": {
+              figure: {
+                "img, video": {
+                  opacity: "1 !important",
+                },
+
+                figcaption: {
+                  bottom: "$gr6",
+                  alignItems: "flex-end",
+                  marginRight: "$gr5",
+                  textAlign: "right",
+                },
+              },
+            },
           },
         },
       },
