@@ -12,8 +12,9 @@ import { WorkProvider } from "@/context/work-context";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
-import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
+import { buildWorkDataLayer } from "@/lib/ga/data-layer";
+import { buildWorkOpenGraphData } from "@/lib/open-graph";
 import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 import { loadItemStructuredData } from "@/lib/json-ld";
 
@@ -79,41 +80,15 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
   const manifest = work ? await buildPres3Manifest(work) : null;
 
-  /**
-   * Add values to GTM's dataLayer object
-   */
-  const creators = work?.creator.map((creator) => creator.label);
-  const contributors = work?.contributor.map(
-    (contributor) => contributor.label
-  );
-  const creatorsContributors = [];
-  if (creators && creators.length > 0) {
-    creatorsContributors.push(...creators);
-  }
-  if (contributors && contributors.length > 0) {
-    creatorsContributors.push(...contributors);
-  }
-  const subjects =
-    work?.subject && work?.subject.length > 0
-      ? work?.subject.map((subject) => subject.label)
-      : [];
+  /** Add values to GTM's dataLayer object */
+  const dataLayer = work ? buildWorkDataLayer(work) : [];
 
-  const dataLayer = buildDataLayer({
-    adminset: work?.library_unit,
-    collections: work?.collection?.title ? work.collection.title : null,
-    creatorsContributors,
-    isLoggedIn: false,
-    pageTitle: work?.title || "",
-    rightsStatement: work?.rights_statement?.label
-      ? work.rights_statement.label
-      : null,
-    subjects,
-    visibility: work?.visibility,
-  });
+  /** Populate OpenGraph data */
+  const openGraphData = work ? buildWorkOpenGraphData(work) : {};
 
   return {
-    props: { dataLayer, manifest, work },
-    revalidate: 10, // seconds
+    props: { dataLayer, manifest, openGraphData, work },
+    revalidate: 10,
   };
 }
 

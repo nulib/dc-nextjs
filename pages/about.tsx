@@ -2,6 +2,7 @@ import Container from "@/components/Shared/Container";
 import Head from "next/head";
 import Layout from "components/layout";
 import { NextPage } from "next";
+import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { PlaceholderBlock } from "@/components/Shared/PlaceholderBlock.styled";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
@@ -34,8 +35,12 @@ export async function getStaticProps() {
     pageTitle: "About page",
   });
 
+  const openGraphData = {
+    "og:url": `${PRODUCTION_URL}/about`,
+  };
+
   return {
-    props: { dataLayer },
+    props: { dataLayer, openGraphData },
   };
 }
 

@@ -53,6 +53,7 @@ export interface WorkShape {
   create_date: string;
   creator: Array<GenericIdLabel>;
   cultural_contexts: Array<string>;
+  description: Array<string>;
   file_sets: Array<FileSet>;
   folder_names: Array<string>;
   folder_numbers: Array<string>;
