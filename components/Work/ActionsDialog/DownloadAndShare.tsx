@@ -27,7 +27,13 @@ const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
 
-  const embedViewerHTML = `<iframe src=“https://dc.library.northwestern.edu/embedded-viewer/${manifest?.id}” title=“${work?.title}” width=“100%” height=“800”></iframe>`;
+  const embedViewerHTML = manifest?.id
+    ? `<iframe src="${
+        window.location.origin
+      }/embedded-viewer/${encodeURIComponent(manifest.id)}" title="${
+        work?.title
+      }" width="100%" height="800"></iframe>`
+    : "";
 
   if (!manifest || !work) return <></>;
 
@@ -50,7 +56,7 @@ const DownloadAndShare: React.FC = () => {
 
         <h3>Embed Viewer</h3>
         <EmbedViewer>
-          <pre>{embedViewerHTML}</pre>
+          <pre>{embedViewerHTML || "Error creating embed viewer HTML"}</pre>
           <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
         </EmbedViewer>
 
