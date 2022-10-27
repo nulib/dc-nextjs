@@ -8,7 +8,9 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
+import { UserContext } from "@/pages/_app";
 import { WorkProvider } from "@/context/work-context";
+import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
@@ -24,6 +26,8 @@ interface WorkPageProps {
 }
 
 const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
+  const userAuthContext = React.useContext(UserContext);
+
   if (!work || !manifest)
     return (
       <Layout>
@@ -32,6 +36,9 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
     );
 
   const related = getRelatedCollections(work);
+  const isRestricted =
+    work.visibility === "Private" ||
+    (!userAuthContext?.user && work.visibility !== "Public");
 
   return (
     <>
@@ -54,7 +61,14 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
       <Layout title={work.title}>
         <WorkProvider initialState={{ manifest: manifest, work: work }}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            {isRestricted && (
+              <WorkRestrictedDisplay thumbnail={work.thumbnail} />
+            )}
+            {!isRestricted && (
+              <WorkViewerWrapper
+                manifestId={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${work.id}?as=iiif`}
+              />
+            )}
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
               <RelatedItems collections={related} title="Explore Further" />

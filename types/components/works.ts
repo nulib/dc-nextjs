@@ -1,3 +1,10 @@
+export interface Contributor {
+  id: string;
+  label: string;
+  label_with_role: string;
+  role: string;
+}
+
 export interface FileSet {
   id: string;
   label: string;
@@ -14,15 +21,19 @@ type GenericIdLabel = {
   label: string;
 };
 
-export interface Contributor {
+type IdLabelScheme = {
   id: string;
   label: string;
-  label_with_role: string;
-  role: string;
+  scheme: string;
+};
+
+export interface Note {
+  note: string;
+  type: IdLabelScheme;
 }
 
 export interface RelatedUrl {
-  label: string;
+  label: IdLabelScheme;
   url: string;
 }
 
@@ -69,9 +80,9 @@ export interface WorkShape {
   keywords: Array<string>;
   legacy_identifier: Array<string>;
   library_unit: string;
-  license: GenericIdLabel;
+  license: IdLabelScheme;
   modified_date: string;
-  notes: Array<string>;
+  notes: Array<Note>;
   physical_description_material: Array<string>;
   physical_description_size: Array<string>;
   preservation_level: "Level 1" | "Level 2" | "Level 3";

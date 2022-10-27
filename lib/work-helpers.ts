@@ -43,6 +43,19 @@ export async function getWorkIds(): Promise<Array<string>> {
   return [];
 }
 
+export async function getWorkManifest(id: string) {
+  try {
+    const response = await getAPIData({
+      method: "GET",
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}?as=iiif`,
+    });
+    return response;
+  } catch (err) {
+    console.error("Error getting the work", id);
+    return null;
+  }
+}
+
 export function isImageType(work_type: string | undefined) {
   return work_type === "Image";
 }

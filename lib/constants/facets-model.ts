@@ -77,6 +77,11 @@ export const ALL_FACETS: FacetsList = {
       label: "Technique",
     },
     {
+      field: "visibility",
+      id: "visibility",
+      label: "Visibility",
+    },
+    {
       field: "work_type",
       id: "workType",
       label: "Work Type",
@@ -117,6 +122,11 @@ const FACETS_RIGHTS_USAGE: FacetsGroup = {
       field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
+    },
+    {
+      field: "visibility",
+      id: "visibility",
+      label: "Visibility",
     },
   ],
   label: "Rights and Usage",

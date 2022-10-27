@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/favicon.ico" />
         <meta name="description" content="NUL Digital Collections v2" />
         <title>{title}</title>
       </Head>

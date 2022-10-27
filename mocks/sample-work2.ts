@@ -63,6 +63,7 @@ export const sampleWork2: WorkShape = {
   license: {
     id: "foo",
     label: "bar",
+    scheme: "scheme",
   },
   modified_date: "2022-02-24T23:51:12.736078Z",
 
