@@ -4,12 +4,7 @@ import {
   TopInfoContent,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
-import {
-  Label,
-  Metadata,
-  RequiredStatement,
-  Summary,
-} from "@samvera/nectar-iiif";
+import { Label, RequiredStatement, Summary } from "@samvera/nectar-iiif";
 import React, { MouseEvent } from "react";
 import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
@@ -17,6 +12,7 @@ import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled
 import Expand from "@/components/Shared/Expand/Expand";
 import { Manifest } from "@iiif/presentation-3";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
+import WorkMetadata from "@/components/Work/Metadata";
 import { WorkShape } from "@/types/components/works";
 
 interface TopInfoProps {
@@ -93,12 +89,12 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
           close={() => setActionsDialog({ activeDialog: undefined })}
         />
       </header>
-      <Expand initialHeight={600} buttonText="Show More">
+      <Expand initialHeight={900} buttonText="Show More">
         <TopInfoContent>
           <div data-testid="work-top-info-wrapper">
             <DefinitionListWrapper>
               {manifest?.metadata && (
-                <Metadata metadata={manifest.metadata} data-testid="metadata" />
+                <WorkMetadata metadata={manifest.metadata} />
               )}
               {manifest?.requiredStatement && (
                 <RequiredStatement

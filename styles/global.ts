@@ -5,9 +5,13 @@ const defaults = {
     boxSizing: "border-box",
   },
 
-  a: {
-    color: "inherit",
-    textDecoration: "none",
+  "a, a:visited": {
+    color: "$purple",
+    textDecoration: "underline",
+
+    "&:active, &:hover": {
+      color: "$purple120",
+    },
   },
 
   body: {

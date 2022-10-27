@@ -17,6 +17,10 @@ const GridFilter = styled(Dialog.Trigger, {
 const GridItem = styled("div", {
   margin: "0 1rem 0.618rem",
   zIndex: "1",
+
+  a: {
+    textDecoration: "none !important",
+  },
 });
 
 const GridStyled = styled(Masonry, {
