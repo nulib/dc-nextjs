@@ -33,6 +33,11 @@ export interface Subject {
   role: string;
 }
 
+export interface FacetsWorkLink {
+  label: string;
+  param: string;
+}
+
 export interface WorkShape {
   id: string;
   abstract: Array<string>;

@@ -97,6 +97,11 @@ const HeroStyled = styled("div", {
           maxWidth: "$gr11",
           textAlign: "left",
 
+          a: {
+            color: "$white !important",
+            textDecoration: "none",
+          },
+
           ".slide-label": {
             fontFamily: "$displayBold",
             fontSize: "$gr7",

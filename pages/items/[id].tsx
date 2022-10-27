@@ -12,9 +12,9 @@ import { WorkProvider } from "@/context/work-context";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
-import { buildPres3Manifest } from "@/lib/iiif/manifest-helpers";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { buildWorkOpenGraphData } from "@/lib/open-graph";
+import { getIIIFResource } from "@/lib/dc-api";
 import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 import { loadItemStructuredData } from "@/lib/json-ld";
 
@@ -78,7 +78,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
-  const manifest = work ? await buildPres3Manifest(work) : null;
+  const manifest = work ? await getIIIFResource(work.iiif_manifest) : null;
 
   /** Add values to GTM's dataLayer object */
   const dataLayer = work ? buildWorkDataLayer(work) : [];

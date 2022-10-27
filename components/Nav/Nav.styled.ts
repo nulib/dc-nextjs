@@ -7,6 +7,10 @@ const NavStyled = styled("nav", {
   alignItems: "center",
   flexShrink: "1",
   flexGrow: "0",
+
+  a: {
+    textDecoration: "none",
+  },
 });
 
 export { NavStyled };

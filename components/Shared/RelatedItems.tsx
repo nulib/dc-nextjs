@@ -16,9 +16,6 @@ export const BloomIIIF: React.ComponentType<{
 
 const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
   if (collections && collections.length === 0) return <></>;
-
-  console.log(collections);
-
   return (
     <RelatedItemsStyled data-testid="related-items">
       <h2>{title}</h2>

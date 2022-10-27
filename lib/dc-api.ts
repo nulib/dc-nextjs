@@ -23,4 +23,19 @@ async function getAPIData<R>(obj: GetApiParams): Promise<R | undefined> {
   }
 }
 
-export { getAPIData };
+async function getIIIFResource<R>(uri: string): Promise<R | undefined> {
+  try {
+    const response = await fetch(uri, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = (await response.json()) as Promise<R>;
+    return data;
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+  }
+}
+export { getAPIData, getIIIFResource };

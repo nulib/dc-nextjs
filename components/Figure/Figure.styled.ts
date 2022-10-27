@@ -32,7 +32,10 @@ const FigureStyled = styled("figure", {
   color: "transparent",
   width: "100%",
 
-  figcaption: { display: "flex", flexDirection: "column" },
+  figcaption: {
+    display: "flex",
+    flexDirection: "column",
+  },
 
   [`&[data-orientation=horizontal]`]: {
     flexDirection: "row",

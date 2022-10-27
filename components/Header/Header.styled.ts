@@ -12,6 +12,11 @@ const Lockup = styled("div", {
   fontSize: "$gr6",
   fontFamily: "$sansLight",
   zIndex: "1",
+
+  a: {
+    color: "$white !important",
+    textDecoration: "none",
+  },
 });
 
 const PrimaryInner = styled("div", {
@@ -116,6 +121,8 @@ const Super = styled("div", {
 
     a: {
       padding: "0 $gr2",
+      color: "$white !important",
+      textDecoration: "none",
 
       "&:last-child": {
         paddingRight: "0",
