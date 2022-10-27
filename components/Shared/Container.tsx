@@ -1,3 +1,4 @@
+import { maxWidths } from "@/styles/containers";
 import { styled } from "@/stitches.config";
 
 interface ContainerProps {
@@ -34,10 +35,10 @@ export const ContainerStyled = styled("div", {
   variants: {
     containerType: {
       default: {
-        maxWidth: "1120px",
+        maxWidth: maxWidths.default,
       },
       wide: {
-        maxWidth: "1440px",
+        maxWidth: maxWidths.wide,
       },
     },
     isFlex: {
