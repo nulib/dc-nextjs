@@ -52,7 +52,7 @@ export default function HeaderSuper() {
             <>
               <User>{userAuthContext.user.displayName}</User>
               <a
-                onClick={userAuthContext.logout}
+                href={`${DCAPI_ENDPOINT}/auth/logout`}
                 style={{
                   cursor: "pointer",
                   paddingLeft: "8px",

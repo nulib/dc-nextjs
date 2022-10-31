@@ -75,8 +75,6 @@ resource "aws_amplify_app" "dc-next" {
     JWT_TOKEN_SECRET           = var.jwt_token_secret
     NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
     NEXT_PUBLIC_DC_URL         = var.next_public_dc_url
-    NUSSO_API_KEY              = var.nusso_api_key
-    NUSSO_BASE_URL             = var.nusso_base_url
     _LIVE_UPDATES              = "[{ \"name\" : \"Next.js version\", \"pkg\" : \"next-version\", \"type\" : \"internal\", \"version\" : \"latest\" }]"
   }
 }
