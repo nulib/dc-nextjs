@@ -1,21 +1,12 @@
 import {
   FacetsGroup,
+  FacetsInstance,
   FacetsList,
   FacetsListWorkType,
 } from "@/types/components/facets";
 
 export const ALL_FACETS: FacetsList = {
   facets: [
-    {
-      field: "box_name",
-      id: "boxName",
-      label: "Box Name",
-    },
-    {
-      field: "box_number",
-      id: "boxNumber",
-      label: "Box Number",
-    },
     {
       field: "collection.title",
       id: "collection",
@@ -35,16 +26,6 @@ export const ALL_FACETS: FacetsList = {
       field: "genre.label",
       id: "genre",
       label: "Genre",
-    },
-    {
-      field: "folder_name",
-      id: "folderName",
-      label: "Folder Name",
-    },
-    {
-      field: "folder_number",
-      id: "folderNumber",
-      label: "Folder Number",
     },
     {
       field: "library_unit",
@@ -87,6 +68,12 @@ export const ALL_FACETS: FacetsList = {
       label: "Work Type",
     },
   ],
+};
+
+export const DEFAULT_FACET: FacetsInstance = {
+  field: "subject.label",
+  id: "subject",
+  label: "Subject",
 };
 
 export const FACETS_WORK_TYPE: FacetsListWorkType = {
@@ -176,26 +163,6 @@ const FACETS_LOCATION: FacetsGroup = {
       label: "Collection",
     },
     {
-      field: "box_name",
-      id: "boxName",
-      label: "Box Name",
-    },
-    {
-      field: "box_number",
-      id: "boxNumber",
-      label: "Box Number",
-    },
-    {
-      field: "folder_names",
-      id: "folderName",
-      label: "Folder Name",
-    },
-    {
-      field: "folder_numbers",
-      id: "folderNumber",
-      label: "Folder Number",
-    },
-    {
       field: "series",
       id: "series",
       label: "Series",
@@ -205,8 +172,8 @@ const FACETS_LOCATION: FacetsGroup = {
 };
 
 export const FACETS: FacetsGroup[] = [
-  FACETS_CREATOR,
   FACETS_DESCRIPTIVE,
+  FACETS_CREATOR,
   FACETS_LOCATION,
   FACETS_RIGHTS_USAGE,
 ];

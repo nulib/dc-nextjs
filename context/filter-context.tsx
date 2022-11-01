@@ -1,4 +1,5 @@
 import { FilterContextStore, UrlFacets } from "@/types/context/filter-context";
+import { DEFAULT_FACET } from "@/lib/constants/facets-model";
 import { FacetsInstance } from "@/types/components/facets";
 import React from "react";
 
@@ -19,7 +20,7 @@ type FilterProviderProps = {
 };
 
 const defaultState: FilterContextStore = {
-  recentFacet: undefined,
+  recentFacet: DEFAULT_FACET,
   userFacetsUnsubmitted: {},
 };
 

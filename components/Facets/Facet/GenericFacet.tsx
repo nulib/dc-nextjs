@@ -33,7 +33,7 @@ const GenericFacet: React.FC<GenericFacetProps> = ({ facet }) => {
         <IconSearch />
         <FindInput
           aria-label={`Find ${id}`}
-          placeholder={`Find ${id}`}
+          placeholder={`Find ${label}`}
           onChange={(e: ChangeEvent<HTMLInputElement>) => debouncedHandler(e)}
           type="text"
         />

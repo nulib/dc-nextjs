@@ -25,7 +25,7 @@ describe("Facet Option UI component", () => {
 
   it("Renders a facet option with correct label.", () => {
     render(<Option {...mockOption} />);
-    const label = screen.getByLabelText(`Bar`);
+    const label = screen.getByText(`Bar`);
     expect(label).toBeInTheDocument();
   });
 

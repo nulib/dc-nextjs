@@ -9,6 +9,8 @@ const StyledGenericFacet = styled("div", {
 
   [`${StyledHeading}`]: {
     margin: "0 0 1rem",
+    fontFamily: "$displayBold",
+    fontWeight: "400",
   },
 });
 
@@ -33,6 +35,7 @@ const Find = styled("div", {
     position: "relative",
     border: "none",
     backgroundColor: "transparent",
+    fontSize: "$gr3",
     zIndex: "1",
   },
 
@@ -55,11 +58,23 @@ const Find = styled("div", {
 
 const Indicator = styled(Checkbox.Indicator, {
   display: "flex",
-  width: "calc(0.9rem)",
-  height: "calc(0.9rem)",
+  width: "$gr3",
+  height: "$gr3",
   backgroundColor: "$purple",
   margin: "-1px 0 0 -1px",
-  borderRadius: "2px",
+  borderRadius: "3px",
+});
+
+const OptionCount = styled("span", {
+  color: "$black50",
+  marginLeft: "4px",
+  fontFamily: "$sansLight",
+  position: "relative",
+});
+
+const OptionText = styled("span", {
+  color: "$black",
+  fontFamily: "$sansRegular",
 });
 
 const Options = styled("ul", {
@@ -67,21 +82,19 @@ const Options = styled("ul", {
   padding: "0",
 
   li: {
-    margin: "0",
+    margin: "$gr1 0",
     padding: "0",
     listStyle: "none",
-    marginBottom: "0.35rem",
     display: "flex",
-
-    "> span": {
-      display: "block",
-      color: "$black50",
-      marginLeft: "0.25em",
-    },
+    fontSize: "$gr3",
 
     label: {
       cursor: "pointer",
-      color: "$black50",
+      color: "$black",
+      fontFamily: "$sansRegular",
+      lineHeight: "1.382em",
+      flexShrink: "1",
+      flexGrow: "0",
 
       "&:hover, &:focus": {
         color: "$black",
@@ -89,23 +102,27 @@ const Options = styled("ul", {
 
       [`&[data-selected=true]`]: {
         color: "$black",
+        fontFamily: "$sansBold",
         fontWeight: "700",
+
+        [`${OptionCount}`]: {
+          fontWeight: "400",
+        },
       },
     },
 
     button: {
       display: "flex",
-      marginRight: "0.382rem",
-      width: "0.9rem",
-      height: "0.9rem",
+      marginRight: "$gr1",
+      width: "calc(1rem)",
+      height: "calc(1rem)",
       flexGrow: "0",
       flexShrink: "0",
       backgroundColor: "$white",
-      border: "1px solid $black20",
-      marginTop: "3px",
+      border: "1px solid $black10",
       padding: "0",
       cursor: "pointer",
-      borderRadius: "2px",
+      borderRadius: "3px",
       color: "$purple30",
 
       svg: {
@@ -113,7 +130,7 @@ const Options = styled("ul", {
       },
 
       "&:hover, &:focus": {
-        borderColor: "$black50",
+        borderColor: "$black20",
         boxShadow: "2px 2px 5px #0002",
         color: "$white",
       },
@@ -121,4 +138,12 @@ const Options = styled("ul", {
   },
 });
 
-export { Find, FindInput, Indicator, Options, StyledGenericFacet };
+export {
+  Find,
+  FindInput,
+  Indicator,
+  Options,
+  OptionCount,
+  OptionText,
+  StyledGenericFacet,
+};

@@ -98,9 +98,15 @@ const Text = styled("div", {
   overflow: "hidden",
   textOverflow: "ellipsis",
 
+  strong: {
+    fontFamily: "$displayBold",
+    fontWeight: "400",
+  },
+
   span: {
     color: "$black50",
     fontSize: "12px",
+    fontFamily: "$displayBook",
   },
 });
 
@@ -112,6 +118,7 @@ const StyledValue = styled("button", {
   background: "transparent",
   alignItems: "center",
   cursor: "pointer",
+  fontFamily: "$sansRegular",
 
   [`&:hover`]: {
     [`& ${Icon}`]: {

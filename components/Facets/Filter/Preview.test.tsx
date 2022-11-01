@@ -10,7 +10,7 @@ describe("Submit component", () => {
   it("renders the component with heading 3", () => {
     renderHelper();
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
-      "Top Results"
+      "Preview Results"
     );
   });
 

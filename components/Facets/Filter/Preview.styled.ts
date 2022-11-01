@@ -9,6 +9,10 @@ const PreviewItem = styled("li", {
   padding: "0",
   listStyle: "none",
 
+  a: {
+    textDecoration: "none",
+  },
+
   [`& ${Image}`]: {
     width: "81px",
     height: "81px",
@@ -36,6 +40,8 @@ const StyledPreview = styled("div", {
 
   [`& ${StyledHeading}`]: {
     margin: "0.5rem 0 1rem",
+    fontFamily: "$displayBold",
+    fontWeight: "400",
   },
 });
 
