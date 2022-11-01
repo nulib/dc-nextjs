@@ -12,7 +12,7 @@ interface PreviewProps {
 const Preview: React.FC<PreviewProps> = ({ items }) => {
   return (
     <StyledPreview>
-      <Heading as="h3">Top Results</Heading>
+      <Heading as="h3">Preview Results</Heading>
       <PreviewList>
         {items.map((item) => {
           return (

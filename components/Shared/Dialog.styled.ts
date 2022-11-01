@@ -6,7 +6,7 @@ import { styled } from "@/stitches.config";
 const DialogClose = styled(Dialog.Close, {});
 
 const DialogOverlay = styled(Dialog.Overlay, {
-  background: "rgba(0 0 0 / 0.618)",
+  background: "rgba(0 0 0 / 0.382)",
   position: "fixed",
   top: 0,
   left: 0,

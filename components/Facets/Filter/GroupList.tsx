@@ -6,11 +6,13 @@ import {
   GroupContent,
   GroupHeader,
   GroupToggle,
+  GroupToggleIcon,
   ItemContent,
   ItemList,
   ItemToggle,
 } from "@/components/Facets/Filter/GroupList.styled";
 import Facet from "@/components/Facets/Facet/Facet";
+import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { getFacetGroup } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
 
@@ -39,7 +41,12 @@ const FacetsGroupList: React.FC = () => {
           return (
             <Group value={group.label} key={group.label}>
               <GroupHeader>
-                <GroupToggle>{group.label}</GroupToggle>
+                <GroupToggle>
+                  <span>{group.label}</span>
+                  <GroupToggleIcon>
+                    <IconChevronDown />
+                  </GroupToggleIcon>
+                </GroupToggle>
               </GroupHeader>
               <GroupContent>
                 <ItemList>

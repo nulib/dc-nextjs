@@ -123,9 +123,6 @@ const SearchPage: NextPage = () => {
         {error && <p>{error}</p>}
         {apiData && (
           <Container containerType="wide">
-            <p style={{ margin: "0 1rem" }}>
-              Total hits: {apiData.pagination.total_hits}
-            </p>
             <Grid data={apiData.data} info={apiData.info} />
             <Pagination pagination={apiData.pagination} />
           </Container>

@@ -50,17 +50,6 @@ const FilterFloating = styled("div", {
   "&:hover": {
     backgroundColor: "$purple10",
     boxShadow: "2px 2px 5px #0004",
-
-    // [`& ${PopoverToggle}`]: {
-    //   fill: "$purple",
-
-    //   svg: {
-    //     color: "$purple",
-    //     fill: "$purple",
-    //     marginTop: "-2px",
-    //     transform: "rotate(-90deg)",
-    //   },
-    // },
   },
 });
 
@@ -103,16 +92,6 @@ const FilterBody = styled("div", {
   [`& ${ValueWrapper}`]: {
     padding: "0 1rem",
   },
-
-  "&:before": {
-    position: "absolute",
-    display: "block",
-    width: "100%",
-    height: "1px",
-    backgroundColor: "$black10",
-    // content: "",
-    margin: "-1rem 0 0 -1rem",
-  },
 });
 
 const FilterFooter = styled("footer", {
@@ -121,7 +100,6 @@ const FilterFooter = styled("footer", {
   padding: "1rem",
   backgroundColor: "$black10",
   width: "100%",
-  boxShadow: "inset 3px 3px 8px #0001",
   display: "flex",
   justifyContent: "flex-end",
 
@@ -165,6 +143,8 @@ const FilterHeader = styled("header", {
     padding: "0",
     margin: "0",
     color: "$black50",
+    fontFamily: "$displayBold",
+    fontWeight: "400",
   },
 
   em: {
@@ -206,24 +186,39 @@ const FilterHeader = styled("header", {
 });
 
 const FilterContent = styled(Dialog.Content, {
-  width: "calc(100vw - 8rem)",
-  height: "calc(100vh - 8rem)",
+  width: "calc(100vw - ($gr6 * 2))",
+  height: "calc(100vh - ($gr6 * 2))",
   background: "white",
   position: "fixed",
-  top: "4rem",
-  left: "4rem",
+  top: "$gr6",
+  left: "$gr6",
   right: 0,
   bottom: 0,
   overflowY: "auto",
   zIndex: "2",
   borderRadius: "3px",
-  boxShadow: "5px 5px 11px #0002",
+  boxShadow: "5px 5px 11px #0003",
+
+  "@lg": {
+    width: "calc(100vw - ($gr5 * 2))",
+    height: "calc(100vh - ($gr5 * 2))",
+    top: "$gr5",
+    left: "$gr5",
+  },
+
+  "@md": {
+    width: "calc(100vw - ($gr3 * 2))",
+    height: "calc(100vh - ($gr3 * 2))",
+    top: "$gr3",
+    left: "$gr3",
+  },
 
   "@sm": {
-    width: "calc(100vw - 1rem)",
-    height: "calc(100vh - 1rem)",
-    top: "0.5rem",
-    left: "0.5rem",
+    width: "100vw",
+    height: "100vh",
+    top: "0",
+    left: "0",
+    borderRadius: "0",
   },
 });
 
