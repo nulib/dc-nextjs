@@ -1,6 +1,5 @@
 import WorkMetadata, { ValueAsSearchLink } from "@/components/Work/Metadata";
 import { render, screen, within } from "@/test-utils";
-import { DC_URL } from "@/lib/constants/endpoints";
 import { FACETS_WORK_LINK } from "@/lib/constants/works";
 import { MetadataItem } from "@iiif/presentation-3";
 import { manifest } from "@/mocks/sample-work-image";
@@ -30,6 +29,6 @@ describe("WorkMetadata component", () => {
   it("renders metadata value as custom link pattern", () => {
     render(<ValueAsSearchLink param="foo" value="bar" />);
     const link = screen.getByRole("link");
-    expect(link.getAttribute("href")).toBe(`${DC_URL}/search?foo=bar`);
+    expect(link.getAttribute("href")).toContain(`/search?foo=bar`);
   });
 });
