@@ -1,6 +1,6 @@
-import { API_TOKEN_COOKIE, AUTH_DOMAIN } from "@/lib/constants/auth";
 import { User, UserContextInterface } from "@/types/context/user";
-import { deleteCookie, getCookie } from "cookies-next";
+
+import { API_TOKEN_COOKIE } from "@/lib/constants/auth";
 import type { AppProps } from "next/app";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -11,6 +11,7 @@ import { SearchProvider } from "@/context/search-context";
 import Transition from "@/components/Transition";
 import axios from "axios";
 import { defaultOpenGraphData } from "@/lib/open-graph";
+import { getCookie } from "cookies-next";
 import globalStyles from "@/styles/global";
 
 export const UserContext = React.createContext<UserContextInterface | null>(
@@ -65,12 +66,6 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     }
   }, [pageProps]);
 
-  const logout = () => {
-    setUser(null);
-    // Delete cookie - Maybe move to new /logout API route if we want to delete NUSSO cookie
-    deleteCookie(API_TOKEN_COOKIE, { domain: AUTH_DOMAIN });
-  };
-
   return (
     <>
       <Head>
@@ -81,7 +76,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         ))}
       </Head>
 
-      <UserContext.Provider value={{ logout, user }}>
+      <UserContext.Provider value={{ user }}>
         <Transition>
           <SearchProvider>
             <Script id="google-tag-manager" strategy="afterInteractive">

@@ -4,7 +4,6 @@ export interface User {
 }
 
 export interface UserContextInterface {
-  logout: () => void;
   user: User | null;
 }
 
