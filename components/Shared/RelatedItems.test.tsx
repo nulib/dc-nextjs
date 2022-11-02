@@ -4,7 +4,7 @@ import RelatedItems, {
 import { render, screen, waitFor } from "@/test-utils";
 
 const props: RelatedItemsProps = {
-  collections: ["http://localhost:3000/something.json"],
+  collectionUris: ["http://localhost:3000/something.json"],
   title: "Explore Further",
 };
 

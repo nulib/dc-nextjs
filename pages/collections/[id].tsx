@@ -9,12 +9,14 @@ import {
   getCollection,
   getCollectionIds,
   getMetadataAggs,
+  getTopMetadataAggs,
 } from "@/lib/collection-helpers";
 import { ApiResponseBucket } from "@/types/api/response";
 import { CollectionShape } from "@/types/components/collections";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import Container from "@/components/Shared/Container";
+import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
 import Head from "next/head";
 import Hero from "@/components/Hero/Hero";
 import { HeroWrapper } from "@/components/Collection/Collection.styled";
@@ -22,14 +24,18 @@ import Layout from "components/layout";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
-// import { useRouter } from "next/router";
 
 interface CollectionProps {
   collection: CollectionShape | null;
   metadata: ApiResponseBucket[];
+  topMetadata: GetTopMetadataAggsReturn[] | [];
 }
 
-const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
+const Collection: NextPage<CollectionProps> = ({
+  collection,
+  metadata,
+  topMetadata,
+}) => {
   if (!collection) return null;
 
   const { description, id } = collection;
@@ -63,7 +69,11 @@ const Collection: NextPage<CollectionProps> = ({ collection, metadata }) => {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="explore">
-              <CollectionTabsExplore description={description} />
+              <CollectionTabsExplore
+                collectionId={id}
+                description={description}
+                topMetadata={topMetadata}
+              />
             </TabsContent>
             <TabsContent value="metadata">
               <CollectionTabsMetadata metadata={metadata} />
@@ -92,6 +102,15 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const metadata =
     id && collection
       ? await getMetadataAggs(id as string, "subject.label")
+      : null;
+
+  /** Get some data to build out "About" slider content for the Explore tab */
+  const topMetadata =
+    id && collection
+      ? await getTopMetadataAggs({
+          collectionId: id as string,
+          metadataFields: ["subject.label", "genre.label"],
+        })
       : null;
 
   /** Add values to GTM's dataLayer object */
@@ -126,6 +145,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       dataLayer,
       metadata,
       openGraphData,
+      topMetadata,
     },
   };
 }

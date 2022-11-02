@@ -3,8 +3,10 @@ import {
   ApiCollectionResponse,
   ApiSearchResponse,
 } from "@/types/api/response";
+import { Aggs } from "@/types/api/request";
 import { CollectionShape } from "@/types/components/collections";
 import { getAPIData } from "@/lib/dc-api";
+import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getCollection(
   id: string
@@ -81,7 +83,7 @@ export async function getCollectionIds(): Promise<Array<string>> {
   }
 }
 
-export async function getMetadataAggs(id: string, field: string) {
+export async function getMetadataAggs(collectionId: string, field: string) {
   const body = {
     _source: ["id"],
     aggs: {
@@ -100,7 +102,7 @@ export async function getMetadataAggs(id: string, field: string) {
         must: [
           {
             match: {
-              "collection.id": id,
+              "collection.id": collectionId,
             },
           },
         ],
@@ -121,5 +123,69 @@ export async function getMetadataAggs(id: string, field: string) {
     return null;
   } catch (err) {
     console.error("Error getting Collection subjects", err);
+  }
+}
+
+type GetTopMetadataAggsParams = {
+  collectionId: string;
+  metadataFields: string[];
+};
+export type GetTopMetadataAggsReturn = {
+  field: string;
+  value: string[] | [];
+};
+
+export async function getTopMetadataAggs({
+  collectionId,
+  metadataFields,
+}: GetTopMetadataAggsParams): Promise<GetTopMetadataAggsReturn[] | []> {
+  if (!collectionId || !metadataFields) return [];
+
+  const aggs: Aggs = {};
+
+  metadataFields.forEach((field) => {
+    aggs[field] = {
+      terms: {
+        field,
+        size: 10,
+      },
+    };
+  });
+
+  const body = {
+    aggs,
+    query: {
+      bool: {
+        must: [
+          {
+            match: {
+              "collection.id": collectionId,
+            },
+          },
+        ],
+      },
+    },
+    size: 0,
+  };
+
+  try {
+    const topMetadata = [];
+    const response = await getAPIData<ApiSearchResponse>({
+      body,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+    });
+
+    if (response?.aggregations) {
+      for (const [key, value] of Object.entries(response?.aggregations)) {
+        topMetadata.push({
+          field: key,
+          value: shuffle(value.buckets.map((bucket) => bucket.key)).slice(0, 3),
+        });
+      }
+    }
+    return topMetadata;
+  } catch (err) {
+    console.error("Error getting Collection subjects", err);
+    return [];
   }
 }

@@ -54,12 +54,12 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
 
 const StyledContent = styled(TabsPrimitive.Content, {
   flexGrow: 1,
-  padding: "$2 0",
+  padding: "$2 $1",
   backgroundColor: "white",
   borderBottomLeftRadius: 6,
   borderBottomRightRadius: 6,
   outline: "none",
-  "&:focus": { boxShadow: `0 0 0 2px black` },
+  "&:focus": { boxShadow: `0 0 0 2px #f0f0f0` },
 
   "& a": {
     color: "$purple",
