@@ -4,7 +4,7 @@ import { RelatedItemsStyled } from "@/components/Shared/RelatedItems.styled";
 import dynamic from "next/dynamic";
 
 export interface RelatedItemsProps {
-  collections?: string[];
+  collectionUris?: string[];
   title: string;
 }
 
@@ -14,16 +14,18 @@ export const BloomIIIF: React.ComponentType<{
   ssr: false,
 });
 
-const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
-  if (collections && collections.length === 0) return <></>;
+const RelatedItems: React.FC<RelatedItemsProps> = ({
+  collectionUris,
+  title,
+}) => {
+  if (collectionUris?.length === 0) return <></>;
   return (
     <RelatedItemsStyled data-testid="related-items">
       <h2>{title}</h2>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {collections &&
-          collections.map((collectionId) => (
-            <BloomIIIF collectionId={collectionId} key={collectionId} />
-          ))}
+        {collectionUris?.map((collectionId) => (
+          <BloomIIIF collectionId={collectionId} key={collectionId} />
+        ))}
       </ErrorBoundary>
     </RelatedItemsStyled>
   );

@@ -3,7 +3,7 @@ export interface Agg {
     field: string;
     exclude?: string[] | string;
     include?: string[] | string;
-    order: {
+    order?: {
       _count: string;
     };
     size: number;

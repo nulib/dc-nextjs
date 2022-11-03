@@ -71,7 +71,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
             )}
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
-              <RelatedItems collections={related} title="Explore Further" />
+              <RelatedItems collectionUris={related} title="Explore Further" />
             </Container>
           </ErrorBoundary>
         </WorkProvider>
@@ -102,7 +102,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
   return {
     props: { dataLayer, manifest, openGraphData, work },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }
 

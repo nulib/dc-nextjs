@@ -25,19 +25,16 @@ const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
       <Announcement data-testid="announcement">
         <h2>Authentication needed</h2>
         <p>
-          This Work requires Northwestern University NetID authentication or has
-          restricted access.
-        </p>
-        <p>
+          This Work requires Northwestern University NetID authentication.
           Please{" "}
           <a style={{ cursor: "pointer" }} onClick={handleScrollToTop}>
             sign in
           </a>{" "}
-          or email{" "}
-          <a href="mailto:repository@northwestern.edu">
-            repository@northwestern.edu
-          </a>{" "}
-          to request access to this work.
+        </p>
+        <p>
+          If you are not a member of the Northwestern Community, you can{" "}
+          <a href="mailto:repository@northwestern.edu">request access</a>.
+          Please include a short description of your research needs.
         </p>
       </Announcement>
     </div>
