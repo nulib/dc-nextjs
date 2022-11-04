@@ -65,9 +65,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
               <WorkRestrictedDisplay thumbnail={work.thumbnail} />
             )}
             {!isRestricted && (
-              <WorkViewerWrapper
-                manifestId={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${work.id}?as=iiif`}
-              />
+              <WorkViewerWrapper manifestId={work.iiif_manifest} />
             )}
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
