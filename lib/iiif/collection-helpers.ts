@@ -19,34 +19,25 @@ export const getRelatedCollections = (work: WorkShape) => {
   if (work.subject.length > 0) {
     const subjects = shuffle([work?.subject.map((s) => s.label)]).filter(
       (label: string, index: number) => index < 2 && label
-    );
-    related.push(
-      ...subjects.map(
-        (subject: string) =>
-          `${DC_API_SEARCH_URL}?query=subject:"${subject}" AND NOT id:"${work.id}"&collectionLabel=${subject}&collectionSummary=Subject&as=iiif`
-      )
-    );
+    )[0];
+
+    subjects.forEach((subject: string) => {
+      related.push(
+        `${DC_API_SEARCH_URL}?query=subject.label:"${subject}"&collectionLabel=${subject}&collectionSummary=Subject&as=iiif`
+      );
+    });
   }
 
   /**
    * Append genre based IIIF collection
    */
   if (work.genre.length > 0) {
-    const genre = sample(work?.genre[0].label);
+    const genre = sample(work?.genre);
     genre &&
       related.push(
-        `${DC_API_SEARCH_URL}?query=descriptiveMetadata.genre.term.label.keyword:"${genre}" AND NOT id:"${work.id}"&collectionLabel=${genre}&collectionSummary=Genre&as=iiif`
+        `${DC_API_SEARCH_URL}?query=genre.label:"${genre.label}"&collectionLabel=${genre.label}&collectionSummary=Genre&as=iiif`
       );
   }
-
-  /**
-   * Append work type IIIF collection
-   */
-  const type = work?.work_type;
-  type &&
-    related.push(
-      `${DC_API_SEARCH_URL}?query=workType.label.keyword:"${type}" AND NOT id:"${work.id}"&collectionLabel=${type}&collectionSummary=Work Type&as=iiif`
-    );
 
   /**
    * Add some variance and shuffle the deck
@@ -58,7 +49,15 @@ export const getRelatedCollections = (work: WorkShape) => {
    */
   const collection = work?.collection?.title;
   related.unshift(
-    `${DC_API_SEARCH_URL}?query=collection.title.keyword:"${collection}" AND NOT id:"${work.id}"&collectionLabel=${collection}&collectionSummary=Collection&as=iiif`
+    `${DC_API_SEARCH_URL}?query=collection.title.keyword:"${collection}"&collectionLabel=${collection}&collectionSummary=Collection&as=iiif`
+  );
+
+  /**
+   * Add "More Like This" similar slider to top of related array
+   */
+  const similarLabel = `Similar to ${work.title}`;
+  related.unshift(
+    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${similarLabel}&as=iiif`
   );
 
   return related;
