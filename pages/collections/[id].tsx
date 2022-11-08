@@ -1,3 +1,7 @@
+import type {
+  GenericAggsReturn,
+  GetTopMetadataAggsReturn,
+} from "@/lib/collection-helpers";
 import { GetStaticPropsContext, NextPage } from "next";
 import {
   Tabs,
@@ -15,8 +19,8 @@ import { ApiResponseBucket } from "@/types/api/response";
 import { CollectionShape } from "@/types/components/collections";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
+import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
 import Container from "@/components/Shared/Container";
-import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
 import Head from "next/head";
 import Hero from "@/components/Hero/Hero";
 import { HeroWrapper } from "@/components/Collection/Collection.styled";
@@ -29,12 +33,14 @@ interface CollectionProps {
   collection: CollectionShape | null;
   metadata: ApiResponseBucket[];
   topMetadata: GetTopMetadataAggsReturn[] | [];
+  series: GenericAggsReturn[];
 }
 
 const Collection: NextPage<CollectionProps> = ({
   collection,
   metadata,
   topMetadata,
+  series,
 }) => {
   if (!collection) return null;
 
@@ -78,7 +84,9 @@ const Collection: NextPage<CollectionProps> = ({
             <TabsContent value="metadata">
               <CollectionTabsMetadata metadata={metadata} />
             </TabsContent>
-            <TabsContent value="organization"></TabsContent>
+            <TabsContent value="organization">
+              <CollectionTabsOrganization collectionId={id} series={series} />
+            </TabsContent>
           </Tabs>
         </Container>
       </Layout>
@@ -113,6 +121,9 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
         })
       : null;
 
+  const series =
+    id && collection ? await getMetadataAggs(id as string, "series") : null;
+
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
     adminset: "",
@@ -145,6 +156,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       dataLayer,
       metadata,
       openGraphData,
+      series,
       topMetadata,
     },
   };

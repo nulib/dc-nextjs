@@ -87,7 +87,7 @@ export async function getMetadataAggs(collectionId: string, field: string) {
   const body = {
     _source: ["id"],
     aggs: {
-      collectionSubjects: {
+      collectionMetadata: {
         terms: {
           field: field,
           order: {
@@ -118,7 +118,7 @@ export async function getMetadataAggs(collectionId: string, field: string) {
     });
 
     if (response?.aggregations) {
-      return response.aggregations.collectionSubjects.buckets;
+      return response.aggregations.collectionMetadata.buckets;
     }
     return null;
   } catch (err) {
@@ -126,10 +126,16 @@ export async function getMetadataAggs(collectionId: string, field: string) {
   }
 }
 
+export type GenericAggsReturn = {
+  key: string;
+  doc_count: number;
+};
+
 type GetTopMetadataAggsParams = {
   collectionId: string;
   metadataFields: string[];
 };
+
 export type GetTopMetadataAggsReturn = {
   field: string;
   value: string[] | [];
