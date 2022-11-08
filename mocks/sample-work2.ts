@@ -3,7 +3,7 @@ import { WorkShape } from "@/types/components/works";
 export const sampleWork2: WorkShape = {
   abstract: [],
   accession_number: "Accession:JR_049_12",
-  alternate_titles: [],
+  alternate_title: [],
   api_link:
     "https://dcapi.stack.rdc-staging.library.northwestern.edu/api/v2/works/c16029ff-d027-496a-98b7-6f259395a8f7",
   api_model: "Work",
@@ -26,18 +26,22 @@ export const sampleWork2: WorkShape = {
   ],
   create_date: "2021-03-16T15:52:00.377715Z",
   creator: [],
-  cultural_contexts: [],
+  cultural_context: [],
   description: ["Ima cool description"],
   file_sets: [
     {
+      height: 1000,
       id: "93d75ffe-20d8-48ea-9206-8db9114f2731",
       label: "inu-dil-50575a78-a47a-4a07-939f-6e1d6a9d7065.tif",
       mime_type: "audio",
+      original_filename: "hey hey",
       poster_offset: 1000,
-      rank: "",
+      rank: 10,
       representative_image_url: "http://foo.bar",
       role: "",
       streaming_url: null,
+      webvtt: null,
+      width: 1000,
     },
   ],
   folder_names: [],
@@ -78,7 +82,7 @@ export const sampleWork2: WorkShape = {
   related_material: [],
   related_url: [],
   representative_file_set: {
-    fileSetId: "93d75ffe-20d8-48ea-9206-8db9114f2731",
+    id: "93d75ffe-20d8-48ea-9206-8db9114f2731",
     url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731",
   },
   rights_holder: [],

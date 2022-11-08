@@ -6,6 +6,7 @@ import { styled } from "@/stitches.config";
 
 const AnnouncementStyled = styled("section", {
   background: "$purple10",
+  color: "$black80",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -28,8 +29,13 @@ const AnnouncementStyled = styled("section", {
 });
 
 const ContentWrapper = styled("div", {
+  fontSize: "$gr4",
   maxWidth: maxWidths.default,
   width: "100%",
+
+  "& p": {
+    lineHeight: "1.55em",
+  },
 });
 
 interface AnnouncementProps {

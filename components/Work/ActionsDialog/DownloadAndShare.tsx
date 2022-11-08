@@ -21,11 +21,14 @@ import React from "react";
 import SharedSocial from "@/components/Shared/Social";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import { getInfoResponse } from "@/lib/iiif/manifest-helpers";
+import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
 
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
+  const router = useRouter();
+  const isSharedLinkPage = router.pathname.includes("/shared");
 
   const embedViewerHTML = manifest?.id
     ? `<iframe src="${
@@ -43,16 +46,18 @@ const DownloadAndShare: React.FC = () => {
         <SharedSocial />
       </ActionsDialogAside>
       <Content>
-        <DefinitionListWrapper>
-          <dl>
-            <dt>IIIF Manifest</dt>
-            <dd>
-              <a href={manifest.id} target="_blank" rel="noreferrer">
-                {manifest.id}
-              </a>
-            </dd>
-          </dl>
-        </DefinitionListWrapper>
+        {!isSharedLinkPage && (
+          <DefinitionListWrapper>
+            <dl>
+              <dt>IIIF Manifest</dt>
+              <dd>
+                <a href={manifest.id} target="_blank" rel="noreferrer">
+                  {manifest.id}
+                </a>
+              </dd>
+            </dl>
+          </DefinitionListWrapper>
+        )}
 
         <h3>Embed Viewer</h3>
         <EmbedViewer>
