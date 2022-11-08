@@ -1,4 +1,3 @@
-import { StyledCopyText } from "@/components/Shared/CopyText.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -7,16 +6,6 @@ const EmbedViewer = styled("div", {
   border: "2px dashed $black10",
   width: "calc(100% - $4)",
   padding: "$3 $4",
-
-  [`& ${StyledCopyText}`]: {
-    display: "flex",
-    backgroundColor: "transparent",
-    border: "none",
-    cursor: "pointer",
-    color: "$purple",
-    fontWeight: "700",
-    fontSize: "$3",
-  },
 
   pre: {
     margin: "$3 0",

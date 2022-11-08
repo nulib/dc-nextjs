@@ -27,18 +27,27 @@ describe("WorkDialogCite", () => {
     const div = screen.getByTestId("metadata");
 
     // <dt>s
-    expect(within(div).getByText(/IDENTIFIER/i));
-    expect(within(div).getAllByText(/title/i));
-    expect(within(div).getByText(/USE STATEMENT/i));
-    expect(within(div).getAllByText(/ark/i));
-    expect(within(div).getByText(/apa format/i));
-    expect(within(div).getByText(/chicago\/turabian format/i));
-    expect(within(div).getByText(/mla format/i));
-    expect(within(div).getByText(/wiki citation/i));
+    expect(within(div).getByText(/IDENTIFIER/i, { exact: false }));
+    expect(within(div).getAllByText(/title/i, { exact: false }));
+    expect(within(div).getByText(/USE STATEMENT/i, { exact: false }));
+    expect(within(div).getAllByText(/ark/i, { exact: false }));
+    expect(within(div).getByText(/apa format/i, { exact: false }));
+    expect(
+      within(div).getByText(/chicago\/turabian format/i, { exact: false })
+    );
+    expect(within(div).getByText(/mla format/i, { exact: false }));
+    expect(within(div).getByText(/wiki citation/i, { exact: false }));
 
-    // <dl>s
+    // <dd>s
     metadataValues.forEach((value) => {
-      expect(within(div).getByText(value));
+      expect(
+        within(div).getAllByText(value, { exact: false }).length
+      ).toBeGreaterThan(0);
     });
+  });
+
+  it("renders copy links for all metadata", () => {
+    setup();
+    expect(screen.getAllByText(/copy/i).length).toEqual(8);
   });
 });
