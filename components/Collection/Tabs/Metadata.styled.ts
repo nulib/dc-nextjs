@@ -13,7 +13,8 @@ const GroupedList = styled("ul", {
   padding: 0,
 
   "& li": {
-    paddingBottom: "$1",
+    paddingBottom: "$gr2",
+    fontSize: "$gr4",
   },
 });
 

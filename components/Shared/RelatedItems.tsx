@@ -1,11 +1,12 @@
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
+import Heading from "@/components/Heading/Heading";
 import { RelatedItemsStyled } from "@/components/Shared/RelatedItems.styled";
 import dynamic from "next/dynamic";
 
 export interface RelatedItemsProps {
   collectionUris?: string[];
-  title: string;
+  title?: string;
 }
 
 export const BloomIIIF: React.ComponentType<{
@@ -21,7 +22,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
   if (collectionUris?.length === 0) return <></>;
   return (
     <RelatedItemsStyled data-testid="related-items">
-      <h2>{title}</h2>
+      {title && <Heading as="h2">{title}</Heading>}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {collectionUris?.map((collectionId) => (
           <BloomIIIF collectionId={collectionId} key={collectionId} />

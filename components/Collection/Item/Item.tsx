@@ -40,7 +40,7 @@ const CollectionItem: React.FC<CollectionShape> = (props) => {
       </ItemImageWrapper>
       <ItemContent>
         <a href={`/collections/${id}`}>
-          <Heading as="h2">{title}</Heading>
+          <Heading as="h3">{title}</Heading>
         </a>
         {description && (
           <p>

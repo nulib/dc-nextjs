@@ -21,14 +21,6 @@ const ItemContent = styled("div", {
   paddingLeft: "$gr4",
   lineHeight: "1.55",
 
-  h2: {
-    fontSize: "$gr5",
-    fontFamily: "$displayBold",
-    fontWeight: "400",
-    marginBottom: "$gr2",
-    color: "$purple",
-  },
-
   p: {
     fontSize: "$gr3",
     fontFamily: "$sansLight",

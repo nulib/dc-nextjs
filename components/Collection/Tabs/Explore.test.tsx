@@ -24,6 +24,5 @@ describe("CollectionTabsExplore", () => {
       />
     );
     expect(screen.getByTestId("explore-wrapper"));
-    expect(screen.getByTestId("description"));
   });
 });

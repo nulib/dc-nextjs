@@ -2,6 +2,19 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
+const HeroActions = styled("div", {
+  paddingTop: "$gr3",
+
+  a: {
+    textTransform: "uppercase",
+    padding: "calc($gr2 + 3px) $gr3 $gr2",
+    marginRight: "$gr3",
+    fontSize: "$gr3",
+    textShadow: "none",
+    backgroundColor: "$purple",
+  },
+});
+
 const HeroStyled = styled("div", {
   position: "absolute",
   width: "100%",
@@ -68,7 +81,8 @@ const HeroStyled = styled("div", {
           display: "flex",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(7deg, #000e 0%, #0000 61.8%)",
+          background:
+            "linear-gradient(7deg, #401F68cc 0%, #000a 20%, #0000 61.8%)",
           position: "absolute",
           zIndex: "1",
           bottom: "0",
@@ -88,7 +102,7 @@ const HeroStyled = styled("div", {
         figcaption: {
           position: "absolute",
           zIndex: "1",
-          bottom: "$gr5",
+          bottom: "$gr6",
           color: "$white",
           display: "flex",
           flexDirection: "column",
@@ -104,9 +118,9 @@ const HeroStyled = styled("div", {
 
           ".slide-label": {
             fontFamily: "$displayBold",
-            fontSize: "$gr7",
+            fontSize: "$gr8",
             display: "block",
-            margin: "0 0 $gr1",
+            margin: "0 0 $gr2",
             lineHeight: "1em",
           },
 
@@ -117,16 +131,10 @@ const HeroStyled = styled("div", {
             color: "$black20",
             lineHeight: "1.15em",
           },
-
-          ".slide-see-also": {
-            marginTop: "$gr2",
-            fontSize: "$gr4",
-            textShadow: "none",
-            textTransform: "none",
-          },
         },
       },
     },
   },
 });
-export { HeroStyled };
+
+export { HeroActions, HeroStyled };
