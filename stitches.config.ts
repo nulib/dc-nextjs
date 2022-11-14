@@ -29,6 +29,11 @@ export const { styled, keyframes } = createStitches({
     },
   },
   utils: {
+    heroBgImage: (value: string) => ({
+      "& :before": {
+        backgroundImage: value,
+      },
+    }),
     marginX: (value: number) => ({ marginLeft: value, marginRight: value }),
   },
 });

@@ -11,7 +11,7 @@ const ItemImageWrapper = styled("div", {
   display: "flex",
   width: "150px",
   flexShrink: "0",
-  margin: "$gr3 0",
+  margin: "0 0 $gr3 0",
   borderRadius: "3px",
   overflow: "hidden",
   flexDirection: "column",
@@ -19,18 +19,11 @@ const ItemImageWrapper = styled("div", {
 
 const ItemContent = styled("div", {
   paddingLeft: "$gr4",
-  lineHeight: "1.55",
+});
 
-  p: {
-    fontSize: "$gr3",
-    fontFamily: "$sansLight",
-    margin: "0",
-
-    "a, a:visited": {
-      color: "$purple",
-      cursor: "pointer",
-    },
-  },
+const ItemTitle = styled("h3", {
+  fontSize: "$gr5",
+  marginTop: 0,
 });
 
 const ItemStyled = styled("article", {
@@ -38,4 +31,4 @@ const ItemStyled = styled("article", {
   marginBottom: "$gr3",
 });
 
-export { ItemImage, ItemImageWrapper, ItemContent, ItemStyled };
+export { ItemImage, ItemImageWrapper, ItemContent, ItemStyled, ItemTitle };
