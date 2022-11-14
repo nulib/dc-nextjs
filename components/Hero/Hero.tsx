@@ -3,12 +3,11 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, EffectFade, Keyboard, Navigation, Pagination } from "swiper";
+import { HeroActions, HeroStyled } from "@/components/Hero/Hero.styled";
 import { Label, Summary, Thumbnail } from "@samvera/nectar-iiif";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
 import { HeroCollection } from "@/lib/constants/homepage";
-import { HeroStyled } from "@/components/Hero/Hero.styled";
 import Link from "next/link";
 import React from "react";
 
@@ -62,18 +61,22 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
                       className="slide-summary"
                     />
                   )}
-                  {item.seeAlso &&
-                    item.seeAlso.map((entry) => (
-                      <Link href={entry.id} key={entry.id}>
-                        <Button isPrimary as="a" className="slide-see-also">
-                          {entry.label ? (
-                            <Label label={entry.label} />
-                          ) : (
-                            <span>Search Collection</span>
-                          )}
-                        </Button>
-                      </Link>
-                    ))}
+
+                  {item.seeAlso && (
+                    <HeroActions>
+                      {item.seeAlso.map((entry) => (
+                        <Link href={entry.id} key={entry.id}>
+                          <a>
+                            {entry.label ? (
+                              <Label label={entry.label} />
+                            ) : (
+                              <span>Search Collection</span>
+                            )}
+                          </a>
+                        </Link>
+                      ))}
+                    </HeroActions>
+                  )}
                 </figcaption>
               </Container>
             </figure>

@@ -29,6 +29,20 @@ const StyledHeading = styled("h2", {
       top: "-$gr4",
     },
   },
+
+  "&[data-level=h2]": {
+    fontFamily: "$displayBold",
+    fontSize: "$gr6",
+    fontWeight: "400",
+    marginBottom: "$gr5",
+  },
+
+  "&[data-level=h3]": {
+    fontFamily: "$displayBook",
+    fontSize: "$gr6",
+    fontWeight: "400",
+    marginBottom: "$gr3",
+  },
 });
 
 export { StyledHeading };

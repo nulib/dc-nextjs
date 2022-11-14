@@ -181,6 +181,11 @@ const HeaderStyled = styled("header", {
 
             ".swiper-slide": {
               figure: {
+                "&::before": {
+                  background:
+                    "linear-gradient(7deg, #000a 0%, #000a 20%, #0000 61.8%)",
+                },
+
                 "img, video": {
                   opacity: "1 !important",
                 },

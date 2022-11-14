@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Description } from "@/components/Collection/Collection.styled";
 import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
-import ReadMore from "@/components/Shared/ReadMore";
 import RelatedItems from "@/components/Shared/RelatedItems";
 
 interface CollectionTabsExploreProps {
@@ -14,7 +12,6 @@ const url = process.env.NEXT_PUBLIC_DCAPI_ENDPOINT;
 
 const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
   collectionId,
-  description,
   topMetadata,
 }) => {
   const [urls, setUrls] = useState<string[]>([]);
@@ -38,14 +35,8 @@ const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
 
   return (
     <div data-testid="explore-wrapper">
-      {description && (
-        <Description data-testid="description">
-          <ReadMore text={description} words={55} />
-        </Description>
-      )}
-
       {urls.length > 0 && (
-        <RelatedItems collectionUris={urls} title="Explore Collection" />
+        <RelatedItems collectionUris={urls} title="Top Subjects" />
       )}
     </div>
   );

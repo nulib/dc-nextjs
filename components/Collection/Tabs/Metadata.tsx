@@ -1,8 +1,6 @@
-import {
-  ActionHeader,
-  GroupedList,
-} from "@/components/Collection/Tabs/Metadata.styled";
 import { ApiResponseBucket } from "@/types/api/response";
+import { GroupedList } from "@/components/Collection/Tabs/Metadata.styled";
+import Heading from "@/components/Heading/Heading";
 import React from "react";
 import { useRouter } from "next/router";
 
@@ -34,13 +32,11 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
 
   return (
     <div>
-      <ActionHeader>
-        <h2>Subjects</h2>
-      </ActionHeader>
+      <Heading as="h2">All Subjects</Heading>
       <GroupedList>
         {Object.keys(grouped).map((letter) => (
           <li key={letter}>
-            <h3>{letter}</h3>
+            <Heading as="h3">{letter}</Heading>
             <GroupedList>
               {grouped[letter].map(({ doc_count, key }) => (
                 <li key={key}>

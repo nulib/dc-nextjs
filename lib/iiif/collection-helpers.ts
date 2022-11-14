@@ -64,11 +64,32 @@ export const getRelatedCollections = (work: WorkShape) => {
 };
 
 export const getHeroCollection = (collection: CollectionShape) => {
-  const { id, representative_image, title } = collection;
+  const { id, finding_aid_url, representative_image, title } = collection;
 
   const thumbnailId = representative_image.url
     ? `${representative_image.url}/full/1200,/0/default.jpg`
     : "";
+
+  const appendSeeAlso = (search: string, findingAid: string | null) => {
+    const seeAlso = [
+      {
+        id: search,
+        label: { none: ["Search this Collection"] },
+        type: "Text",
+      },
+    ];
+
+    if (findingAid)
+      seeAlso.push({
+        id: findingAid,
+        label: { none: ["View Finding Aid"] },
+        type: "Text",
+      });
+
+    return seeAlso;
+  };
+
+  const searchUrl = `${DC_URL}/search?q=${id}`;
 
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",
@@ -83,12 +104,7 @@ export const getHeroCollection = (collection: CollectionShape) => {
         ],
         id: `${DCAPI_ENDPOINT}`,
         label: { none: [title] },
-        seeAlso: [
-          {
-            id: `${DC_URL}/search?q=${id}`,
-            type: "Text",
-          },
-        ],
+        seeAlso: appendSeeAlso(searchUrl, finding_aid_url),
         thumbnail: [
           {
             format: "image/jpeg",

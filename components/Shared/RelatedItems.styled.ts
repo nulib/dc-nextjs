@@ -6,9 +6,9 @@ const RelatedItemsStyled = styled("section", {
   marginBottom: "$gr5",
 
   "> h2": {
-    color: "$black50",
-    fontSize: "$gr4",
-    fontFamily: "$displayExtraLight",
+    color: "$black",
+    fontFamily: "$displayBold",
+    fontSize: "$gr6",
     fontWeight: "400",
     marginBottom: "$gr5",
   },
@@ -20,7 +20,7 @@ const RelatedItemsStyled = styled("section", {
   [`& .bloom-header-label`]: {
     display: "block",
     color: "$purple",
-    fontFamily: "$displayBold !important",
+    fontFamily: "$sansRegular !important",
     fontSize: "$gr5 !important",
   },
 
