@@ -15,6 +15,19 @@ const StyledStatus = styled("span", {
   textTransform: "uppercase",
 });
 
-const StyledCopyText = styled("button", {});
+const StyledCopyText = styled("button", {
+  display: "inline-flex",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
+  color: "$purple",
+  fontWeight: "700",
+  fontSize: "$3",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
+});
 
 export { StyledCopyText, StyledStatus };

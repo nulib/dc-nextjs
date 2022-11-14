@@ -3,6 +3,7 @@ import {
   Content,
 } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
+import CopyText from "@/components/Shared/CopyText";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import React from "react";
 import { useWorkState } from "@/context/work-context";
@@ -52,12 +53,24 @@ const WorkDialogCite: React.FC = () => {
             {metadata.map((item) => (
               <React.Fragment key={item[0]}>
                 <dt>{item[0]}</dt>
-                <dd>{item[1]}</dd>
+                <dd>
+                  {item[1]}{" "}
+                  {item[1] && (
+                    <>
+                      {" |"}
+                      <CopyText textPrompt="Copy" textToCopy={item[1]} />
+                    </>
+                  )}
+                </dd>
               </React.Fragment>
             ))}
             <dt>Wiki Citation</dt>
             <dd>
               <code>{wikiCitation}</code>
+              <>
+                {" |"}
+                <CopyText textPrompt="Copy" textToCopy={wikiCitation} />
+              </>
             </dd>
           </dl>
         </DefinitionListWrapper>
