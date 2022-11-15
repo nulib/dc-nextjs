@@ -50,7 +50,7 @@ resource "aws_amplify_app" "dc-next" {
       phases:
         preBuild:
           commands:
-            - npm ci
+            - npm ci --force
         build:
           commands:
             - npm run test:ci && npm run build
