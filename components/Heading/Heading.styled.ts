@@ -31,15 +31,41 @@ const StyledHeading = styled("h2", {
   },
 
   "&[data-level=h2]": {
+    color: "$purple",
     fontFamily: "$displayBold",
-    fontSize: "$gr6",
+    fontSize: "$gr7",
     fontWeight: "400",
     marginBottom: "$gr5",
   },
 
   "&[data-level=h3]": {
-    fontFamily: "$displayBook",
+    color: "$black50",
+    fontFamily: "$sansLight",
     fontSize: "$gr6",
+    fontWeight: "400",
+    marginBottom: "$gr3",
+  },
+
+  "&[data-level=h4]": {
+    color: "$purple",
+    fontFamily: "$sansLight",
+    fontSize: "$gr5",
+    fontWeight: "400",
+    marginBottom: "$gr3",
+  },
+
+  "&[data-level=h5]": {
+    color: "$black80",
+    fontFamily: "$displayBold",
+    fontSize: "$gr4",
+    fontWeight: "400",
+    marginBottom: "$gr3",
+  },
+
+  "&[data-level=h6]": {
+    color: "$black50",
+    fontFamily: "$displayBold",
+    fontSize: "$gr3",
     fontWeight: "400",
     marginBottom: "$gr3",
   },

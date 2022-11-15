@@ -1,5 +1,7 @@
 import { globalCss } from "@stitches/react";
 
+/* eslint sort-keys: 0 */
+
 const defaults = {
   [`*`]: {
     boxSizing: "border-box",
@@ -20,8 +22,13 @@ const defaults = {
   },
 
   html: {
+    color: "$black80",
     fontFamily: "$sansRegular",
     fontSize: "19px",
+  },
+
+  p: {
+    lineHeight: "1.7em",
   },
 };
 
