@@ -1,6 +1,6 @@
+import { VisibilityStatus, WorkShape } from "@/types/components/works";
 import { CollectionShape } from "@/types/components/collections";
 import { ModelName } from "@/types/api/generic";
-import { WorkShape } from "@/types/components/works";
 
 export interface ApiCollectionResponse {
   data: CollectionShape | null;
@@ -47,6 +47,7 @@ export interface ApiResponseDataShape {
   iiif_manifest?: string;
   thumbnail: string;
   title: string;
+  visibility: VisibilityStatus;
 }
 
 /**

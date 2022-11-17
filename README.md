@@ -121,3 +121,9 @@ https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/collections/18ec4c6b-1
 
 https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/file-sets/ce1f6d18-8563-4f70-aabc-d4ce1688d8dc
 ```
+
+## Design
+
+### Icons
+
+Manually sourced from [Iconicons](https://ionic.io/ionicons) and locally created in `components/Shared/SVG/Icons.tsx`, as opposed to including the entire NPM package direct.
