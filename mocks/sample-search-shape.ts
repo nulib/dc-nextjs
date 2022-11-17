@@ -8,6 +8,7 @@ export const sampleSearchShape: SearchShape[] = [
     thumbnail:
       "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/245eabab-7839-4e13-ab5a-e9d3243250fe/full/!300,300/0/default.jpg",
     title: "",
+    visibility: "Public",
     work_type: "Image",
   },
   {
@@ -17,6 +18,7 @@ export const sampleSearchShape: SearchShape[] = [
     thumbnail:
       "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/4c1c9ab6-72ed-42fa-b273-6acd0cf946dc/full/!300,300/0/default.jpg",
     title: "Cakrasamvara Mandala",
+    visibility: "Public",
     work_type: "Image",
   },
 ];

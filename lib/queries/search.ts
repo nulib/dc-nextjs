@@ -32,6 +32,7 @@ const querySearchTemplate: ApiSearchRequest = {
     "iiif_manifest",
     "title",
     "thumbnail",
+    "visibility",
     "work_type",
   ],
   query: {

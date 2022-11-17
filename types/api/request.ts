@@ -51,5 +51,6 @@ export type SearchSource = [
   "iiif_manifest",
   "title",
   "thumbnail",
+  "visibility",
   "work_type"
 ];

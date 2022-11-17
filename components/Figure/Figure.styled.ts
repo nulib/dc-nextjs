@@ -1,4 +1,5 @@
 import { VariantProps, styled } from "@/stitches.config";
+import { IconLock } from "@/components/Shared/SVG/Icons";
 
 /* eslint sort-keys: 0 */
 
@@ -17,28 +18,51 @@ const SupplementalInfo = styled("span", {
 });
 
 const Title = styled("span", {
-  marginTop: "$3",
   fontSize: "$3",
   fontFamily: "$sansRegular",
   color: "$purple",
-  display: "block",
+  display: "flex",
+  alignItems: "flex-start",
 });
+
+const TitleWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+});
+
+IconLock.toString = () => ".icon-lock";
 
 const FigureStyled = styled("figure", {
   display: "flex",
   flexDirection: "column",
   paddingBottom: "1rem",
+  position: "relative",
   margin: "0",
   color: "transparent",
   width: "100%",
 
   figcaption: {
+    marginTop: "$3",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
   },
 
   [`&[data-orientation=horizontal]`]: {
     flexDirection: "row",
+  },
+
+  [`& ${IconLock}`]: {
+    width: "28px",
+    flexShrink: 0,
+    fill: "white",
+    marginRight: "$gr1",
+    marginTop: "-28px",
+    padding: "6px",
+    backgroundColor: "$purple",
+    borderRadius: "50%",
+    zIndex: "1",
   },
 
   variants: {
@@ -61,4 +85,4 @@ const FigureStyled = styled("figure", {
 
 export type FigureVariants = VariantProps<typeof FigureStyled>;
 
-export { FigureStyled, Image, Title, SupplementalInfo };
+export { FigureStyled, Image, Title, TitleWrapper, SupplementalInfo };
