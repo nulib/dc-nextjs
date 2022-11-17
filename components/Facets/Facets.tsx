@@ -1,7 +1,8 @@
+import { FacetExtras, StyledFacets, Width, Wrapper } from "./Facets.styled";
 import React, { useRef } from "react";
-import { StyledFacets, Width, Wrapper } from "./Facets.styled";
 import Container from "@/components/Shared/Container";
 import FacetsFilter from "@/components/Facets/Filter/Filter";
+import SearchPublicOnlyWorks from "@/components/Search/PublicOnlyWorks";
 import WorkType from "@/components/Facets/WorkType/WorkType";
 import { useSearchState } from "@/context/search-context";
 
@@ -20,7 +21,10 @@ const Facets: React.FC = () => {
         <StyledFacets data-testid="facets-ui-wrapper" ref={facetsRef}>
           <Width ref={facetsRef} />
           <FacetsFilter />
-          <WorkType />
+          <FacetExtras>
+            <WorkType />
+            <SearchPublicOnlyWorks />
+          </FacetExtras>
         </StyledFacets>
       </Container>
     </Wrapper>

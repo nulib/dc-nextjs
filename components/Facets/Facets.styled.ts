@@ -1,3 +1,4 @@
+import { StyledToggle } from "@/components/Shared/Switch.styled";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
 import { styled } from "@/stitches.config";
 
@@ -9,6 +10,18 @@ const StyledFacets = styled("div", {
   margin: "1.618rem 0",
   position: "relative",
   zIndex: "1",
+
+  [`& ${WorkTypeWrapper}`]: {
+    borderRight: "1px solid $black10",
+    paddingRight: "$gr2",
+  },
+
+  "@sm": {
+    [`& ${WorkTypeWrapper}`]: {
+      width: "0",
+      opacity: "0",
+    },
+  },
 });
 
 const Width = styled("span", {
@@ -35,7 +48,16 @@ const Wrapper = styled("div", {
       top: "50px",
       zIndex: "1",
     },
+
+    [`& ${StyledToggle}`]: {
+      width: "0",
+      opacity: "0",
+    },
   },
 });
 
-export { StyledFacets, Width, Wrapper };
+const FacetExtras = styled("div", {
+  display: "flex",
+});
+
+export { FacetExtras, StyledFacets, Width, Wrapper };
