@@ -1,35 +1,13 @@
-import {
-  ApiSearchQuery,
-  ApiSearchRequest,
-  SearchSimpleQueryString,
-} from "@/types/api/request";
-
-export const queryModelPart: ApiSearchQuery = {
-  bool: {
-    must: [
-      // {
-      //   bool: {
-      //     must: [
-      //       {
-      //         match: {
-      //           "model.name": "Work",
-      //         },
-      //       },
-      //     ],
-      //   },
-      // },
-    ],
-  },
-};
+import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
 
 /**
- * Default Elasticsearch search query for a Work
+ * Default search query for a Work
  */
 const querySearchTemplate: ApiSearchRequest = {
   _source: [
-    "accession_number",
     "id",
     "iiif_manifest",
+    "representative_file_set",
     "title",
     "thumbnail",
     "visibility",

@@ -8,7 +8,7 @@ const DefinitionListWrapper = styled("div", {
   "& dt": {
     fontSize: "$gr3",
     color: "$black",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
   },
   "& dd": {
     marginInlineStart: "0",

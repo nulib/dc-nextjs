@@ -15,7 +15,7 @@ const AnnouncementStyled = styled("section", {
 
   "& h2": {
     color: "$purple",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
   },
 
   "& a": {

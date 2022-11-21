@@ -4,12 +4,12 @@ import { styled } from "@/stitches.config";
 
 const FactsItemBig = styled("span", {
   fontSize: "$gr7",
-  fontFamily: "$displayExtraBold",
+  fontFamily: "$northwesternDisplayExtraBold",
 });
 
 const FactsItemSmall = styled("span", {
   fontSize: "$gr4",
-  fontFamily: "$displayExtraLight",
+  fontFamily: "$northwesternDisplayExtraLight",
 });
 
 const FactsItemStyled = styled("div", {

@@ -1,12 +1,21 @@
 /* eslint sort-keys: 0 */
+export const width = {
+  xxs: 334,
+  xs: 575,
+  sm: 767,
+  md: 991,
+  lg: 1199,
+  xl: 1439,
+};
 
 const media = {
-  xxs: "(max-width: 349px)",
-  xs: "(max-width: 575px)",
-  sm: "(max-width: 767px)",
-  md: "(max-width: 991px)",
-  lg: "(max-width: 1199px)",
-  xl: "(min-width: 1199px)",
+  xxs: `(max-width: ${width.xxs}px)`,
+  xs: `(max-width: ${width.xs}px)`,
+  sm: `(max-width: ${width.sm}px)`,
+  md: `(max-width: ${width.md}px)`,
+  lg: `(max-width: ${width.lg}px)`,
+  xl: `(max-width: ${width.xl}px)`,
+  xxl: `(min-width: ${width.xl + 1}px)`,
 };
 
 export default media;

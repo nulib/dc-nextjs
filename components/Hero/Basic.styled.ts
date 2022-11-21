@@ -40,7 +40,7 @@ const Content = styled("div", {
 const HeroTitle = HeadingSlashTitleStyled;
 
 const Subhead = styled("p", {
-  fontFamily: "$displayBold",
+  fontFamily: "$northwesternDisplayBold",
   fontSize: "72px",
   lineHeight: "5rem",
   margin: "0 0 $gr3 0",

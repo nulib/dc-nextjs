@@ -9,7 +9,7 @@ const StyledGenericFacet = styled("div", {
 
   [`${StyledHeading}`]: {
     margin: "0 0 1rem",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontWeight: "400",
   },
 });
@@ -68,13 +68,13 @@ const Indicator = styled(Checkbox.Indicator, {
 const OptionCount = styled("span", {
   color: "$black50",
   marginLeft: "4px",
-  fontFamily: "$sansLight",
+  fontFamily: "$northwesternSansLight",
   position: "relative",
 });
 
 const OptionText = styled("span", {
   color: "$black",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
 });
 
 const Options = styled("ul", {
@@ -91,7 +91,7 @@ const Options = styled("ul", {
     label: {
       cursor: "pointer",
       color: "$black",
-      fontFamily: "$sansRegular",
+      fontFamily: "$northwesternSansRegular",
       lineHeight: "1.382em",
       flexShrink: "1",
       flexGrow: "0",
@@ -102,7 +102,7 @@ const Options = styled("ul", {
 
       [`&[data-selected=true]`]: {
         color: "$black",
-        fontFamily: "$sansBold",
+        fontFamily: "$northwesternSansBold",
         fontWeight: "700",
 
         [`${OptionCount}`]: {

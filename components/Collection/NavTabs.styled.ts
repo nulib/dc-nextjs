@@ -20,7 +20,7 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
   cursor: "pointer",
   display: "flex",
   fontSize: "$gr4",
-  fontFamily: "$displayBook",
+  fontFamily: "$northwesternDisplayBook",
   flexDirection: "column",
   justifyContent: "center",
   margin: "0",
@@ -42,7 +42,7 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
   },
 
   "&[data-state='active']": {
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     color: "$purple",
 
     "&::before": {

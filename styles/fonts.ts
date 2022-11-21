@@ -5,19 +5,19 @@
 const generic = `AkkuratProRegular, Arial, Helvetica, sans-serif`;
 
 const sans = {
-  sansBold: `AkkuratProBold, AkkuratProRegular, ${generic} `,
-  sansBoldItalic: `AkkuratProBoldItalic, AkkuratProRegular, ${generic}`,
-  sansItalic: `AkkuratProItalic, AkkuratProRegular, ${generic}`,
-  sansLight: `AkkuratProLight, AkkuratProRegular, ${generic}`,
-  sansLightItalic: `AkkuratProLightItalic, AkkuratProRegular, ${generic}`,
-  sansRegular: `AkkuratProRegular, ${generic}`,
+  northwesternSansBold: `AkkuratProBold, AkkuratProRegular, ${generic} `,
+  northwesternSansBoldItalic: `AkkuratProBoldItalic, AkkuratProRegular, ${generic}`,
+  northwesternSansItalic: `AkkuratProItalic, AkkuratProRegular, ${generic}`,
+  northwesternSansLight: `AkkuratProLight, AkkuratProRegular, ${generic}`,
+  northwesternSansLightItalic: `AkkuratProLightItalic, AkkuratProRegular, ${generic}`,
+  northwesternSansRegular: `AkkuratProRegular, ${generic}`,
 };
 
 const display = {
-  displayBold: `CamptonBold, ${generic}`,
-  displayBook: `CamptonBook, ${generic}`,
-  displayExtraBold: `CamptonExtraBold, ${generic}`,
-  displayExtraLight: `CamptonExtraLight, ${generic}`,
+  northwesternDisplayBold: `CamptonBold, ${generic}`,
+  northwesternDisplayBook: `CamptonBook, ${generic}`,
+  northwesternDisplayExtraBold: `CamptonExtraBold, ${generic}`,
+  northwesternDisplayExtraLight: `CamptonExtraLight, ${generic}`,
 };
 
 const fonts = {

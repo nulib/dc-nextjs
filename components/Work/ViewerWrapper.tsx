@@ -31,8 +31,8 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
       secondaryMuted: "$gray6",
     },
     fonts: {
-      display: "$display",
-      sans: "$sans",
+      display: "$northwesternDisplay",
+      sans: "$northwesternSans",
     },
   };
 

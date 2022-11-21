@@ -33,7 +33,7 @@ export const PaginationStyled = styled("nav", {
   fontSize: "$gr3",
   color: "$black80",
   margin: "0 $gr3 $gr4",
-  borderTop: "1px solid $black10",
+  borderTop: "2px solid $black10",
 
   "& svg": {
     width: "$gr3",

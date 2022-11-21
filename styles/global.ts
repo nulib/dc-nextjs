@@ -23,7 +23,7 @@ const defaults = {
 
   html: {
     color: "$black80",
-    fontFamily: "$sansRegular",
+    fontFamily: "$northwesternSansRegular",
     fontSize: "19px",
   },
 
