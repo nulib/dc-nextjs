@@ -1,6 +1,7 @@
 import { Aggs } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
 import { UrlFacets } from "@/types/context/filter-context";
+import { facetRegex } from "@/lib/utils/facet-helpers";
 
 /**
  * This constructs the `aggs` property as part of an elastic search query request
@@ -12,6 +13,19 @@ export const buildAggs = (
   userFacets: UrlFacets
 ) => {
   const aggs: Aggs = {};
+  let cleanFilterValue: string;
+
+  /** Is user filtering using quotes for exact match? */
+  const quoteCount = (facetFilterValue?.match(/"/g) || []).length;
+
+  if (quoteCount % 2 > 0) {
+    /** User has entered only one double quote */
+    cleanFilterValue = " ";
+  } else {
+    cleanFilterValue = facetFilterValue?.includes(`"`)
+      ? `.*${facetFilterValue.replace(/"/g, '"')}.*`
+      : facetRegex(facetFilterValue);
+  }
 
   facets.forEach((facet) => {
     const userFacetsValues =
@@ -24,7 +38,7 @@ export const buildAggs = (
       field: facet.field,
 
       // This line will filter returned aggs based on user text input
-      include: facetFilterValue ? `.*${facetFilterValue}.*` : undefined,
+      include: cleanFilterValue ? cleanFilterValue : undefined,
 
       order: {
         _count: "desc",
