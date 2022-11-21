@@ -1,60 +1,77 @@
 import {
+  Description,
   ItemContent,
-  ItemImage,
   ItemImageWrapper,
   ItemStyled,
-  ItemTitle,
+  MetadataIcons,
 } from "@/components/Collection/Item/Item.styled";
-import { CollectionShape } from "@/types/components/collections";
-import ContentLoader from "react-content-loader";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import { IconAudio, IconImage, IconVideo } from "@/components/Shared/SVG/Icons";
+import { type CollectionListShape } from "@/pages/collections";
+import Figure from "@/components/Figure/Figure";
 import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
 import { LinkStyled } from "@/components/Shared/LinkStyled";
 import ReadMore from "@/components/Shared/ReadMore";
 
-const CollectionItem: React.FC<CollectionShape> = (props) => {
-  const { title, description, id, representative_image } = props;
-
-  const src = representative_image?.work_id
-    ? `${DCAPI_ENDPOINT}/works/${representative_image.work_id}/thumbnail?aspect=square`
-    : null;
-
+const CollectionItem: React.FC<CollectionListShape> = ({
+  title,
+  description,
+  id,
+  thumbnail,
+  totalAudio,
+  totalImage,
+  totalVideo,
+  totalWorks,
+}) => {
   return (
     <ItemStyled data-collection={id}>
       <ItemImageWrapper>
         <Link href={`/collections/${id}`}>
           <a>
-            {src ? (
-              <ItemImage alt={title} src={src} width="300" height="300" />
-            ) : (
-              <ContentLoader
-                speed={0}
-                width={150}
-                height={150}
-                viewBox="0 0 150 150"
-                backgroundColor="#f3f3f3"
-                foregroundColor="#ecebeb"
-                title={title}
-              >
-                <rect x="0" y="0" width="150" height="150" />
-              </ContentLoader>
-            )}
+            <Figure
+              data={{
+                src: `${thumbnail}?aspect=square`,
+                title,
+              }}
+            />
           </a>
         </Link>
       </ItemImageWrapper>
       <ItemContent>
         <Link href={`/collections/${id}`}>
-          <ItemTitle>
-            <Heading as="h4">
-              <LinkStyled>{title}</LinkStyled>
-            </Heading>
-          </ItemTitle>
+          <Heading as="h4">
+            <LinkStyled>{title}</LinkStyled>
+          </Heading>
         </Link>
+
+        {totalWorks && totalWorks > 0 ? (
+          <MetadataIcons>
+            {totalWorks && totalWorks > 0 ? (
+              <span>{totalWorks} Works</span>
+            ) : null}
+            {totalImage && totalImage > 0 ? (
+              <span title={`${totalImage} images`}>
+                {totalImage} <IconImage />
+              </span>
+            ) : null}
+            {totalAudio && totalAudio > 0 ? (
+              <span title={`${totalAudio} audio files`}>
+                {totalAudio} <IconAudio />
+              </span>
+            ) : null}
+
+            {totalVideo && totalVideo > 0 ? (
+              <span title={`${totalVideo} videos`}>
+                {totalVideo} <IconVideo />
+              </span>
+            ) : null}
+          </MetadataIcons>
+        ) : null}
+
         {description && (
-          <p>
+          <Description>
             <ReadMore text={description} words={55} />
-          </p>
+          </Description>
         )}
       </ItemContent>
     </ItemStyled>
