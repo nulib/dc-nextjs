@@ -1,7 +1,10 @@
+import {
+  type CollectionRepresentativeImage,
+  type CollectionShape,
+} from "@/types/components/collections";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { StyledForm, StyledInput } from "@/components/Shared/Form.styled";
 import CollectionItem from "@/components/Collection/Item/Item";
-import { CollectionShape } from "@/types/components/collections";
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -9,16 +12,30 @@ import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
+import { VisibilityStatus } from "@/types/components/works";
+import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
-import { getCollectionList } from "@/lib/collection-helpers";
+import { getCollectionWorkCounts } from "@/lib/collection-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 
+export type CollectionListShape = {
+  description?: string;
+  id: string;
+  representativeImage: CollectionRepresentativeImage;
+  thumbnail?: string;
+  title: string;
+  totalWorks?: number;
+  totalImage?: number;
+  totalAudio?: number;
+  totalVideo?: number;
+  visibility: VisibilityStatus;
+};
 interface CollectionListProps {
-  collections: CollectionShape[];
+  collectionList: CollectionListShape[];
 }
 
-const CollectionList: NextPage<CollectionListProps> = ({ collections }) => {
-  const [items, setItems] = useState<CollectionShape[]>([]);
+const CollectionList: NextPage<CollectionListProps> = ({ collectionList }) => {
+  const [items, setItems] = useState<CollectionListShape[]>([]);
   const [search, setSearch] = useState("");
 
   const handleSearch = (input: ChangeEvent<HTMLInputElement>) => {
@@ -26,11 +43,11 @@ const CollectionList: NextPage<CollectionListProps> = ({ collections }) => {
   };
 
   useEffect(() => {
-    const filtered = collections.filter((item) =>
+    const filtered = collectionList.filter((item) =>
       item.title.toLowerCase().includes(search)
     );
     setItems(filtered);
-  }, [collections, search]);
+  }, [collectionList, search]);
 
   return (
     <>
@@ -72,19 +89,41 @@ export async function getStaticProps() {
   const dataLayer = buildDataLayer({
     pageTitle: "Collections page",
   });
-
-  let response;
   let collections: CollectionShape[] = [];
-  let next_url: string | undefined = `${DCAPI_ENDPOINT}/collections`;
+  let collectionList: CollectionListShape[] = [];
+  const defaultCountTotals = {
+    totalAudio: 0,
+    totalImage: 0,
+    totalVideo: 0,
+    totalWorks: 0,
+  };
 
-  /**
-   *  temporarily use while() to build full list until completed:
-   *  https://github.com/nulib/repodev_planning_and_docs/issues/3214
-   */
-  while (next_url) {
-    response = await getCollectionList(next_url);
-    collections = collections.concat(response?.data as CollectionShape[]);
-    next_url = response?.pagination.next_url;
+  try {
+    /** Get all Collections */
+    const response = await axios(
+      `${DCAPI_ENDPOINT}/collections?size=100&sort=title:asc`
+    );
+    collections = response.data.data;
+
+    /** Get Work counts (Image / Audio / Video) for each Collection */
+    const workCountMap = await getCollectionWorkCounts();
+
+    /** Stitch together only the Collection list info this page requires */
+    collectionList = collections.map((collection) => {
+      return {
+        description: collection.description,
+        id: collection.id,
+        representativeImage: collection.representative_image,
+        thumbnail: collection.thumbnail,
+        title: collection.title,
+        visibility: collection.visibility,
+        ...(workCountMap && workCountMap[collection.id]
+          ? { ...workCountMap[collection.id] }
+          : { ...defaultCountTotals }),
+      };
+    });
+  } catch (err) {
+    console.error(err);
   }
 
   const openGraphData = {
@@ -92,7 +131,7 @@ export async function getStaticProps() {
   };
 
   return {
-    props: { collections, dataLayer, openGraphData },
+    props: { collectionList, dataLayer, openGraphData },
   };
 }
 

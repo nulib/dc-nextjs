@@ -27,6 +27,8 @@ export interface ApiResponseAggregation {
 export type ApiResponseBucket = {
   doc_count: number;
   key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 };
 
 export type ApiResponseData = CollectionShape | SearchShape[] | WorkShape;

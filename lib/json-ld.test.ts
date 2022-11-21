@@ -25,6 +25,7 @@ const collectionMock = {
     url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1ceaa647-1b1b-4e9d-8e3f-2a1539af3410",
     work_id: "ff520ae7-1621-4b59-9da7-6cf10450b717",
   },
+  thumbnail: "http://test.com",
   title: "Department of Art History || Slide Collection",
   visibility: "Institution",
 };

@@ -26,6 +26,17 @@ const IconArrowForward: React.FC = () => (
   </svg>
 );
 
+const IconAudio: React.FC = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon-audio"
+    viewBox="0 0 512 512"
+  >
+    <title>Audio</title>
+    <path d="M296 416.19a23.92 23.92 0 01-14.21-4.69l-.66-.51-91.46-75H120a24 24 0 01-24-24V200a24 24 0 0124-24h69.65l91.46-75 .66-.51A24 24 0 01320 119.83v272.34a24 24 0 01-24 24zM384 336a16 16 0 01-14.29-23.18c9.49-18.9 14.3-38 14.3-56.82 0-19.36-4.66-37.92-14.25-56.73a16 16 0 0128.5-14.54C410.2 208.16 416 231.47 416 256c0 23.83-6 47.78-17.7 71.18A16 16 0 01384 336z" />
+  </svg>
+);
+
 const IconCheck: React.FC = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <title>Checkmark</title>
@@ -65,6 +76,17 @@ const IconFilter: React.FC = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <title>Filter</title>
     <path d="M472 168H40a24 24 0 010-48h432a24 24 0 010 48zM392 280H120a24 24 0 010-48h272a24 24 0 010 48zM296 392h-80a24 24 0 010-48h80a24 24 0 010 48z" />
+  </svg>
+);
+
+const IconImage: React.FC = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon-image"
+    viewBox="0 0 512 512"
+  >
+    <title>Image</title>
+    <path d="M416 64H96a64.07 64.07 0 00-64 64v256a64.07 64.07 0 0064 64h320a64.07 64.07 0 0064-64V128a64.07 64.07 0 00-64-64zm-80 64a48 48 0 11-48 48 48.05 48.05 0 0148-48zM96 416a32 32 0 01-32-32v-67.63l94.84-84.3a48.06 48.06 0 0165.8 1.9l64.95 64.81L172.37 416zm352-32a32 32 0 01-32 32H217.63l121.42-121.42a47.72 47.72 0 0161.64-.16L448 333.84z" />
   </svg>
 );
 
@@ -110,16 +132,30 @@ const IconSocialTwitter: React.FC = () => (
   </svg>
 );
 
+const IconVideo: React.FC = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon-video"
+    viewBox="0 0 512 512"
+  >
+    <title>Video</title>
+    <path d="M464 384.39a32 32 0 01-13-2.77 15.77 15.77 0 01-2.71-1.54l-82.71-58.22A32 32 0 01352 295.7v-79.4a32 32 0 0113.58-26.16l82.71-58.22a15.77 15.77 0 012.71-1.54 32 32 0 0145 29.24v192.76a32 32 0 01-32 32zM268 400H84a68.07 68.07 0 01-68-68V180a68.07 68.07 0 0168-68h184.48A67.6 67.6 0 01336 179.52V332a68.07 68.07 0 01-68 68z" />
+  </svg>
+);
+
 export {
   IconArrowBack,
   IconArrowForward,
+  IconAudio,
   IconCheck,
   IconChevronDown,
   IconClear,
   IconFilter,
+  IconImage,
   IconLock,
   IconSearch,
   IconSocialFacebook,
   IconSocialPinterest,
   IconSocialTwitter,
+  IconVideo,
 };

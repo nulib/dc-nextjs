@@ -1,6 +1,7 @@
 import {
   ApiCollectionListResponse,
   ApiCollectionResponse,
+  ApiResponseBucket,
   ApiSearchResponse,
 } from "@/types/api/response";
 import { Aggs } from "@/types/api/request";
@@ -80,6 +81,83 @@ export async function getCollectionIds(): Promise<Array<string>> {
   } catch (err) {
     console.error("Error getting all Collection Ids", err);
     return [];
+  }
+}
+
+/* eslint sort-keys:0 */
+export async function getCollectionWorkCounts() {
+  function getCount(
+    buckets: ApiResponseBucket[],
+    targetWorkType: "Audio" | "Image" | "Video"
+  ) {
+    const found = buckets.find((bucket) => bucket.key === targetWorkType);
+    return found ? found.doc_count : 0;
+  }
+
+  const body = {
+    _source: ["id"],
+    aggs: {
+      collections: {
+        terms: {
+          field: "collection.id",
+          size: 10000,
+        },
+        aggs: {
+          workTypes: {
+            terms: {
+              field: "work_type",
+              size: 1000,
+            },
+          },
+        },
+      },
+    },
+    query: {
+      query_string: {
+        query: "*",
+      },
+    },
+    size: 0,
+  };
+
+  try {
+    const response = await getAPIData<ApiSearchResponse>({
+      body,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+    });
+
+    const collectionBuckets = response?.aggregations?.collections?.buckets;
+    if (!collectionBuckets || collectionBuckets.length === 0) {
+      return null;
+    }
+
+    const countMap: {
+      [key: string]: {
+        totalWorks: number;
+        totalImage: number;
+        totalAudio: number;
+        totalVideo: number;
+      };
+    } = {};
+
+    collectionBuckets.forEach((bucket) => {
+      const workTypeBuckets = bucket.workTypes.buckets;
+      const totalImage = getCount(workTypeBuckets, "Image");
+      const totalAudio = getCount(workTypeBuckets, "Audio");
+      const totalVideo = getCount(workTypeBuckets, "Video");
+
+      countMap[bucket.key] = {
+        totalWorks: bucket.doc_count,
+        totalImage,
+        totalAudio,
+        totalVideo,
+      };
+    });
+
+    return countMap;
+  } catch (err) {
+    console.error("Error getting Collection subjects", err);
+    return null;
   }
 }
 
