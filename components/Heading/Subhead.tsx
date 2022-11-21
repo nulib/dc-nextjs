@@ -12,7 +12,7 @@ const HeadingSubhead: React.FC<HeadingSubheadProps> = ({ children }) => {
 
 const HeadingSubheadStyled = styled("p", {
   fontSize: "$gr8",
-  fontFamily: "$displayExtraLight",
+  fontFamily: "$northwesternDisplayExtraLight",
   lineHeight: "1.2em",
   marginBottom: "$gr3",
 });

@@ -19,6 +19,7 @@ const Card: React.FC<CardProps> = ({
   title,
 }) => {
   const data = {
+    aspectRatio: 1,
     src: imageUrl,
     supplementalInfo,
     title,

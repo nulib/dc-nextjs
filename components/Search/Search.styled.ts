@@ -38,7 +38,7 @@ const Input = styled("input", {
   padding: "2px $gr5 0",
   fontSize: "$gr3",
   zIndex: "1",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
 });
 
 const Button = styled("button", {
@@ -47,7 +47,7 @@ const Button = styled("button", {
   padding: "2px $3 0",
   color: "$purple",
   fontSize: "$gr4",
-  fontFamily: "$sansBold",
+  fontFamily: "$northwesternSansBold",
   cursor: "pointer",
   textRendering: "optimizeLegibility",
 });

@@ -5,7 +5,7 @@ import { styled } from "stitches.config";
 const LinkStyled = styled("a", {
   color: "$purple",
   cursor: "pointer",
-  fontFamily: "$sansBold",
+  fontFamily: "$northwesternSansBold",
   textDecoration: "none",
   borderBottom: "1px dashed $purple30",
   paddingBottom: "0.08rem",

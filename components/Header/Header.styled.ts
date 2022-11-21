@@ -10,7 +10,7 @@ const Lockup = styled("div", {
   position: "relative",
   padding: "$gr4 0 $gr5",
   fontSize: "$gr6",
-  fontFamily: "$sansLight",
+  fontFamily: "$northwesternSansLight",
   zIndex: "1",
 
   a: {
@@ -47,7 +47,7 @@ const Primary = styled("div", {
       backgroundColor: "$gray6",
       color: "$purple",
       fontSize: "$gr4",
-      fontFamily: "$sansBold",
+      fontFamily: "$northwesternSansBold",
       paddingTop: "2px",
       display: "flex",
       height: "$gr5",

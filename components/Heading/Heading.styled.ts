@@ -14,7 +14,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h1]": {
     lineHeight: "1em",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontSize: "$gr8",
     letterSpacing: "-0.015em",
     margin: "$gr6 0 $gr4",
@@ -32,7 +32,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h2]": {
     color: "$purple",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontSize: "$gr7",
     fontWeight: "400",
     marginBottom: "$gr5",
@@ -40,7 +40,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h3]": {
     color: "$black50",
-    fontFamily: "$sansLight",
+    fontFamily: "$northwesternSansLight",
     fontSize: "$gr6",
     fontWeight: "400",
     marginBottom: "$gr3",
@@ -48,7 +48,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h4]": {
     color: "$purple",
-    fontFamily: "$sansLight",
+    fontFamily: "$northwesternSansLight",
     fontSize: "$gr5",
     fontWeight: "400",
     marginBottom: "$gr3",
@@ -56,7 +56,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h5]": {
     color: "$black80",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontSize: "$gr4",
     fontWeight: "400",
     marginBottom: "$gr3",
@@ -64,7 +64,7 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h6]": {
     color: "$black50",
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontSize: "$gr3",
     fontWeight: "400",
     marginBottom: "$gr3",

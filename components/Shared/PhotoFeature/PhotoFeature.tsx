@@ -95,7 +95,7 @@ const TextOverImage = styled("div", {
   "& h3": {
     color: "$white",
     fontSize: "$gr6",
-    //fontFamily: "$displayBold",
+    //fontFamily: "$northwesternDisplayBold",
     marginBottom: "$gr2",
     lineHeight: "1",
     textShadow: "2px 2px 0x #000",

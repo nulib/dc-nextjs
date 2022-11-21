@@ -27,8 +27,8 @@ const StyledWorkType = styled("ul", {
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
-      fontSize: "1rem",
-      fontFamily: "$sans",
+      fontSize: "$gr3",
+      fontFamily: "$northwesternSansRegular",
       height: "2rem",
       zIndex: "1",
       padding: "0",
@@ -37,7 +37,7 @@ const StyledWorkType = styled("ul", {
 
       [`&[aria-checked="true"]`]: {
         color: "$black",
-        fontWeight: "700",
+        fontFamily: "$northwesternSansBold",
       },
 
       ["&:hover"]: {

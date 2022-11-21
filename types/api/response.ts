@@ -41,10 +41,14 @@ export interface ApiSearchResponse extends ApiResponse {
  * Default shape for API response data property
  */
 export interface ApiResponseDataShape {
-  accession_number: string;
   api_model: ModelName;
   id: string;
   iiif_manifest?: string;
+  representative_file_set: {
+    aspect_ratio: number;
+    id: string;
+    url: string;
+  };
   thumbnail: string;
   title: string;
   visibility: VisibilityStatus;

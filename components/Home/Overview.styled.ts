@@ -6,7 +6,7 @@ const Content = styled("div", {
   width: "61.8%",
 
   h2: {
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     margin: "0 0 $gr2",
     fontSize: "$gr6",
     fontWeight: "400",
@@ -14,7 +14,7 @@ const Content = styled("div", {
   },
 
   p: {
-    fontFamily: "$sansLight",
+    fontFamily: "$northwesternSansLight",
     fontSize: "$4",
     lineHeight: "1.55em",
     margin: "0 0 $gr4",

@@ -3,6 +3,7 @@ import colors from "@/styles/colors";
 import { createStitches } from "@stitches/react";
 import fonts from "@/styles/fonts";
 import media from "@/styles/media";
+import transitions from "@/styles/transitions";
 
 export type { VariantProps } from "@stitches/react";
 
@@ -24,9 +25,7 @@ export const { styled, keyframes } = createStitches({
     fonts: { ...fonts },
     sizes: { ...sizes },
     space: { ...sizes },
-    transitions: {
-      all: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",
-    },
+    transitions: { ...transitions },
   },
   utils: {
     heroBgImage: (value: string) => ({

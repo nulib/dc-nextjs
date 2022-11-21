@@ -15,21 +15,21 @@ const MessageContent = styled("div", {
 
   button: {
     color: "inherit",
-    fontFamily: "$sansBold",
+    fontFamily: "$northwesternSansBold",
     textDecoration: "underline",
   },
 });
 
 const MessageTitle = styled("span", {
   display: "block",
-  fontFamily: "$displayBook",
+  fontFamily: "$northwesternDisplayBook",
   fontSize: "$gr5",
   margin: "0 0 $gr2",
 });
 
 const MessageText = styled("span", {
   display: "block",
-  fontFamily: "$sansLight",
+  fontFamily: "$northwesternSansLight",
   fontSize: "$gr3",
 });
 

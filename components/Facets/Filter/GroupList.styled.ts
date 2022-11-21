@@ -45,7 +45,7 @@ const GroupToggle = styled(Accordion.Trigger, {
   borderTopLeftRadius: "0",
   borderBottomLeftRadius: "0",
   whiteSpace: "nowrap",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
   fontWeight: "400",
 
   ["&[aria-expanded=true]"]: {
@@ -98,10 +98,10 @@ const ItemToggle = styled(Tabs.Trigger, {
   borderRadius: "3px",
   borderTopLeftRadius: "0",
   borderBottomLeftRadius: "0",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
 
   ["&[aria-selected=true]"]: {
-    fontFamily: "$sansBold",
+    fontFamily: "$northwesternSansBold",
     fontWeight: "700",
 
     "&:hover, &:focus": {

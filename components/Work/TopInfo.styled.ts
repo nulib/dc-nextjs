@@ -10,7 +10,7 @@ const ActionButtons = styled("div", {
 
   button: {
     marginRight: "$4",
-    fontFamily: "$sansLight",
+    fontFamily: "$northwesternSansLight",
     paddingTop: "$3",
 
     "&:last-child": {
@@ -39,7 +39,7 @@ const TopInfoWrapper = styled("section", {
 
     h1: {
       lineHeight: "1em",
-      fontFamily: "$displayBold",
+      fontFamily: "$northwesternDisplayBold",
       fontSize: "$8",
       letterSpacing: "-0.015em",
       margin: "0",
@@ -58,7 +58,7 @@ const TopInfoWrapper = styled("section", {
     p: {
       fontSize: "$5",
       color: "$black50",
-      fontFamily: "$sansLight",
+      fontFamily: "$northwesternSansLight",
       lineHeight: "1.47em",
     },
   },
@@ -68,7 +68,7 @@ const TopInfoCollection = styled("div", {
   padding: "1rem 0",
 
   h2: {
-    fontFamily: "$displayBold",
+    fontFamily: "$northwesternDisplayBold",
     fontWeight: "400",
     fontSize: "$3",
   },

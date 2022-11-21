@@ -8,7 +8,7 @@ const ExpandableListItemIndicator = styled("span", {
   backgroundColor: "transparent",
   color: "$black50",
   fontSize: "$gr1",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
   borderRadius: "3px",
   height: "$gr3",
   padding: "3px",
@@ -20,7 +20,7 @@ const ExpandableListItemIndicator = styled("span", {
 
 const ExpandableListItemHeading = styled("span", {
   color: "$purple",
-  fontFamily: "$sansRegular",
+  fontFamily: "$northwesternSansRegular",
   fontSize: "$gr4",
   lineHeight: "1.55em",
 });

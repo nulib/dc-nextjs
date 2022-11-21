@@ -18,7 +18,6 @@ describe("Submit component", () => {
     renderHelper();
     const items = screen.getAllByTestId("facets-filter-preview-item");
     expect(items.length).toBe(2);
-    expect(items[0]).toHaveTextContent("Voyager:RL03108");
     expect(items[0]).toHaveTextContent("Image");
     expect(items[1]).toHaveTextContent("Cakrasamvara Mandala");
     expect(items[1]).toHaveTextContent("Image");

@@ -4,7 +4,7 @@ import { styled } from "@/stitches.config";
 
 const Description = styled("p", {
   fontSize: "$gr5",
-  fontFamily: "$sansLight",
+  fontFamily: "$northwesternSansLight",
   lineHeight: "1.55em",
   margin: "$gr2 0 $gr5",
   color: "$black50",

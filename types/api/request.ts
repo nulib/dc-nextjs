@@ -46,9 +46,9 @@ export interface SearchSimpleQueryString {
 }
 
 export type SearchSource = [
-  "accession_number",
   "id",
   "iiif_manifest",
+  "representative_file_set",
   "title",
   "thumbnail",
   "visibility",

@@ -31,7 +31,7 @@ const SearchPage: NextPage = () => {
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
-    loading: false,
+    loading: true,
   });
 
   /**
@@ -119,14 +119,18 @@ const SearchPage: NextPage = () => {
           Northwestern
         </Heading>
         <Facets />
-        {loading && <p>loading...</p>}
-        {error && <p>{error}</p>}
-        {apiData && (
-          <Container containerType="wide">
-            <Grid data={apiData.data} info={apiData.info} />
-            <Pagination pagination={apiData.pagination} />
-          </Container>
-        )}
+        <Container containerType="wide">
+          <div style={{ minHeight: "80vh" }}>
+            {loading && <></>}
+            {error && <p>{error}</p>}
+            {apiData && (
+              <>
+                <Grid data={apiData.data} info={apiData.info} />
+                <Pagination pagination={apiData.pagination} />
+              </>
+            )}
+          </div>
+        </Container>
       </Layout>
     </>
   );
