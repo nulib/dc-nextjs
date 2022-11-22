@@ -38,10 +38,11 @@ const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
   useEffect(() => {
     async function doRequest() {
       try {
-        setRequest({
+        setRequest((request) => ({
           ...request,
+          error: null,
           loading: true,
-        });
+        }));
 
         const body: ApiSearchRequest = buildQuery({
           aggs: activeFacets,
@@ -52,22 +53,23 @@ const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
         });
 
         const response = await axios.post(DC_API_SEARCH_URL, body);
-        setRequest({
+        setRequest((request) => ({
           ...request,
           data: response.data,
           loading: false,
-        });
+        }));
       } catch (err) {
-        setRequest({
+        setRequest((request) => ({
           ...request,
           error: "Error loading data from useFetchApi",
-        });
+          loading: false,
+        }));
         console.error("error fetching API data", err);
       }
     }
 
     doRequest();
-  }, [aggsFilterValue, searchTerm, size, urlFacets]);
+  }, [aggsFilterValue, searchTerm, setRequest, size, urlFacets]);
 
   return { ...request };
 };

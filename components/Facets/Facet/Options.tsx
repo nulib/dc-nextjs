@@ -33,7 +33,13 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   });
 
   if (loading) return <SpinLoader />;
-  if (error || !data || !data.aggregations) return <>friendly user error...</>;
+  if (error) return <p>Error fetching data</p>;
+  if (
+    !data ||
+    !data.aggregations ||
+    data.aggregations[facet.id].buckets.length === 0
+  )
+    return <p>No data returned</p>;
 
   /**
    * return facet aggregation data for this facet instance
