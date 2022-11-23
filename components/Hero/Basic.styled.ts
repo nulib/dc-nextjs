@@ -1,4 +1,4 @@
-import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle";
+import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */

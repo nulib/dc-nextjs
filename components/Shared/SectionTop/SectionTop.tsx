@@ -1,5 +1,5 @@
 import Container from "@/components/Shared/Container";
-import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle";
+import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle.styled";
 import { HeadingSubheadStyled } from "@/components/Heading/Subhead";
 import { styled } from "@/stitches.config";
 

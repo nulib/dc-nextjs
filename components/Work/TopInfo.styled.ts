@@ -1,3 +1,4 @@
+import { StyledHeading } from "@/components/Heading/Heading.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -67,10 +68,10 @@ const TopInfoWrapper = styled("section", {
 const TopInfoCollection = styled("div", {
   padding: "1rem 0",
 
-  h2: {
-    fontFamily: "$northwesternDisplayBold",
-    fontWeight: "400",
-    fontSize: "$3",
+  [`& ${StyledHeading}`]: {
+    color: "$black80",
+    fontSize: "$gr5",
+    marginBottom: "$gr2",
   },
 });
 

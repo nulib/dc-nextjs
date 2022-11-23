@@ -6,6 +6,7 @@ import {
 import type {
   GenericAggsReturn,
   GetTopMetadataAggsReturn,
+  WorkTypeCountMap,
 } from "@/lib/collection-helpers";
 import { GetStaticPropsContext, NextPage } from "next";
 import {
@@ -17,6 +18,7 @@ import {
 import {
   getCollection,
   getCollectionIds,
+  getCollectionWorkCounts,
   getMetadataAggs,
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
@@ -40,6 +42,7 @@ interface CollectionProps {
   metadata: ApiResponseBucket[];
   topMetadata: GetTopMetadataAggsReturn[] | [];
   series: GenericAggsReturn[];
+  workTypeCounts: WorkTypeCountMap;
 }
 
 const Collection: NextPage<CollectionProps> = ({
@@ -47,6 +50,7 @@ const Collection: NextPage<CollectionProps> = ({
   metadata,
   topMetadata,
   series,
+  workTypeCounts,
 }) => {
   if (!collection) return null;
 
@@ -74,11 +78,23 @@ const Collection: NextPage<CollectionProps> = ({
         <Interstitial>
           <Container>
             <Facts>
-              <Facts.Item big="30000" small="Total Works" />
-              <Facts.Item big="29000" small="Image Works" />
-              <Facts.Item big="300" small="Video Works" />
-              <Facts.Item big="30" small="Audio Works" />
-              <Facts.Item big="Across" small="47 Boxes" />
+              <Facts.Item
+                big={workTypeCounts?.totalWorks}
+                small="Total Works"
+              />
+              <Facts.Item
+                big={workTypeCounts?.totalImage}
+                small="Image Works"
+              />
+              <Facts.Item
+                big={workTypeCounts?.totalVideo}
+                small="Video Works"
+              />
+              <Facts.Item
+                big={workTypeCounts?.totalAudio}
+                small="Audio Works"
+              />
+              <Facts.Item big="Across" small="[Count here] Boxes" />
             </Facts>
           </Container>
         </Interstitial>
@@ -134,6 +150,12 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       ? await getMetadataAggs(id as string, "subject.label")
       : null;
 
+  const collectionWorkCounts =
+    id && collection && (await getCollectionWorkCounts(id as string));
+
+  const workTypeCounts =
+    collectionWorkCounts && id ? collectionWorkCounts[id as string] : null;
+
   /** Get some data to build out "About" slider content for the Explore tab */
   const topMetadata =
     id && collection
@@ -180,6 +202,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       openGraphData,
       series,
       topMetadata,
+      workTypeCounts,
     },
   };
 }

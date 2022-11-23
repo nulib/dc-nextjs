@@ -8,7 +8,7 @@ import RelatedItems from "@/components/Shared/RelatedItems";
 import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
-import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
+import { getWorkSliders } from "@/lib/work-helpers";
 
 interface SharedLinkProps {
   manifest: Manifest | null;
@@ -16,7 +16,7 @@ interface SharedLinkProps {
 }
 
 const SharedLink: React.FC<SharedLinkProps> = ({ manifest, work }) => {
-  const related = work ? getRelatedCollections(work) : null;
+  const related = work ? getWorkSliders(work) : [];
 
   return (
     <div data-testid="shared-link-wrapper">
