@@ -1,6 +1,7 @@
 import { IconAudio, IconImage, IconVideo } from "@/components/Shared/SVG/Icons";
 import { FigureCaption } from "@/components/Figure/Figure.styled";
 import Image from "next/image";
+import { LinkStyled } from "@/components/Shared/LinkStyled";
 import { StyledHeading } from "@/components/Heading/Heading.styled";
 import { styled } from "@/stitches.config";
 
@@ -67,6 +68,10 @@ const ItemContent = styled("div", {
     "@sm": {
       fontSize: "$gr4",
     },
+  },
+
+  [`& ${LinkStyled}`]: {
+    fontFamily: "$northwesternSansRegular",
   },
 
   "& p": {

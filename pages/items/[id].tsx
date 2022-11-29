@@ -1,5 +1,9 @@
+import {
+  type CollectionWorkCountMap,
+  getCollectionWorkCounts,
+} from "@/lib/collection-helpers";
 import { GetStaticPropsContext, NextPage } from "next";
-import { getWork, getWorkIds } from "@/lib/work-helpers";
+import { getWork, getWorkIds, getWorkSliders } from "@/lib/work-helpers";
 import Container from "@/components/Shared/Container";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
@@ -17,15 +21,19 @@ import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { buildWorkOpenGraphData } from "@/lib/open-graph";
 import { getIIIFResource } from "@/lib/dc-api";
-import { getRelatedCollections } from "@/lib/iiif/collection-helpers";
 import { loadItemStructuredData } from "@/lib/json-ld";
 
 interface WorkPageProps {
+  collectionWorkCounts: CollectionWorkCountMap | null;
   manifest?: Manifest;
   work: WorkShape;
 }
 
-const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
+const WorkPage: NextPage<WorkPageProps> = ({
+  collectionWorkCounts,
+  manifest,
+  work,
+}) => {
   const userAuthContext = React.useContext(UserContext);
 
   if (!work || !manifest)
@@ -35,10 +43,12 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
       </Layout>
     );
 
-  const related = getRelatedCollections(work);
+  const related = getWorkSliders(work);
   const isRestricted =
     work.visibility === "Private" ||
     (!userAuthContext?.user && work.visibility !== "Public");
+  const collectionWorkTypeCounts =
+    collectionWorkCounts && collectionWorkCounts[work.collection?.id];
 
   return (
     <>
@@ -68,7 +78,11 @@ const WorkPage: NextPage<WorkPageProps> = ({ manifest, work }) => {
               <WorkViewerWrapper manifestId={work.iiif_manifest} />
             )}
             <Container>
-              <WorkTopInfo manifest={manifest} work={work} />
+              <WorkTopInfo
+                manifest={manifest}
+                work={work}
+                collectionWorkTypeCounts={collectionWorkTypeCounts}
+              />
               <RelatedItems collectionUris={related} title="Explore Further" />
             </Container>
           </ErrorBoundary>
@@ -91,6 +105,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const work = params?.id ? await getWork(params.id as string) : null;
   const manifest = work ? await getIIIFResource(work.iiif_manifest) : null;
+  const collectionWorkCounts = work?.collection
+    ? await getCollectionWorkCounts(work?.collection.id)
+    : null;
 
   /** Add values to GTM's dataLayer object */
   const dataLayer = work ? buildWorkDataLayer(work) : [];
@@ -99,7 +116,13 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const openGraphData = work ? buildWorkOpenGraphData(work) : {};
 
   return {
-    props: { dataLayer, manifest, openGraphData, work },
+    props: {
+      collectionWorkCounts,
+      dataLayer,
+      manifest,
+      openGraphData,
+      work,
+    },
     revalidate: 3600,
   };
 }

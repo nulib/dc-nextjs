@@ -7,7 +7,7 @@ import {
 import React, { ReactNode } from "react";
 
 interface FactsItemProps {
-  big: string;
+  big: number | string;
   small: string;
 }
 

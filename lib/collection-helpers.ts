@@ -84,8 +84,45 @@ export async function getCollectionIds(): Promise<Array<string>> {
   }
 }
 
+export async function getCollectionWorkCount(collectionId: string) {
+  const body = {
+    _source: ["id"],
+    query: {
+      match: {
+        "collection.id": collectionId,
+      },
+    },
+    aggs: {},
+    size: "0",
+  };
+
+  try {
+    const response = await getAPIData<ApiSearchResponse>({
+      body,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+    });
+
+    if (response?.pagination) {
+      return response.pagination.total_hits;
+    }
+    return null;
+  } catch (err) {
+    console.error("Error getting Collection Work count", err);
+  }
+}
+
+export type WorkTypeCountMap = {
+  totalWorks: number;
+  totalImage: number;
+  totalAudio: number;
+  totalVideo: number;
+};
+export type CollectionWorkCountMap = {
+  [key: string]: WorkTypeCountMap;
+};
+
 /* eslint sort-keys:0 */
-export async function getCollectionWorkCounts() {
+export async function getCollectionWorkCounts(collectionId = "") {
   function getCount(
     buckets: ApiResponseBucket[],
     targetWorkType: "Audio" | "Image" | "Video"
@@ -94,29 +131,36 @@ export async function getCollectionWorkCounts() {
     return found ? found.doc_count : 0;
   }
 
+  /** Get data for all Collections */
   const body = {
     _source: ["id"],
     aggs: {
       collections: {
         terms: {
           field: "collection.id",
-          size: 10000,
+          size: collectionId ? 1 : 10000,
         },
         aggs: {
           workTypes: {
             terms: {
               field: "work_type",
-              size: 1000,
+              size: 10,
             },
           },
         },
       },
     },
-    query: {
-      query_string: {
-        query: "*",
-      },
-    },
+    query: collectionId
+      ? {
+          match: {
+            "collection.id": collectionId,
+          },
+        }
+      : {
+          query_string: {
+            query: "*",
+          },
+        },
     size: 0,
   };
 
@@ -128,17 +172,22 @@ export async function getCollectionWorkCounts() {
 
     const collectionBuckets = response?.aggregations?.collections?.buckets;
     if (!collectionBuckets || collectionBuckets.length === 0) {
+      /** The Collection has no Works, send default zero counts */
+      if (collectionId) {
+        return {
+          [collectionId]: {
+            totalAudio: 0,
+            totalImage: 0,
+            totalWorks: 0,
+            totalVideo: 0,
+          },
+        };
+      }
+      /** All Collections - something went wrong in API if this evaluates */
       return null;
     }
 
-    const countMap: {
-      [key: string]: {
-        totalWorks: number;
-        totalImage: number;
-        totalAudio: number;
-        totalVideo: number;
-      };
-    } = {};
+    const countMap: CollectionWorkCountMap = {};
 
     collectionBuckets.forEach((bucket) => {
       const workTypeBuckets = bucket.workTypes.buckets;

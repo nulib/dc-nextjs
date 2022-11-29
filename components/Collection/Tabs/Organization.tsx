@@ -1,4 +1,4 @@
-import { BloomIIIF } from "@/components/Shared/RelatedItems";
+import { BloomIIIFWrapper } from "@/components/BloomWrapper";
 import ExpandableList from "@/components/Shared/ExpandableList";
 import { GenericAggsReturn } from "@/lib/collection-helpers";
 import Heading from "@/components/Heading/Heading";
@@ -37,7 +37,7 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
                 value={value}
                 key={value}
               >
-                <BloomIIIF collectionId={collectionId} />
+                <BloomIIIFWrapper collectionId={collectionId} />
               </ExpandableList.Item>
             );
           })}

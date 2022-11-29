@@ -1,3 +1,5 @@
+import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle.styled";
+import { StyledHeading } from "@/components/Heading/Heading.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -5,12 +7,8 @@ import { styled } from "@/stitches.config";
 const RelatedItemsStyled = styled("section", {
   marginBottom: "$gr5",
 
-  "> h2": {
-    color: "$black",
-    fontFamily: "$northwesternDisplayBold",
-    fontSize: "$gr6",
-    fontWeight: "400",
-    marginBottom: "$gr5",
+  [`& ${StyledHeading}`]: {
+    color: "$black80",
   },
 
   "> div": {
@@ -49,6 +47,12 @@ const RelatedItemsStyled = styled("section", {
 
   [`& a:hover figcaption, & a:focus figcaption`]: {
     color: "$purple !important",
+  },
+
+  [`& ${HeadingSlashTitleStyled}`]: {
+    color: "$purple",
+    textAlign: "center",
+    marginTop: "$gr6",
   },
 });
 

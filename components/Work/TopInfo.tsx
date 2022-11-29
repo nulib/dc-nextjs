@@ -10,12 +10,15 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
+// import Heading from "@/components/Heading/Heading";
 import { Manifest } from "@iiif/presentation-3";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import WorkMetadata from "@/components/Work/Metadata";
 import { WorkShape } from "@/types/components/works";
+import { type WorkTypeCountMap } from "@/lib/collection-helpers";
 
 interface TopInfoProps {
+  collectionWorkTypeCounts?: WorkTypeCountMap | null;
   manifest?: Manifest;
   work: WorkShape;
 }
@@ -24,7 +27,11 @@ export interface ActionsDialog {
   activeDialog: "CITE" | "DOWNLOAD" | "FIND" | undefined;
 }
 
-const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
+const WorkTopInfo: React.FC<TopInfoProps> = ({
+  collectionWorkTypeCounts,
+  manifest,
+  work,
+}) => {
   const [actionsDialog, setActionsDialog] = React.useState<ActionsDialog>({
     activeDialog: undefined,
   });
@@ -49,6 +56,17 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
         break;
     }
   };
+
+  function buildWorkCountsText() {
+    if (!collectionWorkTypeCounts) return "";
+    const { totalAudio, totalImage, totalVideo, totalWorks } =
+      collectionWorkTypeCounts;
+    let text = `${totalWorks} Total Works:`;
+    text += totalImage && totalImage > 0 ? ` ${totalImage} Images` : "";
+    text += totalAudio && totalAudio > 0 ? ` ${totalAudio} Audio` : "";
+    text += totalVideo && totalVideo > 0 ? ` ${totalVideo} Video` : "";
+    return text;
+  }
 
   return (
     <TopInfoWrapper>
@@ -104,13 +122,13 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({ manifest, work }) => {
             </DefinitionListWrapper>
           </div>
           <TopInfoCollection>
-            <h2>Collection</h2>
+            {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
             <Card
               title={work.collection?.title}
               description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
               href={`/collections/${work.collection?.id}`}
               imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
-              supplementalInfo="678 Works"
+              supplementalInfo={buildWorkCountsText()}
             />
           </TopInfoCollection>
         </TopInfoContent>

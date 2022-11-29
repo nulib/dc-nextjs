@@ -1,6 +1,7 @@
-import { CardStyled, LinkedAnchor } from "@/components/Shared/Card.styled";
+import { CardStyled } from "@/components/Shared/Card.styled";
 import Figure from "@/components/Figure/Figure";
 import Link from "next/link";
+import { LinkStyled } from "@/components/Shared/LinkStyled";
 import React from "react";
 
 export interface CardProps {
@@ -29,9 +30,9 @@ const Card: React.FC<CardProps> = ({
     <CardStyled data-testid="card-wrapper">
       {href ? (
         <Link href={href}>
-          <LinkedAnchor>
+          <LinkStyled>
             <Figure data={data} isPromoted />
-          </LinkedAnchor>
+          </LinkStyled>
         </Link>
       ) : (
         <Figure data={data} isPromoted />

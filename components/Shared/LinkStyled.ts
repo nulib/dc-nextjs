@@ -1,8 +1,8 @@
-import { styled } from "stitches.config";
+import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const LinkStyled = styled("a", {
+const linkStyling = {
   color: "$purple",
   cursor: "pointer",
   fontFamily: "$northwesternSansBold",
@@ -13,6 +13,8 @@ const LinkStyled = styled("a", {
   "&:hover": {
     borderBottom: "1px solid $purple",
   },
-});
+};
 
-export { LinkStyled };
+const LinkStyled = styled("a", linkStyling);
+
+export { linkStyling, LinkStyled };

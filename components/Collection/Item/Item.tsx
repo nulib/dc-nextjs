@@ -38,11 +38,11 @@ const CollectionItem: React.FC<CollectionListShape> = ({
         </Link>
       </ItemImageWrapper>
       <ItemContent>
-        <Link href={`/collections/${id}`}>
-          <Heading as="h4">
+        <Heading as="h4">
+          <Link href={`/collections/${id}`}>
             <LinkStyled>{title}</LinkStyled>
-          </Heading>
-        </Link>
+          </Link>
+        </Heading>
 
         {totalWorks && totalWorks > 0 ? (
           <MetadataIcons>
