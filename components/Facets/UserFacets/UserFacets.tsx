@@ -121,7 +121,6 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
           <DropdownContent
             align="start"
             alignOffset={-95}
-            portalled={true}
             data-testid="facet-user-component-popover-content"
           >
             {currentFacets}
