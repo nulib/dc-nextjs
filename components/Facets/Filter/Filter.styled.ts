@@ -20,6 +20,7 @@ const FilterActivate = styled(Dialog.Trigger, {
   padding: "0 1rem 0 0.5rem",
 
   [`& ${IconStyled}`]: {
+    color: "$black50",
     fill: "$black50",
     marginBottom: "-1px",
   },
@@ -30,6 +31,7 @@ const FilterActivate = styled(Dialog.Trigger, {
     boxShadow: "2px 2px 5px #0002",
 
     [`& ${IconStyled}`]: {
+      color: "$purple30",
       fill: "$purple30",
     },
   },
