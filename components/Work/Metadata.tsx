@@ -1,6 +1,7 @@
 import { DC_URL } from "@/lib/constants/endpoints";
 import { FACETS_WORK_LINK } from "@/lib/constants/works";
 import Link from "next/link";
+import { LinkItemStyled } from "@/components/Work/Metadata.styled";
 import { Metadata } from "@samvera/nectar-iiif";
 import { MetadataItem } from "@iiif/presentation-3";
 
@@ -20,9 +21,11 @@ export const ValueAsSearchLink: React.FC<ValueAsSearchLinkProps> = ({
   if (!value) return <></>;
   const search = `${DC_URL}/search?${param}=`;
   return (
-    <Link href={search.concat(encodeURIComponent(value))}>
-      <a>{value}</a>
-    </Link>
+    <LinkItemStyled>
+      <Link href={search.concat(encodeURIComponent(value))}>
+        <a>{value}</a>
+      </Link>
+    </LinkItemStyled>
   );
 };
 
@@ -37,6 +40,7 @@ const WorkMetadata: React.FC<WorkMetadataProps> = ({ metadata }) => {
   return (
     <Metadata
       customValueContent={customValues}
+      customValueDelimiter=""
       data-testid="metadata"
       metadata={metadata}
     />

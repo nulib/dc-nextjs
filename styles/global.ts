@@ -9,7 +9,7 @@ const defaults = {
 
   "a, a:visited": {
     color: "$purple",
-    textDecoration: "underline",
+    textDecoration: "none",
 
     "&:active, &:hover": {
       color: "$purple120",

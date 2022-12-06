@@ -18,7 +18,7 @@ describe("WorkMetadata component", () => {
           label?.none?.join(", ") as string
         );
         expect(within(group).getByRole("definition")).toHaveTextContent(
-          value?.none?.join(", ") as string
+          value?.none?.join("") as string
         );
       }
     });
