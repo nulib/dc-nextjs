@@ -116,6 +116,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
               )}
               {manifest?.requiredStatement && (
                 <RequiredStatement
+                  customValueDelimiter="<br /><br />"
                   requiredStatement={manifest.requiredStatement}
                 />
               )}
