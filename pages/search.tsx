@@ -27,47 +27,51 @@ type RequestState = {
 const SearchPage: NextPage = () => {
   const size = 40;
   const router = useRouter();
-  const { page } = router.query;
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
     loading: true,
   });
+  const [pageQueryUrl, setPageQueryUrl] = useState<string>();
 
   /**
-   * Direct request to the search API endpoint
+   * Post request to the search API endpoint for query and facet parameters
    */
   useEffect(() => {
-    async function doRequest() {
+    if (!router.isReady) return;
+    (async () => {
       try {
+        const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
         const body: ApiSearchRequest = buildQuery({
           size,
-          term: router.query.q as string,
+          term: q as string,
           urlFacets,
         });
+
         const response = await axios.post(DC_API_SEARCH_URL, body);
-        setRequestState({
-          data: response?.data,
-          error: "",
-          loading: false,
-        });
+        const { pagination } = response?.data;
+
+        /**
+         * Construct url for page request
+         */
+        const url = new URL(pagination.query_url);
+        url.searchParams.append("page", page ? (page as string) : "1");
+        setPageQueryUrl(url.toString());
       } catch (err) {
         handleErrors(err);
       }
-    }
-    if (!router.isReady) return;
-    doRequest();
+    })();
   }, [router.isReady, router.query]);
 
   /**
-   * Pagination request
+   * Get request for page results
    */
   useEffect(() => {
-    async function doPaginationRequest() {
+    if (!pageQueryUrl) return;
+    (async () => {
       try {
-        const url = `${requestState?.data?.pagination.query_url}/&page=${page}`;
-        const response = await axios.get(url);
+        const response = await axios.get(pageQueryUrl);
         setRequestState({
           data: response.data,
           error: "",
@@ -76,10 +80,8 @@ const SearchPage: NextPage = () => {
       } catch (err) {
         handleErrors(err);
       }
-    }
-    if (!requestState.data?.pagination.query_url || !page) return;
-    doPaginationRequest();
-  }, [page, requestState.data?.pagination.query_url]);
+    })();
+  }, [pageQueryUrl]);
 
   /**
    * Handle any network errors
