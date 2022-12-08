@@ -13,6 +13,7 @@ export const sampleWork2: WorkShape = {
   caption: [],
   catalog_key: [],
   collection: {
+    description: null,
     id: "51d4475f-5a0a-42a4-8901-bde73a1fae99",
     title: "Jim Roberts Photographs, 1968-1972",
   },
