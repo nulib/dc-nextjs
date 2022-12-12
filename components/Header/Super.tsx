@@ -1,4 +1,5 @@
 import { Super, User } from "@/components/Header/Header.styled";
+
 import Container from "../Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Link from "next/link";
@@ -43,14 +44,14 @@ export default function HeaderSuper() {
               <a>{label}</a>
             </Link>
           ))}
-          {!userAuthContext?.user && (
+          {!userAuthContext?.user?.isLoggedIn && (
             <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
               <a>Sign in</a>
             </Link>
           )}
-          {userAuthContext?.user && (
+          {userAuthContext?.user?.isLoggedIn && (
             <>
-              <User>{userAuthContext.user.displayName}</User>
+              <User>{userAuthContext.user.name}</User>
               <a
                 href={`${DCAPI_ENDPOINT}/auth/logout`}
                 style={{
