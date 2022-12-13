@@ -15,7 +15,7 @@ const GridItem: React.FC<GridItemProps> = ({ item }) => {
 
   const isRestricted = (item: SearchShape): boolean => {
     const { visibility } = item;
-    if (!userContext?.user && visibility !== "Public") return true;
+    if (!userContext?.user?.isLoggedIn && visibility !== "Public") return true;
     return false;
   };
 
