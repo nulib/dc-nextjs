@@ -1,6 +1,5 @@
 import { User, UserContextInterface } from "@/types/context/user";
 
-import { API_TOKEN_COOKIE } from "@/lib/constants/auth";
 import type { AppProps } from "next/app";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -11,7 +10,6 @@ import { SearchProvider } from "@/context/search-context";
 import Transition from "@/components/Transition";
 import axios from "axios";
 import { defaultOpenGraphData } from "@/lib/open-graph";
-import { getCookie } from "cookies-next";
 import globalStyles from "@/styles/global";
 
 export const UserContext = React.createContext<UserContextInterface | null>(
@@ -34,22 +32,27 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     /**
      * Determine if user is authenticated via cookie
      */
-    const token = getCookie(API_TOKEN_COOKIE);
-    if (token) {
-      axios
-        .get(`${DCAPI_ENDPOINT}/auth/whoami`, {
-          withCredentials: true,
-        })
-        .then((result) => {
-          if (!result.data) return;
-
-          const { displayName, mail } = result.data;
-          setUser({
-            displayName: displayName[0],
-            mail,
-          });
+    axios
+      .get(`${DCAPI_ENDPOINT}/auth/whoami`, {
+        withCredentials: true,
+      })
+      .then((result) => {
+        if (!result.data) return;
+        const {
+          email,
+          isLoggedIn = false,
+          isReadingRoom = false,
+          name,
+          sub,
+        } = result.data;
+        setUser({
+          email,
+          isLoggedIn,
+          isReadingRoom,
+          name,
+          sub,
         });
-    }
+      });
   }, []);
 
   {

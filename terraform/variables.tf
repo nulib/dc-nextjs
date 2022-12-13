@@ -25,10 +25,6 @@ variable "environment_name" {
   type = string
 }
 
-variable "jwt_token_secret" {
-  type = string
-}
-
 variable "next_public_dcapi_endpoint" {
   type = string
 }
