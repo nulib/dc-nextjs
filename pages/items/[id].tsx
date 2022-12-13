@@ -46,7 +46,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const related = getWorkSliders(work);
   const isRestricted =
     work.visibility === "Private" ||
-    (!userAuthContext?.user && work.visibility !== "Public");
+    (!userAuthContext?.user?.isLoggedIn && work.visibility !== "Public");
   const collectionWorkTypeCounts =
     collectionWorkCounts && collectionWorkCounts[work.collection?.id];
 
