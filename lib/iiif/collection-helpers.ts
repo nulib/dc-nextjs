@@ -74,7 +74,7 @@ export const getHeroCollection = (collection: CollectionShape) => {
     const seeAlso = [
       {
         id: search,
-        label: { none: ["Search this Collection"] },
+        label: { none: ["View this Collection"] },
         type: "Text",
       },
     ];

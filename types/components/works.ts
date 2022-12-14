@@ -72,6 +72,7 @@ export interface WorkShape {
   caption: Array<string>;
   catalog_key: Array<string>;
   collection: {
+    description: string | null;
     id: string;
     title: string;
   };

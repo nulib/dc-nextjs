@@ -6,9 +6,11 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import Search from "@/components/Search/Search";
 import useElementPosition from "@/hooks/useElementPosition";
+import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
 const HeaderPrimary: React.FC = () => {
+  const router = useRouter();
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
   const { searchDispatch, searchState } = useSearchState();
@@ -43,7 +45,12 @@ const HeaderPrimary: React.FC = () => {
             <strong>N</strong>
           </Heading>
           <PrimaryInner>
-            <Search isSearchActive={handleIsSearchActive} />
+            <Search
+              isSearchActive={handleIsSearchActive}
+              {...(router.pathname.includes("collection")
+                ? { jumpTo: "collection" }
+                : undefined)}
+            />
             <Nav>
               <Link href="/collections">Browse Collections</Link>
             </Nav>
