@@ -1,3 +1,4 @@
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Layout from "@/components/layout";
@@ -35,21 +36,34 @@ const SharedPage: NextPage<SharedPageProps> = ({ manifest, work }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+  res,
+}) => {
   try {
+    let cookie = req.headers.cookie;
     const workResponse = await axios.get(
-      `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/shared-links/${params?.id}`
+      `${DCAPI_ENDPOINT}/shared-links/${params?.id}`,
+      { headers: { cookie } }
     );
+
+    if (workResponse) {
+      const cookieHeader = workResponse.headers["set-cookie"];
+      if (cookieHeader) {
+        res.setHeader("set-cookie", cookieHeader);
+        cookie = cookieHeader[0].split(/;\s+/)[0];
+      }
+    }
+
+    // console.log("cookie", cookie);
+    // console.log("req", req);
+
     const work: WorkShape = workResponse.data.data;
 
-    /**
-     * For a restricted Work (Private or Institution), this manifest URL returns a non 200
-     * So, work is being done to make this endpoint work, which we'll need to pass through
-     * to child components to allow access to a manifest:
-     *
-     * `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/shared-links/${params?.id}?as=iiif`
-     */
-    const manifestResponse = await axios.get(work.iiif_manifest);
+    const manifestResponse = await axios.get(work.iiif_manifest, {
+      headers: { cookie },
+    });
     const manifest = manifestResponse.data;
 
     return {

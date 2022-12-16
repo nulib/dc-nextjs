@@ -9,6 +9,7 @@ async function getAPIData<R>(obj: GetApiParams): Promise<R | undefined> {
   try {
     const response = await fetch(url, {
       body: JSON.stringify(body),
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

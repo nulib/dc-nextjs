@@ -1,3 +1,4 @@
+import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
 import { ViewerWrapperStyled } from "@/components/Work/ViewerWrapper.styled";
 import dynamic from "next/dynamic";
@@ -8,7 +9,9 @@ export const CloverIIIF: React.ComponentType<{
     fonts: { [key: string]: string };
   };
   id: string;
-  options: { [key: string]: boolean | string };
+  options: {
+    [key: string]: OpenSeadragonOptions | boolean | string;
+  };
 }> = dynamic(() => import("@samvera/clover-iiif"), {
   ssr: false,
 });
@@ -43,6 +46,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
     showIIIFBadge: false,
     showInformationToggle: false,
     showTitle: false,
+    withCredentials: true,
   };
 
   return (
