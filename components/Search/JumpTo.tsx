@@ -3,12 +3,32 @@ import {
   JumpItem,
   SearchJumpToStyled,
 } from "@/components/Search/JumpTo.styled";
+import { useEffect, useState } from "react";
 import { IconReturnDownBack } from "@/components/Shared/SVG/Icons";
 import Link from "next/link";
+import { getCollection } from "@/lib/collection-helpers";
 import { useRouter } from "next/router";
 
 const SearchJumpTo = ({ searchValue }: { searchValue: string }) => {
   const router = useRouter();
+  const [collectionTitle, setCollectionTitle] = useState<string>("");
+
+  useEffect(() => {
+    if (!router?.query?.id) return;
+
+    async function getCollectionTitle() {
+      try {
+        const data = await getCollection(router.query.id as string);
+        setCollectionTitle(data?.title || "");
+      } catch (err) {
+        console.error(
+          "Error getting Collection title in JumpTo component",
+          err
+        );
+      }
+    }
+    getCollectionTitle();
+  }, [router.query.id]);
 
   return (
     <SearchJumpToStyled data-testid="jump-to-wrapper" role="listbox">
@@ -17,7 +37,7 @@ const SearchJumpTo = ({ searchValue }: { searchValue: string }) => {
           href={{
             pathname: "/search",
             query: {
-              collection: router.query.id,
+              collection: collectionTitle,
               q: searchValue,
             },
           }}
