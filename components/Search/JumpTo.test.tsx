@@ -1,51 +1,45 @@
+import { render, screen } from "@/test-utils";
 import SearchJumpTo from "@/components/Search/JumpTo";
-import { act } from "@testing-library/react";
-import { render } from "@/test-utils";
-import { screen } from "@testing-library/react";
-import singletonRouter from "next/router";
+import userEvent from "@testing-library/user-event";
+
+const mockIsSearchActive = jest.fn();
 
 jest.mock("next/router", () => require("next-router-mock"));
-// This is needed for mocking 'next/link':
-jest.mock("next/dist/client/router", () => require("next-router-mock"));
-
-/** Mock getCollection() to return a Collection title for tests */
-jest.mock("../../lib/collection-helpers", () => ({
-  getCollection: jest.fn().mockResolvedValue({
-    title: "Best Collection Ever",
-  }),
-}));
 
 describe("SearchJumpTo component", () => {
-  it("renders search value in listbox items", () => {
-    render(<SearchJumpTo searchValue="Dylan" />);
-    expect(screen.getByTestId("jump-to-wrapper"));
-    expect(screen.getAllByText("Dylan")).toHaveLength(2);
+  it("renders the component", () => {
+    render(<SearchJumpTo isSearchActive={() => ({})} />);
+    const wrapper = screen.getByTestId("search-jump-to-form");
+    expect(wrapper).toBeInTheDocument();
   });
 
-  it("renders Helper components in each JumpTo item", () => {
-    render(<SearchJumpTo searchValue="foo" />);
-    const helpers = screen.getAllByTestId("helper");
-    expect(helpers[0]).toHaveTextContent(/in this collection/i);
-    expect(helpers[1]).toHaveTextContent(/all digital collections/i);
-  });
-
-  it("renders route query params in JumpTo items", async () => {
-    render(<SearchJumpTo searchValue="foo" />);
-
-    await act(async () => {
-      await singletonRouter.push({
-        pathname: "/collections/[id]",
-        query: { id: "abc123" },
-      });
-    });
-
-    expect(
-      await screen.findByTestId("helper-anchor-collection")
-    ).toHaveAttribute("href", `/search?collection=Best+Collection+Ever&q=foo`);
-
-    expect(screen.getByTestId("helper-anchor-all")).toHaveAttribute(
-      "href",
-      "/search?q=foo"
+  it("conditionally renders the SearchJumpTo component", async () => {
+    const user = userEvent.setup();
+    render(
+      <div data-testid="page">
+        <span>Outside search form</span>
+        <SearchJumpTo isSearchActive={mockIsSearchActive} />
+      </div>
     );
+    const form = screen.getByTestId("search-jump-to-form");
+
+    await user.type(screen.getByRole("search"), "foo");
+
+    // JumpTo should be visible
+    expect(form).toHaveFormValues({ search: "foo" });
+    expect(screen.getByRole("listbox"));
+
+    // Click outside SearchJumpTo form, it should close JumpTo
+    await user.click(screen.getByText("Outside search form"));
+
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+
+    // Type back in main search input, it should re-open JumpTo
+    await user.type(screen.getByRole("search"), "baz");
+
+    expect(form).toHaveFormValues({
+      search: "foobaz",
+    });
+    expect(screen.getByRole("listbox"));
   });
 });
