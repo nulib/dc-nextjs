@@ -8,7 +8,7 @@ import {
 export const ALL_FACETS: FacetsList = {
   facets: [
     {
-      field: "collection.id",
+      field: "collection.title.keyword",
       id: "collection",
       label: "Collection",
     },

@@ -1,4 +1,5 @@
 import SearchJumpTo from "@/components/Search/JumpTo";
+import { act } from "@testing-library/react";
 import { render } from "@/test-utils";
 import { screen } from "@testing-library/react";
 import singletonRouter from "next/router";
@@ -6,6 +7,13 @@ import singletonRouter from "next/router";
 jest.mock("next/router", () => require("next-router-mock"));
 // This is needed for mocking 'next/link':
 jest.mock("next/dist/client/router", () => require("next-router-mock"));
+
+/** Mock getCollection() to return a Collection title for tests */
+jest.mock("../../lib/collection-helpers", () => ({
+  getCollection: jest.fn().mockResolvedValue({
+    title: "Best Collection Ever",
+  }),
+}));
 
 describe("SearchJumpTo component", () => {
   it("renders search value in listbox items", () => {
@@ -22,16 +30,19 @@ describe("SearchJumpTo component", () => {
   });
 
   it("renders route query params in JumpTo items", async () => {
-    singletonRouter.push({
-      pathname: "/collection/[id]",
-      query: { id: "abc123" },
-    });
     render(<SearchJumpTo searchValue="foo" />);
 
-    expect(screen.getByTestId("helper-anchor-collection")).toHaveAttribute(
-      "href",
-      "/search?collection=abc123&q=foo"
-    );
+    await act(async () => {
+      await singletonRouter.push({
+        pathname: "/collections/[id]",
+        query: { id: "abc123" },
+      });
+    });
+
+    expect(
+      await screen.findByTestId("helper-anchor-collection")
+    ).toHaveAttribute("href", `/search?collection=Best+Collection+Ever&q=foo`);
+
     expect(screen.getByTestId("helper-anchor-all")).toHaveAttribute(
       "href",
       "/search?q=foo"
