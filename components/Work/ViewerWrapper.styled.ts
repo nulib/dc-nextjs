@@ -7,4 +7,16 @@ const ViewerWrapperStyled = styled("section", {
   zIndex: "0",
 });
 
-export { ViewerWrapperStyled };
+const AnnouncementContent = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  "& svg": {
+    height: "$gr4",
+    fill: "$black80",
+    marginRight: "$gr1",
+  },
+});
+
+export { AnnouncementContent, ViewerWrapperStyled };
