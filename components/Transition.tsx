@@ -1,21 +1,23 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { useRouter } from "next/router";
 
-const variants = {
-  in: {
+const variants: Variants = {
+  animate: {
     opacity: 1,
     transition: {
-      delay: 0.25,
-      duration: 0.25,
+      duration: 0.5,
+      ease: "easeInOut",
     },
-    y: 0,
   },
-  out: {
-    opacity: 0,
+  exit: {
+    opacity: 0.9,
     transition: {
-      duration: 0.25,
+      duration: 0.5,
+      ease: "easeInOut",
     },
-    y: 0,
+  },
+  initial: {
+    opacity: 0.9,
   },
 };
 
@@ -28,13 +30,13 @@ const Transition: React.FC<Props> = ({ children }) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <AnimatePresence initial={false} exitBeforeEnter>
+      <AnimatePresence>
         <motion.div
           key={asPath}
           variants={variants}
-          animate="in"
-          initial="out"
-          exit="out"
+          initial="initial"
+          animate="animate"
+          exit="exit"
         >
           {children}
         </motion.div>
