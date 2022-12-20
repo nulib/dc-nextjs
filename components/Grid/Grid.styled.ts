@@ -1,47 +1,66 @@
-import { styled } from "stitches.config";
-import * as Dialog from "@radix-ui/react-dialog";
+import { FigureImageWrapper } from "@/components/Figure/Figure.styled";
 import Masonry from "react-masonry-css";
+import { styled } from "@/stitches.config";
 
-const GridControls = styled("div", {
-  display: "flex",
-  margin: "2.618rem 5vw 1.618rem",
-  maxWidth: "90vw",
-  justifyContent: "space-between",
-
-  div: {
-    transition: "$all",
-    left: "0",
-    position: "relative",
-  },
-
-  ".sticky-filter": {
-    top: "81px !important",
-    zIndex: "1",
-    left: "calc(50% - 40.5px)",
-  },
-});
-
-const GridFilter = styled(Dialog.Trigger, {
-  width: "81px",
-  height: "38px",
-  cursor: "pointer",
-  backgroundColor: "$slate12",
-  border: "0",
-  color: "$slate1",
-  fontSize: "1rem",
-});
+/* eslint sort-keys: 0 */
 
 const GridItem = styled("div", {
-  margin: "0 1rem 0.618rem",
   zIndex: "1",
+
+  a: {
+    textDecoration: "none !important",
+
+    "&:hover, &:focus": {
+      [`& ${FigureImageWrapper}`]: {
+        backgroundColor: "$purple10",
+        outline: "2px solid $purple60",
+        boxShadow: "2px 2px 5px #0003",
+      },
+    },
+  },
 });
 
-const GridStyled = styled(Masonry as any, {
+const GridStyled = styled(Masonry, {
   display: "flex",
-  margin: "auto calc(5vw - 1rem)",
-  maxWidth: "calc(90vw + 2rem)",
   position: "relative",
   zIndex: "0",
+  padding: "0",
+
+  "@xxl": {
+    padding: "0 $gr4",
+  },
+
+  "@xl": {
+    padding: "0 $gr4",
+  },
+
+  "@lg": {
+    padding: "0",
+  },
+
+  [`.grid-column`]: {
+    marginLeft: "$gr4",
+
+    "@xxs": {
+      marginLeft: "$gr2",
+    },
+
+    "@xs": {
+      marginLeft: "$gr2",
+    },
+
+    "@sm": {
+      marginLeft: "$gr3",
+    },
+
+    "@md": {
+      marginLeft: "$gr3",
+    },
+
+    "&:first-child": {
+      marginLeft: "0",
+    },
+  },
 });
 
-export { GridControls, GridFilter, GridItem, GridStyled };
+export { GridItem, GridStyled };

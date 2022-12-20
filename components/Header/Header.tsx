@@ -1,14 +1,26 @@
-import { StyledHeader } from "./Header.styled";
-import HeaderLockup from "./Lockup";
-import HeaderPrimary from "./Primary";
-import HeaderSuper from "./Super";
+import {
+  HeaderStyled,
+  HeaderVariants,
+} from "@/components/Header/Header.styled";
+import HeaderLockup from "@/components/Header/Lockup";
+import HeaderPrimary from "@/components/Header/Primary";
+import HeaderSuper from "@/components/Header/Super";
+import Hero from "@/components/Hero/Hero";
+import { defaultCollection } from "@/lib/constants/homepage";
 
-export default function Header() {
+interface HeaderProps {
+  isHero?: boolean;
+}
+
+const Header: React.FC<HeaderProps & HeaderVariants> = ({ isHero }) => {
   return (
-    <StyledHeader>
+    <HeaderStyled isHero={isHero}>
       <HeaderSuper />
       <HeaderLockup />
       <HeaderPrimary />
-    </StyledHeader>
+      {isHero && <Hero collection={defaultCollection}></Hero>}
+    </HeaderStyled>
   );
-}
+};
+
+export default Header;

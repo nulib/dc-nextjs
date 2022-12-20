@@ -1,16 +1,71 @@
-import Nav from "components/Nav/Nav";
-import { Super } from "components/Header/Header.styled";
+import { Super, User } from "@/components/Header/Header.styled";
+
+import Container from "../Shared/Container";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import Link from "next/link";
+import Nav from "@/components/Nav/Nav";
+import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
+import React from "react";
+import { UserContext } from "@/pages/_app";
+
+const nav = [
+  {
+    href: "https://www.library.northwestern.edu/",
+    label: "Libraries",
+  },
+  {
+    href: "/about",
+    label: "About",
+  },
+  {
+    href: "/contact",
+    label: "Contact",
+  },
+];
 
 export default function HeaderSuper() {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const userAuthContext = React.useContext(UserContext);
+
   return (
     <Super>
-      <a>Northwestern</a>
-      <Nav>
-        <a>Libraries</a>
-        <a>About</a>
-        <a>Contact</a>
-        <a>Sign In</a>
-      </Nav>
+      <Container>
+        <Link href="https://www.northwestern.edu/">
+          <a>{isLoaded && <NorthwesternWordmark />}</a>
+        </Link>
+        <Nav>
+          {nav.map(({ href, label }) => (
+            <Link key={label} href={href}>
+              <a>{label}</a>
+            </Link>
+          ))}
+          {!userAuthContext?.user?.isLoggedIn && (
+            <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
+              <a>Sign in</a>
+            </Link>
+          )}
+          {userAuthContext?.user?.isLoggedIn && (
+            <>
+              <User>{userAuthContext.user.name}</User>
+              <a
+                href={`${DCAPI_ENDPOINT}/auth/logout`}
+                style={{
+                  cursor: "pointer",
+                  paddingLeft: "8px",
+                  textDecoration: "underline",
+                }}
+              >
+                Logout
+              </a>
+            </>
+          )}
+        </Nav>
+      </Container>
     </Super>
   );
 }

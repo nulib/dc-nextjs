@@ -1,4 +1,6 @@
-import { styled } from "../../stitches.config";
+import { styled } from "@/stitches.config";
+
+/* eslint sort-keys: 0 */
 
 const NavStyled = styled("nav", {
   display: "flex",
@@ -7,7 +9,7 @@ const NavStyled = styled("nav", {
   flexGrow: "0",
 
   a: {
-    padding: "0 1.618rem",
+    textDecoration: "none",
   },
 });
 

@@ -1,30 +1,63 @@
-import { useState } from "react";
-import Sticky from "react-sticky-el";
-import { Primary } from "components/Header/Header.styled";
-import Nav from "components/Nav/Nav";
-import Search from "components/Search/Search";
+import { Primary, PrimaryInner } from "@/components/Header/Header.styled";
+import { useEffect, useRef, useState } from "react";
+import Container from "@/components/Shared/Container";
+import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
+import Nav from "@/components/Nav/Nav";
+import Search from "@/components/Search/Search";
+import useElementPosition from "@/hooks/useElementPosition";
+import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 const HeaderPrimary: React.FC = () => {
-  const [searchActive, setSearchActive] = useState(false);
+  const router = useRouter();
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+
+  const { searchDispatch, searchState } = useSearchState();
+  const { searchFixed } = searchState;
+
+  const primaryRef = useRef<HTMLDivElement>(null);
+  const scrollPosition = useElementPosition(primaryRef);
+
+  useEffect(
+    () =>
+      searchDispatch({
+        searchFixed: scrollPosition >= 0,
+        type: "updateSearchFixed",
+      }),
+    [searchDispatch, scrollPosition]
+  );
 
   const handleIsSearchActive = (status: boolean) => {
     setSearchActive(status);
   };
 
   return (
-    <Sticky stickyClassName="sticky-primary">
-      <Primary data-search-active={searchActive}>
-        <span>Northwestern</span>
-        <div>
-          <Nav>
-            <a>Items</a>
-            <Link href="/collection/list">Collections</Link>
-          </Nav>
-          <Search isSearchActive={handleIsSearchActive} />
-        </div>
+    <>
+      <Primary
+        data-search-active={searchActive}
+        data-search-fixed={searchFixed}
+        data-testid="header-primary-ui-component"
+        ref={primaryRef}
+      >
+        <Container>
+          <Heading as="span">
+            <strong>N</strong>
+          </Heading>
+          <PrimaryInner>
+            <Search
+              isSearchActive={handleIsSearchActive}
+              {...(router.pathname.includes("collection")
+                ? { jumpTo: "collection" }
+                : undefined)}
+            />
+            <Nav>
+              <Link href="/collections">Browse Collections</Link>
+            </Nav>
+          </PrimaryInner>
+        </Container>
       </Primary>
-    </Sticky>
+    </>
   );
 };
 

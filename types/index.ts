@@ -1,15 +1,3 @@
-export interface AdministrativeMetadata {
-  libraryUnit: any;
-  preservationLevel: any;
-  projectCycle: string;
-  projectDesc: Array<string>;
-  projectManager: Array<string>;
-  projectName: Array<string>;
-  projectProposer: Array<string>;
-  projectTaskNumber: Array<string>;
-  status: any;
-}
-
 export interface Collection {
   adminEmail: string | null;
   createDate: Date;
@@ -26,6 +14,24 @@ export interface Collection {
   visibility: Visibility;
 }
 
+export type ObjectLiteral =
+  | {
+      [key: string]: never;
+    }
+  | {
+      [key: string]: string[];
+    };
+
+export type OpenGraphData = {
+  "og:description": string;
+  "og:image"?: string;
+  "og:image:secure_url"?: string;
+  "og:site_name": string;
+  "og:title": string;
+  "og:type": string;
+  "og:url": string;
+};
+
 export interface Model {
   application: string;
   name: string;
@@ -34,6 +40,10 @@ export interface Model {
 export interface RepresentativeImage {
   url: string;
   workId: string;
+}
+
+export interface UserFacets {
+  [key: string]: string[];
 }
 
 enum VisibilityID {
@@ -51,21 +61,22 @@ export interface Visibility {
   scheme: string;
 }
 
-export interface Work {
-  accessionNumber: string;
-  administrativeMetadata: AdministrativeMetadata;
-  alternateTitle: Array<string>;
-  batches: Array<string>;
-  collection: {
-    id: string;
-    title: string;
-  };
-  collectionTitle: string;
-  contributor: Array<string>;
-  createDate: string;
-  creator: Array<string>;
-  dateCreated: Array<string>;
-  description: Array<string>;
-  descriptiveMetadata: any;
-  // Do we really need this?
+export interface WorkType {
+  label: "Audio" | "Image" | "Video";
+}
+
+export interface FacetBucketAgg {
+  key: string;
+  doc_count: number;
+}
+export interface FilteredFacets {
+  [key: string]: [FacetBucketAgg];
+}
+export interface FilteredFacet {
+  facetId: string;
+  buckets: Array<FacetBucketAgg>;
+}
+
+export interface FacetFilterValues {
+  [key: string]: string;
 }

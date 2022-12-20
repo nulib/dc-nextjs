@@ -1,0 +1,78 @@
+{
+  "id": "http://localhost:3000/fixtures/iiif/manifest/wisconsin-1937.json",
+  "items": [
+    {
+      "duration": 1486.542,
+      "height": 480,
+      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/4b/19/3e/9d/-5/32/6-/42/08/-a/cf/6-/7d/a7/e3/6b/af/2c-manifest.json/canvas/b287374d-c6eb-48bc-ad38-43533fe32926",
+      "items": [
+        {
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/4b/19/3e/9d/-5/32/6-/42/08/-a/cf/6-/7d/a7/e3/6b/af/2c-manifest.json/canvas/b287374d-c6eb-48bc-ad38-43533fe32926/annotation_page/1",
+          "items": [
+            {
+              "body": {
+                "duration": 1486.542,
+                "format": "video/mp4",
+                "height": 1080,
+                "id": "https://meadow-streaming.rdc.library.northwestern.edu/b2/87/37/4d/-c/6e/b-/48/bc/-a/d3/8-/43/53/3f/e3/29/26/numedia_32767-inu-fball_ac_1937_wisconsin.m3u8",
+                "type": "Video",
+                "width": 1920
+              },
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/4b/19/3e/9d/-5/32/6-/42/08/-a/cf/6-/7d/a7/e3/6b/af/2c-manifest.json/canvas/b287374d-c6eb-48bc-ad38-43533fe32926/annotation_page/1/annotation/1",
+              "motivation": "painting",
+              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/4b/19/3e/9d/-5/32/6-/42/08/-a/cf/6-/7d/a7/e3/6b/af/2c-manifest.json/canvas/b287374d-c6eb-48bc-ad38-43533fe32926",
+              "type": "Annotation"
+            }
+          ],
+          "type": "AnnotationPage"
+        }
+      ],
+      "label": {
+        "en": ["numedia_32767-inu-fball_ac_1937_wisconsin.mp4"]
+      },
+      "thumbnail": [
+        {
+          "format": "image/jpeg",
+          "height": 300,
+          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926/full/!300,300/0/default.jpg",
+          "service": [
+            {
+              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926",
+              "profile": "http://iiif.io/api/image/2/level2.json",
+              "type": "ImageService2"
+            }
+          ],
+          "type": "Image",
+          "width": 300
+        },
+        {
+          "duration": 30,
+          "format": "video/mp4",
+          "height": 200,
+          "id": "https://meadow-streaming.rdc.library.northwestern.edu/b2/87/37/4d/-c/6e/b-/48/bc/-a/d3/8-/43/53/3f/e3/29/26/numedia_32767-inu-fball_ac_1937_wisconsin.m3u8#t=200,230",
+          "type": "Video",
+          "width": 200
+        }
+      ],
+      "type": "Canvas",
+      "width": 640
+    }
+  ],
+  "label": {
+    "en": ["Northwestern Football vs. Wisconsin, 1937"]
+  },
+  "requiredStatement": {
+    "label": {
+      "en": ["Attribution"]
+    },
+    "value": {
+      "en": ["Courtesy of Northwestern University Libraries"]
+    }
+  },
+  "rights": "http://rightsstatements.org/vocab/InC-EDU/1.0/",
+  "summary": {
+    "en": ["Final Score: NU 14, Wisconsin 6. Coach: Lynn \"Pappy\" Waldorf"]
+  },
+  "type": "Manifest",
+  "@context": "http://iiif.io/api/presentation/3/context.json"
+}

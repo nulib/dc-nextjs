@@ -1,11 +1,32 @@
-import { styled } from "../../stitches.config";
+import { styled } from "@/stitches.config";
 
-const Wrapper = styled("div", {
+/* eslint sort-keys: 0 */
+
+const SearchStyled = styled("form", {
   position: "relative",
   display: "flex",
   flexShrink: "0",
   flexGrow: "1",
-  backgroundColor: "$slate3",
+  backgroundColor: "$white",
+  height: "$gr5",
+  marginRight: "$gr5",
+  boxShadow: "inset 0 -1px 0 #f0f0f0",
+
+  svg: {
+    position: "absolute",
+    display: "flex",
+    left: "0",
+    height: "$gr5",
+    width: "$gr5",
+    justifyContent: "center",
+    textAlign: "center",
+    alignItems: "center",
+    border: "none",
+    backgroundColor: "transparent",
+    zIndex: "0",
+    fill: "$black80",
+    padding: "$gr2",
+  },
 });
 
 const Input = styled("input", {
@@ -14,37 +35,29 @@ const Input = styled("input", {
   width: "100%",
   border: "none",
   backgroundColor: "transparent",
-  padding: "0 2.618rem",
-  fontSize: "15px",
+  padding: "2px $gr5 0",
+  fontSize: "$gr3",
   zIndex: "1",
+  fontFamily: "$northwesternSansRegular",
 });
 
 const Button = styled("button", {
-  position: "absolute",
-  display: "flex",
-  left: "0",
-  height: "50px",
-  width: "50px",
-  justifyContent: "center",
-  textAlign: "center",
-  alignItems: "center",
-  cursor: "pointer",
   border: "none",
-  backgroundColor: "transparent",
-  zIndex: "0",
-
-  svg: {
-    fill: "$slate9",
-    padding: "10px",
-  },
+  backgroundColor: "$gray6",
+  padding: "2px $3 0",
+  color: "$purple",
+  fontSize: "$gr4",
+  fontFamily: "$northwesternSansBold",
+  cursor: "pointer",
+  textRendering: "optimizeLegibility",
 });
 
 const Clear = styled("button", {
   position: "absolute",
   display: "flex",
-  right: "0",
-  height: "50px",
-  width: "50px",
+  right: "5rem",
+  height: "$gr5",
+  width: "$gr5",
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
@@ -54,9 +67,9 @@ const Clear = styled("button", {
   zIndex: "1",
 
   svg: {
-    fill: "$slate9",
-    padding: "10px",
+    fill: "$black50",
+    padding: "$gr1",
   },
 });
 
-export { Button, Clear, Input, Wrapper };
+export { Button, Clear, Input, SearchStyled };

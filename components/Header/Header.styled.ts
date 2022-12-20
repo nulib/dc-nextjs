@@ -1,55 +1,128 @@
-import { styled } from "../../stitches.config";
-import { NavStyled } from "../Nav/Nav.styled";
-import { Wrapper, Input, Button } from "../Search/Search.styled";
+import { VariantProps, styled } from "@/stitches.config";
+import { ContainerStyled } from "@/components/Shared/Container";
+import { HeroStyled } from "@/components/Hero/Hero.styled";
+import { NavStyled } from "@/components/Nav/Nav.styled";
+import { SearchStyled } from "@/components/Search/Search.styled";
+
+/* eslint sort-keys: 0 */
 
 const Lockup = styled("div", {
-  alignItems: "center",
+  position: "relative",
+  padding: "$gr4 0 $gr5",
+  fontSize: "$gr6",
+  fontFamily: "$northwesternSansLight",
+  zIndex: "1",
+
+  a: {
+    color: "$white !important",
+    textDecoration: "none",
+  },
+});
+
+const PrimaryInner = styled("div", {
   display: "flex",
-  padding: "31px 5vw 50px",
-  fontSize: "25px",
+  flexGrow: "1",
+  alignItems: "center",
 });
 
 const Primary = styled("div", {
-  backgroundColor: "white",
-  color: "$slate12",
+  color: "$black",
   display: "flex",
-  width: "90vw",
   margin: "0 auto",
-  height: "50px",
   zIndex: "1",
   transition: "$all",
-  justifyContent: "space-between",
+  position: "relative",
+  top: "unset",
+  height: "$gr5",
 
-  "> span": {
+  [`& ${ContainerStyled}`]: {
     display: "flex",
-    width: "0",
-    opacity: "0",
-    justifyContent: "center",
-    textAlign: "center",
+    alignContent: "center",
     alignItems: "center",
-    flexGrow: "0",
+    justifyContent: "space-between",
+    flexGrow: "1",
+    transition: "$all",
+
+    [`& ${NavStyled}`]: {
+      backgroundColor: "$gray6",
+      color: "$purple",
+      fontSize: "$gr4",
+      fontFamily: "$northwesternSansBold",
+      paddingTop: "2px",
+      display: "flex",
+      height: "$gr5",
+
+      a: {
+        display: "flex",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "0 $gr3",
+      },
+    },
+
+    "> span": {
+      display: "flex",
+      width: "0",
+      opacity: "0",
+      justifyContent: "center",
+      textAlign: "center",
+      alignItems: "center",
+      flexGrow: "0",
+    },
   },
 
-  "> div": {
-    display: "flex",
-    flexGrow: "1",
+  "&[data-search-fixed='true']": {
+    [`& ${ContainerStyled}`]: {
+      position: "fixed",
+      top: "0",
+      maxWidth: "100%",
+      backgroundColor: "white",
+      boxShadow: "0px 3px 11px #0003",
+
+      "> span": {
+        opacity: "1",
+        width: "$gr5",
+      },
+
+      [`& ${NavStyled}`]: {
+        width: "0",
+        opacity: "0",
+      },
+
+      [`& ${SearchStyled}`]: {
+        marginRight: "0",
+      },
+    },
   },
 });
 
 const Super = styled("div", {
-  backgroundColor: "$slate12",
-  color: "$slate1",
-  height: "50px",
-  alignItems: "center",
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "0 5vw",
+  position: "relative",
+  backgroundColor: "$purple120",
+  color: "$purple10",
+  zIndex: "1",
+
+  [`& ${ContainerStyled}`]: {
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    svg: {
+      height: "$gr3",
+      fill: "$white",
+    },
+  },
 
   [`& ${NavStyled}`]: {
-    fontSize: "12px",
+    fontSize: "$gr2",
+    height: "$gr5",
 
     a: {
-      padding: "0 1rem",
+      padding: "0 $gr2",
+      color: "$white !important",
+      textDecoration: "none",
 
       "&:last-child": {
         paddingRight: "0",
@@ -58,78 +131,80 @@ const Super = styled("div", {
   },
 });
 
-const StyledHeader = styled("header", {
-  backgroundColor: "$slate7",
-  color: "$slate12",
-  display: "flex",
+const User = styled("span", {
+  "&:before": {
+    content: "-",
+    display: "inline-block",
+    paddingRight: "$gr2",
+  },
+});
+
+const HeaderStyled = styled("header", {
+  backgroundColor: "$purple",
+  color: "$white",
   flexDirection: "column",
-  marginBottom: "5px",
 
-  ".sticky-primary": {
-    zIndex: "1",
+  variants: {
+    isHero: {
+      true: {
+        height: "100vh",
+        minHeight: "500px",
+        maxHeight: "800px",
+        backgroundColor: "$black",
+        position: "relative",
+        zIndex: "1",
 
-    [`& ${Primary}`]: {
-      backgroundColor: "$slate12",
-      color: "$slate1",
-      width: "100vw",
-      justifyContent: "space-between",
+        [`& ${Lockup}`]: {
+          textShadow: "1px 1px 3px #0003",
+        },
 
-      "> span": {
-        opacity: "1",
-        width: "auto",
-        padding: "0 1rem",
-        transition: "$all",
+        [`& ${Primary}`]: {
+          [`& ${SearchStyled}, & ${NavStyled}`]: {
+            boxShadow: "3px 8px 19px #0003",
+          },
+        },
+
+        [`& ${HeroStyled}`]: {
+          height: `calc(100% - 50px) !important`,
+          top: "50px !important",
+          marginTop: "0 !important",
+
+          ".swiper": {
+            ".swiper-wrapper::before": {
+              background:
+                "linear-gradient(173deg, $purple 0%, #4E2A84dd 12%, #0000 31%)",
+            },
+
+            ".slide-inner": {
+              justifyContent: "flex-end",
+            },
+
+            ".swiper-slide": {
+              figure: {
+                "&::before": {
+                  background:
+                    "linear-gradient(7deg, #000a 0%, #000a 20%, #0000 61.8%)",
+                },
+
+                "img, video": {
+                  opacity: "1 !important",
+                },
+
+                figcaption: {
+                  bottom: "$gr6",
+                  alignItems: "flex-end",
+                  marginRight: "$gr5",
+                  textAlign: "right",
+                },
+              },
+            },
+          },
+        },
       },
-
-      "> div": {
-        flexGrow: "0",
-      },
-
-      "&[data-search-active='true']": {
-        "> span": {
-          opacity: "0",
-          padding: "0",
-          width: "0",
-        },
-
-        "> div": {
-          flexGrow: "1",
-        },
-
-        [`& ${NavStyled}`]: {
-          width: "0",
-          opacity: "0",
-        },
-
-        [`& ${Input}`]: {
-          width: "100%",
-          padding: "0 2.618rem",
-          color: "$slate1",
-          cursor: "unset",
-          opacity: "1",
-          marginRight: "0",
-        },
-
-        [`& ${Button}`]: {
-          left: "0",
-        },
-      },
-    },
-
-    [`& ${Input}`]: {
-      width: "50px",
-      backgroundColor: "transparent",
-      color: "$slate1",
-      cursor: "pointer",
-      padding: "0",
-      opacity: "0",
-      marginRight: "1rem",
-    },
-
-    [`& ${Wrapper}`]: {
-      backgroundColor: "unset",
     },
   },
 });
 
-export { Lockup, Primary, Super, StyledHeader };
+export type HeaderVariants = VariantProps<typeof HeaderStyled>;
+
+export { Lockup, Primary, PrimaryInner, HeaderStyled, Super, User };

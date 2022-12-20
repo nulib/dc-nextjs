@@ -1,27 +1,37 @@
-import Figure from "components/Figure/Figure";
-import { results } from "mocks/results";
-import { GridControls, GridFilter, GridItem, GridStyled } from "./Grid.styled";
-import Topics from "components/Topics/Topics";
-import Sticky from "react-sticky-el";
-import * as Dialog from "@radix-ui/react-dialog";
-import Filter from "components/Filter/Filter";
+import GridItem from "@/components/Grid/Item";
+import { GridStyled } from "@/components/Grid/Grid.styled";
+import React from "react";
+import { SearchShape } from "@/types/api/response";
+import { width } from "@/styles/media";
 
-export default function Grid() {
-  return (
-    <>
-      <GridControls>
-        <Sticky topOffset={-81} stickyClassName="sticky-filter">
-          <Filter />
-        </Sticky>
-        <Topics />
-      </GridControls>
-      <GridStyled breakpointCols={4}>
-        {results.map((result, index) => (
-          <GridItem key={index}>
-            <Figure data={result} />
-          </GridItem>
-        ))}
-      </GridStyled>
-    </>
-  );
+interface GridProps {
+  data: SearchShape[];
+  info: { total?: number };
 }
+
+const Grid: React.FC<GridProps> = ({ data = [] }) => {
+  const breakpointColumns = {
+    default: 5,
+    [width.xl]: 5,
+    [width.lg]: 4,
+    [width.md]: 3,
+    [width.sm]: 2,
+    [width.xs]: 2,
+  };
+
+  if (!data) return <></>;
+
+  return (
+    <GridStyled
+      breakpointCols={breakpointColumns}
+      className="grid"
+      columnClassName="grid-column"
+    >
+      {data.map((item: SearchShape) => (
+        <GridItem item={item} key={item.id} />
+      ))}
+    </GridStyled>
+  );
+};
+
+export default Grid;

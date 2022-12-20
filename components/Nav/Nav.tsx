@@ -1,5 +1,12 @@
 import { NavStyled } from "./Nav.styled";
+import { ReactNode } from "react";
 
-export default function Nav({ children }) {
-  return <NavStyled>{children}</NavStyled>;
+interface NavProps {
+  children: ReactNode;
 }
+
+const Nav: React.FC<NavProps> = ({ children }) => {
+  return <NavStyled>{children}</NavStyled>;
+};
+
+export default Nav;
