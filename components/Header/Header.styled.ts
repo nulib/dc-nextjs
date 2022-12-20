@@ -1,6 +1,5 @@
 import { VariantProps, styled } from "@/stitches.config";
 import { ContainerStyled } from "@/components/Shared/Container";
-import { HeroStyled } from "@/components/Hero/Hero.styled";
 import { NavStyled } from "@/components/Nav/Nav.styled";
 import { SearchStyled } from "@/components/Search/Search.styled";
 
@@ -147,57 +146,13 @@ const HeaderStyled = styled("header", {
   variants: {
     isHero: {
       true: {
-        height: "100vh",
-        minHeight: "500px",
-        maxHeight: "800px",
-        backgroundColor: "$black",
-        position: "relative",
-        zIndex: "1",
-
         [`& ${Lockup}`]: {
           textShadow: "1px 1px 3px #0003",
         },
 
         [`& ${Primary}`]: {
           [`& ${SearchStyled}, & ${NavStyled}`]: {
-            boxShadow: "3px 8px 19px #0003",
-          },
-        },
-
-        [`& ${HeroStyled}`]: {
-          height: `calc(100% - 50px) !important`,
-          top: "50px !important",
-          marginTop: "0 !important",
-
-          ".swiper": {
-            ".swiper-wrapper::before": {
-              background:
-                "linear-gradient(173deg, $purple 0%, #4E2A84dd 12%, #0000 31%)",
-            },
-
-            ".slide-inner": {
-              justifyContent: "flex-end",
-            },
-
-            ".swiper-slide": {
-              figure: {
-                "&::before": {
-                  background:
-                    "linear-gradient(7deg, #000a 0%, #000a 20%, #0000 61.8%)",
-                },
-
-                "img, video": {
-                  opacity: "1 !important",
-                },
-
-                figcaption: {
-                  bottom: "$gr6",
-                  alignItems: "flex-end",
-                  marginRight: "$gr5",
-                  textAlign: "right",
-                },
-              },
-            },
+            boxShadow: "8px 8px 19px #0003",
           },
         },
       },

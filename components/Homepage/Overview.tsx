@@ -3,13 +3,13 @@ import {
   Images,
   Inner,
   OverviewStyled,
-} from "@/components/Home/Overview.styled";
+} from "@/components/Homepage/Overview.styled";
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
 import { Thumbnail } from "@samvera/nectar-iiif";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 
-const Overview = () => {
+const HomepageOverview = () => {
   return (
     <OverviewStyled>
       <Container>
@@ -33,4 +33,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default HomepageOverview;
