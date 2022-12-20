@@ -1,6 +1,12 @@
+import {
+  AnnouncementContent,
+  ViewerWrapperStyled,
+} from "@/components/Work/ViewerWrapper.styled";
+import Announcement from "@/components/Shared/Announcement";
+import { IconInfo } from "@/components/Shared/SVG/Icons";
 import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
-import { ViewerWrapperStyled } from "@/components/Work/ViewerWrapper.styled";
+import { UserContext } from "@/pages/_app";
 import dynamic from "next/dynamic";
 
 export const CloverIIIF: React.ComponentType<{
@@ -21,6 +27,8 @@ interface WrapperProps {
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
+  const userAuth = React.useContext(UserContext);
+
   const customTheme = {
     colors: {
       accent: "$purple",
@@ -57,6 +65,14 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
           id={manifestId}
           options={options}
         />
+      )}
+      {userAuth?.user?.isReadingRoom && (
+        <Announcement>
+          <AnnouncementContent>
+            <IconInfo />
+            <p>You have access to Work because you are in the reading room</p>
+          </AnnouncementContent>
+        </Announcement>
       )}
     </ViewerWrapperStyled>
   );
