@@ -89,7 +89,7 @@ export const getHeroCollection = (collection: CollectionShape) => {
     return seeAlso;
   };
 
-  const searchUrl = `${DC_URL}/search?q=${id}`;
+  const searchUrl = `${DC_URL}/search?collection=${title}`;
 
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",
