@@ -13,6 +13,7 @@ const Description = styled("p", {
 const HeroWrapper = styled("div", {
   height: "375px",
   position: "relative",
+  pointerEvents: "none",
 });
 
 const Interstitial = styled("div", {

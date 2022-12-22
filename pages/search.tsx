@@ -144,7 +144,7 @@ export async function getStaticProps() {
   });
 
   const openGraphData = {
-    "og:url": `${PRODUCTION_URL}/contact`,
+    "og:url": `${PRODUCTION_URL}/search`,
   };
 
   return {

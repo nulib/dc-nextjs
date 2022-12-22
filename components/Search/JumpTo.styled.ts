@@ -2,17 +2,18 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const SearchJumpToStyled = styled("ul", {
+const JumpToListStyled = styled("ul", {
   position: "absolute",
   left: "0px",
   display: "block",
   margin: "0",
   padding: "0",
   background: "white",
-  width: "calc(100% - $gr5)",
+  width: "100%",
   fontSize: "$gr3",
   listStyle: "none",
   top: "50px",
+  border: "1px solid $black10",
 });
 
 const JumpItem = styled("li", {
@@ -25,10 +26,10 @@ const JumpItem = styled("li", {
     borderTopColor: "$black20",
     borderTopStyle: "solid",
     cursor: "pointer",
+  },
 
-    "&:hover": {
-      background: "$black10",
-    },
+  "&[aria-selected='true']": {
+    background: "$purple10",
   },
 });
 
@@ -37,12 +38,12 @@ const HelperStyled = styled("div", {
   top: "$gr2",
   right: "$gr2",
   padding: "0 $gr2",
-  background: "$black50",
+  background: "$purple60",
   color: "$white",
   display: "flex",
   alignItems: "center",
 
-  "& svg": {
+  "& > svg": {
     position: "relative",
     display: "inline-block",
     padding: "0",
@@ -52,4 +53,4 @@ const HelperStyled = styled("div", {
   },
 });
 
-export { HelperStyled, JumpItem, SearchJumpToStyled };
+export { HelperStyled, JumpItem, JumpToListStyled };
