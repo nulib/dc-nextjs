@@ -50,7 +50,7 @@ export async function getCollectionIds(): Promise<Array<string>> {
           order: {
             _count: "asc",
           },
-          size: 100,
+          size: 1,
         },
       },
     },
