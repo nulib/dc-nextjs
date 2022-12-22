@@ -43,13 +43,20 @@ const Message = () => {
       <Container>
         <MessageContent>
           <div>
-            <MessageTitle>Donec sollicitudin molestie massa</MessageTitle>
+            <MessageTitle>Potentially harmful content</MessageTitle>
             <MessageText>
-              Nulla fringilla elementum odio eget efficitur. Mauris placerat
-              velit sapien, vitae gravida nibh feugiat at. Sed a congue turpis.
-              Aliquam nibh nulla, ullamcorper non purus vel, cursus interdum
-              augue. Suspendisse turpis ex, mollis non consequat quis, interdum
-              vel diam.
+              Northwestern University Libraries Digital Collections contain
+              materials that reflect the beliefs and norms of the era and
+              culture in which they were created or collected. The site contains
+              offensive imagery, language, or opinions related to a white
+              supremist, exploitative, and/or discriminatory culture.
+              Additionally, this site contains sexual content or violence that
+              may not be appropriate for all audiences. The Libraries are
+              committed to the ethical digitization and description of materials
+              that offer alternative histories and center voices from
+              marginalized cultures. If you have questions or concerns about the
+              materials, please refer to our “Retention of Challenged Materials”
+              policy with more information about how to contact us.
             </MessageText>
           </div>
           <div>

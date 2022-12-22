@@ -11,6 +11,10 @@ const MessageContent = styled("div", {
 
   "& div:first-child": {
     marginRight: "$gr6",
+
+    "@md": {
+      marginRight: "0",
+    },
   },
 
   button: {
@@ -31,6 +35,12 @@ const MessageText = styled("span", {
   display: "block",
   fontFamily: "$northwesternSansLight",
   fontSize: "$gr3",
+  maxHeight: "$gr6",
+  overflowY: "scroll",
+
+  "@md": {
+    maxHeight: "$gr7",
+  },
 });
 
 const MessageStyled = styled("div", {
