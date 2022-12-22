@@ -72,4 +72,14 @@ const Clear = styled("button", {
   },
 });
 
-export { Button, Clear, Input, SearchStyled };
+const Results = styled("p", {
+  color: "$black50",
+  padding: "0 $gr4",
+  fontSize: "$gr3",
+
+  "@md": {
+    padding: "0",
+  },
+});
+
+export { Button, Clear, Input, Results, SearchStyled };
