@@ -38,8 +38,9 @@ const CollectionList: NextPage<CollectionListProps> = ({ collectionList }) => {
   const [items, setItems] = useState<CollectionListShape[]>([]);
   const [search, setSearch] = useState("");
 
-  const handleSearch = (input: ChangeEvent<HTMLInputElement>) => {
-    setSearch(input?.target?.value.toLowerCase());
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setSearch(event?.target?.value.toLowerCase());
   };
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const CollectionList: NextPage<CollectionListProps> = ({ collectionList }) => {
       <Layout>
         <Container>
           <Heading as="h1">All Collections</Heading>
-          <StyledForm>
+          <StyledForm onSubmit={(e) => e.preventDefault()}>
             <StyledInput
               placeholder="Filter collections"
               onChange={handleSearch}
@@ -75,9 +76,9 @@ const CollectionList: NextPage<CollectionListProps> = ({ collectionList }) => {
           {items.length > 0 ? (
             items.map((item) => <CollectionItem {...item} key={item.id} />)
           ) : (
-            <span>
+            <p>
               No results found for <strong>{search}</strong>.
-            </span>
+            </p>
           )}
         </Container>
       </Layout>
