@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
 interface SearchProps {
@@ -21,15 +22,14 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const { urlFacets } = useQueryParams();
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     router.push({
       pathname: "/search",
-      query: {
-        q: searchValue,
-      },
+      query: { q: searchValue, ...urlFacets },
     });
   };
 
@@ -45,7 +45,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const clearSearchResults = () => {
     setSearchValue("");
     if (search.current) search.current.value = "";
-    router.push("/search");
+    router.push({
+      pathname: "/search",
+      query: { ...urlFacets },
+    });
   };
 
   useEffect(() => {
@@ -84,7 +87,9 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           <IconClear />
         </Clear>
       )}
-      <Button type="submit">Search</Button>
+      <Button type="submit" data-testid="submit-button">
+        Search
+      </Button>
       {isLoaded && <IconSearch />}
     </SearchStyled>
   );
