@@ -21,23 +21,15 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 Commits to the `deploy/staging` branch will trigger a build in an AWS Amplify Hosting solution.
 
-### Static build
+Commits prefaced with `preview/branch-name-here` will deploy to a preview branch
 
-This app could be deployed statically, but will not support [these NextJS features](https://nextjs.org/docs/advanced-features/static-html-export#unsupported-features).
+### Data fetching
 
-To test a static deploy, run:
+Currently in the Amplify AWS environment (Dec 2022), note that SSR (Server Side Rendering), will not pass authentication JWT tokens properly.
 
-```bash
-// Build static files to the /out directory
-npm run export
+The primary dynamic route pages (`items/[id]` and `collections/[id]`), will support [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration), but we'll keep build time routes to statically generate at 1 for both a Work and Collection.
 
-// Serve locally from the /out directory
-cd out
-npx serve
-
-// Open up your locally hosted url and view the static site
-
-```
+````
 
 ## Code Quality
 
@@ -45,7 +37,7 @@ The app uses ESLint with a plugin for TypeScript support.
 
 ```bash
 npm run lint
-```
+````
 
 Run Typescript's `tsc` compiler for type-checking directly.
 
