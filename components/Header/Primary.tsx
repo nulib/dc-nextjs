@@ -16,8 +16,10 @@ const HeaderPrimary: React.FC = () => {
 
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
-  const { searchDispatch, searchState } = useSearchState();
-  const { searchFixed } = searchState;
+  const {
+    searchDispatch,
+    searchState: { searchFixed },
+  } = useSearchState();
 
   const primaryRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useElementPosition(primaryRef);

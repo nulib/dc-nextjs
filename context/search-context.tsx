@@ -19,7 +19,6 @@ type SearchProviderProps = {
 
 const defaultState: SearchContextStore = {
   aggregations: {},
-  q: "",
   searchFixed: false,
 };
 
