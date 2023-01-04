@@ -3,9 +3,10 @@ import Figure from "@/components/Figure/Figure";
 import Link from "next/link";
 import { LinkStyled } from "@/components/Shared/LinkStyled";
 import React from "react";
+import ReadMore from "./ReadMore";
 
 export interface CardProps {
-  description?: string;
+  description?: string | null;
   href?: string;
   imageUrl: string;
   supplementalInfo?: string;
@@ -38,7 +39,11 @@ const Card: React.FC<CardProps> = ({
         <Figure data={data} isPromoted />
       )}
 
-      {description && <p data-testid="card-description">{description}</p>}
+      {description && (
+        <p data-testid="card-description">
+          <ReadMore text={description} words={30} />
+        </p>
+      )}
     </CardStyled>
   );
 };
