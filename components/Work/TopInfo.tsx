@@ -126,7 +126,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
             {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
             <Card
               title={work.collection?.title}
-              description="Cras mollis lorem sed nisi consequat aliquet. Mauris fringilla pretium nibh, ut laoreet mi luctus nec. Integer luctus urna sed nisi rhoncus mollis."
+              description={work.collection?.description}
               href={`/collections/${work.collection?.id}`}
               imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
               supplementalInfo={buildWorkCountsText()}

@@ -102,13 +102,15 @@ const FigureStyled = styled("figure", {
   variants: {
     isPromoted: {
       true: {
+        paddingBottom: "$gr3",
+
         [`& ${FigureTitle}`]: {
           fontSize: "$5",
-          fontFamily: "$northwesternDisplayBold",
+          fontFamily: "$northwesternDisplayBook",
         },
 
         [`& ${FigureSupplementalInfo}`]: {
-          fontSize: "$3",
+          fontSize: "$2",
         },
       },
     },
