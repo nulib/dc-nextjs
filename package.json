@@ -47,6 +47,7 @@
     "@iiif/presentation-3": "^2.0.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.0.4",
     "@types/node": "^18.11.18",
     "@types/openseadragon": "^3.0.4",
