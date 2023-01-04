@@ -4,7 +4,7 @@ import { Options } from "./GenericFacet.styled";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { useFilterState } from "@/context/filter-context";
-import { useSearchState } from "@/context/search-context";
+import useQueryParams from "@/hooks/useQueryParams";
 
 interface FacetOptionsProps {
   aggsFilterValue: string;
@@ -16,9 +16,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   facet,
 }) => {
   const facetInstance = facet ? [facet] : undefined;
-  const {
-    searchState: { q },
-  } = useSearchState();
+  const { searchTerm } = useQueryParams();
 
   const {
     filterState: { userFacetsUnsubmitted },
@@ -27,7 +25,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   const { data, error, loading } = useFetchApiData({
     activeFacets: facetInstance,
     aggsFilterValue,
-    searchTerm: q,
+    searchTerm,
     size: 0,
     urlFacets: userFacetsUnsubmitted,
   });

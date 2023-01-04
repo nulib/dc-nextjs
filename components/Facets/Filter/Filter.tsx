@@ -12,14 +12,11 @@ import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useSearchState } from "@/context/search-context";
 
 const DialogWrapper: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { filterDispatch } = useFilterState();
-  const { searchState } = useSearchState();
-  const { q } = searchState;
-  const { urlFacets } = useQueryParams();
+  const { searchTerm, urlFacets } = useQueryParams();
 
   const handleDialogChange = () => {
     /**
@@ -49,7 +46,7 @@ const DialogWrapper: React.FC = () => {
       <Dialog.Portal>
         <DialogOverlay />
         <FilterContent data-testid="modal-content">
-          <FilterModal q={q} setIsModalOpen={setIsModalOpen} />
+          <FilterModal q={searchTerm} setIsModalOpen={setIsModalOpen} />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>
