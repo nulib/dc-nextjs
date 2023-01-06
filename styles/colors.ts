@@ -37,9 +37,19 @@ const basic = {
   gray6: "#f0f0f0",
 };
 
+/**
+ * influence bloom-iiif color tokens
+ */
+const bloom = {
+  accent: `${purple.purple} !important`,
+  accentAlt: `${purple.purple60} !important`,
+  secondary: `${basic.white} !important`,
+};
+
 const colors = {
   ...basic,
   ...black,
+  ...bloom,
   ...purple,
   ...secondary,
   ...slate, // work this out and replace with brand colors.

@@ -1,4 +1,4 @@
-import { BloomIIIFWrapper } from "@/components/BloomWrapper";
+import BloomIIIFWrapper from "@/components/BloomWrapper";
 import ExpandableList from "@/components/Shared/ExpandableList";
 import { GenericAggsReturn } from "@/lib/collection-helpers";
 import Heading from "@/components/Heading/Heading";
