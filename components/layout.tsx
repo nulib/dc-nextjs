@@ -1,3 +1,8 @@
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/lazy";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Header from "@/components/Header/Header";

@@ -1,7 +1,3 @@
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Autoplay, EffectFade, Keyboard, Navigation, Pagination } from "swiper";
 import { HeroActions, HeroStyled } from "@/components/Hero/Hero.styled";
 import { Label, Summary, Thumbnail } from "@samvera/nectar-iiif";
