@@ -15,6 +15,7 @@ import {
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
+import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import React from "react";
@@ -22,14 +23,23 @@ import SharedSocial from "@/components/Shared/Social";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import { getInfoResponse } from "@/lib/iiif/manifest-helpers";
 import { useRouter } from "next/router";
+import useWorkAuth from "@/hooks/useWorkAuth";
 import { useWorkState } from "@/context/work-context";
+
+const embedWarningMessage =
+  "Embed is not available for images restricted to the Northwestern University community";
 
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
+  const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
+    useWorkAuth(work);
 
+  const showEmbedWarning = Boolean(
+    isWorkRestricted || (isUserLoggedIn && isWorkInstitution)
+  );
   const embedViewerHTML = manifest?.id
     ? `<iframe src="${
         window.location.origin
@@ -60,19 +70,35 @@ const DownloadAndShare: React.FC = () => {
         )}
 
         <h3>Embed Viewer</h3>
-        <EmbedViewer>
-          <pre>{embedViewerHTML || "Error creating embed viewer HTML"}</pre>
-          <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
-        </EmbedViewer>
+        {showEmbedWarning && <Announcement>{embedWarningMessage}</Announcement>}
+        {!showEmbedWarning && (
+          <EmbedViewer>
+            <pre>{embedViewerHTML || "Error creating embed viewer HTML"}</pre>
+            <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
+          </EmbedViewer>
+        )}
 
         {Array.isArray(manifest?.items) && (
           <>
             <h3>Download and Embed</h3>
-            <div>
-              {manifest.items.map((item) => (
-                <Item item={item} key={item.id} />
-              ))}
-            </div>
+
+            {isWorkRestricted && (
+              <Announcement>
+                Download requires Northwestern University NetID authentication{" "}
+              </Announcement>
+            )}
+
+            {!isWorkRestricted && (
+              <div>
+                {manifest.items.map((item) => (
+                  <Item
+                    item={item}
+                    key={item.id}
+                    showEmbedWarning={showEmbedWarning}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
       </Content>
@@ -80,7 +106,12 @@ const DownloadAndShare: React.FC = () => {
   );
 };
 
-const Item: React.FC<Record<"item", Canvas>> = ({ item }) => {
+interface ItemProps {
+  item: Canvas;
+  showEmbedWarning: boolean;
+}
+
+const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
   const [embedHTMLOpen, setEmbedHTMLOpen] = React.useState(false);
   const [color, setColor] = React.useState("default");
   const [width, setWidth] = React.useState(3000);
@@ -119,7 +150,21 @@ const Item: React.FC<Record<"item", Canvas>> = ({ item }) => {
     },
   ];
 
-  const embedHTMLString = `<img src="https://iiif.stack.rdc.library.northwestern.edu/iiif/2/017962ae-0cc5-4e1f-899d-ab102aad71b7/full/${width},/0/${color}.jpg" alt="inu-dil-8ab680fc-4940-4c8e-a0bf-96844a27f5a5.tif" />`;
+  const thumbId = item.thumbnail ? item.thumbnail[0].id : "";
+  const embedHTMLStringArray = thumbId?.split("/");
+  const isValidStringArray =
+    embedHTMLStringArray?.length && embedHTMLStringArray.length > 0;
+
+  if (isValidStringArray) {
+    embedHTMLStringArray[7] = `${width},`;
+    embedHTMLStringArray[9] = `${color}.jpg`;
+  }
+
+  const embedHTMLString = `<img src="${embedHTMLStringArray?.join(
+    "/"
+  )}" alt="Northwestern Libraries Digital Collections Fileset image for ${
+    isValidStringArray ? embedHTMLStringArray[5] : ""
+  }" />`;
 
   return (
     <ItemStyled>
@@ -156,26 +201,38 @@ const Item: React.FC<Record<"item", Canvas>> = ({ item }) => {
         </ItemContent>
       </ItemRow>
       {embedHTMLOpen && (
-        <EmbedHTML>
-          <pre>{embedHTMLString}</pre>
-          <EmbedHTMLActionRow>
-            <CopyText textPrompt="Copy" textToCopy={embedHTMLString} />
-            <SimpleSelect onChange={(e) => setWidth(parseInt(e.target.value))}>
-              {widths.map((width) => (
-                <option key={width.value} value={width.value}>
-                  {width.label}
-                </option>
-              ))}
-            </SimpleSelect>
-            <SimpleSelect onChange={(e) => setColor(e.target.value)}>
-              {colors.map((color) => (
-                <option key={color.value} value={color.value}>
-                  {color.label}
-                </option>
-              ))}
-            </SimpleSelect>
-          </EmbedHTMLActionRow>
-        </EmbedHTML>
+        <>
+          {showEmbedWarning && (
+            <div style={{ marginTop: "1rem" }}>
+              <Announcement>{embedWarningMessage}</Announcement>
+            </div>
+          )}
+
+          {!showEmbedWarning && (
+            <EmbedHTML>
+              <pre>{embedHTMLString}</pre>
+              <EmbedHTMLActionRow>
+                <CopyText textPrompt="Copy" textToCopy={embedHTMLString} />
+                <SimpleSelect
+                  onChange={(e) => setWidth(parseInt(e.target.value))}
+                >
+                  {widths.map((width) => (
+                    <option key={width.value} value={width.value}>
+                      {width.label}
+                    </option>
+                  ))}
+                </SimpleSelect>
+                <SimpleSelect onChange={(e) => setColor(e.target.value)}>
+                  {colors.map((color) => (
+                    <option key={color.value} value={color.value}>
+                      {color.label}
+                    </option>
+                  ))}
+                </SimpleSelect>
+              </EmbedHTMLActionRow>
+            </EmbedHTML>
+          )}
+        </>
       )}
     </ItemStyled>
   );
