@@ -1,5 +1,6 @@
 import { BlockStyled } from "@/components/Shared/BlockStyled";
 import Container from "@/components/Shared/Container";
+import CopyText from "@/components/Shared/CopyText";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
@@ -36,15 +37,11 @@ const ContactPage: NextPage = () => {
 
             <p>
               Questions about digitization, description of items, or software
-              can be directed here.{" "}
-              <a
-                href="mailto:repository@northwestern.edu"
-                style={{
-                  unicodeBidi: "bidi-override",
-                }}
-              >
-                repository@northwestern.edu
-              </a>
+              can be directed to:{" "}
+              <CopyText
+                textPrompt="repository@northwestern.edu"
+                textToCopy="repository@northwestern.edu"
+              />
             </p>
 
             <p>
