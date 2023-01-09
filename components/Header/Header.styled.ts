@@ -62,12 +62,17 @@ const Primary = styled("div", {
 
     "> span": {
       display: "flex",
-      width: "0",
       opacity: "0",
       justifyContent: "center",
       textAlign: "center",
       alignItems: "center",
+      height: "$gr5",
       flexGrow: "0",
+      backgroundColor: "$purple",
+
+      svg: {
+        fill: "$white",
+      },
     },
   },
 
@@ -78,15 +83,24 @@ const Primary = styled("div", {
       maxWidth: "100%",
       backgroundColor: "white",
       boxShadow: "0px 3px 11px #0003",
+      transition: "$dcAll",
 
       "> span": {
         opacity: "1",
         width: "$gr5",
+
+        svg: {
+          height: "$gr3",
+        },
       },
 
       [`& ${NavStyled}`]: {
         width: "0",
         opacity: "0",
+      },
+
+      button: {
+        backgroundColor: "$purple10",
       },
 
       [`& ${SearchStyled}`]: {
