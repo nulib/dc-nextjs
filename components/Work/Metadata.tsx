@@ -1,8 +1,10 @@
+import {
+  LinkItemStyled,
+  MetadataStyled,
+} from "@/components/Work/Metadata.styled";
 import { DC_URL } from "@/lib/constants/endpoints";
 import { FACETS_WORK_LINK } from "@/lib/constants/works";
 import Link from "next/link";
-import { LinkItemStyled } from "@/components/Work/Metadata.styled";
-import { Metadata } from "@samvera/nectar-iiif";
 import { MetadataItem } from "@iiif/presentation-3";
 
 interface WorkMetadataProps {
@@ -38,7 +40,7 @@ const WorkMetadata: React.FC<WorkMetadataProps> = ({ metadata }) => {
   });
 
   return (
-    <Metadata
+    <MetadataStyled
       customValueContent={customValues}
       customValueDelimiter=""
       data-testid="metadata"
