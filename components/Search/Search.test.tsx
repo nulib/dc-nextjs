@@ -1,5 +1,8 @@
 import { render, screen } from "@/test-utils";
 import Search from "./Search";
+import mockRouter from "next-router-mock";
+import { renderHook } from "@testing-library/react";
+import { useRouter } from "next/router";
 import userEvent from "@testing-library/user-event";
 
 const mockIsSearchActive = jest.fn();
@@ -13,7 +16,7 @@ describe("Search component", () => {
     expect(wrapper).toBeInTheDocument();
   });
 
-  it("does not render the SearchJumpTo component on Search page", async () => {
+  it("accepts text input as a form value", async () => {
     const user = userEvent.setup();
     render(<Search isSearchActive={mockIsSearchActive} />);
     const form = screen.getByTestId("search-ui-component");
@@ -21,36 +24,43 @@ describe("Search component", () => {
     await user.type(screen.getByRole("search"), "foo");
 
     expect(form).toHaveFormValues({ search: "foo" });
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
 
-  it("conditionally renders the SearchJumpTo component", async () => {
+  it("populates the search query param in browser url bar", async () => {
     const user = userEvent.setup();
-    render(
-      <div data-testid="page">
-        <span>Outside search form</span>
-        <Search isSearchActive={mockIsSearchActive} jumpTo="collection" />
-      </div>
-    );
-    const form = screen.getByTestId("search-ui-component");
+    mockRouter.setCurrentUrl("/search");
+    const { result } = renderHook(() => {
+      return useRouter();
+    });
+
+    expect(result.current).toMatchObject({
+      asPath: "/search",
+    });
+
+    render(<Search isSearchActive={mockIsSearchActive} />);
 
     await user.type(screen.getByRole("search"), "foo");
+    await user.click(screen.getByTestId("submit-button"));
 
-    // JumpTo should be visible
-    expect(form).toHaveFormValues({ search: "foo" });
-    expect(screen.getByRole("listbox"));
-
-    // Click outside Search form, it should close JumpTo
-    await user.click(screen.getByText("Outside search form"));
-
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-
-    // Type back in main search input, it should re-open JumpTo
-    await user.type(screen.getByRole("search"), "baz");
-
-    expect(form).toHaveFormValues({
-      search: "foobaz",
+    expect(result.current).toMatchObject({
+      asPath: "/search?q=foo",
     });
-    expect(screen.getByRole("listbox"));
+  });
+
+  it("retains filter query params in browser url bar when searching", async () => {
+    const user = userEvent.setup();
+    mockRouter.setCurrentUrl("/search?subject=baz");
+    const { result } = renderHook(() => {
+      return useRouter();
+    });
+
+    render(<Search isSearchActive={mockIsSearchActive} />);
+
+    await user.type(screen.getByRole("search"), "foo");
+    await user.click(screen.getByTestId("submit-button"));
+
+    expect(result.current).toMatchObject({
+      asPath: "/search?q=foo&subject=baz",
+    });
   });
 });

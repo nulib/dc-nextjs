@@ -27,7 +27,7 @@ export async function getWorkIds(): Promise<Array<string>> {
           order: {
             _count: "asc",
           },
-          size: 100,
+          size: 1,
         },
       },
     },

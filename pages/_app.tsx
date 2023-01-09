@@ -29,9 +29,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const [user, setUser] = React.useState<User | null>(null);
 
   React.useEffect(() => {
-    /**
-     * Determine if user is authenticated via cookie
-     */
+    /* Determine if user is authenticated via cookie */
     axios
       .get(`${DCAPI_ENDPOINT}/auth/whoami`, {
         withCredentials: true,

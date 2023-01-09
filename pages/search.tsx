@@ -11,6 +11,7 @@ import Layout from "@/components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { Pagination } from "@/components/Search/Pagination";
+import { Results } from "@/components/Search/Search.styled";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
@@ -127,6 +128,9 @@ const SearchPage: NextPage = () => {
             {error && <p>{error}</p>}
             {apiData && (
               <>
+                <Results>
+                  {requestState.data?.pagination.total_hits} results
+                </Results>
                 <Grid data={apiData.data} info={apiData.info} />
                 <Pagination pagination={apiData.pagination} />
               </>
@@ -144,7 +148,7 @@ export async function getStaticProps() {
   });
 
   const openGraphData = {
-    "og:url": `${PRODUCTION_URL}/contact`,
+    "og:url": `${PRODUCTION_URL}/search`,
   };
 
   return {

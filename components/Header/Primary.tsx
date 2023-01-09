@@ -5,16 +5,21 @@ import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import Search from "@/components/Search/Search";
+import SearchJumpTo from "@/components/Search/JumpTo";
 import useElementPosition from "@/hooks/useElementPosition";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
 const HeaderPrimary: React.FC = () => {
   const router = useRouter();
+  const isCollectionPage = router.pathname.includes("collection");
+
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
-  const { searchDispatch, searchState } = useSearchState();
-  const { searchFixed } = searchState;
+  const {
+    searchDispatch,
+    searchState: { searchFixed },
+  } = useSearchState();
 
   const primaryRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useElementPosition(primaryRef);
@@ -45,12 +50,12 @@ const HeaderPrimary: React.FC = () => {
             <strong>N</strong>
           </Heading>
           <PrimaryInner>
-            <Search
-              isSearchActive={handleIsSearchActive}
-              {...(router.pathname.includes("collection")
-                ? { jumpTo: "collection" }
-                : undefined)}
-            />
+            {!isCollectionPage && (
+              <Search isSearchActive={handleIsSearchActive} />
+            )}
+            {isCollectionPage && (
+              <SearchJumpTo isSearchActive={handleIsSearchActive} />
+            )}
             <Nav>
               <Link href="/collections">Browse Collections</Link>
             </Nav>

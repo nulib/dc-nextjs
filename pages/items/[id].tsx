@@ -49,6 +49,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
     (!userAuthContext?.user?.isLoggedIn && work.visibility !== "Public");
   const collectionWorkTypeCounts =
     collectionWorkCounts && collectionWorkCounts[work.collection?.id];
+  const isReadingRoom = userAuthContext?.user?.isReadingRoom;
 
   return (
     <>
@@ -71,11 +72,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
       <Layout title={work.title}>
         <WorkProvider initialState={{ manifest: manifest, work: work }}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            {isRestricted && (
-              <WorkRestrictedDisplay thumbnail={work.thumbnail} />
-            )}
-            {!isRestricted && (
+            {!isRestricted || isReadingRoom ? (
               <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            ) : (
+              <WorkRestrictedDisplay thumbnail={work.thumbnail} />
             )}
             <Container>
               <WorkTopInfo

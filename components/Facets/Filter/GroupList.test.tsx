@@ -2,7 +2,11 @@ import { render, screen, within } from "@/test-utils";
 import { FACETS } from "@/lib/constants/facets-model";
 import FacetsGroupList from "./GroupList";
 import { FilterProvider } from "@/context/filter-context";
+import mockRouter from "next-router-mock";
 import userEvent from "@testing-library/user-event";
+
+jest.mock("next/router", () => require("next-router-mock"));
+mockRouter.setCurrentUrl("/search");
 
 jest.mock("@/hooks/useFetchApiData", () => {
   return jest.fn(() => ({

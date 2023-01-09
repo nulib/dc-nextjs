@@ -1,8 +1,12 @@
+import {
+  HomepageCollections as Collections,
+  HomepageHero as Hero,
+  HomepageOverview as Overview,
+  HomepageWorks as Works,
+} from "@/components/Homepage";
 import Head from "next/head";
 import Layout from "@/components/layout";
-import Overview from "@/components/Home/Overview";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { PlaceholderBlock } from "@/components/Shared/PlaceholderBlock.styled";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 
@@ -21,8 +25,10 @@ const HomePage: React.FC = () => {
         />
       </Head>
       <Layout header="hero">
+        <Hero />
         <Overview />
-        <PlaceholderBlock css={{ height: "100vh" }} />
+        <Collections />
+        <Works />
       </Layout>
     </>
   );

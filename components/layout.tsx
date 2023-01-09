@@ -1,10 +1,20 @@
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/lazy";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Header from "@/components/Header/Header";
 import Message from "@/components/Shared/Message/Message";
 import React from "react";
+import { styled } from "@/stitches.config";
 
 export const siteTitle = "Digital Collections v2";
+
+const MainStyled = styled("main", {
+  minHeight: "300px",
+});
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -33,7 +43,7 @@ const Layout: React.FC<LayoutProps> = ({
         <title>{title}</title>
       </Head>
       <Header isHero={header === "hero"} />
-      <main>{children}</main>
+      <MainStyled>{children}</MainStyled>
       <Footer />
       <Message />
     </>

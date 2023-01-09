@@ -14,10 +14,14 @@ const LinkedAnchor = styled("a", {
 
 const CardStyled = styled("div", {
   p: {
-    margin: "0 0 $gr4",
+    margin: "0 0 $gr3",
     fontFamily: "$northwesternSansRegular",
     fontSize: "$gr3",
     lineHeight: "1.47em",
+
+    a: {
+      cursor: "pointer",
+    },
   },
 });
 

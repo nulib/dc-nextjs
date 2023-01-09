@@ -1,3 +1,4 @@
+import { Metadata } from "@samvera/nectar-iiif";
 import { linkStyling } from "@/components/Shared/LinkStyled";
 import { styled } from "@/stitches.config";
 
@@ -10,4 +11,10 @@ const LinkItemStyled = styled("div", {
   },
 });
 
-export { LinkItemStyled };
+const MetadataStyled = styled(Metadata, {
+  "[data-label=last-modified]": {
+    display: "none",
+  },
+});
+
+export { LinkItemStyled, MetadataStyled };

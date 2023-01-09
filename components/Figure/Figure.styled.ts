@@ -13,6 +13,7 @@ const FigureImage = styled("img", {
   opacity: "0",
   width: "100%",
   height: "100%",
+  objectFit: "cover",
 
   variants: {
     isLoaded: {
@@ -101,13 +102,15 @@ const FigureStyled = styled("figure", {
   variants: {
     isPromoted: {
       true: {
+        paddingBottom: "$gr3",
+
         [`& ${FigureTitle}`]: {
           fontSize: "$5",
-          fontFamily: "$northwesternDisplayBold",
+          fontFamily: "$northwesternDisplayBook",
         },
 
         [`& ${FigureSupplementalInfo}`]: {
-          fontSize: "$3",
+          fontSize: "$2",
         },
       },
     },

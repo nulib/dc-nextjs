@@ -7,8 +7,9 @@ import WorkType from "@/components/Facets/WorkType/WorkType";
 import { useSearchState } from "@/context/search-context";
 
 const Facets: React.FC = () => {
-  const { searchState } = useSearchState();
-  const { searchFixed } = searchState;
+  const {
+    searchState: { searchFixed },
+  } = useSearchState();
 
   const facetsRef = useRef<HTMLDivElement>(null);
 
