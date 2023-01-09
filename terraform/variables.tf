@@ -11,6 +11,10 @@ variable "app_password" {
   type = string
 }
 
+variable "auto_branch_creation" {
+  type    = bool
+  default = true
+}
 
 variable "aws_region" {
   type    = string
