@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { ALL_FACETS } from "@/lib/constants/facets-model";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
@@ -26,6 +27,15 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    /* Guard against searching from a page with dynamic route params */
+    const facetIds = ALL_FACETS.facets.map((facet) => facet.id);
+    const urlFacetsKeys = Object.keys(urlFacets);
+    urlFacetsKeys.forEach((key) => {
+      if (!facetIds.includes(key)) {
+        delete urlFacets[key];
+      }
+    });
 
     router.push({
       pathname: "/search",
