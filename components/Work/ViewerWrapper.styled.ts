@@ -5,6 +5,11 @@ import { styled } from "@/stitches.config";
 const ViewerWrapperStyled = styled("section", {
   position: "relative",
   zIndex: "0",
+  margin: "1px 0 0 0",
+
+  "[class*='-css']": {
+    boxShadow: "3px 3px 11px #0002",
+  },
 });
 
 const AnnouncementContent = styled("div", {
