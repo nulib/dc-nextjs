@@ -21,11 +21,9 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
             const { key, doc_count } = entry;
             const summary =
               doc_count > 1 ? `${doc_count} Items` : `${doc_count}  Item`;
-            const collectionId = encodeURI(
-              `${url}/search?query=series:"${key}"
-            &collectionLabel=${key}&collectionSummary=${summary}&as=iiif`
-            );
 
+            const sanitizedKey = key.replace(/&/g, "%26");
+            const collectionId = `${url}/search?query=series:"${sanitizedKey}"&collectionLabel=${sanitizedKey}&collectionSummary=${summary}&as=iiif`;
             const value = `series-${index}`;
             const title = entry.key;
             const indicator = `${entry.doc_count} Items`;
