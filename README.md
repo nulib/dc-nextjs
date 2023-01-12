@@ -82,7 +82,19 @@ npm run test
 
 ## API
 
+### Notes
+
+Currently DC v2 hits a new DC API v2 for it's indexed data.
+
+`https://dcapi.rdc-staging.library.northwestern.edu/docs/v2`
+
+Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references).
+
+### Endpoints
+
 The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo.
+
+### Viewing OpenSearch data locally
 
 In a local dev environment, to view API data coming from the index (for now), run the following:
 
@@ -98,21 +110,23 @@ The API supports both POST for searching and GET for Work and Collection items.
 
 ```
 # Search Works (default)
-curl -X POST 'http://127.0.0.1:3000/search' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
+curl -X POST '[URL]/search' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
 
 # Search Collections
-curl -X POST 'http://127.0.0.1:3000/search/collections' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
+curl -X POST '[URL]/search/collections' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
 ```
 
-### Work / Collection examples
+### Direct GET request endpoint examples
 
 ```
-https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/works/4359936f-9091-499b-893f-b8e900db49ec
+[URL]/works/4359936f-9091-499b-893f-b8e900db49ec
 
-https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7
+[URL]/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7
 
-https://pylxu5f2l2.execute-api.us-east-1.amazonaws.com/v2/file-sets/ce1f6d18-8563-4f70-aabc-d4ce1688d8dc
+[URL]/file-sets/ce1f6d18-8563-4f70-aabc-d4ce1688d8dc
 ```
+
+See documentation in above link for more info
 
 ## Design
 

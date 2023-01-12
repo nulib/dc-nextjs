@@ -138,6 +138,14 @@ const Options = styled("ul", {
   },
 });
 
+const SpinWrapper = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  paddingTop: "$gr2",
+  paddingLeft: "$gr3",
+});
+
 export {
   Find,
   FindInput,
@@ -145,5 +153,6 @@ export {
   Options,
   OptionCount,
   OptionText,
+  SpinWrapper,
   StyledGenericFacet,
 };

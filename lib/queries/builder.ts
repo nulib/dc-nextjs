@@ -3,7 +3,7 @@ import { ApiSearchRequest } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
 import { UrlFacets } from "@/types/context/filter-context";
 import { buildAggs } from "@/lib/queries/aggs";
-import { buildFacetPart } from "@/lib/queries/facet";
+import { buildFacetFilters } from "@/lib/queries/facet";
 
 type BuildQueryProps = {
   aggs?: FacetsInstance[];
@@ -43,11 +43,27 @@ export function addFacetsToQuery(
   query: ApiSearchRequest,
   urlFacets: UrlFacets
 ) {
-  for (const [key, value] of Object.entries(urlFacets)) {
-    if (value?.length > 0) {
-      query.query.bool.must.push(buildFacetPart(key, value));
-    }
+  /** Verify at least one user facet has been activated */
+  if (Object.keys(urlFacets).length > 0) {
+    /** 
+     * It should end up looking like this:
+     * 
+      "bool": {
+        "filter": [
+            { "term": { "subject.label": "Berkeley (Calif.)" } },
+            { "term": {  "subject.label": "Baez, Joan" } },
+            { "term": {  "genre.label": "Photographs" } }
+        ]
+      }
+     */
+
+    query.query.bool.must.push({
+      bool: {
+        filter: buildFacetFilters(urlFacets),
+      },
+    });
   }
+
   return query;
 }
 
