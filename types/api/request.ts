@@ -27,13 +27,15 @@ export interface ApiSearchQuery {
   };
 }
 
+export type FacetTerm = {
+  term: {
+    [key: string]: string;
+  };
+};
+
 export interface FacetTerms {
   bool: {
-    should: Array<{
-      terms: {
-        [key: string]: string[];
-      };
-    }>;
+    filter: Array<FacetTerm>;
   };
 }
 
