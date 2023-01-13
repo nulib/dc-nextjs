@@ -40,8 +40,8 @@ export interface FacetTerms {
 }
 
 export interface SearchSimpleQueryString {
-  simple_query_string: {
-    default_operator: string;
+  query_string: {
+    default_operator?: string;
     fields: string[];
     query: string;
   };
