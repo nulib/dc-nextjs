@@ -21,7 +21,6 @@ const WorkDialogCite: React.FC = () => {
     collection: { title: collection_title },
     create_date,
     id,
-    identifier,
     library_unit,
     terms_of_use,
     title,
@@ -36,7 +35,6 @@ const WorkDialogCite: React.FC = () => {
   const wikiCitation = `<ref name=NUL>{{cite web | url=${itemLink} | title= ${title} (${formattedDate}) }} |author=Digital Collections, ${nul} |accessdate=${today} |publisher=${nul}, ${library_unit}}}</ref>`;
 
   const metadata = [
-    ["Identifier", identifier.join(", ")],
     ["Title", title],
     ["Use Statement", terms_of_use],
     ["Ark", ark],
