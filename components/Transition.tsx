@@ -1,21 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { seconds } from "@/styles/transitions";
 import { useRouter } from "next/router";
 
 const variants = {
   in: {
     opacity: 1,
     transition: {
-      delay: 0.25,
-      duration: 0.25,
+      duration: seconds,
     },
-    y: 0,
   },
   out: {
     opacity: 0,
     transition: {
-      duration: 0.25,
+      duration: seconds,
     },
-    y: 0,
   },
 };
 

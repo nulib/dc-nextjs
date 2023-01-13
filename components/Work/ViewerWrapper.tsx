@@ -48,7 +48,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
   };
 
   const options = {
-    canvasBackgroundColor: "$black",
+    canvasBackgroundColor: "$gray6",
     canvasHeight: "640px",
     renderAbout: false,
     showIIIFBadge: false,

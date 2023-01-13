@@ -1,6 +1,6 @@
+import { Options, SpinWrapper } from "./GenericFacet.styled";
 import { FacetsInstance } from "@/types/components/facets";
 import Option from "./Option";
-import { Options } from "./GenericFacet.styled";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
 import useFetchApiData from "@/hooks/useFetchApiData";
 import { useFilterState } from "@/context/filter-context";
@@ -30,7 +30,12 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
     urlFacets: userFacetsUnsubmitted,
   });
 
-  if (loading) return <SpinLoader />;
+  if (loading)
+    return (
+      <SpinWrapper>
+        <SpinLoader />
+      </SpinWrapper>
+    );
   if (error) return <p>Error fetching data</p>;
   if (
     !data ||

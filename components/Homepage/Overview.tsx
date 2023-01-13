@@ -6,6 +6,7 @@ import {
 } from "@/components/Homepage/Overview.styled";
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
+import Link from "next/link";
 import { Thumbnail } from "@samvera/nectar-iiif";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 
@@ -20,7 +21,9 @@ const HomepageOverview = () => {
               Explore millions of high-quality primary sources and images from
               around the world, including artworks, maps, photographs, and more.{" "}
             </p>
-            <Button isPrimary>Learn More</Button>
+            <Link href="/about">
+              <Button isPrimary>Learn More</Button>
+            </Link>
           </Content>
           <Images>
             {overviewThumbnails.map((item, index) => (

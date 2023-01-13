@@ -1,3 +1,14 @@
+const AcademicN: React.FC = () => (
+  <svg
+    id="nortwestern-academic-n"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 293.04 282.02"
+  >
+    <title>Northwestern University</title>
+    <polygon points="186.1 2.11 186.1 22 219.48 30.38 226.07 38.65 226.07 198.03 59.61 1.03 58.74 0 9.54 0 9.54 14.89 36.8 45.49 36.8 252.21 0 262.5 0 279.93 105.46 279.93 105.46 262.39 72.81 253.76 66.06 245.44 66.06 79.2 236.42 282.02 256.05 282.02 256.05 31.43 293.04 20.24 293.04 2.11 186.1 2.11" />
+  </svg>
+);
+
 const NorthwesternWordmark: React.FC = () => (
   <svg
     version="1.1"
@@ -76,4 +87,4 @@ const NorthwesternWordmark: React.FC = () => (
   </svg>
 );
 
-export { NorthwesternWordmark };
+export { AcademicN, NorthwesternWordmark };

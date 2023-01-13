@@ -27,6 +27,9 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const ogData = { ...defaultOpenGraphData, ...openGraphData };
 
   const [user, setUser] = React.useState<User | null>(null);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     /* Determine if user is authenticated via cookie */
@@ -89,7 +92,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         })(window,document,'script','dataLayer','GTM-NDJXLQW');
       `}
             </Script>
-            <Component {...pageProps} />
+            {mounted && <Component {...pageProps} />}
           </SearchProvider>
         </Transition>
       </UserContext.Provider>

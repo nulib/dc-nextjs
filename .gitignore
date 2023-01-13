@@ -39,3 +39,4 @@ yarn-error.log*
 # terraform
 *.tfvars
 /terraform/.terraform
+/terraform/*.plan

@@ -1,5 +1,8 @@
 import Announcement from "@/components/Shared/Announcement";
 import BlurredBgImage from "@/components/Shared/BlurredBgImage";
+import CopyText from "@/components/Shared/CopyText";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -7,14 +10,6 @@ interface Props {
 }
 
 const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
-  function handleScrollToTop() {
-    window.scrollTo({
-      behavior: "smooth",
-      left: 0,
-      top: 0,
-    });
-  }
-
   return (
     <div data-testid="restricted-display">
       <BlurredBgImage
@@ -27,14 +22,18 @@ const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
         <p>
           This Work requires Northwestern University NetID authentication.
           Please{" "}
-          <a style={{ cursor: "pointer" }} onClick={handleScrollToTop}>
-            sign in
-          </a>{" "}
+          <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
+            <a style={{ cursor: "pointer" }}>sign in</a>
+          </Link>
         </p>
         <p>
-          If you are not a member of the Northwestern Community, you can{" "}
-          <a href="mailto:repository@northwestern.edu">request access</a>.
-          Please include a short description of your research needs.
+          If you are not a member of the Northwestern Community, email{" "}
+          <CopyText
+            textPrompt="repository@northwestern.edu"
+            textToCopy="repository@northwestern.edu"
+          />{" "}
+          to request access. Please include a short description of your research
+          needs.
         </p>
       </Announcement>
     </div>

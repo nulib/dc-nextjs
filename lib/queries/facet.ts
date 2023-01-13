@@ -1,25 +1,33 @@
-import { ALL_FACETS } from "../constants/facets-model";
+import { ALL_FACETS } from "@/lib/constants/facets-model";
+import { FacetTerm } from "@/types/api/request";
+import { UrlFacets } from "@/types/context/filter-context";
 
-const buildFacetPart = (id: string, values: string[]) => {
-  /**
-   * Lookup facet field by ID to pass to query
-   */
-  const facet = ALL_FACETS.facets.find((item) => item.id === id);
+const buildFacetFilters = (urlFacets: UrlFacets) => {
+  const filter: FacetTerm[] = [];
 
-  if (!facet) return;
+  /** Sample urlFacets object for reference
+  const sampleUrlFacets = {
+    collection: [],
+    genre: ['baz'],
+    subject: ["foo", "bar"]
+  }
+  */
 
-  const obj = {
-    bool: {
-      should: [
-        {
-          terms: {
-            [facet.field]: [...values],
-          },
-        },
-      ],
-    },
-  };
-  return obj;
+  /** Loop through facet keys */
+  for (const [key, value] of Object.entries(urlFacets)) {
+    /** Lookup facet field by ID to pass to query */
+    const facet = ALL_FACETS.facets.find((item) => item.id === key);
+
+    if (facet && value?.length > 0) {
+      /** Loop through facet values */
+      value.forEach((facetValue) => {
+        filter.push({
+          term: { [facet.field]: facetValue },
+        });
+      });
+    }
+  }
+  return filter;
 };
 
-export { buildFacetPart };
+export { buildFacetFilters };

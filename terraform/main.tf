@@ -32,16 +32,20 @@ resource "aws_amplify_app" "dc-next" {
   repository             = "https://github.com/nulib/dc-nextjs"
   iam_service_role_arn   = aws_iam_role.dc_next_amplify_role.arn
   access_token           = var.access_token
-  platform               = "WEB_DYNAMIC"
+  platform               = "WEB_COMPUTE"
   enable_basic_auth      = var.app_username != "" ? true : false
   basic_auth_credentials = base64encode("${var.app_username}:${var.app_password}")
 
-  enable_auto_branch_creation   = true
-  enable_branch_auto_build      = true
-  enable_branch_auto_deletion   = true
-  auto_branch_creation_patterns = ["preview/*"]
-  auto_branch_creation_config {
-    enable_auto_build = true
+  enable_auto_branch_creation   = var.auto_branch_creation
+  enable_branch_auto_build      = var.auto_branch_creation
+  enable_branch_auto_deletion   = var.auto_branch_creation
+  auto_branch_creation_patterns = var.auto_branch_creation ? ["preview/*"] : []
+  
+  dynamic "auto_branch_creation_config" {
+    for_each = var.auto_branch_creation ? toset([1]) : toset([])
+    content {
+      enable_auto_build = var.auto_branch_creation
+    }
   }
 
   build_spec = <<-EOT
@@ -74,7 +78,6 @@ resource "aws_amplify_app" "dc-next" {
     ENV                        = var.environment_name
     NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
     NEXT_PUBLIC_DC_URL         = var.next_public_dc_url
-    _LIVE_UPDATES              = "[{ \"name\" : \"Next.js version\", \"pkg\" : \"next-version\", \"type\" : \"internal\", \"version\" : \"latest\" }]"
   }
 }
 
