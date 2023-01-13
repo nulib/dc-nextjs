@@ -41,6 +41,8 @@ const GridItem: React.FC<GridItemProps> = ({ item }) => {
     }
   }, [item]);
 
+  if (!endpointPath) return <></>;
+
   return (
     <ItemStyled key={item.id} data-item-id={item.id}>
       <Link href={`${urlPath}/${item.id}`}>
