@@ -19,15 +19,14 @@ describe("WorkDialogCite", () => {
   });
 
   it("renders expected metadata content", () => {
-    const { ark, identifier, terms_of_use, title } = sampleWork1;
+    const { ark, terms_of_use, title } = sampleWork1;
 
-    const metadataValues = [ark, identifier.join(", "), terms_of_use, title];
+    const metadataValues = [ark, terms_of_use, title];
 
     setup();
     const div = screen.getByTestId("metadata");
 
     // <dt>s
-    expect(within(div).getByText(/IDENTIFIER/i, { exact: false }));
     expect(within(div).getAllByText(/title/i, { exact: false }));
     expect(within(div).getByText(/USE STATEMENT/i, { exact: false }));
     expect(within(div).getAllByText(/ark/i, { exact: false }));
@@ -48,6 +47,6 @@ describe("WorkDialogCite", () => {
 
   it("renders copy links for all metadata", () => {
     setup();
-    expect(screen.getAllByText(/copy/i).length).toEqual(8);
+    expect(screen.getAllByText(/copy/i).length).toEqual(7);
   });
 });
