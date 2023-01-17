@@ -14,6 +14,7 @@ import {
   ItemThumbnail,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
+import { makeBlob, mimicDownload } from "@samvera/image-downloader";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
@@ -166,6 +167,28 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
     isValidStringArray ? embedHTMLStringArray[5] : ""
   }" />`;
 
+  const handleDownloadClick = async (
+    e: React.SyntheticEvent<HTMLAnchorElement>
+  ) => {
+    e.preventDefault();
+
+    const downloadFilename =
+      item.label?.none && item.label.none.length > 0
+        ? item.label.none[0].replace(/\.[^/.]+$/, "")
+        : "nul_fileset";
+
+    const response = await makeBlob(
+      `${getInfoResponse(item)}/full/1000,/0/default.jpg`
+    );
+
+    if (!response || response.error) {
+      alert("Error fetching the image");
+      return;
+    }
+
+    mimicDownload(response, downloadFilename);
+  };
+
   return (
     <ItemStyled>
       <ItemRow>
@@ -180,12 +203,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
           {item.label && <Label label={item.label} as="span" />}
           <ItemActions>
             <li>
-              <a
-                href={`${getInfoResponse(item)}/full/1000,/0/default.jpg`}
-                download
-                rel="noreferrer"
-                target="_blank"
-              >
+              <a onClick={handleDownloadClick} href="#">
                 Download JPG
               </a>
             </li>
