@@ -176,10 +176,9 @@ export async function getCollectionWorkCounts(collectionId = "") {
       if (collectionId) {
         return {
           [collectionId]: {
-            totalAudio: 0,
-            totalImage: 0,
-            totalWorks: 0,
-            totalVideo: 0,
+            audio: 0,
+            image: 0,
+            video: 0,
           },
         };
       }

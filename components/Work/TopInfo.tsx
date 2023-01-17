@@ -10,9 +10,9 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
-// import Heading from "@/components/Heading/Heading";
 import { Manifest } from "@iiif/presentation-3";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
+import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 import WorkMetadata from "@/components/Work/Metadata";
 import { WorkShape } from "@/types/components/works";
 import { type WorkTypeCountMap } from "@/lib/collection-helpers";
@@ -57,15 +57,10 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
     }
   };
 
-  function buildWorkCountsText() {
+  function buildWorkCounts() {
     if (!collectionWorkTypeCounts) return "";
-    const { totalAudio, totalImage, totalVideo, totalWorks } =
-      collectionWorkTypeCounts;
-    let text = `${totalWorks} Total Works:`;
-    text += totalImage && totalImage > 0 ? ` ${totalImage} Images` : "";
-    text += totalAudio && totalAudio > 0 ? ` ${totalAudio} Audio` : "";
-    text += totalVideo && totalVideo > 0 ? ` ${totalVideo} Video` : "";
-    return text;
+    const { totalAudio, totalImage, totalVideo } = collectionWorkTypeCounts;
+    return { audio: totalAudio, image: totalImage, video: totalVideo };
   }
 
   return (
@@ -129,7 +124,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
               description={work.collection?.description}
               href={`/collections/${work.collection?.id}`}
               imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
-              supplementalInfo={buildWorkCountsText()}
+              supplementalInfo={<WorkCount {...buildWorkCounts()} />}
             />
           </TopInfoCollection>
         </TopInfoContent>
