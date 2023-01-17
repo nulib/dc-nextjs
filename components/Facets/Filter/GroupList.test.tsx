@@ -23,32 +23,38 @@ describe("FacetsGroupList component", () => {
     return render(<FacetsGroupList />);
   }
 
-  it("renders all the facet group UI triggers", () => {
+  it("renders all top level facet group UI trigger elements", () => {
     renderHelper();
     expect(screen.getByTestId("facets-group-list"));
+
     facetGroupLabels.forEach((label) => {
       expect(screen.getByText(label));
     });
   });
 
-  it("renders facets under a facet group when facet group is clicked", async () => {
-    const user = userEvent.setup();
-    renderHelper();
-    const subjectsGroup = FACETS.find(
-      (group) => group.label === "Subjects and Descriptive"
-    );
-    const groupTrigger = screen.getByText("Subjects and Descriptive");
-    await user.click(groupTrigger);
+  /**
+   * Make sure all facets in our FACET mapping are getting
+   * rendered to the screen
+   */
+  FACETS.forEach((group) => {
+    it("renders facet children when facet group is clicked", async () => {
+      const user = userEvent.setup();
+      renderHelper();
 
-    /* eslint-disable-next-line */
-    const ancestorEl = groupTrigger.closest("div");
-    if (ancestorEl) {
-      subjectsGroup?.facets.forEach((facet) => {
-        expect(within(ancestorEl).getByText(facet.label));
-      });
-    } else {
-      throw Error("Error finding ancestor of Facet Group trigger");
-    }
+      const groupTrigger = screen.getByText(group.label);
+      await user.click(groupTrigger);
+
+      /* eslint-disable-next-line */
+      const ancestorEl = groupTrigger.closest("div");
+      if (ancestorEl) {
+        group?.facets.forEach((facet) => {
+          const el = within(ancestorEl).getByText(facet.label);
+          expect(el).toBeInTheDocument();
+        });
+      } else {
+        throw Error("Error finding ancestor of Facet Group trigger");
+      }
+    });
   });
 
   it("renders a default expanded initial facet value", () => {

@@ -32,6 +32,13 @@ type IdLabelScheme = {
   scheme: string;
 };
 
+type Language = {
+  facet: string;
+  id: string;
+  label: string;
+  variants: string[];
+};
+
 export interface Note {
   note: string;
   type: string;
@@ -89,6 +96,7 @@ export interface WorkShape {
   iiif_manifest: string;
   indexed_at: string;
   keywords: Array<string>;
+  language: Array<Language>;
   legacy_identifier: Array<string>;
   library_unit: string;
   license: IdLabelScheme | null;
