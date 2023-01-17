@@ -1,15 +1,15 @@
+import React, { ReactNode } from "react";
 import { CardStyled } from "@/components/Shared/Card.styled";
 import Figure from "@/components/Figure/Figure";
 import Link from "next/link";
 import { LinkStyled } from "@/components/Shared/LinkStyled";
-import React from "react";
 import ReadMore from "./ReadMore";
 
 export interface CardProps {
   description?: string | null;
   href?: string;
   imageUrl: string;
-  supplementalInfo?: string;
+  supplementalInfo?: ReactNode;
   title: string;
 }
 

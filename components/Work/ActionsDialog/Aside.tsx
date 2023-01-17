@@ -12,13 +12,15 @@ const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
   const { workState } = useWorkState();
   const { work } = workState;
 
+  const WorkType = () => <>{work?.work_type}</>;
+
   return (
     <ActionsDialogAsideStyled data-testid="actions-dialog-aside">
       {work && (
         <Card
           title={work.title}
           imageUrl={work.thumbnail}
-          supplementalInfo={work.work_type}
+          supplementalInfo={<WorkType />}
         />
       )}
       {children}

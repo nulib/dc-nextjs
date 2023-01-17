@@ -9,14 +9,14 @@ import {
   FigureTitle,
   FigureVariants,
 } from "@/components/Figure/Figure.styled";
+import React, { ReactNode } from "react";
 import { IconLock } from "@/components/Shared/SVG/Icons";
-import React from "react";
 
 interface Figure {
   aspectRatio?: number;
   isRestricted?: boolean;
   src: string;
-  supplementalInfo?: string;
+  supplementalInfo?: ReactNode;
   title: string;
 }
 
