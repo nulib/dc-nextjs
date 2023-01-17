@@ -33,6 +33,11 @@ export const ALL_FACETS: FacetsList = {
       label: "Library Department",
     },
     {
+      field: "language.label",
+      id: "language",
+      label: "Language",
+    },
+    {
       field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
@@ -87,7 +92,7 @@ export const FACETS_WORK_TYPE: FacetsListWorkType = {
   options: ["All", "Image", "Audio", "Video"],
 };
 
-const FACETS_CREATOR: FacetsGroup = {
+export const FACETS_CREATOR: FacetsGroup = {
   facets: [
     {
       field: "contributor.label",
@@ -103,7 +108,7 @@ const FACETS_CREATOR: FacetsGroup = {
   label: "Creator and Contributor",
 };
 
-const FACETS_RIGHTS_USAGE: FacetsGroup = {
+export const FACETS_RIGHTS_USAGE: FacetsGroup = {
   facets: [
     {
       field: "rights_statement.label",
@@ -119,12 +124,17 @@ const FACETS_RIGHTS_USAGE: FacetsGroup = {
   label: "Rights and Usage",
 };
 
-const FACETS_DESCRIPTIVE: FacetsGroup = {
+export const FACETS_DESCRIPTIVE: FacetsGroup = {
   facets: [
     {
       field: "genre.label",
       id: "genre",
       label: "Genre",
+    },
+    {
+      field: "language.label",
+      id: "language",
+      label: "Language",
     },
     {
       field: "style_period.label",
@@ -150,7 +160,7 @@ const FACETS_DESCRIPTIVE: FacetsGroup = {
   label: "Subjects and Descriptive",
 };
 
-const FACETS_LOCATION: FacetsGroup = {
+export const FACETS_LOCATION: FacetsGroup = {
   facets: [
     {
       field: "library_unit",

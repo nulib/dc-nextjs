@@ -54,6 +54,14 @@ export const sampleWork1: WorkShape = {
     "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json",
   indexed_at: "2022-07-28T15:46:19.209799",
   keywords: [],
+  language: [
+    {
+      facet: "https://iiif.stack.rdc-staging.library",
+      id: "http://something",
+      label: "Cheng",
+      variants: ["Ch'eng"],
+    },
+  ],
   legacy_identifier: ["inu:dil-50575a78-a47a-4a07-939f-6e1d6a9d7065"],
   library_unit: "University Archives",
   license: {
