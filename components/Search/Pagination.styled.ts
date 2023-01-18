@@ -26,7 +26,7 @@ const prevNextStyles = {
 };
 
 /* eslint sort-keys: 0 */
-export const PaginationStyled = styled("nav", {
+const PaginationStyled = styled("nav", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
@@ -40,7 +40,7 @@ export const PaginationStyled = styled("nav", {
   },
 });
 
-export const LeftNav = styled("div", {
+const LeftNav = styled("div", {
   ...prevNextStyles,
   "& svg": {
     marginRight: "$gr2",
@@ -49,7 +49,19 @@ export const LeftNav = styled("div", {
   variants: { ...linkActiveVariant },
 });
 
-export const RightNav = styled("div", {
+const NavWrapper = styled("div", {
+  display: "flex",
+
+  "& button": {
+    fontSize: "$gr3",
+
+    "&:last-of-type": {
+      marginRight: "0",
+    },
+  },
+});
+
+const RightNav = styled("div", {
   ...prevNextStyles,
   justifyContent: "end",
 
@@ -60,7 +72,7 @@ export const RightNav = styled("div", {
   variants: { ...linkActiveVariant },
 });
 
-export const PaginationLinks = styled("div", {
+const PaginationLinks = styled("div", {
   display: "flex",
   marginTop: "-1px",
 
@@ -69,7 +81,7 @@ export const PaginationLinks = styled("div", {
   },
 });
 
-export const PageNumber = styled("a", {
+const PageNumber = styled("a", {
   display: "inline-flex",
   alignItems: "center",
   cursor: "pointer",
@@ -91,3 +103,21 @@ export const PageNumber = styled("a", {
     },
   },
 });
+
+const Results = styled("div", {
+  color: "$black50",
+
+  "& span": {
+    fontFamily: "$northwesternSansBold",
+  },
+});
+
+export {
+  LeftNav,
+  NavWrapper,
+  PageNumber,
+  PaginationLinks,
+  PaginationStyled,
+  Results,
+  RightNav,
+};
