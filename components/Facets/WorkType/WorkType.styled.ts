@@ -7,7 +7,7 @@ const Wrapper = styled(Radio.Root, {
   position: "relative",
   height: "2rem",
   opacity: "1",
-  transition: "$all",
+  transition: "$dcAll",
 });
 
 const StyledWorkType = styled("ul", {

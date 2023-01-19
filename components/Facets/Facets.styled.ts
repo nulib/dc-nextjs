@@ -14,6 +14,7 @@ const StyledFacets = styled("div", {
   [`& ${WorkTypeWrapper}`]: {
     borderRight: "1px solid $black10",
     paddingRight: "$gr2",
+    transition: "$dcWidth",
   },
 
   "@sm": {
@@ -31,7 +32,7 @@ const Width = styled("span", {
 
 const Wrapper = styled("div", {
   ".facets-ui-container": {
-    transition: "$all",
+    transition: "$dcAll",
   },
 
   "&[data-filter-fixed='true']": {

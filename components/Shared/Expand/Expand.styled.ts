@@ -6,7 +6,7 @@ import { Button } from "@nulib/design-system";
 const ExpandButton = styled(Button, {
   margin: "0 auto",
   opacity: "1",
-  transition: "$all",
+  transition: "$dcAll",
 });
 
 const ExpandEdge = styled("div", {
@@ -18,7 +18,7 @@ const ExpandEdge = styled("div", {
   padding: "$4 0 0",
   backgroundColor: "$white",
   background: "linear-gradient(to bottom, #fff0 0%, #fff 61.8%)",
-  transition: "$all",
+  transition: "$dcAll",
   overflow: "hidden",
 });
 
@@ -29,7 +29,7 @@ const ExpandContent = styled("div", {
 const ExpandStyled = styled("div", {
   position: "relative",
   overflow: "hidden",
-  transition: "$all",
+  transition: "$dcAll",
   backgroundColor: "transparent",
 
   variants: {

@@ -2,22 +2,50 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
+const HelperStyled = styled("div", {
+  position: "absolute",
+  top: "10px",
+  right: "$gr2",
+  padding: "$gr1 $gr3",
+  background: "transparent",
+  borderRadius: "1rem",
+  color: "$black50",
+  display: "flex",
+  alignItems: "center",
+  transition: "$dcAll",
+  fontFamily: "$northwesternSansRegular",
+
+  "& > svg": {
+    position: "relative",
+    display: "inline-block",
+    padding: "0",
+    marginLeft: "$gr1",
+    height: "$gr3",
+    width: "0",
+    color: "inherit",
+    transition: "$dcAll",
+  },
+});
+
 const JumpToListStyled = styled("ul", {
   position: "absolute",
   left: "0px",
   display: "block",
   margin: "0",
   padding: "0",
-  background: "white",
+  background: "$white",
   width: "100%",
-  fontSize: "$gr3",
+  fontSize: "$gr2",
   listStyle: "none",
   top: "50px",
   border: "1px solid $black10",
+  boxShadow: "3px 3px 8px #0003",
 });
 
 const JumpItem = styled("li", {
   position: "relative",
+  backgroundColor: "$gray6",
+  transition: "$dcAll",
 
   "& a": {
     display: "block",
@@ -26,30 +54,21 @@ const JumpItem = styled("li", {
     borderTopColor: "$black20",
     borderTopStyle: "solid",
     cursor: "pointer",
+    color: "$purple120",
   },
 
   "&[aria-selected='true']": {
     background: "$purple10",
-  },
-});
 
-const HelperStyled = styled("div", {
-  position: "absolute",
-  top: "$gr2",
-  right: "$gr2",
-  padding: "0 $gr2",
-  background: "$purple60",
-  color: "$white",
-  display: "flex",
-  alignItems: "center",
+    [`${HelperStyled}`]: {
+      color: "$purple10",
+      background: "$purple",
+      boxShadow: "2px 2px 5px #0001",
 
-  "& > svg": {
-    position: "relative",
-    display: "inline-block",
-    padding: "0",
-    marginLeft: "$gr1",
-    height: "$gr4",
-    width: "auto",
+      svg: {
+        width: "$gr3",
+      },
+    },
   },
 });
 
