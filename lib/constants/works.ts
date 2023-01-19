@@ -22,6 +22,10 @@ const FACETS_WORK_LINK: FacetsWorkLink[] = [
     param: "language",
   },
   {
+    label: "Rights Statement",
+    param: "rightsStatement",
+  },
+  {
     label: "Series",
     param: "series",
   },
