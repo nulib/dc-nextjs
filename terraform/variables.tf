@@ -29,6 +29,10 @@ variable "environment_name" {
   type = string
 }
 
+variable "honeybadger_api_key" {
+  type    = string
+}
+
 variable "next_public_dcapi_endpoint" {
   type = string
 }
