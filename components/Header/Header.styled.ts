@@ -29,7 +29,7 @@ const Primary = styled("div", {
   display: "flex",
   margin: "0 auto",
   zIndex: "1",
-  transition: "$all",
+  transition: "$dcAll",
   position: "relative",
   top: "unset",
   height: "$gr5",
@@ -40,7 +40,7 @@ const Primary = styled("div", {
     alignItems: "center",
     justifyContent: "space-between",
     flexGrow: "1",
-    transition: "$all",
+    transition: "$dcAll",
 
     [`& ${NavStyled}`]: {
       backgroundColor: "$gray6",

@@ -25,17 +25,17 @@ const StyledSwitch = styled(Switch.Root, {
 
 const StyledThumb = styled(Switch.Thumb, {
   display: "block",
-  height: "calc(2rem - 12px)",
-  width: "calc(2rem - 12px)",
+  height: "calc(2rem - 14px)",
+  width: "calc(2rem - 14px)",
   backgroundColor: "$white",
   borderRadius: "100%",
   boxShadow: `2px 2px 5px #0001`,
-  transition: "$all",
-  transform: "translateX(6px)",
+  transition: "$dcAll",
+  transform: "translateX(7px)",
   willChange: "transform",
 
   '&[data-state="checked"]': {
-    transform: "translateX(calc(1.236rem + 6px))",
+    transform: "translateX(calc(1.236rem + 7px))",
   },
 });
 

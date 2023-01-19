@@ -5,7 +5,7 @@ import { styled } from "@/stitches.config";
 
 const DropdownToggle = styled(Dropdown.Trigger, {
   display: "flex",
-  padding: "0 1rem",
+  padding: "0 $gr2",
   border: "none",
   position: "relative",
   backgroundColor: "transparent",
@@ -20,7 +20,7 @@ const DropdownToggle = styled(Dropdown.Trigger, {
   transition: "all 200ms ease-in-out",
 
   svg: {
-    width: "16px",
+    width: "$gr3",
     marginRight: "0.25rem",
     marginBottom: "-2px",
     color: "$black50",
@@ -32,14 +32,16 @@ const DropdownToggle = styled(Dropdown.Trigger, {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "11px",
     backgroundColor: "$darkBlueA",
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+    fontSize: "$gr1",
     color: "$white",
     width: "19px",
     height: "19px",
     borderRadius: "50%",
-    marginTop: "-1.5rem",
-    marginRight: "-1.25rem",
+    marginTop: "-$gr4",
+    marginRight: "-$gr3",
   },
 
   [`&:hover`]: {
@@ -48,7 +50,7 @@ const DropdownToggle = styled(Dropdown.Trigger, {
     svg: {
       transform: "rotate(0deg) !important",
       color: "$purple",
-      marginBottom: "-7px",
+      marginBottom: "-$gr1",
     },
   },
 
@@ -63,17 +65,17 @@ const DropdownToggle = styled(Dropdown.Trigger, {
 const Icon = styled("span", {
   display: "flex",
   right: "0",
-  height: "31px",
-  width: "31px",
+  height: "$gr4",
+  width: "$gr4",
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
   cursor: "pointer",
   backgroundColor: "transparent",
   zIndex: "1",
-  border: "2px solid $black10",
+  border: "1px solid $black10",
   borderRadius: "50%",
-  marginRight: "0.5rem",
+  marginRight: "$gr2",
   fill: "$black50",
   stroke: "$black50",
   transition: "all 200ms ease-in-out",

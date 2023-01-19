@@ -13,7 +13,8 @@ import { useSearchState } from "@/context/search-context";
 
 const HeaderPrimary: React.FC = () => {
   const router = useRouter();
-  const isCollectionPage = router.pathname.includes("collection");
+  const isCollectionPage =
+    router.pathname.includes("collection") && router.query.id;
 
   const [searchActive, setSearchActive] = useState<boolean>(false);
 

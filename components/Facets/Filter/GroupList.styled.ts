@@ -18,12 +18,12 @@ const GroupToggleIcon = styled("span", {
   right: "$gr3",
   marginTop: "-1px",
   opacity: "0.5",
-  transition: "$all",
+  transition: "$dcAll",
 
   svg: {
     height: "$gr3",
     transform: "rotate(-90deg)",
-    transition: "$all",
+    transition: "$dcAll",
   },
 });
 

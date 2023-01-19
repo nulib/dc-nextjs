@@ -38,7 +38,7 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
     position: "absolute",
     bottom: "-4px",
     left: "0",
-    transition: "$all",
+    transition: "$dcAll",
   },
 
   "&[data-state='active']": {
