@@ -3,45 +3,49 @@ import {
   MetadataStyled,
 } from "@/components/Work/Metadata.styled";
 import { DC_URL } from "@/lib/constants/endpoints";
-import { FACETS_WORK_LINK } from "@/lib/constants/works";
 import Link from "next/link";
 import { MetadataItem } from "@iiif/presentation-3";
+import { WORK_METADATA_LABELS } from "@/lib/constants/works";
 
 interface WorkMetadataProps {
   metadata: MetadataItem[];
 }
 
-interface ValueAsSearchLinkProps {
-  param: string;
+interface ValueAsListItemProps {
+  searchParam?: string;
   value?: string;
 }
 
-export const ValueAsSearchLink: React.FC<ValueAsSearchLinkProps> = ({
-  param,
+export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
+  searchParam,
   value,
 }) => {
   if (!value) return <></>;
-  const search = `${DC_URL}/search?${param}=`;
+  const search = `${DC_URL}/search?${searchParam}=`;
   return (
     <LinkItemStyled>
-      <Link href={search.concat(encodeURIComponent(value))}>
-        <a>{value}</a>
-      </Link>
+      {searchParam ? (
+        <Link href={search.concat(encodeURIComponent(value))}>
+          <a>{value}</a>
+        </Link>
+      ) : (
+        <span dangerouslySetInnerHTML={{ __html: value }} />
+      )}
     </LinkItemStyled>
   );
 };
 
 const WorkMetadata: React.FC<WorkMetadataProps> = ({ metadata }) => {
-  const customValues = FACETS_WORK_LINK.map((value) => {
+  const formattedValues = WORK_METADATA_LABELS.map((value) => {
     return {
-      Content: <ValueAsSearchLink param={value.param} />,
+      Content: <ValueAsListItem searchParam={value.searchParam} />,
       matchingLabel: { none: [value.label] },
     };
   });
 
   return (
     <MetadataStyled
-      customValueContent={customValues}
+      customValueContent={formattedValues}
       customValueDelimiter=""
       data-testid="metadata"
       metadata={metadata}

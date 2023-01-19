@@ -56,9 +56,9 @@ export interface Subject {
   role: string;
 }
 
-export interface FacetsWorkLink {
+export interface WorkMetadata {
   label: string;
-  param: string;
+  searchParam?: string;
 }
 
 export type PreservationLevelStatus = "Level 1" | "Level 2" | "Level 3";
