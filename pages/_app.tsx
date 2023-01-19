@@ -1,5 +1,4 @@
 import { User, UserContextInterface } from "@/types/context/user";
-
 import type { AppProps } from "next/app";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -11,10 +10,13 @@ import Transition from "@/components/Transition";
 import axios from "axios";
 import { defaultOpenGraphData } from "@/lib/open-graph";
 import globalStyles from "@/styles/global";
+import setupHoneyBadger from "@/lib/honeybadger/config";
 
 export const UserContext = React.createContext<UserContextInterface | null>(
   null
 );
+
+setupHoneyBadger();
 
 interface MyAppProps extends AppProps {
   pageProps: ObjectLiteral;
