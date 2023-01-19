@@ -42,7 +42,7 @@ const ExpandableListItemTrigger = styled(Accordion.Trigger, {
     marginRight: "$gr1",
     marginTop: "2px",
     transform: "rotate(-90deg)",
-    transition: "$all",
+    transition: "$dcAll",
     flexShrink: "0",
     flexGrow: "1",
   },

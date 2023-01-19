@@ -6,7 +6,11 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const FilterActivate = styled(Dialog.Trigger, {
-  height: "38px",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  alignContent: "center",
   cursor: "pointer",
   backgroundColor: "$white",
   border: "0",
@@ -15,14 +19,11 @@ const FilterActivate = styled(Dialog.Trigger, {
   fontSize: "$gr3",
   borderRadius: "50px",
   transition: "all 200ms ease-in-out",
-  display: "flex",
-  alignItems: "center",
-  padding: "0 1rem 0 0.5rem",
+  padding: "0 $gr3 0 $gr1",
 
   [`& ${IconStyled}`]: {
     color: "$black50",
     fill: "$black50",
-    marginBottom: "-1px",
   },
 
   "&:hover": {
@@ -38,6 +39,7 @@ const FilterActivate = styled(Dialog.Trigger, {
 });
 
 const FilterFloating = styled("div", {
+  height: `calc($gr3 * 2)`,
   display: "flex",
   backgroundColor: "$white",
   position: "relative",
