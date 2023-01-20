@@ -15,6 +15,7 @@ const GridItem = styled("div", {
         backgroundColor: "$purple10",
         outline: "2px solid $purple60",
         boxShadow: "2px 2px 5px #0003",
+        borderRadius: "3px !important",
       },
     },
   },
