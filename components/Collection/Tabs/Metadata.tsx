@@ -2,6 +2,7 @@ import { ApiResponseBucket } from "@/types/api/response";
 import { GroupedList } from "@/components/Collection/Tabs/Metadata.styled";
 import Heading from "@/components/Heading/Heading";
 import React from "react";
+import { formatNumber } from "@/lib/utils/count-helpers";
 import { useRouter } from "next/router";
 
 interface CollectionTabsMetadataProps {
@@ -41,7 +42,7 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
               {grouped[letter].map(({ doc_count, key }) => (
                 <li key={key}>
                   <a onClick={() => handleMetadataClick(key)}>
-                    {key} ({doc_count})
+                    {key} ({formatNumber(doc_count)})
                   </a>
                 </li>
               ))}

@@ -5,6 +5,7 @@ import {
   WorkCountTypes as Types,
   WorkCountStyled,
 } from "@/components/Shared/WorkCount/WorkCount.styled";
+import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import React from "react";
 
 export interface WorkCountProps {
@@ -22,9 +23,7 @@ const WorkCount: React.FC<WorkCountProps> = ({
 
   return (
     <WorkCountStyled>
-      <Total data-testid="work-count-total">
-        {total} {total !== 1 ? "Works" : "Work"}
-      </Total>
+      <Total data-testid="work-count-total">{pluralize("Work", total)}</Total>
       <Types>
         {image ? (
           <Type
@@ -32,7 +31,7 @@ const WorkCount: React.FC<WorkCountProps> = ({
             data-testid="work-count-type"
             data-type="image"
           >
-            {image} <IconImage />
+            {formatNumber(image)} <IconImage />
           </Type>
         ) : (
           <></>
@@ -43,7 +42,7 @@ const WorkCount: React.FC<WorkCountProps> = ({
             data-testid="work-count-type"
             data-type="audio"
           >
-            {audio} <IconAudio />
+            {formatNumber(audio)} <IconAudio />
           </Type>
         ) : (
           <></>
@@ -54,7 +53,7 @@ const WorkCount: React.FC<WorkCountProps> = ({
             data-testid="work-count-type"
             data-type="video"
           >
-            {video} <IconVideo />
+            {formatNumber(video)} <IconVideo />
           </Type>
         ) : (
           <></>
