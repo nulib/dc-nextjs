@@ -4,6 +4,7 @@ import {
   DropdownToggle,
   ValueWrapper,
 } from "./UserFacets.styled";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import FacetsCurrentUserValue from "@/components/Facets/UserFacets/Value";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
@@ -11,6 +12,7 @@ import { UrlFacets } from "@/types/context/filter-context";
 import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 interface FacetsCurrentUserProps {
   screen: "modal" | "search";
@@ -28,8 +30,15 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
   urlFacets,
 }) => {
   const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { filterDispatch, filterState } = useFilterState();
+  const {
+    searchState: { searchFixed },
+  } = useSearchState();
+
+  const dropdownRef = useRef<HTMLButtonElement>(null);
+  const handleOpenChange = (status: boolean) => setIsOpen(status);
 
   let facets: UrlFacets | undefined;
 
@@ -46,6 +55,13 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       );
       break;
   }
+
+  useEffect(() => {
+    if (!searchFixed) {
+      dropdownRef?.current?.blur();
+      handleOpenChange(searchFixed);
+    }
+  }, [searchFixed]);
 
   useEffect(() => {
     if (!facets) return;
@@ -111,16 +127,26 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
    */
 
   return (
-    <ValueWrapper data-testid="facet-user-component">
+    <ValueWrapper
+      data-testid="facet-user-component"
+      isModal={screen === "modal"}
+    >
       {screen === "search" && (
-        <Dropdown.Root modal={false}>
-          <DropdownToggle data-testid="facet-user-component-popover-toggle">
+        <Dropdown.Root
+          modal={false}
+          open={isOpen}
+          onOpenChange={handleOpenChange}
+        >
+          <DropdownToggle
+            data-testid="facet-user-component-popover-toggle"
+            ref={dropdownRef}
+          >
             <IconChevronDown />
             <span>{currentOptions.length}</span>
           </DropdownToggle>
           <DropdownContent
             align="start"
-            alignOffset={-95}
+            alignOffset={-97}
             data-testid="facet-user-component-popover-content"
           >
             {currentFacets}

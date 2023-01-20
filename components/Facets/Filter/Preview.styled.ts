@@ -53,6 +53,7 @@ const PreviewList = styled("ul", {
 const StyledPreview = styled("div", {
   [`& ${StyledHeading}`]: {
     fontFamily: "$northwesternDisplayBold",
+    fontSize: "$gr5",
     fontWeight: "400",
     padding: "0 $gr4",
   },

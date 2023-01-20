@@ -18,8 +18,8 @@ const HeroActions = styled("div", {
 const HeroStyled = styled("div", {
   position: "absolute",
   width: "100%",
-  height: "calc(100% + 156px)",
-  marginTop: "-156px",
+  height: "calc(100% + 161px)",
+  marginTop: "-161px",
   zIndex: "0",
   backgroundColor: "$black",
 

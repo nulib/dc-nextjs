@@ -32,7 +32,7 @@ const StyledWorkType = styled("ul", {
       height: "2rem",
       zIndex: "1",
       padding: "0",
-      transition: "all 200ms ease-in-out",
+      transition: "$dcAll",
       color: "$black50",
 
       [`&[aria-checked="true"]`]: {
@@ -64,7 +64,7 @@ const Highlight = styled("div", {
   top: "0",
   borderRadius: "1rem",
   height: "2rem",
-  transition: "all 100ms ease-in-out",
+  transition: "$dcAll",
   zIndex: "0",
 });
 

@@ -10,6 +10,7 @@ const StyledGenericFacet = styled("div", {
   [`${StyledHeading}`]: {
     margin: "0 0 1rem",
     fontFamily: "$northwesternDisplayBold",
+    fontSize: "$gr5",
     fontWeight: "400",
   },
 });
@@ -73,7 +74,7 @@ const OptionCount = styled("span", {
 });
 
 const OptionText = styled("span", {
-  color: "$black",
+  color: "$black80",
   fontFamily: "$northwesternSansRegular",
 });
 
@@ -90,8 +91,6 @@ const Options = styled("ul", {
 
     label: {
       cursor: "pointer",
-      color: "$black",
-      fontFamily: "$northwesternSansRegular",
       lineHeight: "1.382em",
       flexShrink: "1",
       flexGrow: "0",
@@ -103,10 +102,13 @@ const Options = styled("ul", {
       [`&[data-selected=true]`]: {
         color: "$black",
         fontFamily: "$northwesternSansBold",
-        fontWeight: "700",
 
         [`${OptionCount}`]: {
           fontWeight: "400",
+        },
+
+        [`${OptionText}`]: {
+          fontFamily: "$northwesternSansBold",
         },
       },
     },
