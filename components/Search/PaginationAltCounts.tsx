@@ -5,6 +5,7 @@ import {
 } from "@/components/Search/Pagination.styled";
 import { Button } from "@nulib/design-system";
 import { Pagination as PaginationShape } from "@/types/api/response";
+import { pluralize } from "@/lib/utils/count-helpers";
 import { useRouter } from "next/router";
 
 interface PaginationProps {
@@ -38,7 +39,7 @@ const PaginationAltCounts: React.FC<PaginationProps> = ({ pagination }) => {
     >
       <Results data-testid="results">
         Showing <span>{startCount}</span> to <span>{endCount}</span> of{" "}
-        <span>{total_hits}</span> results
+        {pluralize("result", total_hits)}
       </Results>
 
       <NavWrapper>
