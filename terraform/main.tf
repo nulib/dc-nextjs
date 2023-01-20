@@ -76,6 +76,8 @@ resource "aws_amplify_app" "dc-next" {
 
   environment_variables = {
     ENV                        = var.environment_name
+    HONEYBADGER_API_KEY        = var.honeybadger_api_key
+    HONEYBADGER_ENV            = var.environment_name
     NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
     NEXT_PUBLIC_DC_URL         = var.next_public_dc_url
   }
