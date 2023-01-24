@@ -1,8 +1,12 @@
 const HoneybadgerSourceMapPlugin = require("@honeybadger-io/webpack");
 
 // Use the HoneybadgerSourceMapPlugin to upload the source maps during build step
-const { HONEYBADGER_API_KEY, HONEYBADGER_ASSETS_URL, HONEYBADGER_REPORT_DATA } =
-  process.env;
+const {
+  HONEYBADGER_API_KEY,
+  HONEYBADGER_ENV,
+  HONEYBADGER_ASSETS_URL,
+  HONEYBADGER_REPORT_DATA,
+} = process.env;
 const NODE_ENV = process.env.HONEYBADGER_ENV || process.env.NODE_ENV;
 const HONEYBADGER_REVISION = process.env.AWS_COMMIT_ID;
 
@@ -10,6 +14,7 @@ const HONEYBADGER_REVISION = process.env.AWS_COMMIT_ID;
 module.exports = {
   env: {
     HONEYBADGER_API_KEY,
+    HONEYBADGER_ENV,
     HONEYBADGER_REPORT_DATA,
     HONEYBADGER_REVISION,
     NUSSO_API_KEY: process.env.NUSSO_API_KEY,
