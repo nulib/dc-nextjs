@@ -50,7 +50,7 @@ export const defaultCollection: HeroCollection = {
       },
       thumbnail: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df/210,210,2650,1720/1536,/0/default.jpg",
+          id: `https://iiif.stack.rdc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df/210,210,2650,1720/1536,/0/default.jpg`,
           type: "Image",
           format: "image/jpeg",
           service: [
@@ -73,7 +73,7 @@ export const defaultCollection: HeroCollection = {
       nul_hero_region: "210,210,2650,1720",
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
+      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest2.json",
       type: "Collection",
       label: { none: ["Berkeley Folk Music Festival"] },
       summary: {
@@ -103,7 +103,7 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
+      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest3.json",
       type: "Collection",
       label: {
         none: ["Athletic Department Football Films"],
@@ -155,7 +155,7 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
+      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest4.json",
       type: "Collection",
       label: { none: ["Jim Roberts Photographs"] },
       summary: {
@@ -185,7 +185,7 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest.json",
+      id: "https://iiif.stack.rdc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest2.json",
       type: "Collection",
       label: { none: ["World War II Poster Collection"] },
       summary: { none: ["A careless word-- a needless sinking"] },
@@ -208,6 +208,39 @@ export const defaultCollection: HeroCollection = {
       homepage: [
         {
           id: `${DC_URL}/collections/faf4f60e-78e0-4fbf-96ce-4ca8b4df597a`,
+          type: "Text",
+        },
+      ],
+      nul_hero_region: "100,450,1600,1200",
+    },
+    {
+      id: "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/0ba3a256-4952-44ea-b0d9-0772835ff137?as=iiif",
+      type: "Collection",
+      label: { none: ["Ronald J. Sullivan Photograph Collection"] },
+      summary: {
+        none: [
+          "The Ronald J. Sullivan Photograph Collection is an extensive collection of photographs and slides of public and commercial buses and public transit and commuter trains, dating from 1946-2000. The bulk of the collection comprises photographs taken by Ronald J. Sullivan, an amateur photographer and rail and bus enthusiast; also included are historic images of Chicago-area transit that were part of Sullivan’s personal collection, and which supplement  the photographer’s original material. ",
+        ],
+      },
+      thumbnail: [
+        {
+          id: "https://iiif-test.rdc-staging.library.northwestern.edu/iiif/2/37a27b1d-ea5a-4bbe-b38a-fcd2f5904f25/750,950,1600,1200/800,/0/default.jpg",
+          type: "Image",
+          format: "image/jpeg",
+          service: [
+            {
+              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/37a27b1d-ea5a-4bbe-b38a-fcd2f5904f25",
+              profile: "http://iiif.io/api/image/2/level2.json",
+              type: "ImageService2",
+            },
+          ],
+          width: 1600,
+          height: 1200,
+        },
+      ],
+      homepage: [
+        {
+          id: `${DC_URL}/collections/0ba3a256-4952-44ea-b0d9-0772835ff137`,
           type: "Text",
         },
       ],
@@ -309,87 +342,12 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
 ];
 
-export const collectionData: SearchShape[] = [
-  {
-    api_model: "Collection",
-    representative_file_set: {
-      aspect_ratio: 1.618,
-      id: "ad43c4c9-835f-461b-bae4-92eb62ced935",
-      url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25ed3d-0d1b-41a4-95b3-c3a5790eb0a7",
-    },
-    thumbnail:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7/thumbnail",
-    visibility: "Public",
-    iiif_manifest:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7?as=iiif",
-    work_type: "Image",
-    id: "18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
-    title: "Berkeley Folk Music Festival",
-  },
-  {
-    api_model: "Collection",
-    representative_file_set: {
-      aspect_ratio: 1.618,
-      id: "ad43c4c9-835f-461b-bae4-92eb62ced935",
-      url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25ed3d-0d1b-41a4-95b3-c3a5790eb0a7",
-    },
-    thumbnail:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7/thumbnail",
-    visibility: "Public",
-    iiif_manifest:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7?as=iiif",
-    work_type: "Image",
-    id: "18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
-    title: "Commedia dell'Arte: The Masks of Antonio Fava",
-  },
-  {
-    api_model: "Collection",
-    representative_file_set: {
-      aspect_ratio: 1.618,
-      id: "ad43c4c9-835f-461b-bae4-92eb62ced935",
-      url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25ed3d-0d1b-41a4-95b3-c3a5790eb0a7",
-    },
-    thumbnail:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7/thumbnail",
-    visibility: "Public",
-    iiif_manifest:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7?as=iiif",
-    work_type: "Image",
-    id: "18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
-    title: "Jim Roberts Photographs, 1968-1972",
-  },
-  {
-    api_model: "Collection",
-    representative_file_set: {
-      aspect_ratio: 1.618,
-      id: "ad43c4c9-835f-461b-bae4-92eb62ced935",
-      url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25ed3d-0d1b-41a4-95b3-c3a5790eb0a7",
-    },
-    thumbnail:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7/thumbnail",
-    visibility: "Public",
-    iiif_manifest:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7?as=iiif",
-    work_type: "Image",
-    id: "18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
-    title: "Pat Patrick Collection of Sun Ra Materials",
-  },
-  {
-    api_model: "Collection",
-    representative_file_set: {
-      aspect_ratio: 1.618,
-      id: "ad43c4c9-835f-461b-bae4-92eb62ced935",
-      url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/ca25ed3d-0d1b-41a4-95b3-c3a5790eb0a7",
-    },
-    thumbnail:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7/thumbnail",
-    visibility: "Public",
-    iiif_manifest:
-      "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7?as=iiif",
-    work_type: "Image",
-    id: "18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
-    title: "Records of the Bursar’s Office Takeover, May 1968",
-  },
+export const featuredCollections = [
+  "d3a8e587-cc58-4cb0-aea2-65465d42ec3e",
+  "ecacd539-fe38-40ec-bbc0-590acee3d4f2",
+  "4ed2338d-c715-4a86-8ac6-6b4030a42be5",
+  "3121f8ee-5265-4b19-bae3-59f96e9ac01a",
+  "8eb442ee-c545-430b-a489-53befaafa9b7",
 ];
 
 export const worksData: SearchShape[] = [

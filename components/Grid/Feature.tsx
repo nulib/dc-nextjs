@@ -25,7 +25,7 @@ const GridFeature: React.FC<GridFeatureProps> = ({ data = [] }) => {
     <GridFeatureStyled>
       <GridFeatureItems>
         <GridFeaturePrimary>
-          {primary && <GridItem item={primary} />}
+          {primary && <GridItem item={primary} isFeatured={true} />}
         </GridFeaturePrimary>
         <GridFeatureSecondary>
           {secondary.map((item: SearchShape) => (

@@ -18,8 +18,10 @@ const HomepageOverview = () => {
           <Content>
             <h2>Enrich your research with primary sources</h2>
             <p>
-              Explore millions of high-quality primary sources and images from
-              around the world, including artworks, maps, photographs, and more.{" "}
+              Explore digital resources from the Northwestern University Library
+              collections – including Letters, photographs, diaries, maps, and
+              audiovisual materials - as well as licensed art historical images
+              for teaching and reference.
             </p>
             <Link href="/about">
               <Button isPrimary>Learn More</Button>
