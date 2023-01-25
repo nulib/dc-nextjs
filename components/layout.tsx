@@ -6,7 +6,6 @@ import "swiper/css/pagination";
 import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Header from "@/components/Header/Header";
-import Message from "@/components/Shared/Message/Message";
 import React from "react";
 import { styled } from "@/stitches.config";
 
@@ -45,7 +44,9 @@ const Layout: React.FC<LayoutProps> = ({
       <Header isHero={header === "hero"} />
       <MainStyled>{children}</MainStyled>
       <Footer />
-      <Message />
+
+      {/* De-activated temporarily */}
+      {/* <Message /> */}
     </>
   );
 };

@@ -99,9 +99,8 @@ const Collection: NextPage<CollectionProps> = ({
               />
               <Facts.Item
                 big={formatNumber(totalAudio)}
-                small={pluralize("Audio Works", totalAudio)}
+                small={pluralize("Audio Work", totalAudio)}
               />
-              <Facts.Item big="Across" small="[Count here] Boxes" />
             </Facts>
           </Container>
         </Interstitial>
