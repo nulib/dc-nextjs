@@ -173,6 +173,7 @@ const work = {
   technique: [],
   table_of_contents: [],
   representative_file_set: {
+    aspect_ratio: 1,
     id: "7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
     url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
   },

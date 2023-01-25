@@ -84,6 +84,7 @@ export const sampleWork2: WorkShape = {
   related_material: [],
   related_url: [],
   representative_file_set: {
+    aspect_ratio: 1.6,
     id: "93d75ffe-20d8-48ea-9206-8db9114f2731",
     url: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731",
   },

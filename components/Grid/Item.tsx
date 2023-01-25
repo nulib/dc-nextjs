@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Figure from "@/components/Figure/Figure";
 import { GridItem as ItemStyled } from "@/components/Grid/Grid.styled";
 import Link from "next/link";
@@ -8,11 +7,11 @@ import { UserContext } from "@/pages/_app";
 
 interface GridItemProps {
   item: SearchShape;
+  isFeatured?: boolean;
 }
 
-const GridItem: React.FC<GridItemProps> = ({ item }) => {
+const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
   const [urlPath, setUrlPath] = useState<string>();
-  const [endpointPath, setEndpointPath] = useState<string>();
   const [supplementalInfo, setSupplementalInfo] = useState<string>();
   const userContext = useContext(UserContext);
 
@@ -26,32 +25,29 @@ const GridItem: React.FC<GridItemProps> = ({ item }) => {
     switch (item.api_model) {
       case "Work":
         setUrlPath("/items");
-        setEndpointPath("/works");
         setSupplementalInfo(item.work_type);
         return;
       case "Collection":
         setUrlPath("/collections");
-        setEndpointPath("/collections");
         return;
       default:
         setUrlPath("/items");
-        setEndpointPath("/works");
         setSupplementalInfo(item.work_type);
         return;
     }
   }, [item]);
 
-  if (!endpointPath) return <></>;
-
   return (
-    <ItemStyled key={item.id} data-item-id={item.id}>
+    <ItemStyled key={item.id} data-item-id={item.id} data-testid="grid-item">
       <Link href={`${urlPath}/${item.id}`}>
-        <a>
+        <a data-testid="grid-item-link">
           <Figure
             data={{
               aspectRatio: item.representative_file_set.aspect_ratio,
               isRestricted: isRestricted(item),
-              src: `${DCAPI_ENDPOINT}${endpointPath}/${item.id}/thumbnail`,
+              src: isFeatured
+                ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
+                : item.thumbnail,
               supplementalInfo: supplementalInfo,
               title: item.title,
             }}

@@ -112,6 +112,7 @@ export interface WorkShape {
   related_material: Array<string>;
   related_url: Array<RelatedUrl>;
   representative_file_set: {
+    aspect_ratio: number;
     id: string;
     url: string;
   };
