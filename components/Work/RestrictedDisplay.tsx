@@ -22,8 +22,10 @@ const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
         <p>
           This Work requires Northwestern University NetID authentication.
           Please{" "}
-          <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
-            <a style={{ cursor: "pointer" }}>sign in</a>
+          <Link
+            href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}
+            style={{ cursor: "pointer" }}>
+            sign in
           </Link>
         </p>
         <p>

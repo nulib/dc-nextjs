@@ -151,6 +151,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const id = params?.id;
   const collection = id ? await getCollection(params.id as string) : null;
+
+  if (!collection) {
+    return {
+      notFound: true,
+    };
+  }
+
   const metadata =
     id && collection
       ? await getMetadataAggs(id as string, "subject.label")

@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <CardStyled data-testid="card-wrapper">
       {href ? (
-        <Link href={href}>
+        <Link href={href} legacyBehavior>
           <LinkStyled>
             <Figure data={data} isPromoted />
           </LinkStyled>

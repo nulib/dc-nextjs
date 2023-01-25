@@ -39,20 +39,20 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
 
   return (
     <ItemStyled key={item.id} data-item-id={item.id} data-testid="grid-item">
-      <Link href={`${urlPath}/${item.id}`}>
-        <a data-testid="grid-item-link">
-          <Figure
-            data={{
-              aspectRatio: item.representative_file_set.aspect_ratio,
-              isRestricted: isRestricted(item),
-              src: isFeatured
-                ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
-                : item.thumbnail,
-              supplementalInfo: supplementalInfo,
-              title: item.title,
-            }}
-          />
-        </a>
+      <Link href={`${urlPath}/${item.id}`} data-testid="grid-item-link">
+
+        <Figure
+          data={{
+            aspectRatio: item.representative_file_set.aspect_ratio,
+            isRestricted: isRestricted(item),
+            src: isFeatured
+              ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
+              : item.thumbnail,
+            supplementalInfo: supplementalInfo,
+            title: item.title,
+          }}
+        />
+
       </Link>
     </ItemStyled>
   );

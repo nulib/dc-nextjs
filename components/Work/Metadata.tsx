@@ -26,7 +26,7 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
     <LinkItemStyled>
       {searchParam ? (
         <Link href={search.concat(encodeURIComponent(value))}>
-          <a>{value}</a>
+          {value}
         </Link>
       ) : (
         <span dangerouslySetInnerHTML={{ __html: value }} />

@@ -3,7 +3,6 @@ import GenericFacet from "./GenericFacet";
 import mockRouter from "next-router-mock";
 import { response } from "@/mocks/use-fetch-api-response";
 
-jest.mock("next/router", () => require("next-router-mock"));
 mockRouter.setCurrentUrl("/search");
 
 jest.mock("@/hooks/useFetchApiData", () => {

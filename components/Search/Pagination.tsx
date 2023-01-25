@@ -32,10 +32,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
             query: { ...query, page: current_page - 1 },
           }}
         >
-          <a>
-            <IconArrowBack aria-hidden="true" />
-            Previous
-          </a>
+
+          <IconArrowBack aria-hidden="true" />Previous
         </Link>
       </LeftNav>
       <PaginationLinks>
@@ -46,7 +44,7 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
               pathname,
               query: { ...query, page },
             }}
-          >
+            legacyBehavior>
             <PageNumber isCurrent={page === current_page}>{page}</PageNumber>
           </Link>
         ))}
@@ -58,10 +56,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
             query: { ...query, page: current_page + 1 },
           }}
         >
-          <a>
-            Next
-            <IconArrowForward aria-hidden="true" />
-          </a>
+          Next<IconArrowForward aria-hidden="true" />
+
         </Link>
       </RightNav>
     </PaginationStyled>

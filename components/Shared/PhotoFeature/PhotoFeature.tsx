@@ -19,19 +19,19 @@ const PhotoFeature: React.FC<PhotoFeatureProps> = ({
   title,
 }) => {
   return (
-    <Link href={href}>
-      <a>
-        <PhotoFeatureStyled css={{ backgroundImage: `url(${imgSrc})` }}>
-          <TextOverImage>
-            <h3>{title}</h3>
-            {shortDescription && (
-              <div className="description">{shortDescription}</div>
-            )}
-            <div className="cta">{callToAction}</div>
-          </TextOverImage>
-        </PhotoFeatureStyled>
-      </a>
-    </Link>
+    (<Link href={href}>
+
+      <PhotoFeatureStyled css={{ backgroundImage: `url(${imgSrc})` }}>
+        <TextOverImage>
+          <h3>{title}</h3>
+          {shortDescription && (
+            <div className="description">{shortDescription}</div>
+          )}
+          <div className="cta">{callToAction}</div>
+        </TextOverImage>
+      </PhotoFeatureStyled>
+
+    </Link>)
   );
 };
 

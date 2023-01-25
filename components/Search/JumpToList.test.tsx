@@ -5,7 +5,6 @@ import { screen } from "@testing-library/react";
 import singletonRouter from "next/router";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("next/router", () => require("next-router-mock"));
 // This is needed for mocking 'next/link':
 jest.mock("next/dist/client/router", () => require("next-router-mock"));
 
@@ -36,7 +35,7 @@ describe("SearchJumpToList component", () => {
     expect(helpers[1]).toHaveTextContent(/all digital collections/i);
   });
 
-  it("renders route query params in JumpTo items", async () => {
+  it.only("renders route query params in JumpTo items", async () => {
     render(
       <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />
     );

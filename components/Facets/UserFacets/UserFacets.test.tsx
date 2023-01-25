@@ -6,8 +6,6 @@ import React from "react";
 import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
-jest.mock("next/router", () => require("next-router-mock"));
-
 const searchStateDefault = {
   aggregations: {},
   q: "",

@@ -2,7 +2,6 @@ import { render, screen } from "@/test-utils";
 import HeaderPrimary from "./Primary";
 
 import mockRouter from "next-router-mock";
-jest.mock("next/router", () => require("next-router-mock"));
 
 describe("HeaderPrimary", () => {
   beforeEach(() => {
