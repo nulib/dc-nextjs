@@ -66,6 +66,7 @@ export const buildAggs = (
      * Default agg values for the active Facet
      */
     aggs[facet.id] = {
+      // @ts-ignore
       terms,
     };
   });

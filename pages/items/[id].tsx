@@ -12,7 +12,7 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
 import { WorkShape } from "@/types/components/works";

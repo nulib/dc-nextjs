@@ -1,4 +1,4 @@
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 import { WorkShape } from "@/types/components/works";
 import { useContext } from "react";
 

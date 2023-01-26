@@ -1,4 +1,8 @@
-import { VisibilityStatus, WorkShape } from "@/types/components/works";
+import {
+  RepresentativeFileSet,
+  VisibilityStatus,
+  WorkShape,
+} from "@/types/components/works";
 import { CollectionShape } from "@/types/components/collections";
 import { ModelName } from "@/types/api/generic";
 
@@ -46,11 +50,7 @@ export interface ApiResponseDataShape {
   api_model: ModelName;
   id: string;
   iiif_manifest?: string;
-  representative_file_set: {
-    aspect_ratio: number;
-    id: string;
-    url: string;
-  };
+  representative_file_set: RepresentativeFileSet;
   thumbnail: string;
   title: string;
   visibility: VisibilityStatus;

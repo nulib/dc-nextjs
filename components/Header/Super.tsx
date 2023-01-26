@@ -6,7 +6,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 
 const nav = [
   {

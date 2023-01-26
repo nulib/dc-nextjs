@@ -49,6 +49,12 @@ export interface RelatedUrl {
   url: string;
 }
 
+export type RepresentativeFileSet = {
+  aspect_ratio: number;
+  id: string;
+  url: string;
+};
+
 export interface Subject {
   id: string;
   label: string;
@@ -111,11 +117,7 @@ export interface WorkShape {
   reading_room?: boolean;
   related_material: Array<string>;
   related_url: Array<RelatedUrl>;
-  representative_file_set: {
-    aspect_ratio: number;
-    id: string;
-    url: string;
-  };
+  representative_file_set: RepresentativeFileSet;
   rights_holder: Array<string>;
   rights_statement: GenericIdLabel;
   scope_and_contents: Array<string>;

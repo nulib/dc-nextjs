@@ -64,7 +64,7 @@ jest.mock("./dc-api", () => {
   };
 
   return {
-    getAPIData: jest
+    apiPostRequest: jest
       .fn()
       /** Note these map to the 3 specs below */
       .mockReturnValueOnce(mockAggs)

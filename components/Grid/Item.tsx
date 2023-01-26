@@ -3,7 +3,7 @@ import Figure from "@/components/Figure/Figure";
 import { GridItem as ItemStyled } from "@/components/Grid/Grid.styled";
 import Link from "next/link";
 import { SearchShape } from "@/types/api/response";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 
 interface GridItemProps {
   item: SearchShape;
