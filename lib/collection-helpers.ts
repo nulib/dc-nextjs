@@ -321,3 +321,14 @@ export async function getTopMetadataAggs({
     return [];
   }
 }
+
+/**
+ * Specialized array helper for numerical string
+ * sorting an array by the `key` property
+ */
+export const sortAggsByKey = (arr: GenericAggsReturn[]) => {
+  const collator = new Intl.Collator("en", { numeric: true });
+  return arr.sort(function (a, b) {
+    return collator.compare(a.key, b.key);
+  });
+};
