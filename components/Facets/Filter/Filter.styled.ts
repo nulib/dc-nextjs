@@ -12,28 +12,28 @@ const FilterActivate = styled(Dialog.Trigger, {
   alignItems: "center",
   alignContent: "center",
   cursor: "pointer",
-  backgroundColor: "$white",
+  backgroundColor: "$purple",
   border: "0",
-  color: "$black",
+  color: "$white",
   fontFamily: "$northwesternSansBold",
   fontSize: "$gr3",
   borderRadius: "50px",
-  transition: "all 200ms ease-in-out",
+  transition: "$dcAll",
   padding: "0 $gr3 0 $gr1",
 
   [`& ${IconStyled}`]: {
-    color: "$black50",
-    fill: "$black50",
+    color: "$purple60",
+    fill: "$purple60",
   },
 
   "&:hover": {
-    backgroundColor: "$purple",
+    backgroundColor: "$purple120",
     color: "$white",
-    boxShadow: "2px 2px 5px #0002",
+    boxShadow: "2px 2px 2px #0002",
 
     [`& ${IconStyled}`]: {
-      color: "$purple30",
-      fill: "$purple30",
+      color: "$white",
+      fill: "$white",
     },
   },
 });
@@ -41,18 +41,17 @@ const FilterActivate = styled(Dialog.Trigger, {
 const FilterFloating = styled("div", {
   height: `calc($gr3 * 2)`,
   display: "flex",
-  backgroundColor: "$white",
+  backgroundColor: "$purple30",
   position: "relative",
-  borderRadius: "50px",
   boxShadow: "2px 2px 5px #0002",
-  transition: "all 200ms ease-in-out",
+  borderRadius: "50px",
+  transition: "$dcAll",
 
   [`& ${FilterActivate}`]: {
-    boxShadow: "1px 1px 2px #0002",
+    boxShadow: "2px 2px 5px #0002",
   },
 
   "&:hover": {
-    backgroundColor: "$purple10",
     boxShadow: "2px 2px 5px #0004",
   },
 });
@@ -142,12 +141,12 @@ const FilterHeader = styled("header", {
   backgroundColor: "$white",
 
   h2: {
-    fontSize: "1rem",
+    fontSize: "$gr4",
     lineHeight: "1.5rem",
     padding: "0",
     margin: "0",
     color: "$black50",
-    fontFamily: "$northwesternDisplayBold",
+    fontFamily: "$northwesternDisplayRegular",
     fontWeight: "400",
   },
 
@@ -159,13 +158,14 @@ const FilterHeader = styled("header", {
 
   [`& ${FilterClose}`]: {
     display: "flex",
-    height: "1.5rem",
-    width: "1.5rem",
+    height: "$gr4",
+    width: "$gr4",
     justifyContent: "center",
     textAlign: "center",
     alignItems: "center",
     cursor: "pointer",
-    backgroundColor: "transparent",
+    backgroundColor: "$gray6",
+    boxShadow: "inset 1px 1px 2px #0002",
     zIndex: "1",
     border: "none",
     borderRadius: "50%",
@@ -174,15 +174,18 @@ const FilterHeader = styled("header", {
     stroke: "$black50",
     transition: "all 200ms ease-in-out",
     flexShrink: "0",
+    padding: "$gr1",
 
     "&:hover": {
       backgroundColor: "$brightRed",
+      boxShadow: "3px 3px 8px #0002",
       fill: "$white",
       stroke: "$white",
     },
 
     svg: {
-      transition: "all 200ms ease-in-out",
+      width: "100%",
+      height: "100%",
       fill: "inherit",
       stroke: "inherit",
     },

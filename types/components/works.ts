@@ -56,9 +56,9 @@ export interface Subject {
   role: string;
 }
 
-export interface FacetsWorkLink {
+export interface WorkMetadata {
   label: string;
-  param: string;
+  searchParam?: string;
 }
 
 export type PreservationLevelStatus = "Level 1" | "Level 2" | "Level 3";
@@ -112,6 +112,7 @@ export interface WorkShape {
   related_material: Array<string>;
   related_url: Array<RelatedUrl>;
   representative_file_set: {
+    aspect_ratio: number;
     id: string;
     url: string;
   };

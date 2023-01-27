@@ -40,7 +40,7 @@ const GroupToggle = styled(Accordion.Trigger, {
   borderLeft: "0",
   color: "$black50",
   cursor: "pointer",
-  transition: "background 100ms ease-in-out",
+  transition: "$dcAll",
   borderRadius: "3px",
   borderTopLeftRadius: "0",
   borderBottomLeftRadius: "0",
@@ -102,7 +102,6 @@ const ItemToggle = styled(Tabs.Trigger, {
 
   ["&[aria-selected=true]"]: {
     fontFamily: "$northwesternSansBold",
-    fontWeight: "700",
 
     "&:hover, &:focus": {
       color: "$black",

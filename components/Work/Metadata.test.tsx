@@ -1,6 +1,5 @@
-import WorkMetadata, { ValueAsSearchLink } from "@/components/Work/Metadata";
+import WorkMetadata, { ValueAsListItem } from "@/components/Work/Metadata";
 import { render, screen, within } from "@/test-utils";
-import { FACETS_WORK_LINK } from "@/lib/constants/works";
 import { MetadataItem } from "@iiif/presentation-3";
 import { manifest } from "@/mocks/sample-work-image";
 
@@ -24,11 +23,15 @@ describe("WorkMetadata component", () => {
     });
   });
 
-  FACETS_WORK_LINK;
-
   it("renders metadata value as custom link pattern", () => {
-    render(<ValueAsSearchLink param="foo" value="bar" />);
+    render(<ValueAsListItem searchParam="foo" value="bar" />);
     const link = screen.getByRole("link");
     expect(link.getAttribute("href")).toContain(`/search?foo=bar`);
+  });
+
+  it("renders metadata value as span if no searchParam is provided", () => {
+    render(<ValueAsListItem value="bar" />);
+    const value = screen.getByText("bar");
+    expect(value).toContainHTML(`<span>bar</span>`);
   });
 });

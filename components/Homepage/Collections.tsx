@@ -1,12 +1,12 @@
 import Container from "@/components/Shared/Container";
 import GridFeature from "@/components/Grid/Feature";
+import { HomePageContext } from "@/context/home-context";
 import { HomepageCollectionsStyled } from "@/components/Homepage/Collections.styled";
 import SectionHeading from "@/components/Shared/SectionHeading";
-import { collectionData } from "@/lib/constants/homepage";
-import { shuffle } from "@/lib/utils/array-helpers";
+import { useContext } from "react";
 
 const HomepageCollections = () => {
-  const data = shuffle(collectionData);
+  const { featuredCollections } = useContext(HomePageContext);
 
   return (
     <HomepageCollectionsStyled>
@@ -16,7 +16,7 @@ const HomepageCollections = () => {
           linkHref="/collections"
           linkText="View Collections"
         />
-        <GridFeature data={data} />
+        <GridFeature data={featuredCollections} />
       </Container>
     </HomepageCollectionsStyled>
   );

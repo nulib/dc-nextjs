@@ -9,6 +9,8 @@ const StyledFacets = styled("div", {
   justifyContent: "space-between",
   margin: "1.618rem 0",
   position: "relative",
+  left: "0",
+  transition: "$dcAll",
   zIndex: "1",
 
   [`& ${WorkTypeWrapper}`]: {
@@ -37,6 +39,8 @@ const Wrapper = styled("div", {
 
   "&[data-filter-fixed='true']": {
     margin: "1.618rem 0",
+    flexGrow: "0",
+    flexShrink: "1",
     height: "38px",
 
     [`& ${WorkTypeWrapper}`]: {
@@ -47,7 +51,11 @@ const Wrapper = styled("div", {
     [`& ${StyledFacets}`]: {
       position: "fixed",
       top: "50px",
+      left: "50%",
       zIndex: "1",
+      transform: "translate(-50%)",
+      backfaceVisibility: "hidden",
+      webkitFontSmoothing: "subpixel-antialiased",
     },
 
     [`& ${StyledToggle}`]: {

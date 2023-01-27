@@ -17,6 +17,7 @@ import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
+import { pluralize } from "@/lib/utils/count-helpers";
 import { useRouter } from "next/router";
 
 type RequestState = {
@@ -102,6 +103,7 @@ const SearchPage: NextPage = () => {
   }
 
   const { data: apiData, error, loading } = requestState;
+  const totalResults = requestState.data?.pagination.total_hits;
 
   return (
     <>
@@ -129,7 +131,7 @@ const SearchPage: NextPage = () => {
             {apiData && (
               <>
                 <Results>
-                  {requestState.data?.pagination.total_hits} results
+                  {totalResults && pluralize("result", totalResults)}
                 </Results>
                 <Grid data={apiData.data} info={apiData.info} />
                 <PaginationAltCounts pagination={apiData.pagination} />

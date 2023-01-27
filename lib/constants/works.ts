@@ -1,42 +1,94 @@
-import { FacetsWorkLink } from "@/types/components/works";
+import { WorkMetadata } from "@/types/components/works";
 
-const FACETS_WORK_LINK: FacetsWorkLink[] = [
+const WORK_METADATA_LABELS: WorkMetadata[] = [
+  {
+    label: "Abstract",
+  },
+  {
+    label: "Alternate Title",
+  },
+  {
+    label: "Caption",
+  },
   {
     label: "Contributor",
-    param: "contributor",
+    searchParam: "contributor",
   },
   {
     label: "Creator",
-    param: "creator",
+    searchParam: "creator",
+  },
+  {
+    label: "Cultural Context",
+  },
+  {
+    label: "Date",
   },
   {
     label: "Department",
-    param: "libraryDepartment",
+    searchParam: "libraryDepartment",
   },
   {
     label: "Genre",
-    param: "genre",
+    searchParam: "genre",
+  },
+  {
+    label: "Keyword",
   },
   {
     label: "Language",
-    param: "language",
+    searchParam: "language",
+  },
+  {
+    label: "Location",
+  },
+  {
+    label: "Notes",
+  },
+  {
+    label: "Provenance",
+  },
+  {
+    label: "Publisher",
+  },
+  {
+    label: "Related Material",
+  },
+  {
+    label: "Related URL",
+  },
+  {
+    label: "Rights Holder",
+  },
+  {
+    label: "Rights Statement",
+    searchParam: "rightsStatement",
+  },
+  {
+    label: "Scope and Contents",
   },
   {
     label: "Series",
-    param: "series",
+    searchParam: "series",
+  },
+  {
+    label: "Source",
   },
   {
     label: "Style Period",
-    param: "stylePeriod",
+    searchParam: "stylePeriod",
   },
   {
     label: "Subject",
-    param: "subject",
+    searchParam: "subject",
+  },
+  {
+    label: "Table of Contents",
   },
   {
     label: "Technique",
-    param: "technique",
+    searchParam: "technique",
   },
 ];
 
-export { FACETS_WORK_LINK };
+export { WORK_METADATA_LABELS };

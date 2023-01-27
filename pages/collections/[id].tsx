@@ -15,6 +15,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/Collection/NavTabs.styled";
+import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import {
   getCollection,
   getCollectionIds,
@@ -55,6 +56,12 @@ const Collection: NextPage<CollectionProps> = ({
   if (!collection) return null;
 
   const { description, id } = collection;
+  const {
+    totalAudio = 0,
+    totalImage = 0,
+    totalVideo = 0,
+    totalWorks = 0,
+  } = workTypeCounts;
 
   return (
     <>
@@ -79,22 +86,21 @@ const Collection: NextPage<CollectionProps> = ({
           <Container>
             <Facts>
               <Facts.Item
-                big={workTypeCounts?.totalWorks}
-                small="Total Works"
+                big={formatNumber(totalWorks)}
+                small={pluralize("Total Work", totalWorks)}
               />
               <Facts.Item
-                big={workTypeCounts?.totalImage}
-                small="Image Works"
+                big={formatNumber(totalImage)}
+                small={pluralize("Image Work", totalImage)}
               />
               <Facts.Item
-                big={workTypeCounts?.totalVideo}
-                small="Video Works"
+                big={formatNumber(totalVideo)}
+                small={pluralize("Video Work", totalVideo)}
               />
               <Facts.Item
-                big={workTypeCounts?.totalAudio}
-                small="Audio Works"
+                big={formatNumber(totalAudio)}
+                small={pluralize("Audio Work", totalAudio)}
               />
-              <Facts.Item big="Across" small="[Count here] Boxes" />
             </Facts>
           </Container>
         </Interstitial>

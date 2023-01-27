@@ -17,15 +17,15 @@ const DropdownToggle = styled(Dropdown.Trigger, {
   alignItems: "center",
   fontWeight: "700",
   cursor: "pointer",
-  transition: "all 200ms ease-in-out",
+  transition: "$dcAll",
 
   svg: {
-    width: "$gr3",
-    marginRight: "0.25rem",
-    marginBottom: "-2px",
-    color: "$black50",
+    width: "$gr4",
+    marginBottom: "-3px",
+    color: "$purple120",
     transform: "rotate(0deg)",
-    transition: "all 200ms ease-in-out",
+    transition: "$dcAll",
+    padding: "$gr1",
   },
 
   span: {
@@ -41,7 +41,7 @@ const DropdownToggle = styled(Dropdown.Trigger, {
     height: "19px",
     borderRadius: "50%",
     marginTop: "-$gr4",
-    marginRight: "-$gr3",
+    marginRight: "calc(-$gr3 + 4px)",
   },
 
   [`&:hover`]: {
@@ -57,7 +57,7 @@ const DropdownToggle = styled(Dropdown.Trigger, {
   [`&[aria-expanded="true"]`]: {
     svg: {
       transform: "rotate(180deg) !important",
-      marginBottom: "-3px",
+      marginBottom: "-1px",
     },
   },
 });
@@ -71,21 +71,24 @@ const Icon = styled("span", {
   textAlign: "center",
   alignItems: "center",
   cursor: "pointer",
-  backgroundColor: "transparent",
+  backgroundColor: "$gray6",
+  boxShadow: "inset 1px 1px 2px #0002",
   zIndex: "1",
-  border: "1px solid $black10",
   borderRadius: "50%",
   marginRight: "$gr2",
   fill: "$black50",
+  color: "$black50",
   stroke: "$black50",
-  transition: "all 200ms ease-in-out",
+  transition: "$dcAll",
   flexShrink: "0",
+  objectFit: "contain",
 
   svg: {
-    transition: "all 200ms ease-in-out",
+    widht: "100%",
+    height: "100%",
     fill: "inherit",
     stroke: "inherit",
-    padding: "4px",
+    padding: "$gr1",
   },
 });
 
@@ -94,21 +97,24 @@ const Text = styled("div", {
   flexDirection: "column",
   textAlign: "left",
   color: "$black",
-  paddingRight: "1rem",
-  fontSize: "15px",
+  paddingRight: "$gr2",
+  fontSize: "$gr3",
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
 
   strong: {
-    fontFamily: "$northwesternDisplayBold",
+    fontFamily: "$northwesternSansBold",
     fontWeight: "400",
   },
 
   span: {
+    display: "block",
     color: "$black50",
-    fontSize: "12px",
-    fontFamily: "$northwesternDisplayBook",
+    marginTop: "2px",
+    fontSize: "$gr2",
+    fontWeight: "400",
+    fontFamily: "$northwesternSansRegular",
   },
 });
 
@@ -134,8 +140,21 @@ const StyledValue = styled("button", {
 const ValueWrapper = styled("div", {
   display: "flex",
   flexWrap: "wrap",
+
+  variants: {
+    isModal: {
+      true: {
+        marginBottom: "$gr3",
+
+        [`& ${StyledValue}`]: {
+          marginBottom: "$gr2",
+        },
+      },
+    },
+  },
+
   [`& ${StyledValue}`]: {
-    margin: "0 1rem 1rem 0",
+    marginBottom: "$gr1",
   },
 });
 
@@ -145,10 +164,10 @@ const DropdownContent = styled(Dropdown.Content, {
     backgroundColor: "$white",
     boxShadow: "3px 3px 8px #0002",
     borderRadius: "25px",
-    minWidth: "147px",
+    minWidth: "154px",
     maxWidth: "80vw",
     transition: "all 200ms ease-in-out",
-    marginTop: "5px",
+    marginTop: "$gr1",
 
     [`&:hover`]: {
       boxShadow: "3px 3px 8px #0004",
