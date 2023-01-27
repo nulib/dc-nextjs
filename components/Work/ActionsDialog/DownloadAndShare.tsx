@@ -28,7 +28,7 @@ import useWorkAuth from "@/hooks/useWorkAuth";
 import { useWorkState } from "@/context/work-context";
 
 const embedWarningMessage =
-  "Embed is not available for images restricted to the Northwestern University community";
+  "Embed is not available for works restricted to the Northwestern University community";
 
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
