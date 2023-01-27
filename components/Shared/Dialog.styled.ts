@@ -3,7 +3,12 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const DialogClose = styled(Dialog.Close, {});
+const DialogClose = styled(Dialog.Close, {
+  svg: {
+    width: "100%",
+    height: "100%",
+  },
+});
 
 const DialogOverlay = styled(Dialog.Overlay, {
   background: "rgba(0 0 0 / 0.382)",
