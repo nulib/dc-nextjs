@@ -3,7 +3,7 @@ import {
   getCollectionWorkCounts,
 } from "@/lib/collection-helpers";
 import { GetStaticPropsContext, NextPage } from "next";
-import { getWork, getWorkIds, getWorkSliders } from "@/lib/work-helpers";
+import { getWork, getWorkSliders } from "@/lib/work-helpers";
 import Container from "@/components/Shared/Container";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
@@ -93,12 +93,9 @@ const WorkPage: NextPage<WorkPageProps> = ({
 };
 
 export async function getStaticPaths() {
-  const workIds = await getWorkIds();
-  const paths = workIds.map((id) => ({ params: { id } }));
-
   return {
     fallback: "blocking",
-    paths,
+    paths: [],
   };
 }
 
