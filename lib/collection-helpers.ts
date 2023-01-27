@@ -17,29 +17,6 @@ export async function getCollection(
   }
 }
 
-export async function getCollectionIds(): Promise<Array<string>> {
-  const body = {
-    _source: ["id"],
-    query: {
-      query_string: {
-        query: "*",
-      },
-    },
-    size: 1000,
-  };
-
-  try {
-    const response = await apiPostRequest<ApiSearchResponse>({
-      body,
-      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search/collections`,
-    });
-    return response?.data ? response?.data.map((item) => item.id) : [];
-  } catch (err) {
-    console.error("Error getting all Collection Ids", err);
-    return [];
-  }
-}
-
 export async function getCollectionWorkCount(collectionId: string) {
   const body = {
     _source: ["id"],

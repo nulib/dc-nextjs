@@ -18,7 +18,6 @@ import {
 import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import {
   getCollection,
-  getCollectionIds,
   getCollectionWorkCounts,
   getMetadataAggs,
   getTopMetadataAggs,
@@ -140,12 +139,9 @@ const Collection: NextPage<CollectionProps> = ({
 };
 
 export async function getStaticPaths() {
-  const ids = await getCollectionIds();
-  const paths = ids.map((id) => ({ params: { id } }));
-
   return {
     fallback: "blocking",
-    paths,
+    paths: [],
   };
 }
 

@@ -1,8 +1,6 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
-import { ApiSearchRequestBody } from "@/types/api/request";
-import { ApiSearchResponse } from "@/types/api/response";
 import { type WorkShape } from "@/types/components/works";
+import { apiGetRequest } from "@/lib/dc-api";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getWork(id: string) {
@@ -15,38 +13,6 @@ export async function getWork(id: string) {
     console.error("Error getting the work", id);
     return null;
   }
-}
-
-export async function getWorkIds(): Promise<Array<string>> {
-  const body = {
-    _source: ["id"],
-    aggs: {
-      allIds: {
-        terms: {
-          field: "_id",
-          order: {
-            _count: "asc",
-          },
-          size: 1,
-        },
-      },
-    },
-    query: {
-      match_all: {},
-    },
-    size: 0,
-  } as ApiSearchRequestBody;
-
-  const response = await apiPostRequest<ApiSearchResponse>({
-    body,
-    url: `${DC_API_SEARCH_URL}`,
-  });
-
-  if (response?.aggregations?.allIds) {
-    return response.aggregations.allIds.buckets.map((bucket) => bucket.key);
-  }
-
-  return [];
 }
 
 export async function getWorkManifest(id: string) {
