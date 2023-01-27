@@ -109,10 +109,11 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
               pathname: item.pathName,
               query: item.query,
             }}
-          >
-            <a tabIndex={0} data-testid={item.dataTestId}>
-              {searchValue} <Helper label={item.helperLabel} />
-            </a>
+            tabIndex={0}
+            data-testid={item.dataTestId}>
+
+            {searchValue} <Helper label={item.helperLabel} />
+
           </Link>
         </JumpItem>
       ))}

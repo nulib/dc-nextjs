@@ -25,19 +25,19 @@ const CollectionItem: React.FC<CollectionListShape> = ({
     <ItemStyled data-collection={id}>
       <ItemImageWrapper>
         <Link href={`/collections/${id}`}>
-          <a>
-            <Figure
-              data={{
-                src: `${thumbnail}?aspect=square`,
-                title,
-              }}
-            />
-          </a>
+
+          <Figure
+            data={{
+              src: `${thumbnail}?aspect=square`,
+              title,
+            }}
+          />
+
         </Link>
       </ItemImageWrapper>
       <ItemContent>
         <Heading as="h4">
-          <Link href={`/collections/${id}`}>
+          <Link href={`/collections/${id}`} legacyBehavior>
             <LinkStyled>{title}</LinkStyled>
           </Link>
         </Heading>

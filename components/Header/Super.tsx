@@ -36,17 +36,17 @@ export default function HeaderSuper() {
     <Super>
       <Container>
         <Link href="https://www.northwestern.edu/">
-          <a>{isLoaded && <NorthwesternWordmark />}</a>
+          {isLoaded && <NorthwesternWordmark />}
         </Link>
         <Nav>
           {nav.map(({ href, label }) => (
             <Link key={label} href={href}>
-              <a>{label}</a>
+              {label}
             </Link>
           ))}
           {!userAuthContext?.user?.isLoggedIn && (
             <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
-              <a>Sign in</a>
+              Sign in
             </Link>
           )}
           {userAuthContext?.user?.isLoggedIn && (

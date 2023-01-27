@@ -4,8 +4,6 @@ import userEvent from "@testing-library/user-event";
 
 const mockIsSearchActive = jest.fn();
 
-jest.mock("next/router", () => require("next-router-mock"));
-
 describe("SearchJumpTo component", () => {
   it("renders the component", () => {
     render(<SearchJumpTo isSearchActive={() => ({})} />);

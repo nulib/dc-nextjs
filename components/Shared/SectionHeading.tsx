@@ -19,14 +19,14 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
     <SectionHeadingStyled>
       <Heading as="h2">{headingText}</Heading>
       <Link href={linkHref}>
-        <a>
-          <SectionHeadingExplore>
-            {linkText}
-            <Icon>
-              <IconArrowForward />
-            </Icon>
-          </SectionHeadingExplore>
-        </a>
+
+        <SectionHeadingExplore>
+          {linkText}
+          <Icon>
+            <IconArrowForward />
+          </Icon>
+        </SectionHeadingExplore>
+
       </Link>
     </SectionHeadingStyled>
   );
