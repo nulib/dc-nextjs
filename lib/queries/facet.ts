@@ -1,9 +1,9 @@
 import { ALL_FACETS } from "@/lib/constants/facets-model";
-import { FacetTerm } from "@/types/api/request";
+import { QueryDslBoolQuery } from "@elastic/elasticsearch/api/types";
 import { UrlFacets } from "@/types/context/filter-context";
 
 const buildFacetFilters = (urlFacets: UrlFacets) => {
-  const filter: FacetTerm[] = [];
+  const filter: QueryDslBoolQuery["filter"] = [];
 
   /** Sample urlFacets object for reference
   const sampleUrlFacets = {

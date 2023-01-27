@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { FacetsInstance } from "@/types/components/facets";
 import { UrlFacets } from "@/types/context/filter-context";
-import axios from "axios";
+import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 
 type ApiData = ApiSearchResponse | null;
@@ -44,7 +44,7 @@ const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
           loading: true,
         }));
 
-        const body: ApiSearchRequest = buildQuery({
+        const body: ApiSearchRequestBody = buildQuery({
           aggs: activeFacets,
           aggsFilterValue,
           size,
@@ -52,10 +52,13 @@ const useFetchApiData = (obj: HookArguments): UseFetchApiDataResponse => {
           urlFacets,
         });
 
-        const response = await axios.post(DC_API_SEARCH_URL, body);
+        const responseData = await apiPostRequest<ApiSearchResponse>({
+          body,
+          url: DC_API_SEARCH_URL,
+        });
         setRequest((request) => ({
           ...request,
-          data: response.data,
+          data: responseData || null,
           loading: false,
         }));
       } catch (err) {

@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@/test-utils";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 
 const userContextValue = {

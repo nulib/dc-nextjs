@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import Grid from "@/components/Grid/Grid";
 import { HomepageWorksStyled } from "./Works.styled";
 import SectionHeading from "../Shared/SectionHeading";
-import axios from "axios";
+import { apiPostRequest } from "@/lib/dc-api";
 import { querySearchTemplate } from "@/lib/queries/search";
 
 type RequestState = {
@@ -30,7 +31,7 @@ const HomepageWorks = () => {
           ...querySearchTemplate,
           query: {
             function_score: {
-              boost: `1`,
+              boost: 1,
               boost_mode: "replace",
               query: {
                 match: {
@@ -41,12 +42,15 @@ const HomepageWorks = () => {
             },
           },
           size: size,
-        };
+        } as ApiSearchRequestBody;
 
-        const response = await axios.post(DC_API_SEARCH_URL, body);
+        const work = await apiPostRequest<ApiSearchResponse>({
+          body,
+          url: DC_API_SEARCH_URL,
+        });
 
         setRequestState({
-          data: response.data,
+          data: work || null,
           error: "",
           loading: false,
         });

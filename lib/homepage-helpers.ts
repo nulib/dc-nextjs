@@ -1,6 +1,8 @@
+import { CollectionShape } from "@/types/components/collections";
 import { DCAPI_PRODUCTION_ENDPOINT } from "./constants/endpoints";
 import { SearchShape } from "@/types/api/response";
 import { WorkShape } from "@/types/components/works";
+import { apiGetRequest } from "./dc-api";
 import axios from "axios";
 
 const getHomePageCollections = async (
@@ -8,41 +10,55 @@ const getHomePageCollections = async (
 ): Promise<SearchShape[]> => {
   try {
     /** Batch fetch all Collections */
-    const collectionsResponse = await axios.all(
+    const collections = await axios.all(
       collectionIds.map((id) => {
-        return axios.get(`${DCAPI_PRODUCTION_ENDPOINT}/collections/${id}`);
+        return apiGetRequest<CollectionShape>({
+          url: `${DCAPI_PRODUCTION_ENDPOINT}/collections/${id}`,
+        });
       })
     );
-    const collections = collectionsResponse.map((cr) => cr.data.data);
 
     /** Batch fetch all Works which are representative images of Collections returned above */
-    const workIds = collections.map((c) => c.representative_image.work_id);
-    const worksResponse = await axios.all(
-      workIds.map((id) => axios.get(`${DCAPI_PRODUCTION_ENDPOINT}/works/${id}`))
+    const workIds = collections.map((c) => c?.representative_image.work_id);
+    const works = await axios.all(
+      workIds.map((id) =>
+        apiGetRequest<WorkShape>({
+          url: `${DCAPI_PRODUCTION_ENDPOINT}/works/${id}`,
+        })
+      )
     );
-    const works: WorkShape[] = worksResponse.map(({ data: { data } }) => ({
-      ...data,
-      representative_file_set: {
-        ...data.representative_file_set,
-        /** Format for nice UI display on the home page */
-        aspect_ratio: 1,
-      },
-    }));
+
+    const worksUpdated: WorkShape[] = [];
+    works.forEach((work) => {
+      if (!work) return;
+      worksUpdated.push({
+        ...work,
+        representative_file_set: {
+          ...work?.representative_file_set,
+          /** Format for nice UI display on the home page */
+          aspect_ratio: 1,
+        },
+      });
+    });
 
     /** Build the shape of what the Collection Grid wants */
-    const collectionGridItems = collections.map((collection, index) => {
+    const collectionGridItems: SearchShape[] = [];
+
+    collections.forEach((collection, index) => {
+      if (!collection) return;
+
       const { api_model, id, thumbnail, title, visibility } = collection;
 
-      return {
+      collectionGridItems.push({
         api_model,
         id,
         iiif_manifest: `${DCAPI_PRODUCTION_ENDPOINT}/collections/${id}?as=iiif`,
-        representative_file_set: works[index].representative_file_set,
+        representative_file_set: worksUpdated[index].representative_file_set,
         thumbnail,
         title,
         visibility,
-        work_type: works[index].work_type,
-      };
+        work_type: worksUpdated[index].work_type,
+      });
     });
 
     return collectionGridItems;

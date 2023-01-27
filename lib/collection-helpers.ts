@@ -1,83 +1,39 @@
-import {
-  ApiCollectionListResponse,
-  ApiCollectionResponse,
-  ApiResponseBucket,
-  ApiSearchResponse,
-} from "@/types/api/response";
-import { Aggs } from "@/types/api/request";
-import { CollectionShape } from "@/types/components/collections";
-import { getAPIData } from "@/lib/dc-api";
+import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
+import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
+import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
+import { type CollectionShape } from "@/types/components/collections";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getCollection(
   id: string
-): Promise<CollectionShape | null> {
+): Promise<CollectionShape | undefined> {
   try {
-    const response = await getAPIData<ApiCollectionResponse>({
-      method: "GET",
+    const response = await apiGetRequest<CollectionShape>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${id}`,
     });
-
-    return response ? response.data : null;
+    return response;
   } catch (err) {
-    console.error("Error getting the work", id);
-    return null;
-  }
-}
-
-export async function getCollectionList(
-  url: string
-): Promise<ApiCollectionListResponse | null> {
-  try {
-    const response = await getAPIData<ApiCollectionListResponse>({
-      method: "GET",
-      url: url,
-    });
-    return response ? response : null;
-  } catch (err) {
-    console.error("Error getting all Collection Ids", err);
-    return null;
+    console.error("Error getting the collection", id);
   }
 }
 
 export async function getCollectionIds(): Promise<Array<string>> {
   const body = {
     _source: ["id"],
-    aggs: {
-      allIds: {
-        terms: {
-          field: "_id",
-          order: {
-            _count: "asc",
-          },
-          size: 1,
-        },
-      },
-    },
     query: {
-      bool: {
-        must: [
-          {
-            match: {
-              "model.name": "Collection",
-            },
-          },
-        ],
+      query_string: {
+        query: "*",
       },
     },
-    size: 0,
+    size: 1000,
   };
 
   try {
-    const response = await getAPIData<ApiSearchResponse>({
+    const response = await apiPostRequest<ApiSearchResponse>({
       body,
-      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
+      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search/collections`,
     });
-
-    if (response?.aggregations) {
-      return response.aggregations.allIds.buckets.map((bucket) => bucket.key);
-    }
-    return [];
+    return response?.data ? response?.data.map((item) => item.id) : [];
   } catch (err) {
     console.error("Error getting all Collection Ids", err);
     return [];
@@ -93,11 +49,11 @@ export async function getCollectionWorkCount(collectionId: string) {
       },
     },
     aggs: {},
-    size: "0",
+    size: 0,
   };
 
   try {
-    const response = await getAPIData<ApiSearchResponse>({
+    const response = await apiPostRequest<ApiSearchResponse>({
       body,
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
     });
@@ -165,7 +121,7 @@ export async function getCollectionWorkCounts(collectionId = "") {
   };
 
   try {
-    const response = await getAPIData<ApiSearchResponse>({
+    const response = await apiPostRequest<ApiSearchResponse>({
       body,
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
     });
@@ -235,10 +191,10 @@ export async function getMetadataAggs(collectionId: string, field: string) {
       },
     },
     size: 0,
-  };
+  } as ApiSearchRequestBody;
 
   try {
-    const response = await getAPIData<ApiSearchResponse>({
+    const response = await apiPostRequest<ApiSearchResponse>({
       body,
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
     });
@@ -302,7 +258,7 @@ export async function getTopMetadataAggs({
 
   try {
     const topMetadata = [];
-    const response = await getAPIData<ApiSearchResponse>({
+    const response = await apiPostRequest<ApiSearchResponse>({
       body,
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
     });

@@ -1,16 +1,16 @@
-import { ApiSearchResponse, ApiWorkResponse } from "@/types/api/response";
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import { WorkShape } from "@/types/components/works";
-import { getAPIData } from "@/lib/dc-api";
+import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
+import { ApiSearchRequestBody } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
+import { type WorkShape } from "@/types/components/works";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getWork(id: string) {
   try {
-    const response = await getAPIData<ApiWorkResponse>({
-      method: "GET",
+    const response = await apiGetRequest<WorkShape>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
     });
-    return response?.data;
+    return response;
   } catch (err) {
     console.error("Error getting the work", id);
     return null;
@@ -31,12 +31,15 @@ export async function getWorkIds(): Promise<Array<string>> {
         },
       },
     },
+    query: {
+      match_all: {},
+    },
     size: 0,
-  };
+  } as ApiSearchRequestBody;
 
-  const response = await getAPIData<ApiSearchResponse>({
+  const response = await apiPostRequest<ApiSearchResponse>({
     body,
-    url: `${DC_API_SEARCH_URL}/search`,
+    url: `${DC_API_SEARCH_URL}`,
   });
 
   if (response?.aggregations?.allIds) {
@@ -48,8 +51,7 @@ export async function getWorkIds(): Promise<Array<string>> {
 
 export async function getWorkManifest(id: string) {
   try {
-    const response = await getAPIData({
-      method: "GET",
+    const response = await apiGetRequest({
       url: `${DC_API_SEARCH_URL}/works/${id}?as=iiif`,
     });
     return response;

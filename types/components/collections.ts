@@ -1,3 +1,5 @@
+import { ModelName } from "@/types/api/generic";
+
 export type CollectionRepresentativeImage = {
   url: string;
   work_id: string;
@@ -6,7 +8,7 @@ export type CollectionRepresentativeImage = {
 export interface CollectionShape {
   admin_email: string | null;
   api_link: string;
-  api_model: string;
+  api_model: ModelName;
   create_date: string;
   description: string;
   featured: boolean | null;

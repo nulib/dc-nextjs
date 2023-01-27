@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
@@ -45,7 +45,7 @@ const SearchPage: NextPage = () => {
       try {
         const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
-        const body: ApiSearchRequest = buildQuery({
+        const body: ApiSearchRequestBody = buildQuery({
           size,
           term: q as string,
           urlFacets,

@@ -1,5 +1,5 @@
 import { buildSearchPart, querySearchTemplate } from "@/lib/queries/search";
-import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
 import { UrlFacets } from "@/types/context/filter-context";
 import { buildAggs } from "@/lib/queries/aggs";
@@ -15,11 +15,10 @@ type BuildQueryProps = {
 
 export function buildQuery(obj: BuildQueryProps) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
-  let newQuery: ApiSearchRequest = JSON.parse(
-    JSON.stringify(querySearchTemplate)
-  );
 
-  if (typeof size !== undefined) newQuery.size = size as number;
+  let newQuery: ApiSearchRequestBody = querySearchTemplate;
+
+  if (typeof size !== undefined && newQuery) newQuery.size = size as number;
 
   /**
    * Add search term to the API query
@@ -34,13 +33,14 @@ export function buildQuery(obj: BuildQueryProps) {
   /**
    * Add aggregations to the API query
    */
-  if (aggs) newQuery.aggs = buildAggs(aggs, aggsFilterValue, urlFacets);
+  if (aggs && newQuery)
+    newQuery.aggs = buildAggs(aggs, aggsFilterValue, urlFacets);
 
   return newQuery;
 }
 
 export function addFacetsToQuery(
-  query: ApiSearchRequest,
+  query: ApiSearchRequestBody,
   urlFacets: UrlFacets
 ) {
   /** Verify at least one user facet has been activated */
@@ -57,19 +57,25 @@ export function addFacetsToQuery(
       }
      */
 
-    query.query.bool.must.push({
-      bool: {
-        filter: buildFacetFilters(urlFacets),
-      },
-    });
+    const nestedMust = query?.query?.bool?.must;
+    Array.isArray(nestedMust) &&
+      nestedMust.push({
+        bool: {
+          filter: buildFacetFilters(urlFacets),
+        },
+      });
   }
 
   return query;
 }
 
-export function addSearchTermToQuery(query: ApiSearchRequest, term: string) {
+export function addSearchTermToQuery(
+  query: ApiSearchRequestBody,
+  term: string
+) {
   if (term) {
-    query.query.bool.must.push(buildSearchPart(term));
+    const nestedMust = query?.query?.bool?.must;
+    Array.isArray(nestedMust) && nestedMust.push(buildSearchPart(term));
   }
   return query;
 }

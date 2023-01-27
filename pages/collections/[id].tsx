@@ -54,6 +54,7 @@ const Collection: NextPage<CollectionProps> = ({
   workTypeCounts,
 }) => {
   if (!collection) return null;
+  console.log("collection", collection);
 
   const { description, id } = collection;
   const {

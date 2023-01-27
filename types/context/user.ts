@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   sub: string;
   name: string;
   email: string;
@@ -7,8 +7,8 @@ export interface User {
   iat?: number;
   exp?: number;
   iss?: string;
-}
+};
 
-export interface UserContextInterface {
+export type UserContext = {
   user: User | null;
-}
+};
