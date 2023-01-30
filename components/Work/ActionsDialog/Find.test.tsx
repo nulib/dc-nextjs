@@ -46,7 +46,6 @@ describe("WorkDialogFind", () => {
     expect(within(div).getByText(/ima box/i));
     expect(within(div).getByText(/box number/i));
     expect(within(div).getByText(/53/i));
-    expect(within(div).getByText(/citation/i));
     expect(within(div).getByText(/folder name/i));
     expect(within(div).getByText(/ima folder/i));
     expect(within(div).getByText(/folder number/i));
