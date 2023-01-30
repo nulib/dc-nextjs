@@ -66,8 +66,7 @@ export const sampleWork1: WorkShape = {
   library_unit: "University Archives",
   license: {
     id: "foo",
-    label: "bar",
-    scheme: "scheme",
+    label: "bar"
   },
   modified_date: "2022-02-24T23:51:12.736078Z",
   notes: [],

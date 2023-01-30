@@ -105,7 +105,7 @@ export interface WorkShape {
   language: Array<Language>;
   legacy_identifier: Array<string>;
   library_unit: string;
-  license: IdLabelScheme | null;
+  license: GenericIdLabel | null;
   modified_date: string;
   notes: Array<Note>;
   physical_description_material: Array<string>;
