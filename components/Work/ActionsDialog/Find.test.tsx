@@ -24,8 +24,8 @@ describe("WorkDialogFind", () => {
       box_name,
       box_number,
       catalog_key,
-      folder_names,
-      folder_numbers,
+      folder_name,
+      folder_number,
     } = sampleWork1;
 
     const metadataValues = [
@@ -33,8 +33,8 @@ describe("WorkDialogFind", () => {
       box_name.join(", "),
       box_number.join(", "),
       catalog_key.join(", "),
-      folder_names.join(", "),
-      folder_numbers.join(", "),
+      folder_name.join(", "),
+      folder_number.join(", "),
     ];
 
     setup();

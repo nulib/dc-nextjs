@@ -45,8 +45,8 @@ export const sampleWork2: WorkShape = {
       width: 1000,
     },
   ],
-  folder_names: [],
-  folder_numbers: [],
+  folder_name: [],
+  folder_number: [],
   genre: [
     {
       id: "1",

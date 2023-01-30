@@ -21,9 +21,9 @@ const work = {
   batch_ids: ["80a15dc2-92d5-48a4-9aa4-73ecdcb1d130"],
   api_link:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/659389f3-22e3-41f3-a22e-dd99183af338",
-  folder_names: [],
+  folder_name: [],
   csv_metadata_update_jobs: [],
-  folder_numbers: [],
+  folder_number: [],
   collection: {
     description:
       "Rob Linrothe is an Associate Professor in the Department of Art History at Northwestern University. Here he shares his images of Tibetan, Chinese, and Indian monuments, field photography, and architecture. The collection has a strong focus on Tibetan sites, particularly petroglyphs, stupas, and monasteries in the Ladakh and Zangskar regions. Linrothe has also photographed the architecture and sculpture of monuments such as Borobudur in Indonesia and Sanchi in India. Rob Linrothe specializes in Buddhist art of the Himalayas. His recent fieldwork has focused on pre-modern mural painting in the Ladakh and Zangskar regions of Western Tibet (northwest India), as well as the contemporary revival of monastic painting in the Amdo province of Eastern Tibet (China).",

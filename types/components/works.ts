@@ -95,8 +95,8 @@ export interface WorkShape {
   cultural_context: Array<string>;
   description: Array<string>;
   file_sets: Array<FileSet>;
-  folder_names: Array<string>;
-  folder_numbers: Array<string>;
+  folder_name: Array<string>;
+  folder_number: Array<string>;
   genre: Array<GenericIdLabel>;
   identifier: Array<string>;
   iiif_manifest: string;
