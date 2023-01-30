@@ -95,8 +95,8 @@ export interface WorkShape {
   cultural_context: Array<string>;
   description: Array<string>;
   file_sets: Array<FileSet>;
-  folder_names: Array<string>;
-  folder_numbers: Array<string>;
+  folder_name: Array<string>;
+  folder_number: Array<string>;
   genre: Array<GenericIdLabel>;
   identifier: Array<string>;
   iiif_manifest: string;
@@ -105,7 +105,7 @@ export interface WorkShape {
   language: Array<Language>;
   legacy_identifier: Array<string>;
   library_unit: string;
-  license: IdLabelScheme | null;
+  license: GenericIdLabel | null;
   modified_date: string;
   notes: Array<Note>;
   physical_description_material: Array<string>;

@@ -45,8 +45,8 @@ export const sampleWork2: WorkShape = {
       width: 1000,
     },
   ],
-  folder_names: [],
-  folder_numbers: [],
+  folder_name: [],
+  folder_number: [],
   genre: [
     {
       id: "1",
@@ -68,8 +68,7 @@ export const sampleWork2: WorkShape = {
   library_unit: "University Archives",
   license: {
     id: "foo",
-    label: "bar",
-    scheme: "scheme",
+    label: "bar"
   },
   modified_date: "2022-02-24T23:51:12.736078Z",
 

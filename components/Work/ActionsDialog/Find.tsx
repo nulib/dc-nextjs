@@ -16,8 +16,8 @@ const WorkDialogFind: React.FC = () => {
     box_name,
     box_number,
     catalog_key,
-    folder_names,
-    folder_numbers,
+    folder_name,
+    folder_number,
   } = workState.work;
 
   const primoLink =
@@ -30,8 +30,8 @@ const WorkDialogFind: React.FC = () => {
     ["Box Name", box_name.join(", ")],
     ["Box Number", box_number.join(", ")],
     ["Citation", "not on the API"],
-    ["Folder Name", folder_names.join(", ")],
-    ["Folder Number", folder_numbers.join(", ")],
+    ["Folder Name", folder_name.join(", ")],
+    ["Folder Number", folder_number.join(", ")],
   ];
 
   return (
