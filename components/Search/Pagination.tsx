@@ -6,12 +6,13 @@ import {
   PaginationStyled,
   RightNav,
 } from "@/components/Search/Pagination.styled";
+
 import Link from "next/link";
-import { Pagination as PaginationShape } from "@/types/api/response";
+import { PaginationInfo } from "dcapi-types";
 import { useRouter } from "next/router";
 
 interface PaginationProps {
-  pagination: PaginationShape;
+  pagination: PaginationInfo;
 }
 
 export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
@@ -32,8 +33,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
             query: { ...query, page: current_page - 1 },
           }}
         >
-
-          <IconArrowBack aria-hidden="true" />Previous
+          <IconArrowBack aria-hidden="true" />
+          Previous
         </Link>
       </LeftNav>
       <PaginationLinks>
@@ -44,7 +45,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
               pathname,
               query: { ...query, page },
             }}
-            legacyBehavior>
+            legacyBehavior
+          >
             <PageNumber isCurrent={page === current_page}>{page}</PageNumber>
           </Link>
         ))}
@@ -56,8 +58,8 @@ export const Pagination: React.FC<PaginationProps> = ({ pagination }) => {
             query: { ...query, page: current_page + 1 },
           }}
         >
-          Next<IconArrowForward aria-hidden="true" />
-
+          Next
+          <IconArrowForward aria-hidden="true" />
         </Link>
       </RightNav>
     </PaginationStyled>

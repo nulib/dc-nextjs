@@ -1,7 +1,8 @@
 import { ObjectLiteral, OpenGraphData } from "@/types/index";
 import { isImageType, isPublicWork } from "@/lib/work-helpers";
+
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { WorkShape } from "@/types/components/works";
+import { Work } from "dcapi-types";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 
 export const defaultOpenGraphImage = overviewThumbnails[0][0].id;
@@ -18,7 +19,7 @@ export const defaultOpenGraphData: OpenGraphData = {
 };
 
 export function buildWorkOpenGraphData(
-  work: WorkShape | null
+  work: Work | null
 ): ObjectLiteral | OpenGraphData {
   if (!work) return {};
 
@@ -40,16 +41,16 @@ export function buildWorkOpenGraphData(
   const openGraphData = !work
     ? {}
     : {
-        "og:description": ogDescription,
-        "og:image": imageUrl,
-        ...(isPublic && { "og:image:height": "630" }),
-        "og:image:secure_url": imageUrl,
-        ...(isPublic && { "og:image:width": "1200" }),
-        "og:site_name": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
-        "og:title": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
-        "og:type": "website",
-        "og:url": `${PRODUCTION_URL}/items/${work.id}`,
-      };
+      "og:description": ogDescription,
+      "og:image": imageUrl,
+      ...(isPublic && { "og:image:height": "630" }),
+      "og:image:secure_url": imageUrl,
+      ...(isPublic && { "og:image:width": "1200" }),
+      "og:site_name": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
+      "og:title": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
+      "og:type": "website",
+      "og:url": `${PRODUCTION_URL}/items/${work.id}`,
+    };
 
   return openGraphData;
 }

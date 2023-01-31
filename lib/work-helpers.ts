@@ -1,11 +1,11 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import { type WorkShape } from "@/types/components/works";
+import { type Work } from "dcapi-types";
 import { apiGetRequest } from "@/lib/dc-api";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getWork(id: string) {
   try {
-    const response = await apiGetRequest<WorkShape>({
+    const response = await apiGetRequest<Work>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
     });
     return response;
@@ -27,7 +27,7 @@ export async function getWorkManifest(id: string) {
   }
 }
 
-export function getWorkSliders(work: WorkShape) {
+export function getWorkSliders(work: Work) {
   if (!work) return;
 
   const workSliderUrls = [];

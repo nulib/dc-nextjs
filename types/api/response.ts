@@ -1,18 +1,20 @@
 import {
+  Collection,
+  PaginationInfo,
   RepresentativeFileSet,
-  VisibilityStatus,
-  WorkShape,
-} from "@/types/components/works";
-import { CollectionShape } from "@/types/components/collections";
+  Visibility,
+  Work,
+} from "dcapi-types";
+
 import { ModelName } from "@/types/api/generic";
 
 export interface ApiCollectionResponse {
-  data: CollectionShape | null;
+  data: Collection | null;
 }
 
 export interface ApiCollectionListResponse {
-  data: CollectionShape[] | null;
-  pagination: Pagination;
+  data: Collection[] | null;
+  pagination: PaginationInfo;
 }
 
 export interface ApiResponse {
@@ -35,12 +37,12 @@ export type ApiResponseBucket = {
   [key: string]: any;
 };
 
-export type ApiResponseData = CollectionShape | SearchShape[] | WorkShape;
+export type ApiResponseData = Collection | SearchShape[] | Work;
 
 export interface ApiSearchResponse extends ApiResponse {
   aggregations?: ApiResponseAggregation;
   data: SearchShape[];
-  pagination: Pagination;
+  pagination: PaginationInfo;
 }
 
 /**
@@ -53,27 +55,15 @@ export interface ApiResponseDataShape {
   representative_file_set: RepresentativeFileSet;
   thumbnail: string;
   title: string;
-  visibility: VisibilityStatus;
+  visibility: Visibility;
 }
 
 /**
  * Response shape coming back from [API URL GOES HERE]/items/{id}
  */
 export interface ApiWorkResponse {
-  data: WorkShape | undefined;
+  data: Work | undefined;
 }
-
-export interface Pagination {
-  query_url: string;
-  current_page: number;
-  limit: number;
-  offset: number;
-  total_hits: number;
-  total_pages: number;
-  prev_url?: string;
-  next_url?: string;
-}
-
 /**
  * Defined shapes for API response data property
  */

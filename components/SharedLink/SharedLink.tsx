@@ -5,14 +5,14 @@ import ErrorFallback from "@/components/Shared/ErrorFallback";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
-import { WorkShape } from "@/types/components/works";
+import { Work } from "dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { getWorkSliders } from "@/lib/work-helpers";
 
 interface SharedLinkProps {
   manifest: Manifest | null;
-  work: WorkShape | null;
+  work: Work | null;
 }
 
 const SharedLink: React.FC<SharedLinkProps> = ({ manifest, work }) => {

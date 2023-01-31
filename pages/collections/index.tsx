@@ -1,10 +1,8 @@
-import {
-  type CollectionRepresentativeImage,
-  type CollectionShape,
-} from "@/types/components/collections";
+import { type Collection, type Visibility } from "dcapi-types";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { StyledForm, StyledInput } from "@/components/Shared/Form.styled";
 import CollectionItem from "@/components/Collection/Item/Item";
+import { type CollectionRepresentativeImage } from "@/types/components/collections";
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -12,7 +10,6 @@ import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { VisibilityStatus } from "@/types/components/works";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getCollectionWorkCounts } from "@/lib/collection-helpers";
@@ -28,7 +25,7 @@ export type CollectionListShape = {
   totalImage?: number;
   totalAudio?: number;
   totalVideo?: number;
-  visibility: VisibilityStatus;
+  visibility: Visibility;
 };
 interface CollectionListProps {
   collectionList: CollectionListShape[];
@@ -90,7 +87,7 @@ export async function getStaticProps() {
   const dataLayer = buildDataLayer({
     pageTitle: "Collections page",
   });
-  let collections: CollectionShape[] = [];
+  let collections: Collection[] = [];
   let collectionList: CollectionListShape[] = [];
   const defaultCountTotals = {
     totalAudio: 0,

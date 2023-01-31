@@ -1,14 +1,14 @@
+import { Collection, Work } from "dcapi-types";
 import {
   DCAPI_ENDPOINT,
   DC_API_SEARCH_URL,
   DC_URL,
 } from "@/lib/constants/endpoints";
 import { sample, shuffle } from "@/lib/utils/array-helpers";
-import { CollectionShape } from "@/types/components/collections";
-import { HeroCollection } from "@/lib/constants/homepage";
-import { WorkShape } from "@/types/components/works";
 
-export const getRelatedCollections = (work: WorkShape) => {
+import { HeroCollection } from "@/lib/constants/homepage";
+
+export const getRelatedCollections = (work: Work) => {
   if (!work) return;
 
   let related = [];
@@ -63,7 +63,7 @@ export const getRelatedCollections = (work: WorkShape) => {
   return related;
 };
 
-export const getHeroCollection = (collection: CollectionShape) => {
+export const getHeroCollection = (collection: Collection) => {
   const { id, finding_aid_url, representative_image, title } = collection;
 
   const thumbnailId = representative_image.url

@@ -3,13 +3,14 @@ import {
   PaginationStyled,
   Results,
 } from "@/components/Search/Pagination.styled";
+
 import { Button } from "@nulib/design-system";
-import { Pagination as PaginationShape } from "@/types/api/response";
+import { PaginationInfo } from "dcapi-types";
 import { pluralize } from "@/lib/utils/count-helpers";
 import { useRouter } from "next/router";
 
 interface PaginationProps {
-  pagination: PaginationShape;
+  pagination: PaginationInfo;
 }
 
 const PaginationAltCounts: React.FC<PaginationProps> = ({ pagination }) => {

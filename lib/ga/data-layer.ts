@@ -1,4 +1,4 @@
-import { WorkShape } from "@/types/components/works";
+import { Work } from "dcapi-types";
 
 interface DataLayer {
   adminset?: string;
@@ -29,7 +29,7 @@ export function buildDataLayer(obj: DataLayer) {
   };
 }
 
-export function buildWorkDataLayer(work: WorkShape): DataLayer {
+export function buildWorkDataLayer(work: Work): DataLayer {
   if (!work) return defaultDataLayer;
 
   const creators = work?.creator.map((creator) => creator.label);

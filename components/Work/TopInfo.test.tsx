@@ -1,12 +1,13 @@
 import { manifest, work } from "@/mocks/sample-work-image";
 import { render, screen } from "@/test-utils";
-import { WorkShape } from "@/types/components/works";
+
+import { Work } from "dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
 
 describe("WorkTopInfo component", () => {
   function renderHelper() {
     return render(
-      <WorkTopInfo manifest={manifest} work={work as unknown as WorkShape} />
+      <WorkTopInfo manifest={manifest} work={work as unknown as Work} />
     );
   }
 

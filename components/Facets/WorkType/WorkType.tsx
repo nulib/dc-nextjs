@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
 import RadioGroup from "./RadioGroup";
 import { WorkTypeOptions } from "@/types/components/facets";

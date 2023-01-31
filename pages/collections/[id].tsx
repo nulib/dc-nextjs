@@ -23,7 +23,7 @@ import {
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
 import { ApiResponseBucket } from "@/types/api/response";
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "dcapi-types";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
@@ -38,7 +38,7 @@ import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 
 interface CollectionProps {
-  collection: CollectionShape | null;
+  collection: Collection | null;
   metadata: ApiResponseBucket[];
   topMetadata: GetTopMetadataAggsReturn[] | [];
   series: GenericAggsReturn[];

@@ -1,7 +1,7 @@
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
+import { Work } from "dcapi-types";
 import { WorkContextStore } from "@/types/context/work-context";
-import { WorkShape } from "@/types/components/works";
 
 type Action =
   | {
@@ -10,7 +10,7 @@ type Action =
     }
   | {
       type: "updateWork";
-      work: WorkShape | undefined;
+      work: Work | undefined;
     };
 type Dispatch = (action: Action) => void;
 type State = WorkContextStore;

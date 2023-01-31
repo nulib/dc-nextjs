@@ -1,6 +1,6 @@
-import { WorkShape } from "@/types/components/works";
+import { Work } from "dcapi-types";
 
-export const sampleWork1: WorkShape = {
+export const sampleWork1: Work = {
   abstract: ["Ima description", "Ima another description"],
   accession_number: "Accession:JR_049_12",
   alternate_title: [],

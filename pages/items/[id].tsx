@@ -13,9 +13,9 @@ import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
 import { UserContext } from "@/context/user-context";
+import { Work } from "dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
-import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
@@ -26,7 +26,7 @@ import { loadItemStructuredData } from "@/lib/json-ld";
 interface WorkPageProps {
   collectionWorkCounts: CollectionWorkCountMap | null;
   manifest?: Manifest;
-  work: WorkShape;
+  work: Work;
 }
 
 const WorkPage: NextPage<WorkPageProps> = ({

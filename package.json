@@ -36,6 +36,7 @@
     "@samvera/nectar-iiif": "^0.0.20",
     "@stitches/react": "^1.2.6",
     "axios": "^1.2.2",
+    "dcapi-types": "^2.0.0-alpha",
     "framer-motion": "^8.1.4",
     "jsonwebtoken": "^9.0.0",
     "next": "^13.1.5",

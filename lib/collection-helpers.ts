@@ -1,14 +1,14 @@
 import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
 import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
 import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
-import { type CollectionShape } from "@/types/components/collections";
+import { type Collection } from "dcapi-types";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getCollection(
   id: string
-): Promise<CollectionShape | undefined> {
+): Promise<Collection | undefined> {
   try {
-    const response = await apiGetRequest<CollectionShape>({
+    const response = await apiGetRequest<Collection>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${id}`,
     });
     return response;
@@ -85,15 +85,15 @@ export async function getCollectionWorkCounts(collectionId = "") {
     },
     query: collectionId
       ? {
-          match: {
-            "collection.id": collectionId,
-          },
-        }
-      : {
-          query_string: {
-            query: "*",
-          },
+        match: {
+          "collection.id": collectionId,
         },
+      }
+      : {
+        query_string: {
+          query: "*",
+        },
+      },
     size: 0,
   };
 

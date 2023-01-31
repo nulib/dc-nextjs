@@ -3,8 +3,10 @@ import {
   loadDefaultStructuredData,
   loadItemStructuredData,
 } from "@/lib/json-ld";
-import { CollectionShape } from "@/types/components/collections";
+
+import { type Collection } from "dcapi-types";
 import { sampleWork2 } from "@/mocks/sample-work2";
+
 
 const collectionMock = {
   admin_email: null,
@@ -44,7 +46,7 @@ it("returns the expected default structured data ", () => {
 describe("collection structured data", () => {
   it("returns the expected collection structured data ", () => {
     const obj = loadCollectionStructuredData(
-      collectionMock as CollectionShape,
+      collectionMock as Collection,
       pathName
     );
     expect(obj["@type"]).toEqual("Collection");
@@ -58,7 +60,7 @@ describe("collection structured data", () => {
     const anotherMock = { ...collectionMock };
     anotherMock.description = "";
     const obj = loadCollectionStructuredData(
-      anotherMock as CollectionShape,
+      anotherMock as Collection,
       pathName
     );
     expect(obj).not.toHaveProperty("description");

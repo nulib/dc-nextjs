@@ -1,7 +1,7 @@
-import { CollectionShape } from "@/types/components/collections";
+import { Collection, Work } from "dcapi-types";
+
 import { DCAPI_PRODUCTION_ENDPOINT } from "./constants/endpoints";
 import { SearchShape } from "@/types/api/response";
-import { WorkShape } from "@/types/components/works";
 import { apiGetRequest } from "./dc-api";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ const getHomePageCollections = async (
     /** Batch fetch all Collections */
     const collections = await axios.all(
       collectionIds.map((id) => {
-        return apiGetRequest<CollectionShape>({
+        return apiGetRequest<Collection>({
           url: `${DCAPI_PRODUCTION_ENDPOINT}/collections/${id}`,
         });
       })
@@ -22,13 +22,13 @@ const getHomePageCollections = async (
     const workIds = collections.map((c) => c?.representative_image.work_id);
     const works = await axios.all(
       workIds.map((id) =>
-        apiGetRequest<WorkShape>({
+        apiGetRequest<Work>({
           url: `${DCAPI_PRODUCTION_ENDPOINT}/works/${id}`,
         })
       )
     );
 
-    const worksUpdated: WorkShape[] = [];
+    const worksUpdated: Work[] = [];
     works.forEach((work) => {
       if (!work) return;
       worksUpdated.push({

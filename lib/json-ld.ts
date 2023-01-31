@@ -1,6 +1,6 @@
-import { CollectionShape } from "@/types/components/collections";
+import { Collection, Work } from "dcapi-types";
+
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { WorkShape } from "@/types/components/works";
 
 const acquireLicensePage =
   "https://www.library.northwestern.edu/about/administration/policies/rights-permissions.html";
@@ -26,7 +26,7 @@ export function loadDefaultStructuredData() {
 }
 
 export function loadCollectionStructuredData(
-  collection: CollectionShape,
+  collection: Collection,
   pathname: string
 ) {
   const obj = {
@@ -40,7 +40,7 @@ export function loadCollectionStructuredData(
   return obj;
 }
 
-export function loadItemStructuredData(item: WorkShape, pathname: string) {
+export function loadItemStructuredData(item: Work, pathname: string) {
   const {
     abstract,
     contributor,

@@ -1,4 +1,4 @@
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "dcapi-types";
 
 export const sampleCollection1 = {
   admin_email: null,
@@ -20,4 +20,4 @@ export const sampleCollection1 = {
   thumbnail: "http://test.com",
   title: "Rosenthal Art Slides",
   visibility: "Institution",
-} as CollectionShape;
+} as Collection;
