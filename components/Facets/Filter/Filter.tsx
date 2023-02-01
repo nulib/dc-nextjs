@@ -3,11 +3,13 @@ import {
   FilterActivate,
   FilterContent,
   FilterFloating,
+  FilterWrapper,
 } from "@/components/Facets/Filter/Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
 import React, { useState } from "react";
 import { DialogOverlay } from "@/components/Shared/Dialog.styled";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
+import FilterClear from "@/components/Facets/Filter/Clear";
 import FilterModal from "@/components/Facets/Filter/Modal";
 import Icon from "@/components/Shared/Icon";
 import { IconFilter } from "@/components/Shared/SVG/Icons";
@@ -34,15 +36,18 @@ const DialogWrapper: React.FC = () => {
 
   return (
     <Dialog.Root open={isModalOpen} onOpenChange={handleDialogChange}>
-      <FilterFloating>
-        <FilterActivate>
-          <Icon>
-            <IconFilter />
-          </Icon>
-          Filter
-        </FilterActivate>
-        <FacetsCurrentUser screen="search" urlFacets={urlFacets} />
-      </FilterFloating>
+      <FilterWrapper>
+        <FilterFloating>
+          <FilterActivate>
+            <Icon>
+              <IconFilter />
+            </Icon>
+            Filter
+          </FilterActivate>
+          <FacetsCurrentUser screen="search" urlFacets={urlFacets} />
+        </FilterFloating>
+        {Object.keys(urlFacets).length > 0 && <FilterClear />}
+      </FilterWrapper>
       <Dialog.Portal>
         <DialogOverlay />
         <FilterContent data-testid="modal-content">
