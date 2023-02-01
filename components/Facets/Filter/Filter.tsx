@@ -3,7 +3,6 @@ import {
   FilterActivate,
   FilterContent,
   FilterFloating,
-  FilterWrapper,
 } from "@/components/Facets/Filter/Filter.styled";
 import { FilterProvider, useFilterState } from "@/context/filter-context";
 import React, { useState } from "react";
@@ -36,18 +35,16 @@ const DialogWrapper: React.FC = () => {
 
   return (
     <Dialog.Root open={isModalOpen} onOpenChange={handleDialogChange}>
-      <FilterWrapper>
-        <FilterFloating>
-          <FilterActivate>
-            <Icon>
-              <IconFilter />
-            </Icon>
-            Filter
-          </FilterActivate>
-          <FacetsCurrentUser screen="search" urlFacets={urlFacets} />
-        </FilterFloating>
-        {Object.keys(urlFacets).length > 0 && <FilterClear />}
-      </FilterWrapper>
+      <FilterFloating>
+        <FilterActivate>
+          <Icon>
+            <IconFilter />
+          </Icon>
+          Filter
+        </FilterActivate>
+        <FacetsCurrentUser screen="search" urlFacets={urlFacets} />
+      </FilterFloating>
+      {Object.keys(urlFacets).length > 0 && <FilterClear />}
       <Dialog.Portal>
         <DialogOverlay />
         <FilterContent data-testid="modal-content">

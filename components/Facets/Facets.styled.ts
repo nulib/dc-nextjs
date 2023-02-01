@@ -67,6 +67,8 @@ const Wrapper = styled("div", {
 
 const FacetExtras = styled("div", {
   display: "flex",
+  flexGrow: "1",
+  justifyContent: "flex-end",
 });
 
 export { FacetExtras, StyledFacets, Width, Wrapper };

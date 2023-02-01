@@ -46,6 +46,7 @@ const FilterFloating = styled("div", {
   boxShadow: "2px 2px 5px #0002",
   borderRadius: "50px",
   transition: "$dcAll",
+  alignSelf: "flex-start",
 
   [`& ${FilterActivate}`]: {
     boxShadow: "2px 2px 5px #0002",
