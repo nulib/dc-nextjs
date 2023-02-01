@@ -231,10 +231,6 @@ const FilterContent = styled(Dialog.Content, {
   },
 });
 
-const FilterWrapper = styled("div", {
-  display: "flex",
-});
-
 export {
   FilterActivate,
   FilterBody,
@@ -244,5 +240,4 @@ export {
   FilterFloating,
   FilterFooter,
   FilterHeader,
-  FilterWrapper,
 };
