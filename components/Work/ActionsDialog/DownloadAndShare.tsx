@@ -195,6 +195,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         <ItemThumbnail>
           {item.thumbnail && (
             <Thumbnail
+              altAsLabel={item.label ? item.label : { none: [item.id] }}
               thumbnail={item.thumbnail as IIIFExternalWebResource[]}
             />
           )}
