@@ -1,8 +1,52 @@
 import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
 import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
+import {
+  type CollectionRepresentativeImage,
+  type CollectionShape,
+} from "@/types/components/collections";
 import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
-import { type CollectionShape } from "@/types/components/collections";
+import { DCAPI_ENDPOINT } from "./constants/endpoints";
+import { VisibilityStatus } from "@/types/components/works";
 import { shuffle } from "@/lib/utils/array-helpers";
+
+export type CollectionListShape = {
+  description?: string;
+  id: string;
+  representativeImage: CollectionRepresentativeImage;
+  thumbnail?: string;
+  title: string;
+  totalWorks?: number;
+  totalImage?: number;
+  totalAudio?: number;
+  totalVideo?: number;
+  visibility: VisibilityStatus;
+};
+
+export type CollectionWorkCountMap = {
+  [key: string]: WorkTypeCountMap;
+};
+
+export type GenericAggsReturn = {
+  key: string;
+  doc_count: number;
+};
+
+type GetTopMetadataAggsParams = {
+  collectionId: string;
+  metadataFields: string[];
+};
+
+export type GetTopMetadataAggsReturn = {
+  field: string;
+  value: string[] | [];
+};
+
+export type WorkTypeCountMap = {
+  totalWorks: number;
+  totalImage: number;
+  totalAudio: number;
+  totalVideo: number;
+};
 
 export async function getCollection(
   id: string
@@ -14,6 +58,48 @@ export async function getCollection(
     return response;
   } catch (err) {
     console.error("Error getting the collection", id);
+  }
+}
+
+/** Get all Collections */
+export async function getCollections() {
+  let collectionList: CollectionListShape[] = [];
+  const defaultCountTotals = {
+    totalAudio: 0,
+    totalImage: 0,
+    totalVideo: 0,
+    totalWorks: 0,
+  };
+
+  try {
+    const collections = await apiGetRequest<CollectionShape[] | undefined>({
+      url: `${DCAPI_ENDPOINT}/collections?size=200&sort=title:asc`,
+    });
+
+    if (!collections) return [];
+
+    /** Get Work counts (Image / Audio / Video) for all Collections */
+    const workCountMap = await getCollectionWorkCounts();
+
+    /** Stitch together only the Collection list info this page requires */
+    collectionList = collections.map((collection) => {
+      return {
+        description: collection.description,
+        id: collection.id,
+        representativeImage: collection.representative_image,
+        thumbnail: collection.thumbnail,
+        title: collection.title,
+        visibility: collection.visibility,
+        ...(workCountMap && workCountMap[collection.id]
+          ? { ...workCountMap[collection.id] }
+          : { ...defaultCountTotals }),
+      };
+    });
+
+    return collectionList;
+  } catch (err) {
+    console.error(err);
+    return [];
   }
 }
 
@@ -43,16 +129,6 @@ export async function getCollectionWorkCount(collectionId: string) {
     console.error("Error getting Collection Work count", err);
   }
 }
-
-export type WorkTypeCountMap = {
-  totalWorks: number;
-  totalImage: number;
-  totalAudio: number;
-  totalVideo: number;
-};
-export type CollectionWorkCountMap = {
-  [key: string]: WorkTypeCountMap;
-};
 
 /* eslint sort-keys:0 */
 export async function getCollectionWorkCounts(collectionId = "") {
@@ -184,21 +260,6 @@ export async function getMetadataAggs(collectionId: string, field: string) {
     console.error("Error getting Collection subjects", err);
   }
 }
-
-export type GenericAggsReturn = {
-  key: string;
-  doc_count: number;
-};
-
-type GetTopMetadataAggsParams = {
-  collectionId: string;
-  metadataFields: string[];
-};
-
-export type GetTopMetadataAggsReturn = {
-  field: string;
-  value: string[] | [];
-};
 
 export async function getTopMetadataAggs({
   collectionId,

@@ -8,7 +8,7 @@ import type {
   GetTopMetadataAggsReturn,
   WorkTypeCountMap,
 } from "@/lib/collection-helpers";
-import { GetStaticPropsContext, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import {
   Tabs,
   TabsContent,
@@ -22,6 +22,7 @@ import {
   getMetadataAggs,
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
+import { useEffect, useState } from "react";
 import { ApiResponseBucket } from "@/types/api/response";
 import { CollectionShape } from "@/types/components/collections";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
@@ -38,7 +39,7 @@ import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 
 interface CollectionProps {
-  collection: CollectionShape | null;
+  id: CollectionShape["id"];
   metadata: ApiResponseBucket[];
   topMetadata: GetTopMetadataAggsReturn[] | [];
   series: GenericAggsReturn[];
@@ -46,16 +47,24 @@ interface CollectionProps {
 }
 
 const Collection: NextPage<CollectionProps> = ({
-  collection,
+  id,
   metadata,
   topMetadata,
   series,
   workTypeCounts,
 }) => {
-  if (!collection) return null;
-  console.log("collection", collection);
+  const [collection, setCollection] = useState<CollectionShape>();
+  const description = collection?.description;
 
-  const { description, id } = collection;
+  useEffect(() => {
+    async function getData() {
+      if (!id) return;
+      const data = await getCollection(id);
+      setCollection(data);
+    }
+    getData();
+  }, [id]);
+
   const {
     totalAudio = 0,
     totalImage = 0,
@@ -65,22 +74,25 @@ const Collection: NextPage<CollectionProps> = ({
 
   return (
     <>
-      <Head>
-        <script
-          id="app-ld-json"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              loadCollectionStructuredData(collection, `/colllections/${id}`),
-              null,
-              "\t"
-            ),
-          }}
-        />
-      </Head>
+      {collection && (
+        <Head>
+          <script
+            id="app-ld-json"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                loadCollectionStructuredData(collection, `/colllections/${id}`),
+                null,
+                "\t"
+              ),
+            }}
+          />
+        </Head>
+      )}
+
       <Layout>
         <HeroWrapper>
-          <Hero collection={getHeroCollection(collection)} />
+          {collection && <Hero collection={getHeroCollection(collection)} />}
         </HeroWrapper>
         <Interstitial>
           <Container>
@@ -138,22 +150,9 @@ const Collection: NextPage<CollectionProps> = ({
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    fallback: "blocking",
-    paths: [],
-  };
-}
-
-export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const id = params?.id;
-  const collection = id ? await getCollection(params.id as string) : null;
-
-  if (!collection) {
-    return {
-      notFound: true,
-    };
-  }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context?.params?.id;
+  const collection = await getCollection(id as string);
 
   const metadata =
     id && collection
@@ -184,7 +183,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     collections: "",
     creatorsContributors: "",
     isLoggedIn: false,
-    pageTitle: collection?.title as string,
+    pageTitle: (collection?.title as string) || "",
     rightsStatement: "",
     subjects: "",
     visibility: collection?.visibility,
@@ -206,8 +205,8 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
   return {
     props: {
-      collection,
       dataLayer,
+      id,
       metadata,
       openGraphData,
       series,
@@ -215,6 +214,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       workTypeCounts,
     },
   };
-}
+};
 
 export default Collection;
