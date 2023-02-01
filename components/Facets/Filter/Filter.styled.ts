@@ -104,16 +104,17 @@ const FilterFooter = styled("footer", {
   backgroundColor: "$black10",
   width: "100%",
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
 
   button: {
+    display: "flex",
+    alignItems: "center",
     margin: "0",
-    fontSize: "1rem",
-    lineHeight: "1rem",
-    padding: "0.75rem 1rem",
-    marginRight: "1rem",
+    fontSize: "$gr4",
+    padding: "$gr2 $gr3",
+    marginRight: "$gr2",
     cursor: "pointer",
-    textTransform: "uppercase",
+    fontFamily: "$northwesternSansRegular",
 
     [`&${FilterClose}`]: {
       backgroundColor: "white",
@@ -229,6 +230,10 @@ const FilterContent = styled(Dialog.Content, {
   },
 });
 
+const FilterWrapper = styled("div", {
+  display: "flex",
+});
+
 export {
   FilterActivate,
   FilterBody,
@@ -238,4 +243,5 @@ export {
   FilterFloating,
   FilterFooter,
   FilterHeader,
+  FilterWrapper,
 };
