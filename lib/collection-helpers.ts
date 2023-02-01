@@ -131,7 +131,9 @@ export async function getCollectionWorkCount(collectionId: string) {
 }
 
 /* eslint sort-keys:0 */
-export async function getCollectionWorkCounts(collectionId = "") {
+export async function getCollectionWorkCounts(
+  collectionId = ""
+): Promise<CollectionWorkCountMap | null> {
   function getCount(
     buckets: ApiResponseBucket[],
     targetWorkType: "Audio" | "Image" | "Video"
@@ -185,9 +187,10 @@ export async function getCollectionWorkCounts(collectionId = "") {
       if (collectionId) {
         return {
           [collectionId]: {
-            audio: 0,
-            image: 0,
-            video: 0,
+            totalWorks: 0,
+            totalImage: 0,
+            totalAudio: 0,
+            totalVideo: 0,
           },
         };
       }
