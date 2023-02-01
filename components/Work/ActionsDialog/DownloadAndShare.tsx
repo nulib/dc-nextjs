@@ -178,7 +178,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         : "nul_fileset";
 
     const response = await makeBlob(
-      `${getInfoResponse(item)}/full/1000,/0/default.jpg`
+      `${getInfoResponse(item)}/full/3000,/0/default.jpg`
     );
 
     if (!response || response.error) {
