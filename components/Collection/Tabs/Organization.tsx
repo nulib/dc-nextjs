@@ -2,6 +2,7 @@ import { GenericAggsReturn, sortAggsByKey } from "@/lib/collection-helpers";
 import BloomIIIFWrapper from "@/components/BloomWrapper";
 import ExpandableList from "@/components/Shared/ExpandableList";
 import Heading from "@/components/Heading/Heading";
+import { pluralize } from "@/lib/utils/count-helpers";
 
 interface CollectionTabsOrganizationProps {
   series: GenericAggsReturn[];
@@ -28,7 +29,7 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
             const collectionId = `${url}/search?query=series:"${sanitizedKey}"&collectionLabel=${sanitizedKey}&collectionSummary=${summary}&as=iiif`;
             const value = `series-${index}`;
             const title = entry.key;
-            const indicator = `${entry.doc_count} Items`;
+            const indicator = pluralize("Item", entry.doc_count);
 
             return (
               <ExpandableList.Item
