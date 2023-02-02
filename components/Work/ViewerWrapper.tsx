@@ -6,7 +6,7 @@ import Announcement from "@/components/Shared/Announcement";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 import dynamic from "next/dynamic";
 
 export const CloverIIIF: React.ComponentType<{

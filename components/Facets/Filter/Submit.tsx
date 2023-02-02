@@ -46,7 +46,12 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
 
   return (
     <div data-testid="facets-submit">
-      <Button isPrimary onClick={handleSubmit} data-testid="submit-button">
+      <Button
+        isPrimary
+        isLowercase
+        onClick={handleSubmit}
+        data-testid="submit-button"
+      >
         View Results {total ? `(${total})` : undefined}
       </Button>
     </div>

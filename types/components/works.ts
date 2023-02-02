@@ -49,6 +49,12 @@ export interface RelatedUrl {
   url: string;
 }
 
+export type RepresentativeFileSet = {
+  aspect_ratio: number;
+  id: string;
+  url: string;
+};
+
 export interface Subject {
   id: string;
   label: string;
@@ -89,8 +95,8 @@ export interface WorkShape {
   cultural_context: Array<string>;
   description: Array<string>;
   file_sets: Array<FileSet>;
-  folder_names: Array<string>;
-  folder_numbers: Array<string>;
+  folder_name: Array<string>;
+  folder_number: Array<string>;
   genre: Array<GenericIdLabel>;
   identifier: Array<string>;
   iiif_manifest: string;
@@ -99,7 +105,7 @@ export interface WorkShape {
   language: Array<Language>;
   legacy_identifier: Array<string>;
   library_unit: string;
-  license: IdLabelScheme | null;
+  license: GenericIdLabel | null;
   modified_date: string;
   notes: Array<Note>;
   physical_description_material: Array<string>;
@@ -111,11 +117,7 @@ export interface WorkShape {
   reading_room?: boolean;
   related_material: Array<string>;
   related_url: Array<RelatedUrl>;
-  representative_file_set: {
-    aspect_ratio: number;
-    id: string;
-    url: string;
-  };
+  representative_file_set: RepresentativeFileSet;
   rights_holder: Array<string>;
   rights_statement: GenericIdLabel;
   scope_and_contents: Array<string>;

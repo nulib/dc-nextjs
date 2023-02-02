@@ -1,9 +1,9 @@
-import { ApiSearchRequest, SearchSimpleQueryString } from "@/types/api/request";
+import { ApiSearchRequestBody } from "@/types/api/request";
 
 /**
  * Default search query for a Work
  */
-const querySearchTemplate: ApiSearchRequest = {
+const querySearchTemplate = {
   _source: [
     "id",
     "iiif_manifest",
@@ -19,9 +19,9 @@ const querySearchTemplate: ApiSearchRequest = {
     },
   },
   size: 20,
-};
+} as ApiSearchRequestBody;
 
-const buildSearchPart = (term: string): SearchSimpleQueryString => {
+const buildSearchPart = (term: string) => {
   /**
    * Does the search term contain an OpenSearch "phrase" (ie. "Joan and Bob")
    *

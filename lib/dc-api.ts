@@ -1,42 +1,75 @@
-interface GetApiParams {
-  body?: unknown;
-  method?: "GET" | "POST";
+import axios, { AxiosError } from "axios";
+import { type ApiSearchRequestBody } from "@/types/api/request";
+
+interface ApiGetRequestParams {
   url: string;
 }
 
-async function getAPIData<R>(obj: GetApiParams): Promise<R | undefined> {
-  const { body, method = "POST", url } = obj;
+interface ApiPostRequestParams {
+  body?: ApiSearchRequestBody;
+  url: string;
+}
+
+async function apiGetRequest<R>(
+  obj: ApiGetRequestParams
+): Promise<R | undefined> {
+  const { url } = obj;
   try {
-    const response = await fetch(url, {
-      body: JSON.stringify(body),
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method,
+    const response = await axios({
+      url,
+      withCredentials: true,
     });
-    const data = (await response.json()) as Promise<R>;
+    const data = response.data?.data as R;
     return data;
   } catch (err) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
-    }
+    handleError(err);
+  }
+}
+
+async function apiPostRequest<R>(
+  obj: ApiPostRequestParams
+): Promise<R | undefined> {
+  const { body, url } = obj;
+  try {
+    const response = await axios({
+      data: body,
+      method: "post",
+      url,
+      withCredentials: true,
+    });
+    const data = response.data as R;
+    return data;
+  } catch (err) {
+    handleError(err);
   }
 }
 
 async function getIIIFResource<R>(uri: string): Promise<R | undefined> {
   try {
-    const response = await fetch(uri, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = (await response.json()) as Promise<R>;
-    return data;
+    const response = await axios(uri);
+    return response.data;
   } catch (err) {
-    if (err instanceof Error) {
-      throw new Error(err.message);
-    }
+    handleError(err);
   }
 }
-export { getAPIData, getIIIFResource };
+
+function handleError(err: unknown) {
+  const error = err as AxiosError;
+  //const error = err as AxiosError;
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    console.log(error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log("Error", error.message);
+  }
+}
+export { apiGetRequest, apiPostRequest, getIIIFResource };

@@ -11,3 +11,5 @@ jest.mock("next/dynamic", () => () => {
   DynamicComponent.preload = jest.fn();
   return DynamicComponent;
 });
+
+jest.mock("next/router", () => require("next-router-mock"));

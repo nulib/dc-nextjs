@@ -9,6 +9,7 @@ import {
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
 import FacetsGroupList from "@/components/Facets/Filter/GroupList";
 import FacetsSubmit from "@/components/Facets/Filter/Submit";
+import FilterClear from "@/components/Facets/Filter/Clear";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import Preview from "./Preview";
 import React from "react";
@@ -60,13 +61,16 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
         </FilterBodyInner>
       </FilterBody>
       <FilterFooter role="menubar">
-        <FilterClose data-testid="facets-filter-close" aria-label="Cancel">
-          Cancel
-        </FilterClose>
-        <FacetsSubmit
-          setIsModalOpen={setIsModalOpen}
-          total={apiData?.info.total}
-        />
+        <FilterClear isModal={true} />
+        <div style={{ display: "flex" }}>
+          <FilterClose data-testid="facets-filter-close" aria-label="Cancel">
+            Cancel
+          </FilterClose>
+          <FacetsSubmit
+            setIsModalOpen={setIsModalOpen}
+            total={apiData?.info.total}
+          />
+        </div>
       </FilterFooter>
     </>
   );

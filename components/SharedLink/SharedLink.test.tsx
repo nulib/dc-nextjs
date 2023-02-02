@@ -107,7 +107,7 @@ const work = {
   description: [],
   keywords: [],
   indexed_at: "2022-11-03T15:36:58.665450",
-  folder_names: [],
+  folder_name: [],
   abstract: [],
   genre: [
     {
@@ -195,7 +195,7 @@ const work = {
   location: [],
   published: true,
   source: [],
-  folder_numbers: [],
+  folder_number: [],
   legacy_identifier: ["inu:dil-12b39039-68af-4a31-8b04-1b025d95a0b8"],
   work_type: "Image" as WorkTypeStatus,
   modified_date: "2022-10-13T20:56:27.629306Z",

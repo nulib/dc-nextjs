@@ -6,7 +6,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
-import { UserContext } from "@/pages/_app";
+import { UserContext } from "@/context/user-context";
 
 const nav = [
   {
@@ -36,17 +36,17 @@ export default function HeaderSuper() {
     <Super>
       <Container>
         <Link href="https://www.northwestern.edu/">
-          <a>{isLoaded && <NorthwesternWordmark />}</a>
+          {isLoaded && <NorthwesternWordmark />}
         </Link>
         <Nav>
           {nav.map(({ href, label }) => (
             <Link key={label} href={href}>
-              <a>{label}</a>
+              {label}
             </Link>
           ))}
           {!userAuthContext?.user?.isLoggedIn && (
             <Link href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
-              <a>Sign in</a>
+              Sign in
             </Link>
           )}
           {userAuthContext?.user?.isLoggedIn && (

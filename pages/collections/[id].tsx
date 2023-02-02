@@ -8,7 +8,7 @@ import type {
   GetTopMetadataAggsReturn,
   WorkTypeCountMap,
 } from "@/lib/collection-helpers";
-import { GetStaticPropsContext, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import {
   Tabs,
   TabsContent,
@@ -18,11 +18,11 @@ import {
 import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import {
   getCollection,
-  getCollectionIds,
   getCollectionWorkCounts,
   getMetadataAggs,
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
+import { useEffect, useState } from "react";
 import { ApiResponseBucket } from "@/types/api/response";
 import { CollectionShape } from "@/types/components/collections";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
@@ -37,142 +37,172 @@ import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
+import { useRouter } from "next/router";
 
-interface CollectionProps {
-  collection: CollectionShape | null;
-  metadata: ApiResponseBucket[];
-  topMetadata: GetTopMetadataAggsReturn[] | [];
-  series: GenericAggsReturn[];
-  workTypeCounts: WorkTypeCountMap;
-}
+const Collection: NextPage = () => {
+  const router = useRouter();
+  const [collection, setCollection] = useState<CollectionShape>();
+  const [metadata, setMetadata] = useState<ApiResponseBucket[]>([]);
+  const [series, setSeries] = useState<GenericAggsReturn[]>([]);
+  const [topMetadata, setTopMetadata] = useState<GetTopMetadataAggsReturn[]>(
+    []
+  );
+  const [workTypeCounts, setWorkTypeCounts] = useState<WorkTypeCountMap | null>(
+    null
+  );
 
-const Collection: NextPage<CollectionProps> = ({
-  collection,
-  metadata,
-  topMetadata,
-  series,
-  workTypeCounts,
-}) => {
-  if (!collection) return null;
+  const description = collection?.description;
 
-  const { description, id } = collection;
-  const {
-    totalAudio = 0,
-    totalImage = 0,
-    totalVideo = 0,
-    totalWorks = 0,
-  } = workTypeCounts;
+  /** Get the Collection */
+  useEffect(() => {
+    async function getData() {
+      const id = router.query.id;
+      if (!id || Array.isArray(id)) return;
+      const data = await getCollection(id);
+      setCollection(data);
+    }
+    router.isReady && getData();
+  }, [router.isReady, router.query.id]);
+
+  /** Get dependant data */
+  useEffect(() => {
+    async function getData() {
+      if (!collection) return;
+
+      /** Get metadata */
+      const metadataAggs = await getMetadataAggs(
+        collection.id,
+        "subject.label"
+      );
+
+      /** Get some data to build out "About" slider content for the Explore tab */
+      const topMetadataResponse = await getTopMetadataAggs({
+        collectionId: collection.id,
+        metadataFields: ["subject.label", "genre.label"],
+      });
+
+      const collectionWorkCounts = await getCollectionWorkCounts(collection.id);
+      const workTypeCountsValue = collectionWorkCounts
+        ? collectionWorkCounts[collection.id]
+        : null;
+
+      const seriesResponse = await getMetadataAggs(collection.id, "series");
+
+      if (metadataAggs) {
+        setMetadata(metadataAggs);
+      }
+      if (topMetadataResponse) {
+        setTopMetadata(topMetadataResponse);
+      }
+      if (workTypeCountsValue) {
+        setWorkTypeCounts(workTypeCountsValue);
+      }
+      if (seriesResponse) {
+        setSeries(seriesResponse);
+      }
+    }
+    collection && getData();
+  }, [collection]);
+
+  const totalAudio = workTypeCounts?.totalAudio || 0;
+  const totalImage = workTypeCounts?.totalImage || 0;
+  const totalVideo = workTypeCounts?.totalVideo || 0;
+  const totalWorks = workTypeCounts?.totalWorks || 0;
 
   return (
     <>
-      <Head>
-        <script
-          id="app-ld-json"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              loadCollectionStructuredData(collection, `/colllections/${id}`),
-              null,
-              "\t"
-            ),
-          }}
-        />
-      </Head>
+      {collection && (
+        <Head>
+          <script
+            id="app-ld-json"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                loadCollectionStructuredData(
+                  collection,
+                  `/colllections/${collection.id}`
+                ),
+                null,
+                "\t"
+              ),
+            }}
+          />
+        </Head>
+      )}
+
       <Layout>
-        <HeroWrapper>
-          <Hero collection={getHeroCollection(collection)} />
-        </HeroWrapper>
-        <Interstitial>
-          <Container>
-            <Facts>
-              <Facts.Item
-                big={formatNumber(totalWorks)}
-                small={pluralize("Total Work", totalWorks)}
-              />
-              <Facts.Item
-                big={formatNumber(totalImage)}
-                small={pluralize("Image Work", totalImage)}
-              />
-              <Facts.Item
-                big={formatNumber(totalVideo)}
-                small={pluralize("Video Work", totalVideo)}
-              />
-              <Facts.Item
-                big={formatNumber(totalAudio)}
-                small={pluralize("Audio Work", totalAudio)}
-              />
-            </Facts>
-          </Container>
-        </Interstitial>
-        <Container>
-          <Tabs defaultValue="explore">
-            <TabsList aria-label="Explore">
-              <TabsTrigger value="explore">About</TabsTrigger>
-              <TabsTrigger value="organization">
-                Collection Organization
-              </TabsTrigger>
-              <TabsTrigger value="metadata">All Subjects</TabsTrigger>
-            </TabsList>
-            <TabsContent value="explore">
-              {description && (
-                <Description data-testid="description">
-                  <ReadMore text={description} words={55} />
-                </Description>
-              )}
-              <CollectionTabsExplore
-                collectionId={id}
-                description={description}
-                topMetadata={topMetadata}
-              />
-            </TabsContent>
-            <TabsContent value="organization">
-              <CollectionTabsOrganization series={series} />
-            </TabsContent>
-            <TabsContent value="metadata">
-              <CollectionTabsMetadata metadata={metadata} />
-            </TabsContent>
-          </Tabs>
-        </Container>
+        {collection && (
+          <>
+            <HeroWrapper>
+              <Hero collection={getHeroCollection(collection)} />
+            </HeroWrapper>
+            <Interstitial>
+              <Container>
+                <Facts>
+                  <Facts.Item
+                    big={formatNumber(totalWorks)}
+                    small={pluralize("Total Work", totalWorks)}
+                  />
+                  <Facts.Item
+                    big={formatNumber(totalImage)}
+                    small={pluralize("Image Work", totalImage)}
+                  />
+                  <Facts.Item
+                    big={formatNumber(totalVideo)}
+                    small={pluralize("Video Work", totalVideo)}
+                  />
+                  <Facts.Item
+                    big={formatNumber(totalAudio)}
+                    small={pluralize("Audio Work", totalAudio)}
+                  />
+                </Facts>
+              </Container>
+            </Interstitial>
+            <Container>
+              <Tabs defaultValue="explore">
+                <TabsList aria-label="Explore">
+                  <TabsTrigger value="explore">About</TabsTrigger>
+                  <TabsTrigger value="organization">
+                    Collection Organization
+                  </TabsTrigger>
+                  <TabsTrigger value="metadata">All Subjects</TabsTrigger>
+                </TabsList>
+                <TabsContent value="explore">
+                  {description && (
+                    <Description data-testid="description">
+                      <ReadMore text={description} words={55} />
+                    </Description>
+                  )}
+                  {topMetadata.length > 0 && (
+                    <CollectionTabsExplore
+                      collectionId={collection.id}
+                      description={description}
+                      topMetadata={topMetadata}
+                    />
+                  )}
+                </TabsContent>
+                <TabsContent value="organization">
+                  {series.length > 0 && (
+                    <CollectionTabsOrganization series={series} />
+                  )}
+                </TabsContent>
+                <TabsContent value="metadata">
+                  {metadata.length > 0 && (
+                    <CollectionTabsMetadata metadata={metadata} />
+                  )}
+                </TabsContent>
+              </Tabs>
+            </Container>
+          </>
+        )}
       </Layout>
     </>
   );
 };
 
-export async function getStaticPaths() {
-  const ids = await getCollectionIds();
-  const paths = ids.map((id) => ({ params: { id } }));
-
-  return {
-    fallback: "blocking",
-    paths,
-  };
-}
-
-export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const id = params?.id;
-  const collection = id ? await getCollection(params.id as string) : null;
-  const metadata =
-    id && collection
-      ? await getMetadataAggs(id as string, "subject.label")
-      : null;
-
-  const collectionWorkCounts =
-    id && collection && (await getCollectionWorkCounts(id as string));
-
-  const workTypeCounts =
-    collectionWorkCounts && id ? collectionWorkCounts[id as string] : null;
-
-  /** Get some data to build out "About" slider content for the Explore tab */
-  const topMetadata =
-    id && collection
-      ? await getTopMetadataAggs({
-          collectionId: id as string,
-          metadataFields: ["subject.label", "genre.label"],
-        })
-      : null;
-
-  const series =
-    id && collection ? await getMetadataAggs(id as string, "series") : null;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context?.params?.id;
+  const collection = await getCollection(id as string);
 
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
@@ -180,14 +210,16 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     collections: "",
     creatorsContributors: "",
     isLoggedIn: false,
-    pageTitle: collection?.title as string,
+    pageTitle: (collection?.title as string) || "",
     rightsStatement: "",
     subjects: "",
-    visibility: collection?.visibility,
+    visibility: collection?.visibility || "",
   });
 
   /** Populate OpenGraph data */
-  const imageUrl = `${collection?.representative_image.url}/full/600,600/0/default.jpg`;
+  const imageUrl = collection
+    ? `${collection?.representative_image.url}/full/600,600/0/default.jpg`
+    : "";
   const openGraphData = !collection
     ? {}
     : {
@@ -202,15 +234,11 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
   return {
     props: {
-      collection,
       dataLayer,
-      metadata,
+      id,
       openGraphData,
-      series,
-      topMetadata,
-      workTypeCounts,
     },
   };
-}
+};
 
 export default Collection;

@@ -45,8 +45,8 @@ export const sampleWork1: WorkShape = {
       width: 1000,
     },
   ],
-  folder_names: ["ima folder"],
-  folder_numbers: ["102", "103"],
+  folder_name: ["ima folder"],
+  folder_number: ["102", "103"],
   genre: [],
   id: "c16029ff-d027-496a-98b7-6f259395a8f7",
   identifier: ["MS 63"],
@@ -66,8 +66,7 @@ export const sampleWork1: WorkShape = {
   library_unit: "University Archives",
   license: {
     id: "foo",
-    label: "bar",
-    scheme: "scheme",
+    label: "bar"
   },
   modified_date: "2022-02-24T23:51:12.736078Z",
   notes: [],

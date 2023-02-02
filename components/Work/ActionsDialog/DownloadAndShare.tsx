@@ -28,7 +28,7 @@ import useWorkAuth from "@/hooks/useWorkAuth";
 import { useWorkState } from "@/context/work-context";
 
 const embedWarningMessage =
-  "Embed is not available for images restricted to the Northwestern University community";
+  "Embed is not available for works restricted to the Northwestern University community";
 
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
@@ -54,7 +54,11 @@ const DownloadAndShare: React.FC = () => {
   return (
     <ActionsDialogStyled>
       <ActionsDialogAside>
-        <SharedSocial />
+        <SharedSocial
+          title={work.title}
+          media={work.thumbnail}
+          description={work.description}
+        />
       </ActionsDialogAside>
       <Content>
         {!isSharedLinkPage && (
@@ -178,7 +182,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         : "nul_fileset";
 
     const response = await makeBlob(
-      `${getInfoResponse(item)}/full/1000,/0/default.jpg`
+      `${getInfoResponse(item)}/full/3000,/0/default.jpg`
     );
 
     if (!response || response.error) {
@@ -195,6 +199,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         <ItemThumbnail>
           {item.thumbnail && (
             <Thumbnail
+              altAsLabel={item.label ? item.label : { none: [item.id] }}
               thumbnail={item.thumbnail as IIIFExternalWebResource[]}
             />
           )}

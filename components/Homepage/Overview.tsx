@@ -19,11 +19,11 @@ const HomepageOverview = () => {
             <h2>Enrich your research with primary sources</h2>
             <p>
               Explore digital resources from the Northwestern University Library
-              collections – including Letters, photographs, diaries, maps, and
+              collections – including letters, photographs, diaries, maps, and
               audiovisual materials - as well as licensed art historical images
               for teaching and reference.
             </p>
-            <Link href="/about">
+            <Link href="/about" legacyBehavior>
               <Button isPrimary>Learn More</Button>
             </Link>
           </Content>

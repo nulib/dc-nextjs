@@ -18,17 +18,17 @@ const Preview: React.FC<PreviewProps> = ({ items }) => {
           return (
             <PreviewItem key={item.id} data-testid="facets-filter-preview-item">
               <Link href={`/items/${item.id}`}>
-                <a>
-                  <Figure
-                    data={{
-                      aspectRatio: 1,
-                      src: item.thumbnail,
-                      supplementalInfo: item.work_type,
-                      title: item.title,
-                    }}
-                    orientation="horizontal"
-                  />
-                </a>
+
+                <Figure
+                  data={{
+                    aspectRatio: 1,
+                    src: item.thumbnail,
+                    supplementalInfo: item.work_type,
+                    title: item.title,
+                  }}
+                  orientation="horizontal"
+                />
+
               </Link>
             </PreviewItem>
           );

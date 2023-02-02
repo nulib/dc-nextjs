@@ -1,4 +1,8 @@
-import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
+import {
+  GenericAggsReturn,
+  GetTopMetadataAggsReturn,
+  sortAggsByKey,
+} from "@/lib/collection-helpers";
 import { getTopMetadataAggs } from "@/lib/collection-helpers";
 
 /* eslint sort-keys: 0 */
@@ -64,7 +68,7 @@ jest.mock("./dc-api", () => {
   };
 
   return {
-    getAPIData: jest
+    apiPostRequest: jest
       .fn()
       /** Note these map to the 3 specs below */
       .mockReturnValueOnce(mockAggs)
@@ -110,5 +114,44 @@ describe("getTopMetadataAggs() function", () => {
 
   it("should return an empty 'value' property if buckets are empty for an aggregated field", async () => {
     expect(response).toEqual([{ field: "subject.label", value: [] }]);
+  });
+});
+
+describe("sortAggsByKey() function", () => {
+  const givenAggs: GenericAggsReturn[] = [
+    {
+      key: "Sample -- 1.",
+      doc_count: 1,
+    },
+    {
+      key: "Sample -- 10.",
+      doc_count: 2,
+    },
+    {
+      key: "Sample -- 2.",
+      doc_count: 3,
+    },
+  ];
+
+  const expectedAggs: GenericAggsReturn[] = [
+    {
+      key: "Sample -- 1.",
+      doc_count: 1,
+    },
+    {
+      key: "Sample -- 2.",
+      doc_count: 3,
+    },
+    {
+      key: "Sample -- 10.",
+      doc_count: 2,
+    },
+  ];
+
+  it("sorts generic agg arrays numerically by key value", () => {
+    const output = sortAggsByKey(givenAggs);
+    output.forEach((agg, index) => {
+      expect(agg.key).toBe(expectedAggs[index].key);
+    });
   });
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ApiSearchRequest } from "@/types/api/request";
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
@@ -12,6 +12,7 @@ import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import { Results } from "@/components/Search/Search.styled";
+import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
@@ -45,21 +46,25 @@ const SearchPage: NextPage = () => {
       try {
         const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
-        const body: ApiSearchRequest = buildQuery({
+        const body: ApiSearchRequestBody = buildQuery({
           size,
           term: q as string,
           urlFacets,
         });
 
-        const response = await axios.post(DC_API_SEARCH_URL, body);
-        const { pagination } = response?.data;
+        const response = await apiPostRequest<ApiSearchResponse>({
+          body: body,
+          url: DC_API_SEARCH_URL,
+        });
 
         /**
          * Construct url for page request
          */
-        const url = new URL(pagination.query_url);
-        url.searchParams.append("page", page ? (page as string) : "1");
-        setPageQueryUrl(url.toString());
+        if (response) {
+          const url = new URL(response.pagination.query_url);
+          url.searchParams.append("page", page ? (page as string) : "1");
+          setPageQueryUrl(url.toString());
+        }
       } catch (err) {
         handleErrors(err);
       }

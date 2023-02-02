@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@/test-utils";
 import FacetsSubmit from "@/components/Facets/Filter/Submit";
 import mockRouter from "next-router-mock";
 
-jest.mock("next/router", () => require("next-router-mock"));
 const mockFn = jest.fn();
 
 describe("Submit component", () => {
