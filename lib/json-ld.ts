@@ -1,6 +1,6 @@
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "@nulib/dcapi-types";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 
 const acquireLicensePage =
   "https://www.library.northwestern.edu/about/administration/policies/rights-permissions.html";
@@ -26,7 +26,7 @@ export function loadDefaultStructuredData() {
 }
 
 export function loadCollectionStructuredData(
-  collection: CollectionShape,
+  collection: Collection,
   pathname: string
 ) {
   const obj = {
@@ -40,7 +40,7 @@ export function loadCollectionStructuredData(
   return obj;
 }
 
-export function loadItemStructuredData(item: WorkShape, pathname: string) {
+export function loadItemStructuredData(item: Work, pathname: string) {
   const {
     abstract,
     contributor,
@@ -95,11 +95,12 @@ export function loadItemStructuredData(item: WorkShape, pathname: string) {
     ...(rights_statement && {
       license: rights_statement.id,
     }),
-    ...(physical_description_material.length > 0 && {
-      material: physical_description_material
-        .map((x) => accountForCommas(x))
-        .join(", "),
-    }),
+    ...(physical_description_material &&
+      physical_description_material.length > 0 && {
+        material: physical_description_material
+          .map((x) => accountForCommas(x))
+          .join(", "),
+      }),
   };
 
   return obj;

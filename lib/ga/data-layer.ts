@@ -1,4 +1,4 @@
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 
 interface DataLayer {
   adminset?: string;
@@ -8,7 +8,7 @@ interface DataLayer {
   pageTitle: string;
   rightsStatement?: string | null;
   subjects?: Array<string> | string;
-  visibility?: string;
+  visibility?: string | null;
 }
 
 const defaultDataLayer = {
@@ -29,7 +29,7 @@ export function buildDataLayer(obj: DataLayer) {
   };
 }
 
-export function buildWorkDataLayer(work: WorkShape): DataLayer {
+export function buildWorkDataLayer(work: Work): DataLayer {
   if (!work) return defaultDataLayer;
 
   const creators = work?.creator.map((creator) => creator.label);
@@ -49,7 +49,7 @@ export function buildWorkDataLayer(work: WorkShape): DataLayer {
       : [];
 
   const dataLayer: DataLayer = buildDataLayer({
-    adminset: work?.library_unit,
+    adminset: work?.library_unit || "",
     collections: work?.collection?.title ? work.collection.title : null,
     creatorsContributors,
     isLoggedIn: false,

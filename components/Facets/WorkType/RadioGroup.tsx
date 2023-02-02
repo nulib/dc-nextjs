@@ -2,10 +2,10 @@ import * as Radio from "@radix-ui/react-radio-group";
 import { Highlight, StyledWorkType, Wrapper } from "./WorkType.styled";
 import { MouseEvent, useRef, useState } from "react";
 import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
-import { WorkTypeOptions } from "@/types/components/facets";
+import { type WorkTypeWithAll } from "@/components/Facets/WorkType/WorkType";
 
 interface RadioGroupProps {
-  currentValue: WorkTypeOptions;
+  currentValue: WorkTypeWithAll;
   handleValueChange: (value: string) => void;
 }
 
@@ -54,7 +54,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
       onValueChange={handleValueChange}
       orientation="horizontal"
       ref={wrapperRef}
-      value={currentValue}
+      value={currentValue || ""}
     >
       <Highlight ref={highlightRef} css={highlightStyles} />
       <StyledWorkType

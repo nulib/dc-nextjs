@@ -1,4 +1,4 @@
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "@nulib/dcapi-types";
 
 export const sampleCollection1 = {
   admin_email: null,
@@ -7,9 +7,10 @@ export const sampleCollection1 = {
   create_date: "2021-03-12T02:11:32.348677Z",
   description:
     "This collection was from the Slide Library which was once in the Visual Media Center under the Department of Art History at Northwestern University. During its forty-five years of existence, Rosenthal Art Slides was a primary supplier of images to visual resources collections. The company was founded by Julius Rosenthal, a German refugee in Chicago who, in the 1940s, began vending black-and white slides of works of art and architecture to institutions and scholars. ",
-  featured: null,
+  featured: true,
   finding_aid_url: null,
   id: "04c17199-1b74-4f9f-853c-1c069f1c4f2e",
+  indexed_at: "what goes here",
   keywords: [],
   modified_date: "2022-02-24T23:51:15.854797Z",
   published: true,
@@ -20,4 +21,4 @@ export const sampleCollection1 = {
   thumbnail: "http://test.com",
   title: "Rosenthal Art Slides",
   visibility: "Institution",
-} as CollectionShape;
+} as Collection;

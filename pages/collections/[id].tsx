@@ -24,7 +24,7 @@ import {
 } from "@/lib/collection-helpers";
 import { useEffect, useState } from "react";
 import { ApiResponseBucket } from "@/types/api/response";
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "@nulib/dcapi-types";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
@@ -41,7 +41,7 @@ import { useRouter } from "next/router";
 
 const Collection: NextPage = () => {
   const router = useRouter();
-  const [collection, setCollection] = useState<CollectionShape>();
+  const [collection, setCollection] = useState<Collection>();
   const [metadata, setMetadata] = useState<ApiResponseBucket[]>([]);
   const [series, setSeries] = useState<GenericAggsReturn[]>([]);
   const [topMetadata, setTopMetadata] = useState<GetTopMetadataAggsReturn[]>(
@@ -176,7 +176,6 @@ const Collection: NextPage = () => {
                   {topMetadata.length > 0 && (
                     <CollectionTabsExplore
                       collectionId={collection.id}
-                      description={description}
                       topMetadata={topMetadata}
                     />
                   )}
@@ -217,7 +216,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   /** Populate OpenGraph data */
-  const imageUrl = collection
+  const imageUrl = collection?.representative_image?.url
     ? `${collection?.representative_image.url}/full/600,600/0/default.jpg`
     : "";
   const openGraphData = !collection
