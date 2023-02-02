@@ -26,6 +26,7 @@ const Grid: React.FC<GridProps> = ({ data = [] }) => {
       breakpointCols={breakpointColumns}
       className="grid"
       columnClassName="grid-column"
+      data-testid="search-results-grid"
     >
       {data.map((item: SearchShape) => (
         <GridItem item={item} key={item.id} />

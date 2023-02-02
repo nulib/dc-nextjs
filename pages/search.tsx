@@ -4,6 +4,7 @@ import {
   ResultsWrapper,
 } from "@/components/Search/Search.styled";
 import React, { useEffect, useState } from "react";
+
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import Container from "@/components/Shared/Container";
@@ -140,8 +141,7 @@ const SearchPage: NextPage = () => {
             {apiData && (
               <>
                 {totalResults ? (
-                  <ResultsMessage>
-                    {" "}
+                  <ResultsMessage data-testid="results-count">
                     {pluralize("result", totalResults)}
                   </ResultsMessage>
                 ) : (

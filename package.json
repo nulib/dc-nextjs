@@ -4,8 +4,9 @@
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
     "build": "next build",
-    "cypress:open": "cypress open",
+    "cypress:open": "NEXT_PUBLIC_DCAPI_ENDPOINT=https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2 cypress open",
     "dev": "node server.js",
+    "dev:test-env": "NEXT_PUBLIC_DCAPI_ENDPOINT=https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2 npm run dev",
     "export": "next build && next export",
     "lint": "next lint",
     "ts-lint": "tsc --noEmit --incremental --watch",

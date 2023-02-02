@@ -1,8 +1,9 @@
 # Digital Collections v2
 
-Digital Collections v2 (DCv2) is a UI application for discovering and interacting with Collections and Works in NUL's repository. 
+Digital Collections v2 (DCv2) is a UI application for discovering and interacting with Collections and Works in NUL's repository.
 
 ## Tech Stack
+
 - [NextJS](https://nextjs.org/) React JS fullstack framework
 - [TypeScript](https://www.typescriptlang.org/) for type safety
 - [Radix UI](https://www.radix-ui.com/) A library of React primitives for accessibility and modular development
@@ -11,9 +12,10 @@ Digital Collections v2 (DCv2) is a UI application for discovering and interactin
 - [AWS Amplify](https://aws.amazon.com/amplify/) Hosting environment
 - [OpenSearch](https://opensearch.org/) Search index
 
-
 ## Development Environments
+
 ### Local
+
 Install dependencies and run a NextJS development server:
 
 ```bash
@@ -24,22 +26,24 @@ npm run dev
 Open [http://devbox.library.northwestern.edu:3000](http://devbox.library.northwestern.edu:3000) in your browser.
 
 ### AWS Developer Environment (Northwestern dev team only)
+
 Open a remote SSH dev environment connection in VSCode.
 
 `cd` into the `dc-nextjs` repository
 
-1. Open a new terminal.  
+1. Open a new terminal.
 
-2. Make sure port 3000 is open by running `sg show`.   If you don't see port 3000, run `sg open all 3000`.  View more in [AWS convenience scripts](https://github.com/nulib/aws-developer-environment#convenience-scripts).
+2. Make sure port 3000 is open by running `sg show`. If you don't see port 3000, run `sg open all 3000`. View more in [AWS convenience scripts](https://github.com/nulib/aws-developer-environment#convenience-scripts).
 
 3. Temporarily change the following line in (`dc-nextjs/server.js`):
-```js
 
-// Change 
+```js
+// Change
 const hostname = "devbox.library.northwestern.edu";
 // ...to
 const hostname = "localhost";
 ```
+
 Install dependencies
 
 ```bash
@@ -49,15 +53,15 @@ npm run dev
 
 And now open your AWS dev environment URL (Northwestern developers only).
 
-
 ## Deploy Environments
+
 ### Staging
 
 Commits (via merges) into the `deploy/staging` branch will trigger a build in AWS Amplify to the **staging** environment.
 
 https://dc.rdc-staging.library.northwestern.edu/
 
-Commits prefaced with `preview/branch-name-here` will deploy to a preview branch.  The URL will be available within AWS Amplify.  This is useful for sharing the feature with staff/users as a preview before committing to staging.
+Commits prefaced with `preview/branch-name-here` will deploy to a preview branch. The URL will be available within AWS Amplify. This is useful for sharing the feature with staff/users as a preview before committing to staging.
 
 ### Production
 
@@ -67,11 +71,12 @@ https://dc.library.northwestern.edu/
 
 ## Data fetching / APIs
 
-The application makes network requests against the [DC API v2](https://github.com/nulib/dc-api-v2) to access repository data.  By default, all metadata is returned in the application.  Authenticated content's media (image/audio/video) will be protected and obscured from public access.
+The application makes network requests against the [DC API v2](https://github.com/nulib/dc-api-v2) to access repository data. By default, all metadata is returned in the application. Authenticated content's media (image/audio/video) will be protected and obscured from public access.
 
-Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references).  Network request urls with `?as=iiif` will return data in the shape of a [IIIF](https://iiif.io/) manifest.
+Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references). Network request urls with `?as=iiif` will return data in the shape of a [IIIF](https://iiif.io/) manifest.
 
 ### Viewing the Index (OpenSearch) directly
+
 OpenSearch's data can be accessed directly via [Kibana](https://www.elastic.co/kibana/) by executing the following commands:
 
 ```bash
@@ -83,7 +88,8 @@ es-proxy
 The API supports both POST for searching and GET for Work and Collection items.
 
 ### Environment variables
-The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo. 
+
+The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo.
 
 ## Code Quality
 
@@ -91,7 +97,9 @@ The app uses ESLint with a plugin for TypeScript support.
 
 ```bash
 npm run lint
-````
+```
+
+### Typechecking
 
 Run Typescript's `tsc` compiler for type-checking directly.
 
@@ -105,24 +113,24 @@ A pre-commit hook will ensure code is linted before committed.
 
 ### End to end tests
 
-#### Setup
+Test fixtures can be accessed by pointing the app to a [Test Environment API](https://github.com/nulib/dc-test-environment). Setting the `NEXT_PUBLIC_DCAPI_ENDPOINT` `env` variable value to https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2 will run DC v2 against test data. The following commands start your server and the test suite.
 
-We can run E2E tests against the test environment (...more coming soon)
+```bash
+# Start local server
+npm run dev:test-env
 
-E2E tests use [Cypress](https://docs.cypress.io/), and are linted with [Cypress ESLint Plugin](https://github.com/cypress-io/eslint-plugin-cypress)
-
-To run the text suite:
-
-```
+# Start Cypress test runner
 npm run cypress:open
 ```
+
+E2E tests use [Cypress](https://docs.cypress.io/), and are linted with [Cypress ESLint Plugin](https://github.com/cypress-io/eslint-plugin-cypress).
 
 ### Unit tests
 
 Unit tests use Jest and Testing Library React. Convention is to write tests alongside their respective components:
 
 ```
-// Sample directory
+# Sample directory
 /components/search/Search.tsx
 /components/search/Search.test.tsx
 ...
