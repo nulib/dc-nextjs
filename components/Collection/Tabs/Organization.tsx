@@ -2,6 +2,7 @@ import { GenericAggsReturn, sortAggsByKey } from "@/lib/collection-helpers";
 import BloomIIIFWrapper from "@/components/BloomWrapper";
 import ExpandableList from "@/components/Shared/ExpandableList";
 import Heading from "@/components/Heading/Heading";
+import { OrganizationStyled } from "@/components/Collection/Tabs/Organization.styled";
 import { pluralize } from "@/lib/utils/count-helpers";
 
 interface CollectionTabsOrganizationProps {
@@ -16,35 +17,33 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
   const list = sortAggsByKey(series);
 
   return (
-    <div data-testid="organization-wrapper">
-      <section>
-        <Heading as="h2">Explore Series</Heading>
-        <ExpandableList>
-          {list.map((entry, index) => {
-            const { key, doc_count } = entry;
-            const summary =
-              doc_count > 1 ? `${doc_count} Items` : `${doc_count}  Item`;
+    <OrganizationStyled data-testid="organization-wrapper">
+      <Heading as="h2">Explore Series</Heading>
+      <ExpandableList>
+        {list.map((entry, index) => {
+          const { key, doc_count } = entry;
+          const summary =
+            doc_count > 1 ? `${doc_count} Items` : `${doc_count}  Item`;
 
-            const sanitizedKey = key.replace(/&/g, "%26");
-            const collectionId = `${url}/search?query=series:"${sanitizedKey}"&collectionLabel=${sanitizedKey}&collectionSummary=${summary}&as=iiif`;
-            const value = `series-${index}`;
-            const title = entry.key;
-            const indicator = pluralize("Item", entry.doc_count);
+          const sanitizedKey = key.replace(/&/g, "%26");
+          const collectionId = `${url}/search?query=series:"${sanitizedKey}"&collectionLabel=${sanitizedKey}&collectionSummary=${summary}&as=iiif`;
+          const value = `series-${index}`;
+          const title = entry.key;
+          const indicator = pluralize("Item", entry.doc_count);
 
-            return (
-              <ExpandableList.Item
-                indicator={indicator}
-                title={title}
-                value={value}
-                key={value}
-              >
-                <BloomIIIFWrapper collectionId={collectionId} />
-              </ExpandableList.Item>
-            );
-          })}
-        </ExpandableList>
-      </section>
-    </div>
+          return (
+            <ExpandableList.Item
+              indicator={indicator}
+              title={title}
+              value={value}
+              key={value}
+            >
+              <BloomIIIFWrapper collectionId={collectionId} />
+            </ExpandableList.Item>
+          );
+        })}
+      </ExpandableList>
+    </OrganizationStyled>
   );
 };
 
