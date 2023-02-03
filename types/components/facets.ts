@@ -24,5 +24,3 @@ export interface FacetOption {
   facet: string;
   index: number;
 }
-
-export type WorkTypeOptions = "All" | "Audio" | "Image" | "Video";

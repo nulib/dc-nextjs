@@ -6,17 +6,20 @@ import Link from "next/link";
 import React from "react";
 
 interface Props {
-  thumbnail: string;
+  thumbnail: string | null;
 }
 
 const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
   return (
     <div data-testid="restricted-display">
-      <BlurredBgImage
-        bgImageUrl={thumbnail}
-        bgColor="black"
-        data-testid="bg-image"
-      />
+      {thumbnail && (
+        <BlurredBgImage
+          bgImageUrl={thumbnail}
+          bgColor="black"
+          data-testid="bg-image"
+        />
+      )}
+
       <Announcement data-testid="announcement">
         <h2>Authentication needed</h2>
         <p>
@@ -24,7 +27,8 @@ const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail }) => {
           Please{" "}
           <Link
             href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}
-            style={{ cursor: "pointer" }}>
+            style={{ cursor: "pointer" }}
+          >
             sign in
           </Link>
         </p>

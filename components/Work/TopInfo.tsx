@@ -11,16 +11,16 @@ import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
 import { Manifest } from "@iiif/presentation-3";
+import { type Work } from "@nulib/dcapi-types";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 import WorkMetadata from "@/components/Work/Metadata";
-import { WorkShape } from "@/types/components/works";
 import { type WorkTypeCountMap } from "@/lib/collection-helpers";
 
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;
   manifest?: Manifest;
-  work: WorkShape;
+  work: Work;
 }
 
 export interface ActionsDialog {
@@ -120,7 +120,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
           <TopInfoCollection>
             {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
             <Card
-              title={work.collection?.title}
+              title={work.collection?.title || ""}
               description={work.collection?.description}
               href={`/collections/${work.collection?.id}`}
               imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}

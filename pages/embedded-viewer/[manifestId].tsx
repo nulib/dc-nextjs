@@ -1,8 +1,8 @@
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { NextPage } from "next";
 import React from "react";
+import { type Work } from "@nulib/dcapi-types";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
-import { type WorkShape } from "@/types/components/works";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { getWork } from "@/lib/work-helpers";
 import { useRouter } from "next/router";
@@ -11,7 +11,7 @@ import useWorkAuth from "@/hooks/useWorkAuth";
 const EmbeddedViewerPage: NextPage = () => {
   const router = useRouter();
   const [manifestId, setManifestId] = React.useState("");
-  const [work, setWork] = React.useState<WorkShape | null>();
+  const [work, setWork] = React.useState<Work | null>();
 
   const { isWorkRestricted } = useWorkAuth(work);
 

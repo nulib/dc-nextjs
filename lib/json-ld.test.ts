@@ -3,10 +3,10 @@ import {
   loadDefaultStructuredData,
   loadItemStructuredData,
 } from "@/lib/json-ld";
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "@nulib/dcapi-types";
 import { sampleWork2 } from "@/mocks/sample-work2";
 
-const collectionMock = {
+const collectionMock: Collection = {
   admin_email: null,
   api_link:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/collections/bfeeb065-5b12-4b10-9883-f32b133c7cd1",
@@ -14,7 +14,7 @@ const collectionMock = {
   create_date: "2021-03-12T02:11:32.342977Z",
   description:
     "These images were from the Slide Library which was once in the Visual Media Center under the Department of Art History at Northwestern University.",
-  featured: null,
+  featured: false,
   finding_aid_url: null,
   id: "bfeeb065-5b12-4b10-9883-f32b133c7cd1",
   indexed_at: "2022-10-03T23:44:19.807482",
@@ -44,7 +44,7 @@ it("returns the expected default structured data ", () => {
 describe("collection structured data", () => {
   it("returns the expected collection structured data ", () => {
     const obj = loadCollectionStructuredData(
-      collectionMock as CollectionShape,
+      collectionMock as Collection,
       pathName
     );
     expect(obj["@type"]).toEqual("Collection");
@@ -58,7 +58,7 @@ describe("collection structured data", () => {
     const anotherMock = { ...collectionMock };
     anotherMock.description = "";
     const obj = loadCollectionStructuredData(
-      anotherMock as CollectionShape,
+      anotherMock as Collection,
       pathName
     );
     expect(obj).not.toHaveProperty("description");

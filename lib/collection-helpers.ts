@@ -1,25 +1,22 @@
 import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
 import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
-import {
-  type CollectionRepresentativeImage,
-  type CollectionShape,
-} from "@/types/components/collections";
 import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
+import type { Collection } from "@nulib/dcapi-types";
 import { DCAPI_ENDPOINT } from "./constants/endpoints";
-import { VisibilityStatus } from "@/types/components/works";
+import { type Visibility } from "@nulib/dcapi-types";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export type CollectionListShape = {
-  description?: string;
+  description?: string | null;
   id: string;
-  representativeImage: CollectionRepresentativeImage;
+  representativeImage: Collection["representative_image"];
   thumbnail?: string;
   title: string;
   totalWorks?: number;
   totalImage?: number;
   totalAudio?: number;
   totalVideo?: number;
-  visibility: VisibilityStatus;
+  visibility: Visibility;
 };
 
 export type CollectionWorkCountMap = {
@@ -50,9 +47,9 @@ export type WorkTypeCountMap = {
 
 export async function getCollection(
   id: string
-): Promise<CollectionShape | undefined> {
+): Promise<Collection | undefined> {
   try {
-    const response = await apiGetRequest<CollectionShape>({
+    const response = await apiGetRequest<Collection>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${id}`,
     });
     return response;
@@ -72,7 +69,7 @@ export async function getCollections() {
   };
 
   try {
-    const collections = await apiGetRequest<CollectionShape[] | undefined>({
+    const collections = await apiGetRequest<Collection[] | undefined>({
       url: `${DCAPI_ENDPOINT}/collections?size=200&sort=title:asc`,
     });
 
@@ -82,19 +79,28 @@ export async function getCollections() {
     const workCountMap = await getCollectionWorkCounts();
 
     /** Stitch together only the Collection list info this page requires */
-    collectionList = collections.map((collection) => {
-      return {
-        description: collection.description,
-        id: collection.id,
-        representativeImage: collection.representative_image,
-        thumbnail: collection.thumbnail,
-        title: collection.title,
-        visibility: collection.visibility,
-        ...(workCountMap && workCountMap[collection.id]
-          ? { ...workCountMap[collection.id] }
-          : { ...defaultCountTotals }),
-      };
-    });
+    collectionList = collections.map(
+      ({
+        description,
+        id,
+        representative_image,
+        thumbnail,
+        title,
+        visibility,
+      }) => {
+        return {
+          description: description,
+          id: id,
+          representativeImage: representative_image,
+          thumbnail: thumbnail,
+          title: title,
+          visibility: visibility,
+          ...(workCountMap && workCountMap[id]
+            ? { ...workCountMap[id] }
+            : { ...defaultCountTotals }),
+        };
+      }
+    );
 
     return collectionList;
   } catch (err) {

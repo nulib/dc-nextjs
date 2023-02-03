@@ -18,13 +18,14 @@ const WorkDialogCite: React.FC = () => {
 
   const {
     ark,
-    collection: { title: collection_title },
+    collection,
     create_date,
     id,
     library_unit,
     terms_of_use,
     title,
   } = workState.work;
+  const collection_title = collection?.title;
 
   const dateObj: Date = new Date(create_date);
   const formattedDate = dateObj.toDateString();

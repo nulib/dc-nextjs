@@ -7,6 +7,7 @@ import { IconInfo } from "@/components/Shared/SVG/Icons";
 import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
 import { UserContext } from "@/context/user-context";
+import { type Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
 
 export const CloverIIIF: React.ComponentType<{
@@ -23,7 +24,7 @@ export const CloverIIIF: React.ComponentType<{
 });
 
 interface WrapperProps {
-  manifestId: string;
+  manifestId: Work["iiif_manifest"];
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
