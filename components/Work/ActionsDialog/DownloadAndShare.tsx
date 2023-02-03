@@ -54,11 +54,13 @@ const DownloadAndShare: React.FC = () => {
   return (
     <ActionsDialogStyled>
       <ActionsDialogAside>
-        <SharedSocial
-          title={work.title}
-          media={work.thumbnail}
-          description={work.description}
-        />
+        {work.title && work.thumbnail && (
+          <SharedSocial
+            title={work.title}
+            media={work.thumbnail}
+            description={work.description}
+          />
+        )}
       </ActionsDialogAside>
       <Content>
         {!isSharedLinkPage && (
