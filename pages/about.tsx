@@ -246,66 +246,118 @@ const AboutPage: NextPage = () => {
             </article>
           </BlockStyled>
           <BlockStyled as="section" data-testid="platform-section">
-            <Heading as="h2">Platform</Heading>
-            <Heading as="h3">Development Tools</Heading>
+            <Heading as="h2" css={{ marginBottom: "0 !important" }}>
+              Platform
+            </Heading>
+            <p>
+              The Digital Collection platform is open source and standards
+              based. Hosted on AWS infrastructure, it uses an array of
+              serverless tooling and acts as a showcase of{" "}
+              <LinkStyled
+                href="https://samvera.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Samvera
+              </LinkStyled>{" "}
+              and{" "}
+              <LinkStyled
+                href="https://iiif.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                IIIF
+              </LinkStyled>{" "}
+              concepts and technologies. The preservation-first backend Meadow
+              is built using Elixir and Node.js and makes extensive use of
+              serverless tools for processing and preservation. The Digital
+              Collections frontend and associated API are built using
+              Javascript, React, Next.JS, Radix UI, and Stitches. It leverages
+              the IIIF standard for display of metadata and digital assets and
+              Opensearch as the basis of its API. Core Samvera and IIIF
+              community components and experimental projects were envisioned as
+              part of and are used by Digital Collections, Meadow, and our
+              processing pipeline.
+            </p>
+            <Heading as="h3">Components and Projects</Heading>
             <UnorderedListStyled>
               <li>
-                The repository and metadata management software is a{" "}
                 <LinkStyled
-                  href="https://rubyonrails.org/"
+                  href="https://github.com/nulib/dc-nextjs"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Ruby on Rails application
-                </LinkStyled>{" "}
-                built from{" "}
-                <LinkStyled
-                  href="https://samvera.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Samvera Community
-                </LinkStyled>{" "}
-                components.
-              </li>
-              <li>
-                The Digital Collections front end is built using{" "}
-                <LinkStyled
-                  href="https://reactjs.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ReactJS
-                </LinkStyled>{" "}
-                and{" "}
-                <LinkStyled
-                  href="https://redux.js.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Redux
+                  Digital Collections
                 </LinkStyled>
-                .
               </li>
+
               <li>
-                Our zoomable, high-resolution images are driven by{" "}
                 <LinkStyled
-                  href="https://iiif.io/"
+                  href="https://github.com/nulib/meadow/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  IIIF
+                  Meadow
                 </LinkStyled>
-                .
               </li>
+
               <li>
-                Northwestern&apos;s code is open by default and published on{" "}
                 <LinkStyled
-                  href="https://github.com/nulib/"
+                  href="https://github.com/nulib/authoritex"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  GitHub.
+                  Authoritex
+                </LinkStyled>
+              </li>
+
+              <li>
+                <LinkStyled
+                  href="https://github.com/nulib/dc-api-v2/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  DC API
+                </LinkStyled>
+              </li>
+
+              <li>
+                <LinkStyled
+                  href="https://github.com/samvera/serverless-iiif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Serverless IIIF
+                </LinkStyled>
+              </li>
+
+              <li>
+                <LinkStyled
+                  href="https://github.com/samvera-labs/clover-iiif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Clover IIIF
+                </LinkStyled>
+              </li>
+
+              <li>
+                <LinkStyled
+                  href="https://github.com/samvera-labs/bloom-iiif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Bloom IIIF
+                </LinkStyled>
+              </li>
+
+              <li>
+                <LinkStyled
+                  href="https://github.com/samvera-labs/nectar-iiif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Nectar IIIF
                 </LinkStyled>
               </li>
             </UnorderedListStyled>
