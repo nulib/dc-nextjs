@@ -2,6 +2,8 @@ import { globalCss } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
 
+export const rem = 19;
+
 const defaults = {
   [`*`]: {
     boxSizing: "border-box",
@@ -24,7 +26,7 @@ const defaults = {
   html: {
     color: "$black80",
     fontFamily: "$northwesternSansRegular",
-    fontSize: "19px",
+    fontSize: `${rem}px`,
   },
 
   p: {
