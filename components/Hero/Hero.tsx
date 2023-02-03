@@ -42,13 +42,11 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
               <Container className="slide-inner" isFlex>
                 <figcaption>
                   <Link href={item.homepage[0].id}>
-
                     <Label
                       label={item.label}
                       as="span"
                       className="slide-label"
                     />
-
                   </Link>
                   {item.summary && (
                     <Summary
@@ -60,17 +58,17 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
 
                   {item.seeAlso && (
                     <HeroActions>
-                      {item.seeAlso.map((entry) => (
-                        (<Link href={entry.id} key={entry.id}>
-
-                          {entry.label ? (
-                            <Label label={entry.label} />
-                          ) : (
-                            <span>Search Collection</span>
-                          )}
-
-                        </Link>)
-                      ))}
+                      {item.seeAlso.map((entry) => {
+                        return (
+                          <Link href={entry.id} key={entry.id}>
+                            {entry.label ? (
+                              <Label label={entry.label} />
+                            ) : (
+                              <span>Search Collection</span>
+                            )}
+                          </Link>
+                        );
+                      })}
                     </HeroActions>
                   )}
                 </figcaption>
