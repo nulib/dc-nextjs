@@ -31,7 +31,7 @@ export function buildQuery(obj: BuildQueryProps) {
       },
     }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
-    ...(typeof size !== undefined && { size: size }),
+    ...(typeof size !== "undefined" && { size: size }),
   } as ApiSearchRequestBody;
 }
 

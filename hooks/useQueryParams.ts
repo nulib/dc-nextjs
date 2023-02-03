@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function useQueryParams() {
   const { isReady, query } = useRouter();
   const [urlFacets, setUrlFacets] = React.useState<UrlFacets>({});
-  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [searchTerm, setSearchTerm] = React.useState<string>();
 
   React.useEffect(() => {
     if (!isReady) return;

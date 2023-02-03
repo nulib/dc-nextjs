@@ -1,8 +1,16 @@
+import {
+  ApiResponseAggregation,
+  ApiSearchResponse,
+} from "@/types/api/response";
 import { Options, SpinWrapper } from "./GenericFacet.styled";
+import { useEffect, useState } from "react";
+import { ApiSearchRequestBody } from "@/types/api/request";
+import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { FacetsInstance } from "@/types/components/facets";
 import Option from "./Option";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
-import useFetchApiData from "@/hooks/useFetchApiData";
+import { apiPostRequest } from "@/lib/dc-api";
+import { buildQuery } from "@/lib/queries/builder";
 import { useFilterState } from "@/context/filter-context";
 import useQueryParams from "@/hooks/useQueryParams";
 
@@ -15,20 +23,38 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   aggsFilterValue,
   facet,
 }) => {
-  const facetInstance = facet ? [facet] : undefined;
   const { searchTerm } = useQueryParams();
+  const [aggregations, setAggregations] = useState<ApiResponseAggregation>();
+  const [loading, setLoading] = useState(true);
 
   const {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
 
-  const { data, error, loading } = useFetchApiData({
-    activeFacets: facetInstance,
-    aggsFilterValue,
-    searchTerm,
-    size: 0,
-    urlFacets: userFacetsUnsubmitted,
-  });
+  useEffect(() => {
+    if (typeof searchTerm === "undefined") return;
+    (async () => {
+      try {
+        const body: ApiSearchRequestBody = buildQuery({
+          aggs: facet ? [facet] : undefined,
+          aggsFilterValue: aggsFilterValue,
+          size: 1,
+          term: searchTerm,
+          urlFacets: userFacetsUnsubmitted,
+        });
+
+        const response = await apiPostRequest<ApiSearchResponse>({
+          body: body,
+          url: DC_API_SEARCH_URL,
+        });
+
+        setAggregations(response?.aggregations);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, [aggsFilterValue, facet, searchTerm, userFacetsUnsubmitted]);
 
   if (loading)
     return (
@@ -36,18 +62,13 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
         <SpinLoader />
       </SpinWrapper>
     );
-  if (error) return <p>Error fetching data</p>;
-  if (
-    !data ||
-    !data.aggregations ||
-    data.aggregations[facet.id].buckets.length === 0
-  )
-    return <p>No data returned</p>;
 
-  /**
-   * return facet aggregation data for this facet instance
-   */
-  const { aggregations } = data;
+  if (!aggregations || aggregations[facet.id].buckets.length === 0)
+    return (
+      <p>
+        No options for <strong>{facet.label}</strong> on your current filters.
+      </p>
+    );
 
   const userFacetsAggregation = aggregations.userFacets;
   const userBuckets = userFacetsAggregation
