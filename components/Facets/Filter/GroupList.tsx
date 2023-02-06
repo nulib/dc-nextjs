@@ -1,5 +1,4 @@
 import * as Accordion from "@radix-ui/react-accordion";
-import * as Tabs from "@radix-ui/react-tabs";
 import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
 import {
   Group,
@@ -10,6 +9,7 @@ import {
   ItemContent,
   ItemList,
   ItemToggle,
+  TabsRoot,
 } from "@/components/Facets/Filter/GroupList.styled";
 import Facet from "@/components/Facets/Facet/Facet";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
@@ -30,10 +30,9 @@ const FacetsGroupList: React.FC = () => {
   }
 
   return (
-    <Tabs.Root
+    <TabsRoot
       defaultValue={defaultFacetId}
       orientation="vertical"
-      style={{ display: "flex", padding: "1rem 0" }}
       data-testid="facets-group-list"
     >
       <Accordion.Root type="single" defaultValue={defaultGroup}>
@@ -70,7 +69,7 @@ const FacetsGroupList: React.FC = () => {
           </ItemContent>
         );
       })}
-    </Tabs.Root>
+    </TabsRoot>
   );
 };
 
