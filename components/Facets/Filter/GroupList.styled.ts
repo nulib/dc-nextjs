@@ -4,6 +4,8 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
+const Group = styled(Accordion.Item, {});
+
 const GroupContent = styled(Accordion.Content, {
   marginBottom: "$gr2",
 });
@@ -76,6 +78,10 @@ const GroupToggle = styled(Accordion.Trigger, {
       opacity: "1",
     },
   },
+
+  "@sm": {
+    height: "$gr4",
+  },
 });
 
 const ItemList = styled(Tabs.List, {
@@ -123,13 +129,28 @@ const ItemToggle = styled(Tabs.Trigger, {
   "&:hover, &:focus": {
     color: "$purple",
   },
+
+  "@sm": {
+    height: "$gr4",
+  },
 });
 
 const ItemContent = styled(Tabs.Content, {
   padding: "0.5rem 2rem",
+
+  "@md": {
+    padding: "0.5rem $gr3 0.5rem $gr3",
+  },
 });
 
-const Group = styled(Accordion.Item, {});
+const TabsRoot = styled(Tabs.Root, {
+  display: "flex",
+  padding: "1rem 0",
+
+  "@sm": {
+    flexDirection: "column",
+  },
+});
 
 export {
   Group,
@@ -140,4 +161,5 @@ export {
   ItemContent,
   ItemList,
   ItemToggle,
+  TabsRoot,
 };

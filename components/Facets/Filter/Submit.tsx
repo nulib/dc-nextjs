@@ -45,7 +45,7 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
   };
 
   return (
-    <div data-testid="facets-submit">
+    <div data-testid="facets-submit" style={{ display: "flex" }}>
       <Button
         isPrimary
         isLowercase
