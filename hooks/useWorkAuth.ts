@@ -1,8 +1,8 @@
 import { UserContext } from "@/context/user-context";
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 import { useContext } from "react";
 
-const useWorkAuth = (work: WorkShape | null | undefined) => {
+const useWorkAuth = (work: Work | null | undefined) => {
   const userAuthContext = useContext(UserContext);
   const isUserLoggedIn = userAuthContext?.user?.isLoggedIn;
   const isWorkInstitution = work?.visibility === "Institution";

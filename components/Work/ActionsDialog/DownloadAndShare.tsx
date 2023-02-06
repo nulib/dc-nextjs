@@ -54,11 +54,13 @@ const DownloadAndShare: React.FC = () => {
   return (
     <ActionsDialogStyled>
       <ActionsDialogAside>
-        <SharedSocial
-          title={work.title}
-          media={work.thumbnail}
-          description={work.description}
-        />
+        {work.title && work.thumbnail && (
+          <SharedSocial
+            title={work.title}
+            media={work.thumbnail}
+            description={work.description}
+          />
+        )}
       </ActionsDialogAside>
       <Content>
         {!isSharedLinkPage && (
@@ -182,7 +184,8 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         : "nul_fileset";
 
     const response = await makeBlob(
-      `${getInfoResponse(item)}/full/3000,/0/default.jpg`
+      `${getInfoResponse(item)}/full/3000,/0/default.jpg`,
+      { credentials: "include" }
     );
 
     if (!response || response.error) {

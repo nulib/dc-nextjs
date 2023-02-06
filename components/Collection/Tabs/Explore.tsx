@@ -4,7 +4,6 @@ import RelatedItems from "@/components/Shared/RelatedItems";
 
 interface CollectionTabsExploreProps {
   collectionId: string;
-  description?: string;
   topMetadata: GetTopMetadataAggsReturn[] | [];
 }
 

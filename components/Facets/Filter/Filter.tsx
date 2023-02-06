@@ -51,7 +51,7 @@ const DialogWrapper: React.FC = () => {
       <Dialog.Portal>
         <DialogOverlay />
         <FilterContent data-testid="modal-content">
-          <FilterModal q={searchTerm} setIsModalOpen={setIsModalOpen} />
+          <FilterModal q={searchTerm || ""} setIsModalOpen={setIsModalOpen} />
         </FilterContent>
       </Dialog.Portal>
     </Dialog.Root>

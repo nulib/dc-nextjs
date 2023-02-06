@@ -1,7 +1,7 @@
 import { ObjectLiteral, OpenGraphData } from "@/types/index";
 import { isImageType, isPublicWork } from "@/lib/work-helpers";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 
 export const defaultOpenGraphImage = overviewThumbnails[0][0].id;
@@ -18,7 +18,7 @@ export const defaultOpenGraphData: OpenGraphData = {
 };
 
 export function buildWorkOpenGraphData(
-  work: WorkShape | null
+  work: Work | null
 ): ObjectLiteral | OpenGraphData {
   if (!work) return {};
 
@@ -26,7 +26,9 @@ export function buildWorkOpenGraphData(
   const isPublic = isPublicWork(work?.visibility);
   const imageUrl =
     isPublic && isImageType(work?.work_type)
-      ? `${work?.representative_file_set.url}/full/1200,630/0/default.jpg`
+      ? work?.representative_file_set?.url
+        ? `${work?.representative_file_set.url}/full/1200,630/0/default.jpg`
+        : ""
       : work?.thumbnail;
 
   let ogDescription = "";

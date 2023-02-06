@@ -4,11 +4,11 @@ import {
   DC_URL,
 } from "@/lib/constants/endpoints";
 import { sample, shuffle } from "@/lib/utils/array-helpers";
-import { CollectionShape } from "@/types/components/collections";
+import { Collection } from "@nulib/dcapi-types";
 import { HeroCollection } from "@/lib/constants/homepage";
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 
-export const getRelatedCollections = (work: WorkShape) => {
+export const getRelatedCollections = (work: Work) => {
   if (!work) return;
 
   let related = [];
@@ -63,10 +63,10 @@ export const getRelatedCollections = (work: WorkShape) => {
   return related;
 };
 
-export const getHeroCollection = (collection: CollectionShape) => {
+export const getHeroCollection = (collection: Collection) => {
   const { id, finding_aid_url, representative_image, title } = collection;
 
-  const thumbnailId = representative_image.url
+  const thumbnailId = representative_image?.url
     ? `${representative_image.url}/full/1200,/0/default.jpg`
     : "";
 
@@ -89,7 +89,7 @@ export const getHeroCollection = (collection: CollectionShape) => {
     return seeAlso;
   };
 
-  const searchUrl = `${DC_URL}/search?collection=${title}`;
+  const searchUrl = `${DC_URL}/search?collection=${encodeURIComponent(title)}`;
 
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",

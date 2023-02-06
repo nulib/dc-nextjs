@@ -1,7 +1,7 @@
 import { Manifest } from "@iiif/presentation-3";
-import { WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 
 export interface WorkContextStore {
-  work: WorkShape | undefined;
+  work: Work | undefined;
   manifest: Manifest | undefined;
 }

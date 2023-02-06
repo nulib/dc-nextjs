@@ -1,11 +1,11 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import { type WorkShape } from "@/types/components/works";
+import { type Work } from "@nulib/dcapi-types";
 import { apiGetRequest } from "@/lib/dc-api";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getWork(id: string) {
   try {
-    const response = await apiGetRequest<WorkShape>({
+    const response = await apiGetRequest<Work>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
     });
     return response;
@@ -27,17 +27,19 @@ export async function getWorkManifest(id: string) {
   }
 }
 
-export function getWorkSliders(work: WorkShape) {
+export function getWorkSliders(work: Work) {
   if (!work) return;
 
   const workSliderUrls = [];
 
   /** Collection slider */
-  const collectionLabel = work.collection.title;
-  const collectionSummary = `Collection`;
-  workSliderUrls.push(
-    `${DC_API_SEARCH_URL}?query=collection.id:"${work.collection.id}"&collectionLabel=${collectionLabel}&collectionSummary=${collectionSummary}&as=iiif`
-  );
+  if (work.collection) {
+    const collectionLabel = work.collection.title;
+    const collectionSummary = `Collection`;
+    workSliderUrls.push(
+      `${DC_API_SEARCH_URL}?query=collection.id:"${work.collection.id}"&collectionLabel=${collectionLabel}&collectionSummary=${collectionSummary}&as=iiif`
+    );
+  }
 
   /** More Like This */
   const similarLabel = `Similar to ${work.title}`;
@@ -62,10 +64,10 @@ export function getWorkSliders(work: WorkShape) {
   return workSliderUrls;
 }
 
-export function isImageType(work_type: string | undefined) {
+export function isImageType(work_type: string | null | undefined) {
   return work_type === "Image";
 }
 
-export function isPublicWork(visibility: string | undefined) {
+export function isPublicWork(visibility: Work["visibility"]) {
   return visibility === "Public";
 }

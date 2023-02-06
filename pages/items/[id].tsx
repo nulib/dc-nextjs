@@ -13,9 +13,9 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import RelatedItems from "@/components/Shared/RelatedItems";
 import { UserContext } from "@/context/user-context";
+import { type Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
-import { WorkShape } from "@/types/components/works";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
@@ -26,20 +26,22 @@ import useWorkAuth from "@/hooks/useWorkAuth";
 
 interface WorkPageProps {
   collectionWorkCounts: CollectionWorkCountMap | null;
-  id: WorkShape["id"];
+  id: Work["id"];
 }
 
 const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
   const [isLoading, setIsLoading] = useState(true);
   const userAuthContext = useContext(UserContext);
-  const [work, setWork] = useState<WorkShape>();
+  const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
   const { isWorkRestricted } = useWorkAuth(work);
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work) : [];
   const collectionWorkTypeCounts =
-    collectionWorkCounts && work && collectionWorkCounts[work.collection?.id];
+    collectionWorkCounts &&
+    work?.collection &&
+    collectionWorkCounts[work.collection.id];
 
   useEffect(() => {
     if (!id) return;
@@ -47,12 +49,9 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
     async function getData() {
       const work = await getWork(id);
       if (!work) return setIsLoading(false);
-
       setWork(work);
-
       const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
       setManifest(manifest);
-
       setIsLoading(false);
     }
 
@@ -79,11 +78,11 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
         </Head>
       )}
 
-      <Layout title={work ? work.title : ""}>
+      <Layout title={work?.title || ""}>
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              {work && (isReadingRoom || !isWorkRestricted) && (
+              {work.iiif_manifest && (isReadingRoom || !isWorkRestricted) && (
                 <WorkViewerWrapper manifestId={work.iiif_manifest} />
               )}
               {work && !isReadingRoom && isWorkRestricted && (

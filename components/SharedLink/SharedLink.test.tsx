@@ -1,9 +1,10 @@
 import type {
-  PreservationLevelStatus,
-  StatusValues,
-  VisibilityStatus,
-  WorkTypeStatus,
-} from "@/types/components/works";
+  PreservationLevel,
+  Status,
+  Visibility,
+  Work,
+  WorkType,
+} from "@nulib/dcapi-types";
 import { render, screen } from "@/test-utils";
 import { Manifest } from "@iiif/presentation-3";
 import SharedLink from "./SharedLink";
@@ -29,7 +30,7 @@ describe("SharedLink component", () => {
 
 /* eslint sort-keys: 0 */
 
-const work = {
+const work: Work = {
   provenance: ["France ; Avignon"],
   thumbnail:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/263625cc-6fd7-47ae-a725-394a483d28d2/thumbnail",
@@ -71,7 +72,6 @@ const work = {
       type: "General Note",
     },
   ],
-  related_material: [],
   accession_number: "Voyager:168504",
   create_date: "2021-03-15T17:54:56.302906Z",
   csv_metadata_update_jobs: [],
@@ -129,7 +129,7 @@ const work = {
   batch_ids: ["80a15dc2-92d5-48a4-9aa4-73ecdcb1d130"],
   ark: "ark:/81985/n2mp4wt8r",
   caption: [],
-  status: "Done" as StatusValues,
+  status: "Done" as Status,
   title: "Palace of Popes. Exterior: courtyard",
   iiif_manifest:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/263625cc-6fd7-47ae-a725-394a483d28d2?as=iiif",
@@ -143,8 +143,8 @@ const work = {
   ],
   api_link:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/263625cc-6fd7-47ae-a725-394a483d28d2",
-  ingest_project: {},
-  ingest_sheet: {},
+  ingest_project: null,
+  ingest_sheet: null,
   catalog_key: [],
   cultural_context: [],
   rights_statement: {
@@ -180,8 +180,11 @@ const work = {
   related_url: [],
   terms_of_use:
     "The images on this web site, from material in the collections of Northwestern University Libraries, are provided for use by its students, faculty and staff, and by other researchers visiting this site, for research consultation and scholarly purposes only. Further distribution and/or any commercial use of the images from this site is not permitted.",
-  visibility: "Institution" as VisibilityStatus,
-  license: null,
+  visibility: "Institution" as Visibility,
+  license: {
+    id: "asdfasdf",
+    label: "Ima license label",
+  },
   alternate_title: [],
   project: {
     cycle: null,
@@ -191,13 +194,13 @@ const work = {
     proposer: null,
     task_number: null,
   },
-  preservation_level: "Level 1" as PreservationLevelStatus,
+  preservation_level: "Level 1" as PreservationLevel,
   location: [],
   published: true,
   source: [],
   folder_number: [],
   legacy_identifier: ["inu:dil-12b39039-68af-4a31-8b04-1b025d95a0b8"],
-  work_type: "Image" as WorkTypeStatus,
+  work_type: "Image" as WorkType,
   modified_date: "2022-10-13T20:56:27.629306Z",
   identifier: [],
   box_name: [],

@@ -44,7 +44,8 @@ async function apiPostRequest<R>(
   }
 }
 
-async function getIIIFResource<R>(uri: string): Promise<R | undefined> {
+async function getIIIFResource<R>(uri: string | null): Promise<R | undefined> {
+  if (!uri) return Promise.resolve(undefined);
   try {
     const response = await axios(uri);
     return response.data;
