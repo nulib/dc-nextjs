@@ -17,6 +17,10 @@ const ActionButtons = styled("div", {
     "&:last-child": {
       marginRight: "0",
     },
+
+    "@sm": {
+      marginRight: "0px",
+    },
   },
 
   "@sm": {

@@ -7,12 +7,17 @@ const EmbedViewer = styled("div", {
   width: "calc(100% - $4)",
   padding: "$3 $4",
 
+  "@sm": {
+    width: "100%",
+  },
+
   pre: {
     margin: "$3 0",
     whiteSpace: "break-spaces",
     borderRadius: "3px",
     fontSize: "$3",
     lineHeight: "1.55em",
+    wordBreak: "break-word",
   },
 });
 
@@ -62,6 +67,10 @@ const ItemContent = styled("div", {
 const ItemRow = styled("div", {
   display: "flex",
   flexDirection: "row",
+
+  "@sm": {
+    flexDirection: "column",
+  },
 });
 
 const ItemThumbnail = styled("div", {
@@ -77,6 +86,10 @@ const ItemThumbnail = styled("div", {
   img: {
     width: "100%",
     height: "100%",
+  },
+
+  "@sm": {
+    marginBottom: "$gr3",
   },
 });
 
