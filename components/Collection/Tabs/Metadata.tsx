@@ -32,8 +32,10 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
   };
 
   return (
-    <div>
-      <Heading as="h2">All Subjects</Heading>
+    <>
+      <Heading as="h2" css={{ "@sm": { textAlign: "center" } }}>
+        All Subjects
+      </Heading>
       <GroupedList>
         {Object.keys(grouped).map((letter) => (
           <li key={letter}>
@@ -50,7 +52,7 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
           </li>
         ))}
       </GroupedList>
-    </div>
+    </>
   );
 };
 

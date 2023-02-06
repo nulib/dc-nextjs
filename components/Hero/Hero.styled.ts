@@ -13,6 +13,15 @@ const HeroActions = styled("div", {
     textShadow: "none",
     backgroundColor: "$purple",
   },
+
+  "@sm": {
+    display: "flex",
+    flexDirection: "column",
+
+    "& a:first-child": {
+      marginBottom: "$gr2",
+    },
+  },
 });
 
 const HeroStyled = styled("div", {

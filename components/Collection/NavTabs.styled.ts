@@ -50,6 +50,10 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
       backgroundColor: "$purple",
     },
   },
+
+  "@sm": {
+    fontSize: "$gr3",
+  },
 });
 
 const StyledContent = styled(TabsPrimitive.Content, {
