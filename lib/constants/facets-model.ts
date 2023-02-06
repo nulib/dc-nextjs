@@ -8,6 +8,11 @@ import {
 export const ALL_FACETS: FacetsList = {
   facets: [
     {
+      field: "box_number",
+      id: "boxNumber",
+      label: "Box Number",
+    },
+    {
       field: "collection.title.keyword",
       id: "collection",
       label: "Collection",
@@ -21,6 +26,11 @@ export const ALL_FACETS: FacetsList = {
       field: "creator.label",
       id: "creator",
       label: "Creator",
+    },
+    {
+      field: "folder_number",
+      id: "folderNumber",
+      label: "Folder Number",
     },
     {
       field: "genre.label",
@@ -176,6 +186,16 @@ export const FACETS_LOCATION: FacetsGroup = {
       field: "series",
       id: "series",
       label: "Series",
+    },
+    {
+      field: "box_number",
+      id: "boxNumber",
+      label: "Box Number",
+    },
+    {
+      field: "folder_number",
+      id: "folderNumber",
+      label: "Folder Number",
     },
   ],
   label: "Location",
