@@ -102,8 +102,8 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
           close={() => setActionsDialog({ activeDialog: undefined })}
         />
       </header>
-      <Expand initialHeight={900} buttonText="Show More">
-        <TopInfoContent>
+      <TopInfoContent>
+        <Expand initialHeight={900} buttonText="Show More">
           <div data-testid="work-top-info-wrapper">
             <DefinitionListWrapper>
               {manifest?.metadata && (
@@ -117,18 +117,19 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
               )}
             </DefinitionListWrapper>
           </div>
-          <TopInfoCollection>
-            {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
-            <Card
-              title={work.collection?.title || ""}
-              description={work.collection?.description}
-              href={`/collections/${work.collection?.id}`}
-              imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
-              supplementalInfo={<WorkCount {...buildWorkCounts()} />}
-            />
-          </TopInfoCollection>
-        </TopInfoContent>
-      </Expand>
+        </Expand>
+
+        <TopInfoCollection>
+          {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
+          <Card
+            title={work.collection?.title || ""}
+            description={work.collection?.description}
+            href={`/collections/${work.collection?.id}`}
+            imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
+            supplementalInfo={<WorkCount {...buildWorkCounts()} />}
+          />
+        </TopInfoCollection>
+      </TopInfoContent>
     </TopInfoWrapper>
   );
 };

@@ -33,6 +33,15 @@ const TopInfoContent = styled("div", {
   gap: "$7",
   gridTemplateColumns: "618fr 382fr",
   margin: "$3 0",
+
+  "@md": {
+    gap: "$gr5",
+  },
+
+  "@sm": {
+    gridTemplateColumns: "1fr",
+    gap: "$gr4",
+  },
 });
 
 const TopInfoWrapper = styled("section", {
