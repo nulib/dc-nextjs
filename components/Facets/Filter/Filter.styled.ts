@@ -105,6 +105,7 @@ const FilterFooter = styled("footer", {
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
 
   button: {
     display: "flex",
@@ -128,6 +129,10 @@ const FilterFooter = styled("footer", {
 
     "&:last-child": {
       marginRight: "0",
+    },
+
+    "@sm": {
+      fontSize: "$gr3",
     },
   },
 });

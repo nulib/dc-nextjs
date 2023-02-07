@@ -14,6 +14,18 @@ const StyledBloomIIIFWrapper = styled("div", {
   ".swiper-slide[data-type='collection']": {
     display: "none",
   },
+
+  "@sm": {
+    "& > div > div": {
+      alignItems: "center",
+
+      "& > div": {
+        "&:last-child": {
+          paddingTop: "$gr2",
+        },
+      },
+    },
+  },
 });
 
 type SwiperBreakpoints = SwiperProps["breakpoints"];

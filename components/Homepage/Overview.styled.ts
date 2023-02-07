@@ -5,6 +5,12 @@ import { styled } from "@/stitches.config";
 const Content = styled("div", {
   width: "61.8%",
 
+  "@sm": {
+    width: "100%",
+    marginTop: "$gr4",
+    textAlign: "center",
+  },
+
   h2: {
     fontFamily: "$northwesternDisplayBold",
     margin: "0 0 $gr2",
@@ -29,6 +35,11 @@ const Images = styled("div", {
   gridTemplateRows: "repeat(6,auto)",
   gridGap: "$gr2",
   marginLeft: "$gr5",
+
+  "@sm": {
+    width: "100%",
+    marginLeft: "0",
+  },
 
   "img, video": {
     width: "100%",
@@ -74,6 +85,11 @@ const Inner = styled("div", {
   padding: "$gr6",
   width: "auto",
   alignItems: "center",
+
+  "@sm": {
+    flexDirection: "column-reverse",
+    padding: "$gr4 $gr3",
+  },
 });
 
 const OverviewStyled = styled("section", {});

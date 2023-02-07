@@ -13,6 +13,15 @@ const HeroActions = styled("div", {
     textShadow: "none",
     backgroundColor: "$purple",
   },
+
+  "@sm": {
+    display: "flex",
+    flexDirection: "column",
+
+    "& a:first-child": {
+      marginBottom: "$gr2",
+    },
+  },
 });
 
 const HeroStyled = styled("div", {
@@ -111,6 +120,15 @@ const HeroStyled = styled("div", {
           maxWidth: "$gr11",
           textAlign: "left",
 
+          "@sm": {
+            textAlign: "center !important",
+            maxWidth: "100%",
+            width: "100%",
+            left: "0",
+            marginRight: "0 !important",
+            alignItems: "center !important",
+          },
+
           a: {
             color: "$white !important",
             textDecoration: "none",
@@ -122,6 +140,10 @@ const HeroStyled = styled("div", {
             display: "block",
             margin: "0 0 $gr2",
             lineHeight: "1em",
+
+            "@sm": {
+              fontSize: "$gr7",
+            },
           },
 
           ".slide-summary": {

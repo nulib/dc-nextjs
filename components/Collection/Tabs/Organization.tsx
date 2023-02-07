@@ -18,7 +18,9 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
 
   return (
     <OrganizationStyled data-testid="organization-wrapper">
-      <Heading as="h2">Explore Series</Heading>
+      <Heading as="h2" css={{ "@sm": { textAlign: "center" } }}>
+        Explore Series
+      </Heading>
       <ExpandableList>
         {list.map((entry, index) => {
           const { key, doc_count } = entry;

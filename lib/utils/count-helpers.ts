@@ -3,12 +3,19 @@ const formatNumber = (number: number): string => {
   return number.toLocaleString(undefined);
 };
 
-const pluralize = (noun: string, count: number, suffix = "s") => {
+const pluralize = (
+  noun: string,
+  count: number,
+  suffix = "s",
+  hideCount?: boolean
+) => {
   if (!count && count !== 0) {
     console.error("Missing count argument to pluralize()");
     return "";
   }
-  return `${formatNumber(count)} ${noun}${count !== 1 ? suffix : ""}`;
+  return `${hideCount ? "" : formatNumber(count)} ${noun}${
+    count !== 1 ? suffix : ""
+  }`;
 };
 
 export { formatNumber, pluralize };

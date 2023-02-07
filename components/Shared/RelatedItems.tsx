@@ -16,7 +16,18 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
   if (collectionUris?.length === 0) return <></>;
   return (
     <RelatedItemsStyled data-testid="related-items">
-      {title && <Heading as="h2">{title}</Heading>}
+      {title && (
+        <Heading
+          as="h2"
+          css={{
+            "@sm": {
+              textAlign: "center",
+            },
+          }}
+        >
+          {title}
+        </Heading>
+      )}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {collectionUris?.map((collectionId) => (
           <BloomIIIFWrapper collectionId={collectionId} key={collectionId} />

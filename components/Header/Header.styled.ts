@@ -18,10 +18,53 @@ const Lockup = styled("div", {
   },
 });
 
+const Menu = styled("div", {
+  "@sm": {
+    position: "absolute",
+    width: "100%",
+    left: "0",
+    top: "-2000px",
+    transition: "$dcOpacity",
+    zIndex: "0",
+    backgroundColor: "$purple",
+    opacity: "0",
+    boxShadow: "5px 5px 13px #0006",
+  },
+
+  variants: {
+    isExpanded: {
+      true: {
+        zIndex: "10",
+        top: "$gr5",
+        opacity: "1",
+      },
+    },
+  },
+});
+
+const MenuToggle = styled("button", {
+  display: "none",
+  height: "$gr5",
+  background: "none",
+  border: "transparent",
+  color: "$white",
+  cursor: "pointer",
+
+  "@sm": {
+    display: "block",
+  },
+});
+
 const PrimaryInner = styled("div", {
   display: "flex",
   flexGrow: "1",
   alignItems: "center",
+
+  "@sm": {
+    "& nav": {
+      display: "none !important",
+    },
+  },
 });
 
 const Primary = styled("div", {
@@ -81,6 +124,7 @@ const Primary = styled("div", {
       position: "fixed",
       top: "0",
       maxWidth: "100%",
+      padding: "0",
       backgroundColor: "white",
       boxShadow: "0px 3px 11px #0003",
       transition: "$dcAll",
@@ -114,7 +158,7 @@ const Super = styled("div", {
   position: "relative",
   backgroundColor: "$purple120",
   color: "$purple10",
-  zIndex: "1",
+  zIndex: "10",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -176,4 +220,13 @@ const HeaderStyled = styled("header", {
 
 export type HeaderVariants = VariantProps<typeof HeaderStyled>;
 
-export { Lockup, Primary, PrimaryInner, HeaderStyled, Super, User };
+export {
+  Lockup,
+  Menu,
+  MenuToggle,
+  Primary,
+  PrimaryInner,
+  HeaderStyled,
+  Super,
+  User,
+};

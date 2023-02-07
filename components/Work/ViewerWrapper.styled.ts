@@ -4,7 +4,7 @@ import { styled } from "@/stitches.config";
 
 const ViewerWrapperStyled = styled("section", {
   position: "relative",
-  zIndex: "0",
+  zIndex: "1",
   margin: "1px 0 0 0",
 
   "[class*='-css']": {

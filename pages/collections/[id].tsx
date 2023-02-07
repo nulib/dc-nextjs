@@ -141,19 +141,19 @@ const Collection: NextPage = () => {
                 <Facts>
                   <Facts.Item
                     big={formatNumber(totalWorks)}
-                    small={pluralize("Total Work", totalWorks)}
+                    small={pluralize("Total Work", totalWorks, undefined, true)}
                   />
                   <Facts.Item
                     big={formatNumber(totalImage)}
-                    small={pluralize("Image Work", totalImage)}
+                    small={pluralize("Image Work", totalImage, undefined, true)}
                   />
                   <Facts.Item
                     big={formatNumber(totalVideo)}
-                    small={pluralize("Video Work", totalVideo)}
+                    small={pluralize("Video Work", totalVideo, undefined, true)}
                   />
                   <Facts.Item
                     big={formatNumber(totalAudio)}
-                    small={pluralize("Audio Work", totalAudio)}
+                    small={pluralize("Audio Work", totalAudio, undefined, true)}
                   />
                 </Facts>
               </Container>

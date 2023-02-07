@@ -105,10 +105,10 @@ const DialogContent = styled(Dialog.Content, {
   boxShadow: "5px 5px 11px #0002",
 
   "@sm": {
-    width: "calc(100vw - 1rem)",
-    height: "calc(100vh - 1rem)",
-    top: "0.5rem",
-    left: "0.5rem",
+    width: "calc(100vw - 1rem) !important",
+    height: "calc(100vh - 1rem) !important",
+    top: "0.5rem !important",
+    left: "0.5rem !important",
   },
 
   variants: {

@@ -49,7 +49,13 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
             Results for &ldquo;<strong>{q}</strong>&rdquo;
           </em>
         )}
-        <FilterClose data-testid="facets-filter-close" aria-label="Cancel">
+        <FilterClose
+          data-testid="facets-filter-close"
+          aria-label="Cancel"
+          style={{
+            marginRight: "0",
+          }}
+        >
           <IconClear />
         </FilterClose>
       </FilterHeader>

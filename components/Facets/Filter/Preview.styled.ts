@@ -41,6 +41,10 @@ const PreviewItem = styled("li", {
     overflowWrap: "anywhere",
     whiteSpace: "break-spaces",
   },
+
+  "@md": {
+    padding: "0 $gr3",
+  },
 });
 
 const PreviewList = styled("ul", {
@@ -51,11 +55,18 @@ const PreviewList = styled("ul", {
 });
 
 const StyledPreview = styled("div", {
+  paddingTop: "1.5rem",
+
   [`& ${StyledHeading}`]: {
     fontFamily: "$northwesternDisplayBold",
     fontSize: "$gr5",
     fontWeight: "400",
     padding: "0 $gr4",
+    marginTop: "0",
+
+    "@md": {
+      padding: "0 $gr3",
+    },
   },
 });
 
