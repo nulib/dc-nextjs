@@ -124,6 +124,7 @@ const Primary = styled("div", {
       position: "fixed",
       top: "0",
       maxWidth: "100%",
+      padding: "0",
       backgroundColor: "white",
       boxShadow: "0px 3px 11px #0003",
       transition: "$dcAll",

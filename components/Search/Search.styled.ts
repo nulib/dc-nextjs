@@ -11,6 +11,12 @@ const SearchStyled = styled("form", {
   height: "$gr5",
   marginRight: "$gr5",
   boxShadow: "inset 0 -1px 0 #f0f0f0",
+  transition: "$dcAll",
+
+  "@sm": {
+    width: "100%",
+    marginRight: "0",
+  },
 
   svg: {
     position: "absolute",
