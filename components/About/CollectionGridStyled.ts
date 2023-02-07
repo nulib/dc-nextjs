@@ -10,6 +10,8 @@ const CollectionGridStyled = styled("div", {
   justifyContent: "center",
   maxWidth: "1440px",
   margin: "0 auto",
+  position: "relative",
+  zIndex: "0",
 
   "@sm": {
     gridTemplateColumns: "1fr",
