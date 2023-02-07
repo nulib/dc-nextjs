@@ -4,11 +4,13 @@ variable "access_token" {
 }
 
 variable "app_username" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "app_password" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "auto_branch_creation" {
