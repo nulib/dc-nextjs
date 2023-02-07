@@ -217,9 +217,7 @@ export const defaultCollection: HeroCollection = {
       type: "Collection",
       label: { none: ["Ronald J. Sullivan Photograph Collection"] },
       summary: {
-        none: [
-          "The Ronald J. Sullivan Photograph Collection is an extensive collection of photographs and slides of public and commercial buses and public transit and commuter trains, dating from 1946-2000. The bulk of the collection comprises photographs taken by Ronald J. Sullivan, an amateur photographer and rail and bus enthusiast; also included are historic images of Chicago-area transit that were part of Sullivan’s personal collection, and which supplement  the photographer’s original material. ",
-        ],
+        none: ["4603/74, Brickyard"],
       },
       thumbnail: [
         {

@@ -15,6 +15,11 @@ export const HomepageHeroStyled = styled("div", {
     ".swiper": {
       ".slide-inner": {
         justifyContent: "flex-end",
+
+        "@sm": {
+          justifyContent: "center",
+          margin: "0 auto",
+        },
       },
 
       ".swiper-slide": {
