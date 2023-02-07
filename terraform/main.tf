@@ -100,10 +100,6 @@ resource "aws_amplify_branch" "production" {
 
 }
 
-data "aws_route53_zone" "app_zone" {
-  name = var.dns_zone
-}
-
 resource "aws_amplify_domain_association" "dc_next_domain" {
   app_id      = aws_amplify_app.dc-next.id
   domain_name = "${var.project}.${var.dns_zone}"
