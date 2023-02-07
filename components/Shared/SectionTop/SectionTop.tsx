@@ -35,6 +35,10 @@ const SectionTopStyled = styled("section", {
     maxWidth: "850px",
     display: "inline-block",
     margin: "$gr1 0 $gr1",
+
+    "@sm": {
+      fontSize: "$gr7",
+    },
   },
 });
 

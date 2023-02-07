@@ -59,6 +59,12 @@ const PrimaryInner = styled("div", {
   display: "flex",
   flexGrow: "1",
   alignItems: "center",
+
+  "@sm": {
+    "& nav": {
+      display: "none !important",
+    },
+  },
 });
 
 const Primary = styled("div", {
