@@ -104,17 +104,6 @@ data "aws_route53_zone" "app_zone" {
   name = var.dns_zone
 }
 
-resource "aws_route53_zone" "hosted_zone" {
-  name = "${var.project}.${var.dns_zone}"
-}
-
-resource "aws_route53_record" "dc_next_dns" {
-  zone_id = data.aws_route53_zone.app_zone.id
-  name    = "${var.project}.${var.dns_zone}"
-  type    = "NS"
-  ttl     = "900"
-  records = aws_route53_zone.hosted_zone.name_servers
-}
 resource "aws_amplify_domain_association" "dc_next_domain" {
   app_id      = aws_amplify_app.dc-next.id
   domain_name = "${var.project}.${var.dns_zone}"
