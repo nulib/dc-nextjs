@@ -29,7 +29,6 @@ const WorkDialogFind: React.FC = () => {
     ["Accession", accession_number],
     ["Box Name", box_name.join(", ")],
     ["Box Number", box_number.join(", ")],
-    ["Citation", "not on the API"],
     ["Folder Name", folder_name.join(", ")],
     ["Folder Number", folder_number.join(", ")],
   ];
