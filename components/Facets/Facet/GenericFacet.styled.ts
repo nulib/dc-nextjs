@@ -31,6 +31,7 @@ const Find = styled("div", {
   height: "40px",
   marginBottom: "1rem",
   borderRadius: "3px",
+  zIndex: "1",
 
   [`& ${FindInput}`]: {
     position: "relative",

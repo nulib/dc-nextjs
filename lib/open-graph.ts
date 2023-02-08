@@ -8,7 +8,7 @@ export const defaultOpenGraphImage = overviewThumbnails[0][0].id;
 
 export const defaultOpenGraphData: OpenGraphData = {
   "og:description":
-    "Enrich your research with primary sources. Explore millions of high-quality primary sources and images from around the world, including artworks, maps, photographs, and more.",
+    "Explore digital resources from the Northwestern University Library collections – including letters, photographs, diaries, maps, and audiovisual materials - as well as licensed art historical images for teaching and reference.",
   "og:image": defaultOpenGraphImage,
   "og:image:secure_url": defaultOpenGraphImage,
   "og:site_name": "Digital Collections - Libraries - Northwestern University",
