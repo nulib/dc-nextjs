@@ -107,6 +107,10 @@ const FilterFooter = styled("footer", {
   justifyContent: "space-between",
   alignItems: "center",
 
+  "@sm": {
+    padding: "$gr2",
+  },
+
   button: {
     display: "flex",
     alignItems: "center",
@@ -132,7 +136,8 @@ const FilterFooter = styled("footer", {
     },
 
     "@sm": {
-      fontSize: "$gr3",
+      fontSize: "$gr2",
+      padding: "$gr2 $gr3",
     },
   },
 });
@@ -208,7 +213,7 @@ const FilterContent = styled(Dialog.Content, {
   right: 0,
   bottom: 0,
   overflowY: "auto",
-  zIndex: "2",
+  zIndex: "10",
   borderRadius: "3px",
   boxShadow: "5px 5px 11px #0003",
 
@@ -227,8 +232,8 @@ const FilterContent = styled(Dialog.Content, {
   },
 
   "@sm": {
-    width: "100vw",
-    height: "100vh",
+    width: "100%",
+    height: "100%",
     top: "0",
     left: "0",
     borderRadius: "0",
