@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <FooterStyled>
       <Container>
-        <NUFooter />
+        <NUFooter isCopyright />
       </Container>
     </FooterStyled>
   );
