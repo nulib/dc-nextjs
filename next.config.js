@@ -28,6 +28,18 @@ module.exports = {
     ],
   },
   reactStrictMode: true,
+  rewrites: (rewrites = () => {
+    {
+      return {
+        fallback: [
+          {
+            destination: `/`,
+            source: "/:sitemap*",
+          },
+        ],
+      };
+    }
+  }),
   swcMinify: false,
   webpack: (config) => {
     // When all the Honeybadger configuration env variables are
