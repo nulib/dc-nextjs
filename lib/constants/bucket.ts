@@ -1,0 +1,3 @@
+const DC_SITEMAP_BUCKET = process.env.NEXT_PUBLIC_DC_SITEMAP_BUCKET;
+
+export { DC_SITEMAP_BUCKET };
