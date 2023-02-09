@@ -40,3 +40,6 @@ yarn-error.log*
 *.tfvars
 /terraform/.terraform
 /terraform/*.plan
+
+# ephemeral build artifacts
+/lib/honeybadger/config.vars.js
