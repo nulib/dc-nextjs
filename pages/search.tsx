@@ -1,3 +1,8 @@
+import {
+  NoResultsMessage,
+  ResultsMessage,
+  ResultsWrapper,
+} from "@/components/Search/Search.styled";
 import React, { useEffect, useState } from "react";
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
@@ -11,7 +16,6 @@ import Layout from "@/components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
-import { Results } from "@/components/Search/Search.styled";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
@@ -130,19 +134,32 @@ const SearchPage: NextPage = () => {
         </Heading>
         <Facets />
         <Container containerType="wide">
-          <div style={{ minHeight: "80vh" }}>
+          <ResultsWrapper>
             {loading && <></>}
             {error && <p>{error}</p>}
             {apiData && (
               <>
-                <Results>
-                  {totalResults && pluralize("result", totalResults)}
-                </Results>
+                {totalResults ? (
+                  <ResultsMessage>
+                    {" "}
+                    {pluralize("result", totalResults)}
+                  </ResultsMessage>
+                ) : (
+                  <NoResultsMessage>
+                    <strong>Your search did not match any results.</strong>{" "}
+                    Please try broadening your search terms or adjusting your
+                    filters.
+                  </NoResultsMessage>
+                )}
                 <Grid data={apiData.data} info={apiData.info} />
-                <PaginationAltCounts pagination={apiData.pagination} />
+                {totalResults ? (
+                  <PaginationAltCounts pagination={apiData.pagination} />
+                ) : (
+                  <></>
+                )}
               </>
             )}
-          </div>
+          </ResultsWrapper>
         </Container>
       </Layout>
     </>

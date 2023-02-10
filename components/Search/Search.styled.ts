@@ -78,14 +78,53 @@ const Clear = styled("button", {
   },
 });
 
-const Results = styled("p", {
+const ResultsMessage = styled("span", {
   color: "$black50",
-  padding: "0 $gr4",
+  padding: "0 $gr4 $gr4",
   fontSize: "$gr3",
 
-  "@md": {
-    padding: "0",
+  "@lg": {
+    padding: "0 0 $gr3",
   },
 });
 
-export { Button, Clear, Input, Results, SearchStyled };
+const NoResultsMessage = styled("span", {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  height: "100%",
+  alignItems: "center",
+  alignSelf: "center",
+  color: "$black50",
+  padding: "0 0 $gr8",
+  margin: "0 auto",
+  fontSize: "$gr3",
+  fontFamily: "$northwesternSansLight",
+  textAlign: "center",
+  flexGrow: "1",
+
+  strong: {
+    color: "$black",
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+    display: "block",
+    margin: "0 0 $gr2",
+    fontSize: "$gr4",
+  },
+});
+
+const ResultsWrapper = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "80vh",
+});
+
+export {
+  Button,
+  Clear,
+  Input,
+  NoResultsMessage,
+  ResultsMessage,
+  ResultsWrapper,
+  SearchStyled,
+};
