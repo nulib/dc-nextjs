@@ -34,22 +34,22 @@ describe("GridItem component", () => {
   it("renders the expected default image source", () => {
     render(<GridItem item={mockItem as SearchShape} />);
 
-    expect(screen.getByAltText(mockItem.title)).toHaveAttribute(
-      "src",
-      mockItem.thumbnail
+    expect(screen.getByAltText(mockItem.title).getAttribute("src")).toContain(
+      encodeURIComponent(mockItem.thumbnail)
     );
   });
 
   it("renders the full resolution image source is featured", () => {
     render(<GridItem item={mockItem as SearchShape} isFeatured />);
 
-    expect(screen.getByAltText(mockItem.title)).not.toHaveAttribute(
-      "src",
-      mockItem.thumbnail
-    );
-    expect(screen.getByAltText(mockItem.title)).toHaveAttribute(
-      "src",
-      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/b92874a0-72b7-4479-979e-38860c412a13/square/512,/0/default.jpg"
+    expect(
+      screen.getByAltText(mockItem.title).getAttribute("src")
+    ).not.toContain(encodeURIComponent(mockItem.thumbnail));
+
+    expect(screen.getByAltText(mockItem.title).getAttribute("src")).toContain(
+      encodeURIComponent(
+        "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/b92874a0-72b7-4479-979e-38860c412a13/square/512,/0/default.jpg"
+      )
     );
   });
 });
