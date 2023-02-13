@@ -5,8 +5,10 @@ import React from "react";
 import Script from "next/script";
 import { SearchProvider } from "@/context/search-context";
 import Transition from "@/components/Transition";
+import { User } from "@/types/context/user";
 import { UserProvider } from "@/context/user-context";
 import { defaultOpenGraphData } from "@/lib/open-graph";
+import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 
@@ -22,21 +24,32 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const { openGraphData = {} } = pageProps;
   const ogData = { ...defaultOpenGraphData, ...openGraphData };
   const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const [user, setUser] = React.useState<User>();
+
+  React.useEffect(() => {
+    async function getData() {
+      const userResponse = await getUser();
+      setUser(userResponse);
+      setMounted(true);
+    }
+    getData();
+  }, []);
 
   {
     /** Add GTM (Google Tag Manager) data */
   }
   React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      // @ts-ignore
-      window.dataLayer?.push({
+    if (typeof window !== "undefined" && mounted) {
+      const payload = {
         event: "VirtualPageView",
         // @ts-ignore
         ...pageProps.dataLayer,
-      });
+        isLoggedIn: user?.isLoggedIn,
+      };
+      // @ts-ignore
+      window.dataLayer?.push(payload);
     }
-  }, [pageProps]);
+  }, [mounted, pageProps, user]);
 
   return (
     <>
