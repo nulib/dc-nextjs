@@ -38,6 +38,8 @@ module.exports = {
       "dcapi.rdc.library.northwestern.edu",
       "dcapi.rdc-staging.library.northwestern.edu",
       "iiif.stack.rdc.library.northwestern.edu",
+      "iiif.dc.library.northwestern.edu",
+      "api.dc.library.northwestern.edu",
     ],
   },
   reactStrictMode: true,
