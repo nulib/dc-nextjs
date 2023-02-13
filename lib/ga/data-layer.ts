@@ -52,7 +52,6 @@ export function buildWorkDataLayer(work: Work): DataLayer {
     adminset: work?.library_unit || "",
     collections: work?.collection?.title ? work.collection.title : null,
     creatorsContributors,
-    isLoggedIn: false,
     pageTitle: work?.title || "",
     rightsStatement: work?.rights_statement?.label
       ? work.rights_statement.label

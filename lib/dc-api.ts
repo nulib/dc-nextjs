@@ -73,4 +73,4 @@ function handleError(err: unknown) {
     console.log("Error", error.message);
   }
 }
-export { apiGetRequest, apiPostRequest, getIIIFResource };
+export { apiGetRequest, apiPostRequest, getIIIFResource, handleError };
