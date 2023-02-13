@@ -29,6 +29,9 @@ const WORK_METADATA_LABELS: WorkMetadata[] = [
     searchParam: "libraryDepartment",
   },
   {
+    label: "Dimensions",
+  },
+  {
     label: "Genre",
     searchParam: "genre",
   },
@@ -41,6 +44,9 @@ const WORK_METADATA_LABELS: WorkMetadata[] = [
   },
   {
     label: "Location",
+  },
+  {
+    label: "Materials",
   },
   {
     label: "Notes",
