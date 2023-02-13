@@ -69,22 +69,39 @@ resource "aws_amplify_app" "dc-next" {
 
   lifecycle {
     ignore_changes = [
-      custom_rule,
       basic_auth_credentials
     ]
   }
 
   environment_variables = {
-    ENV                        = var.environment_name
-    HONEYBADGER_API_KEY        = var.honeybadger_api_key
-    HONEYBADGER_ENV            = var.environment_name
-    NEXT_PUBLIC_DCAPI_ENDPOINT = var.next_public_dcapi_endpoint
-    NEXT_PUBLIC_DC_URL         = var.next_public_dc_url
+    ENV                           = var.environment_name
+    HONEYBADGER_API_KEY           = var.honeybadger_api_key
+    HONEYBADGER_ENV               = var.environment_name
+    NEXT_PUBLIC_DCAPI_ENDPOINT    = var.next_public_dcapi_endpoint
+    NEXT_PUBLIC_DC_URL            = var.next_public_dc_url
+    NEXT_PUBLIC_DC_SITEMAP_BUCKET = aws_s3_bucket_website_configuration.sitemap_website.website_endpoint
+  }
+
+  custom_rule {
+    source = "/sitemap.xml"
+    target = "/api/sitemap/sitemap.xml"
+    status = 200
+  }
+
+  custom_rule {
+    source = "/sitemap.xml.gz"
+    target = "/api/sitemap/sitemap.xml.gz"
+    status = 200
+  }
+
+  custom_rule {
+    source = "/sitemap-<*>"
+    target = "/api/sitemap/sitemap-<*>"
+    status = 200
   }
 }
 
 resource "aws_iam_role" "dc_next_amplify_role" {
-
   name                = "${var.project}-role"
   assume_role_policy  = join("", data.aws_iam_policy_document.assume_role.*.json)
   managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess-Amplify"]

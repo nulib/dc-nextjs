@@ -38,7 +38,6 @@ export default function HeaderSuper() {
   }, []);
 
   const userAuthContext = React.useContext(UserContext);
-
   const handleMenu = () => setIsExpanded(!isExpanded);
 
   return (

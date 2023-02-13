@@ -32,8 +32,8 @@ const SharedPage: NextPage = () => {
   }
 
   useEffect(() => {
-    getWorkAndManifest(router.query?.id as string);
-  }, [router]);
+    !!router.query.id && getWorkAndManifest(router.query.id as string);
+  }, [router.query.id]);
 
   if (!(work && manifest)) return <></>;
 

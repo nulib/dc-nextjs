@@ -47,7 +47,10 @@ async function apiPostRequest<R>(
 async function getIIIFResource<R>(uri: string | null): Promise<R | undefined> {
   if (!uri) return Promise.resolve(undefined);
   try {
-    const response = await axios(uri);
+    const response = await axios({
+      url: uri,
+      withCredentials: true,
+    });
     return response.data;
   } catch (err) {
     handleError(err);
@@ -56,7 +59,6 @@ async function getIIIFResource<R>(uri: string | null): Promise<R | undefined> {
 
 function handleError(err: unknown) {
   const error = err as AxiosError;
-  //const error = err as AxiosError;
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
@@ -73,4 +75,4 @@ function handleError(err: unknown) {
     console.log("Error", error.message);
   }
 }
-export { apiGetRequest, apiPostRequest, getIIIFResource };
+export { apiGetRequest, apiPostRequest, getIIIFResource, handleError };
