@@ -1,19 +1,21 @@
 import * as AspectRatio from "@radix-ui/react-aspect-ratio";
 import { VariantProps, styled } from "@/stitches.config";
 import { IconLock } from "@/components/Shared/SVG/Icons";
+import Image from "next/image";
 
 /* eslint sort-keys: 0 */
 
 IconLock.toString = () => ".icon-lock";
 
-const FigureImage = styled("img", {
+const FigureImage = styled(Image, {
   display: "flex",
   borderRadius: "3px",
-  transition: "$dcAll",
+  transition: "$dcImageLoad",
   opacity: "0",
   width: "100%",
   height: "100%",
   objectFit: "cover",
+  zIndex: "1",
 
   variants: {
     isLoaded: {
@@ -25,6 +27,15 @@ const FigureImage = styled("img", {
       },
     },
   },
+});
+
+const FigureLQIP = styled(Image, {
+  display: "flex",
+  borderRadius: "3px",
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  zIndex: "0",
 });
 
 const FigureImageWrapper = styled("div", {
@@ -62,6 +73,7 @@ const FigureCaption = styled("figcaption", {
 const FigurePlaceholder = styled(AspectRatio.Root, {
   backgroundColor: "$black10",
   borderRadius: "3px",
+  zIndex: "0",
 });
 
 const FigureSupplementalInfo = styled("span", {
@@ -123,6 +135,7 @@ export {
   FigureCaption,
   FigureImage,
   FigureImageWrapper,
+  FigureLQIP,
   FigurePlaceholder,
   FigureStyled,
   FigureSupplementalInfo,

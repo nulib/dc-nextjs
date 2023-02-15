@@ -2,6 +2,7 @@ import {
   FigureCaption,
   FigureImage,
   FigureImageWrapper,
+  FigureLQIP,
   FigurePlaceholder,
   FigureStyled,
   FigureSupplementalInfo,
@@ -11,6 +12,7 @@ import {
 } from "@/components/Figure/Figure.styled";
 import React, { ReactNode } from "react";
 import { IconLock } from "@/components/Shared/SVG/Icons";
+import { width } from "@/styles/media";
 
 interface Figure {
   aspectRatio?: number;
@@ -31,25 +33,33 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
   const { data, orientation } = props;
   const { aspectRatio, isRestricted, title, supplementalInfo, src } = data;
 
-  const handleOnLoad = () => {
-    setIsLoaded(true);
-  };
+  const handleOnLoad = () => setIsLoaded(true);
+  const handleOnError = () => console.error("image loading error");
 
-  const handleOnError = () => {
-    console.error("image loading error");
-  };
+  const lqip = new URL(src);
+  lqip.searchParams.set("size", "3");
+
+  const srcSetSizes = `(max-width: ${width.xxs}px) 100vw`;
 
   return (
     <FigureStyled data-orientation={orientation} {...props}>
       <FigureImageWrapper>
         <FigurePlaceholder ratio={aspectRatio ? aspectRatio : 1}>
+          <FigureLQIP
+            alt=""
+            fill={true}
+            sizes={srcSetSizes}
+            src={lqip.toString()}
+            priority={true}
+          />
           <FigureImage
-            src={src}
             alt={title}
+            fill={true}
+            isLoaded={isLoaded}
             onLoad={handleOnLoad}
             onError={handleOnError}
-            isLoaded={isLoaded}
-            {...(isRestricted && { css: { opacity: "0.7" } })}
+            sizes={srcSetSizes}
+            src={src}
           />
         </FigurePlaceholder>
       </FigureImageWrapper>

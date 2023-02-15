@@ -12,7 +12,6 @@ interface GridItemProps {
 
 const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
   const [urlPath, setUrlPath] = useState<string>();
-  const [supplementalInfo, setSupplementalInfo] = useState<string | null>();
   const userContext = useContext(UserContext);
 
   const isRestricted = (item: SearchShape): boolean => {
@@ -25,14 +24,12 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
     switch (item.api_model) {
       case "Work":
         setUrlPath("/items");
-        setSupplementalInfo(item.work_type);
         return;
       case "Collection":
         setUrlPath("/collections");
         return;
       default:
         setUrlPath("/items");
-        setSupplementalInfo(item.work_type);
         return;
     }
   }, [item]);
@@ -48,7 +45,7 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
               isFeatured && item.representative_file_set?.url
                 ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
                 : item.thumbnail || "",
-            supplementalInfo: supplementalInfo,
+            supplementalInfo: item.work_type,
             title: item.title || "",
           }}
         />
