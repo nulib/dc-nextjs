@@ -6,11 +6,13 @@ import {
 } from "@/components/Homepage/Overview.styled";
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
-import Link from "next/link";
 import { Thumbnail } from "@samvera/nectar-iiif";
 import { overviewThumbnails } from "@/lib/constants/homepage";
+import { useRouter } from "next/router";
 
 const HomepageOverview = () => {
+  const router = useRouter();
+
   return (
     <OverviewStyled>
       <Container>
@@ -23,9 +25,9 @@ const HomepageOverview = () => {
               audiovisual materials - as well as licensed art historical images
               for teaching and reference.
             </p>
-            <Link href="/about" legacyBehavior>
-              <Button isPrimary>Learn More</Button>
-            </Link>
+            <Button isPrimary onClick={() => router.push("/about")}>
+              Learn More
+            </Button>
           </Content>
           <Images>
             {overviewThumbnails.map((item, index) => (
