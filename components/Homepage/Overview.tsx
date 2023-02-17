@@ -25,7 +25,7 @@ const HomepageOverview = () => {
               audiovisual materials - as well as licensed art historical images
               for teaching and reference.
             </p>
-            <Button isPrimary onClick={() => router.push("/about")}>
+            <Button isPrimary isLowercase onClick={() => router.push("/about")}>
               Learn More
             </Button>
           </Content>
