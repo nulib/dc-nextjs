@@ -51,6 +51,7 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
             sizes={srcSetSizes}
             src={lqip.toString()}
             priority={true}
+            unoptimized={true}
           />
           <FigureImage
             alt={title}
@@ -60,6 +61,7 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
             onError={handleOnError}
             sizes={srcSetSizes}
             src={src}
+            unoptimized={true}
           />
         </FigurePlaceholder>
       </FigureImageWrapper>
