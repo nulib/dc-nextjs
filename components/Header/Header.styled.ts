@@ -76,6 +76,7 @@ const Primary = styled("div", {
   position: "relative",
   top: "unset",
   height: "$gr5",
+  boxShadow: "2px 2px 5px #0001",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -86,15 +87,15 @@ const Primary = styled("div", {
     transition: "$dcAll",
 
     [`& ${NavStyled}`]: {
-      backgroundColor: "$gray6",
-      color: "$purple",
+      backgroundColor: "$purple120",
       fontSize: "$gr4",
-      fontFamily: "$northwesternSansBold",
-      paddingTop: "2px",
+      fontFamily: "$northwesternSansRegular",
       display: "flex",
       height: "$gr5",
+      boxShadow: "3px -3px 19px #fff1",
 
       a: {
+        color: "$white",
         display: "flex",
         height: "100%",
         justifyContent: "center",
@@ -120,6 +121,8 @@ const Primary = styled("div", {
   },
 
   "&[data-search-fixed='true']": {
+    zIndex: "2",
+
     [`& ${ContainerStyled}`]: {
       position: "fixed",
       top: "0",
@@ -141,10 +144,6 @@ const Primary = styled("div", {
       [`& ${NavStyled}`]: {
         width: "0",
         opacity: "0",
-      },
-
-      button: {
-        backgroundColor: "$purple10",
       },
 
       [`& ${SearchStyled}`]: {
@@ -209,6 +208,8 @@ const HeaderStyled = styled("header", {
         },
 
         [`& ${Primary}`]: {
+          boxShadow: "unset",
+
           [`& ${SearchStyled}, & ${NavStyled}`]: {
             boxShadow: "8px 8px 19px #0003",
           },

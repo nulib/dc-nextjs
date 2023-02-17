@@ -7,6 +7,8 @@ const transitions = {
   dcAll: `all ${seconds}s ${timingFunction}`,
   dcOpacity: `opacity ${seconds}s ${timingFunction}`,
   dcImageLoad: `all 1s ${timingFunction}`,
+  dcScrollLeft: `left 1s ${timingFunction}`,
+  dcScrollHeight: `height 1s ${timingFunction}`,
   dcWidth: `width ${seconds}s ${timingFunction}`,
 };
 

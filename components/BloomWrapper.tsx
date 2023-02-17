@@ -15,9 +15,10 @@ const StyledBloomIIIFWrapper = styled("div", {
     display: "none",
   },
 
-  "@sm": {
+  "@xs": {
     "& > div > div": {
       alignItems: "center",
+      textAlign: "center",
 
       "& > div": {
         "&:last-child": {

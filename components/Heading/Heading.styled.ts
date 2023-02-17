@@ -19,6 +19,10 @@ const StyledHeading = styled("h2", {
     letterSpacing: "-0.015em",
     margin: "$gr6 0 $gr4",
 
+    "@sm": {
+      fontSize: "$gr7 !important",
+    },
+
     "&::before": {
       height: "$gr1",
       width: "$gr7",

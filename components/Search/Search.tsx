@@ -1,5 +1,9 @@
 import { Button, Clear, Input, SearchStyled } from "./Search.styled";
-import { IconClear, IconSearch } from "@/components/Shared/SVG/Icons";
+import {
+  IconArrowForward,
+  IconClear,
+  IconSearch,
+} from "@/components/Shared/SVG/Icons";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -98,7 +102,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         </Clear>
       )}
       <Button type="submit" data-testid="submit-button">
-        Search
+        Search <IconArrowForward />
       </Button>
       {isLoaded && <IconSearch />}
     </SearchStyled>
