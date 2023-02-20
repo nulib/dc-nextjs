@@ -9,22 +9,31 @@ const {
   NEXT_PUBLIC_DC_URL,
 } = process.env;
 const NODE_ENV = process.env.HONEYBADGER_ENV || process.env.NODE_ENV;
-const HONEYBADGER_REVISION = process.env.HONEYBADGER_REVISION || process.env.AWS_COMMIT_ID;
+const HONEYBADGER_REVISION =
+  process.env.HONEYBADGER_REVISION || process.env.AWS_COMMIT_ID;
 
-const HoneybadgerConfig = JSON.stringify({
-  HONEYBADGER_API_KEY,
-  HONEYBADGER_ENV,
-  HONEYBADGER_REPORT_DATA,
-  HONEYBADGER_REVISION,
-}, null, 2);
+const HoneybadgerConfig = JSON.stringify(
+  {
+    HONEYBADGER_API_KEY,
+    HONEYBADGER_ENV,
+    HONEYBADGER_REPORT_DATA,
+    HONEYBADGER_REVISION,
+  },
+  null,
+  2
+);
 
 fs.writeFileSync(
   "lib/honeybadger/config.vars.js",
   `module.exports = ${HoneybadgerConfig};`
 );
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withBundleAnalyzer({
   env: {
     HONEYBADGER_API_KEY,
     HONEYBADGER_ENV,
@@ -32,6 +41,10 @@ module.exports = {
     HONEYBADGER_REVISION,
     NUSSO_API_KEY: process.env.NUSSO_API_KEY,
     NUSSO_BASE_URL: process.env.NUSSO_BASE_URL,
+  },
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en"],
   },
   images: {
     domains: [
@@ -73,4 +86,4 @@ module.exports = {
 
     return config;
   },
-};
+});

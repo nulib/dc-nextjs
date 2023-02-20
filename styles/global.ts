@@ -1,3 +1,12 @@
+import {
+  akkurat,
+  akkuratBold,
+  akkuratLight,
+  campton,
+  camptonBold,
+  camptonExtraBold,
+  camptonExtraLight,
+} from "./fonts";
 import { globalCss } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
@@ -37,54 +46,25 @@ const defaults = {
 const fonts = {
   "@font-face": [
     {
-      fontFamily: "AkkuratProLight",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProLight.woff")
-      format("woff")`,
+      fontFamily: akkuratLight.style.fontFamily,
     },
     {
-      fontFamily: "AkkuratProLightItalic",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProLightItalic.woff")
-      format("woff")`,
+      fontFamily: akkurat.style.fontFamily,
     },
     {
-      fontFamily: "AkkuratProRegular",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProRegular.woff")
-      format("woff")`,
+      fontFamily: akkuratBold.style.fontFamily,
     },
     {
-      fontFamily: "AkkuratProItalic",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProItalic.woff")
-      format("woff")`,
+      fontFamily: campton.style.fontFamily,
     },
     {
-      fontFamily: "AkkuratProBold",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProBold.woff")
-      format("woff")`,
+      fontFamily: camptonBold.style.fontFamily,
     },
     {
-      fontFamily: "AkkuratProBoldItalic",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/AkkuratProBoldItalic.woff")
-      format("woff")`,
+      fontFamily: camptonExtraBold.style.fontFamily,
     },
     {
-      fontFamily: "CamptonBook",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/CamptonBook.woff")
-      format("woff")`,
-    },
-    {
-      fontFamily: "CamptonBold",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/CamptonBold.woff")
-      format("woff")`,
-    },
-    {
-      fontFamily: "CamptonExtraBold",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/CamptonExtraBold.woff")
-      format("woff")`,
-    },
-    {
-      fontFamily: "CamptonExtraLight",
-      src: `url("https://common.northwestern.edu/v8/css/fonts/CamptonExtraLight.woff")
-      format("woff")`,
+      fontFamily: camptonExtraLight.style.fontFamily,
     },
   ],
 };
