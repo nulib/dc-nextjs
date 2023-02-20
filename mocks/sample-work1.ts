@@ -36,6 +36,7 @@ export const sampleWork1: Work = {
   description: ["Ima description"],
   file_sets: [
     {
+      accession_number: "inu-dil-50575a78-a47a-4a07-939f-6e1d6a9d7065",
       duration: 20,
       height: 1000,
       id: "93d75ffe-20d8-48ea-9206-8db9114f2731",
