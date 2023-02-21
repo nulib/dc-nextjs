@@ -17,6 +17,7 @@ const FilterClearStyled = styled("button", {
   marginLeft: "$gr2",
   padding: "0 $gr3",
   transition: "$dcAll",
+  whiteSpace: "nowrap",
 
   "&:focus, &:hover": {
     color: "$purple",

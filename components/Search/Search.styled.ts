@@ -10,12 +10,16 @@ const SearchStyled = styled("form", {
   backgroundColor: "$white",
   height: "$gr5",
   marginRight: "$gr5",
-  boxShadow: "inset 0 -1px 0 #f0f0f0",
+  boxShadow: "3px -3px 19px #fff1",
   transition: "$dcAll",
 
   "@sm": {
     width: "100%",
     marginRight: "0",
+  },
+
+  "@lg": {
+    marginRight: "$gr3",
   },
 
   svg: {
@@ -41,19 +45,30 @@ const Input = styled("input", {
   width: "100%",
   border: "none",
   backgroundColor: "transparent",
-  padding: "2px $gr5 0",
+  padding: "1px $gr3 0 $gr5",
   fontSize: "$gr3",
   zIndex: "1",
   fontFamily: "$northwesternSansRegular",
+  whiteSpace: "nowrap",
+
+  "&::placeholder": {
+    overflow: "hidden",
+    color: "$black80",
+    textOverflow: "ellipsis",
+    marginRight: "$gr5",
+  },
 });
 
 const Button = styled("button", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   border: "none",
-  backgroundColor: "$gray6",
-  padding: "2px $3 0",
-  color: "$purple",
+  backgroundColor: "$purple120",
+  padding: "0 $gr3 ",
+  color: "$white",
   fontSize: "$gr4",
-  fontFamily: "$northwesternSansBold",
+  fontFamily: "$northwesternSansRegular",
   cursor: "pointer",
   textRendering: "optimizeLegibility",
 });
@@ -63,18 +78,25 @@ const Clear = styled("button", {
   display: "flex",
   right: "5rem",
   height: "$gr5",
-  width: "$gr5",
+  width: "calc($gr5 + $gr2)",
   justifyContent: "center",
   textAlign: "center",
   alignItems: "center",
   cursor: "pointer",
   border: "none",
-  backgroundColor: "transparent",
+  background: "linear-gradient(90deg, #fff0 0, #fff  38.2%)",
   zIndex: "1",
+  fill: "$black80",
+
+  "&:focus, &:hover": {
+    fill: "$purple30",
+  },
 
   svg: {
-    fill: "$black50",
-    padding: "$gr1",
+    fill: "inherit",
+    padding: "$gr2",
+    marginLeft: "$gr2",
+    transition: "$dcAll",
   },
 });
 

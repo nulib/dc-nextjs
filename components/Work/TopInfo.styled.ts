@@ -7,12 +7,12 @@ const ActionButtons = styled("div", {
   display: "flex",
   flexDirection: "row",
   justifyContent: "flext-start",
-  padding: "1rem 0",
+  padding: "$gr2 0",
 
   button: {
-    marginRight: "$4",
+    marginRight: "$gr3",
     fontFamily: "$northwesternSansLight",
-    paddingTop: "$3",
+    paddingTop: "$gr3",
 
     "&:last-child": {
       marginRight: "0",
@@ -30,9 +30,9 @@ const ActionButtons = styled("div", {
 
 const TopInfoContent = styled("div", {
   display: "grid",
-  gap: "$7",
+  gap: "$gr7",
   gridTemplateColumns: "618fr 382fr",
-  margin: "$3 0",
+  margin: "$gr3 0",
 
   "@md": {
     gap: "$gr5",
@@ -45,7 +45,7 @@ const TopInfoContent = styled("div", {
 });
 
 const TopInfoWrapper = styled("section", {
-  margin: "$6 0",
+  margin: "$gr5 0",
 
   [`> header`]: {
     display: "flex",
@@ -58,28 +58,26 @@ const TopInfoWrapper = styled("section", {
       letterSpacing: "-0.015em",
       margin: "0",
 
-      "&::before": {
-        height: "$1",
-        width: "$7",
-        display: "block",
-        backgroundColor: "$purple10",
-        content: "",
-        position: "relative",
-        top: "-$4",
+      "@sm": {
+        fontSize: "$gr7",
       },
     },
 
     p: {
-      fontSize: "$5",
+      fontSize: "$gr5",
       color: "$black50",
       fontFamily: "$northwesternSansLight",
       lineHeight: "1.47em",
+
+      "@sm": {
+        fontSize: "$gr4",
+      },
     },
   },
 });
 
 const TopInfoCollection = styled("div", {
-  padding: "1rem 0",
+  padding: "$gr4 0",
 
   [`& ${StyledHeading}`]: {
     color: "$black80",

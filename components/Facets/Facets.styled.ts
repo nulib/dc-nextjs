@@ -1,4 +1,3 @@
-import { StyledToggle } from "@/components/Shared/Switch.styled";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
 import { styled } from "@/stitches.config";
 
@@ -7,23 +6,28 @@ import { styled } from "@/stitches.config";
 const StyledFacets = styled("div", {
   display: "flex",
   justifyContent: "space-between",
-  margin: "1.618rem 0",
   position: "relative",
+  margin: "$gr4 0",
   left: "0",
-  transition: "$dcAll",
+  transition: "$dcScrollLeft",
   zIndex: "1",
 
   [`& ${WorkTypeWrapper}`]: {
     borderRight: "1px solid $black10",
     paddingRight: "$gr2",
     transition: "$dcWidth",
+
+    "@sm": {
+      marginTop: "$gr3",
+      borderRight: "none",
+      paddingRight: "0",
+    },
   },
 
   "@sm": {
-    [`& ${WorkTypeWrapper}`]: {
-      width: "0",
-      opacity: "0",
-    },
+    padding: "$gr4 0",
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
 
@@ -32,41 +36,61 @@ const Width = styled("span", {
   width: "100%",
 });
 
+const FacetExtras = styled("div", {
+  display: "flex",
+
+  "@sm": {
+    marginTop: "$gr4",
+    flexDirection: "column-reverse",
+    alignItems: "center",
+  },
+});
+
 const Wrapper = styled("div", {
+  height: "38px",
+  transition: "$dcScrollHeight",
+  margin: "$gr4 0",
+
+  "@sm": {
+    margin: "-$gr4 0 $gr4",
+    backgroundColor: "$gray6",
+    height: "225px",
+  },
+
   ".facets-ui-container": {
     transition: "$dcAll",
   },
 
   "&[data-filter-fixed='true']": {
-    margin: "1.618rem 0",
     flexGrow: "0",
     flexShrink: "1",
     height: "38px",
 
-    [`& ${WorkTypeWrapper}`]: {
+    "@sm": {
+      backgroundColor: "transparent",
+      margin: "0",
+    },
+
+    [`& ${FacetExtras}`]: {
       width: "0",
       opacity: "0",
     },
 
     [`& ${StyledFacets}`]: {
       position: "fixed",
-      top: "50px",
+      margin: "0",
+      top: "$gr6",
       left: "50%",
       zIndex: "1",
       transform: "translate(-50%)",
       backfaceVisibility: "hidden",
       webkitFontSmoothing: "subpixel-antialiased",
-    },
 
-    [`& ${StyledToggle}`]: {
-      width: "0",
-      opacity: "0",
+      "@sm": {
+        top: "$gr5",
+      },
     },
   },
-});
-
-const FacetExtras = styled("div", {
-  display: "flex",
 });
 
 export { FacetExtras, StyledFacets, Width, Wrapper };
