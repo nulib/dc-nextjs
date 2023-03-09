@@ -75,12 +75,8 @@ describe("FacetsGroupList component", () => {
      * Looks like Radix puts this active state data attribute
      * on the element.... good for testing against:)
      */
-    expect(
-      screen.getAllByRole("tab", { exact: true })[0].dataset.state
-    ).toEqual("active");
-    expect(
-      screen.getAllByRole("tab", { exact: true })[1].dataset.state
-    ).toEqual("inactive");
+    expect(screen.getAllByRole("tab")[0].dataset.state).toEqual("active");
+    expect(screen.getAllByRole("tab")[1].dataset.state).toEqual("inactive");
   });
 
   it("renders facet aggregations when a facet is clicked upon", async () => {

@@ -24,7 +24,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({
   children,
   header = "default",
-  title,
+  title = "Digital Collections - Northwestern University Libraries",
 }) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
