@@ -63,7 +63,11 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       </SpinWrapper>
     );
 
-  if (!aggregations || aggregations[facet.id].buckets.length === 0)
+  if (
+    !aggregations ||
+    !aggregations[facet.id] ||
+    aggregations[facet.id].buckets.length === 0
+  )
     return (
       <p>
         No options for <strong>{facet.label}</strong> on your current filters.

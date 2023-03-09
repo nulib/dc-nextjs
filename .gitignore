@@ -45,4 +45,4 @@ yarn-error.log*
 /lib/honeybadger/config.vars.js
 
 # vscode
-.vscode/*
+/.vscode/*
