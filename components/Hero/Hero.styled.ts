@@ -3,7 +3,7 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const HeroActions = styled("div", {
-  paddingTop: "$gr3",
+  marginTop: "$gr4",
 
   a: {
     textTransform: "uppercase",
