@@ -203,6 +203,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;
   const collection = await getCollection(id as string);
 
+  if (typeof collection === "undefined")
+    return {
+      notFound: true,
+    };
+
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
     adminset: "",
