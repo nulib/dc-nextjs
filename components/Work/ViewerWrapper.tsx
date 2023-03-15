@@ -25,9 +25,10 @@ export const CloverIIIF: React.ComponentType<{
 
 interface WrapperProps {
   manifestId: Work["iiif_manifest"];
+  isWorkRestricted?: boolean;
 }
 
-const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
+const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId, isWorkRestricted }) => {
   const userAuth = React.useContext(UserContext);
 
   const customTheme = {
@@ -67,7 +68,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId }) => {
           options={options}
         />
       )}
-      {userAuth?.user?.isReadingRoom && (
+      {isWorkRestricted && userAuth?.user?.isReadingRoom && (
         <Announcement>
           <AnnouncementContent>
             <IconInfo />

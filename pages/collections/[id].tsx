@@ -59,10 +59,15 @@ const Collection: NextPage = () => {
       const id = router.query.id;
       if (!id || Array.isArray(id)) return;
       const data = await getCollection(id);
+
+      // This is not preferred, but auth is only respected client side
+      // so need this for items to display in Reading Room
+      if (!data) return router.push("/404");
+
       setCollection(data);
     }
     router.isReady && getData();
-  }, [router.isReady, router.query.id]);
+  }, [router, router.isReady, router.query.id]);
 
   /** Get dependant data */
   useEffect(() => {
@@ -202,11 +207,6 @@ const Collection: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;
   const collection = await getCollection(id as string);
-
-  if (typeof collection === "undefined")
-    return {
-      notFound: true,
-    };
 
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
