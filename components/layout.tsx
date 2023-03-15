@@ -1,6 +1,5 @@
 import "swiper/css";
 import "swiper/css/effect-fade";
-import "swiper/css/lazy";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Footer from "@/components/Footer/Footer";
