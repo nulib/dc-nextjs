@@ -2,6 +2,7 @@
   "name": "dc-nextjs",
   "private": true,
   "scripts": {
+    "analyze": "ANALYZE=true npm run build",
     "build": "next build",
     "cypress:open": "cypress open",
     "dev": "node server.js",
@@ -18,6 +19,8 @@
     "@honeybadger-io/js": "^4.9.2",
     "@honeybadger-io/webpack": "^4.8.2",
     "@iiif/parser": "^1.0.10",
+    "@next/bundle-analyzer": "^13.1.6",
+    "@next/font": "^13.1.6",
     "@nulib/dcapi-types": "^2.0.0-rc.5",
     "@nulib/design-system": "^1.6.2",
     "@radix-ui/colors": "^0.1.8",
@@ -52,9 +55,10 @@
     "@elastic/elasticsearch": "7.17",
     "@iiif/presentation-3": "^1.1.3",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.0.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.0.4",
+    "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
     "@types/openseadragon": "^3.0.4",
     "@types/react": "^18.0.26",
@@ -72,9 +76,23 @@
     "jest-environment-jsdom": "^29.0.3",
     "next-router-mock": "^0.9.1-beta.0",
     "prettier": "^2.8.1",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.9.4"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
+  },
+  "next-unused": {
+    "entrypoints": [
+      "stitches.config.ts"
+    ],
+    "include": [
+      "components",
+      "context",
+      "hooks",
+      "mocks",
+      "types",
+      "styles"
+    ]
   }
 }

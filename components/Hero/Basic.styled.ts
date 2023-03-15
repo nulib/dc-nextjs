@@ -10,6 +10,7 @@ const HeroBasicStyled = styled("section", {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  background: "url(/images/liz__O8A9903_final.jpg)",
 
   "&:before": {
     content: "",
@@ -18,7 +19,6 @@ const HeroBasicStyled = styled("section", {
     left: 0,
     width: "100%",
     height: "100%",
-    background: "url(/images/liz__O8A9903_final.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center, center",

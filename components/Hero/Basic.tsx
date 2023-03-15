@@ -10,7 +10,7 @@ const HeroBasic: React.FC<Props> = ({ bgImage, children }) => {
   return (
     <HeroBasicStyled
       css={{
-        heroBgImage: bgImage,
+        background: `url(${bgImage})`,
       }}
     >
       <Content>{children}</Content>

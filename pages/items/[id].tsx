@@ -114,6 +114,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;
   const work = await getWork(id as string);
 
+  if (typeof work === "undefined")
+    return {
+      notFound: true,
+    };
+
   const collectionWorkCounts = work?.collection
     ? await getCollectionWorkCounts(work?.collection.id)
     : null;

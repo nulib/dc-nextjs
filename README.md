@@ -51,6 +51,10 @@ A pre-commit hook will ensure code is linted before committed.
 
 ### End to end tests
 
+#### Setup
+
+We can run E2E tests against the test environment (...more coming soon)
+
 E2E tests use [Cypress](https://docs.cypress.io/), and are linted with [Cypress ESLint Plugin](https://github.com/cypress-io/eslint-plugin-cypress)
 
 To run the text suite:
@@ -58,10 +62,6 @@ To run the text suite:
 ```
 npm run cypress:open
 ```
-
-#### Fixtures
-
-E2E JSON API response fixtures are located in `/cypress/fixtures
 
 ### Unit tests
 
@@ -86,13 +86,13 @@ npm run test
 
 Currently DC v2 hits a new DC API v2 for it's indexed data.
 
-`https://dcapi.rdc-staging.library.northwestern.edu/docs/v2`
+`https://dcapi.rdc.library.northwestern.edu/docs/v2`
 
 Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references).
 
 ### Endpoints
 
-The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo.
+The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo. The dev environment runs against Staging.
 
 ### Viewing OpenSearch data locally
 
@@ -127,6 +127,10 @@ curl -X POST '[URL]/search/collections' --data-binary '{"query": {"match_all": {
 ```
 
 See documentation in above link for more info
+
+## Optimizations
+
+`npm run analyze` will run the [Next Bundle Analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer) to show snapshots of the app's bundled JS.
 
 ## Design
 
