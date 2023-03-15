@@ -17,7 +17,7 @@ export const pageNotFoundCollection: HeroCollection = {
       label: { none: ["Page Not Found"] },
       summary: {
         none: [
-          "Sorry, the page you are looking for does not exist here. Please try again.",
+          'Sorry the page you are looking for does not exist. It\'s possible the resource, work, or collection is no longer available. If you think you reached this page in error, please <a href="https://dc.rdc-staging.library.northwestern.edu/contact">contact us</a>.',
         ],
       },
       thumbnail: [
