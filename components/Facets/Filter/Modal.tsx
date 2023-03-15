@@ -6,14 +6,18 @@ import {
   FilterFooter,
   FilterHeader,
 } from "@/components/Facets/Filter/Filter.styled";
+import React, { useEffect, useState } from "react";
+import { ApiSearchRequestBody } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
+import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import FacetsCurrentUser from "@/components/Facets/UserFacets/UserFacets";
 import FacetsGroupList from "@/components/Facets/Filter/GroupList";
 import FacetsSubmit from "@/components/Facets/Filter/Submit";
 import FilterClear from "@/components/Facets/Filter/Clear";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import Preview from "./Preview";
-import React from "react";
-import useFetchApiData from "@/hooks/useFetchApiData";
+import { apiPostRequest } from "@/lib/dc-api";
+import { buildQuery } from "@/lib/queries/builder";
 import { useFilterState } from "@/context/filter-context";
 
 export type SetIsModalOpenType = React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,21 +28,28 @@ type FilterModalProps = {
 };
 
 const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
+  const [apiData, setApiData] = useState<ApiSearchResponse>();
   const {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
 
-  const {
-    data: apiData,
-    error,
-    loading,
-  } = useFetchApiData({
-    searchTerm: q,
-    size: 5,
-    urlFacets: userFacetsUnsubmitted,
-  });
+  useEffect(() => {
+    async function getData() {
+      const body: ApiSearchRequestBody = buildQuery({
+        size: 5,
+        term: q as string,
+        urlFacets: userFacetsUnsubmitted,
+      });
 
-  if (error) console.warn(error);
+      const response = await apiPostRequest<ApiSearchResponse>({
+        body: body,
+        url: DC_API_SEARCH_URL,
+      });
+
+      setApiData(response);
+    }
+    getData();
+  }, [userFacetsUnsubmitted, q]);
 
   return (
     <>
@@ -63,7 +74,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
         <FacetsCurrentUser screen="modal" />
         <FilterBodyInner>
           <FacetsGroupList />
-          {!loading && apiData && <Preview items={apiData?.data} />}
+          {apiData && <Preview items={apiData?.data} />}
         </FilterBodyInner>
       </FilterBody>
       <FilterFooter role="menubar">
@@ -74,7 +85,7 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
           </FilterClose>
           <FacetsSubmit
             setIsModalOpen={setIsModalOpen}
-            total={apiData?.info.total}
+            total={apiData?.pagination.total_hits}
           />
         </div>
       </FilterFooter>
