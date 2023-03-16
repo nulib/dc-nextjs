@@ -91,8 +91,9 @@ describe("FacetsGroupList component", () => {
   it("renders facet aggregations when a facet is clicked upon", async () => {
     const user = userEvent.setup();
     renderHelper();
+    await user.click(screen.getByText("Subject and Descriptive"));
 
-    const sAndDEl = await screen.findByText("Subjects and Descriptive");
+    const sAndDEl = await screen.findByText("Subject and Descriptive");
     await user.click(sAndDEl);
 
     const el = await screen.findByText("Genre");
