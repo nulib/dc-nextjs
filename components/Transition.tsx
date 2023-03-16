@@ -26,7 +26,7 @@ const Transition: React.FC<Props> = ({ children }) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <AnimatePresence initial={false} exitBeforeEnter>
+      <AnimatePresence initial={false} mode="wait">
         <motion.div
           key={asPath}
           variants={variants}

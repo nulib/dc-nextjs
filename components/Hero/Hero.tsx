@@ -28,7 +28,6 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
         pagination={{
           clickable: true,
         }}
-        preloadImages={false}
         slidesPerView={1}
         speed={1000}
       >

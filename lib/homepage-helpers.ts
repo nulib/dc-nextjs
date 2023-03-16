@@ -33,12 +33,13 @@ const getHomePageCollections = async (
       if (!work) return;
       worksUpdated.push({
         ...work,
-        // @ts-ignore
-        representative_file_set: {
-          ...work?.representative_file_set,
-          /** Format for nice UI display on the home page */
-          aspect_ratio: 1,
-        },
+        ...(work?.representative_file_set && {
+          representative_file_set: {
+            ...work?.representative_file_set,
+            /** Format for nice UI display on the home page */
+            aspect_ratio: 1,
+          },
+        }),
       });
     });
 

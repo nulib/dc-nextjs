@@ -16,8 +16,8 @@
     "test:ci": "jest"
   },
   "dependencies": {
-    "@honeybadger-io/js": "^4.9.2",
-    "@honeybadger-io/webpack": "^4.8.2",
+    "@honeybadger-io/js": "^5.1.1",
+    "@honeybadger-io/webpack": "^5.1.0",
     "@iiif/parser": "^1.0.10",
     "@next/bundle-analyzer": "^13.1.6",
     "@next/font": "^13.1.6",
@@ -40,7 +40,7 @@
     "@samvera/nectar-iiif": "^0.0.20",
     "@stitches/react": "^1.2.6",
     "axios": "^1.2.2",
-    "framer-motion": "^8.1.4",
+    "framer-motion": "^10.2.5",
     "jsonwebtoken": "^9.0.0",
     "next": "^13.1.5",
     "react": "^18.2.0",
@@ -49,7 +49,7 @@
     "react-error-boundary": "^3.1.4",
     "react-masonry-css": "^1.0.16",
     "react-share": "^4.4.1",
-    "swiper": "^8.3.2"
+    "swiper": "^9.1.0"
   },
   "devDependencies": {
     "@elastic/elasticsearch": "7.17",

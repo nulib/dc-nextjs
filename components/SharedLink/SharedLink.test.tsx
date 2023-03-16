@@ -6,6 +6,7 @@ import type {
   WorkType,
 } from "@nulib/dcapi-types";
 import { render, screen } from "@/test-utils";
+
 import { Manifest } from "@iiif/presentation-3";
 import SharedLink from "./SharedLink";
 
@@ -207,7 +208,6 @@ const work: Work = {
   box_name: [],
 };
 
-// @ts-ignore
 const manifest = {
   "@context": "http://iiif.io/api/presentation/3/context.json",
   id: "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/263625cc-6fd7-47ae-a725-394a483d28d2?as=iiif",
@@ -322,6 +322,7 @@ const manifest = {
       id: "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/works/263625cc-6fd7-47ae-a725-394a483d28d2",
       type: "Dataset",
       format: "application/json",
+      // @ts-ignore
       label: {
         none: ["Northwestern University Libraries Digital Collections API"],
       },
@@ -371,8 +372,7 @@ const manifest = {
           width: 300,
           service: [
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
               "@type": "ImageService2",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
@@ -398,8 +398,7 @@ const manifest = {
                 width: 6079,
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
                     "@type": "ImageService2",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
