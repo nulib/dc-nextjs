@@ -14,6 +14,7 @@ async function apiGetRequest<R>(
   obj: ApiGetRequestParams
 ): Promise<R | undefined> {
   const { url } = obj;
+
   try {
     const response = await axios({
       url,

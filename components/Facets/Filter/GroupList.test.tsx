@@ -81,10 +81,10 @@ describe("FacetsGroupList component", () => {
      * Looks like Radix puts this active state data attribute
      * on the element.... good for testing against:)
      */
-    const tabActive = await screen.findAllByRole("tab", { exact: true });
+    const tabActive = await screen.findAllByRole("tab");
     expect(tabActive[0].dataset.state).toEqual("active");
 
-    const tabInactive = await screen.findAllByRole("tab", { exact: true });
+    const tabInactive = await screen.findAllByRole("tab");
     expect(tabInactive[1].dataset.state).toEqual("inactive");
   });
 
