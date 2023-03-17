@@ -1,5 +1,6 @@
 import { Aggs } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
+import { SortOrder } from "@elastic/elasticsearch/api/types";
 import { UrlFacets } from "@/types/context/filter-context";
 import { facetRegex } from "@/lib/utils/facet-helpers";
 
@@ -14,6 +15,7 @@ export const buildAggs = (
 ) => {
   const aggs: Aggs = {};
   let cleanFilterValue: string;
+  const desc = "desc" as SortOrder;
 
   /** Is user filtering using quotes for exact match? */
   const quoteCount = (facetFilterValue?.match(/"/g) || []).length;
@@ -41,7 +43,7 @@ export const buildAggs = (
       include: cleanFilterValue ? cleanFilterValue : undefined,
 
       order: {
-        _count: "desc",
+        _count: desc,
       },
       size: 20,
     };
@@ -49,13 +51,14 @@ export const buildAggs = (
     /**
      * Create a separate aggregation for user selected aggs (checkboxes)
      */
+
     if (userFacetsValues) {
       aggs.userFacets = {
         terms: {
           field: facet.field,
           include: userFacetsValues,
           order: {
-            _count: "desc",
+            _count: desc,
           },
           size: 20,
         },
@@ -66,7 +69,6 @@ export const buildAggs = (
      * Default agg values for the active Facet
      */
     aggs[facet.id] = {
-      // @ts-ignore
       terms,
     };
   });

@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+
 import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpToList from "@/components/Search/JumpToList";
 import Swiper from "swiper";
@@ -23,12 +24,11 @@ const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [showJumpTo, setShowJumpTo] = useState<boolean>(false);
 
   React.useEffect(() => {
-    // @ts-ignore
-    const handleMouseDown = (e) => {
+    const handleMouseDown = (e: MouseEvent) => {
       if (
         showJumpTo &&
         formRef.current &&
-        !formRef.current.contains(e.target)
+        !formRef.current.contains(e.target as Node)
       ) {
         setShowJumpTo(false);
       }

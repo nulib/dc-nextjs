@@ -7,12 +7,18 @@ import userEvent from "@testing-library/user-event";
 
 mockRouter.setCurrentUrl("/search");
 
-jest.mock("@/hooks/useFetchApiData", () => {
-  return jest.fn(() => ({
+jest.mock("@/lib/dc-api", () => {
+  /* eslint sort-keys: 0 */
+  const mockSearchResponse1 = {
     data: [],
-    error: "",
-    loading: "",
-  }));
+    pagination: {},
+    info: {},
+    aggregations: {},
+  };
+
+  return {
+    apiPostRequest: jest.fn().mockReturnValue(mockSearchResponse1),
+  };
 });
 
 const facetGroupLabels = FACETS.map((group) => group.label);
@@ -22,9 +28,9 @@ describe("FacetsGroupList component", () => {
     return render(<FacetsGroupList />);
   }
 
-  it("renders all top level facet group UI trigger elements", () => {
+  it("renders all top level facet group UI trigger elements", async () => {
     renderHelper();
-    expect(screen.getByTestId("facets-group-list"));
+    expect(await screen.findByTestId("facets-group-list"));
 
     facetGroupLabels.forEach((label) => {
       expect(screen.getByText(label));
@@ -56,7 +62,7 @@ describe("FacetsGroupList component", () => {
     });
   });
 
-  it("renders a default expanded initial facet value", () => {
+  it("renders a default expanded initial facet value", async () => {
     render(
       <FilterProvider
         initialState={{
@@ -75,16 +81,22 @@ describe("FacetsGroupList component", () => {
      * Looks like Radix puts this active state data attribute
      * on the element.... good for testing against:)
      */
-    expect(screen.getAllByRole("tab")[0].dataset.state).toEqual("active");
-    expect(screen.getAllByRole("tab")[1].dataset.state).toEqual("inactive");
+    const tabActive = await screen.findAllByRole("tab");
+    expect(tabActive[0].dataset.state).toEqual("active");
+
+    const tabInactive = await screen.findAllByRole("tab");
+    expect(tabInactive[1].dataset.state).toEqual("inactive");
   });
 
   it("renders facet aggregations when a facet is clicked upon", async () => {
     const user = userEvent.setup();
     renderHelper();
-    await user.click(screen.getByText("Subjects and Descriptive"));
+    await user.click(screen.getByText("Subject and Descriptive"));
 
-    const el = screen.getByText("Genre");
+    const sAndDEl = await screen.findByText("Subject and Descriptive");
+    await user.click(sAndDEl);
+
+    const el = await screen.findByText("Genre");
     await user.click(el);
     expect(el.dataset.state).toEqual("active");
   });

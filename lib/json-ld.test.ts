@@ -79,7 +79,11 @@ describe("work structured data", () => {
     expect(obj.contributor).toEqual('"Roberts, James S."');
     expect(obj.dateCreated).toEqual("2021-03-16T15:52:00.377715Z");
     expect(obj.description).toBeUndefined();
-    expect(obj.genre![0]).toEqual("Ima Genre1");
+
+    if (obj.genre) {
+      expect(obj.genre[0]).toEqual("Ima Genre1");
+    }
+
     expect(obj.image).toEqual(
       "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731"
     );

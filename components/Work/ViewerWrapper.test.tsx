@@ -23,28 +23,36 @@ describe("WorkViewerWrapper", () => {
     });
   });
 
-  it("renders an announcement when in the Reading Room", async () => {
-    render(
-      <UserContext.Provider value={userContextValue}>
-        <WorkViewerWrapper manifestId="http://testing.com" />
-      </UserContext.Provider>
-    );
-
-    expect(screen.queryByText(readingRoomMessage)).not.toBeInTheDocument();
-
+  it("renders an announcement when in the Reading Room only when the Work is protected", async () => {
     const readingUserContext = { ...userContextValue };
     readingUserContext.user.isReadingRoom = true;
 
     render(
       <UserContext.Provider value={readingUserContext}>
-        <WorkViewerWrapper manifestId="http://testing.com" />
+        <WorkViewerWrapper isWorkRestricted={true} manifestId="http://testing.com" />
       </UserContext.Provider>
     );
 
     expect(
-      await screen.findByText(
-        /You have access to Work because you are in the reading room/i
-      )
+      await screen.findByText(readingRoomMessage)
     ).toBeInTheDocument();
+
+  });
+
+  it("does not render an announcement when in the Reading Room and the Work is not restricted", async () => {
+    const readingUserContext = { ...userContextValue };
+    readingUserContext.user.isReadingRoom = true;
+
+    render(
+      <UserContext.Provider value={readingUserContext}>
+        <WorkViewerWrapper isWorkRestricted={false} manifestId="http://testing.com" />
+      </UserContext.Provider>
+    );
+
+    let el;
+    await waitFor(() => {
+       el = screen.queryByText(readingRoomMessage);
+    })
+    expect(el).toBeNull();
   });
 });

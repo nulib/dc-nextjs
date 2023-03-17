@@ -22,6 +22,7 @@ import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { buildWorkOpenGraphData } from "@/lib/open-graph";
 import { getIIIFResource } from "@/lib/dc-api";
 import { loadItemStructuredData } from "@/lib/json-ld";
+import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
 
 interface WorkPageProps {
@@ -35,6 +36,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
   const { isWorkRestricted } = useWorkAuth(work);
+  const router = useRouter();
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work) : [];
@@ -48,7 +50,13 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
 
     async function getData() {
       const work = await getWork(id);
-      if (!work) return setIsLoading(false);
+      if (!work) {
+        // This is not preferred, but auth is only respected client side
+        // so need this for items to display in Reading Room
+        router.push("/404");
+
+        return setIsLoading(false);
+      }
       setWork(work);
       const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
       setManifest(manifest);
@@ -56,7 +64,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
     }
 
     getData();
-  }, [id]);
+  }, [id, router]);
 
   return (
     <>
@@ -83,7 +91,10 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               {work.iiif_manifest && (isReadingRoom || !isWorkRestricted) && (
-                <WorkViewerWrapper manifestId={work.iiif_manifest} />
+                <WorkViewerWrapper
+                  manifestId={work.iiif_manifest}
+                  isWorkRestricted={isWorkRestricted}
+                />
               )}
               {work && !isReadingRoom && isWorkRestricted && (
                 <WorkRestrictedDisplay thumbnail={work.thumbnail} />
@@ -113,11 +124,6 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;
   const work = await getWork(id as string);
-
-  if (typeof work === "undefined")
-    return {
-      notFound: true,
-    };
 
   const collectionWorkCounts = work?.collection
     ? await getCollectionWorkCounts(work?.collection.id)

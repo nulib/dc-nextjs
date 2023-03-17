@@ -167,16 +167,11 @@ export const FACETS_DESCRIPTIVE: FacetsGroup = {
       label: "Work Type",
     },
   ],
-  label: "Subjects and Descriptive",
+  label: "Subject and Descriptive",
 };
 
 export const FACETS_LOCATION: FacetsGroup = {
   facets: [
-    {
-      field: "library_unit",
-      id: "libraryDepartment",
-      label: "Library Department",
-    },
     {
       field: "collection.title",
       id: "collection",
@@ -197,13 +192,18 @@ export const FACETS_LOCATION: FacetsGroup = {
       id: "folderNumber",
       label: "Folder Number",
     },
+    {
+      field: "library_unit",
+      id: "libraryDepartment",
+      label: "Library Department",
+    },
   ],
-  label: "Location",
+  label: "Collection and Location",
 };
 
 export const FACETS: FacetsGroup[] = [
   FACETS_DESCRIPTIVE,
-  FACETS_CREATOR,
   FACETS_LOCATION,
+  FACETS_CREATOR,
   FACETS_RIGHTS_USAGE,
 ];

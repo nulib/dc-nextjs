@@ -1,9 +1,19 @@
-# Digital Collections v2 NextJS App
+# Digital Collections v2
 
-This is a work in progress, for experimenting with NextJS, AWS Amplify and various ways of building / data fetching / hosting.
+Digital Collections v2 (DCv2) is a UI application for discovering and interacting with Collections and Works in NUL's repository. 
 
-## Getting Started
+## Tech Stack
+- [NextJS](https://nextjs.org/) React JS fullstack framework
+- [TypeScript](https://www.typescriptlang.org/) for type safety
+- [Radix UI](https://www.radix-ui.com/) A library of React primitives for accessibility and modular development
+- [Stitches.dev](https://stitches.dev/) CSS in JS
+- [IIIF](https://iiif.io/) Research APIs and Specs our data conforms to for open access.
+- [AWS Amplify](https://aws.amazon.com/amplify/) Hosting environment
+- [OpenSearch](https://opensearch.org/) Search index
 
+
+## Development Environments
+### Local
 Install dependencies and run a NextJS development server:
 
 ```bash
@@ -11,25 +21,69 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser.
+Open [http://devbox.library.northwestern.edu:3000](http://devbox.library.northwestern.edu:3000) in your browser.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### AWS Developer Environment (Northwestern dev team only)
+Open a remote SSH dev environment connection in VSCode.
 
-## Deploying
+`cd` into the `dc-nextjs` repository
 
-### NextJS Environment
+1. Open a new terminal.  
 
-Commits to the `deploy/staging` branch will trigger a build in an AWS Amplify Hosting solution.
+2. Make sure port 3000 is open by running `sg show`.   If you don't see port 3000, run `sg open all 3000`.  View more in [AWS convenience scripts](https://github.com/nulib/aws-developer-environment#convenience-scripts).
 
-Commits prefaced with `preview/branch-name-here` will deploy to a preview branch
+3. Temporarily change the following line in (`dc-nextjs/server.js`):
+```js
 
-### Data fetching
+// Change 
+const hostname = "devbox.library.northwestern.edu";
+// ...to
+const hostname = "localhost";
+```
+Install dependencies
 
-Currently in the Amplify AWS environment (Dec 2022), note that SSR (Server Side Rendering), will not pass authentication JWT tokens properly.
+```bash
+npm install
+npm run dev
+```
 
-The primary dynamic route pages (`items/[id]` and `collections/[id]`), will support [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration), but we'll keep build time routes to statically generate at 1 for both a Work and Collection.
+And now open your AWS dev environment URL (Northwestern developers only).
 
-````
+
+## Deploy Environments
+### Staging
+
+Commits (via merges) into the `deploy/staging` branch will trigger a build in AWS Amplify to the **staging** environment.
+
+https://dc.rdc-staging.library.northwestern.edu/
+
+Commits prefaced with `preview/branch-name-here` will deploy to a preview branch.  The URL will be available within AWS Amplify.  This is useful for sharing the feature with staff/users as a preview before committing to staging.
+
+### Production
+
+Commits (via merges) into the `main` branch will trigger a build in AWS Amplify to the **production** environment.
+
+https://dc.library.northwestern.edu/
+
+## Data fetching / APIs
+
+The application makes network requests against the [DC API v2](https://github.com/nulib/dc-api-v2) to access repository data.  By default, all metadata is returned in the application.  Authenticated content's media (image/audio/video) will be protected and obscured from public access.
+
+Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references).  Network request urls with `?as=iiif` will return data in the shape of a [IIIF](https://iiif.io/) manifest.
+
+### Viewing the Index (OpenSearch) directly
+OpenSearch's data can be accessed directly via [Kibana](https://www.elastic.co/kibana/) by executing the following commands:
+
+```bash
+export AWS_PROFILE=staging
+aws-adfs login --profile $AWS_PROFILE
+es-proxy
+```
+
+The API supports both POST for searching and GET for Work and Collection items.
+
+### Environment variables
+The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo. 
 
 ## Code Quality
 
@@ -79,54 +133,6 @@ To run [Jest](https://jestjs.io/) w/ [React Testing-Library](https://testing-lib
 ```bash
 npm run test
 ```
-
-## API
-
-### Notes
-
-Currently DC v2 hits a new DC API v2 for it's indexed data.
-
-`https://dcapi.rdc.library.northwestern.edu/docs/v2`
-
-Behind the scenes, DC API v2 is using OpenSearch `v 1.2` or Elasticsearch `v 7.17`. (For documentation references).
-
-### Endpoints
-
-The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo. The dev environment runs against Staging.
-
-### Viewing OpenSearch data locally
-
-In a local dev environment, to view API data coming from the index (for now), run the following:
-
-```
-export AWS_PROFILE=staging
-aws-adfs login --profile $AWS_PROFILE
-es-proxy
-```
-
-The API supports both POST for searching and GET for Work and Collection items.
-
-### Search examples
-
-```
-# Search Works (default)
-curl -X POST '[URL]/search' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
-
-# Search Collections
-curl -X POST '[URL]/search/collections' --data-binary '{"query": {"match_all": {}}, "_source": "id", "size": 1000}' | jq
-```
-
-### Direct GET request endpoint examples
-
-```
-[URL]/works/4359936f-9091-499b-893f-b8e900db49ec
-
-[URL]/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7
-
-[URL]/file-sets/ce1f6d18-8563-4f70-aabc-d4ce1688d8dc
-```
-
-See documentation in above link for more info
 
 ## Optimizations
 
