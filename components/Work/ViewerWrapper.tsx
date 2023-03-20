@@ -3,7 +3,6 @@ import {
   ViewerWrapperStyled,
 } from "@/components/Work/ViewerWrapper.styled";
 import Announcement from "@/components/Shared/Announcement";
-import { DC_URL } from "@/lib/constants/endpoints";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
@@ -32,7 +31,7 @@ interface WrapperProps {
 const WorkViewerWrapper: React.FC<WrapperProps> = ({ isWorkRestricted }) => {
   const userAuth = React.useContext(UserContext);
 
-  const manifestId = `${DC_URL}/fixtures/iiif/manifest/placeholder-canvas.json`;
+  const manifestId = "/fixtures/iiif/manifest/placeholder-canvas.json";
 
   const customTheme = {
     colors: {

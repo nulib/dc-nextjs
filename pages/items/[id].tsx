@@ -6,7 +6,6 @@ import { GetServerSideProps, NextPage } from "next";
 import { getWork, getWorkSliders } from "@/lib/work-helpers";
 import { useContext, useEffect, useState } from "react";
 import Container from "@/components/Shared/Container";
-import { DC_URL } from "@/lib/constants/endpoints";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Head from "next/head";
@@ -60,7 +59,7 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
       }
       setWork(work);
       const manifest = await getIIIFResource<Manifest>(
-        `${DC_URL}/fixtures/iiif/manifest/placeholder-canvas.json`
+        `/fixtures/iiif/manifest/placeholder-canvas.json`
       );
       setManifest(manifest);
       setIsLoading(false);
