@@ -1,6 +1,6 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://devbox.library.northwestern.edu:3000/fixtures/iiif/manifest/placeholder-canvas.json",
+  "id": "https://preview-placeholder-canvas-mock.d2v1qbdeix3nr2.amplifyapp.com/fixtures/iiif/manifest/placeholder-canvas.json",
   "type": "Manifest",
   "label": { "none": ["Zagna \"lunga\""] },
   "metadata": [
