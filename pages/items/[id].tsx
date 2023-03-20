@@ -58,7 +58,9 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
         return setIsLoading(false);
       }
       setWork(work);
-      const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
+      const manifest = await getIIIFResource<Manifest>(
+        "https://devbox.library.northwestern.edu:3000/fixtures/iiif/manifest/placeholder-canvas.json"
+      );
       setManifest(manifest);
       setIsLoading(false);
     }

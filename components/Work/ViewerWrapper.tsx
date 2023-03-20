@@ -28,8 +28,11 @@ interface WrapperProps {
   isWorkRestricted?: boolean;
 }
 
-const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId, isWorkRestricted }) => {
+const WorkViewerWrapper: React.FC<WrapperProps> = ({ isWorkRestricted }) => {
   const userAuth = React.useContext(UserContext);
+
+  const manifestId =
+    "https://devbox.library.northwestern.edu:3000/fixtures/iiif/manifest/placeholder-canvas.json";
 
   const customTheme = {
     colors: {
