@@ -155,6 +155,7 @@ const work: Work = {
   file_sets: [
     {
       accession_number: "inu-dil-12b39039-68af-4a31-8b04-1b025d95a0b8",
+      description: "Something",
       duration: null,
       height: 4050,
       id: "7ad42e60-a8b6-444d-b4cf-f53f9c2756f6",
