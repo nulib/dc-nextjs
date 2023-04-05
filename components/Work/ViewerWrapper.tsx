@@ -28,7 +28,10 @@ interface WrapperProps {
   isWorkRestricted?: boolean;
 }
 
-const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId, isWorkRestricted }) => {
+const WorkViewerWrapper: React.FC<WrapperProps> = ({
+  manifestId,
+  isWorkRestricted,
+}) => {
   const userAuth = React.useContext(UserContext);
 
   const customTheme = {
@@ -52,6 +55,11 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({ manifestId, isWorkRestricte
   const options = {
     canvasBackgroundColor: "$gray6",
     canvasHeight: "640px",
+    openSeadragon: {
+      gestureSettingsMouse: {
+        scrollToZoom: false,
+      },
+    },
     renderAbout: false,
     showIIIFBadge: false,
     showInformationToggle: false,
