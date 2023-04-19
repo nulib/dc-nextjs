@@ -1,24 +1,28 @@
 describe("Homepage component", () => {
   it("renders the hero slider", () => {
-    cy.visit("https://devbox.library.northwestern.edu:3000/");
+    cy.visit("/");
     cy.get(".swiper").within(() => {
       cy.get(".swiper-button-prev");
-      cy.get(".swiper-button-next");
-    });
-  });
+      cy.get(".swiper-button-next").as("nextBtn");
 
-  it("renders the global search bar and fires off a successful search", () => {
-    cy.visit("https://devbox.library.northwestern.edu:3000/");
+      cy.get("figure")
+        .first()
+        .contains("Edward S. Curtis's The North American Indian")
+        .should(
+          "have.attr",
+          "href",
+          "https://dc-next.rdc-staging.library.northwestern.edu/collections/55ff2504-dd53-4943-b2cb-aeea46e77bc3"
+        );
+      cy.contains("Crossing the Pend d'Oreille - Kalispel");
 
-    cy.fixture("/search/response1.js").then((json) => {
-      cy.intercept(
-        "POST",
-        "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search*",
-        json
+      cy.get("@nextBtn").click();
+
+      cy.contains("Berkeley Folk Music Festival").should(
+        "have.attr",
+        "href",
+        "https://dc-next.rdc-staging.library.northwestern.edu/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7"
       );
-      cy.get("form[data-testid='search-ui-component'] input").type("foo");
-      cy.contains("Search").click();
-      cy.url().should("include", "/search?q=foo");
+      cy.contains("Joan Baez");
     });
   });
 

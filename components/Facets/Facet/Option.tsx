@@ -1,5 +1,7 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
+
 import { Indicator, OptionCount, OptionText } from "./GenericFacet.styled";
+
 import { FacetOption } from "@/types/components/facets";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import React from "react";
@@ -16,8 +18,9 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
 
-  const isChecked =
-    userFacetsUnsubmitted[facet] && userFacetsUnsubmitted[facet].includes(key);
+  const isChecked = !!(
+    userFacetsUnsubmitted[facet] && userFacetsUnsubmitted[facet].includes(key)
+  );
 
   const handleCheckedChange = (checkedStatus: boolean) => {
     const newObj: UserFacets = { ...userFacetsUnsubmitted };

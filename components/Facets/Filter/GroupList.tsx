@@ -1,4 +1,5 @@
 import * as Accordion from "@radix-ui/react-accordion";
+
 import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
 import {
   Group,
@@ -11,6 +12,7 @@ import {
   ItemToggle,
   TabsRoot,
 } from "@/components/Facets/Filter/GroupList.styled";
+
 import Facet from "@/components/Facets/Facet/Facet";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { getFacetGroup } from "@/lib/utils/facet-helpers";
@@ -51,7 +53,11 @@ const FacetsGroupList: React.FC = () => {
                 <ItemList>
                   {group.facets.map((facet) => {
                     return (
-                      <ItemToggle value={facet.id} key={facet.id}>
+                      <ItemToggle
+                        value={facet.id}
+                        key={facet.id}
+                        data-testid="facet-value-button"
+                      >
                         {facet.label}
                       </ItemToggle>
                     );
