@@ -10,6 +10,13 @@ interface ApiPostRequestParams {
   url: string;
 }
 
+async function apiGetStatus(url: string) {
+  return axios
+    .head(url, { withCredentials: true })
+    .then((response) => response.status)
+    .catch((error) => error.response.status);
+}
+
 async function apiGetRequest<R>(
   obj: ApiGetRequestParams
 ): Promise<R | undefined> {
@@ -63,9 +70,9 @@ function handleError(err: unknown) {
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
+    // console.log(error.response.data);
+    // console.log(error.response.status);
+    // console.log(error.response.headers);
   } else if (error.request) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -76,4 +83,10 @@ function handleError(err: unknown) {
     console.log("Error", error.message);
   }
 }
-export { apiGetRequest, apiPostRequest, getIIIFResource, handleError };
+export {
+  apiGetRequest,
+  apiGetStatus,
+  apiPostRequest,
+  getIIIFResource,
+  handleError,
+};

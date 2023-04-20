@@ -2,7 +2,7 @@ import Head from "next/head";
 import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/layout";
 import type { NextPage } from "next";
-import { collection404 } from "@/lib/constants/error";
+import { collection403 } from "@/lib/constants/error";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { styled } from "@/stitches.config";
 
@@ -26,7 +26,7 @@ const PageNotFound: NextPage = () => {
       </Head>
       <Layout header="hero">
         <StyledPageNotFound>
-          <Hero collection={collection404} />
+          <Hero collection={collection403} />
         </StyledPageNotFound>
       </Layout>
     </>
