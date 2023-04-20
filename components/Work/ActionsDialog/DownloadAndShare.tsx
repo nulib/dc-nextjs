@@ -15,6 +15,7 @@ import {
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
 import { makeBlob, mimicDownload } from "@samvera/image-downloader";
+
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
@@ -89,14 +90,14 @@ const DownloadAndShare: React.FC = () => {
           <>
             <h3>Download and Embed</h3>
 
-            {isWorkRestricted && (
+            {isWorkRestricted && !isSharedLinkPage && (
               <Announcement>
                 Download requires Northwestern University NetID authentication{" "}
               </Announcement>
             )}
 
-            {!isWorkRestricted && (
-              <div>
+            {(!isWorkRestricted || isSharedLinkPage) && (
+              <div data-testid="download-embed-items">
                 {manifest.items.map((item) => (
                   <Item
                     item={item}
