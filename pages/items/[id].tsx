@@ -3,9 +3,11 @@ import {
   getCollectionWorkCounts,
 } from "@/lib/collection-helpers";
 import { GetServerSideProps, NextPage } from "next";
+import { apiGetStatus, getIIIFResource } from "@/lib/dc-api";
 import { getWork, getWorkSliders } from "@/lib/work-helpers";
 import { useContext, useEffect, useState } from "react";
 import Container from "@/components/Shared/Container";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Head from "next/head";
@@ -20,7 +22,6 @@ import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { buildWorkOpenGraphData } from "@/lib/open-graph";
-import { getIIIFResource } from "@/lib/dc-api";
 import { loadItemStructuredData } from "@/lib/json-ld";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
@@ -28,9 +29,14 @@ import useWorkAuth from "@/hooks/useWorkAuth";
 interface WorkPageProps {
   collectionWorkCounts: CollectionWorkCountMap | null;
   id: Work["id"];
+  status: number;
 }
 
-const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
+const WorkPage: NextPage<WorkPageProps> = ({
+  collectionWorkCounts,
+  id,
+  status,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const userAuthContext = useContext(UserContext);
   const [work, setWork] = useState<Work>();
@@ -50,21 +56,19 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
 
     async function getData() {
       const work = await getWork(id);
-      if (!work) {
-        // This is not preferred, but auth is only respected client side
-        // so need this for items to display in Reading Room
-        router.push("/404");
-
-        return setIsLoading(false);
+      if (work) {
+        setWork(work);
+        const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
+        setManifest(manifest);
+        setIsLoading(false);
+      } else if (status === 403 && !work) {
+        router.push("/403");
+        setIsLoading(false);
       }
-      setWork(work);
-      const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
-      setManifest(manifest);
-      setIsLoading(false);
     }
 
     getData();
-  }, [id, router]);
+  }, [id, router, status]);
 
   return (
     <>
@@ -122,8 +126,23 @@ const WorkPage: NextPage<WorkPageProps> = ({ collectionWorkCounts, id }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context?.params?.id;
-  const work = await getWork(id as string);
+  const id = context?.params?.id as string;
+
+  /**
+   * get status code of the work from the DC API using
+   * apiGetStatus() which requests using axios.head
+   */
+  const status = await apiGetStatus(`${DCAPI_ENDPOINT}/works/${id}`);
+
+  /**
+   * if the status code is 404 return the Next.js notFound prop
+   */
+  if (status === 404)
+    return {
+      notFound: true,
+    };
+
+  const work = await getWork(id);
 
   const collectionWorkCounts = work?.collection
     ? await getCollectionWorkCounts(work?.collection.id)
@@ -141,6 +160,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       dataLayer,
       id,
       openGraphData,
+      status,
     },
   };
 };
