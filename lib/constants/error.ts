@@ -1,4 +1,4 @@
-import { DCAPI_ENDPOINT, DC_URL } from "./endpoints";
+import { DC_URL } from "./endpoints";
 import { HeroCollection } from "./homepage";
 
 /* eslint sort-keys: 0 */
@@ -44,9 +44,9 @@ export const collection403: HeroCollection = {
       ],
       seeAlso: [
         {
-          id: `${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`,
+          id: `${DC_URL}`,
           type: "Text",
-          label: { none: ["Sign In"] },
+          label: { none: ["To Homepage"] },
         },
         {
           id: `${DC_URL}/search`,
