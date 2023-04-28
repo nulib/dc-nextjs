@@ -101,7 +101,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
                 />
               )}
               {work && !isReadingRoom && isWorkRestricted && (
-                <WorkRestrictedDisplay thumbnail={work.thumbnail} />
+                <WorkRestrictedDisplay
+                  thumbnail={work.thumbnail}
+                  workId={work.id}
+                />
               )}
               <Container>
                 {work && (
