@@ -7,9 +7,14 @@ import React from "react";
 interface Props {
   thumbnail: string | null;
   workId?: string;
+  workTitle?: string | null;
 }
 
-const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail, workId }) => {
+const WorkRestrictedDisplay: React.FC<Props> = ({
+  thumbnail,
+  workId,
+  workTitle = "",
+}) => {
   return (
     <div data-testid="restricted-display">
       {thumbnail && (
@@ -39,6 +44,8 @@ const WorkRestrictedDisplay: React.FC<Props> = ({ thumbnail, workId }) => {
             rel="noreferrer"
             href={`mailto:repository@northwestern.edu?subject=${encodeURIComponent(
               `Work ID: ${workId} access request`
+            )}&body=${encodeURIComponent(
+              `Hello, I have a question about "${workTitle}".\n\nhttps://dc.library.northwestern.edu/items/${workId}\n\nQUESTION: `
             )}`}
           >
             repository@northwestern.edu
