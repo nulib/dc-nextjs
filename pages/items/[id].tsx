@@ -104,6 +104,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
                 <WorkRestrictedDisplay
                   thumbnail={work.thumbnail}
                   workId={work.id}
+                  workTitle={work.title}
                 />
               )}
               <Container>
