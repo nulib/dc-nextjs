@@ -1,24 +1,29 @@
 import { CopyStatus, useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import React, { ReactElement } from "react";
 import {
   StyledCopyText,
   StyledStatus,
 } from "@/components/Shared/CopyText.styled";
-import React from "react";
 
-const CopyTextStatus: React.FC<{ status: CopyStatus }> = ({ status }) => {
+export const CopyTextStatus: React.FC<{ status: CopyStatus }> = ({
+  status,
+}) => {
   if (!status) return null;
 
   return <StyledStatus data-copy-status={status}>{status}</StyledStatus>;
 };
 
-export const CopyText: React.FC<{ textPrompt: string; textToCopy: string }> = ({
-  textPrompt,
-  textToCopy,
-}) => {
+export const CopyText: React.FC<{
+  renderIcon?: () => ReactElement;
+  textPrompt: string;
+  textToCopy: string;
+}> = ({ renderIcon, textPrompt, textToCopy }) => {
   const [copyStatus, copyText] = useCopyToClipboard(textToCopy);
+  const icon = renderIcon ? renderIcon() : null;
+
   return (
     <StyledCopyText onClick={copyText}>
-      {textPrompt} <CopyTextStatus status={copyStatus} />
+      {icon} {textPrompt} <CopyTextStatus status={copyStatus} />
     </StyledCopyText>
   );
 };

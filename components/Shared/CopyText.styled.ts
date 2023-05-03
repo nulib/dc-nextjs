@@ -23,7 +23,13 @@ const StyledCopyText = styled("button", {
   cursor: "pointer",
   color: "$purple",
   fontWeight: "700",
-  fontSize: "$3",
+  fontSize: "$gr3",
+  whiteSpace: "nowrap",
+
+  svg: {
+    height: "calc($gr3 - 3px)",
+    marginRight: "$gr1",
+  },
 
   "&:hover": {
     textDecoration: "underline",
