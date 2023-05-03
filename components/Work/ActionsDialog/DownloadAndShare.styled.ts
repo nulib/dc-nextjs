@@ -1,3 +1,4 @@
+import { StyledCopyText } from "@/components/Shared/CopyText.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -46,8 +47,19 @@ const ItemActions = styled("ul", {
     margin: "0 $3 0 0",
     fontSize: "$3",
 
-    "a, a:visited": {
+    [`${StyledCopyText}`]: {
       color: "$black50",
+      textDecoration: "underline",
+      fontWeight: "400",
+      padding: "0",
+
+      "&:hover, &:focus": {
+        textDecoration: "none",
+      },
+    },
+
+    "a, a:visited": {
+      color: "$black50 !important",
       textDecoration: "underline",
     },
 

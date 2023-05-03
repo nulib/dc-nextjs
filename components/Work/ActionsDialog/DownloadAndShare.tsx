@@ -20,6 +20,7 @@ import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
+import IIIF from "@/components/Shared/SVG/IIIF";
 import React from "react";
 import SharedSocial from "@/components/Shared/Social";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
@@ -124,6 +125,8 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
   const [color, setColor] = React.useState("default");
   const [width, setWidth] = React.useState(3000);
 
+  const iiifImageInfo = `${getInfoResponse(item)}/info.json`;
+
   const colors = [
     {
       label: "Default",
@@ -223,6 +226,13 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
               >
                 Embed HTML
               </a>
+            </li>
+            <li>
+              <CopyText
+                renderIcon={IIIF}
+                textPrompt="Copy IIIF"
+                textToCopy={iiifImageInfo}
+              />
             </li>
           </ItemActions>
         </ItemContent>
