@@ -10,6 +10,13 @@ interface ApiPostRequestParams {
   url: string;
 }
 
+async function apiGetStatus(url: string) {
+  return axios
+    .head(url, { withCredentials: true })
+    .then((response) => response.status)
+    .catch((error) => error.response.status);
+}
+
 async function apiGetRequest<R>(
   obj: ApiGetRequestParams
 ): Promise<R | undefined> {
@@ -76,4 +83,10 @@ function handleError(err: unknown) {
     console.log("Error", error.message);
   }
 }
-export { apiGetRequest, apiPostRequest, getIIIFResource, handleError };
+export {
+  apiGetRequest,
+  apiGetStatus,
+  apiPostRequest,
+  getIIIFResource,
+  handleError,
+};
