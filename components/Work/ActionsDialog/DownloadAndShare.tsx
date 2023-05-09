@@ -12,6 +12,8 @@ import {
   ItemRow,
   ItemStyled,
   ItemThumbnail,
+  ShareURL,
+  ShareURLActions,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
 import { makeBlob, mimicDownload } from "@samvera/image-downloader";
@@ -19,7 +21,7 @@ import { makeBlob, mimicDownload } from "@samvera/image-downloader";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
-import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
+import Heading from "@/components/Heading/Heading";
 import IIIF from "@/components/Shared/SVG/IIIF";
 import React from "react";
 import SharedSocial from "@/components/Shared/Social";
@@ -66,19 +68,35 @@ const DownloadAndShare: React.FC = () => {
       </ActionsDialogAside>
       <Content>
         {!isSharedLinkPage && (
-          <DefinitionListWrapper>
-            <dl>
-              <dt>IIIF Manifest</dt>
-              <dd>
-                <a href={manifest.id} target="_blank" rel="noreferrer">
-                  {manifest.id}
+          <>
+            <Heading as="h3" css={{ marginTop: "0" }}>
+              IIIF Manifest
+            </Heading>
+            <ShareURL>
+              <a href={manifest.id} target="_blank" rel="noreferrer">
+                {manifest.id}
+              </a>
+              <ShareURLActions>
+                <CopyText
+                  renderIcon={IIIF}
+                  textPrompt="Copy Manifest Link"
+                  textToCopy={manifest.id}
+                />
+                <a href="https://iiif.io/get-started/why-iiif/" target="_blank">
+                  What is IIIF?
                 </a>
-              </dd>
-            </dl>
-          </DefinitionListWrapper>
+                <a
+                  href={`https://projectmirador.org/embed/?iiif-content=${manifest.id}`}
+                  target="_blank"
+                >
+                  View in Mirador
+                </a>
+              </ShareURLActions>
+            </ShareURL>
+          </>
         )}
 
-        <h3>Embed Viewer</h3>
+        <Heading as="h3">Embed Viewer</Heading>
         {showEmbedWarning && <Announcement>{embedWarningMessage}</Announcement>}
         {!showEmbedWarning && (
           <EmbedViewer>
@@ -89,7 +107,7 @@ const DownloadAndShare: React.FC = () => {
 
         {Array.isArray(manifest?.items) && (
           <>
-            <h3>Download and Embed</h3>
+            <Heading as="h3">Download and Embed</Heading>
 
             {isWorkRestricted && !isSharedLinkPage && (
               <Announcement>

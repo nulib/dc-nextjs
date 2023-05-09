@@ -23,6 +23,7 @@ const StyledCopyText = styled("button", {
   cursor: "pointer",
   color: "$purple",
   fontWeight: "700",
+  fontFamily: "$northwesternSans",
   fontSize: "$gr3",
   whiteSpace: "nowrap",
 

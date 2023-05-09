@@ -5,18 +5,18 @@ import { styled } from "@/stitches.config";
 
 const EmbedViewer = styled("div", {
   border: "2px dashed $black10",
-  width: "calc(100% - $4)",
-  padding: "$3 $4",
+  width: "calc(100% - $gr4)",
+  padding: "$gr4",
 
   "@sm": {
     width: "100%",
   },
 
   pre: {
-    margin: "$3 0",
+    margin: "0 0 $gr3",
     whiteSpace: "break-spaces",
     borderRadius: "3px",
-    fontSize: "$3",
+    fontSize: "$gr2",
     lineHeight: "1.55em",
     wordBreak: "break-word",
   },
@@ -39,13 +39,13 @@ const EmbedHTMLActionRow = styled("div", {
 const ItemActions = styled("ul", {
   display: "flex",
   padding: "0",
-  margin: "$3 0",
+  margin: "$gr3 0",
   fontWeight: "400",
 
   li: {
     listStyle: "none",
-    margin: "0 $3 0 0",
-    fontSize: "$3",
+    margin: "0 $gr3 0 0",
+    fontSize: "$gr3",
 
     [`${StyledCopyText}`]: {
       color: "$black50",
@@ -111,6 +111,28 @@ const ItemStyled = styled("div", {
   margin: "$4 0 0",
 });
 
+const ShareURL = styled(EmbedHTML, {
+  "> a": {
+    fontSize: "$gr3",
+  },
+});
+
+const ShareURLActions = styled(EmbedHTMLActionRow, {
+  marginTop: "$gr3",
+
+  "> a, > button": {
+    marginLeft: "$gr3",
+    color: "$black50",
+    fontSize: "$gr3",
+    textDecoration: "underline",
+    fontWeight: "400",
+
+    "&:first-child": {
+      marginLeft: "0",
+    },
+  },
+});
+
 export {
   EmbedHTML,
   EmbedHTMLActionRow,
@@ -120,4 +142,6 @@ export {
   ItemRow,
   ItemStyled,
   ItemThumbnail,
+  ShareURL,
+  ShareURLActions,
 };
