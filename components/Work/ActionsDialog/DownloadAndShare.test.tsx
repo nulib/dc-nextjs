@@ -43,7 +43,7 @@ describe("DownloadAndShare", () => {
     );
     expect(screen.getByText("Embed Viewer")).toBeInTheDocument();
     expect(screen.getByText(embedWarningText)).toBeInTheDocument();
-    expect(screen.getByText("Download and Embed")).toBeInTheDocument();
+    expect(screen.getByText("Download and Embed Images")).toBeInTheDocument();
   });
 
   it("renders download but not embed HTML for a private, unpublished work", async () => {
