@@ -18,7 +18,8 @@ async function apiGetStatus(url: string) {
 }
 
 async function apiGetRequest<R>(
-  obj: ApiGetRequestParams
+  obj: ApiGetRequestParams,
+  rawResponse?: boolean
 ): Promise<R | undefined> {
   const { url } = obj;
 
@@ -27,8 +28,9 @@ async function apiGetRequest<R>(
       url,
       withCredentials: true,
     });
-    const data = response.data?.data as R;
-    return data;
+    const work = response.data?.data as R;
+    // @ts-ignore
+    return rawResponse ? (response as unknown) : work;
   } catch (err) {
     handleError(err);
   }
