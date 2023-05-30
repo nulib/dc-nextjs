@@ -3,6 +3,7 @@ import SectionTop, {
   SectionSubhead,
   SectionTitle,
 } from "@/components/Shared/SectionTop/SectionTop";
+
 import AboutCollectionGrid from "@/components/About/CollectionGrid";
 import { BlockStyled } from "@/components/Shared/BlockStyled";
 import Container from "@/components/Shared/Container";
@@ -245,6 +246,72 @@ const AboutPage: NextPage = () => {
               </p>
             </article>
           </BlockStyled>
+
+          <BlockStyled as="section" data-testid="api-section">
+            <Heading as="h2" css={{ marginBottom: "0 !important" }}>
+              Digital Collections API and Collections as Data
+            </Heading>
+            <p>
+              Northwestern University Libraries supports the use of our
+              collections as data to further research. We offer a full-featured
+              API for accessing our collection data in your own applications and
+              workflows. The{" "}
+              <LinkStyled
+                href="https://api.dc.library.northwestern.edu/docs/v2/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Digital Collections API
+              </LinkStyled>{" "}
+              allows users to search, aggregate, and use data from Northwestern
+              Collections in a simple RESTful inteface. All results can be
+              returned as generic JSON data or IIIF-compliant manifests and
+              collections. Code examples and more information are available on
+              the{" "}
+              <LinkStyled
+                href="https://api.dc.library.northwestern.edu/docs/v2/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Digital Collections API page
+              </LinkStyled>
+              .
+            </p>
+
+            <p>
+              In addition to the full-featured API, we publish a{" "}
+              <LinkStyled
+                href="https://github.com/nulib/nuldc"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                command-line interface (CLI) application
+              </LinkStyled>{" "}
+              with built-in features for querying, aggregating, and accessing
+              works. The nuldc cli application allows users to return any
+              results available in Digital Collections via the terminal for
+              further processing.
+            </p>
+
+            <p>
+              For researchers looking to work with the full, public dataset, we
+              offer static downloads in csv, json, and xml format. The dataset
+              is{" "}
+              <LinkStyled
+                href="https://github.com/nulib/nuldc-metadata"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                published on Github
+              </LinkStyled>
+              . Using this dataset is a simple way to browse and analyze the
+              data without having to collect the information yourself. The
+              dataset is updated weekly.
+            </p>
+
+            <p>Let us know what you build!</p>
+          </BlockStyled>
+
           <BlockStyled as="section" data-testid="platform-section">
             <Heading as="h2" css={{ marginBottom: "0 !important" }}>
               Platform
