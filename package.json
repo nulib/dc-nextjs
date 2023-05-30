@@ -22,7 +22,7 @@
     "@iiif/parser": "^1.0.10",
     "@next/bundle-analyzer": "^13.1.6",
     "@next/font": "^13.1.6",
-    "@nulib/dcapi-types": "^2.0.0",
+    "@nulib/dcapi-types": "^2.1.0",
     "@nulib/design-system": "^1.6.2",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-accordion": "^1.0.1",
