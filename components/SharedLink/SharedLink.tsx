@@ -8,14 +8,26 @@ import RelatedItems from "@/components/Shared/RelatedItems";
 import { type Work } from "@nulib/dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
+import { formatDateLong } from "@/lib/utils/date-helpers";
 import { getWorkSliders } from "@/lib/work-helpers";
+import { styled } from "@/stitches.config";
+
+const BoldText = styled("strong", {
+  fontFamily: "$northwesternSansBold",
+  fontWeight: "400",
+});
 
 interface SharedLinkProps {
+  linkExpiration?: string;
   manifest: Manifest | null;
   work: Work | null;
 }
 
-const SharedLink: React.FC<SharedLinkProps> = ({ manifest, work }) => {
+const SharedLink: React.FC<SharedLinkProps> = ({
+  linkExpiration,
+  manifest,
+  work,
+}) => {
   const related = work ? getWorkSliders(work) : [];
 
   return (
@@ -43,7 +55,10 @@ const SharedLink: React.FC<SharedLinkProps> = ({ manifest, work }) => {
                   Read more
                 </a>
               </p>
-              <p>This work was shared with you via a temporary link.</p>
+              <p>
+                This work was shared with you via a temporary link. It will
+                expire <BoldText>{formatDateLong(linkExpiration)}</BoldText>
+              </p>
             </div>
           </Announcement>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
