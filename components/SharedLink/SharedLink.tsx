@@ -12,8 +12,9 @@ import { formatDateLong } from "@/lib/utils/date-helpers";
 import { getWorkSliders } from "@/lib/work-helpers";
 import { styled } from "@/stitches.config";
 
-const BoldText = styled("span", {
+const BoldText = styled("strong", {
   fontFamily: "$northwesternSansBold",
+  fontWeight: "400",
 });
 
 interface SharedLinkProps {
