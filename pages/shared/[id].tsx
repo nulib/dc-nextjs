@@ -1,5 +1,6 @@
 import { apiGetRequest, getIIIFResource } from "@/lib/dc-api";
 import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
 import Layout from "@/components/layout";
@@ -15,16 +16,23 @@ const SharedPage: NextPage = () => {
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
   const router = useRouter();
+  const [linkExpiration, setLinkExpiration] = useState<string>("");
 
   async function getWorkAndManifest(id: string) {
     try {
-      const work = await apiGetRequest<Work>({
-        url: `${DCAPI_ENDPOINT}/shared-links/${id}`,
-      });
-      if (!work) return;
-      setWork(work);
-      const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
+      const response = await apiGetRequest<AxiosResponse>(
+        {
+          url: `${DCAPI_ENDPOINT}/shared-links/${id}`,
+        },
+        true
+      );
+      if (!response) return;
+      setWork(response.data.data);
+      const manifest = await getIIIFResource<Manifest>(
+        response.data.data.iiif_manifest
+      );
       setManifest(manifest);
+      setLinkExpiration(response.data.info.link_expiration || "");
     } catch (err) {
       console.error("err", err);
     }
@@ -51,7 +59,11 @@ const SharedPage: NextPage = () => {
         />
       </Head>
       <Layout>
-        <SharedLink manifest={manifest} work={work} />
+        <SharedLink
+          manifest={manifest}
+          work={work}
+          linkExpiration={linkExpiration}
+        />
       </Layout>
     </WorkProvider>
   );

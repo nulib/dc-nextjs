@@ -15,18 +15,21 @@ import {
   ShareURL,
   ShareURLActions,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
-import { Label, Thumbnail } from "@samvera/nectar-iiif";
-import { makeBlob, mimicDownload } from "@samvera/image-downloader";
 
+import { Label, Thumbnail } from "@samvera/nectar-iiif";
+import React, { useEffect, useState } from "react";
+import {
+  getAnnotationBodyType,
+  getInfoResponse,
+} from "@/lib/iiif/manifest-helpers";
+import { makeBlob, mimicDownload } from "@samvera/image-downloader";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import IIIF from "@/components/Shared/SVG/IIIF";
-import React from "react";
 import SharedSocial from "@/components/Shared/Social";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
-import { getInfoResponse } from "@/lib/iiif/manifest-helpers";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
 import { useWorkState } from "@/context/work-context";
@@ -37,6 +40,7 @@ const embedWarningMessage =
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
+  const [imageCanvases, setImageCanvases] = useState<Canvas[]>([]);
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
   const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
@@ -52,6 +56,15 @@ const DownloadAndShare: React.FC = () => {
         work?.title
       }" width="100%" height="800"></iframe>`
     : "";
+
+  useEffect(() => {
+    if (manifest?.items && Array.isArray(manifest?.items)) {
+      const imageCanvases = manifest.items.filter(
+        (item) => getAnnotationBodyType(item) === "Image"
+      );
+      setImageCanvases(imageCanvases);
+    }
+  }, [manifest]);
 
   if (!manifest || !work) return <></>;
 
@@ -105,9 +118,9 @@ const DownloadAndShare: React.FC = () => {
           </EmbedViewer>
         )}
 
-        {Array.isArray(manifest?.items) && (
+        {imageCanvases.length > 0 && (
           <>
-            <Heading as="h3">Download and Embed</Heading>
+            <Heading as="h3">Download and Embed Images</Heading>
 
             {isWorkRestricted && !isSharedLinkPage && (
               <Announcement>
@@ -117,7 +130,7 @@ const DownloadAndShare: React.FC = () => {
 
             {(!isWorkRestricted || isSharedLinkPage) && (
               <div data-testid="download-embed-items">
-                {manifest.items.map((item) => (
+                {imageCanvases.map((item) => (
                   <Item
                     item={item}
                     key={item.id}

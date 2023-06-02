@@ -1,4 +1,9 @@
-import { Annotation, AnnotationBody, Canvas } from "@iiif/presentation-3";
+import {
+  Annotation,
+  AnnotationBody,
+  Canvas,
+  ContentResource,
+} from "@iiif/presentation-3";
 
 interface MetadataInput {
   label: string;
@@ -33,4 +38,21 @@ export const getInfoResponse = (canvas: Canvas) => {
   }
 
   return infoResponse;
+};
+
+export const getAnnotationBodyType = (canvas: Canvas) => {
+  let annotationBodyType;
+
+  if (
+    canvas.items &&
+    canvas.items[0] &&
+    canvas.items[0].items &&
+    canvas.items[0].items[0]
+  ) {
+    const annotation: Annotation = canvas.items[0].items[0];
+    const body = annotation.body as ContentResource;
+    if (body && body.type) annotationBodyType = body.type;
+  }
+
+  return annotationBodyType;
 };
