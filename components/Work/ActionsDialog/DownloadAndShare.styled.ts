@@ -120,7 +120,7 @@ const ShareURL = styled(EmbedHTML, {
 const ShareURLActions = styled(EmbedHTMLActionRow, {
   marginTop: "$gr3",
 
-  "> a, > button": {
+  "> a, > button, > span": {
     marginLeft: "$gr3",
     color: "$black50",
     fontSize: "$gr3",
