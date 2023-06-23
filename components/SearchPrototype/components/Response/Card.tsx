@@ -1,15 +1,31 @@
 import React from "react";
+import ResponseCertainty from "./Certainity";
 import { styled } from "@/stitches.config";
 
-const ResponseCard = ({ title }: { title: string }) => {
+export interface ResponseCardProps {
+  certainty: number;
+  id: string;
+  title: string;
+  type: "Audio" | "Image" | "Video";
+}
+
+const ResponseCard: React.FC<ResponseCardProps> = ({
+  certainty,
+  title,
+  type,
+}) => {
   return (
     <StyledResponseCard>
       <figure>
-        <ImageWrapper></ImageWrapper>
-        <figcaption>
-          <strong>{title}</strong>
-          <span>Image</span>
-        </figcaption>
+        <ImageWrapper>
+          <ResponseCertainty amount={certainty} />
+        </ImageWrapper>
+        <Context>
+          <figcaption>
+            <strong>{title}</strong>
+            <span>{type}</span>
+          </figcaption>
+        </Context>
       </figure>
     </StyledResponseCard>
   );
@@ -23,12 +39,17 @@ const ImageWrapper = styled("div", {
   height: "$gr8",
   width: "$gr8",
   border: "1px solid $purple10",
+  position: "relative",
+});
+
+const Context = styled("div", {
+  padding: "$gr2 0",
+  display: "flex",
+  justifyContent: "space-between",
 });
 
 const StyledResponseCard = styled("div", {
   figcaption: {
-    padding: "$gr2 0",
-
     span: {
       color: "$black50 !important",
       display: "block",
