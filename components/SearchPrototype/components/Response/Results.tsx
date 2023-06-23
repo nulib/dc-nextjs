@@ -32,6 +32,7 @@ const StyledResponseResults = styled("div", {
 
   p: {
     fontSize: "$gr3",
+    fontFamily: "$northwesternSerifRegular !important",
   },
 });
 
