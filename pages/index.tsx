@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
   return (
     <StyledHomePage>
       <Container>
-        <Heading as="h1">Vector Search Prototype</Heading>
+        <Heading as="h1">Chat Search Prototype</Heading>
         <SearchPrototype />
       </Container>
     </StyledHomePage>
@@ -23,11 +23,5 @@ const StyledHomePage = styled("div", {
     marginBottom: "$gr5 !important",
   },
 });
-
-export async function getStaticProps() {
-  return {
-    props: {},
-  };
-}
 
 export default HomePage;
