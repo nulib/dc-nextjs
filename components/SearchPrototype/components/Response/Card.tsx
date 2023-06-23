@@ -39,6 +39,7 @@ const StyledResponseCard = styled("div", {
     strong: {
       display: "block",
       fontFamily: "$northwesternSansBold",
+      fontWeight: "400",
       marginBottom: "3px",
     },
   },
