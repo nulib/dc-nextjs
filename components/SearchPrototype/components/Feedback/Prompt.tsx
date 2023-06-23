@@ -19,7 +19,6 @@ const StyledFeedbackPrompt = styled("div", {
   fontFamily: "$northwesternSansRegular !important",
   textAlign: "center",
   color: "$black80",
-  padding: "$gr3 0",
 
   "a, a:visited": {
     textDecoration: "underline",

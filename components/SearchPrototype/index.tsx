@@ -1,3 +1,4 @@
+import FeedbackPrompt from "./components/Feedback/Prompt";
 import React from "react";
 import RequestInput from "./components/Request/Input";
 import ResponseResults from "./components/Response/Results";
@@ -7,6 +8,7 @@ const SearchPrototype = () => {
     <>
       <RequestInput />
       <ResponseResults />
+      <FeedbackPrompt />
     </>
   );
 };

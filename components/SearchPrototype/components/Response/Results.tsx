@@ -21,7 +21,7 @@ const ResponseResults = () => {
 /* eslint sort-keys: 0 */
 
 const StyledResponseResults = styled("div", {
-  padding: "$gr3 0",
+  padding: "$gr4 0",
 
   "> div": {
     display: "flex",
