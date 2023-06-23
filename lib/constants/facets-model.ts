@@ -48,6 +48,11 @@ export const ALL_FACETS: FacetsList = {
       label: "Language",
     },
     {
+      field: "license.label",
+      id: "license",
+      label: "License",
+    },
+    {
       field: "rights_statement.label",
       id: "rightsStatement",
       label: "Rights Statement",
@@ -120,6 +125,11 @@ export const FACETS_CREATOR: FacetsGroup = {
 
 export const FACETS_RIGHTS_USAGE: FacetsGroup = {
   facets: [
+    {
+      field: "license.label",
+      id: "license",
+      label: "License",
+    },
     {
       field: "rights_statement.label",
       id: "rightsStatement",
