@@ -4,16 +4,13 @@ import mockResponse from "../../fixtures/mock-response";
 import { styled } from "@/stitches.config";
 
 const ResponseResults = () => {
+  const { data, summary } = mockResponse;
+
   return (
     <StyledResponseResults>
-      <p>
-        Foo lipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor
-        mauris eget. Foo lipsum dolor sit amet, consectetur adipiscing elit. Foo
-        lipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor mauris
-        eget. Foo lipsum dolor sit amet, consectetur adipiscing elit.
-      </p>
+      {summary && <p>{summary}</p>}
       <div>
-        {mockResponse.map((result) => (
+        {data.map((result) => (
           <ResponseCard {...result} key={result.id} />
         ))}
       </div>
