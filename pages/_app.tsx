@@ -47,11 +47,11 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 
   React.useEffect(() => {
     if (typeof window !== "undefined" && mounted) {
-      const { dataLayer } = pageProps;
+      const { dataLayer } = pageProps; // eslint-disable-line @typescript-eslint/no-unused-vars
 
       const payload = {
         ...pageProps.dataLayer,
-        isLoggedIn: user?.isLoggedIn,
+        isLoggedIn: user?.isLoggedIn
       };
 
       // send pageProps to dataLayer
@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       // send VirtualPageView event to dataLayer
       // @ts-ignore
       window.dataLayer?.push({
-        event: "VirtualPageView",
+        event: "VirtualPageView"
       });
     }
   }, [mounted, pageProps, user]);

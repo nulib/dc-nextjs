@@ -1,55 +1,40 @@
-import {
-  HomepageCollections as Collections,
-  HomepageHero as Hero,
-  HomepageOverview as Overview,
-  HomepageWorks as Works,
-} from "@/components/Homepage";
-
-import Head from "next/head";
-import { HomeContextProvider } from "@/context/home-context";
-import Layout from "@/components/layout";
-import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { buildDataLayer } from "@/lib/ga/data-layer";
-import { loadDefaultStructuredData } from "@/lib/json-ld";
+import Container from "@/components/Shared/Container";
+import Heading from "@/components/Heading/Heading";
+import SearchPrototype from "@/components/SearchPrototype";
+import { styled } from "@/stitches.config";
 
 const HomePage: React.FC = () => {
   return (
-    <>
-      <HomeContextProvider>
-        {/* Google Structured Data via JSON-LD */}
-        <Head>
-          <script
-            key="app-ld-json"
-            id="app-ld-json"
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(loadDefaultStructuredData(), null, "\t"),
-            }}
-          />
-        </Head>
-        <Layout header="hero">
-          <Hero />
-          <Overview />
-          <Collections />
-          <Works />
-        </Layout>
-      </HomeContextProvider>
-    </>
+    <StyledHomePage>
+      <Container>
+        <Heading as="h1">Chat Search Prototype</Heading>
+        <SearchPrototypeWrapper>
+          <SearchPrototype />
+        </SearchPrototypeWrapper>
+      </Container>
+    </StyledHomePage>
   );
 };
 
-export async function getStaticProps() {
-  const dataLayer = buildDataLayer({
-    pageTitle: "Homepage",
-  });
+/* eslint sort-keys: 0 */
 
-  const openGraphData = {
-    "og:url": PRODUCTION_URL,
-  };
+const StyledHomePage = styled("div", {
+  color: "$black80",
+  fontFamily: "$northwesternSansRegular",
+  fontSize: "$gr3",
 
-  return {
-    props: { dataLayer, openGraphData },
-  };
-}
+  h1: {
+    marginBottom: "$gr5 !important",
+
+    "&::before": {
+      backgroundColor: "$brightBlueB !important",
+    },
+  },
+});
+
+const SearchPrototypeWrapper = styled("div", {
+  margin: "$gr4 -$gr4",
+  padding: "$gr4",
+});
 
 export default HomePage;
