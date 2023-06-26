@@ -3,14 +3,21 @@ import Heading from "@/components/Heading/Heading";
 import React from "react";
 import mockAnswer from "../../fixtures/mock-answer";
 import { styled } from "@/stitches.config";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const AnswerResults = () => {
+const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
   const { answer, question, source_documents } = mockAnswer;
+  const [questions] = useLocalStorage<any>("nul-chat-search", []);
+
+  const data = questions.find((q: any) => q.id === activeQuestion);
+
+  console.log(question);
+  console.log(activeQuestion);
 
   return (
     <StyledAnswerResults>
       <Header>
-        <Heading as="h2">{question}</Heading>
+        <Heading as="h2">{data?.question}</Heading>
       </Header>
       <Answer>{answer}</Answer>
       <Sources>

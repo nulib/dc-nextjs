@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import AnswerResults from "./components/Answer/Results";
 import FeedbackPrompt from "./components/Feedback/Prompt";
 import QuestionInput from "./components/Question/Input";
-import React from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 const SearchPrototype = () => {
+  const [activeQuestion, setActiveQuestion] = useState<number>();
   const [questions, saveQuestions] = useLocalStorage<any>(
     "nul-chat-search",
     []
@@ -31,6 +32,7 @@ const SearchPrototype = () => {
        * save the question in local storage
        */
       saveQuestions([...questions, { id, question, timestamp }]);
+      setActiveQuestion(id);
     }
   };
 
@@ -39,7 +41,7 @@ const SearchPrototype = () => {
       <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
       {questions.length ? (
         <>
-          <AnswerResults />
+          <AnswerResults activeQuestion={activeQuestion as number} />
           <FeedbackPrompt />
         </>
       ) : (
