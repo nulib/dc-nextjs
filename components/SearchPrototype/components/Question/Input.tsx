@@ -19,20 +19,24 @@ const QuestionInput = () => {
 /* eslint sort-keys: 0 */
 
 const StyledQuestionInput = styled("form", {
-  backgroundColor: "$gray6",
-  borderRadius: "5px",
+  backgroundColor: "$white",
   display: "flex",
   position: "relative",
-  border: "1px solid $purple10",
   boxShadow: "0 3px 8px 0 rgba(0, 0, 0, 0.05)",
+  borderBottom: "1px solid $gray6",
+  margin: "-$gr4 -$gr4 0",
+  borderRadius: "13px",
+  borderBottomLeftRadius: "0",
+  borderBottomRightRadius: "0",
 
   svg: {
     height: "$gr3",
-    color: "$black20",
+    color: "$brightBlueB",
   },
 
   input: {
     flexGrow: 1,
+    outlineColor: "$brightBlueB",
   },
 
   button: {
@@ -47,8 +51,8 @@ const StyledQuestionInput = styled("form", {
     border: "none",
     color: "$black80",
     fontFamily: "$northwesternSansRegular",
-    fontSize: "$gr3",
-    padding: "$gr2 $gr3",
+    fontSize: "$gr4",
+    padding: "$gr3 $gr4",
   },
 });
 

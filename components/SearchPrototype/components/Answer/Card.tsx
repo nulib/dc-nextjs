@@ -34,7 +34,6 @@ const ImageWrapper = styled("div", {
   borderRadius: "5px",
   height: "$gr8",
   width: "$gr8",
-  border: "1px solid $purple10",
   position: "relative",
 });
 

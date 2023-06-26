@@ -27,7 +27,7 @@ const StyledHomePage = styled("div", {
     marginBottom: "$gr5 !important",
 
     "&::before": {
-      backgroundColor: "$purple60 !important",
+      backgroundColor: "$brightBlueB !important",
     },
   },
 });

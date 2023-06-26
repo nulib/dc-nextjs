@@ -31,6 +31,7 @@ const StyledAnswerResults = styled("div", {
   },
 
   p: {
+    color: "$black",
     fontSize: "$gr3",
     fontFamily: "$northwesternSerifRegular !important",
   },
