@@ -8,11 +8,15 @@ const HomePage: React.FC = () => {
     <StyledHomePage>
       <Container>
         <Heading as="h1">Chat Search Prototype</Heading>
-        <SearchPrototype />
+        <SearchPrototypeWrapper>
+          <SearchPrototype />
+        </SearchPrototypeWrapper>
       </Container>
     </StyledHomePage>
   );
 };
+
+/* eslint sort-keys: 0 */
 
 const StyledHomePage = styled("div", {
   color: "$black80",
@@ -21,7 +25,19 @@ const StyledHomePage = styled("div", {
 
   h1: {
     marginBottom: "$gr5 !important",
+
+    "&::before": {
+      backgroundColor: "$purple60 !important",
+    },
   },
+});
+
+const SearchPrototypeWrapper = styled("div", {
+  backgroundColor: "$white",
+  borderRadius: "13px",
+  boxShadow: "0 8px 21px 0 rgba(0, 0, 0, 0.13)",
+  margin: "$gr4 -$gr4",
+  padding: "$gr4",
 });
 
 export default HomePage;
