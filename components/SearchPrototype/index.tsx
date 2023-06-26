@@ -1,13 +1,13 @@
+import AnswerResults from "./components/Answer/Results";
 import FeedbackPrompt from "./components/Feedback/Prompt";
+import QuestionInput from "./components/Question/Input";
 import React from "react";
-import RequestInput from "./components/Request/Input";
-import ResponseResults from "./components/Response/Results";
 
 const SearchPrototype = () => {
   return (
     <>
-      <RequestInput />
-      <ResponseResults />
+      <QuestionInput />
+      <AnswerResults />
       <FeedbackPrompt />
     </>
   );

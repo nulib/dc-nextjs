@@ -1,34 +1,25 @@
 import AnswerCertainty from "./Certainity";
-import { DCAPI_PRODUCTION_ENDPOINT } from "@/lib/constants/endpoints";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import { styled } from "@/stitches.config";
 
 export interface AnswerCardProps {
-  metadata: any;
-  page_content: string;
+  certainty: number;
+  id: string;
+  title: string;
+  type: "Audio" | "Image" | "Video";
 }
 
-const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
-  const { _additional, source, work_type } = metadata;
-  console.log(metadata);
-  const dcLink = `https://dc.library.northwestern.edu/items/${source}`;
-  const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${source}/thumbnail?aspect=square`;
-
+const AnswerCard: React.FC<AnswerCardProps> = ({ certainty, title, type }) => {
   return (
-    <StyledAnswerCard href={dcLink} target="_blank">
+    <StyledAnswerCard>
       <figure>
         <ImageWrapper>
-          <Image alt={page_content} fill={true} src={thumbnail} />
-          {_additional?.certainty && (
-            <AnswerCertainty amount={_additional?.certainty} />
-          )}
+          <AnswerCertainty amount={certainty} />
         </ImageWrapper>
         <Context>
           <figcaption>
-            <strong>{page_content}</strong>
-            <span>{work_type}</span>
+            <strong>{title}</strong>
+            <span>{type}</span>
           </figcaption>
         </Context>
       </figure>
@@ -43,12 +34,8 @@ const ImageWrapper = styled("div", {
   borderRadius: "5px",
   height: "$gr8",
   width: "$gr8",
+  border: "1px solid $purple10",
   position: "relative",
-
-  img: {
-    color: "transparent",
-    borderRadius: "6px",
-  },
 });
 
 const Context = styled("div", {
@@ -57,18 +44,16 @@ const Context = styled("div", {
   justifyContent: "space-between",
 });
 
-const StyledAnswerCard = styled(Link, {
+const StyledAnswerCard = styled("div", {
   figcaption: {
-    width: "$gr8",
     span: {
       color: "$black50 !important",
       display: "block",
+      fontFamily: "$northwesternSansLight",
       fontSize: "$gr2",
-      whiteSpace: "wrap",
     },
 
     strong: {
-      color: "$black",
       display: "block",
       fontFamily: "$northwesternSansBold",
       fontWeight: "400",

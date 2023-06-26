@@ -1,36 +1,12 @@
-import React, { useState } from "react";
 import { Icon } from "@nulib/design-system";
 import { IconArrowForward } from "@/components/Shared/SVG/Icons";
+import React from "react";
 import { styled } from "@stitches/react";
 
-const QuestionInput = ({
-  onQuestionSubmission,
-}: {
-  onQuestionSubmission: (question: string) => void;
-}) => {
-  const [question, setQuestion] = useState("");
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuestion(event.target.value);
-  };
-
-  const handleQuestionSubmission = (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
-    onQuestionSubmission(question);
-
-    // @ts-ignore
-    event.target.reset();
-  };
-
+const QuestionInput = () => {
   return (
-    <StyledQuestionInput onSubmit={handleQuestionSubmission}>
-      <input
-        placeholder="Something on your mind?"
-        onChange={handleInputChange}
-      />
+    <StyledQuestionInput>
+      <input placeholder="Something on your mind?" />
       <button type="submit" aria-label="Search">
         <Icon>
           <IconArrowForward />
@@ -43,23 +19,20 @@ const QuestionInput = ({
 /* eslint sort-keys: 0 */
 
 const StyledQuestionInput = styled("form", {
-  backgroundColor: "$white",
+  backgroundColor: "$gray6",
+  borderRadius: "5px",
   display: "flex",
   position: "relative",
-  border: "1px solid $gray6",
-  borderBottom: "none",
-  boxShadow: "0 13px 21px 0 rgba(0, 0, 0, 0.13)",
-  margin: "-$gr4 -$gr4 $gr5",
-  borderRadius: "8px",
+  border: "1px solid $purple10",
+  boxShadow: "0 3px 8px 0 rgba(0, 0, 0, 0.05)",
 
   svg: {
     height: "$gr3",
-    color: "$brightBlueB",
+    color: "$black20",
   },
 
   input: {
     flexGrow: 1,
-    outlineColor: "$brightBlueB",
   },
 
   button: {
@@ -74,8 +47,8 @@ const StyledQuestionInput = styled("form", {
     border: "none",
     color: "$black80",
     fontFamily: "$northwesternSansRegular",
-    fontSize: "$gr4",
-    padding: "$gr3 $gr4",
+    fontSize: "$gr3",
+    padding: "$gr2 $gr3",
   },
 });
 
