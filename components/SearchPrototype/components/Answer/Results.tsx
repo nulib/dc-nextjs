@@ -1,4 +1,5 @@
 import AnswerCard from "./Card";
+import Heading from "@/components/Heading/Heading";
 import React from "react";
 import mockAnswer from "../../fixtures/mock-answer";
 import { styled } from "@/stitches.config";
@@ -8,7 +9,9 @@ const AnswerResults = () => {
 
   return (
     <StyledAnswerResults>
-      <Question>{question}</Question>
+      <Header>
+        <Heading as="h2">{question}</Heading>
+      </Header>
       <Answer>{answer}</Answer>
       <Sources>
         {source_documents.map((document: any) => (
@@ -21,11 +24,14 @@ const AnswerResults = () => {
 
 /* eslint sort-keys: 0 */
 
-const Question = styled("header", {
-  color: "$black",
-  fontSize: "$gr5",
-  fontFamily: "$northwesternSansBold !important",
-  padding: "$gr2 0 0",
+const Header = styled("header", {
+  h2: {
+    color: "$black !important",
+    fontSize: "$gr5 !important",
+    fontFamily: "$northwesternSansBold !important",
+    padding: "$gr2 0 0 !important",
+    margin: "0 !important",
+  },
 });
 
 const Answer = styled("article", {
