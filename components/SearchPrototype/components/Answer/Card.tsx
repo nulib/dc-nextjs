@@ -13,14 +13,15 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
   page_content,
   _additional,
 }) => {
-  const { certainty } = _additional;
   const { work_type } = metadata;
 
   return (
     <StyledAnswerCard>
       <figure>
         <ImageWrapper>
-          <AnswerCertainty amount={certainty} />
+          {_additional?.certainty && (
+            <AnswerCertainty amount={_additional?.certainty} />
+          )}
         </ImageWrapper>
         <Context>
           <figcaption>

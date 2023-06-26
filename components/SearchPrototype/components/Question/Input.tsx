@@ -18,7 +18,11 @@ const QuestionInput = ({
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+    event.stopPropagation();
     onQuestionSubmission(question);
+
+    // @ts-ignore
+    event.target.reset();
   };
 
   return (
