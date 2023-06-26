@@ -19,9 +19,8 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
       const typed = new Typed(questionElement.current, {
         strings: [`${entry?.question}`],
         typeSpeed: 5,
-        showCursor: false,
         onComplete: function (self) {
-          console.log(self);
+          self.cursor.remove();
           if (!entry?.response) {
             axios({
               data: entry?.question,
@@ -46,7 +45,7 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
         </Heading>
       </Header>
 
-      {response ? (
+      {response?.question === entry?.question ? (
         <>
           <Answer>{response?.answer}</Answer>
           <Sources>
