@@ -1,12 +1,32 @@
+import React, { useState } from "react";
 import { Icon } from "@nulib/design-system";
 import { IconArrowForward } from "@/components/Shared/SVG/Icons";
-import React from "react";
 import { styled } from "@stitches/react";
 
-const QuestionInput = () => {
+const QuestionInput = ({
+  onQuestionSubmission,
+}: {
+  onQuestionSubmission: (question: string) => void;
+}) => {
+  const [question, setQuestion] = useState("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuestion(event.target.value);
+  };
+
+  const handleQuestionSubmission = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    onQuestionSubmission(question);
+  };
+
   return (
-    <StyledQuestionInput>
-      <input placeholder="Something on your mind?" />
+    <StyledQuestionInput onSubmit={handleQuestionSubmission}>
+      <input
+        placeholder="Something on your mind?"
+        onChange={handleInputChange}
+      />
       <button type="submit" aria-label="Search">
         <Icon>
           <IconArrowForward />
@@ -26,8 +46,6 @@ const StyledQuestionInput = styled("form", {
   borderBottom: "1px solid $gray6",
   margin: "-$gr4 -$gr4 0",
   borderRadius: "13px",
-  borderBottomLeftRadius: "0",
-  borderBottomRightRadius: "0",
 
   svg: {
     height: "$gr3",

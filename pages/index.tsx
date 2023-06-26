@@ -37,7 +37,7 @@ const SearchPrototypeWrapper = styled("div", {
   borderRadius: "13px",
   boxShadow: "0 8px 21px 0 rgba(0, 0, 0, 0.13)",
   margin: "$gr4 -$gr4",
-  padding: "$gr4",
+  padding: "$gr4 $gr4 0",
 });
 
 export default HomePage;

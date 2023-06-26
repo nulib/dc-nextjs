@@ -4,15 +4,15 @@ import mockAnswer from "../../fixtures/mock-answer";
 import { styled } from "@/stitches.config";
 
 const AnswerResults = () => {
-  const { data, summary } = mockAnswer;
+  const { answer, question, source_documents } = mockAnswer;
 
   return (
     <StyledAnswerResults>
-      <Question>How many photos of dogs do you have?</Question>
-      <Answer>{summary}</Answer>
+      <Question>{question}</Question>
+      <Answer>{answer}</Answer>
       <Sources>
-        {data.map((result) => (
-          <AnswerCard {...result} key={result.id} />
+        {source_documents.map((document: any) => (
+          <AnswerCard {...document} key={document.identifier} />
         ))}
       </Sources>
     </StyledAnswerResults>
@@ -23,7 +23,7 @@ const AnswerResults = () => {
 
 const Question = styled("header", {
   color: "$black",
-  fontSize: "$gr4",
+  fontSize: "$gr5",
   fontFamily: "$northwesternSansBold !important",
   padding: "$gr2 0 0",
 });

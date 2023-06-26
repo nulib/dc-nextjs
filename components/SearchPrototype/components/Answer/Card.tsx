@@ -3,13 +3,19 @@ import React from "react";
 import { styled } from "@/stitches.config";
 
 export interface AnswerCardProps {
-  certainty: number;
-  id: string;
-  title: string;
-  type: "Audio" | "Image" | "Video";
+  _additional: any;
+  metadata: any;
+  page_content: string;
 }
 
-const AnswerCard: React.FC<AnswerCardProps> = ({ certainty, title, type }) => {
+const AnswerCard: React.FC<AnswerCardProps> = ({
+  metadata,
+  page_content,
+  _additional,
+}) => {
+  const { certainty } = _additional;
+  const { work_type } = metadata;
+
   return (
     <StyledAnswerCard>
       <figure>
@@ -18,8 +24,8 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ certainty, title, type }) => {
         </ImageWrapper>
         <Context>
           <figcaption>
-            <strong>{title}</strong>
-            <span>{type}</span>
+            <strong>{page_content}</strong>
+            <span>{work_type}</span>
           </figcaption>
         </Context>
       </figure>
@@ -45,11 +51,13 @@ const Context = styled("div", {
 
 const StyledAnswerCard = styled("div", {
   figcaption: {
+    width: "$gr8",
     span: {
       color: "$black50 !important",
       display: "block",
       fontFamily: "$northwesternSansLight",
       fontSize: "$gr2",
+      whiteSpace: "wrap",
     },
 
     strong: {
