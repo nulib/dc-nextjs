@@ -8,33 +8,42 @@ const AnswerResults = () => {
 
   return (
     <StyledAnswerResults>
-      {summary && <p>{summary}</p>}
-      <div>
+      <Question>How many photos of dogs do you have?</Question>
+      <Answer>{summary}</Answer>
+      <Sources>
         {data.map((result) => (
           <AnswerCard {...result} key={result.id} />
         ))}
-      </div>
+      </Sources>
     </StyledAnswerResults>
   );
 };
 
 /* eslint sort-keys: 0 */
 
+const Question = styled("header", {
+  color: "$black",
+  fontSize: "$gr4",
+  fontFamily: "$northwesternSansBold !important",
+  padding: "$gr2 0 0",
+});
+
+const Answer = styled("article", {
+  fontSize: "$gr3",
+  fontFamily: "$northwesternSerifRegular !important",
+  lineHeight: "1.76em",
+  padding: "$gr3 0",
+});
+
+const Sources = styled("div", {
+  display: "flex",
+  gap: "$gr4",
+  overflowX: "scroll",
+  padding: "$gr1 0",
+});
+
 const StyledAnswerResults = styled("div", {
   padding: "$gr4 0",
-
-  "> div": {
-    display: "flex",
-    gap: "$gr4",
-    overflowX: "scroll",
-    padding: "$gr1 0",
-  },
-
-  p: {
-    color: "$black",
-    fontSize: "$gr3",
-    fontFamily: "$northwesternSerifRegular !important",
-  },
 });
 
 export default AnswerResults;

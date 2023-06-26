@@ -10,16 +10,17 @@ const AnswerCertainty = ({ amount }: { amount: number }) => {
 /* eslint sort-keys: 0 */
 
 const StyledAnswerCertainty = styled("span", {
-  backgroundColor: "$black80",
-  color: "$white",
+  backgroundColor: "$white",
+  color: "$brightBlueB",
   display: "flex",
-  fontFamily: "$northwesternSerifRegular",
-  fontSize: "$gr1",
+  fontFamily: "$northwesternSerifBold",
+  fontSize: "$gr2",
   lineHeight: "1",
   padding: "$gr1",
   position: "absolute",
   borderTopLeftRadius: "5px",
   borderBottomRightRadius: "5px",
+  border: "1px solid $gray6",
   right: "0",
   bottom: "0",
 });

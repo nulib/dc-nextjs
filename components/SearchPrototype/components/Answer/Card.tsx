@@ -53,6 +53,7 @@ const StyledAnswerCard = styled("div", {
     },
 
     strong: {
+      color: "$black",
       display: "block",
       fontFamily: "$northwesternSansBold",
       fontWeight: "400",
