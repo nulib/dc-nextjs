@@ -99,16 +99,17 @@ const RemoveButton = styled("button", {
   svg: {
     opacity: "0",
     transition: "opacity 0.2s ease-in-out",
+
+    "&:hover": {
+      fill: "$brightRed",
+    },
   },
 });
 
 const Header = styled(Accordion.Header, {
   margin: "$gr2 0",
   display: "flex",
-
-  "&:hover button svg": {
-    opacity: "1",
-  },
+  justifyContent: "space-between",
 
   button: {
     background: "transparent !important",
@@ -157,6 +158,10 @@ const StyledAnswerResults = styled(Accordion.Item, {
     "&:hover": {
       color: "$brightBlueB !important",
     },
+  },
+
+  "&:hover button svg": {
+    opacity: "1",
   },
 });
 

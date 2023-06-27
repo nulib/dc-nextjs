@@ -1,5 +1,5 @@
 import AnswerCertainty from "./Certainity";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import { DCAPI_PRODUCTION_ENDPOINT } from "@/lib/constants/endpoints";
 import Image from "next/image";
 import React from "react";
 import { styled } from "@/stitches.config";
@@ -11,7 +11,7 @@ export interface AnswerCardProps {
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
   const { _additional, identifier, work_type } = metadata;
-  const thumbnail = `${DCAPI_ENDPOINT}/works/${identifier}/thumbnail`;
+  const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${identifier}/thumbnail?aspect=square`;
 
   return (
     <StyledAnswerCard>
@@ -44,6 +44,7 @@ const ImageWrapper = styled("div", {
 
   img: {
     color: "transparent",
+    borderRadius: "6px",
   },
 });
 
