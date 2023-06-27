@@ -1,6 +1,7 @@
 import AnswerCertainty from "./Certainity";
 import { DCAPI_PRODUCTION_ENDPOINT } from "@/lib/constants/endpoints";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { styled } from "@/stitches.config";
 
@@ -10,11 +11,12 @@ export interface AnswerCardProps {
 }
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
-  const { _additional, identifier, work_type } = metadata;
+  const { _additional, identifier, source, work_type } = metadata;
+  console.log(metadata);
   const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${identifier}/thumbnail?aspect=square`;
 
   return (
-    <StyledAnswerCard>
+    <StyledAnswerCard href={source} target="_blank">
       <figure>
         <ImageWrapper>
           <Image alt={page_content} fill={true} src={thumbnail} />
@@ -54,7 +56,7 @@ const Context = styled("div", {
   justifyContent: "space-between",
 });
 
-const StyledAnswerCard = styled("div", {
+const StyledAnswerCard = styled(Link, {
   figcaption: {
     width: "$gr8",
     span: {
