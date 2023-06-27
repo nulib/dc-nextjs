@@ -1,5 +1,6 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import AnswerResults from "./components/Answer/Results";
+import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
 import React from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -39,20 +40,28 @@ const SearchPrototype = () => {
   const defaultValue = questions.length ? `${questions[0].id}` : undefined;
 
   return (
-    <Accordion.Root
-      type="single"
-      defaultValue={defaultValue}
-      key={defaultValue}
-    >
-      <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
-      {questions.length ? (
-        questions.map((question: any) => (
-          <AnswerResults questionId={question.id as number} key={question.id} />
-        ))
-      ) : (
-        <></>
-      )}
-    </Accordion.Root>
+    <>
+      <Accordion.Root
+        type="single"
+        defaultValue={defaultValue}
+        key={defaultValue}
+      >
+        <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
+        {questions.length ? (
+          <>
+            {questions.map((question: any) => (
+              <AnswerResults
+                questionId={question.id as number}
+                key={question.id}
+              />
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
+      </Accordion.Root>
+      <QuestionClearHistory />
+    </>
   );
 };
 

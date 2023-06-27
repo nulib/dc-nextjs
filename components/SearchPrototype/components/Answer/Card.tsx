@@ -59,7 +59,6 @@ const StyledAnswerCard = styled("div", {
     span: {
       color: "$black50 !important",
       display: "block",
-      fontFamily: "$northwesternSansLight",
       fontSize: "$gr2",
       whiteSpace: "wrap",
     },

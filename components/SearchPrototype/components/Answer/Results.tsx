@@ -1,6 +1,8 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import React, { useEffect, useRef, useState } from "react";
 import AnswerCard from "./Card";
+import Icon from "@/components/Shared/Icon";
+import { IconClear } from "@/components/Shared/SVG/Icons";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
 import Typed from "typed.js";
 import axios from "axios";
@@ -50,12 +52,21 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
     }
   }, [entry]);
 
+  const handleDelete = () => {
+    saveQuestions(questions.filter((q: any) => q.id !== questionId));
+  };
+
   return (
     <StyledAnswerResults value={`${questionId}`}>
       <Header>
         <Accordion.Trigger>
           <span ref={questionElement} />
         </Accordion.Trigger>
+        <RemoveButton onClick={handleDelete}>
+          <Icon>
+            <IconClear />
+          </Icon>
+        </RemoveButton>
       </Header>
 
       {response?.question === entry?.question ? (
@@ -76,8 +87,27 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
 
 /* eslint sort-keys: 0 */
 
+const RemoveButton = styled("button", {
+  background: "transparent",
+  border: "none",
+  cursor: "pointer",
+  fontFamily: "$northwesternSansRegular",
+  fontSize: "$gr2",
+  padding: "0",
+
+  svg: {
+    opacity: "0",
+    transition: "opacity 0.2s ease-in-out",
+  },
+});
+
 const Header = styled(Accordion.Header, {
   margin: "$gr2 0",
+  display: "flex",
+
+  "&:hover button svg": {
+    opacity: "1",
+  },
 
   button: {
     background: "transparent !important",
