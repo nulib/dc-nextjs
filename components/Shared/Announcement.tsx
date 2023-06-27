@@ -1,3 +1,4 @@
+import { CSS } from "@stitches/react/types/css-util";
 import React from "react";
 import { maxWidths } from "@/styles/containers";
 import { styled } from "@/stitches.config";
@@ -40,6 +41,7 @@ const ContentWrapper = styled("div", {
 
 interface AnnouncementProps {
   children: React.ReactNode;
+  css?: CSS;
 }
 
 const Announcement: React.FC<AnnouncementProps> = ({
