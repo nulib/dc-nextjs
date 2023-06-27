@@ -1,3 +1,4 @@
+import * as Accordion from "@radix-ui/react-accordion";
 import React, { useState } from "react";
 import AnswerResults from "./components/Answer/Results";
 import FeedbackPrompt from "./components/Feedback/Prompt";
@@ -31,23 +32,30 @@ const SearchPrototype = () => {
       /**
        * save the question in local storage
        */
-      saveQuestions([...questions, { id, question, timestamp }]);
+
+      questions.unshift({ id, question, timestamp });
+      saveQuestions(questions);
       setActiveQuestion(id);
     }
   };
 
+  const defaultValue = questions.length ? `${questions[0].id}` : undefined;
+
   return (
-    <>
+    <Accordion.Root
+      type="single"
+      defaultValue={defaultValue}
+      key={defaultValue}
+    >
       <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
       {questions.length ? (
-        <>
-          <AnswerResults activeQuestion={activeQuestion as number} />
-          <FeedbackPrompt />
-        </>
+        questions.map((question: any) => (
+          <AnswerResults questionId={question.id as number} key={question.id} />
+        ))
       ) : (
         <></>
       )}
-    </>
+    </Accordion.Root>
   );
 };
 

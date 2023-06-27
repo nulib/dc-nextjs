@@ -46,10 +46,9 @@ const StyledQuestionInput = styled("form", {
   backgroundColor: "$white",
   display: "flex",
   position: "relative",
-  boxShadow: "0 3px 8px 0 rgba(0, 0, 0, 0.05)",
-  borderBottom: "1px solid $gray6",
-  margin: "-$gr4 -$gr4 0",
-  borderRadius: "13px",
+  boxShadow: "0 8px 21px 0 rgba(0, 0, 0, 0.08)",
+  margin: "-$gr4 -$gr4 $gr4",
+  borderRadius: "3px",
 
   svg: {
     height: "$gr3",

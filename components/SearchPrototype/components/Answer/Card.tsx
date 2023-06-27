@@ -5,17 +5,12 @@ import React from "react";
 import { styled } from "@/stitches.config";
 
 export interface AnswerCardProps {
-  _additional: any;
   metadata: any;
   page_content: string;
 }
 
-const AnswerCard: React.FC<AnswerCardProps> = ({
-  metadata,
-  page_content,
-  _additional,
-}) => {
-  const { identifier, work_type } = metadata;
+const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
+  const { _additional, identifier, work_type } = metadata;
   const thumbnail = `${DCAPI_ENDPOINT}/works/${identifier}/thumbnail`;
 
   return (
@@ -46,6 +41,10 @@ const ImageWrapper = styled("div", {
   height: "$gr8",
   width: "$gr8",
   position: "relative",
+
+  img: {
+    color: "transparent",
+  },
 });
 
 const Context = styled("div", {

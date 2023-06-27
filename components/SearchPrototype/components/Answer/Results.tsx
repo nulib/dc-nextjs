@@ -1,3 +1,4 @@
+import * as Accordion from "@radix-ui/react-accordion";
 import React, { useEffect, useRef, useState } from "react";
 import AnswerCard from "./Card";
 import Heading from "@/components/Heading/Heading";
@@ -7,18 +8,16 @@ import axios from "axios";
 import { styled } from "@/stitches.config";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
+const AnswerResults = ({ questionId }: { questionId: number }) => {
   const questionElement = useRef(null);
   const [response, setResponse] = useState<any>();
   const [questions] = useLocalStorage<any>("nul-chat-search", []);
-  const entry = questions?.find((q: any) => q.id === activeQuestion);
-
+  const entry = questions?.find((q: any) => q.id === questionId);
   // type the question and get a response from the chat API
   useEffect(() => {
     if (entry?.question) {
       const typed = new Typed(questionElement.current, {
         strings: [entry?.question],
-        typeSpeed: 5,
         onComplete: function (self) {
           self.cursor.remove();
           if (!entry?.response) {
@@ -28,7 +27,9 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
               method: "post",
               url: "https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat",
               withCredentials: true,
-            }).then((response) => setResponse(response.data));
+            }).then((response) => {
+              setResponse(response.data);
+            });
           }
         },
       });
@@ -36,24 +37,25 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
       return () => typed.destroy();
     }
   }, [entry]);
+  console.log(`questionId: ${questionId}`);
 
   return (
-    <StyledAnswerResults>
+    <StyledAnswerResults value={`${questionId}`}>
       <Header>
-        <Heading as="h2">
+        <Accordion.Trigger>
           <span ref={questionElement} />
-        </Heading>
+        </Accordion.Trigger>
       </Header>
 
       {response?.question === entry?.question ? (
-        <>
+        <Accordion.Content>
           <Answer>{response?.answer}</Answer>
           <Sources>
             {response?.source_documents.map((document: any) => (
               <AnswerCard {...document} key={document.identifier} />
             ))}
           </Sources>
-        </>
+        </Accordion.Content>
       ) : (
         <SpinLoader />
       )}
@@ -63,13 +65,22 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
 
 /* eslint sort-keys: 0 */
 
-const Header = styled("header", {
-  h2: {
+const Header = styled(Accordion.Header, {
+  margin: "$gr2 0",
+
+  button: {
+    background: "transparent !important",
+    border: "none",
+    cursor: "pointer",
+    margin: "0",
+    padding: "0",
     color: "$black !important",
     fontSize: "$gr5 !important",
     fontFamily: "$northwesternSansBold !important",
-    padding: "$gr2 0 0 !important",
-    margin: "0 !important",
+
+    "&:hover": {
+      color: "$brightBlueB !important",
+    },
   },
 });
 
@@ -77,7 +88,7 @@ const Answer = styled("article", {
   fontSize: "$gr3",
   fontFamily: "$northwesternSerifRegular !important",
   lineHeight: "1.76em",
-  padding: "$gr3 0",
+  margin: "$gr1 0",
 });
 
 const Sources = styled("div", {
@@ -87,8 +98,20 @@ const Sources = styled("div", {
   padding: "$gr1 0",
 });
 
-const StyledAnswerResults = styled("div", {
-  padding: "$gr4 0",
+const StyledAnswerResults = styled(Accordion.Item, {
+  "&::after": {
+    content: "",
+    display: "block",
+    height: "1px",
+    margin: "$gr3 0",
+    width: "100%",
+    backgroundColor: "$gray6",
+  },
+
+  [`&[data-state=closed] ${Header} button`]: {
+    fontFamily: "$northwesternSansRegular !important",
+    color: "$black80",
+  },
 });
 
 export default AnswerResults;
