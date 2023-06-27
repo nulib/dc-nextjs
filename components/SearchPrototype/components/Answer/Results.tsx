@@ -1,7 +1,6 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import React, { useEffect, useRef, useState } from "react";
 import AnswerCard from "./Card";
-import Heading from "@/components/Heading/Heading";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
 import Typed from "typed.js";
 import axios from "axios";
@@ -11,33 +10,45 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 const AnswerResults = ({ questionId }: { questionId: number }) => {
   const questionElement = useRef(null);
   const [response, setResponse] = useState<any>();
-  const [questions] = useLocalStorage<any>("nul-chat-search", []);
+  const [questions, saveQuestions] = useLocalStorage<any>(
+    "nul-chat-search",
+    []
+  );
   const entry = questions?.find((q: any) => q.id === questionId);
   // type the question and get a response from the chat API
   useEffect(() => {
-    if (entry?.question) {
+    if (entry?.question && !entry?.response) {
       const typed = new Typed(questionElement.current, {
         strings: [entry?.question],
         onComplete: function (self) {
           self.cursor.remove();
-          if (!entry?.response) {
-            axios({
-              data: entry?.question,
-              headers: { "Content-Type": "text/plain" },
-              method: "post",
-              url: "https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat",
-              withCredentials: true,
-            }).then((response) => {
-              setResponse(response.data);
-            });
-          }
+          axios({
+            data: entry?.question,
+            headers: { "Content-Type": "text/plain" },
+            method: "post",
+            url: "https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat",
+            withCredentials: true,
+          }).then((response) => {
+            setResponse(response.data);
+            saveQuestions(
+              questions.map((q: any) => {
+                if (q.id === questionId) {
+                  q.response = response.data;
+                }
+                return q;
+              })
+            );
+          });
         },
       });
 
       return () => typed.destroy();
+    } else if (entry?.response) {
+      // @ts-ignore
+      questionElement.current.innerHTML = entry?.question;
+      setResponse(entry?.response);
     }
   }, [entry]);
-  console.log(`questionId: ${questionId}`);
 
   return (
     <StyledAnswerResults value={`${questionId}`}>
@@ -110,7 +121,11 @@ const StyledAnswerResults = styled(Accordion.Item, {
 
   [`&[data-state=closed] ${Header} button`]: {
     fontFamily: "$northwesternSansRegular !important",
-    color: "$black80",
+    color: "$black50 !important",
+
+    "&:hover": {
+      color: "$brightBlueB !important",
+    },
   },
 });
 

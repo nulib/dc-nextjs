@@ -1,12 +1,10 @@
 import * as Accordion from "@radix-ui/react-accordion";
-import React, { useState } from "react";
 import AnswerResults from "./components/Answer/Results";
-import FeedbackPrompt from "./components/Feedback/Prompt";
 import QuestionInput from "./components/Question/Input";
+import React from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 const SearchPrototype = () => {
-  const [activeQuestion, setActiveQuestion] = useState<number>();
   const [questions, saveQuestions] = useLocalStorage<any>(
     "nul-chat-search",
     []
@@ -35,7 +33,6 @@ const SearchPrototype = () => {
 
       questions.unshift({ id, question, timestamp });
       saveQuestions(questions);
-      setActiveQuestion(id);
     }
   };
 

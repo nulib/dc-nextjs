@@ -30,8 +30,6 @@ const defaults = {
   body: {
     margin: 0,
     padding: 0,
-    background: "linear-gradient(0deg, #FFFFFF 0%, $gray6 100%)",
-    height: "100vh",
   },
 
   html: {
