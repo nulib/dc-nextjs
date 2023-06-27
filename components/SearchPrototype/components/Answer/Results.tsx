@@ -97,11 +97,14 @@ const RemoveButton = styled("button", {
   padding: "0",
 
   svg: {
-    opacity: "0",
+    fill: "$black20 !important",
     transition: "opacity 0.2s ease-in-out",
+  },
 
-    "&:hover": {
-      fill: "$brightRed",
+  "&:active, &:hover": {
+    svg: {
+      opacity: "1 !important",
+      fill: "$brightRed !important",
     },
   },
 });
