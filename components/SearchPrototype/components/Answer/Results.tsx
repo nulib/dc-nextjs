@@ -22,6 +22,7 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
     if (entry?.question && !entry?.response) {
       const typed = new Typed(questionElement.current, {
         strings: [entry?.question],
+        typeSpeed: 20,
         onComplete: function (self) {
           self.cursor.remove();
           axios({
