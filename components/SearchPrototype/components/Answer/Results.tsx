@@ -17,7 +17,7 @@ const AnswerResults = ({ activeQuestion }: { activeQuestion: number }) => {
   useEffect(() => {
     if (entry?.question) {
       const typed = new Typed(questionElement.current, {
-        strings: [`${entry?.question}`],
+        strings: [entry?.question],
         typeSpeed: 5,
         onComplete: function (self) {
           self.cursor.remove();

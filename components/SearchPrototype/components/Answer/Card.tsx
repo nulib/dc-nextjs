@@ -1,4 +1,6 @@
 import AnswerCertainty from "./Certainity";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import Image from "next/image";
 import React from "react";
 import { styled } from "@/stitches.config";
 
@@ -13,12 +15,14 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
   page_content,
   _additional,
 }) => {
-  const { work_type } = metadata;
+  const { identifier, work_type } = metadata;
+  const thumbnail = `${DCAPI_ENDPOINT}/works/${identifier}/thumbnail`;
 
   return (
     <StyledAnswerCard>
       <figure>
         <ImageWrapper>
+          <Image alt={page_content} fill={true} src={thumbnail} />
           {_additional?.certainty && (
             <AnswerCertainty amount={_additional?.certainty} />
           )}
