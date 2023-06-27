@@ -61,7 +61,7 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
     <StyledAnswerResults value={`${questionId}`}>
       <Header>
         <Accordion.Trigger>
-          <span ref={questionElement} />
+          <Question ref={questionElement} />
         </Accordion.Trigger>
         <RemoveButton onClick={handleDelete}>
           <Icon>
@@ -109,6 +109,8 @@ const RemoveButton = styled("button", {
   },
 });
 
+const Question = styled("span", {});
+
 const Header = styled(Accordion.Header, {
   margin: "$gr2 0",
   display: "flex",
@@ -123,6 +125,7 @@ const Header = styled(Accordion.Header, {
     color: "$black !important",
     fontSize: "$gr5 !important",
     fontFamily: "$northwesternSansBold !important",
+    textAlign: "left",
 
     "&:hover": {
       color: "$brightBlueB !important",
