@@ -1,9 +1,10 @@
 import * as Accordion from "@radix-ui/react-accordion";
+import AnswerInformation, { AnswerTooltip } from "./Information";
 import React, { useEffect, useRef, useState } from "react";
 import AnswerCard from "./Card";
+import AnswerLoader from "./Loader";
 import Icon from "@/components/Shared/Icon";
 import { IconClear } from "@/components/Shared/SVG/Icons";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
 import Typed from "typed.js";
 import axios from "axios";
 import { styled } from "@/stitches.config";
@@ -22,7 +23,7 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
     if (entry?.question && !entry?.response) {
       const typed = new Typed(questionElement.current, {
         strings: [entry?.question],
-        typeSpeed: 20,
+        typeSpeed: 5,
         onComplete: function (self) {
           self.cursor.remove();
           axios({
@@ -63,11 +64,14 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
         <Accordion.Trigger>
           <Question ref={questionElement} />
         </Accordion.Trigger>
-        <RemoveButton onClick={handleDelete}>
-          <Icon>
-            <IconClear />
-          </Icon>
-        </RemoveButton>
+        <Actions>
+          <AnswerInformation timestamp={entry?.timestamp} />
+          <RemoveButton onClick={handleDelete}>
+            <Icon>
+              <IconClear />
+            </Icon>
+          </RemoveButton>
+        </Actions>
       </Header>
 
       {response?.question === entry?.question ? (
@@ -80,13 +84,18 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
           </Sources>
         </Accordion.Content>
       ) : (
-        <SpinLoader />
+        <AnswerLoader />
       )}
     </StyledAnswerResults>
   );
 };
 
 /* eslint sort-keys: 0 */
+
+const Actions = styled("div", {
+  display: "flex",
+  paddingLeft: "$gr5",
+});
 
 const RemoveButton = styled("button", {
   background: "transparent",
@@ -115,6 +124,7 @@ const Header = styled(Accordion.Header, {
   margin: "$gr2 0",
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "flex-start",
 
   button: {
     background: "transparent !important",
@@ -137,7 +147,7 @@ const Answer = styled("article", {
   fontSize: "$gr3",
   fontFamily: "$northwesternSerifRegular !important",
   lineHeight: "1.76em",
-  margin: "$gr1 0",
+  margin: "$gr3 0 $gr2",
 });
 
 const Sources = styled("div", {
@@ -157,12 +167,19 @@ const StyledAnswerResults = styled(Accordion.Item, {
     backgroundColor: "$gray6",
   },
 
-  [`&[data-state=closed] ${Header} button`]: {
-    fontFamily: "$northwesternSansRegular !important",
-    color: "$black50 !important",
+  [`&[data-state=closed]  ${Header}`]: {
+    [`button`]: {
+      fontFamily: "$northwesternSansRegular !important",
+      color: "$black50 !important",
 
-    "&:hover": {
-      color: "$brightBlueB !important",
+      "&:hover": {
+        color: "$brightBlueB !important",
+      },
+    },
+
+    [`& ${AnswerTooltip}`]: {
+      display: "none",
+      cursor: "default",
     },
   },
 
