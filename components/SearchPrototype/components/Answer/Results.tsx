@@ -65,7 +65,9 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
           <Question ref={questionElement} />
         </Accordion.Trigger>
         <Actions>
-          <AnswerInformation timestamp={entry?.timestamp} />
+          {response?.answer && (
+            <AnswerInformation timestamp={entry?.timestamp} />
+          )}
           <RemoveButton onClick={handleDelete}>
             <Icon>
               <IconClear />
