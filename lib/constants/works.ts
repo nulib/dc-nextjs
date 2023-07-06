@@ -43,6 +43,10 @@ const WORK_METADATA_LABELS: WorkMetadata[] = [
     searchParam: "language",
   },
   {
+    label: "License",
+    searchParam: "license",
+  },
+  {
     label: "Location",
   },
   {

@@ -297,6 +297,7 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
         none: ["Midnight"],
       },
       thumbnail: [
+        // @ts-ignore
         {
           id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0/full/!300,300/0/default.jpg",
           type: "Image",
@@ -355,6 +356,7 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
         none: ["Album"],
       },
       thumbnail: [
+        // @ts-ignore
         {
           id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/592022f6-3dc1-4f17-a412-42c025ceae93/full/!300,300/0/default.jpg",
           type: "Image",

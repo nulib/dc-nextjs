@@ -15,7 +15,6 @@ import {
   ShareURL,
   ShareURLActions,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
-
 import { Label, Thumbnail } from "@samvera/nectar-iiif";
 import React, { useEffect, useState } from "react";
 import {
@@ -23,6 +22,7 @@ import {
   getInfoResponse,
 } from "@/lib/iiif/manifest-helpers";
 import { makeBlob, mimicDownload } from "@samvera/image-downloader";
+
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
@@ -37,13 +37,32 @@ import { useWorkState } from "@/context/work-context";
 const embedWarningMessage =
   "Embed is not available for works restricted to the Northwestern University community";
 
+function MiradorLink({
+  showWarning,
+  manifestId,
+}: {
+  showWarning: boolean;
+  manifestId: string;
+}) {
+  return showWarning ? (
+    <span>View in Mirador</span>
+  ) : (
+    <a
+      href={`https://projectmirador.org/embed/?iiif-content=${manifestId}`}
+      target="_blank"
+    >
+      View in Mirador
+    </a>
+  );
+}
+
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
   const [imageCanvases, setImageCanvases] = useState<Canvas[]>([]);
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
-  const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
+  const { isUserLoggedIn, isWorkInstitution, isWorkPrivate, isWorkRestricted } =
     useWorkAuth(work);
 
   const showEmbedWarning = Boolean(
@@ -98,13 +117,22 @@ const DownloadAndShare: React.FC = () => {
                 <a href="https://iiif.io/get-started/why-iiif/" target="_blank">
                   What is IIIF?
                 </a>
-                <a
-                  href={`https://projectmirador.org/embed/?iiif-content=${manifest.id}`}
-                  target="_blank"
-                >
-                  View in Mirador
-                </a>
+                <MiradorLink
+                  showWarning={isWorkInstitution || isWorkPrivate}
+                  manifestId={manifest.id}
+                />
               </ShareURLActions>
+              {(isWorkInstitution || isWorkPrivate) && (
+                <Announcement
+                  css={{
+                    marginTop: "1rem",
+                  }}
+                  data-testid="mirador-announcement"
+                >
+                  Opening in external tools like Mirador is not supported for works
+                  that require authentication.
+                </Announcement>
+              )}
             </ShareURL>
           </>
         )}

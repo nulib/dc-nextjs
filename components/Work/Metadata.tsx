@@ -2,6 +2,7 @@ import {
   LinkItemStyled,
   MetadataStyled,
 } from "@/components/Work/Metadata.styled";
+
 import { DC_URL } from "@/lib/constants/endpoints";
 import Link from "next/link";
 import { MetadataItem } from "@iiif/presentation-3";
@@ -25,9 +26,7 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
   return (
     <LinkItemStyled>
       {searchParam ? (
-        <Link href={search.concat(encodeURIComponent(value))}>
-          {value}
-        </Link>
+        <Link href={search.concat(encodeURIComponent(value))}>{value}</Link>
       ) : (
         <span dangerouslySetInnerHTML={{ __html: value }} />
       )}
