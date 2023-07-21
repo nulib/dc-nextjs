@@ -11,12 +11,13 @@ export interface AnswerCardProps {
 }
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
-  const { _additional, identifier, source, work_type } = metadata;
+  const { _additional, source, work_type } = metadata;
   console.log(metadata);
-  const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${identifier}/thumbnail?aspect=square`;
+  const dcLink = `https://dc.library.northwestern.edu/items/${source}`;
+  const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${source}/thumbnail?aspect=square`;
 
   return (
-    <StyledAnswerCard href={source} target="_blank">
+    <StyledAnswerCard href={dcLink} target="_blank">
       <figure>
         <ImageWrapper>
           <Image alt={page_content} fill={true} src={thumbnail} />
