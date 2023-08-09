@@ -9,6 +9,7 @@ import React from "react";
 import { UserContext } from "@/context/user-context";
 import { type Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 export const CloverIIIF: React.ComponentType<{
   customTheme: {
@@ -33,6 +34,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   isWorkRestricted,
 }) => {
   const userAuth = React.useContext(UserContext);
+  const router = useRouter();
 
   const customTheme = {
     colors: {
@@ -66,6 +68,14 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     showTitle: false,
     withCredentials: true,
   };
+
+  // On an "embedded-viewer" route, show the metadata drawer in the viewer
+  if (router.pathname === "/embedded-viewer/[manifestId]") {
+    options["renderAbout"] = true;
+    options["showInformationToggle"] = true;
+    options["showIIIFBadge"] = true;
+    options["showTitle"] = true;
+  }
 
   return (
     <ViewerWrapperStyled data-testid="work-viewer-wrapper">
