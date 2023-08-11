@@ -4,9 +4,10 @@ import {
   Inner,
   OverviewStyled,
 } from "@/components/Homepage/Overview.styled";
+
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
-import { Thumbnail } from "@samvera/nectar-iiif";
+import { Thumbnail } from "@samvera/clover-iiif/primitives";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 import { useRouter } from "next/router";
 

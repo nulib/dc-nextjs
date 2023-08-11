@@ -15,7 +15,7 @@ import {
   ShareURL,
   ShareURLActions,
 } from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
-import { Label, Thumbnail } from "@samvera/nectar-iiif";
+import { Label, Thumbnail } from "@samvera/clover-iiif/primitives";
 import React, { useEffect, useState } from "react";
 import {
   getAnnotationBodyType,
@@ -27,7 +27,7 @@ import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
-import IIIF from "@/components/Shared/SVG/IIIF";
+import IIIFLogo from "@/components/Shared/SVG/IIIF";
 import SharedSocial from "@/components/Shared/Social";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import { useRouter } from "next/router";
@@ -71,9 +71,9 @@ const DownloadAndShare: React.FC = () => {
   const embedViewerHTML = manifest?.id
     ? `<iframe src="${
         window.location.origin
-      }/embedded-viewer/${encodeURIComponent(manifest.id)}" title="${
-        work?.title
-      }" width="100%" height="800"></iframe>`
+      }/embedded-viewer/${encodeURIComponent(
+        manifest.id
+      )}" title="${work?.title}" width="100%" height="800"></iframe>`
     : "";
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const DownloadAndShare: React.FC = () => {
               </a>
               <ShareURLActions>
                 <CopyText
-                  renderIcon={IIIF}
+                  renderIcon={IIIFLogo}
                   textPrompt="Copy Manifest Link"
                   textToCopy={manifest.id}
                 />
@@ -129,8 +129,8 @@ const DownloadAndShare: React.FC = () => {
                   }}
                   data-testid="mirador-announcement"
                 >
-                  Opening in external tools like Mirador is not supported for works
-                  that require authentication.
+                  Opening in external tools like Mirador is not supported for
+                  works that require authentication.
                 </Announcement>
               )}
             </ShareURL>
@@ -288,7 +288,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
             </li>
             <li>
               <CopyText
-                renderIcon={IIIF}
+                renderIcon={IIIFLogo}
                 textPrompt="Copy IIIF"
                 textToCopy={iiifImageInfo}
               />

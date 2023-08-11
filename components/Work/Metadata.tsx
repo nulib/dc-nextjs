@@ -35,6 +35,7 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
 };
 
 const WorkMetadata: React.FC<WorkMetadataProps> = ({ metadata }) => {
+
   const formattedValues = WORK_METADATA_LABELS.map((value) => {
     return {
       Content: <ValueAsListItem searchParam={value.searchParam} />,
