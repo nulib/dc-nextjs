@@ -1,5 +1,5 @@
+import Slider from "@samvera/clover-iiif/slider";
 import { SwiperProps } from "swiper/react";
-import dynamic from "next/dynamic";
 import { gr } from "@/styles/sizes";
 import { rem } from "@/styles/global";
 import { styled } from "@/stitches.config";
@@ -7,7 +7,7 @@ import { width } from "@/styles/media";
 
 /* eslint sort-keys: 0 */
 
-const StyledBloomIIIFWrapper = styled("div", {
+const StyledSliderIIIFWrapper = styled("div", {
   position: "relative",
   zIndex: "0",
 
@@ -64,28 +64,16 @@ const breakpoints: SwiperBreakpoints = {
   },
 };
 
-const BloomIIIF: React.ComponentType<{
-  collectionId: string;
-  options: {
-    breakpoints: SwiperBreakpoints;
-    credentials: "include" | "omit" | "same-origin";
-    enablePreview: boolean;
-  };
-}> = dynamic(() => import("@samvera/bloom-iiif"), {
-  ssr: false,
-});
-
-const BloomIIIFWrapper = ({ collectionId }: { collectionId: string }) => (
-  <StyledBloomIIIFWrapper>
-    <BloomIIIF
-      collectionId={collectionId}
+const SliderIIIFWrapper = ({ collectionId }: { collectionId: string }) => (
+  <StyledSliderIIIFWrapper>
+    <Slider
+      iiifContent={collectionId}
       options={{
-        enablePreview: false,
         breakpoints: breakpoints,
         credentials: "include",
       }}
     />
-  </StyledBloomIIIFWrapper>
+  </StyledSliderIIIFWrapper>
 );
 
-export default BloomIIIFWrapper;
+export default SliderIIIFWrapper;

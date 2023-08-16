@@ -1,4 +1,4 @@
-import { Metadata } from "@samvera/nectar-iiif";
+import { Metadata } from "@samvera/clover-iiif/primitives";
 import { linkStyling } from "@/components/Shared/LinkStyled";
 import { styled } from "@/stitches.config";
 

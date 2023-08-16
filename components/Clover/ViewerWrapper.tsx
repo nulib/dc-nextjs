@@ -1,28 +1,21 @@
 import {
   AnnouncementContent,
   ViewerWrapperStyled,
-} from "@/components/Work/ViewerWrapper.styled";
+} from "@/components/Clover/ViewerWrapper.styled";
 import Announcement from "@/components/Shared/Announcement";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
-import { Options as OpenSeadragonOptions } from "openseadragon";
 import React from "react";
 import { UserContext } from "@/context/user-context";
 import { type Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-export const CloverIIIF: React.ComponentType<{
-  customTheme: {
-    colors: { [key: string]: string };
-    fonts: { [key: string]: string };
-  };
-  id: string;
-  options: {
-    [key: string]: OpenSeadragonOptions | boolean | string;
-  };
-}> = dynamic(() => import("@samvera/clover-iiif"), {
-  ssr: false,
-});
+export const CloverViewer = dynamic(
+  () => import("@samvera/clover-iiif/viewer"),
+  {
+    ssr: false,
+  }
+);
 
 interface WrapperProps {
   manifestId: Work["iiif_manifest"];
@@ -80,9 +73,10 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   return (
     <ViewerWrapperStyled data-testid="work-viewer-wrapper">
       {manifestId && (
-        <CloverIIIF
+        <CloverViewer
+          // @ts-ignore
           customTheme={customTheme}
-          id={manifestId}
+          iiifContent={manifestId}
           options={options}
         />
       )}

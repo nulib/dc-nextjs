@@ -34,6 +34,8 @@ describe("WorkTopInfo component", () => {
 
   it("renders metadata", async () => {
     renderHelper();
-    expect(screen.getByTestId("metadata"));
+
+    const metadataEl = await screen.findByTestId("metadata");
+    expect(metadataEl).toBeInTheDocument();
   });
 });

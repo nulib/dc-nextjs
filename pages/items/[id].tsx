@@ -19,7 +19,7 @@ import { type Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
 import WorkTopInfo from "@/components/Work/TopInfo";
-import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
+import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { buildWorkOpenGraphData } from "@/lib/open-graph";
 import { loadItemStructuredData } from "@/lib/json-ld";

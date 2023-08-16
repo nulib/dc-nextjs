@@ -1,8 +1,8 @@
-import BloomIIIFWrapper from "@/components/BloomWrapper";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Heading from "@/components/Heading/Heading";
 import { RelatedItemsStyled } from "@/components/Shared/RelatedItems.styled";
+import SliderWrapper from "@/components/Clover/SliderWrapper";
 
 export interface RelatedItemsProps {
   collectionUris?: string[];
@@ -30,7 +30,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
       )}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {collectionUris?.map((collectionId) => (
-          <BloomIIIFWrapper collectionId={collectionId} key={collectionId} />
+          <SliderWrapper collectionId={collectionId} key={collectionId} />
         ))}
       </ErrorBoundary>
     </RelatedItemsStyled>

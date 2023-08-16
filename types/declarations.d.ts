@@ -4,9 +4,6 @@
  * this, TypeScript complains.
  */
 
-declare module "@samvera/bloom-iiif";
-declare module "@samvera/clover-iiif";
-
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
