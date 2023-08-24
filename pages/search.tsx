@@ -17,10 +17,12 @@ import Layout from "@/components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
+import SearchSimilar from "@/components/Search/Similar";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
+import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
@@ -41,6 +43,16 @@ const SearchPage: NextPage = () => {
     loading: true,
   });
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
+  const [similarTo, setSimilarTo] = useState<{
+    visible: boolean;
+    work: { id: string; title: string };
+  }>({
+    visible: false,
+    work: {
+      id: "",
+      title: "",
+    },
+  });
 
   /**
    * Post request to the search API endpoint for query and facet parameters
@@ -51,6 +63,21 @@ const SearchPage: NextPage = () => {
       try {
         const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
+
+        // If there is a "similar" facet, get the work and set the state
+        if (urlFacets?.similar) {
+          const workId = urlFacets.similar[0];
+          const work = await getWork(workId);
+
+          setSimilarTo({
+            visible: true,
+            work: {
+              id: workId,
+              title: work?.title || work?.accession_number || "",
+            },
+          });
+        }
+
         const body: ApiSearchRequestBody = buildQuery({
           size,
           term: q as string,
@@ -112,6 +139,16 @@ const SearchPage: NextPage = () => {
     }));
   }
 
+  function handleCloseSimilar() {
+    const newQuery = { ...router.query };
+    delete newQuery.similar;
+
+    router.push({
+      pathname: "/search",
+      query: { ...newQuery },
+    });
+  }
+
   const { data: apiData, error, loading } = requestState;
   const totalResults = requestState.data?.pagination.total_hits;
 
@@ -133,7 +170,15 @@ const SearchPage: NextPage = () => {
         <Heading as="h1" isHidden>
           Northwestern
         </Heading>
+        {similarTo?.visible && (
+          <SearchSimilar
+            handleClose={handleCloseSimilar}
+            work={similarTo.work}
+          />
+        )}
+
         <Facets />
+
         <Container containerType="wide">
           <ResultsWrapper>
             {loading && <></>}
