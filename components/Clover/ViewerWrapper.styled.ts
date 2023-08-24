@@ -10,6 +10,10 @@ const ViewerWrapperStyled = styled("section", {
   "[class*='-css']": {
     boxShadow: "3px 3px 11px #0002",
   },
+
+  "& label[for='information-toggle']": {
+    boxShadow: "none",
+  },
 });
 
 const AnnouncementContent = styled("div", {

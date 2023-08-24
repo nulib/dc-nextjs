@@ -7,7 +7,7 @@ import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
 import { type Work } from "@nulib/dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
-import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
+import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { formatDateLong } from "@/lib/utils/date-helpers";
 import { getWorkSliders } from "@/lib/work-helpers";
 import { styled } from "@/stitches.config";

@@ -1,8 +1,10 @@
 import WorkMetadata, { ValueAsListItem } from "@/components/Work/Metadata";
 import { render, screen, within } from "@/test-utils";
+
 import { MetadataItem } from "@iiif/presentation-3";
 import { manifest } from "@/mocks/sample-work-image";
 
+// TODO: Need to figure out how to make Jest render dynamic components
 describe("WorkMetadata component", () => {
   it("renders the metadata definition list", () => {
     render(<WorkMetadata metadata={manifest.metadata as MetadataItem[]} />);

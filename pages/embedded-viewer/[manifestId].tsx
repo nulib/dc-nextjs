@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import React from "react";
 import { type Work } from "@nulib/dcapi-types";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
-import WorkViewerWrapper from "@/components/Work/ViewerWrapper";
+import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { getWork } from "@/lib/work-helpers";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";

@@ -1,5 +1,6 @@
 import { GenericAggsReturn, sortAggsByKey } from "@/lib/collection-helpers";
-import BloomIIIFWrapper from "@/components/BloomWrapper";
+
+import BloomIIIFWrapper from "@/components/Clover/SliderWrapper";
 import ExpandableList from "@/components/Shared/ExpandableList";
 import Heading from "@/components/Heading/Heading";
 import { OrganizationStyled } from "@/components/Collection/Tabs/Organization.styled";

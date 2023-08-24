@@ -1,7 +1,8 @@
 import { Autoplay, EffectFade, Keyboard, Navigation, Pagination } from "swiper";
 import { HeroActions, HeroStyled } from "@/components/Hero/Hero.styled";
-import { Label, Summary, Thumbnail } from "@samvera/nectar-iiif";
+import { Label, Summary, Thumbnail } from "@samvera/clover-iiif/primitives";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import Container from "@/components/Shared/Container";
 import { HeroCollection } from "@/lib/constants/homepage";
 import Link from "next/link";

@@ -4,9 +4,14 @@ import {
   TopInfoContent,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
-import { Label, RequiredStatement, Summary } from "@samvera/nectar-iiif";
+import {
+  Label,
+  RequiredStatement,
+  Summary,
+} from "@samvera/clover-iiif/primitives";
 import React, { MouseEvent } from "react";
 import { Button } from "@nulib/design-system";
+
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
