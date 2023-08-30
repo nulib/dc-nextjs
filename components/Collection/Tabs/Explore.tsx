@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
 import RelatedItems from "@/components/Shared/RelatedItems";
 
@@ -18,10 +19,12 @@ const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
   useEffect(() => {
     /**
      * In the future we could  support multiple metadata fields, but for
-     * now we'll just assume passing in 3 Subject collections to Bloom
+     * now we'll just assume passing in 3 Subject collections to the Slider
      */
     const subject = topMetadata[0];
+    console.log("subject", subject);
 
+    // Build "as=iiif" urls for each subject which will feed into the Slider
     setUrls(
       subject.value.map((subjectValue) => {
         const str = `${url}/search?query=collection.id:"${collectionId}" AND ${
