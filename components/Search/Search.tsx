@@ -12,6 +12,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+
 import { ALL_FACETS } from "@/lib/constants/facets-model";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
@@ -34,6 +35,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
     /* Guard against searching from a page with dynamic route params */
     const facetIds = ALL_FACETS.facets.map((facet) => facet.id);
+
+    // Account for the "similar" facet (comes from "View All" in sliders)
+    facetIds.push("similar");
+
     const urlFacetsKeys = Object.keys(urlFacets);
     urlFacetsKeys.forEach((key) => {
       if (!facetIds.includes(key)) {

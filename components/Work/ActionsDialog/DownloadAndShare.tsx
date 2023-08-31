@@ -50,6 +50,7 @@ function MiradorLink({
     <a
       href={`https://projectmirador.org/embed/?iiif-content=${manifestId}`}
       target="_blank"
+      rel="noreferrer"
     >
       View in Mirador
     </a>
@@ -114,7 +115,11 @@ const DownloadAndShare: React.FC = () => {
                   textPrompt="Copy Manifest Link"
                   textToCopy={manifest.id}
                 />
-                <a href="https://iiif.io/get-started/why-iiif/" target="_blank">
+                <a
+                  href="https://iiif.io/get-started/why-iiif/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   What is IIIF?
                 </a>
                 <MiradorLink

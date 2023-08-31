@@ -1,5 +1,6 @@
 import { FacetExtras, StyledFacets, Width, Wrapper } from "./Facets.styled";
 import React, { useRef } from "react";
+
 import Container from "@/components/Shared/Container";
 import FacetsFilter from "@/components/Facets/Filter/Filter";
 import SearchPublicOnlyWorks from "@/components/Search/PublicOnlyWorks";
