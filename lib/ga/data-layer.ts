@@ -1,4 +1,4 @@
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 
 interface DataLayer {
   adminset?: string;

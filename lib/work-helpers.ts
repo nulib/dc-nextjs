@@ -1,5 +1,6 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import { type Work } from "@nulib/dcapi-types";
+
+import type { Work } from "@nulib/dcapi-types";
 import { apiGetRequest } from "@/lib/dc-api";
 import { shuffle } from "@/lib/utils/array-helpers";
 

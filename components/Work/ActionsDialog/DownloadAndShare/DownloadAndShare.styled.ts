@@ -111,6 +111,56 @@ const ItemStyled = styled("div", {
   margin: "$4 0 0",
 });
 
+const LayoutImg = styled("img", {
+  width: "100%",
+  opacity: "0.8",
+  marginBottom: "$gr3",
+});
+
+const EmbedLayoutPreview = styled("div", {
+  border: "1px solid $black10",
+  height: "250px",
+  position: "relative",
+  display: "flex",
+  width: "100%",
+  flexDirection: "column",
+  marginBottom: "$gr3",
+});
+
+const EmbedLayoutPreviewTitle = styled("div", {
+  padding: "$gr2",
+  display: "flex",
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+  "& span:last-of-type": {
+    borderRadius: "30px",
+    width: "$gr5",
+    height: "$gr3",
+    backgroundColor: "$black20",
+  },
+});
+
+const EmbedLayoutPreviewContent = styled("div", {
+  flexGrow: "1",
+  display: "flex",
+  width: "100%",
+
+  "& > span": {
+    display: "block",
+    backgroundSize: "cover",
+    height: "100%",
+    width: "100%",
+  },
+});
+
+const EmbedLayoutPreviewInfoPanel = styled("div", {
+  backgroundColor: "$black10",
+  padding: "$gr3",
+  width: "$gr9",
+});
+
 const ShareURL = styled(EmbedHTML, {
   "> a": {
     fontSize: "$gr3",
@@ -136,12 +186,17 @@ const ShareURLActions = styled(EmbedHTMLActionRow, {
 export {
   EmbedHTML,
   EmbedHTMLActionRow,
+  EmbedLayoutPreview,
+  EmbedLayoutPreviewContent,
+  EmbedLayoutPreviewTitle,
+  EmbedLayoutPreviewInfoPanel,
   EmbedViewer,
   ItemActions,
   ItemContent,
   ItemRow,
   ItemStyled,
   ItemThumbnail,
+  LayoutImg,
   ShareURL,
   ShareURLActions,
 };

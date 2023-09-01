@@ -1,6 +1,6 @@
 import { Collection } from "@nulib/dcapi-types";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 
 const acquireLicensePage =
   "https://www.library.northwestern.edu/about/administration/policies/rights-permissions.html";

@@ -1,7 +1,7 @@
 import { Collection } from "@nulib/dcapi-types";
 import { DCAPI_PRODUCTION_ENDPOINT } from "./constants/endpoints";
 import { SearchShape } from "@/types/api/response";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { apiGetRequest } from "./dc-api";
 import axios from "axios";
 
