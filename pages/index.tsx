@@ -1,12 +1,19 @@
+import { useEffect, useState } from "react";
+
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Heading from "@/components/Heading/Heading";
 import SearchPrototype from "@/components/SearchPrototype";
 import axios from "axios";
 import { styled } from "@/stitches.config";
-import { useEffect } from "react";
+
+export type ChatSocket = {
+  auth: string,
+  endpoint: string
+}
 
 const HomePage: React.FC = () => {
+  const [chatSocket, setChatSocket] = useState<ChatSocket>();
 
   useEffect(() => {
     axios({
@@ -15,6 +22,9 @@ const HomePage: React.FC = () => {
       withCredentials: true,
     }).then((response) => {
       console.log(response.data);
+      setChatSocket(response.data);
+    }).catch((error) => {
+      console.error(error);
     });
   }, [])
 
@@ -22,9 +32,11 @@ const HomePage: React.FC = () => {
     <StyledHomePage>
       <Container>
         <Heading as="h1">Chat Search Prototype</Heading>
-        <SearchPrototypeWrapper>
-          <SearchPrototype />
-        </SearchPrototypeWrapper>
+        {chatSocket && 
+          (<SearchPrototypeWrapper>
+            <SearchPrototype chatSocket={chatSocket} />
+          </SearchPrototypeWrapper>)
+        }     
       </Container>
     </StyledHomePage>
   );

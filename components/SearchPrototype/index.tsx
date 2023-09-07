@@ -1,15 +1,27 @@
 import * as Accordion from "@radix-ui/react-accordion";
+
 import AnswerResults from "./components/Answer/Results";
+import { ChatSocket } from "@/pages";
 import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
 import React from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
-const SearchPrototype = () => {
+interface SearchPrototypeProps {
+  chatSocket: ChatSocket
+}
+
+const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatSocket}) => {
   const [questions, saveQuestions] = useLocalStorage<any>(
     "nul-chat-search",
     []
   );
+
+  React.useEffect(() => {
+    const socket = new WebSocket(chatSocket.endpoint)
+    console.log(socket)
+  }, [chatSocket])
+
 
   const handleQuestionSubmission = (question: string) => {
     /**
