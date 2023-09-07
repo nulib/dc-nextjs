@@ -1,8 +1,11 @@
 import * as Accordion from "@radix-ui/react-accordion";
+
 import AnswerInformation, { AnswerTooltip } from "./Information";
 import React, { useEffect, useRef, useState } from "react";
+
 import AnswerCard from "./Card";
 import AnswerLoader from "./Loader";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Icon from "@/components/Shared/Icon";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import Typed from "typed.js";
@@ -30,7 +33,7 @@ const AnswerResults = ({ questionId }: { questionId: number }) => {
             data: entry?.question,
             headers: { "Content-Type": "text/plain" },
             method: "post",
-            url: "https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat",
+            url: `${DCAPI_ENDPOINT}/chat`,
             withCredentials: true,
           }).then((response) => {
             setResponse(response.data);

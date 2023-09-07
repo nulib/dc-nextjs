@@ -1,9 +1,23 @@
 import Container from "@/components/Shared/Container";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Heading from "@/components/Heading/Heading";
 import SearchPrototype from "@/components/SearchPrototype";
+import axios from "axios";
 import { styled } from "@/stitches.config";
+import { useEffect } from "react";
 
 const HomePage: React.FC = () => {
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `${DCAPI_ENDPOINT}/chat-endpoint`,
+      withCredentials: true,
+    }).then((response) => {
+      console.log(response.data);
+    });
+  }, [])
+
   return (
     <StyledHomePage>
       <Container>
