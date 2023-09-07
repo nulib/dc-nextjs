@@ -7,13 +7,13 @@ import SearchPrototype from "@/components/SearchPrototype";
 import axios from "axios";
 import { styled } from "@/stitches.config";
 
-export type ChatSocket = {
+export type ChatConfig = {
   auth: string,
   endpoint: string
 }
 
 const HomePage: React.FC = () => {
-  const [chatSocket, setChatSocket] = useState<ChatSocket>();
+  const [chatConfig, setChatConfig] = useState<ChatConfig>();
 
   useEffect(() => {
     axios({
@@ -21,8 +21,8 @@ const HomePage: React.FC = () => {
       url: `${DCAPI_ENDPOINT}/chat-endpoint`,
       withCredentials: true,
     }).then((response) => {
-      console.log(response.data);
-      setChatSocket(response.data);
+      // console.log(response.data);
+      setChatConfig(response.data);
     }).catch((error) => {
       console.error(error);
     });
@@ -32,9 +32,9 @@ const HomePage: React.FC = () => {
     <StyledHomePage>
       <Container>
         <Heading as="h1">Chat Search Prototype</Heading>
-        {chatSocket && 
+        {chatConfig && 
           (<SearchPrototypeWrapper>
-            <SearchPrototype chatSocket={chatSocket} />
+            <SearchPrototype chatConfig={chatConfig} />
           </SearchPrototypeWrapper>)
         }     
       </Container>

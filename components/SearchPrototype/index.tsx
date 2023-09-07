@@ -1,27 +1,60 @@
 import * as Accordion from "@radix-ui/react-accordion";
 
+import React, { useEffect } from "react";
+
 import AnswerResults from "./components/Answer/Results";
-import { ChatSocket } from "@/pages";
+import { ChatConfig } from "@/pages";
 import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
-import React from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 interface SearchPrototypeProps {
-  chatSocket: ChatSocket
+  chatConfig: ChatConfig
 }
 
-const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatSocket}) => {
+const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
+  const [chatSocket, setChatSocket] = React.useState<WebSocket>();
+  const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
   const [questions, saveQuestions] = useLocalStorage<any>(
     "nul-chat-search",
     []
   );
 
-  React.useEffect(() => {
-    const socket = new WebSocket(chatSocket.endpoint)
-    console.log(socket)
-  }, [chatSocket])
+  const {auth, endpoint} = chatConfig;
 
+  const handleStateChange = (event: Event) => {
+    const target = event.target as WebSocket;
+    setReadyState(target.readyState);
+  }
+
+  useEffect(() => {
+    const socket = new WebSocket(endpoint);
+    setChatSocket(socket);
+    socket.addEventListener("open", handleStateChange);
+    socket.addEventListener("close", handleStateChange);
+    socket.addEventListener("error", handleStateChange);
+    
+    return () =>  {
+      socket.removeEventListener("open", handleStateChange);
+      socket.removeEventListener("close", handleStateChange);
+      socket.removeEventListener("error", handleStateChange);
+    }
+  }, [auth, endpoint]);
+
+  useEffect(() => {
+    if(chatSocket)
+      chatSocket.onopen = (event) => {
+        console.log(event);
+        chatSocket.send(
+          JSON.stringify({
+            auth,
+            message: "chat",
+            question: "Are you there?",
+            ref: "1234"
+          })
+        );
+      };
+  }, [chatSocket, auth]); 
 
   const handleQuestionSubmission = (question: string) => {
     /**
@@ -53,6 +86,7 @@ const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatSocket}) => {
 
   return (
     <>
+      <span>{readyState}</span>
       <Accordion.Root
         type="single"
         defaultValue={defaultValue}
