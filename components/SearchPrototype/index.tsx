@@ -13,24 +13,45 @@ interface SearchPrototypeProps {
 }
 
 type Question = {
-  auth: string,
-  message: "chat",
-  question: string,
-  ref: string
-}
+  auth: string;
+  message: "chat";
+  question: string;
+  ref: string;
+};
 
 type SourceDocument = {
-  page_content: string,
+  page_content: string;
   metadata: {
-    [key: string]: any
-  }
-}
+    [key: string]: any;
+  };
+};
 
 type Answer = {
-  ref: string,
-  source_documents: Array<SourceDocument>,
-  answer: string
-}
+  ref: string;
+  source_documents: Array<SourceDocument>;
+  answer: string;
+};
+
+type StreamingMessageEventData =
+  | AnswerMessage
+  | ContextMessage
+  | StreamingMessage;
+
+type ContextMessage = {
+  question: string;
+  ref: string;
+  source_documents: Array<SourceDocument>;
+};
+
+type StreamingMessage = {
+  ref: string;
+  token: string;
+};
+
+type AnswerMessage = {
+  answer: string;
+  ref: string;
+};
 
 const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
@@ -40,11 +61,20 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     []
   );
 
+  const [streamAnswers, setStreamAnswers] = React.useState<Answer[]>([]);
+
   const { auth, endpoint } = chatConfig;
 
   const handleStateChange = (event: Event) => {
     const target = event.target as WebSocket;
     setReadyState(target.readyState);
+  };
+
+  const handleMessageUpdate = (event: MessageEvent) => {
+    const data: StreamingMessageEventData = JSON.parse(event.data);
+    console.log("data", data);
+
+    // Does the 'ref' exist in the answers array?
   };
 
   useEffect(() => {
@@ -53,11 +83,13 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     socket.addEventListener("open", handleStateChange);
     socket.addEventListener("close", handleStateChange);
     socket.addEventListener("error", handleStateChange);
+    socket.addEventListener("message", handleMessageUpdate);
 
     return () => {
       socket.removeEventListener("open", handleStateChange);
       socket.removeEventListener("close", handleStateChange);
       socket.removeEventListener("error", handleStateChange);
+      socket.removeEventListener("message", handleMessageUpdate);
     };
   }, [auth, endpoint]);
 
@@ -75,20 +107,23 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
       const uniqueString = `${questionString}${timestamp}`;
 
       // Refactor the following as a SHA1[0..4]
-      const ref = uniqueString.split("").reduce((a, b) => {
-        a = (a << 5) - a + b.charCodeAt(0);
-        return a & a;
-      }, 0).toString();
+      const ref = uniqueString
+        .split("")
+        .reduce((a, b) => {
+          a = (a << 5) - a + b.charCodeAt(0);
+          return a & a;
+        }, 0)
+        .toString();
 
       const question: Question = {
         auth,
         message: "chat",
         question: questionString,
-        ref
-      }
+        ref,
+      };
 
       chatSocket?.send(JSON.stringify(question));
-      
+
       /**
        * save the question in local storage
        */
@@ -111,7 +146,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
         {readyState === 1 && (
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
         )}
-        {questions.length ? (
+        {/* {questions.length ? (
           <>
             {questions.map((question: any) => (
               <AnswerResults
@@ -122,7 +157,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
           </>
         ) : (
           <></>
-        )}
+        )} */}
       </Accordion.Root>
       <QuestionClearHistory />
     </>
