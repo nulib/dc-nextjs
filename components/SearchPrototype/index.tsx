@@ -32,26 +32,29 @@ type Answer = {
   answer: string;
 };
 
-type StreamingMessageEventData =
-  | AnswerMessage
-  | ContextMessage
-  | StreamingMessage;
-
-type ContextMessage = {
-  question: string;
-  ref: string;
-  source_documents: Array<SourceDocument>;
-};
-
 type StreamingMessage = {
+  answer?: string;
+  question?: string;
   ref: string;
-  token: string;
+  source_documents?: Array<SourceDocument>;
+  token?: string;
 };
 
-type AnswerMessage = {
-  answer: string;
-  ref: string;
-};
+// type ContextMessage = {
+//   question: string;
+//   ref: string;
+//   source_documents: Array<SourceDocument>;
+// };
+
+// type StreamingMessage = {
+//   ref: string;
+//   token: string;
+// };
+
+// type AnswerMessage = {
+//   answer: string;
+//   ref: string;
+// };
 
 const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
@@ -71,15 +74,57 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   };
 
   const handleMessageUpdate = (event: MessageEvent) => {
-    const data: StreamingMessageEventData = JSON.parse(event.data);
-    console.log("data", data);
+    const data: StreamingMessage = JSON.parse(event.data);
+    // console.log("data", data);
 
     // Does the 'ref' exist in the answers array?
-    let thisAnswer:Answer = streamAnswers.find(({ref}) => ref === data.ref)
-    if(!thisAnswer){
-      thisAnswer = {ref: data.ref, source_documents: data.source_documents}
-      setStreamAnswers(prevStreamAnswers => [...prevStreamAnswers, thisAnswer])
+    let newAnswer = false;
+    let thisAnswer: Answer | undefined = streamAnswers.find((element) => {
+      console.log(`element`, element);
+      return element.ref === data.ref;
+    });
+
+    // console.log(`streamAnswers`, streamAnswers);
+    // console.log(`thisAnswer`, thisAnswer);
+
+    if (!thisAnswer) {
+      newAnswer = true;
+      thisAnswer = {
+        answer: "",
+        ref: data.ref,
+        source_documents: [],
+      };
     }
+
+    if (data.token) {
+      thisAnswer.answer += data.token;
+    }
+
+    if (data.source_documents) {
+      thisAnswer.source_documents = data.source_documents;
+    }
+
+    if (data.answer) {
+      thisAnswer.answer = data.answer;
+    }
+
+    if (newAnswer) {
+      console.log(`thisAnswer?!`, thisAnswer);
+
+      // our js handler here isn't recocgnizing the react state handling here
+      setStreamAnswers((prevStreamAnswers) => [
+        ...prevStreamAnswers,
+        thisAnswer as Answer,
+      ]);
+    }
+
+    // if (!thisAnswer) {
+    //   thisAnswer = { ref: data.ref, source_documents: data.source_documents };
+    //   setStreamAnswers((prevStreamAnswers) => [
+    //     ...prevStreamAnswers,
+    //     thisAnswer,
+    //   ]);
+    // }
   };
 
   useEffect(() => {
