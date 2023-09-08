@@ -75,6 +75,11 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     console.log("data", data);
 
     // Does the 'ref' exist in the answers array?
+    let thisAnswer:Answer = streamAnswers.find(({ref}) => ref === data.ref)
+    if(!thisAnswer){
+      thisAnswer = {ref: data.ref, source_documents: data.source_documents}
+      setStreamAnswers(prevStreamAnswers => [...prevStreamAnswers, thisAnswer])
+    }
   };
 
   useEffect(() => {
@@ -94,6 +99,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   }, [auth, endpoint]);
 
   const handleQuestionSubmission = (questionString: string) => {
+    console.log("questionString", questionString);
     /**
      * do some basic validation and save the question
      */
@@ -128,8 +134,8 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
        * save the question in local storage
        */
 
-      questions.unshift({ id: ref, question: questionString, timestamp });
-      saveQuestions(questions);
+      // questions.unshift({ id: ref, question: questionString, timestamp });
+      // saveQuestions(questions);
     }
   };
 
