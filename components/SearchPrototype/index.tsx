@@ -12,6 +12,26 @@ interface SearchPrototypeProps {
   chatConfig: ChatConfig;
 }
 
+type Question = {
+  auth: string,
+  message: "chat",
+  question: string,
+  ref: string
+}
+
+type SourceDocument = {
+  page_content: string,
+  metadata: {
+    [key: string]: any
+  }
+}
+
+type Answer = {
+  ref: string,
+  source_documents: Array<SourceDocument>,
+  answer: string
+}
+
 const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
@@ -41,43 +61,39 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     };
   }, [auth, endpoint]);
 
-  useEffect(() => {
-    if (chatSocket)
-      chatSocket.onopen = (event) => {
-        console.log(event);
-        chatSocket.send(
-          JSON.stringify({
-            auth,
-            message: "chat",
-            question: "Are you there?",
-            ref: "1234",
-          })
-        );
-      };
-  }, [chatSocket, auth]);
-
-  const handleQuestionSubmission = (question: string) => {
+  const handleQuestionSubmission = (questionString: string) => {
     /**
      * do some basic validation and save the question
      */
-    if (question) {
+    if (questionString) {
       const date = new Date();
       const timestamp = date.getTime();
 
       /**
        * hackily generate unique id from string and timestamp
        */
-      const uniqueString = `${question}${timestamp}`;
-      const id = uniqueString.split("").reduce((a, b) => {
+      const uniqueString = `${questionString}${timestamp}`;
+
+      // Refactor the following as a SHA1[0..4]
+      const ref = uniqueString.split("").reduce((a, b) => {
         a = (a << 5) - a + b.charCodeAt(0);
         return a & a;
-      }, 0);
+      }, 0).toString();
 
+      const question: Question = {
+        auth,
+        message: "chat",
+        question: questionString,
+        ref
+      }
+
+      chatSocket?.send(JSON.stringify(question));
+      
       /**
        * save the question in local storage
        */
 
-      questions.unshift({ id, question, timestamp });
+      questions.unshift({ id: ref, question: questionString, timestamp });
       saveQuestions(questions);
     }
   };
