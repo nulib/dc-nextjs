@@ -9,10 +9,10 @@ import QuestionInput from "./components/Question/Input";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 interface SearchPrototypeProps {
-  chatConfig: ChatConfig
+  chatConfig: ChatConfig;
 }
 
-const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
+const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
   const [questions, saveQuestions] = useLocalStorage<any>(
@@ -20,12 +20,12 @@ const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
     []
   );
 
-  const {auth, endpoint} = chatConfig;
+  const { auth, endpoint } = chatConfig;
 
   const handleStateChange = (event: Event) => {
     const target = event.target as WebSocket;
     setReadyState(target.readyState);
-  }
+  };
 
   useEffect(() => {
     const socket = new WebSocket(endpoint);
@@ -33,16 +33,16 @@ const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
     socket.addEventListener("open", handleStateChange);
     socket.addEventListener("close", handleStateChange);
     socket.addEventListener("error", handleStateChange);
-    
-    return () =>  {
+
+    return () => {
       socket.removeEventListener("open", handleStateChange);
       socket.removeEventListener("close", handleStateChange);
       socket.removeEventListener("error", handleStateChange);
-    }
+    };
   }, [auth, endpoint]);
 
   useEffect(() => {
-    if(chatSocket)
+    if (chatSocket)
       chatSocket.onopen = (event) => {
         console.log(event);
         chatSocket.send(
@@ -50,11 +50,11 @@ const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
             auth,
             message: "chat",
             question: "Are you there?",
-            ref: "1234"
+            ref: "1234",
           })
         );
       };
-  }, [chatSocket, auth]); 
+  }, [chatSocket, auth]);
 
   const handleQuestionSubmission = (question: string) => {
     /**
@@ -92,7 +92,9 @@ const SearchPrototype:React.FC<SearchPrototypeProps> = ({chatConfig}) => {
         defaultValue={defaultValue}
         key={defaultValue}
       >
-        <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
+        {readyState === 1 && (
+          <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
+        )}
         {questions.length ? (
           <>
             {questions.map((question: any) => (
