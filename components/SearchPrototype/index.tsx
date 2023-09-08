@@ -64,7 +64,13 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     []
   );
 
-  const [streamAnswers, setStreamAnswers] = React.useState<Answer[]>([]);
+  // This is a pattern to access and update React state within a WebSocket event handler
+  const [streamAnswers, _setStreamAnswers] = React.useState<Answer[]>([]);
+  const streamAnswersRef = React.useRef(streamAnswers);
+  const setStreamAnswers = (data: Array<Answer>) => {
+    streamAnswersRef.current = data;
+    _setStreamAnswers(data);
+  };
 
   const { auth, endpoint } = chatConfig;
 
@@ -75,17 +81,14 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
 
   const handleMessageUpdate = (event: MessageEvent) => {
     const data: StreamingMessage = JSON.parse(event.data);
-    // console.log("data", data);
 
     // Does the 'ref' exist in the answers array?
     let newAnswer = false;
-    let thisAnswer: Answer | undefined = streamAnswers.find((element) => {
-      console.log(`element`, element);
-      return element.ref === data.ref;
-    });
-
-    // console.log(`streamAnswers`, streamAnswers);
-    // console.log(`thisAnswer`, thisAnswer);
+    let thisAnswer: Answer | undefined = streamAnswersRef.current.find(
+      (element) => {
+        return element.ref === data.ref;
+      }
+    );
 
     if (!thisAnswer) {
       newAnswer = true;
@@ -109,22 +112,8 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     }
 
     if (newAnswer) {
-      console.log(`thisAnswer?!`, thisAnswer);
-
-      // our js handler here isn't recocgnizing the react state handling here
-      setStreamAnswers((prevStreamAnswers) => [
-        ...prevStreamAnswers,
-        thisAnswer as Answer,
-      ]);
+      setStreamAnswers([...streamAnswersRef.current, thisAnswer as Answer]);
     }
-
-    // if (!thisAnswer) {
-    //   thisAnswer = { ref: data.ref, source_documents: data.source_documents };
-    //   setStreamAnswers((prevStreamAnswers) => [
-    //     ...prevStreamAnswers,
-    //     thisAnswer,
-    //   ]);
-    // }
   };
 
   useEffect(() => {
@@ -144,7 +133,6 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   }, [auth, endpoint]);
 
   const handleQuestionSubmission = (questionString: string) => {
-    console.log("questionString", questionString);
     /**
      * do some basic validation and save the question
      */
