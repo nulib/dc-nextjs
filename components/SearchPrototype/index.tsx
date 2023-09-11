@@ -40,22 +40,6 @@ type StreamingMessage = {
   token?: string;
 };
 
-// type ContextMessage = {
-//   question: string;
-//   ref: string;
-//   source_documents: Array<SourceDocument>;
-// };
-
-// type StreamingMessage = {
-//   ref: string;
-//   token: string;
-// };
-
-// type AnswerMessage = {
-//   answer: string;
-//   ref: string;
-// };
-
 const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
@@ -82,43 +66,47 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
 
   const handleMessageUpdate = (event: MessageEvent) => {
     const data: StreamingMessage = JSON.parse(event.data);
-
-    // Does the 'ref' exist in the answers array?
-    let newAnswer = false;
-    let thisAnswer: Answer | undefined = streamAnswersRef.current.find(
-      (element) => {
-        return element.ref === data.ref;
-      }
-    );
-
-    if (!thisAnswer) {
-      newAnswer = true;
-      thisAnswer = {
+    
+    // Create a shallow copy of the current answers
+    const updatedStreamAnswers = [...streamAnswersRef.current];
+  
+    // Check if the answer with the given 'ref' already exists in the state
+    const answerIndex = updatedStreamAnswers.findIndex(answer => answer.ref === data.ref);
+    const existingAnswer = updatedStreamAnswers[answerIndex];
+    
+    let updatedAnswer: Answer;
+    if (existingAnswer) {
+      // Create a shallow copy of the existing answer to modify
+      updatedAnswer = { ...existingAnswer };
+    } else {
+      // Initialize a new answer
+      updatedAnswer = {
         answer: "",
         ref: data.ref,
         source_documents: [],
       };
     }
-
+  
+    // Update the properties of the answer based on the incoming data
     if (data.token) {
-      thisAnswer.answer += data.token;
-
-      // we keep appending here? lets write into it?
-      setStreamAnswers([...streamAnswersRef.current, thisAnswer as Answer]);
-      // newAnswer = false;
+      updatedAnswer.answer += data.token;
     }
-
     if (data.source_documents) {
-      thisAnswer.source_documents = data.source_documents;
+      updatedAnswer.source_documents = data.source_documents;
     }
-
     if (data.answer) {
-      thisAnswer.answer = data.answer;
+      updatedAnswer.answer = data.answer;
     }
-
-    if (newAnswer) {
-      setStreamAnswers([...streamAnswersRef.current, thisAnswer as Answer]);
+  
+    // Replace or append the answer in the state array
+    if (existingAnswer) {
+      updatedStreamAnswers[answerIndex] = updatedAnswer;
+    } else {
+      updatedStreamAnswers.push(updatedAnswer);
     }
+  
+    // Update the state with the modified array
+    setStreamAnswers(updatedStreamAnswers);
   };
 
   useEffect(() => {
@@ -167,13 +155,6 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
       };
 
       chatSocket?.send(JSON.stringify(question));
-
-      /**
-       * save the question in local storage
-       */
-
-      // questions.unshift({ id: ref, question: questionString, timestamp });
-      // saveQuestions(questions);
     }
   };
 
@@ -192,11 +173,11 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
         )}
 
-        {/* <>
+        <>
           {streamAnswers.map((answer: Answer) => {
             return <div key={answer.ref}>{answer.answer}</div>;
           })}
-        </> */}
+        </>
       </Accordion.Root>
       <QuestionClearHistory />
     </>
