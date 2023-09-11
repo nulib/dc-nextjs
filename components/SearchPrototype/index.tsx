@@ -70,6 +70,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const setStreamAnswers = (data: Array<Answer>) => {
     streamAnswersRef.current = data;
     _setStreamAnswers(data);
+    console.log('streamAnswers', streamAnswers);
   };
 
   const { auth, endpoint } = chatConfig;
@@ -172,7 +173,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     }
   };
 
-  const defaultValue = questions.length ? `${questions[0].id}` : undefined;
+  const defaultValue = streamAnswers.length ? `${streamAnswers[0].ref}` : undefined;
 
   return (
     <>
@@ -185,18 +186,19 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
         {readyState === 1 && (
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
         )}
-        {/* {questions.length ? (
-          <>
-            {questions.map((question: any) => (
-              <AnswerResults
-                questionId={question.id as number}
-                key={question.id}
-              />
-            ))}
-          </>
-        ) : (
-          <></>
-        )} */}
+
+        <>
+          {streamAnswers.map((answer: Answer) => { console.log(answer.answer)
+            return (
+            <div key={answer.ref}>
+              {answer.answer}
+            </div>
+            // <AnswerResults
+            //   questionId={question.id as number}
+            //   key={question.id}
+            // />
+          )})}
+        </>
       </Accordion.Root>
       <QuestionClearHistory />
     </>
