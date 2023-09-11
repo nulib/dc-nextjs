@@ -30,6 +30,7 @@ type Answer = {
   ref: string;
   source_documents: Array<SourceDocument>;
   answer: string;
+  question?: string; // revisit this
 };
 
 type StreamingMessage = {
@@ -82,8 +83,9 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
       // Initialize a new answer
       updatedAnswer = {
         answer: "",
+        question: data.question,
         ref: data.ref,
-        source_documents: [],
+        source_documents: []
       };
     }
   
@@ -102,10 +104,18 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     if (existingAnswer) {
       updatedStreamAnswers[answerIndex] = updatedAnswer;
     } else {
+      /**
+       * save the question in local storage
+       */
+
+      // questions.unshift({ id: ref, question: questionString, timestamp });
+      // saveQuestions(questions);
+    
+      // Update the state with the modified array
       updatedStreamAnswers.push(updatedAnswer);
     }
-  
-    // Update the state with the modified array
+
+
     setStreamAnswers(updatedStreamAnswers);
   };
 
@@ -175,7 +185,12 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
 
         <>
           {streamAnswers.map((answer: Answer) => {
-            return <div key={answer.ref}>{answer.answer}</div>;
+            return (
+              <article key={answer.ref}>
+                <h3>{answer.question}</h3>
+                <div>{answer.answer}</div>
+              </article>
+            )
           })}
         </>
       </Accordion.Root>
