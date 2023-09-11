@@ -69,8 +69,8 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const streamAnswersRef = React.useRef(streamAnswers);
   const setStreamAnswers = (data: Array<Answer>) => {
     streamAnswersRef.current = data;
+    console.log(`data`, data);
     _setStreamAnswers(data);
-    console.log('streamAnswers', streamAnswers);
   };
 
   const { auth, endpoint } = chatConfig;
@@ -102,6 +102,10 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
 
     if (data.token) {
       thisAnswer.answer += data.token;
+
+      // we keep appending here? lets write into it?
+      setStreamAnswers([...streamAnswersRef.current, thisAnswer as Answer]);
+      // newAnswer = false;
     }
 
     if (data.source_documents) {
@@ -173,8 +177,9 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     }
   };
 
-  const defaultValue = streamAnswers.length ? `${streamAnswers[0].ref}` : undefined;
-
+  const defaultValue = streamAnswers.length
+    ? `${streamAnswers[0].ref}`
+    : undefined;
   return (
     <>
       <span>{readyState}</span>
@@ -187,18 +192,11 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
         )}
 
-        <>
-          {streamAnswers.map((answer: Answer) => { console.log(answer.answer)
-            return (
-            <div key={answer.ref}>
-              {answer.answer}
-            </div>
-            // <AnswerResults
-            //   questionId={question.id as number}
-            //   key={question.id}
-            // />
-          )})}
-        </>
+        {/* <>
+          {streamAnswers.map((answer: Answer) => {
+            return <div key={answer.ref}>{answer.answer}</div>;
+          })}
+        </> */}
       </Accordion.Root>
       <QuestionClearHistory />
     </>
