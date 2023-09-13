@@ -211,7 +211,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
     adminset: "",
-    collections: "",
+    collections: collection?.title,
     creatorsContributors: "",
     isLoggedIn: false,
     pageTitle: (collection?.title as string) || "",
