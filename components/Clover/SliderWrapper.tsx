@@ -11,6 +11,10 @@ const StyledSliderIIIFWrapper = styled("div", {
   position: "relative",
   zIndex: "0",
 
+  ".clover-slider-header-view-all": {
+    color: "$white",
+  },
+
   ".swiper-slide[data-type='collection']": {
     display: "none",
   },
