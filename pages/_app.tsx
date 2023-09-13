@@ -47,8 +47,6 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 
   React.useEffect(() => {
     if (typeof window !== "undefined" && mounted) {
-      const { dataLayer } = pageProps;
-
       const payload = {
         ...pageProps.dataLayer,
         isLoggedIn: user?.isLoggedIn,
