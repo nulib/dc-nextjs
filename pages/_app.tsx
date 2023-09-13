@@ -49,23 +49,20 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     if (typeof window !== "undefined" && mounted) {
       const { dataLayer } = pageProps;
 
+      const payload = {
+        ...pageProps.dataLayer,
+        isLoggedIn: user?.isLoggedIn,
+      };
+
+      // send pageProps to dataLayer
       // @ts-ignore
-      if (dataLayer?.pageTitle) {
-        const payload = {
-          ...pageProps.dataLayer,
-          isLoggedIn: user?.isLoggedIn,
-        };
+      window.dataLayer?.push(payload);
 
-        // send pageProps to dataLayer
-        // @ts-ignore
-        window.dataLayer?.push(payload);
-
-        // send VirtualPageView event to dataLayer
-        // @ts-ignore
-        window.dataLayer?.push({
-          event: "VirtualPageView",
-        });
-      }
+      // send VirtualPageView event to dataLayer
+      // @ts-ignore
+      window.dataLayer?.push({
+        event: "VirtualPageView",
+      });
     }
   }, [mounted, pageProps, user]);
 
