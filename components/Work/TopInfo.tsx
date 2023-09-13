@@ -10,17 +10,17 @@ import {
   Summary,
 } from "@samvera/clover-iiif/primitives";
 import React, { MouseEvent } from "react";
-import { Button } from "@nulib/design-system";
 
+import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
 import { Manifest } from "@iiif/presentation-3";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 import WorkMetadata from "@/components/Work/Metadata";
-import { type WorkTypeCountMap } from "@/lib/collection-helpers";
+import type { WorkTypeCountMap } from "@/lib/collection-helpers";
 
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;

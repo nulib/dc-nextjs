@@ -1,6 +1,6 @@
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { WorkContextStore } from "@/types/context/work-context";
 
 type Action =

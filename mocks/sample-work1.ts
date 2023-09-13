@@ -1,4 +1,4 @@
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 
 export const sampleWork1: Work = {
   abstract: ["Ima description", "Ima another description"],

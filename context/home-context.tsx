@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { type SearchShape } from "@/types/api/response";
+
+import type { SearchShape } from "@/types/api/response";
 import { featuredCollections } from "@/lib/constants/homepage";
 import { getHomePageCollections } from "@/lib/homepage-helpers";
 import { shuffle } from "@/lib/utils/array-helpers";

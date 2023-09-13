@@ -1,5 +1,6 @@
 import { apiGetRequest, getIIIFResource } from "@/lib/dc-api";
 import { useEffect, useState } from "react";
+
 import { AxiosResponse } from "axios";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
@@ -7,7 +8,7 @@ import Layout from "@/components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import { NextPage } from "next";
 import SharedLink from "@/components/SharedLink/SharedLink";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { useRouter } from "next/router";

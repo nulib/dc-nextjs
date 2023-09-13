@@ -4,7 +4,8 @@ import {
   ItemImageWrapper,
   ItemStyled,
 } from "@/components/Collection/Item/Item.styled";
-import { type CollectionListShape } from "@/lib/collection-helpers";
+
+import type { CollectionListShape } from "@/lib/collection-helpers";
 import Figure from "@/components/Figure/Figure";
 import Heading from "@/components/Heading/Heading";
 import Link from "next/link";

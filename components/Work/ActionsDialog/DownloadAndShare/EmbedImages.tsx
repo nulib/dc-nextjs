@@ -1,83 +1,49 @@
-import {
-  ActionsDialogStyled,
-  Content,
-} from "@/components/Work/ActionsDialog/ActionsDialog.styled";
-import { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
+import type { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
 import {
   EmbedHTML,
   EmbedHTMLActionRow,
-  EmbedViewer,
   ItemActions,
   ItemContent,
   ItemRow,
   ItemStyled,
   ItemThumbnail,
-  ShareURL,
-  ShareURLActions,
-} from "@/components/Work/ActionsDialog/DownloadAndShare.styled";
+} from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.styled";
 import { Label, Thumbnail } from "@samvera/clover-iiif/primitives";
-import React, { useEffect, useState } from "react";
 import {
   getAnnotationBodyType,
   getInfoResponse,
 } from "@/lib/iiif/manifest-helpers";
 import { makeBlob, mimicDownload } from "@samvera/image-downloader";
 
-import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import IIIFLogo from "@/components/Shared/SVG/IIIF";
-import SharedSocial from "@/components/Shared/Social";
+import type { Manifest } from "@iiif/presentation-3";
+import React from "react";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
+import type { Work } from "@nulib/dcapi-types";
+import { embedWarningMessage } from "./DownloadAndShare";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
-import { useWorkState } from "@/context/work-context";
 
-const embedWarningMessage =
-  "Embed is not available for works restricted to the Northwestern University community";
-
-function MiradorLink({
-  showWarning,
-  manifestId,
-}: {
-  showWarning: boolean;
-  manifestId: string;
-}) {
-  return showWarning ? (
-    <span>View in Mirador</span>
-  ) : (
-    <a
-      href={`https://projectmirador.org/embed/?iiif-content=${manifestId}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      View in Mirador
-    </a>
-  );
+interface EmbedImagesProps {
+  manifest: Manifest;
+  showEmbedWarning: boolean;
+  work: Work;
 }
 
-const DownloadAndShare: React.FC = () => {
-  const { workState } = useWorkState();
-  const { manifest, work } = workState;
-  const [imageCanvases, setImageCanvases] = useState<Canvas[]>([]);
+const EmbedImages: React.FC<EmbedImagesProps> = ({
+  manifest,
+  showEmbedWarning,
+  work,
+}) => {
   const router = useRouter();
+  const [imageCanvases, setImageCanvases] = React.useState<Canvas[]>([]);
+  const { isWorkRestricted } = useWorkAuth(work);
   const isSharedLinkPage = router.pathname.includes("/shared");
-  const { isUserLoggedIn, isWorkInstitution, isWorkPrivate, isWorkRestricted } =
-    useWorkAuth(work);
 
-  const showEmbedWarning = Boolean(
-    isWorkRestricted || (isUserLoggedIn && isWorkInstitution)
-  );
-  const embedViewerHTML = manifest?.id
-    ? `<iframe src="${
-        window.location.origin
-      }/embedded-viewer/${encodeURIComponent(
-        manifest.id
-      )}" title="${work?.title}" width="100%" height="800"></iframe>`
-    : "";
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
       const imageCanvases = manifest.items.filter(
         (item) => getAnnotationBodyType(item) === "Image"
@@ -86,98 +52,32 @@ const DownloadAndShare: React.FC = () => {
     }
   }, [manifest]);
 
-  if (!manifest || !work) return <></>;
-
   return (
-    <ActionsDialogStyled>
-      <ActionsDialogAside>
-        {work.title && work.thumbnail && (
-          <SharedSocial
-            title={work.title}
-            media={work.thumbnail}
-            description={work.description}
-          />
-        )}
-      </ActionsDialogAside>
-      <Content>
-        {!isSharedLinkPage && (
-          <>
-            <Heading as="h3" css={{ marginTop: "0" }}>
-              IIIF Manifest
-            </Heading>
-            <ShareURL>
-              <a href={manifest.id} target="_blank" rel="noreferrer">
-                {manifest.id}
-              </a>
-              <ShareURLActions>
-                <CopyText
-                  renderIcon={IIIFLogo}
-                  textPrompt="Copy Manifest Link"
-                  textToCopy={manifest.id}
-                />
-                <a
-                  href="https://iiif.io/get-started/why-iiif/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  What is IIIF?
-                </a>
-                <MiradorLink
-                  showWarning={isWorkInstitution || isWorkPrivate}
-                  manifestId={manifest.id}
-                />
-              </ShareURLActions>
-              {(isWorkInstitution || isWorkPrivate) && (
-                <Announcement
-                  css={{
-                    marginTop: "1rem",
-                  }}
-                  data-testid="mirador-announcement"
-                >
-                  Opening in external tools like Mirador is not supported for
-                  works that require authentication.
-                </Announcement>
-              )}
-            </ShareURL>
-          </>
-        )}
+    <>
+      <Heading as="h3">Download and Embed Images</Heading>
 
-        <Heading as="h3">Embed Viewer</Heading>
-        {showEmbedWarning && <Announcement>{embedWarningMessage}</Announcement>}
-        {!showEmbedWarning && (
-          <EmbedViewer>
-            <pre>{embedViewerHTML || "Error creating embed viewer HTML"}</pre>
-            <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
-          </EmbedViewer>
-        )}
+      {isWorkRestricted && !isSharedLinkPage && (
+        <Announcement>
+          Download requires Northwestern University NetID authentication{" "}
+        </Announcement>
+      )}
 
-        {imageCanvases.length > 0 && (
-          <>
-            <Heading as="h3">Download and Embed Images</Heading>
-
-            {isWorkRestricted && !isSharedLinkPage && (
-              <Announcement>
-                Download requires Northwestern University NetID authentication{" "}
-              </Announcement>
-            )}
-
-            {(!isWorkRestricted || isSharedLinkPage) && (
-              <div data-testid="download-embed-items">
-                {imageCanvases.map((item) => (
-                  <Item
-                    item={item}
-                    key={item.id}
-                    showEmbedWarning={showEmbedWarning}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-      </Content>
-    </ActionsDialogStyled>
+      {(!isWorkRestricted || isSharedLinkPage) && (
+        <div data-testid="download-embed-items">
+          {imageCanvases.map((item) => (
+            <Item
+              item={item}
+              key={item.id}
+              showEmbedWarning={showEmbedWarning}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 };
+
+export default EmbedImages;
 
 interface ItemProps {
   item: Canvas;
@@ -338,5 +238,3 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
     </ItemStyled>
   );
 };
-
-export default DownloadAndShare;

@@ -1,5 +1,5 @@
 import { UserContext } from "@/context/user-context";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { useContext } from "react";
 
 const useWorkAuth = (work: Work | null | undefined) => {

@@ -4,9 +4,10 @@ import {
   DC_URL,
 } from "@/lib/constants/endpoints";
 import { sample, shuffle } from "@/lib/utils/array-helpers";
+
 import { Collection } from "@nulib/dcapi-types";
 import { HeroCollection } from "@/lib/constants/homepage";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 
 export const getRelatedCollections = (work: Work) => {
   if (!work) return;

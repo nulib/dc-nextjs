@@ -1,9 +1,10 @@
 import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
 import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
 import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
+
 import type { Collection } from "@nulib/dcapi-types";
 import { DCAPI_ENDPOINT } from "./constants/endpoints";
-import { type Visibility } from "@nulib/dcapi-types";
+import type { Visibility } from "@nulib/dcapi-types";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export type CollectionListShape = {
