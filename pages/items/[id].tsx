@@ -1,11 +1,12 @@
 import {
-  type CollectionWorkCountMap,
+  CollectionWorkCountMap,
   getCollectionWorkCounts,
 } from "@/lib/collection-helpers";
 import { GetServerSideProps, NextPage } from "next";
 import { apiGetStatus, getIIIFResource } from "@/lib/dc-api";
 import { getWork, getWorkSliders } from "@/lib/work-helpers";
 import { useContext, useEffect, useState } from "react";
+
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { ErrorBoundary } from "react-error-boundary";
@@ -15,7 +16,7 @@ import Layout from "components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import RelatedItems from "@/components/Shared/RelatedItems";
 import { UserContext } from "@/context/user-context";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
 import WorkTopInfo from "@/components/Work/TopInfo";

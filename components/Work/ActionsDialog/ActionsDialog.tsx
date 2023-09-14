@@ -1,5 +1,5 @@
 import { ActionsDialog } from "@/components/Work/TopInfo";
-import DownloadAndShare from "@/components/Work/ActionsDialog/DownloadAndShare";
+import DownloadAndShare from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare";
 import React from "react";
 import SharedDialog from "@/components/Shared/Dialog";
 import WorkDialogCite from "@/components/Work/ActionsDialog/Cite";

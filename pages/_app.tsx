@@ -7,6 +7,7 @@ import {
   camptonExtraBold,
   camptonExtraLight,
 } from "@/styles/fonts";
+
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ObjectLiteral } from "@/types";
@@ -44,19 +45,22 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     getData();
   }, []);
 
-  {
-    /** Add GTM (Google Tag Manager) data */
-  }
   React.useEffect(() => {
     if (typeof window !== "undefined" && mounted) {
       const payload = {
-        event: "VirtualPageView",
-        // @ts-ignore
         ...pageProps.dataLayer,
         isLoggedIn: user?.isLoggedIn,
       };
+
+      // send pageProps to dataLayer
       // @ts-ignore
       window.dataLayer?.push(payload);
+
+      // send VirtualPageView event to dataLayer
+      // @ts-ignore
+      window.dataLayer?.push({
+        event: "VirtualPageView",
+      });
     }
   }, [mounted, pageProps, user]);
 

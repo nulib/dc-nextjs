@@ -1,7 +1,8 @@
 import { ObjectLiteral, OpenGraphData } from "@/types/index";
 import { isImageType, isPublicWork } from "@/lib/work-helpers";
+
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 
 export const defaultOpenGraphImage = overviewThumbnails[0][0].id;

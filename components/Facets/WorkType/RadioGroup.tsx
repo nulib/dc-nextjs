@@ -1,8 +1,10 @@
 import * as Radio from "@radix-ui/react-radio-group";
+
 import { Highlight, StyledWorkType, Wrapper } from "./WorkType.styled";
 import { MouseEvent, useRef, useState } from "react";
+
 import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
-import { type WorkTypeWithAll } from "@/components/Facets/WorkType/WorkType";
+import type { WorkTypeWithAll } from "@/components/Facets/WorkType/WorkType";
 
 interface RadioGroupProps {
   currentValue: WorkTypeWithAll;

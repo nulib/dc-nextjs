@@ -5,7 +5,7 @@ import ErrorFallback from "@/components/Shared/ErrorFallback";
 import { Manifest } from "@iiif/presentation-3";
 import React from "react";
 import RelatedItems from "@/components/Shared/RelatedItems";
-import { type Work } from "@nulib/dcapi-types";
+import type { Work } from "@nulib/dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { formatDateLong } from "@/lib/utils/date-helpers";

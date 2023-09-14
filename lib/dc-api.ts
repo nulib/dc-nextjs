@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { type ApiSearchRequestBody } from "@/types/api/request";
+
+import type { ApiSearchRequestBody } from "@/types/api/request";
 
 interface ApiGetRequestParams {
   url: string;

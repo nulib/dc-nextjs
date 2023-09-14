@@ -2,13 +2,14 @@ import {
   AnnouncementContent,
   ViewerWrapperStyled,
 } from "@/components/Clover/ViewerWrapper.styled";
+
 import Announcement from "@/components/Shared/Announcement";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { UserContext } from "@/context/user-context";
-import { type Work } from "@nulib/dcapi-types";
+import type { ViewerConfigOptions } from "@samvera/clover-iiif";
+import type { Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 
 export const CloverViewer = dynamic(
   () => import("@samvera/clover-iiif/viewer"),
@@ -20,14 +21,15 @@ export const CloverViewer = dynamic(
 interface WrapperProps {
   manifestId: Work["iiif_manifest"];
   isWorkRestricted?: boolean;
+  viewerOptions?: ViewerConfigOptions;
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
   manifestId,
   isWorkRestricted,
+  viewerOptions = {},
 }) => {
   const userAuth = React.useContext(UserContext);
-  const router = useRouter();
 
   const customTheme = {
     colors: {
@@ -47,28 +49,28 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     },
   };
 
-  const options = {
+  const defaultOptions: ViewerConfigOptions = {
     canvasBackgroundColor: "$gray6",
     canvasHeight: "640px",
+    informationPanel: {
+      open: false,
+      renderAbout: false,
+      renderToggle: false,
+    },
     openSeadragon: {
       gestureSettingsMouse: {
         scrollToZoom: false,
       },
     },
-    renderAbout: false,
     showIIIFBadge: false,
-    showInformationToggle: false,
     showTitle: false,
     withCredentials: true,
   };
 
-  // On an "embedded-viewer" route, show the metadata drawer in the viewer
-  if (router.pathname === "/embedded-viewer/[manifestId]") {
-    options["renderAbout"] = true;
-    options["showInformationToggle"] = true;
-    options["showIIIFBadge"] = true;
-    options["showTitle"] = true;
-  }
+  const options = {
+    ...defaultOptions,
+    ...viewerOptions,
+  };
 
   return (
     <ViewerWrapperStyled data-testid="work-viewer-wrapper">

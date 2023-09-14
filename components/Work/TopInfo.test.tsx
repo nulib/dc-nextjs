@@ -1,6 +1,7 @@
 import { manifest, work } from "@/mocks/sample-work-image";
 import { render, screen } from "@/test-utils";
-import { type Work } from "@nulib/dcapi-types";
+
+import type { Work } from "@nulib/dcapi-types";
 import WorkTopInfo from "@/components/Work/TopInfo";
 
 describe("WorkTopInfo component", () => {
