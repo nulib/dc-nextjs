@@ -47,11 +47,13 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const { auth: authToken, endpoint } = chatConfig;
 
   const handleReadyStateChange = (event: Event) => {
+    console.log(`handleReadyStateChange event`, event);
     const target = event.target as WebSocket;
     setReadyState(target.readyState);
   };
 
   const handleMessageUpdate = (event: MessageEvent) => {
+    console.log(`handleMessageUpdate event`, event);
     const data: StreamingMessage = JSON.parse(event.data);
     // console.log(`handleMessageUpdate data`, data);
 
@@ -96,17 +98,15 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     }
   };
 
-  const defaultValue = streamAnswers.length
-    ? `${streamAnswers[0].ref}`
-    : undefined;
+  const defaultValue = questions.length ? `${questions[0].ref}` : undefined;
 
   return (
     <>
       <span>{readyState}</span>
       <Accordion.Root
         type="single"
-        defaultValue={defaultValue}
         key={defaultValue}
+        defaultValue={defaultValue}
       >
         {readyState === 1 && (
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
