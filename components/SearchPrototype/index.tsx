@@ -1,12 +1,22 @@
 import * as Accordion from "@radix-ui/react-accordion";
 
-import { Answer, QuestionRendered, StreamingMessage } from "./types/search-prototype";
+import {
+  Answer,
+  QuestionRendered,
+  StreamingMessage,
+} from "./types/search-prototype";
 import React, { useEffect } from "react";
+import {
+  StyledAnswerHeader,
+  StyledAnswerItem,
+} from "./components/Answer/Answer.styled";
 
+import AnswerLoader from "./components/Answer/Loader";
 import AnswerResults from "./components/Answer/Results";
 import { ChatConfig } from "@/pages";
 import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
+import SourceDocuments from "./components/Answer/SourceDocuments";
 import StreamingAnswer from "./components/Answer/StreamingAnswer";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import useStreamingAnswers from "./hooks/useStreamingAnswers";
@@ -23,7 +33,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   //   "nul-chat-search",
   //   []
   // );
-  
+
   const { prepareQuestion, updateStreamAnswers } = useStreamingAnswers();
 
   // This is a pattern to access and update React state within a WebSocket event handler
@@ -41,14 +51,15 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     setReadyState(target.readyState);
   };
 
-
   const handleMessageUpdate = (event: MessageEvent) => {
     const data: StreamingMessage = JSON.parse(event.data);
     // console.log(`handleMessageUpdate data`, data);
-    
+
     // if (data?.question) setCurrentQuestion(data.question);
-    
-    const updatedStreamAnswers = updateStreamAnswers(data, [...streamAnswersRef.current]);
+
+    const updatedStreamAnswers = updateStreamAnswers(data, [
+      ...streamAnswersRef.current,
+    ]);
     // console.log(`handleMessageUpdate updatedStreamAnswers`, updatedStreamAnswers);
     setStreamAnswers(updatedStreamAnswers);
   };
@@ -73,14 +84,14 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     // do some basic validation and save the question
     if (questionString) {
       const question = prepareQuestion(questionString, authToken);
-      const questionToStore = { 
+      const questionToStore = {
         question: question.question,
-        ref: question.ref
+        ref: question.ref,
       };
 
       // apped questio to my questions React state array using prevState
       setQuestions((prevQuestions) => [questionToStore, ...prevQuestions]);
-      
+
       chatSocket?.send(JSON.stringify(question));
     }
   };
@@ -88,7 +99,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const defaultValue = streamAnswers.length
     ? `${streamAnswers[0].ref}`
     : undefined;
-    
+
   return (
     <>
       <span>{readyState}</span>
@@ -101,17 +112,28 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
           <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
         )}
 
-        <>
-          {streamAnswers.map((answer: Answer) => { 
-            const question = questions?.find((q) => q.ref === answer.ref);
-            return (
-              <article key={answer.ref}>
-                {question && <h3>{question?.question}</h3>}
-                <StreamingAnswer answer={answer.answer} />
-              </article>
-            )
-          })}
-        </>
+        {questions.map((question: QuestionRendered) => {
+          const answer = streamAnswers?.find(
+            (answer) => question.ref === answer.ref
+          );
+          return (
+            <StyledAnswerItem value={question.ref} key={question.ref}>
+              <StyledAnswerHeader>
+                <Accordion.Trigger>
+                  <span>{question?.question}</span>
+                </Accordion.Trigger>
+              </StyledAnswerHeader>
+              {answer?.answer ? (
+                <Accordion.Content>
+                  <SourceDocuments source_documents={answer.source_documents} />
+                  <StreamingAnswer answer={answer.answer} />
+                </Accordion.Content>
+              ) : (
+                <AnswerLoader />
+              )}
+            </StyledAnswerItem>
+          );
+        })}
       </Accordion.Root>
       <QuestionClearHistory />
     </>
