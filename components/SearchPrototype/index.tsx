@@ -12,13 +12,12 @@ import {
 } from "./components/Answer/Answer.styled";
 
 import AnswerLoader from "./components/Answer/Loader";
-import AnswerResults from "./components/Answer/Results";
 import { ChatConfig } from "@/pages";
 import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
 import SourceDocuments from "./components/Answer/SourceDocuments";
 import StreamingAnswer from "./components/Answer/StreamingAnswer";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+import useLocalStorageSimple from "./hooks/useLocalStorageSimple";
 import useStreamingAnswers from "./hooks/useStreamingAnswers";
 
 interface SearchPrototypeProps {
@@ -26,26 +25,32 @@ interface SearchPrototypeProps {
 }
 
 const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
-  const [questions, setQuestions] = React.useState<QuestionRendered[]>([]);
+  const { auth: authToken, endpoint } = chatConfig;
+  const { prepareQuestion, updateStreamAnswers } = useStreamingAnswers();
+
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
 
-  // const [questions, saveQuestions] = useLocalStorage<any>(
-  //   "nul-chat-search",
-  //   []
-  // );
+  const [questions, setQuestions] = useLocalStorageSimple<QuestionRendered[]>(
+    "nul-chat-search-questions",
+    []
+  );
 
-  const { prepareQuestion, updateStreamAnswers } = useStreamingAnswers();
-
-  // This is a pattern to access and update React state within a WebSocket event handler
-  const [streamAnswers, _setStreamAnswers] = React.useState<Answer[]>([]);
+  /**
+   * A pattern to access and update React state within a WebSocket event handler
+   */
+  const [streamAnswers, _setStreamAnswers] = useLocalStorageSimple<Answer[]>(
+    "nul-chat-search-answers",
+    []
+  );
   const streamAnswersRef = React.useRef(streamAnswers);
-  const setStreamAnswers = (data: Array<Answer>) => {
-    streamAnswersRef.current = data;
-    _setStreamAnswers(data);
-  };
-
-  const { auth: authToken, endpoint } = chatConfig;
+  const setStreamAnswers = useCallback(
+    (data: Array<Answer>) => {
+      streamAnswersRef.current = data;
+      _setStreamAnswers(data);
+    },
+    [_setStreamAnswers]
+  );
 
   const handleReadyStateChange = (event: Event) => {
     const target = event.target as WebSocket;
@@ -60,7 +65,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
       ]);
       setStreamAnswers(updatedStreamAnswers);
     },
-    [updateStreamAnswers]
+    [setStreamAnswers, updateStreamAnswers]
   );
 
   useEffect(() => {
@@ -88,9 +93,8 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
         ref: question.ref,
       };
 
-      // apped questio to my questions React state array using prevState
+      // Append question to my questions React state array using prevState
       setQuestions((prevQuestions) => [questionToStore, ...prevQuestions]);
-
       chatSocket?.send(JSON.stringify(question));
     }
   };
