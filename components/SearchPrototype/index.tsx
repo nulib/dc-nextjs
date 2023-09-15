@@ -5,7 +5,7 @@ import {
   QuestionRendered,
   StreamingMessage,
 } from "./types/search-prototype";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   StyledAnswerHeader,
   StyledAnswerItem,
@@ -29,6 +29,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const [questions, setQuestions] = React.useState<QuestionRendered[]>([]);
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
+
   // const [questions, saveQuestions] = useLocalStorage<any>(
   //   "nul-chat-search",
   //   []
@@ -47,24 +48,20 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const { auth: authToken, endpoint } = chatConfig;
 
   const handleReadyStateChange = (event: Event) => {
-    console.log(`handleReadyStateChange event`, event);
     const target = event.target as WebSocket;
     setReadyState(target.readyState);
   };
 
-  const handleMessageUpdate = (event: MessageEvent) => {
-    console.log(`handleMessageUpdate event`, event);
-    const data: StreamingMessage = JSON.parse(event.data);
-    // console.log(`handleMessageUpdate data`, data);
-
-    // if (data?.question) setCurrentQuestion(data.question);
-
-    const updatedStreamAnswers = updateStreamAnswers(data, [
-      ...streamAnswersRef.current,
-    ]);
-    // console.log(`handleMessageUpdate updatedStreamAnswers`, updatedStreamAnswers);
-    setStreamAnswers(updatedStreamAnswers);
-  };
+  const handleMessageUpdate = useCallback(
+    (event: MessageEvent) => {
+      const data: StreamingMessage = JSON.parse(event.data);
+      const updatedStreamAnswers = updateStreamAnswers(data, [
+        ...streamAnswersRef.current,
+      ]);
+      setStreamAnswers(updatedStreamAnswers);
+    },
+    [updateStreamAnswers]
+  );
 
   useEffect(() => {
     const socket = new WebSocket(endpoint);
@@ -80,7 +77,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
       socket.removeEventListener("error", handleReadyStateChange);
       socket.removeEventListener("message", handleMessageUpdate);
     };
-  }, [authToken, endpoint]);
+  }, [authToken, endpoint, handleMessageUpdate]);
 
   const handleQuestionSubmission = (questionString: string) => {
     // do some basic validation and save the question

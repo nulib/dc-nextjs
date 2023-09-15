@@ -12,7 +12,6 @@ export interface AnswerCardProps {
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ metadata, page_content }) => {
   const { _additional, source, work_type } = metadata;
-  console.log(metadata);
   const dcLink = `https://dc.library.northwestern.edu/items/${source}`;
   const thumbnail = `${DCAPI_PRODUCTION_ENDPOINT}/works/${source}/thumbnail?aspect=square`;
 

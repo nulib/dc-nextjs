@@ -12,8 +12,8 @@ const SourceDocuments: React.FC<SourceDocumentsProps> = ({
 }) => {
   return (
     <Sources>
-      {source_documents.map((document) => (
-        <AnswerCard {...document} key={document.metadata?.identifer} />
+      {source_documents.map((document, idx) => (
+        <AnswerCard {...document} key={idx} />
       ))}
     </Sources>
   );
