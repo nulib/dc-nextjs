@@ -126,7 +126,10 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
               {answer?.answer ? (
                 <Accordion.Content>
                   <SourceDocuments source_documents={answer.source_documents} />
-                  <StreamingAnswer answer={answer.answer} />
+                  <StreamingAnswer
+                    answer={answer.answer}
+                    isComplete={answer.isComplete}
+                  />
                 </Accordion.Content>
               ) : (
                 <AnswerLoader />

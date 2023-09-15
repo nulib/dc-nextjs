@@ -1,4 +1,3 @@
-
 export type QuestionRendered = {
   question: string;
   ref: string;
@@ -19,10 +18,11 @@ export type SourceDocument = {
 };
 
 export type Answer = {
+  answer: string;
+  isComplete: boolean;
+  question?: string; // revisit this
   ref: string;
   source_documents: Array<SourceDocument>;
-  answer: string;
-  question?: string; // revisit this
 };
 
 export type StreamingMessage = {
