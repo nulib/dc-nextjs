@@ -7,12 +7,17 @@ import {
 } from "./types/search-prototype";
 import React, { useCallback, useEffect } from "react";
 import {
+  StyledActions,
   StyledAnswerHeader,
   StyledAnswerItem,
+  StyledRemoveButton,
 } from "./components/Answer/Answer.styled";
 
+import AnswerInformation from "./components/Answer/Information";
 import AnswerLoader from "./components/Answer/Loader";
 import { ChatConfig } from "@/pages";
+import Icon from "@/components/Shared/Icon";
+import { IconClear } from "@/components/Shared/SVG/Icons";
 import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
 import SourceDocuments from "./components/Answer/SourceDocuments";
@@ -99,6 +104,13 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     }
   };
 
+  const handleDelete = (ref: string) => {
+    const updatedQuestions = questions.filter((q: any) => q.ref !== ref);
+    const updatedAnswers = streamAnswers.filter((a: any) => a.ref !== ref);
+    setQuestions(updatedQuestions);
+    setStreamAnswers(updatedAnswers);
+  };
+
   const defaultValue = questions.length ? `${questions[0].ref}` : undefined;
 
   return (
@@ -123,6 +135,17 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
                 <Accordion.Trigger>
                   <span>{question?.question}</span>
                 </Accordion.Trigger>
+
+                <StyledActions>
+                  {answer?.answer && <AnswerInformation timestamp={1212} />}
+                  <StyledRemoveButton
+                    onClick={() => handleDelete(question.ref)}
+                  >
+                    <Icon>
+                      <IconClear />
+                    </Icon>
+                  </StyledRemoveButton>
+                </StyledActions>
               </StyledAnswerHeader>
               {answer?.answer ? (
                 <Accordion.Content>

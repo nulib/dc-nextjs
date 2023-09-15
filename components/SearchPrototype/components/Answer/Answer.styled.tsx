@@ -1,15 +1,16 @@
 import * as Accordion from "@radix-ui/react-accordion";
 
+import { AnswerTooltip } from "./Information";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
-const Actions = styled("div", {
+const StyledActions = styled("div", {
   display: "flex",
   paddingLeft: "$gr5",
 });
 
-const RemoveButton = styled("button", {
+const StyledRemoveButton = styled("button", {
   background: "transparent",
   border: "none",
   cursor: "pointer",
@@ -29,8 +30,6 @@ const RemoveButton = styled("button", {
     },
   },
 });
-
-const Question = styled("span", {});
 
 const StyledAnswerHeader = styled(Accordion.Header, {
   margin: "$gr2 0",
@@ -82,10 +81,10 @@ const StyledAnswerItem = styled(Accordion.Item, {
       },
     },
 
-    // [`& ${AnswerTooltip}`]: {
-    //   display: "none",
-    //   cursor: "default",
-    // },
+    [`& ${AnswerTooltip}`]: {
+      display: "none",
+      cursor: "default",
+    },
   },
 
   "&:hover button svg": {
@@ -93,4 +92,9 @@ const StyledAnswerItem = styled(Accordion.Item, {
   },
 });
 
-export { StyledAnswerHeader, StyledAnswerItem };
+export {
+  StyledActions,
+  StyledAnswerHeader,
+  StyledAnswerItem,
+  StyledRemoveButton,
+};
