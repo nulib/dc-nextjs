@@ -18,7 +18,6 @@ import AnswerLoader from "./components/Answer/Loader";
 import { ChatConfig } from "@/pages";
 import Icon from "@/components/Shared/Icon";
 import { IconClear } from "@/components/Shared/SVG/Icons";
-import QuestionClearHistory from "./components/Question/ClearHistory";
 import QuestionInput from "./components/Question/Input";
 import SourceDocuments from "./components/Answer/SourceDocuments";
 import StreamingAnswer from "./components/Answer/StreamingAnswer";
@@ -48,6 +47,7 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
     "nul-chat-search-answers",
     []
   );
+
   const streamAnswersRef = React.useRef(streamAnswers);
   const setStreamAnswers = useCallback(
     (data: Array<Answer>) => {
@@ -114,56 +114,50 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   const defaultValue = questions.length ? `${questions[0].ref}` : undefined;
 
   return (
-    <>
-      <span>{readyState}</span>
-      <Accordion.Root
-        type="single"
-        key={defaultValue}
-        defaultValue={defaultValue}
-      >
-        {readyState === 1 && (
-          <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
-        )}
+    <Accordion.Root
+      type="single"
+      key={defaultValue}
+      defaultValue={defaultValue}
+    >
+      {readyState === 1 && (
+        <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
+      )}
 
-        {questions.map((question: QuestionRendered) => {
-          const answer = streamAnswers?.find(
-            (answer) => question.ref === answer.ref
-          );
-          return (
-            <StyledAnswerItem value={question.ref} key={question.ref}>
-              <StyledAnswerHeader>
-                <Accordion.Trigger>
-                  <span>{question?.question}</span>
-                </Accordion.Trigger>
+      {questions.map((question: QuestionRendered) => {
+        const answer = streamAnswers?.find(
+          (answer) => question.ref === answer.ref
+        );
+        return (
+          <StyledAnswerItem value={question.ref} key={question.ref}>
+            <StyledAnswerHeader>
+              <Accordion.Trigger>
+                <span>{question?.question}</span>
+              </Accordion.Trigger>
 
-                <StyledActions>
-                  {answer?.answer && <AnswerInformation timestamp={1212} />}
-                  <StyledRemoveButton
-                    onClick={() => handleDelete(question.ref)}
-                  >
-                    <Icon>
-                      <IconClear />
-                    </Icon>
-                  </StyledRemoveButton>
-                </StyledActions>
-              </StyledAnswerHeader>
-              {answer?.answer ? (
-                <Accordion.Content>
-                  <SourceDocuments source_documents={answer.source_documents} />
-                  <StreamingAnswer
-                    answer={answer.answer}
-                    isComplete={answer.isComplete}
-                  />
-                </Accordion.Content>
-              ) : (
-                <AnswerLoader />
-              )}
-            </StyledAnswerItem>
-          );
-        })}
-      </Accordion.Root>
-      <QuestionClearHistory />
-    </>
+              <StyledActions>
+                {answer?.answer && <AnswerInformation timestamp={1212} />}
+                <StyledRemoveButton onClick={() => handleDelete(question.ref)}>
+                  <Icon>
+                    <IconClear />
+                  </Icon>
+                </StyledRemoveButton>
+              </StyledActions>
+            </StyledAnswerHeader>
+            {answer?.answer ? (
+              <Accordion.Content>
+                <SourceDocuments source_documents={answer.source_documents} />
+                <StreamingAnswer
+                  answer={answer.answer}
+                  isComplete={answer.isComplete}
+                />
+              </Accordion.Content>
+            ) : (
+              <AnswerLoader />
+            )}
+          </StyledAnswerItem>
+        );
+      })}
+    </Accordion.Root>
   );
 };
 

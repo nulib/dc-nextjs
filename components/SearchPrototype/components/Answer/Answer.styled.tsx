@@ -19,7 +19,7 @@ const StyledRemoveButton = styled("button", {
   padding: "0",
 
   svg: {
-    fill: "$black20 !important",
+    fill: "$black50 !important",
     transition: "opacity 0.2s ease-in-out",
   },
 
