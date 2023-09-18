@@ -51,9 +51,7 @@
     "react-masonry-css": "^1.0.16",
     "react-share": "^4.4.1",
     "react-wrap-balancer": "^1.0.0",
-    "sonner": "^0.5.0",
-    "swiper": "^9.4.1",
-    "typed.js": "^2.0.16"
+    "swiper": "^9.4.1"
   },
   "devDependencies": {
     "@elastic/elasticsearch": "7.17",
