@@ -3,13 +3,14 @@ import {
   MessageStyled,
   MessageText,
   MessageTitle,
-} from "@/components/Shared/Message/Message.styled";
+} from "@/components/Footer/SiteContentMessage/SiteContentMessage.styled";
 import { useEffect, useState } from "react";
+
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
 import useSessionStorage from "@/hooks/useSessionStorage";
 
-const Message = () => {
+const SiteContentMessage = () => {
   const current = Date.now() / 1000;
   const interval = 86400; // 24 hours
 
@@ -69,4 +70,4 @@ const Message = () => {
     </MessageStyled>
   );
 };
-export default Message;
+export default SiteContentMessage;

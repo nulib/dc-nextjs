@@ -2,6 +2,7 @@ import Container from "@/components/Shared/Container";
 import { FooterStyled } from "@/components/Footer/Footer.styled";
 import { Footer as NUFooter } from "@nulib/design-system";
 import React from "react";
+import SiteContentMessage from "./SiteContentMessage/SiteContentMessage";
 
 export default function Footer() {
   return (
@@ -9,6 +10,7 @@ export default function Footer() {
       <Container>
         <NUFooter isCopyright />
       </Container>
+      <SiteContentMessage />
     </FooterStyled>
   );
 }
