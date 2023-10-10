@@ -2,14 +2,14 @@ import {
   MessageContent,
   MessageStyled,
   MessageText,
-  MessageTitle,
-} from "@/components/Shared/Message/Message.styled";
+} from "@/components/Footer/SiteContentMessage/SiteContentMessage.styled";
 import { useEffect, useState } from "react";
+
 import { Button } from "@nulib/design-system";
 import Container from "@/components/Shared/Container";
 import useSessionStorage from "@/hooks/useSessionStorage";
 
-const Message = () => {
+const SiteContentMessage = () => {
   const current = Date.now() / 1000;
   const interval = 86400; // 24 hours
 
@@ -43,20 +43,19 @@ const Message = () => {
       <Container>
         <MessageContent>
           <div>
-            <MessageTitle>Potentially harmful content</MessageTitle>
             <MessageText>
-              Northwestern University Libraries Digital Collections contain
-              materials that reflect the beliefs and norms of the era and
-              culture in which they were created or collected. The site contains
-              offensive imagery, language, or opinions related to a white
-              supremist, exploitative, and/or discriminatory culture.
-              Additionally, this site contains sexual content or violence that
-              may not be appropriate for all audiences. The Libraries are
-              committed to the ethical digitization and description of materials
-              that offer alternative histories and center voices from
-              marginalized cultures. If you have questions or concerns about the
-              materials, please refer to our “Retention of Challenged Materials”
-              policy with more information about how to contact us.
+              Northwestern University Libraries&apos; Digital Collections
+              contain materials that reflect the beliefs and norms of their eras
+              and culture in which they were created or collected. The site may
+              contain imagery, language, or opinions that are offensive and may
+              not be appropriate for all audiences. The Libraries are committed
+              to the ethical digitization and description of materials that
+              offer alternative histories and center voices from marginalized
+              cultures. Please direct questions to{" "}
+              <a href="mailto:library@northwestern.edu">
+                library@northwestern.edu
+              </a>
+              .
             </MessageText>
           </div>
           <div>
@@ -69,4 +68,4 @@ const Message = () => {
     </MessageStyled>
   );
 };
-export default Message;
+export default SiteContentMessage;
