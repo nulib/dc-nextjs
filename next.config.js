@@ -8,6 +8,7 @@ const {
   HONEYBADGER_REPORT_DATA,
   NEXT_PUBLIC_DC_URL,
 } = process.env;
+
 const NODE_ENV = process.env.HONEYBADGER_ENV || process.env.NODE_ENV;
 const HONEYBADGER_REVISION =
   process.env.HONEYBADGER_REVISION || process.env.AWS_COMMIT_ID;

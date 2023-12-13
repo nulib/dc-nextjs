@@ -40,7 +40,7 @@ resource "aws_amplify_app" "dc-next" {
   enable_branch_auto_build      = var.auto_branch_creation
   enable_branch_auto_deletion   = var.auto_branch_creation
   auto_branch_creation_patterns = var.auto_branch_creation ? ["preview/*"] : []
-  
+
   dynamic "auto_branch_creation_config" {
     for_each = var.auto_branch_creation ? toset([1]) : toset([])
     content {

@@ -12,6 +12,16 @@ Digital Collections v2 (DCv2) is a UI application for discovering and interactin
 - [AWS Amplify](https://aws.amazon.com/amplify/) Hosting environment
 - [OpenSearch](https://opensearch.org/) Search index
 
+### Dependency Notes
+
+The following dependencies should be "pinned" or held behind `@latest` versions
+
+- `next`: We've experienced issues with the AWS Amplify build process when using `@latest` versions of NextJS. To be safe, in general we should pin NextJS to >= 1 minor versions behind `next@latest`.
+- `@elastic/elasticsearch`: To match the version of `OpenSearch` our app uses.
+- `swiper`
+- `@honeybadger-io/js`
+- `@iiif/presentation-3`
+
 ## Development Environments
 
 ### Local
