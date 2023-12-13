@@ -54,8 +54,6 @@ resource "aws_amplify_app" "dc-next" {
       phases:
         preBuild:
           commands:
-            - nvm install 18.17.0
-            - nvm use 18.17.0
             - npm ci --force
         build:
           commands:
