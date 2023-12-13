@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Heading from "@/components/Heading/Heading";
+import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import SearchPrototype from "@/components/SearchPrototype";
+import SettingsBox from "@/components/SearchPrototype/components/Settings/Box";
 import axios from "axios";
 import { styled } from "@/stitches.config";
 
 export type ChatConfig = {
   auth: string,
-  endpoint: string
+  endpoint: string,
 }
 
 const HomePage: React.FC = () => {
@@ -32,8 +34,8 @@ const HomePage: React.FC = () => {
     <StyledHomePage>
       <Container>
         <Heading as="h1">Chat Search Prototype</Heading>
-        {chatConfig && 
-          (<SearchPrototypeWrapper>
+        <SettingsBox />
+        {chatConfig && (<SearchPrototypeWrapper>
             <SearchPrototype chatConfig={chatConfig} />
           </SearchPrototypeWrapper>)
         }     
