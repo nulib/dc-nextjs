@@ -16,7 +16,6 @@ Digital Collections v2 (DCv2) is a UI application for discovering and interactin
 
 The following dependencies should be "pinned" or held behind `@latest` versions
 
-- `next`: We've experienced issues with the AWS Amplify build process when using `@latest` versions of NextJS. To be safe, in general we should pin NextJS to >= 1 minor versions behind `next@latest`.
 - `@elastic/elasticsearch`: To match the version of `OpenSearch` our app uses.
 - `swiper`
 - `@honeybadger-io/js`
@@ -138,17 +137,36 @@ A pre-commit hook will ensure code is linted before committed.
 
 ### End to end tests
 
-Test fixtures can be accessed by pointing the app to a [Test Environment API](https://github.com/nulib/dc-test-environment). Setting the `NEXT_PUBLIC_DCAPI_ENDPOINT` `env` variable value to https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2 will run DC v2 against test data. The following commands start your server and the test suite.
+Test fixtures can be accessed by pointing the app to a [Test Environment API](https://github.com/nulib/dc-test-environment).
+
+_Note: Only currently supported in local dev environments. Tests are flaky due to network requests in Github Actions CI env._
 
 ```bash
-# Start local server
-npm run dev:test-env
-
-# Start Cypress test runner
-npm run cypress:open
+NEXT_PUBLIC_DCAPI_ENDPOINT="https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2"
 ```
 
-E2E tests use [Cypress](https://docs.cypress.io/), and are linted with [Cypress ESLint Plugin](https://github.com/cypress-io/eslint-plugin-cypress).
+```bash
+# Start local server (automatically points NEXT_PUBLIC_DCAPI_ENDPOINT to the test data API)
+npm run dev:test-env
+
+# If in AWS Dev Environment, set a BASE_URL environment variable in a .env.local file
+BASE_URL="[YOUR_DEV_ID].dev.rdc.library.northwestern.edu"
+
+# Start Playwright tests in headless mode
+npm run test:playwright
+```
+
+To run more visual tests, try experimenting with:
+
+```bash
+# Run in an interactive test browser to visually see tests run
+npx playwright test --ui
+
+# Run all tests in headed mode
+npx playwright test --headed
+```
+
+For more info, view the docs: [Playwright](https://playwright.dev/).
 
 ### Unit tests
 

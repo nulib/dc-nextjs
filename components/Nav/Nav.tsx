@@ -6,7 +6,7 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = ({ children }) => {
-  return <NavStyled>{children}</NavStyled>;
+  return <NavStyled data-testid="super-nav">{children}</NavStyled>;
 };
 
 export default Nav;
