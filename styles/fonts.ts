@@ -1,3 +1,4 @@
+import { Noto_Serif } from "next/font/google";
 import localFont from "@next/font/local";
 
 /**
@@ -67,13 +68,17 @@ export const camptonExtraLight = localFont({
   variable: "--font-campton-extra-light",
 });
 
-const generic = `Arial, Helvetica, sans-serif`;
+const notoSerifBold = Noto_Serif({
+  subsets: ["latin-ext"],
+  weight: "700",
+});
 
-const sans = {
-  northwesternSansBold: `var(--font-akkurat-bold), var(--font-akkurat), ${generic} `,
-  northwesternSansLight: `var(--font-akkurat-light), var(--font-akkurat), ${generic}`,
-  northwesternSansRegular: `var(--font-akkurat), ${generic}`,
-};
+const notoSerifRegular = Noto_Serif({
+  subsets: ["latin-ext"],
+  weight: "400",
+});
+
+const generic = `Arial, Helvetica, sans-serif`;
 
 const display = {
   northwesternDisplayBold: `var(--font-campton-bold), ${generic}`,
@@ -82,9 +87,21 @@ const display = {
   northwesternDisplayExtraLight: `var(--font-campton-extra-light), ${generic}`,
 };
 
+const sans = {
+  northwesternSansBold: `var(--font-akkurat-bold), var(--font-akkurat), ${generic} `,
+  northwesternSansLight: `var(--font-akkurat-light), var(--font-akkurat), ${generic}`,
+  northwesternSansRegular: `var(--font-akkurat), ${generic}`,
+};
+
+const serif = {
+  northwesternSerifBold: notoSerifBold.style.fontFamily,
+  northwesternSerifRegular: notoSerifRegular.style.fontFamily,
+};
+
 const fonts = {
   ...display,
   ...sans,
+  ...serif,
 };
 
 export default fonts;
