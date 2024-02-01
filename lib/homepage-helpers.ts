@@ -6,7 +6,7 @@ import { apiGetRequest } from "./dc-api";
 import axios from "axios";
 
 const getHomePageCollections = async (
-  collectionIds: string[] = []
+  collectionIds: string[] = [],
 ): Promise<SearchShape[]> => {
   try {
     /** Batch fetch all Collections */
@@ -15,7 +15,7 @@ const getHomePageCollections = async (
         return apiGetRequest<Collection>({
           url: `${DCAPI_PRODUCTION_ENDPOINT}/collections/${id}`,
         });
-      })
+      }),
     );
 
     /** Batch fetch all Works which are representative images of Collections returned above */
@@ -24,8 +24,8 @@ const getHomePageCollections = async (
       workIds.map((id) =>
         apiGetRequest<Work>({
           url: `${DCAPI_PRODUCTION_ENDPOINT}/works/${id}`,
-        })
-      )
+        }),
+      ),
     );
 
     const worksUpdated: Work[] = [];

@@ -19,12 +19,12 @@ export const getRelatedCollections = (work: Work) => {
    */
   if (work.subject.length > 0) {
     const subjects = shuffle([work?.subject.map((s) => s.label)]).filter(
-      (label: string, index: number) => index < 2 && label
+      (label: string, index: number) => index < 2 && label,
     )[0];
 
     subjects.forEach((subject: string) => {
       related.push(
-        `${DC_API_SEARCH_URL}?query=subject.label:"${subject}"&collectionLabel=${subject}&collectionSummary=Subject&as=iiif`
+        `${DC_API_SEARCH_URL}?query=subject.label:"${subject}"&collectionLabel=${subject}&collectionSummary=Subject&as=iiif`,
       );
     });
   }
@@ -36,7 +36,7 @@ export const getRelatedCollections = (work: Work) => {
     const genre = sample(work?.genre);
     genre &&
       related.push(
-        `${DC_API_SEARCH_URL}?query=genre.label:"${genre.label}"&collectionLabel=${genre.label}&collectionSummary=Genre&as=iiif`
+        `${DC_API_SEARCH_URL}?query=genre.label:"${genre.label}"&collectionLabel=${genre.label}&collectionSummary=Genre&as=iiif`,
       );
   }
 
@@ -50,7 +50,7 @@ export const getRelatedCollections = (work: Work) => {
    */
   const collection = work?.collection?.title;
   related.unshift(
-    `${DC_API_SEARCH_URL}?query=collection.title.keyword:"${collection}"&collectionLabel=${collection}&collectionSummary=Collection&as=iiif`
+    `${DC_API_SEARCH_URL}?query=collection.title.keyword:"${collection}"&collectionLabel=${collection}&collectionSummary=Collection&as=iiif`,
   );
 
   /**
@@ -58,7 +58,7 @@ export const getRelatedCollections = (work: Work) => {
    */
   const similarLabel = `Similar to ${work.title}`;
   related.unshift(
-    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${similarLabel}&as=iiif`
+    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${similarLabel}&as=iiif`,
   );
 
   return related;

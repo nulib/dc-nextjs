@@ -45,7 +45,7 @@ const HeroStyled = styled("div", {
         width: "100%",
         height: "300px",
         background:
-          "linear-gradient(173deg, $purple 0%, #4E2A84cc 19%, #0000 61.8%)",
+          "linear-gradient(180deg, $purple 0%, #4E2A84cc 19%, #0000 61.8%)",
         position: "absolute",
         zIndex: "1",
       },
@@ -90,8 +90,7 @@ const HeroStyled = styled("div", {
           display: "flex",
           width: "100%",
           height: "100%",
-          background:
-            "linear-gradient(7deg, #401F68cc 0%, #000a 20%, #0000 61.8%)",
+          background: "linear-gradient(0deg, #000a 0%, #000a 19%, #0000 50%)",
           position: "absolute",
           zIndex: "1",
           bottom: "0",

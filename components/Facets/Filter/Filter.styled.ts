@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+
 import { IconStyled } from "@/components/Shared/Icon";
 import { ValueWrapper } from "@/components/Facets/UserFacets/UserFacets.styled";
 import { styled } from "@/stitches.config";
@@ -15,11 +16,12 @@ const FilterActivate = styled(Dialog.Trigger, {
   backgroundColor: "$purple",
   border: "0",
   color: "$white",
-  fontFamily: "$northwesternSansBold",
+  fontFamily: "$northwesternSansRegular",
   fontSize: "$gr3",
   borderRadius: "50px",
   transition: "$dcAll",
   padding: "0 $gr3 0 $gr1",
+  boxShadow: "2px 2px 5px #0002",
 
   [`& ${IconStyled}`]: {
     color: "$purple60",
@@ -29,7 +31,6 @@ const FilterActivate = styled(Dialog.Trigger, {
   "&:hover": {
     backgroundColor: "$purple120",
     color: "$white",
-    boxShadow: "2px 2px 2px #0002",
 
     [`& ${IconStyled}`]: {
       color: "$white",
@@ -46,14 +47,6 @@ const FilterFloating = styled("div", {
   boxShadow: "2px 2px 5px #0002",
   borderRadius: "50px",
   transition: "$dcAll",
-
-  [`& ${FilterActivate}`]: {
-    boxShadow: "2px 2px 5px #0002",
-  },
-
-  "&:hover": {
-    boxShadow: "2px 2px 5px #0004",
-  },
 });
 
 const FilterClose = styled(Dialog.Close, {});

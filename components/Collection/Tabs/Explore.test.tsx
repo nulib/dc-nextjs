@@ -17,7 +17,7 @@ const topMetadata = [
 describe("CollectionTabsExplore", () => {
   it("renders the description", async () => {
     render(
-      <CollectionTabsExplore collectionId="abc123" topMetadata={topMetadata} />
+      <CollectionTabsExplore collectionId="abc123" topMetadata={topMetadata} />,
     );
     expect(screen.getByTestId("explore-wrapper"));
   });

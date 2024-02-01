@@ -2,6 +2,7 @@ import {
   HeaderStyled,
   HeaderVariants,
 } from "@/components/Header/Header.styled";
+
 import HeaderLockup from "@/components/Header/Lockup";
 import HeaderPrimary from "@/components/Header/Primary";
 import HeaderSuper from "@/components/Header/Super";

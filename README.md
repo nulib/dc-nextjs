@@ -103,7 +103,22 @@ The API endpoint is an environment variable which is accessed in a local dev env
 
 ## Code Quality
 
-The app uses ESLint with a plugin for TypeScript support.
+### Prettier
+
+There are no pre-commit hooks, however deploy CI will run a Prettier check on all files to ensure code quality. It's recommended to:
+
+- Install the [Prettier VSCode extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Enable the "Format on Save" setting in VSCode
+- Manually validate and/or fix, by running Prettier locally using the following commands:
+
+```bash
+npm run prettier:check # Check for formatting issues
+npm run prettier:fix # Fix formatting issues
+```
+
+### ESLint
+
+The app uses ESLint with a plugin for TypeScript support. Note currently with NextJS `v14`, this command won't run due to a dependency issue with ESLint `v9` support. Hopefully resolved by NextJS soon.
 
 ```bash
 npm run lint
@@ -116,8 +131,6 @@ Run Typescript's `tsc` compiler for type-checking directly.
 ```bash
 npm run ts-lint
 ```
-
-A pre-commit hook will ensure code is linted before committed.
 
 ## Testing
 

@@ -104,7 +104,9 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
 
             <EmbedLayoutPreviewContent>
               <span
-                style={{ backgroundImage: `url(${work.thumbnail})` }}
+                style={{
+                  backgroundImage: `url(${work.thumbnail})`,
+                }}
               ></span>
               {infoPanelDefaultOpen && (
                 <EmbedLayoutPreviewInfoPanel data-testid="preview-info-panel">

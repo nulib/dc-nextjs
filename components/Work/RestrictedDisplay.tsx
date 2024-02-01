@@ -43,9 +43,9 @@ const WorkRestrictedDisplay: React.FC<Props> = ({
             target="_blank"
             rel="noreferrer"
             href={`mailto:repository@northwestern.edu?subject=${encodeURIComponent(
-              `Work ID: ${workId} access request`
+              `Work ID: ${workId} access request`,
             )}&body=${encodeURIComponent(
-              `Hello, I have a question about "${workTitle}".\n\nhttps://dc.library.northwestern.edu/items/${workId}\n\nQUESTION: `
+              `Hello, I have a question about "${workTitle}".\n\nhttps://dc.library.northwestern.edu/items/${workId}\n\nQUESTION: `,
             )}`}
           >
             repository@northwestern.edu

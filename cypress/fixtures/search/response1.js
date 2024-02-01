@@ -14,7 +14,7 @@
    * This is a static image in DC Production that we assume will always be available
    */
   const thumbnailUrl =
-    "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/76c26a0a-0454-48d8-a225-9fc26735315b/full/pct:10/0/default.jpg";
+    "https://iiif.dc.library.northwestern.edu/iiif/2/76c26a0a-0454-48d8-a225-9fc26735315b/full/pct:10/0/default.jpg";
   
     const awsMockManifestUrl =
     "https://yt8thudrak.execute-api.us-east-1.amazonaws.com/manifests";

@@ -25,12 +25,12 @@ const SharedPage: NextPage = () => {
         {
           url: `${DCAPI_ENDPOINT}/shared-links/${id}`,
         },
-        true
+        true,
       );
       if (!response) return;
       setWork(response.data.data);
       const manifest = await getIIIFResource<Manifest>(
-        response.data.data.iiif_manifest
+        response.data.data.iiif_manifest,
       );
       setManifest(manifest);
       setLinkExpiration(response.data.info.link_expiration || "");
@@ -59,7 +59,7 @@ const SharedPage: NextPage = () => {
           }}
         />
       </Head>
-      <Layout title={work.title || ''}>
+      <Layout title={work.title || ""}>
         <SharedLink
           manifest={manifest}
           work={work}

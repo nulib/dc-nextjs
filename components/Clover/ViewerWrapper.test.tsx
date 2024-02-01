@@ -34,7 +34,7 @@ describe("WorkViewerWrapper", () => {
           isWorkRestricted={true}
           manifestId="http://testing.com"
         />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     expect(await screen.findByText(readingRoomMessage)).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe("WorkViewerWrapper", () => {
           isWorkRestricted={false}
           manifestId="http://testing.com"
         />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     let el;

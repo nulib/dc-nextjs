@@ -4,6 +4,7 @@ interface DataLayer {
   adminset?: string;
   collections?: string | null;
   creatorsContributors?: Array<string> | string;
+  isUsingAI?: boolean;
   isLoggedIn?: boolean;
   pageTitle: string;
   rightsStatement?: string | null;
@@ -15,6 +16,7 @@ const defaultDataLayer = {
   adminset: "",
   collections: "",
   creatorsContributors: "",
+  isUsingAI: false,
   isLoggedIn: false,
   pageTitle: "",
   rightsStatement: "",
@@ -34,7 +36,7 @@ export function buildWorkDataLayer(work: Work): DataLayer {
 
   const creators = work?.creator.map((creator) => creator.label);
   const contributors = work?.contributor.map(
-    (contributor) => contributor.label
+    (contributor) => contributor.label,
   );
   const creatorsContributors: string[] = [];
   if (creators && creators.length > 0) {

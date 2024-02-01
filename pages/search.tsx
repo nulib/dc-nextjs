@@ -1,24 +1,29 @@
-import {
-  NoResultsMessage,
-  ResultsMessage,
-  ResultsWrapper,
-} from "@/components/Search/Search.styled";
+import * as Tabs from "@radix-ui/react-tabs";
+
+import { GetServerSideProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
 
+import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
+import Chat from "@/components/Chat/Chat";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import Facets from "@/components/Facets/Facets";
-import Grid from "@/components/Grid/Grid";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
+import Icon from "@/components/Shared/Icon";
+import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
-import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
+import SearchOptions from "@/components/Search/Options";
+import SearchResults from "@/components/Search/Results";
+import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
+import { SpinLoader } from "@/components/Shared/Loader.styled";
+import { StyledResponseWrapper } from "@/components/Search/Search.styled";
+import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
@@ -26,24 +31,30 @@ import { buildQuery } from "@/lib/queries/builder";
 import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
-import { pluralize } from "@/lib/utils/count-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
-type RequestState = {
-  data: ApiSearchResponse | null;
-  error: string | null;
-  loading: boolean;
+const defaultSearchResultsState: SearchResultsState = {
+  data: null,
+  error: "",
+  loading: true,
 };
 
 const SearchPage: NextPage = () => {
-  const size = 40;
   const router = useRouter();
-  const [requestState, setRequestState] = useState<RequestState>({
-    data: null,
-    error: "",
-    loading: true,
-  });
+  const { page, q } = router.query;
+
+  const { user } = React.useContext(UserContext);
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>("results");
+
+  const [searchResults, setSearchResults] = useState<SearchResultsState>(
+    defaultSearchResultsState,
+  );
+
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
+
   const [similarTo, setSimilarTo] = useState<{
     visible: boolean;
     work: { id: string; title: string };
@@ -55,15 +66,37 @@ const SearchPage: NextPage = () => {
     },
   });
 
+  const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
+  const totalResults = searchResults.data?.pagination?.total_hits;
+
   /**
-   * Post request to the search API endpoint for query and facet parameters
+   * on a query change, we check to see if the user is using the AI and then
+   * set the active tab to "stream" if they are, otherwise set it to "results"
+   * this also persist the state of the active tab when the user filters search
+   * results navigates pages
+   */
+  useEffect(() => {
+    if (showStreamedResponse) {
+      return setActiveTab("stream");
+    }
+
+    setActiveTab("results");
+  }, [q, showStreamedResponse]);
+
+  /**
+   * Make requests to the search API endpoint
    */
   useEffect(() => {
     if (!router.isReady) return;
+
+    // Reset search results state
+    setSearchResults(defaultSearchResultsState);
+
     (async () => {
       try {
-        const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
+        const requestUrl = new URL(DC_API_SEARCH_URL);
+        const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
 
         // If there is a "similar" facet, get the work and set the state
         if (urlFacets?.similar) {
@@ -79,15 +112,23 @@ const SearchPage: NextPage = () => {
           });
         }
 
-        const body: ApiSearchRequestBody = buildQuery({
-          size,
-          term: q as string,
-          urlFacets,
-        });
+        const body: ApiSearchRequestBody = buildQuery(
+          {
+            size: SEARCH_RESULTS_PER_PAGE,
+            term: q as string,
+            urlFacets,
+          },
+          !!isAI,
+        );
 
+        // Request as a "hybrid" OpensSearch query
+        // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
+        if (!!body?.query?.hybrid && pipeline) {
+          requestUrl.searchParams.append("search_pipeline", pipeline);
+        }
         const response = await apiPostRequest<ApiSearchResponse>({
-          body: body,
-          url: DC_API_SEARCH_URL,
+          body,
+          url: requestUrl.toString(),
         });
 
         /**
@@ -102,7 +143,7 @@ const SearchPage: NextPage = () => {
         handleErrors(err);
       }
     })();
-  }, [router.isReady, router.query]);
+  }, [router.isReady, router.query, isAI]);
 
   /**
    * Get request for page results
@@ -112,7 +153,7 @@ const SearchPage: NextPage = () => {
     (async () => {
       try {
         const response = await axios.get(pageQueryUrl);
-        setRequestState({
+        setSearchResults({
           data: response.data,
           error: "",
           loading: false,
@@ -133,7 +174,7 @@ const SearchPage: NextPage = () => {
     else message = String(err);
     console.error("Error getting data", message);
 
-    setRequestState((prevState) => ({
+    setSearchResults((prevState) => ({
       ...prevState,
       error: message,
       loading: false,
@@ -150,8 +191,9 @@ const SearchPage: NextPage = () => {
     });
   }
 
-  const { data: apiData, error, loading } = requestState;
-  const totalResults = requestState.data?.pagination.total_hits;
+  function handleViewResultsCallback() {
+    setActiveTab("results");
+  }
 
   return (
     <>
@@ -171,51 +213,62 @@ const SearchPage: NextPage = () => {
         data-testid="search-page-wrapper"
         title={HEAD_META["SEARCH"].title}
       >
-        <Heading as="h1" isHidden>
-          Northwestern
-        </Heading>
-        {similarTo?.visible && (
-          <SearchSimilar
-            handleClose={handleCloseSimilar}
-            work={similarTo.work}
-          />
-        )}
+        <StyledResponseWrapper>
+          <Heading as="h1" isHidden>
+            Northwestern
+          </Heading>
+          {similarTo?.visible && (
+            <SearchSimilar
+              handleClose={handleCloseSimilar}
+              work={similarTo.work}
+            />
+          )}
 
-        <Facets />
+          <Tabs.Root
+            value={activeTab}
+            onValueChange={(value) => setActiveTab(value as ActiveTab)}
+          >
+            <SearchOptions
+              tabs={
+                <Tabs.List>
+                  <Tabs.Trigger value="stream" data-tab="stream">
+                    <Icon>
+                      <IconSparkles />
+                    </Icon>
+                    AI Response
+                  </Tabs.Trigger>
+                  <Tabs.Trigger value="results" data-tab="results">
+                    {Number.isInteger(totalResults) ? (
+                      "View More Results"
+                    ) : (
+                      <SpinLoader size="small" />
+                    )}
+                  </Tabs.Trigger>
+                </Tabs.List>
+              }
+              activeTab={activeTab}
+              renderTabList={showStreamedResponse}
+            />
+            <Tabs.Content value="stream">
+              <Chat
+                totalResults={totalResults}
+                viewResultsCallback={handleViewResultsCallback}
+              />
+            </Tabs.Content>
 
-        <Container containerType="wide">
-          <ResultsWrapper>
-            {loading && <></>}
-            {error && <p>{error}</p>}
-            {apiData && (
-              <>
-                {totalResults ? (
-                  <ResultsMessage data-testid="results-count">
-                    {pluralize("result", totalResults)}
-                  </ResultsMessage>
-                ) : (
-                  <NoResultsMessage>
-                    <strong>Your search did not match any results.</strong>{" "}
-                    Please try broadening your search terms or adjusting your
-                    filters.
-                  </NoResultsMessage>
-                )}
-                <Grid data={apiData.data} info={apiData.info} />
-                {totalResults ? (
-                  <PaginationAltCounts pagination={apiData.pagination} />
-                ) : (
-                  <></>
-                )}
-              </>
-            )}
-          </ResultsWrapper>
-        </Container>
+            <Tabs.Content value="results">
+              <Container containerType="wide">
+                <SearchResults {...searchResults} />
+              </Container>
+            </Tabs.Content>
+          </Tabs.Root>
+        </StyledResponseWrapper>
       </Layout>
     </>
   );
 };
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const dataLayer = buildDataLayer({
     pageTitle: "Search page",
   });
@@ -228,6 +281,6 @@ export async function getStaticProps() {
   return {
     props: { dataLayer, openGraphData },
   };
-}
+};
 
 export default SearchPage;

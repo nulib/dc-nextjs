@@ -7,6 +7,7 @@ import {
   camptonExtraBold,
   camptonExtraLight,
 } from "./fonts";
+
 import { globalCss } from "@stitches/react";
 
 /* eslint sort-keys: 0 */

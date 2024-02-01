@@ -1,20 +1,29 @@
-// import { render, screen, within } from "@/test-utils";
 import { act, render, renderHook, screen } from "@testing-library/react";
 import singletonRouter, { useRouter } from "next/router";
+
 import { FilterProvider } from "@/context/filter-context";
 import React from "react";
+import { SearchContextStore } from "@/types/context/search-context";
 import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
-const searchStateDefault = {
+const searchStateDefault: SearchContextStore = {
   aggregations: {},
-  q: "",
+  chat: {
+    answer: "",
+    documents: [],
+    question: "",
+  },
   searchFixed: false,
 };
 
-const searchState = {
+const searchState: SearchContextStore = {
   aggregations: {},
-  q: "",
+  chat: {
+    answer: "",
+    documents: [],
+    question: "",
+  },
   searchFixed: false,
 };
 
@@ -43,7 +52,7 @@ describe("UserFacet UI component", () => {
         <FilterProvider initialState={filterStateDefault}>
           <UserFacets screen="search" urlFacets={{}} />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
     const userFacets = screen.queryByText(`facet-user-component`);
 
@@ -72,13 +81,15 @@ describe("UserFacet UI component", () => {
             }}
           />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
     const userFacets = await screen.findByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();
+
     const toggle = screen.getByTestId(`facet-user-component-popover-toggle`);
     expect(toggle).toBeInTheDocument();
     expect(toggle).toHaveTextContent("1");
+
     const content = screen.queryByText(`facet-user-component-popover-content`);
     expect(content).toBeNull();
   });
@@ -101,10 +112,12 @@ describe("UserFacet UI component", () => {
             }}
           />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
+
     const userFacets = screen.getByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();
+
     const values = screen.getAllByTestId(`facet-user-value-component`);
     expect(values.length).toBe(3);
   });

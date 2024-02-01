@@ -7,7 +7,7 @@ const pluralize = (
   noun: string,
   count: number,
   suffix = "s",
-  hideCount?: boolean
+  hideCount?: boolean,
 ) => {
   if (!count && count !== 0) {
     console.error("Missing count argument to pluralize()");

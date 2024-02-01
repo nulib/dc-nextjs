@@ -19,7 +19,10 @@
         { "key": "Painting", "doc_count": 80 },
         { "key": "Berkeley (Calif.)", "doc_count": 12 },
         { "key": "Buddhist art", "doc_count": 11 },
-        { "key": "Northwestern University (Evanston, Ill.)", "doc_count": 11 },
+        {
+          "key": "Northwestern University (Evanston, Ill.)",
+          "doc_count": 11
+        },
         { "key": "Church architecture", "doc_count": 10 },
         { "key": "Giant panda", "doc_count": 10 },
         { "key": "Olivier, Barry, 1935-", "doc_count": 10 },

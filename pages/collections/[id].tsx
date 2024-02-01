@@ -46,10 +46,10 @@ const Collection: NextPage = () => {
   const [metadata, setMetadata] = useState<ApiResponseBucket[]>([]);
   const [series, setSeries] = useState<GenericAggsReturn[]>([]);
   const [topMetadata, setTopMetadata] = useState<GetTopMetadataAggsReturn[]>(
-    []
+    [],
   );
   const [workTypeCounts, setWorkTypeCounts] = useState<WorkTypeCountMap | null>(
-    null
+    null,
   );
 
   const description = collection?.description;
@@ -78,7 +78,7 @@ const Collection: NextPage = () => {
       /** Get metadata */
       const metadataAggs = await getMetadataAggs(
         collection.id,
-        "subject.label"
+        "subject.label",
       );
 
       /** Get some data to build out "About" slider content for the Explore tab */
@@ -126,10 +126,10 @@ const Collection: NextPage = () => {
               __html: JSON.stringify(
                 loadCollectionStructuredData(
                   collection,
-                  `/colllections/${collection.id}`
+                  `/colllections/${collection.id}`,
                 ),
                 null,
-                "\t"
+                "\t",
               ),
             }}
           />
@@ -137,7 +137,11 @@ const Collection: NextPage = () => {
         </Head>
       )}
 
-      <Layout title={collection?.title || ""} description={description || ""}>
+      <Layout
+        description={description || ""}
+        header="hero"
+        title={collection?.title || ""}
+      >
         {collection && (
           <>
             <HeroWrapper>

@@ -6,7 +6,7 @@ describe("Expand component", () => {
     render(
       <Expand buttonText="Expand something" initialHeight={350}>
         <div>Some content</div>
-      </Expand>
+      </Expand>,
     );
 
     const expand = screen.getByTestId("expand");
@@ -29,7 +29,7 @@ describe("Expand component", () => {
     render(
       <Expand>
         <div>Other content</div>
-      </Expand>
+      </Expand>,
     );
     const expand = screen.getByTestId("expand");
     const button = screen.getByRole("button");

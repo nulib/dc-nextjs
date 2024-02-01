@@ -1,10 +1,12 @@
 import { IconClear, IconMenu } from "../Shared/SVG/Icons";
 import {
+  Logout,
   Menu,
   MenuToggle,
   Super,
   User,
 } from "@/components/Header/Header.styled";
+
 import Container from "../Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Link from "next/link";
@@ -13,6 +15,7 @@ import { NavResponsiveOnly } from "@/components/Nav/Nav.styled";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
 import { UserContext } from "@/context/user-context";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const nav = [
   {
@@ -32,6 +35,7 @@ const nav = [
 export default function HeaderSuper() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(false);
+  const [ai, setAI] = useLocalStorage("ai", "false");
 
   React.useEffect(() => {
     setIsLoaded(true);
@@ -39,6 +43,11 @@ export default function HeaderSuper() {
 
   const userAuthContext = React.useContext(UserContext);
   const handleMenu = () => setIsExpanded(!isExpanded);
+
+  const handleLogout = () => {
+    if (ai === "true") setAI("false");
+    window.location.href = `${DCAPI_ENDPOINT}/auth/logout`;
+  };
 
   return (
     <Super>
@@ -67,16 +76,7 @@ export default function HeaderSuper() {
             {userAuthContext?.user?.isLoggedIn && (
               <>
                 <User>{userAuthContext.user.name}</User>
-                <a
-                  href={`${DCAPI_ENDPOINT}/auth/logout`}
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: "8px",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Logout
-                </a>
+                <Logout onClick={handleLogout}>Logout</Logout>
               </>
             )}
           </Nav>

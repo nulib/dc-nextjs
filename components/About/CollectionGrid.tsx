@@ -1,6 +1,7 @@
 import PhotoFeature, {
   PhotoFeatureProps,
 } from "@/components/Shared/PhotoFeature/PhotoFeature";
+
 import { CollectionGridStyled } from "components/About/CollectionGridStyled";
 
 interface Props {

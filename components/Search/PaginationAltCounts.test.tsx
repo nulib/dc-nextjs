@@ -1,4 +1,5 @@
 import { render, screen } from "@/test-utils";
+
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 
 /* eslint sort-keys: 0 */
@@ -70,5 +71,16 @@ describe("PaginationAltCounts component", () => {
     expect(screen.getByText(/start/i)).toBeInTheDocument();
     expect(screen.getByText(/previous/i)).toBeInTheDocument();
     expect(screen.queryByText(/next/i)).toBeNull();
+  });
+
+  it("renders a pagination navigation without results for AI responses", () => {
+    render(
+      <PaginationAltCounts pagination={pagination} showResultCounts={false} />,
+    );
+
+    const results = screen.queryByTestId("results");
+    expect(screen.getByTestId("pagination-alt-counts")).not.toContainElement(
+      results,
+    );
   });
 });
