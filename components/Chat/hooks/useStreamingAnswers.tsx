@@ -1,4 +1,4 @@
-import { Answer, Question, StreamingMessage } from "../types/search-prototype";
+import { Answer, Question, StreamingMessage } from "../types/chat";
 
 const updateStreamAnswers = (
   data: StreamingMessage,

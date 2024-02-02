@@ -50,7 +50,7 @@ const StyledQuestionInput = styled("form", {
   border: "1px solid $gray6",
   borderBottom: "none",
   boxShadow: "0 13px 21px 0 rgba(0, 0, 0, 0.13)",
-  margin: "-$gr4 -$gr4 $gr5",
+  margin: "0 0 $gr4",
   borderRadius: "8px",
 
   svg: {

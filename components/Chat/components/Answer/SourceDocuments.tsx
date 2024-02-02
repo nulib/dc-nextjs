@@ -1,6 +1,6 @@
-import AnswerCard from "./Card";
+import AnswerCard from "@/components/Chat/components/Answer/Card";
 import React from "react";
-import { SourceDocument } from "../../types/search-prototype";
+import { SourceDocument } from "@/components/Chat/types/chat";
 import { styled } from "@/stitches.config";
 
 interface SourceDocumentsProps {

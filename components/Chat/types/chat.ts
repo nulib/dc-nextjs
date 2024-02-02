@@ -32,3 +32,8 @@ export type StreamingMessage = {
   source_documents?: Array<SourceDocument>;
   token?: string;
 };
+
+export type ChatConfig = {
+  auth: string;
+  endpoint: string;
+};

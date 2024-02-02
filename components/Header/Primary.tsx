@@ -1,5 +1,6 @@
 import { Primary, PrimaryInner } from "@/components/Header/Header.styled";
 import { useEffect, useRef, useState } from "react";
+
 import { AcademicN } from "@/components/Shared/SVG/Northwestern";
 import Container from "@/components/Shared/Container";
 import Heading from "@/components/Heading/Heading";
