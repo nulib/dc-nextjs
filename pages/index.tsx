@@ -1,68 +1,55 @@
-import { useEffect, useState } from "react";
+import {
+  HomepageCollections as Collections,
+  HomepageHero as Hero,
+  HomepageOverview as Overview,
+  HomepageWorks as Works,
+} from "@/components/Homepage";
 
-import Container from "@/components/Shared/Container";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
-import Heading from "@/components/Heading/Heading";
-import SearchPrototype from "@/components/SearchPrototype";
-import axios from "axios";
-import { styled } from "@/stitches.config";
-
-export type ChatConfig = {
-  auth: string;
-  endpoint: string;
-};
+import Head from "next/head";
+import { HomeContextProvider } from "@/context/home-context";
+import Layout from "@/components/layout";
+import { PRODUCTION_URL } from "@/lib/constants/endpoints";
+import { buildDataLayer } from "@/lib/ga/data-layer";
+import { loadDefaultStructuredData } from "@/lib/json-ld";
 
 const HomePage: React.FC = () => {
-  const [chatConfig, setChatConfig] = useState<ChatConfig>();
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint`,
-      withCredentials: true,
-    })
-      .then((response) => {
-        console.log(`response`, response.data);
-        setChatConfig(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   return (
-    <StyledHomePage>
-      <Container>
-        <Heading as="h1">Chat Search Prototype</Heading>
-        {chatConfig && (
-          <SearchPrototypeWrapper>
-            <SearchPrototype chatConfig={chatConfig} />
-          </SearchPrototypeWrapper>
-        )}
-      </Container>
-    </StyledHomePage>
+    <>
+      <HomeContextProvider>
+        {/* Google Structured Data via JSON-LD */}
+        <Head>
+          <script
+            key="app-ld-json"
+            id="app-ld-json"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(loadDefaultStructuredData(), null, "\t"),
+            }}
+          />
+        </Head>
+        <Layout header="hero">
+          <Hero />
+          <Overview />
+          <Collections />
+          <Works />
+        </Layout>
+      </HomeContextProvider>
+    </>
   );
 };
 
-/* eslint sort-keys: 0 */
+export async function getStaticProps() {
+  const dataLayer = buildDataLayer({
+    pageTitle: "Homepage",
+  });
 
-const StyledHomePage = styled("div", {
-  color: "$black80",
-  fontFamily: "$northwesternSansRegular",
-  fontSize: "$gr3",
+  const openGraphData = {
+    "og:url": PRODUCTION_URL,
+  };
 
-  h1: {
-    marginBottom: "$gr5 !important",
-
-    "&::before": {
-      backgroundColor: "$brightBlueB !important",
-    },
-  },
-});
-
-const SearchPrototypeWrapper = styled("div", {
-  margin: "$gr4 -$gr4",
-  padding: "$gr4",
-});
+  return {
+    props: { dataLayer, openGraphData },
+  };
+}
 
 export default HomePage;

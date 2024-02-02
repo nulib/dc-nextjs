@@ -1,10 +1,6 @@
 import * as Accordion from "@radix-ui/react-accordion";
 
-import {
-  Answer,
-  QuestionRendered,
-  StreamingMessage,
-} from "./types/search-prototype";
+import { Answer, QuestionRendered, StreamingMessage } from "./types/chat";
 import React, { useCallback, useEffect } from "react";
 import {
   StyledActions,
@@ -15,7 +11,7 @@ import {
 
 import AnswerInformation from "./components/Answer/Information";
 import AnswerLoader from "./components/Answer/Loader";
-import { ChatConfig } from "@/pages";
+import { ChatConfig } from "@/components/Chat/types/chat";
 import Icon from "@/components/Shared/Icon";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import QuestionInput from "./components/Question/Input";
@@ -24,11 +20,7 @@ import StreamingAnswer from "./components/Answer/StreamingAnswer";
 import useLocalStorageSimple from "./hooks/useLocalStorageSimple";
 import useStreamingAnswers from "./hooks/useStreamingAnswers";
 
-interface SearchPrototypeProps {
-  chatConfig: ChatConfig;
-}
-
-const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
+const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
   const { auth: authToken, endpoint } = chatConfig;
   const { prepareQuestion, updateStreamAnswers } = useStreamingAnswers();
 
@@ -161,4 +153,4 @@ const SearchPrototype: React.FC<SearchPrototypeProps> = ({ chatConfig }) => {
   );
 };
 
-export default SearchPrototype;
+export default Chat;
