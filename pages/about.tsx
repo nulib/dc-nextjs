@@ -7,6 +7,7 @@ import SectionTop, {
 import AboutCollectionGrid from "@/components/About/CollectionGrid";
 import { BlockStyled } from "@/components/Shared/BlockStyled";
 import Container from "@/components/Shared/Container";
+import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "components/Heading/Heading";
 import HeroBasic from "@/components/Hero/Basic";
@@ -105,7 +106,10 @@ const AboutPage: NextPage = () => {
           }}
         />
       </Head>
-      <Layout>
+      <Layout
+        title={HEAD_META["ABOUT"].title}
+        description={HEAD_META["ABOUT"].description}
+      >
         <HeroBasic bgImage="/images/liz__O8A9903_final.jpg">
           <HeroTitle>Repository and Digital Curation</HeroTitle>
           <Subhead>Digitizing Our Distinctive Collections</Subhead>
@@ -441,6 +445,7 @@ export async function getStaticProps() {
   });
 
   const openGraphData = {
+    "og:title": HEAD_META["ABOUT"].title,
     "og:url": `${PRODUCTION_URL}/about`,
   };
 

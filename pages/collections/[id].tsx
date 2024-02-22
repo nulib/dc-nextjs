@@ -132,10 +132,11 @@ const Collection: NextPage = () => {
               ),
             }}
           />
+          <title>{collection.title}</title>
         </Head>
       )}
 
-      <Layout>
+      <Layout title={collection?.title || ""} description={description || ""}>
         {collection && (
           <>
             <HeroWrapper>
@@ -230,8 +231,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         "og:description": collection.description,
         "og:image": imageUrl,
         "og:image:secure_url": imageUrl,
-        "og:site_name": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
-        "og:title": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
+        "og:title": `${collection.title}`,
         "og:type": "website",
         "og:url": `${process.env.DC_URL}/collections/${collection.id}`,
       };
