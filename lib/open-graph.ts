@@ -12,11 +12,19 @@ export const defaultOpenGraphData: OpenGraphData = {
     "Explore digital resources from the Northwestern University Library collections – including letters, photographs, diaries, maps, and audiovisual materials - as well as licensed art historical images for teaching and reference.",
   "og:image": defaultOpenGraphImage,
   "og:image:secure_url": defaultOpenGraphImage,
-  "og:site_name": "Digital Collections - Libraries - Northwestern University",
-  "og:title": "Digital Collections - Libraries - Northwestern University",
+  "og:site_name": "Digital Collections - Northwestern University Libraries",
+  "og:title": "Digital Collections - Northwestern University Libraries",
   "og:type": "website",
   "og:url": PRODUCTION_URL,
 };
+
+export function buildWorkDescription(work: Work | null) {
+  let ogDescription = "";
+  if (work?.description && work.description.length > 0) {
+    ogDescription = `${work.description.join(" ")}`;
+  }
+  return ogDescription;
+}
 
 export function buildWorkOpenGraphData(
   work: Work | null
@@ -32,12 +40,9 @@ export function buildWorkOpenGraphData(
         : ""
       : work?.thumbnail;
 
-  let ogDescription = "";
-  if (work?.description && work.description.length > 0) {
-    ogDescription = `${work.description.join(" ")} - `;
-  }
+  let ogDescription = buildWorkDescription(work);
   if (work?.terms_of_use) {
-    ogDescription += work?.terms_of_use;
+    ogDescription += ` - ${work?.terms_of_use}`;
   }
 
   const openGraphData = !work
@@ -48,8 +53,7 @@ export function buildWorkOpenGraphData(
         ...(isPublic && { "og:image:height": "630" }),
         "og:image:secure_url": imageUrl,
         ...(isPublic && { "og:image:width": "1200" }),
-        "og:site_name": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
-        "og:title": `${ogTitle} - Digital Collections - Libraries - Northwestern University`,
+        "og:title": `${ogTitle}`,
         "og:type": "website",
         "og:url": `${PRODUCTION_URL}/items/${work.id}`,
       };

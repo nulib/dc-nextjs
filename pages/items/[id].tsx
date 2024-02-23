@@ -4,6 +4,7 @@ import {
 } from "@/lib/collection-helpers";
 import { GetServerSideProps, NextPage } from "next";
 import { apiGetStatus, getIIIFResource } from "@/lib/dc-api";
+import { buildWorkDescription, buildWorkOpenGraphData } from "@/lib/open-graph";
 import { getWork, getWorkSliders } from "@/lib/work-helpers";
 import { useContext, useEffect, useState } from "react";
 
@@ -22,7 +23,6 @@ import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
-import { buildWorkOpenGraphData } from "@/lib/open-graph";
 import { loadItemStructuredData } from "@/lib/json-ld";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
@@ -91,7 +91,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
         </Head>
       )}
 
-      <Layout title={work?.title || ""}>
+      <Layout
+        title={work?.title || ""}
+        description={work ? buildWorkDescription(work) : ""}
+      >
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -139,9 +142,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
    */
   const status = await apiGetStatus(`${DCAPI_ENDPOINT}/works/${id}`);
 
-  /**
-   * if the status code is 404 return the Next.js notFound prop
-   */
   if (status === 404)
     return {
       notFound: true,

@@ -1,11 +1,10 @@
-import {
-  type CollectionListShape,
-  getCollections,
-} from "@/lib/collection-helpers";
+import { CollectionListShape, getCollections } from "@/lib/collection-helpers";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { StyledForm, StyledInput } from "@/components/Shared/Form.styled";
+
 import CollectionItem from "@/components/Collection/Item/Item";
 import Container from "@/components/Shared/Container";
+import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
@@ -61,7 +60,7 @@ const CollectionList: NextPage = () => {
         />
       </Head>
 
-      <Layout>
+      <Layout title={HEAD_META["COLLECTIONS"].title}>
         <Container>
           <Heading as="h1">All Collections</Heading>
           <StyledForm onSubmit={(e) => e.preventDefault()}>
@@ -99,6 +98,7 @@ export async function getServerSideProps() {
   });
 
   const openGraphData = {
+    "og:title": HEAD_META["COLLECTIONS"].title,
     "og:url": `${PRODUCTION_URL}/collections`,
   };
 

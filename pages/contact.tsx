@@ -1,6 +1,7 @@
 import { BlockStyled } from "@/components/Shared/BlockStyled";
 import Container from "@/components/Shared/Container";
 import CopyText from "@/components/Shared/CopyText";
+import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
@@ -23,7 +24,10 @@ const ContactPage: NextPage = () => {
           }}
         />
       </Head>
-      <Layout>
+      <Layout
+        title={HEAD_META["CONTACT"].title}
+        description={HEAD_META["CONTACT"].description}
+      >
         <Container>
           <Heading as="h1">Contact</Heading>
           <BlockStyled>
@@ -70,6 +74,7 @@ export async function getStaticProps() {
   });
 
   const openGraphData = {
+    "og:title": HEAD_META["CONTACT"].title,
     "og:url": `${PRODUCTION_URL}/contact`,
   };
 
