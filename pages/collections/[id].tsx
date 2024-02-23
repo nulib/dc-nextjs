@@ -233,7 +233,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         "og:image:secure_url": imageUrl,
         "og:title": `${collection.title}`,
         "og:type": "website",
-        "og:url": `${process.env.DC_URL}/collections/${collection.id}`,
+        "og:url": `${process.env.NEXT_PUBLIC_DC_URL}/collections/${collection.id}`,
       };
 
   return {
