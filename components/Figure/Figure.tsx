@@ -11,6 +11,7 @@ import {
   FigureVariants,
 } from "@/components/Figure/Figure.styled";
 import React, { ReactNode } from "react";
+
 import { IconLock } from "@/components/Shared/SVG/Icons";
 import { width } from "@/styles/media";
 
@@ -32,6 +33,8 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
 
   const { data, orientation } = props;
   const { aspectRatio, isRestricted, title, supplementalInfo, src } = data;
+
+  if (!src) return null;
 
   const handleOnLoad = () => setIsLoaded(true);
   const handleOnError = () => console.error("image loading error");
