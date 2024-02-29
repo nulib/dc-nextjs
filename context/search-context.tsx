@@ -7,6 +7,7 @@ type Action =
       type: "updateAggregations";
       aggregations: ApiResponseAggregation | undefined;
     }
+  | { type: "updateGenerativeAI"; isGenerativeAI: boolean }
   | { type: "updateSearch"; q: string }
   | { type: "updateSearchFixed"; searchFixed: boolean };
 
@@ -19,6 +20,7 @@ type SearchProviderProps = {
 
 const defaultState: SearchContextStore = {
   aggregations: {},
+  isGenerativeAI: false,
   searchFixed: false,
 };
 
@@ -32,6 +34,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         aggregations: action.aggregations,
+      };
+    }
+    case "updateGenerativeAI": {
+      return {
+        ...state,
+        isGenerativeAI: action.isGenerativeAI,
       };
     }
     case "updateSearch": {
