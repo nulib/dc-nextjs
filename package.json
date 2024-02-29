@@ -1,6 +1,9 @@
 {
   "name": "dc-nextjs",
   "private": true,
+  "engines": {
+    "node": ">=18.17.0"
+  },
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
     "build": "next build",
