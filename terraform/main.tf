@@ -74,6 +74,7 @@ resource "aws_amplify_app" "dc-next" {
   }
 
   environment_variables = {
+    _CUSTOM_IMAGE                 = var.amplify_build_custom_image
     ENV                             = var.environment_name
     HONEYBADGER_API_KEY             = var.honeybadger_api_key
     HONEYBADGER_ENV                 = var.environment_name
