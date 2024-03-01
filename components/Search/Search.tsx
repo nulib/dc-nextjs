@@ -1,7 +1,14 @@
-import { Button, Clear, Input, SearchStyled } from "./Search.styled";
+import {
+  Button,
+  Clear,
+  GenerativeAICheckbox,
+  Input,
+  SearchStyled,
+} from "./Search.styled";
 import {
   IconArrowForward,
   IconClear,
+  IconInfo,
   IconSearch,
 } from "@/components/Shared/SVG/Icons";
 import React, {
@@ -14,6 +21,7 @@ import React, {
 } from "react";
 
 import { ALL_FACETS } from "@/lib/constants/facets-model";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import GenerativeAIDialog from "@/components/Shared/Dialog";
 import { UserContext } from "@/context/user-context";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -44,6 +52,9 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     isOpen: false,
     title: "Generative AI Dialog",
   });
+  const [genAICheckBox, setGenAICheckBox] = useState<boolean>(
+    searchState.isGenerativeAI
+  );
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,11 +97,16 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   };
 
   const handleGenerativeAIChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setModalGenerativeUI({ ...modalGenerativeAI, isOpen: e.target.checked });
-    searchDispatch({
-      isGenerativeAI: e.target.checked,
-      type: "updateGenerativeAI",
-    });
+    if (!user?.isLoggedIn) {
+      setModalGenerativeUI({ ...modalGenerativeAI, isOpen: e.target.checked });
+    }
+
+    if (user?.isLoggedIn) {
+      searchDispatch({
+        isGenerativeAI: e.target.checked,
+        type: "updateGenerativeAI",
+      });
+    }
   };
 
   useEffect(() => {
@@ -108,6 +124,21 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
+
+  useEffect(() => {
+    setGenAICheckBox(searchState.isGenerativeAI);
+  }, [searchState.isGenerativeAI]);
+
+  // TODO: This needs to accept more than one query param when
+  // directing to NU SSO.  We need the additional query param
+  // to know that user came wanting to use Generative AI
+  function goToLocation() {
+    const currentUrl = `${window.location.origin}${router.asPath}`;
+    const url = new URL(currentUrl);
+    url.searchParams.set("ai", "true");
+    console.log("url.toString()", url.toString());
+    return url.toString();
+  }
 
   return (
     <>
@@ -130,14 +161,18 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
             <IconClear />
           </Clear>
         )}
-        <label htmlFor="isGenerativeAI">
+
+        <GenerativeAICheckbox>
           <input
             type="checkbox"
             name="isGenerativeAI"
             onChange={handleGenerativeAIChange}
+            checked={genAICheckBox}
           />
-          Use Generative AI [tooltip]
-        </label>
+          <label htmlFor="isGenerativeAI">Use Generative AI</label>
+          <IconInfo />
+        </GenerativeAICheckbox>
+
         <Button type="submit" data-testid="submit-button">
           Search <IconArrowForward />
         </Button>
@@ -151,8 +186,12 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           setModalGenerativeUI({ ...modalGenerativeAI, isOpen: false })
         }
       >
-        <p>You must log in to proceed</p>
-        <Button>Login</Button>
+        <p>
+          <a href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
+            Click here
+          </a>{" "}
+          to login
+        </p>
         <Button>Close</Button>
       </GenerativeAIDialog>
     </>
