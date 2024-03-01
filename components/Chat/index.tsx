@@ -1,7 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
 
 import { Answer, QuestionRendered, StreamingMessage } from "./types/chat";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyledActions,
   StyledAnswerHeader,
@@ -18,6 +18,7 @@ import QuestionInput from "./components/Question/Input";
 import SourceDocuments from "./components/Answer/SourceDocuments";
 import StreamingAnswer from "./components/Answer/StreamingAnswer";
 import useLocalStorageSimple from "./hooks/useLocalStorageSimple";
+import useQueryParams from "@/hooks/useQueryParams";
 import useStreamingAnswers from "./hooks/useStreamingAnswers";
 
 const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
@@ -27,51 +28,53 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
   const [chatSocket, setChatSocket] = React.useState<WebSocket>();
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
 
-  const [questions, setQuestions] = useLocalStorageSimple<QuestionRendered[]>(
-    "nul-chat-search-questions",
-    []
-  );
+  const [streamedAnswer, setStreamedAnswer] = useState("");
+  console.log("streamedAnswer", streamedAnswer);
 
-  /**
-   * A pattern to access and update React state within a WebSocket event handler
-   */
-  const [streamAnswers, _setStreamAnswers] = useLocalStorageSimple<Answer[]>(
-    "nul-chat-search-answers",
-    []
-  );
-
-  const streamAnswersRef = React.useRef(streamAnswers);
-  const setStreamAnswers = useCallback(
-    (data: Array<Answer>) => {
-      streamAnswersRef.current = data;
-      _setStreamAnswers(data);
-    },
-    [_setStreamAnswers]
-  );
+  const { searchTerm: question } = useQueryParams();
+  console.log("question", question);
 
   const handleReadyStateChange = (event: Event) => {
     const target = event.target as WebSocket;
+    console.log("target.readyState", target.readyState);
     setReadyState(target.readyState);
   };
 
-  const handleMessageUpdate = useCallback(
-    (event: MessageEvent) => {
-      const data: StreamingMessage = JSON.parse(event.data);
-      const updatedStreamAnswers = updateStreamAnswers(data, [
-        ...streamAnswersRef.current,
-      ]);
-      setStreamAnswers(updatedStreamAnswers);
-    },
-    [setStreamAnswers, updateStreamAnswers]
-  );
+  // Handle web socket stream updates
+  const handleMessageUpdate = (event: MessageEvent) => {
+    const data: StreamingMessage = JSON.parse(event.data);
+    console.log("handleMessageUpdate", data);
+
+    if (data.token) {
+      setStreamedAnswer((prev) => {
+        console.log("prev, data.token", prev, data.token);
+        return prev + data.token;
+      });
+    } else if (data.answer) {
+      setStreamedAnswer(data.answer);
+    }
+  };
 
   useEffect(() => {
+    if (question && chatSocket?.readyState === 1) {
+      const preparedQuestion = prepareQuestion(question, authToken);
+      console.log("preparedQuestion", preparedQuestion, chatSocket);
+      chatSocket?.send(JSON.stringify(preparedQuestion));
+    }
+  }, [authToken, chatSocket, question, prepareQuestion]);
+
+  useEffect(() => {
+    if (!authToken || !endpoint) return;
+
+    console.log("creating socket", authToken, endpoint);
     const socket = new WebSocket(endpoint);
-    setChatSocket(socket);
+
     socket.addEventListener("open", handleReadyStateChange);
     socket.addEventListener("close", handleReadyStateChange);
     socket.addEventListener("error", handleReadyStateChange);
     socket.addEventListener("message", handleMessageUpdate);
+
+    setChatSocket(socket);
 
     return () => {
       socket.removeEventListener("open", handleReadyStateChange);
@@ -79,77 +82,17 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
       socket.removeEventListener("error", handleReadyStateChange);
       socket.removeEventListener("message", handleMessageUpdate);
     };
-  }, [authToken, endpoint, handleMessageUpdate]);
-
-  const handleQuestionSubmission = (questionString: string) => {
-    // do some basic validation and save the question
-    if (questionString) {
-      const question = prepareQuestion(questionString, authToken);
-      const questionToStore = {
-        question: question.question,
-        ref: question.ref,
-      };
-
-      // Append question to my questions React state array using prevState
-      setQuestions((prevQuestions) => [questionToStore, ...prevQuestions]);
-      chatSocket?.send(JSON.stringify(question));
-    }
-  };
-
-  const handleDelete = (ref: string) => {
-    const updatedQuestions = questions.filter((q: any) => q.ref !== ref);
-    const updatedAnswers = streamAnswers.filter((a: any) => a.ref !== ref);
-    setQuestions(updatedQuestions);
-    setStreamAnswers(updatedAnswers);
-  };
-
-  const defaultValue = questions.length ? `${questions[0].ref}` : undefined;
+  }, [authToken, endpoint]);
 
   return (
-    <Accordion.Root
-      type="single"
-      key={defaultValue}
-      defaultValue={defaultValue}
-    >
-      {readyState === 1 && (
-        <QuestionInput onQuestionSubmission={handleQuestionSubmission} />
+    <>
+      {question && (
+        <>
+          {/* <SourceDocuments source_documents={answer.source_documents} /> */}
+          <StreamingAnswer answer={streamedAnswer} isComplete={false} />
+        </>
       )}
-
-      {questions.map((question: QuestionRendered) => {
-        const answer = streamAnswers?.find(
-          (answer) => question.ref === answer.ref
-        );
-        return (
-          <StyledAnswerItem value={question.ref} key={question.ref}>
-            <StyledAnswerHeader>
-              <Accordion.Trigger>
-                <span>{question?.question}</span>
-              </Accordion.Trigger>
-
-              <StyledActions>
-                {answer?.answer && <AnswerInformation timestamp={1212} />}
-                <StyledRemoveButton onClick={() => handleDelete(question.ref)}>
-                  <Icon>
-                    <IconClear />
-                  </Icon>
-                </StyledRemoveButton>
-              </StyledActions>
-            </StyledAnswerHeader>
-            {answer?.answer ? (
-              <Accordion.Content>
-                <SourceDocuments source_documents={answer.source_documents} />
-                <StreamingAnswer
-                  answer={answer.answer}
-                  isComplete={answer.isComplete}
-                />
-              </Accordion.Content>
-            ) : (
-              <AnswerLoader />
-            )}
-          </StyledAnswerItem>
-        );
-      })}
-    </Accordion.Root>
+    </>
   );
 };
 
