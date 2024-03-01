@@ -20,6 +20,7 @@ import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import SearchSimilar from "@/components/Search/Similar";
+import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
@@ -29,6 +30,7 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 type RequestState = {
   data: ApiSearchResponse | null;
@@ -39,6 +41,12 @@ type RequestState = {
 const SearchPage: NextPage = () => {
   const size = 40;
   const router = useRouter();
+
+  const { searchState } = useSearchState();
+  const { user } = React.useContext(UserContext);
+  const showChatResponse = user?.isLoggedIn && searchState.isGenerativeAI;
+  console.log("showChatResponse", showChatResponse);
+
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
@@ -182,7 +190,7 @@ const SearchPage: NextPage = () => {
           />
         )}
 
-        <ChatWrapper />
+        {showChatResponse && <ChatWrapper />}
 
         <Facets />
 

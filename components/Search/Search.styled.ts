@@ -100,6 +100,26 @@ const Clear = styled("button", {
   },
 });
 
+const GenerativeAICheckbox = styled("div", {
+  color: "$black50",
+  fontSize: "$gr2",
+  display: "flex",
+  alignItems: "center",
+
+  "& label": {
+    cursor: "pointer",
+    width: "120px",
+  },
+
+  "& svg": {
+    position: "relative",
+    padding: "$gr0",
+    height: "$gr3",
+    width: "$gr3",
+    fill: "$black50",
+  },
+});
+
 const ResultsMessage = styled("span", {
   color: "$black50",
   padding: "0 $gr4 $gr4",
@@ -144,6 +164,7 @@ const ResultsWrapper = styled("div", {
 export {
   Button,
   Clear,
+  GenerativeAICheckbox,
   Input,
   NoResultsMessage,
   ResultsMessage,
