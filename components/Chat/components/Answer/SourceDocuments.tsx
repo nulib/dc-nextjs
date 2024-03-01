@@ -1,10 +1,9 @@
-import AnswerCard from "@/components/Chat/components/Answer/Card";
 import React from "react";
-import { SourceDocument } from "@/components/Chat/types/chat";
+import { Work } from "@nulib/dcapi-types";
 import { styled } from "@/stitches.config";
 
 interface SourceDocumentsProps {
-  source_documents: SourceDocument[];
+  source_documents: Work[];
 }
 
 const SourceDocuments: React.FC<SourceDocumentsProps> = ({
@@ -13,7 +12,11 @@ const SourceDocuments: React.FC<SourceDocumentsProps> = ({
   return (
     <Sources>
       {source_documents.map((document, idx) => (
-        <AnswerCard {...document} key={idx} />
+        <div key={document.id}>
+          <strong>{document.title}</strong>
+          <img src={document.thumbnail} />
+        </div>
+        // <AnswerCard {...document} key={idx} />
       ))}
     </Sources>
   );
