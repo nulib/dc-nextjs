@@ -4,9 +4,12 @@ import Chat from "@/components/Chat";
 import { ChatConfig } from "@/components/Chat/types/chat";
 import axios from "axios";
 
-const weaviateEndpointt = `https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint`;
-const chatEndpoint =
-  "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint";
+const WS_ENDPOINTS = {
+  production: "https://api.dc.library.northwestern.edu/api/v2/chat-endpoint",
+  staging:
+    "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint",
+  weaviateEndpoint: `https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint`,
+};
 
 const ChatWrapper = () => {
   const [chatConfig, setChatConfig] = useState<ChatConfig>();
@@ -14,11 +17,10 @@ const ChatWrapper = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: chatEndpoint,
+      url: WS_ENDPOINTS.production,
       withCredentials: true,
     })
       .then((response) => {
-        console.log("Wrapper response.data", response.data);
         setChatConfig(response.data);
       })
       .catch((error) => {

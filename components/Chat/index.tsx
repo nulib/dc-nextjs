@@ -1,5 +1,3 @@
-import * as Accordion from "@radix-ui/react-accordion";
-
 import { Answer, QuestionRendered, StreamingMessage } from "./types/chat";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -17,11 +15,11 @@ import { IconClear } from "@/components/Shared/SVG/Icons";
 import QuestionInput from "./components/Question/Input";
 import SourceDocuments from "./components/Answer/SourceDocuments";
 import StreamingAnswer from "./components/Answer/StreamingAnswer";
-import useLocalStorageSimple from "./hooks/useLocalStorageSimple";
 import useQueryParams from "@/hooks/useQueryParams";
 import useStreamingAnswers from "./hooks/useStreamingAnswers";
 
 const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
+  console.log("\n RE RENDERING");
   const { auth: authToken, endpoint } = chatConfig;
   const { prepareQuestion, updateStreamAnswers } = useStreamingAnswers();
 
@@ -29,10 +27,8 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
   const [readyState, setReadyState] = React.useState<WebSocket["readyState"]>();
 
   const [streamedAnswer, setStreamedAnswer] = useState("");
-  console.log("streamedAnswer", streamedAnswer);
 
   const { searchTerm: question } = useQueryParams();
-  console.log("question", question);
 
   const handleReadyStateChange = (event: Event) => {
     const target = event.target as WebSocket;
@@ -47,7 +43,6 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
 
     if (data.token) {
       setStreamedAnswer((prev) => {
-        console.log("prev, data.token", prev, data.token);
         return prev + data.token;
       });
     } else if (data.answer) {
@@ -66,7 +61,6 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
   useEffect(() => {
     if (!authToken || !endpoint) return;
 
-    console.log("creating socket", authToken, endpoint);
     const socket = new WebSocket(endpoint);
 
     socket.addEventListener("open", handleReadyStateChange);
@@ -77,10 +71,13 @@ const Chat = ({ chatConfig }: { chatConfig: ChatConfig }) => {
     setChatSocket(socket);
 
     return () => {
-      socket.removeEventListener("open", handleReadyStateChange);
-      socket.removeEventListener("close", handleReadyStateChange);
-      socket.removeEventListener("error", handleReadyStateChange);
-      socket.removeEventListener("message", handleMessageUpdate);
+      if (socket) {
+        socket.close();
+        socket.removeEventListener("open", handleReadyStateChange);
+        socket.removeEventListener("close", handleReadyStateChange);
+        socket.removeEventListener("error", handleReadyStateChange);
+        socket.removeEventListener("message", handleMessageUpdate);
+      }
     };
   }, [authToken, endpoint]);
 
