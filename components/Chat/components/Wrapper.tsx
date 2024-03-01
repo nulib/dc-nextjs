@@ -1,38 +1,16 @@
-import { useEffect, useState } from "react";
-
 import Chat from "@/components/Chat";
-import { ChatConfig } from "@/components/Chat/types/chat";
-import axios from "axios";
-
-const WS_ENDPOINTS = {
-  production: "https://api.dc.library.northwestern.edu/api/v2/chat-endpoint",
-  staging:
-    "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint",
-  weaviateEndpoint: `https://dcapi-prototype.rdc-staging.library.northwestern.edu/api/v2/chat-endpoint`,
-};
+import useChatSocket from "../../../hooks/useChatSocket";
+import useQueryParams from "@/hooks/useQueryParams";
 
 const ChatWrapper = () => {
-  const [chatConfig, setChatConfig] = useState<ChatConfig>();
+  const { searchTerm: question } = useQueryParams();
+  const { authToken, chatSocket } = useChatSocket();
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: WS_ENDPOINTS.production,
-      withCredentials: true,
-    })
-      .then((response) => {
-        setChatConfig(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  if (!chatConfig) return null;
+  if (!authToken || !chatSocket || !question) return null;
 
   return (
     <div style={{ background: "#f0f0f0", padding: "2rem" }}>
-      <Chat chatConfig={chatConfig} />
+      <Chat authToken={authToken} chatSocket={chatSocket} question={question} />
     </div>
   );
 };

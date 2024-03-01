@@ -1,3 +1,5 @@
+import { Work } from "@nulib/dcapi-types";
+
 export type QuestionRendered = {
   question: string;
   ref: string;
@@ -10,26 +12,19 @@ export type Question = {
   ref: string;
 };
 
-export type SourceDocument = {
-  page_content: string;
-  metadata: {
-    [key: string]: any;
-  };
-};
-
 export type Answer = {
   answer: string;
   isComplete: boolean;
-  question?: string; // revisit this
+  question?: string;
   ref: string;
-  source_documents: Array<SourceDocument>;
+  source_documents: Array<Work>;
 };
 
 export type StreamingMessage = {
   answer?: string;
   question?: string;
   ref: string;
-  source_documents?: Array<SourceDocument>;
+  source_documents?: Array<Work>;
   token?: string;
 };
 
