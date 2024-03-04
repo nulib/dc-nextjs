@@ -1,4 +1,5 @@
 import { render, screen } from "@/test-utils";
+
 import Search from "./Search";
 import mockRouter from "next-router-mock";
 import { renderHook } from "@testing-library/react";
@@ -6,6 +7,16 @@ import { useRouter } from "next/router";
 import userEvent from "@testing-library/user-event";
 
 const mockIsSearchActive = jest.fn();
+
+jest.mock("./GenerativeAIToggle", () => {
+  return function DummyGenerativeAIToggle(props: any) {
+    return (
+      <div data-testid="generative-ai-toggle">
+        {props.isSearchActive.toString()}
+      </div>
+    );
+  };
+});
 
 describe("Search component", () => {
   it("renders the search ui component", () => {
@@ -60,5 +71,18 @@ describe("Search component", () => {
     expect(result.current).toMatchObject({
       asPath: "/search?q=foo&subject=baz",
     });
+  });
+
+  it("renders the generative ai toggle component and correctly passes active search state down", async () => {
+    const user = userEvent.setup();
+    mockRouter.setCurrentUrl("/search");
+
+    render(<Search isSearchActive={mockIsSearchActive} />);
+    const wrapper = await screen.findByTestId("generative-ai-toggle");
+
+    expect(wrapper).toHaveTextContent("false");
+
+    await user.type(screen.getByRole("search"), "foo");
+    expect(wrapper).toHaveTextContent("true");
   });
 });
