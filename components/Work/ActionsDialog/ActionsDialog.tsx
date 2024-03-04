@@ -43,7 +43,7 @@ const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
       <SharedDialog
         handleCloseClick={close}
         isOpen={!!activeDialog}
-        large
+        size="large"
         title={renderTitle()}
       >
         {renderContent()}

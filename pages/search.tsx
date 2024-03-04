@@ -45,7 +45,6 @@ const SearchPage: NextPage = () => {
   const { searchState } = useSearchState();
   const { user } = React.useContext(UserContext);
   const showChatResponse = user?.isLoggedIn && searchState.isGenerativeAI;
-  console.log("showChatResponse", showChatResponse);
 
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,

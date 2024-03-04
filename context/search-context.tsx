@@ -81,4 +81,4 @@ function useSearchState() {
   return context;
 }
 
-export { SearchProvider, useSearchState };
+export { SearchProvider, defaultState, useSearchState };

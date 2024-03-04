@@ -1,14 +1,7 @@
-import {
-  Button,
-  Clear,
-  GenerativeAICheckbox,
-  Input,
-  SearchStyled,
-} from "./Search.styled";
+import { Button, Clear, Input, SearchStyled } from "./Search.styled";
 import {
   IconArrowForward,
   IconClear,
-  IconInfo,
   IconSearch,
 } from "@/components/Shared/SVG/Icons";
 import React, {
@@ -21,12 +14,9 @@ import React, {
 } from "react";
 
 import { ALL_FACETS } from "@/lib/constants/facets-model";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
-import GenerativeAIDialog from "@/components/Shared/Dialog";
-import { UserContext } from "@/context/user-context";
+import GenerativeAIToggle from "./GenerativeAIToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -36,25 +26,12 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { urlFacets } = useQueryParams();
 
-  const search = useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
-
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  const { searchState, searchDispatch } = useSearchState();
-
-  const { user } = React.useContext(UserContext);
-
-  const [modalGenerativeAI, setModalGenerativeUI] = useState({
-    isOpen: false,
-    title: "Generative AI Dialog",
-  });
-  const [genAICheckBox, setGenAICheckBox] = useState<boolean>(
-    searchState.isGenerativeAI
-  );
 
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,24 +66,11 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
   const clearSearchResults = () => {
     setSearchValue("");
-    if (search.current) search.current.value = "";
+    if (searchRef.current) searchRef.current.value = "";
     router.push({
       pathname: "/search",
       query: { ...urlFacets },
     });
-  };
-
-  const handleGenerativeAIChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!user?.isLoggedIn) {
-      setModalGenerativeUI({ ...modalGenerativeAI, isOpen: e.target.checked });
-    }
-
-    if (user?.isLoggedIn) {
-      searchDispatch({
-        isGenerativeAI: e.target.checked,
-        type: "updateGenerativeAI",
-      });
-    }
   };
 
   useEffect(() => {
@@ -116,7 +80,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => {
     if (router) {
       const { q } = router.query;
-      if (q && search.current) search.current.value = q as string;
+      if (q && searchRef.current) searchRef.current.value = q as string;
       setSearchValue(q as string);
     }
   }, [router]);
@@ -124,21 +88,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
-
-  useEffect(() => {
-    setGenAICheckBox(searchState.isGenerativeAI);
-  }, [searchState.isGenerativeAI]);
-
-  // TODO: This needs to accept more than one query param when
-  // directing to NU SSO.  We need the additional query param
-  // to know that user came wanting to use Generative AI
-  function goToLocation() {
-    const currentUrl = `${window.location.origin}${router.asPath}`;
-    const url = new URL(currentUrl);
-    url.searchParams.set("ai", "true");
-    console.log("url.toString()", url.toString());
-    return url.toString();
-  }
 
   return (
     <>
@@ -152,7 +101,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           onChange={handleSearchChange}
           onFocus={handleSearchFocus}
           onBlur={handleSearchFocus}
-          ref={search}
+          ref={searchRef}
           name="search"
           role="search"
         />
@@ -161,39 +110,12 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
             <IconClear />
           </Clear>
         )}
-
-        <GenerativeAICheckbox>
-          <input
-            type="checkbox"
-            name="isGenerativeAI"
-            onChange={handleGenerativeAIChange}
-            checked={genAICheckBox}
-          />
-          <label htmlFor="isGenerativeAI">Use Generative AI</label>
-          <IconInfo />
-        </GenerativeAICheckbox>
-
+        <GenerativeAIToggle isSearchActive={!!searchValue} />
         <Button type="submit" data-testid="submit-button">
           Search <IconArrowForward />
         </Button>
         {isLoaded && <IconSearch />}
       </SearchStyled>
-
-      <GenerativeAIDialog
-        isOpen={modalGenerativeAI.isOpen}
-        title={modalGenerativeAI.title}
-        handleCloseClick={() =>
-          setModalGenerativeUI({ ...modalGenerativeAI, isOpen: false })
-        }
-      >
-        <p>
-          <a href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}>
-            Click here
-          </a>{" "}
-          to login
-        </p>
-        <Button>Close</Button>
-      </GenerativeAIDialog>
     </>
   );
 };
