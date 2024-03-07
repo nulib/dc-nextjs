@@ -32,8 +32,10 @@ export default function useGenerativeAISearchToggle() {
   function goToLocation() {
     const currentUrl = `${window.location.origin}${router.asPath}`;
     const url = new URL(currentUrl);
+
     url.searchParams.set(aiQueryParam, "true");
-    return url.toString();
+    const encodedUri = encodeURIComponent(url.href);
+    return encodedUri;
   }
 
   function closeDialog() {
