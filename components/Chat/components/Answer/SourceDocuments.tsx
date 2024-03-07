@@ -11,10 +11,11 @@ const SourceDocuments: React.FC<SourceDocumentsProps> = ({
 }) => {
   return (
     <Sources>
+      {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
       {source_documents.map((document, idx) => (
         <div key={document.id}>
           <strong>{document.title}</strong>
-          <img src={document.thumbnail} />
+          <img src={document.thumbnail || ""} />
         </div>
         // <AnswerCard {...document} key={idx} />
       ))}
