@@ -1,10 +1,13 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
+
 import React from "react";
 import { styled } from "@/stitches.config";
 
 interface AnswerInformationProps {
   timestamp: number;
 }
+
+export const generativeAIWarning = `The answers and provided links are generated using chatGPT and metadata from Northwestern University Libraries Digital Collections. This is an experiment and results may be inaccurate, irrelevant, or potentially harmful.`;
 
 export const AnswerInformation: React.FC<AnswerInformationProps> = ({
   timestamp,
@@ -32,10 +35,7 @@ export const AnswerInformation: React.FC<AnswerInformationProps> = ({
             <Tooltip.Content side="bottom" sideOffset={3} collisionPadding={19}>
               <AnswerTooltipArrow />
               <AnswerTooltipContent>
-                The answers and provided links are generated using chatGPT and
-                metadata from Northwestern University Libraries Digital
-                Collections. This is an experiment and results may be
-                inaccurate, irrelevant, or potentially harmful.
+                {generativeAIWarning}
                 <em>Answered on {answerDate}</em>
               </AnswerTooltipContent>
             </Tooltip.Content>
@@ -71,11 +71,11 @@ export const AnswerTooltip = styled("span", {
   },
 });
 
-const AnswerTooltipArrow = styled(Tooltip.Arrow, {
+export const AnswerTooltipArrow = styled(Tooltip.Arrow, {
   fill: "$brightBlueB",
 });
 
-const AnswerTooltipContent = styled("div", {
+export const AnswerTooltipContent = styled("div", {
   background: "$white",
   boxShadow: "0 13px 21px 0 rgba(0, 0, 0, 0.13)",
   width: "450px",

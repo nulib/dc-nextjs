@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+
 import {
   DialogBody,
   DialogClose,
@@ -6,6 +7,7 @@ import {
   DialogHeader,
   DialogOverlay,
 } from "@/components/Shared/Dialog.styled";
+
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import { ReactNode } from "react";
 
@@ -13,14 +15,14 @@ interface SharedDialogProps {
   children: ReactNode;
   handleCloseClick: () => void;
   isOpen: boolean;
-  large?: boolean;
+  size?: "small" | "large";
   title: string;
 }
 
 const SharedDialog: React.FC<SharedDialogProps> = ({
   children,
   handleCloseClick,
-  large,
+  size,
   isOpen,
   title,
 }) => {
@@ -30,7 +32,7 @@ const SharedDialog: React.FC<SharedDialogProps> = ({
         <DialogOverlay />
         <DialogContent
           onInteractOutside={handleCloseClick}
-          {...(large && { size: "large" })}
+          {...(size ? { size } : {})}
         >
           <DialogHeader>
             <Dialog.Title>{title}</Dialog.Title>
