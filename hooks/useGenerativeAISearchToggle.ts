@@ -26,9 +26,6 @@ export default function useGenerativeAISearchToggle() {
 
   const loginUrl = `${DCAPI_ENDPOINT}/auth/login?goto=${goToLocation()}`;
 
-  // TODO: This needs to accept more than one query param when
-  // directing to NU SSO.  We need the additional query param
-  // to know that user came wanting to use Generative AI
   function goToLocation() {
     const currentUrl = `${window.location.origin}${router.asPath}`;
     const url = new URL(currentUrl);
