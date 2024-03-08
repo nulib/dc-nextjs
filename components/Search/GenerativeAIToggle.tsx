@@ -19,10 +19,11 @@ import GenerativeAIDialog from "@/components/Shared/Dialog";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
-import { generativeAIWarning } from "@/components/Chat/components/Answer/Information";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 function GenerativeAITooltip() {
+  const generativeAIWarning = `The answers and provided links are generated using chatGPT and metadata from Northwestern University Libraries Digital Collections. This is an experiment and results may be inaccurate, irrelevant, or potentially harmful.`;
+
   return (
     <Tooltip.Provider delayDuration={20}>
       <Tooltip.Root data-testid="tooltip">

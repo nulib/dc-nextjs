@@ -1,4 +1,4 @@
-import { Question } from "../components/Chat/types/chat";
+import { Question } from "../types/components/chat";
 
 const prepareQuestion = (questionString: string, authToken: string) => {
   const date = new Date();
