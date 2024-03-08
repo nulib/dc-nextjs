@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import SourceDocuments from "./components/Answer/SourceDocuments";
-import StreamingAnswer from "./components/Answer/StreamingAnswer";
-import { StreamingMessage } from "./types/chat";
+import ChatResponse from "@/components/Chat/Response/Response";
+import { StreamingMessage } from "@/types/components/chat";
 import { Work } from "@nulib/dcapi-types";
-import { prepareQuestion } from "../../lib/chat-helpers";
+import { prepareQuestion } from "@/lib/chat-helpers";
 
 const Chat = ({
   authToken,
@@ -66,19 +65,15 @@ const Chat = ({
     };
   }, [chatSocket, chatSocket?.url]);
 
+  if (!question) return null;
+
   return (
-    <>
-      <h3>{question}</h3>
-      {question && (
-        <>
-          <SourceDocuments source_documents={sourceDocuments} />
-          <StreamingAnswer
-            answer={streamedAnswer}
-            isComplete={isStreamingComplete}
-          />
-        </>
-      )}
-    </>
+    <ChatResponse
+      isStreamingComplete={isStreamingComplete}
+      question={question}
+      sourceDocuments={sourceDocuments}
+      streamedAnswer={streamedAnswer}
+    />
   );
 };
 

@@ -1,5 +1,5 @@
-import Chat from "@/components/Chat";
-import useChatSocket from "../../../hooks/useChatSocket";
+import Chat from "@/components/Chat/Chat";
+import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
 
 const ChatWrapper = () => {
@@ -9,9 +9,7 @@ const ChatWrapper = () => {
   if (!authToken || !chatSocket || !question) return null;
 
   return (
-    <div style={{ background: "#f0f0f0", padding: "2rem" }}>
-      <Chat authToken={authToken} chatSocket={chatSocket} question={question} />
-    </div>
+    <Chat authToken={authToken} chatSocket={chatSocket} question={question} />
   );
 };
 
