@@ -1,13 +1,14 @@
 import { keyframes, styled } from "@/stitches.config";
+
 import React from "react";
 
-const AnswerLoader = () => {
+const BouncingLoader = () => {
   return (
-    <StyledAnswerLoader>
+    <StyledBouncingLoader aria-label="loading" role="status">
       <div></div>
       <div></div>
       <div></div>
-    </StyledAnswerLoader>
+    </StyledBouncingLoader>
   );
 };
 
@@ -20,10 +21,9 @@ const bouncingLoader = keyframes({
   },
 });
 
-const StyledAnswerLoader = styled("div", {
+const StyledBouncingLoader = styled("div", {
   display: "flex",
-  justifyContent: "center",
-  margin: "$gr5 auto",
+  margin: "$gr2 auto",
 
   "& > div": {
     width: "$gr2",
@@ -44,4 +44,4 @@ const StyledAnswerLoader = styled("div", {
   },
 });
 
-export default AnswerLoader;
+export default BouncingLoader;
