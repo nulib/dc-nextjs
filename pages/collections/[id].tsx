@@ -23,11 +23,12 @@ import {
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
 import { useEffect, useState } from "react";
+
 import { ApiResponseBucket } from "@/types/api/response";
-import { Collection } from "@nulib/dcapi-types";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
+import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
@@ -41,7 +42,7 @@ import { useRouter } from "next/router";
 
 const Collection: NextPage = () => {
   const router = useRouter();
-  const [collection, setCollection] = useState<Collection>();
+  const [collection, setCollection] = useState<CollectionType>();
   const [metadata, setMetadata] = useState<ApiResponseBucket[]>([]);
   const [series, setSeries] = useState<GenericAggsReturn[]>([]);
   const [topMetadata, setTopMetadata] = useState<GetTopMetadataAggsReturn[]>(

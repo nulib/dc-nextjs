@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FACETS_WORK_TYPE } from "@/lib/constants/facets-model";
 import RadioGroup from "./RadioGroup";
-import { WorkType } from "@nulib/dcapi-types";
+import { type WorkType } from "@nulib/dcapi-types";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
