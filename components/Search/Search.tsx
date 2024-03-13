@@ -13,8 +13,9 @@ import React, {
   useState,
 } from "react";
 
-import { ALL_FACETS } from "@/lib/constants/facets-model";
 import GenerativeAIToggle from "./GenerativeAIToggle";
+import { UrlFacets } from "@/types/context/filter-context";
+import { getAllFacetIds } from "@/lib/utils/facet-helpers";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
@@ -24,7 +25,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
-  const { urlFacets } = useQueryParams();
+  const { ai, urlFacets } = useQueryParams();
 
   const searchRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,22 +37,27 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const updatedFacets: UrlFacets = {};
+
     /* Guard against searching from a page with dynamic route params */
-    const facetIds = ALL_FACETS.facets.map((facet) => facet.id);
+    const allFacetsIds = getAllFacetIds();
 
     // Account for the "similar" facet (comes from "View All" in sliders)
-    facetIds.push("similar");
+    allFacetsIds.push("similar");
 
-    const urlFacetsKeys = Object.keys(urlFacets);
-    urlFacetsKeys.forEach((key) => {
-      if (!facetIds.includes(key)) {
-        delete urlFacets[key];
+    Object.keys(urlFacets).forEach((facetKey) => {
+      if (allFacetsIds.includes(facetKey)) {
+        updatedFacets[facetKey] = urlFacets[facetKey];
       }
     });
 
     router.push({
       pathname: "/search",
-      query: { q: searchValue, ...urlFacets },
+      query: {
+        q: searchValue,
+        ...(ai && { ai }),
+        ...updatedFacets,
+      },
     });
   };
 

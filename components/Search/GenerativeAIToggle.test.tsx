@@ -38,6 +38,10 @@ const withSearchProvider = (
 };
 
 describe("GenerativeAIToggle", () => {
+  beforeEach(() => {
+    mockRouter.setCurrentUrl("/");
+  });
+
   it("renders the generative AI toggle UI and toggles state for a logged in user", async () => {
     const user = userEvent.setup();
     render(
@@ -64,7 +68,7 @@ describe("GenerativeAIToggle", () => {
     expect(tooltip).toBeInTheDocument();
   });
 
-  it("renders the generative AI dialog for a non-logged in user", async () => {
+  it("renders a login dialog for a non-logged-in user when generative ai checkbox is checked", async () => {
     const user = userEvent.setup();
     const nonLoggedInUser = {
       user: {
@@ -113,5 +117,27 @@ describe("GenerativeAIToggle", () => {
 
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).toHaveAttribute("data-state", "checked");
+  });
+
+  it("sets a query param in the URL when generative AI checkbox is clicked", async () => {
+    const user = userEvent.setup();
+
+    mockRouter.setCurrentUrl("/");
+    render(
+      withUserProvider(
+        withSearchProvider(
+          <GenerativeAIToggle isSearchActive={false} />,
+          defaultSearchState
+        )
+      )
+    );
+
+    await user.click(screen.getByRole("checkbox"));
+
+    expect(mockRouter).toMatchObject({
+      asPath: "/?ai=true",
+      pathname: "/",
+      query: { ai: "true" },
+    });
   });
 });
