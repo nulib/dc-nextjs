@@ -23,11 +23,12 @@ import {
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
 import { useEffect, useState } from "react";
+
 import { ApiResponseBucket } from "@/types/api/response";
-import { Collection } from "@nulib/dcapi-types";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
+import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
@@ -41,7 +42,7 @@ import { useRouter } from "next/router";
 
 const Collection: NextPage = () => {
   const router = useRouter();
-  const [collection, setCollection] = useState<Collection>();
+  const [collection, setCollection] = useState<CollectionType>();
   const [metadata, setMetadata] = useState<ApiResponseBucket[]>([]);
   const [series, setSeries] = useState<GenericAggsReturn[]>([]);
   const [topMetadata, setTopMetadata] = useState<GetTopMetadataAggsReturn[]>(
@@ -132,10 +133,11 @@ const Collection: NextPage = () => {
               ),
             }}
           />
+          <title>{collection.title}</title>
         </Head>
       )}
 
-      <Layout>
+      <Layout title={collection?.title || ""} description={description || ""}>
         {collection && (
           <>
             <HeroWrapper>
@@ -230,10 +232,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         "og:description": collection.description,
         "og:image": imageUrl,
         "og:image:secure_url": imageUrl,
-        "og:site_name": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
-        "og:title": `${collection.title} - Digital Collections - Libraries - Northwestern University`,
+        "og:title": `${collection.title}`,
         "og:type": "website",
-        "og:url": `${process.env.DC_URL}/collections/${collection.id}`,
+        "og:url": `${process.env.NEXT_PUBLIC_DC_URL}/collections/${collection.id}`,
       };
 
   return {

@@ -2,12 +2,15 @@ import {
   AnnouncementContent,
   ViewerWrapperStyled,
 } from "@/components/Clover/ViewerWrapper.styled";
+import type {
+  CloverViewerProps,
+  ViewerConfigOptions,
+} from "@samvera/clover-iiif";
 
 import Announcement from "@/components/Shared/Announcement";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { UserContext } from "@/context/user-context";
-import type { ViewerConfigOptions } from "@samvera/clover-iiif";
 import type { Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
 
@@ -67,7 +70,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     withCredentials: true,
   };
 
-  const options = {
+  const options: CloverViewerProps["options"] = {
     ...defaultOptions,
     ...viewerOptions,
   };

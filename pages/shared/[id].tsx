@@ -59,7 +59,7 @@ const SharedPage: NextPage = () => {
           }}
         />
       </Head>
-      <Layout>
+      <Layout title={work.title || ''}>
         <SharedLink
           manifest={manifest}
           work={work}

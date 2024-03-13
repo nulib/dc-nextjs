@@ -11,6 +11,7 @@ import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import Facets from "@/components/Facets/Facets";
 import Grid from "@/components/Grid/Grid";
+import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
 import Layout from "@/components/layout";
@@ -166,7 +167,10 @@ const SearchPage: NextPage = () => {
         />
       </Head>
 
-      <Layout data-testid="search-page-wrapper">
+      <Layout
+        data-testid="search-page-wrapper"
+        title={HEAD_META["SEARCH"].title}
+      >
         <Heading as="h1" isHidden>
           Northwestern
         </Heading>
@@ -217,6 +221,7 @@ export async function getStaticProps() {
   });
 
   const openGraphData = {
+    "og:title": HEAD_META["SEARCH"].title,
     "og:url": `${PRODUCTION_URL}/search`,
   };
 
