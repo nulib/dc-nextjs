@@ -2,7 +2,10 @@ import {
   AnnouncementContent,
   ViewerWrapperStyled,
 } from "@/components/Clover/ViewerWrapper.styled";
-import type { CloverViewerProps, ViewerConfigOptions } from "@samvera/clover-iiif";
+import type {
+  CloverViewerProps,
+  ViewerConfigOptions,
+} from "@samvera/clover-iiif";
 
 import Announcement from "@/components/Shared/Announcement";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
