@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { UserContext } from "@/context/user-context";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 const defaultModalState = {
   isOpen: false,
@@ -14,15 +13,11 @@ const aiQueryParam = "ai";
 
 export default function useGenerativeAISearchToggle() {
   const router = useRouter();
-  const effectQueryDep = router.query[aiQueryParam];
+  const isChecked = router.query[aiQueryParam] === "true";
 
-  const { searchState, searchDispatch } = useSearchState();
   const { user } = React.useContext(UserContext);
 
   const [dialog, setDialog] = useState(defaultModalState);
-  const [isChecked, setIsChecked] = useState<boolean>(
-    searchState.isGenerativeAI
-  );
 
   const loginUrl = `${DCAPI_ENDPOINT}/auth/login?goto=${goToLocation()}`;
 
@@ -42,12 +37,17 @@ export default function useGenerativeAISearchToggle() {
   function handleCheckChange(checked: boolean) {
     if (!user?.isLoggedIn) {
       setDialog({ ...dialog, isOpen: checked });
-    }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [aiQueryParam]: _, ...query } = router.query;
 
-    if (user?.isLoggedIn) {
-      searchDispatch({
-        isGenerativeAI: checked,
-        type: "updateGenerativeAI",
+      if (checked) {
+        query[aiQueryParam] = checked.toString();
+      }
+
+      router.push({
+        pathname: router.pathname,
+        query,
       });
     }
   }
@@ -55,19 +55,6 @@ export default function useGenerativeAISearchToggle() {
   function handleLogin() {
     router.push(loginUrl);
   }
-
-  useEffect(() => {
-    setIsChecked(searchState.isGenerativeAI);
-  }, [searchState.isGenerativeAI]);
-
-  useEffect(() => {
-    if (effectQueryDep && user?.isLoggedIn) {
-      searchDispatch({
-        isGenerativeAI: true,
-        type: "updateGenerativeAI",
-      });
-    }
-  }, [effectQueryDep, searchDispatch, user?.isLoggedIn]);
 
   return {
     closeDialog,

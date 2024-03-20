@@ -29,8 +29,8 @@ import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
+import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 type RequestState = {
   data: ApiSearchResponse | null;
@@ -42,9 +42,9 @@ const SearchPage: NextPage = () => {
   const size = 40;
   const router = useRouter();
 
-  const { searchState } = useSearchState();
   const { user } = React.useContext(UserContext);
-  const showChatResponse = user?.isLoggedIn && searchState.isGenerativeAI;
+  const { ai } = useQueryParams();
+  const showChatResponse = user?.isLoggedIn && ai;
 
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
