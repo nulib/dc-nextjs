@@ -5,20 +5,16 @@ import {
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
 import {
-  DialogButtonRow,
-  FlexBody,
-  GenerativeAIDialogMessage,
   GenerativeAIToggleWrapper,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/Search/GenerativeAI.styled";
 import { TooltipArrow, TooltipBody } from "../Shared/Tooltip.styled";
 
-import { Button } from "@nulib/design-system";
-import GenerativeAIDialog from "@/components/Shared/Dialog";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
+import SharedAlertDialog from "../Shared/AlertDialog";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 function GenerativeAITooltip() {
@@ -69,27 +65,14 @@ export default function GenerativeAIToggle({
         <GenerativeAITooltip />
       </GenerativeAIToggleWrapper>
 
-      <div style={{ display: "flex" }}>
-        <GenerativeAIDialog
-          isOpen={dialog.isOpen}
-          title={dialog.title}
-          handleCloseClick={closeDialog}
-          size="small"
-        >
-          <FlexBody>
-            <GenerativeAIDialogMessage>
-              You must be logged in with a Northwestern NetID to use the
-              Generative AI search feature.
-            </GenerativeAIDialogMessage>
-            <DialogButtonRow>
-              <Button isPrimary onClick={handleLogin}>
-                Login
-              </Button>
-              <Button onClick={closeDialog}>Cancel</Button>
-            </DialogButtonRow>
-          </FlexBody>
-        </GenerativeAIDialog>
-      </div>
+      <SharedAlertDialog
+        isOpen={dialog.isOpen}
+        cancel={{ label: "Cancel", onClick: closeDialog }}
+        action={{ label: "Login", onClick: handleLogin }}
+      >
+        You must be logged in with a Northwestern NetID to use the Generative AI
+        search feature.
+      </SharedAlertDialog>
     </>
   );
 }
