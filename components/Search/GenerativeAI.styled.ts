@@ -28,20 +28,6 @@ const GenerativeAIToggleWrapper = styled("div", {
   },
 });
 
-const GenerativeAIDialogMessage = styled("p", {});
-
-const FlexBody = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  width: "100%",
-});
-
-const DialogButtonRow = styled("div", {
-  display: "flex",
-  justifyContent: "flex-end",
-});
-
 const TooltipTrigger = styled(Tooltip.Trigger, {
   background: "transparent",
   border: "none",
@@ -51,11 +37,4 @@ const TooltipContent = styled(Tooltip.Content, {
   zIndex: 2,
 });
 
-export {
-  DialogButtonRow,
-  FlexBody,
-  GenerativeAIDialogMessage,
-  GenerativeAIToggleWrapper,
-  TooltipContent,
-  TooltipTrigger,
-};
+export { GenerativeAIToggleWrapper, TooltipContent, TooltipTrigger };
