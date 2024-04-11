@@ -183,13 +183,44 @@ const ShareURLActions = styled(EmbedHTMLActionRow, {
   },
 });
 
+const EmbedResourcesWrapper = styled("div", {
+  paddingBottom: "$gr3",
+});
+
+const AlternateFormatList = styled("ul", {
+  listStyle: "none",
+  marginBlockStart: "0px",
+  paddingInlineStart: "0px",
+
+  "> li": {
+    paddingBottom: "$gr2",
+  },
+
+  "> li > a": {
+    color: "$black80",
+    textDecoration: "underline",
+
+    "&:hover": {
+      color: "$black80",
+      textDecoration: "none",
+    },
+  },
+});
+
+const PdfLabel = styled("span", {
+  paddingLeft: "$gr1",
+  fontSize: "$gr2",
+});
+
 export {
+  AlternateFormatList,
   EmbedHTML,
   EmbedHTMLActionRow,
   EmbedLayoutPreview,
   EmbedLayoutPreviewContent,
   EmbedLayoutPreviewTitle,
   EmbedLayoutPreviewInfoPanel,
+  EmbedResourcesWrapper,
   EmbedViewer,
   ItemActions,
   ItemContent,
@@ -197,6 +228,7 @@ export {
   ItemStyled,
   ItemThumbnail,
   LayoutImg,
+  PdfLabel,
   ShareURL,
   ShareURLActions,
 };

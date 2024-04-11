@@ -1,13 +1,16 @@
-import type { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
 import {
+  AlternateFormatList,
   EmbedHTML,
   EmbedHTMLActionRow,
+  EmbedResourcesWrapper,
   ItemActions,
   ItemContent,
   ItemRow,
   ItemStyled,
   ItemThumbnail,
+  PdfLabel,
 } from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.styled";
+import type { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
 import { Label, Thumbnail } from "@samvera/clover-iiif/primitives";
 import {
   getAnnotationBodyType,
@@ -19,22 +22,25 @@ import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import IIIFLogo from "@/components/Shared/SVG/IIIF";
-import type { Manifest } from "@iiif/presentation-3";
+import { NULWorkManifest } from "@/types/components/works";
 import React from "react";
 import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
+import { StyledCopyText } from "@/components/Shared/CopyText.styled";
 import type { Work } from "@nulib/dcapi-types";
 import { embedWarningMessage } from "./DownloadAndShare";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
 
-interface EmbedImagesProps {
-  manifest: Manifest;
+interface EmbedResourcesProps {
+  manifest: NULWorkManifest;
+  alternateFormatItems: NULWorkManifest["rendering"];
   showEmbedWarning: boolean;
   work: Work;
 }
 
-const EmbedImages: React.FC<EmbedImagesProps> = ({
+const EmbedResources: React.FC<EmbedResourcesProps> = ({
   manifest,
+  alternateFormatItems,
   showEmbedWarning,
   work,
 }) => {
@@ -53,8 +59,8 @@ const EmbedImages: React.FC<EmbedImagesProps> = ({
   }, [manifest]);
 
   return (
-    <>
-      <Heading as="h3">Download and Embed Images</Heading>
+    <EmbedResourcesWrapper>
+      <Heading as="h3">Download and Embed</Heading>
 
       {isWorkRestricted && !isSharedLinkPage && (
         <Announcement>
@@ -63,21 +69,45 @@ const EmbedImages: React.FC<EmbedImagesProps> = ({
       )}
 
       {(!isWorkRestricted || isSharedLinkPage) && (
-        <div data-testid="download-embed-items">
-          {imageCanvases.map((item) => (
-            <Item
-              item={item}
-              key={item.id}
-              showEmbedWarning={showEmbedWarning}
-            />
-          ))}
-        </div>
+        <>
+          {alternateFormatItems && alternateFormatItems.length > 0 && (
+            <>
+              <Heading as="h4">Alternate Formats</Heading>
+              <AlternateFormatList>
+                {alternateFormatItems.map((item) => (
+                  <li key={item.id}>
+                    {item.label && (
+                      <a href={item.id} target="_blank" rel="noreferrer">
+                        <Label label={item.label} as="span" />
+                        {/* @ts-ignore  */}
+                        {item.format?.includes("application/pdf") && (
+                          <PdfLabel>(pdf)</PdfLabel>
+                        )}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </AlternateFormatList>
+            </>
+          )}
+
+          <Heading as="h4">Images</Heading>
+          <div data-testid="download-embed-items">
+            {imageCanvases.map((item) => (
+              <Item
+                item={item}
+                key={item.id}
+                showEmbedWarning={showEmbedWarning}
+              />
+            ))}
+          </div>
+        </>
       )}
-    </>
+    </EmbedResourcesWrapper>
   );
 };
 
-export default EmbedImages;
+export default EmbedResources;
 
 interface ItemProps {
   item: Canvas;
@@ -142,7 +172,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
   }" />`;
 
   const handleDownloadClick = async (
-    e: React.SyntheticEvent<HTMLAnchorElement>
+    e: React.SyntheticEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
 
@@ -179,9 +209,9 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
           {item.label && <Label label={item.label} as="span" />}
           <ItemActions>
             <li>
-              <a onClick={handleDownloadClick} href="#">
+              <StyledCopyText onClick={handleDownloadClick}>
                 Download JPG
-              </a>
+              </StyledCopyText>
             </li>
             <li>
               <a
