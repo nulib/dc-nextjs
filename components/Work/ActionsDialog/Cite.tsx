@@ -2,6 +2,7 @@ import {
   ActionsDialogStyled,
   Content,
 } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
+
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import CopyText from "@/components/Shared/CopyText";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
@@ -30,9 +31,9 @@ const WorkDialogCite: React.FC = () => {
   const dateObj: Date = new Date(create_date);
   const formattedDate = dateObj.toDateString();
   const itemLink = `${window.location.origin}/items/${id}`;
-  const apaFormat = `${library_unit}, ${nul}. (${formattedDate}). ${title}, Retrieved from ${itemLink}`;
+  const apaFormat = `${library_unit}, ${nul}. (${today}). ${title}, Retrieved from ${itemLink}`;
   const chicagoTurabianFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} Accessed ${today}. ${itemLink}`;
-  const mlaFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} ${formattedDate}. ${window.location.origin}/items/${id}`;
+  const mlaFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} ${today}. ${window.location.origin}/items/${id}`;
   const wikiCitation = `<ref name=NUL>{{cite web | url=${itemLink} | title= ${title} (${formattedDate}) }} |author=Digital Collections, ${nul} |accessdate=${today} |publisher=${nul}, ${library_unit}}}</ref>`;
 
   const metadata = [
