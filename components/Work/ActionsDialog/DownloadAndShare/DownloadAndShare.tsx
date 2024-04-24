@@ -2,11 +2,15 @@ import {
   ActionsDialogStyled,
   Content,
 } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
+import {
+  LabeledContentResource,
+  NULWorkManifest,
+} from "@/types/components/works";
 import React, { useEffect, useState } from "react";
 
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import { Canvas } from "@iiif/presentation-3";
-import EmbedImages from "./EmbedImages";
+import EmbedResources from "./EmbedResources";
 import EmbedViewer from "@/components/Work/ActionsDialog/DownloadAndShare/EmbedViewer";
 import IIIFManifest from "./IIIFManifest";
 import SharedSocial from "@/components/Shared/Social";
@@ -22,8 +26,13 @@ const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work } = workState;
   const [imageCanvases, setImageCanvases] = useState<Canvas[]>([]);
+  const [alternateFormatItems, setAlternateFormatItems] = useState<
+    LabeledContentResource[]
+  >([]);
+
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
+
   const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
     useWorkAuth(work);
 
@@ -36,7 +45,11 @@ const DownloadAndShare: React.FC = () => {
       const imageCanvases = manifest.items.filter(
         (item) => getAnnotationBodyType(item) === "Image"
       );
+      const alternateFormatItems = manifest.rendering
+        ? [...manifest.rendering]
+        : [];
       setImageCanvases(imageCanvases);
+      setAlternateFormatItems(alternateFormatItems);
     }
   }, [manifest]);
 
@@ -62,9 +75,10 @@ const DownloadAndShare: React.FC = () => {
           work={work}
         />
 
-        {imageCanvases.length > 0 && (
-          <EmbedImages
-            manifest={manifest}
+        {(imageCanvases.length > 0 || alternateFormatItems.length > 0) && (
+          <EmbedResources
+            manifest={manifest as NULWorkManifest}
+            alternateFormatItems={alternateFormatItems}
             showEmbedWarning={showEmbedWarning}
             work={work}
           />
