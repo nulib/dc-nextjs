@@ -1,69 +1,40 @@
 import React, { useEffect, useState } from "react";
 
 import ChatResponse from "@/components/Chat/Response/Response";
-import { StreamingMessage } from "@/types/components/chat";
 import { Work } from "@nulib/dcapi-types";
 import { prepareQuestion } from "@/lib/chat-helpers";
+import useChatSocket from "@/hooks/useChatSocket";
+import useQueryParams from "@/hooks/useQueryParams";
 
-const Chat = ({
-  authToken,
-  chatSocket,
-  question,
-}: {
-  authToken: string;
-  chatSocket?: WebSocket;
-  question?: string;
-}) => {
-  const [isReadyStateOpen, setIsReadyStateOpen] = useState(false);
+const Chat = () => {
+  const { searchTerm: question } = useQueryParams();
+  const { authToken, isConnected, message, sendMessage } = useChatSocket();
+
   const [isStreamingComplete, setIsStreamingComplete] = useState(false);
   const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
   const [streamedAnswer, setStreamedAnswer] = useState("");
 
-  const handleReadyStateChange = () => {
-    setIsReadyStateOpen(chatSocket?.readyState === 1);
-  };
+  useEffect(() => {
+    if (question && isConnected && authToken) {
+      const preparedQuestion = prepareQuestion(question, authToken);
+      sendMessage(preparedQuestion);
+    }
+  }, [authToken, isConnected, question, sendMessage]);
 
-  // Handle web socket stream updates
-  const handleMessageUpdate = (event: MessageEvent) => {
-    const data: StreamingMessage = JSON.parse(event.data);
-    // console.log("handleMessageUpdate", data);
+  useEffect(() => {
+    if (!message) return;
 
-    if (data.source_documents) {
-      setSourceDocuments(data.source_documents);
-    } else if (data.token) {
+    if (message.source_documents) {
+      setSourceDocuments(message.source_documents);
+    } else if (message.token) {
       setStreamedAnswer((prev) => {
-        return prev + data.token;
+        return prev + message.token;
       });
-    } else if (data.answer) {
-      setStreamedAnswer(data.answer);
+    } else if (message.answer) {
+      setStreamedAnswer(message.answer);
       setIsStreamingComplete(true);
     }
-  };
-
-  useEffect(() => {
-    if (question && isReadyStateOpen && chatSocket) {
-      const preparedQuestion = prepareQuestion(question, authToken);
-      chatSocket?.send(JSON.stringify(preparedQuestion));
-    }
-  }, [chatSocket, isReadyStateOpen, prepareQuestion]);
-
-  useEffect(() => {
-    if (chatSocket) {
-      chatSocket.addEventListener("message", handleMessageUpdate);
-      chatSocket.addEventListener("open", handleReadyStateChange);
-      chatSocket.addEventListener("close", handleReadyStateChange);
-      chatSocket.addEventListener("error", handleReadyStateChange);
-    }
-
-    return () => {
-      if (chatSocket) {
-        chatSocket.removeEventListener("message", handleMessageUpdate);
-        chatSocket.removeEventListener("open", handleReadyStateChange);
-        chatSocket.removeEventListener("close", handleReadyStateChange);
-        chatSocket.removeEventListener("error", handleReadyStateChange);
-      }
-    };
-  }, [chatSocket, chatSocket?.url]);
+  }, [message]);
 
   if (!question) return null;
 
