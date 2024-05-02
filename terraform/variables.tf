@@ -32,7 +32,7 @@ variable "environment_name" {
 }
 
 variable "honeybadger_api_key" {
-  type    = string
+  type = string
 }
 
 variable "next_public_dcapi_endpoint" {
@@ -43,6 +43,13 @@ variable "next_public_dc_url" {
   type = string
 }
 
+variable "next_public_opensearch_model_id" {
+  type = string
+}
+
+variable "next_public_opensearch_pipeline" {
+  type = string
+}
 
 variable "production_branch" {
   type = string
