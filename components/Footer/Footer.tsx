@@ -7,7 +7,7 @@ import SiteContentMessage from "./SiteContentMessage/SiteContentMessage";
 export default function Footer() {
   return (
     <FooterStyled>
-      <Container>
+      <Container data-testid="footer">
         <NUFooter isCopyright />
       </Container>
       <SiteContentMessage />

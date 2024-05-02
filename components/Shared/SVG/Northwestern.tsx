@@ -13,6 +13,7 @@ const NorthwesternWordmark: React.FC = () => (
   <svg
     version="1.1"
     id="nortwestern-wordmark"
+    data-testid="northwestern-logo"
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     x="0px"
