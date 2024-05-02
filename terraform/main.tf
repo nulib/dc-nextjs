@@ -74,12 +74,14 @@ resource "aws_amplify_app" "dc-next" {
   }
 
   environment_variables = {
-    ENV                           = var.environment_name
-    HONEYBADGER_API_KEY           = var.honeybadger_api_key
-    HONEYBADGER_ENV               = var.environment_name
-    NEXT_PUBLIC_DCAPI_ENDPOINT    = var.next_public_dcapi_endpoint
-    NEXT_PUBLIC_DC_URL            = var.next_public_dc_url
-    NEXT_PUBLIC_DC_SITEMAP_BUCKET = aws_s3_bucket_website_configuration.sitemap_website.website_endpoint
+    ENV                             = var.environment_name
+    HONEYBADGER_API_KEY             = var.honeybadger_api_key
+    HONEYBADGER_ENV                 = var.environment_name
+    NEXT_PUBLIC_DCAPI_ENDPOINT      = var.next_public_dcapi_endpoint
+    NEXT_PUBLIC_DC_URL              = var.next_public_dc_url
+    NEXT_PUBLIC_DC_SITEMAP_BUCKET   = aws_s3_bucket_website_configuration.sitemap_website.website_endpoint,
+    NEXT_PUBLIC_OPENSEARCH_MODEL_ID = var.next_public_opensearch_model_id,
+    NEXT_PUBLIC_OPENSEARCH_PIPELINE = var.next_public_opensearch_pipeline
   }
 
   custom_rule {
