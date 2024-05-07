@@ -6,6 +6,7 @@ import { QueryDslQueryContainer } from "@elastic/elasticsearch/api/types";
 import { UrlFacets } from "@/types/context/filter-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetFilters } from "@/lib/queries/facet";
+import { isAiChatActive } from "../utils/get-url-search-params";
 
 type BuildQueryProps = {
   aggs?: FacetsInstance[];
@@ -18,7 +19,11 @@ type BuildQueryProps = {
 export function buildQuery(obj: BuildQueryProps) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
+  let queryValue;
 
+  const isAiChat = isAiChatActive();
+
+  // Build the "must" part of the query
   if (term) must.push(buildSearchPart(term));
 
   if (Object.keys(urlFacets).length > 0) {
@@ -29,14 +34,43 @@ export function buildQuery(obj: BuildQueryProps) {
     }
   }
 
+  // User facets exist and we are not in AI chat mode
+  if (must.length > 0 && !isAiChat) {
+    queryValue = {
+      bool: {
+        must,
+      },
+    };
+  }
+
+  // We are in AI chat mode and a search term exists
+  if (isAiChat && term) {
+    queryValue = {
+      hybrid: {
+        queries: [
+          {
+            bool: {
+              must,
+            },
+          },
+          {
+            neural: {
+              embedding: {
+                k: size || 20,
+                model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
+                query_text: term, // if term has no value, the API returns a 400 error
+              },
+            },
+          },
+        ],
+      },
+    };
+  }
+
   return {
     ...querySearchTemplate,
-    ...(must.length > 0 && {
-      query: {
-        bool: {
-          must: must,
-        },
-      },
+    ...(queryValue && {
+      query: queryValue,
     }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),

@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+
 import {
   FilterBody,
   FilterBodyInner,
@@ -7,6 +8,7 @@ import {
   FilterHeader,
 } from "@/components/Facets/Filter/Filter.styled";
 import React, { useEffect, useState } from "react";
+
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";

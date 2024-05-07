@@ -64,7 +64,7 @@ const SearchPage: NextPage = () => {
   });
 
   /**
-   * Post request to the search API endpoint for query and facet parameters
+   * Make requests to the search API endpoint
    */
   useEffect(() => {
     if (!router.isReady) return;
@@ -72,6 +72,8 @@ const SearchPage: NextPage = () => {
       try {
         const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
+        const requestUrl = new URL(DC_API_SEARCH_URL);
+        const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
 
         // If there is a "similar" facet, get the work and set the state
         if (urlFacets?.similar) {
@@ -93,9 +95,14 @@ const SearchPage: NextPage = () => {
           urlFacets,
         });
 
+        // Request as a "hybrid" OpensSearch query
+        // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
+        if (!!body?.query?.hybrid && pipeline) {
+          requestUrl.searchParams.append("search_pipeline", pipeline);
+        }
         const response = await apiPostRequest<ApiSearchResponse>({
-          body: body,
-          url: DC_API_SEARCH_URL,
+          body,
+          url: requestUrl.toString(),
         });
 
         /**
