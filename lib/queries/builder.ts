@@ -70,6 +70,11 @@ export function buildQuery(obj: BuildQueryProps) {
                 k: size || 20,
                 model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
                 query_text: term, // if term has no value, the API returns a 400 error
+                filter: {
+                  bool: {
+                    filter: buildFacetFilters(urlFacets),
+                  },
+                },
               },
             },
           },
