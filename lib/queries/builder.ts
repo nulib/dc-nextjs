@@ -49,8 +49,19 @@ export function buildQuery(obj: BuildQueryProps) {
       hybrid: {
         queries: [
           {
-            bool: {
-              must,
+            query_string: {
+              /**
+               * Reference available index keys/vars:
+               * https://github.com/nulib/meadow/blob/deploy/staging/app/priv/elasticsearch/v2/settings/work.json
+               */
+              fields: [
+                "title^5",
+                // "all_text", // we feel like neural should handle the all_text part
+                "all_controlled_labels",
+                "all_ids^5", // boost the all_ids field
+              ],
+              query: term,
+              default_operator: "AND",
             },
           },
           {
