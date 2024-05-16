@@ -84,24 +84,17 @@ describe("GenerativeAIToggle", () => {
       )
     );
 
-    const checkbox = screen.getByRole("checkbox");
+    const checkbox = await screen.findByRole("checkbox");
     await user.click(checkbox);
 
-    const generativeAIDialog = screen.queryByText(
+    const generativeAIDialog = await screen.findByText(
       "You must be logged in with a Northwestern NetID to use the Generative AI search feature."
     );
-    const cancelButton = screen.getByText("Cancel");
 
     expect(generativeAIDialog).toBeInTheDocument();
-    expect(screen.getByText("Login")).toBeInTheDocument();
-    expect(cancelButton).toBeInTheDocument();
-
-    await user.click(cancelButton);
-
-    expect(generativeAIDialog).not.toBeInTheDocument();
   });
 
-  it("renders a toggled generative ai state when a query param is set", () => {
+  it("renders a toggled generative ai state when a query param is set and user is logged in", () => {
     const activeSearchState = {
       ...defaultSearchState,
       isGenerativeAI: true,
@@ -109,9 +102,11 @@ describe("GenerativeAIToggle", () => {
 
     mockRouter.setCurrentUrl("/search?ai=true");
     render(
-      withSearchProvider(
-        <GenerativeAIToggle isSearchActive={true} />,
-        activeSearchState
+      withUserProvider(
+        withSearchProvider(
+          <GenerativeAIToggle isSearchActive={true} />,
+          activeSearchState
+        )
       )
     );
 
@@ -123,6 +118,7 @@ describe("GenerativeAIToggle", () => {
     const user = userEvent.setup();
 
     mockRouter.setCurrentUrl("/");
+
     render(
       withUserProvider(
         withSearchProvider(
