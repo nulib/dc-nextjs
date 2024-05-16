@@ -456,6 +456,7 @@ export const mockPrivateUnpublishedWork: Work = {
     {
       accession_number: "asdfsdfgh",
       description: "asdf asdf",
+      download_url: "http://download.me",
       duration: null,
       height: 1308,
       id: "62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0",
@@ -474,6 +475,7 @@ export const mockPrivateUnpublishedWork: Work = {
     {
       accession_number: "bbkkasdf",
       description: "asdfasdf asdfasdf",
+      download_url: "http://download.me",
       duration: null,
       height: 1538,
       id: "592022f6-3dc1-4f17-a412-42c025ceae93",
