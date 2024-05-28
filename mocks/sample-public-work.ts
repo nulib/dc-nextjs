@@ -32,6 +32,7 @@ export const samplePublicWork: Work = {
     {
       accession_number: "Time01_5000_accn_1301",
       description: "This is a description of work the work",
+      download_url: "http://download.me",
       duration: null,
       height: 4246,
       id: "1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
@@ -50,6 +51,7 @@ export const samplePublicWork: Work = {
     {
       accession_number: "Time01_5000_accn_1302",
       description: "This is a description of work the work",
+      download_url: "http://download.me",
       duration: null,
       height: 4212,
       id: "3a1562c9-e9d7-4311-a572-28e9ddf39745",
