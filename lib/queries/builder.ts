@@ -50,31 +50,32 @@ export function buildQuery(obj: BuildQueryProps) {
         queries: [
           {
             query_string: {
+              default_operator: "AND",
+
               /**
                * Reference available index keys/vars:
                * https://github.com/nulib/meadow/blob/deploy/staging/app/priv/elasticsearch/v2/settings/work.json
                */
               fields: [
-                "title^5",
-                // "all_text", // we feel like neural should handle the all_text part
+                "title^5", // "all_text", // we feel like neural should handle the all_text part
                 "all_controlled_labels",
-                "all_ids^5", // boost the all_ids field
+                "all_ids^5",
               ],
               query: term,
-              default_operator: "AND",
             },
           },
           {
             neural: {
               embedding: {
-                k: size || 20,
-                model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
-                query_text: term, // if term has no value, the API returns a 400 error
+                // if term has no value, the API returns a 400 error
                 filter: {
                   bool: {
                     filter: buildFacetFilters(urlFacets),
                   },
                 },
+                k: size || 20,
+                model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
+                query_text: term,
               },
             },
           },
