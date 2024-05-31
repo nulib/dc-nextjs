@@ -20,7 +20,7 @@ import { UnorderedListStyled } from "@/components/Shared/UnorderedList";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 
-const baseUrl = "https://iiif.stack.rdc.library.northwestern.edu/iiif/2";
+const baseUrl = "https://iiif.dc.library.northwestern.edu/iiif/2";
 
 const featuredCollections: PhotoFeatureProps[] = [
   {

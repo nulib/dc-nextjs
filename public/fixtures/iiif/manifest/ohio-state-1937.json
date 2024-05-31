@@ -4,21 +4,21 @@
     {
       "annotations": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/a1",
+          "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/a1",
           "items": [
             {
               "body": {
                 "format": "text/vtt",
-                "id": "https://iiif.stack.rdc.library.northwestern.edu/public/vtt/df/13/39/6b/-4/6e/6-/47/e0/-a/a6/0-/3b/7a/7b/05/85/f4/df13396b-46e6-47e0-aa60-3b7a7b0585f4.vtt",
+                "id": "https://iiif.dc.library.northwestern.edu/public/vtt/df/13/39/6b/-4/6e/6-/47/e0/-a/a6/0-/3b/7a/7b/05/85/f4/df13396b-46e6-47e0-aa60-3b7a7b0585f4.vtt",
                 "label": {
                   "en": ["Chapters"]
                 },
                 "language": "en",
                 "type": "Text"
               },
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/2",
+              "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/2",
               "motivation": "supplementing",
-              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "target": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
               "type": "Annotation"
             }
           ],
@@ -27,10 +27,10 @@
       ],
       "duration": 791.125,
       "height": 480,
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
       "items": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1",
+          "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1",
           "items": [
             {
               "body": {
@@ -41,9 +41,9 @@
                 "type": "Video",
                 "width": 2048
               },
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/1",
+              "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4/annotation_page/1/annotation/1",
               "motivation": "painting",
-              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "target": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
               "type": "Annotation"
             }
           ],
@@ -57,10 +57,10 @@
         {
           "format": "image/jpeg",
           "height": 300,
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4/full/!300,300/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4/full/!300,300/0/default.jpg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -83,10 +83,10 @@
     {
       "duration": 470.792,
       "height": 480,
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
       "items": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1",
+          "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1",
           "items": [
             {
               "body": {
@@ -97,9 +97,9 @@
                 "type": "Video",
                 "width": 2048
               },
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1/annotation/1",
+              "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde/annotation_page/1/annotation/1",
               "motivation": "painting",
-              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
+              "target": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/ddf29a36-3b5a-4685-a670-451cfc753fde",
               "type": "Annotation"
             }
           ],
@@ -113,10 +113,10 @@
         {
           "format": "image/jpeg",
           "height": 300,
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde/full/!300,300/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde/full/!300,300/0/default.jpg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/ddf29a36-3b5a-4685-a670-451cfc753fde",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -139,10 +139,10 @@
     {
       "duration": 546.709,
       "height": 480,
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
       "items": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1",
+          "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1",
           "items": [
             {
               "body": {
@@ -153,9 +153,9 @@
                 "type": "Video",
                 "width": 2048
               },
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1/annotation/1",
+              "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/annotation_page/1/annotation/1",
               "motivation": "painting",
-              "target": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+              "target": "https://iiif.dc.library.northwestern.edu/public/iiif3/cf/4e/33/36/-1/02/5-/4f/0f/-a/63/5-/53/64/fd/ed/f9/d5-manifest.json/canvas/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
               "type": "Annotation"
             }
           ],
@@ -169,10 +169,10 @@
         {
           "format": "image/jpeg",
           "height": 300,
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/full/!300,300/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec/full/!300,300/0/default.jpg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/70602b4e-ec3a-43ad-ad51-dd04c4e665ec",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
