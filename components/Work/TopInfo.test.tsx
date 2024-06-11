@@ -7,7 +7,7 @@ import WorkTopInfo from "@/components/Work/TopInfo";
 describe("WorkTopInfo component", () => {
   function renderHelper() {
     return render(
-      <WorkTopInfo manifest={manifest} work={work as unknown as Work} />
+      <WorkTopInfo manifest={manifest} work={work as unknown as Work} />,
     );
   }
 
@@ -19,10 +19,10 @@ describe("WorkTopInfo component", () => {
   it("renders title and description", async () => {
     renderHelper();
     expect(screen.getByTestId("title")).toHaveTextContent(
-      manifest?.label?.none?.join(",") as string
+      manifest?.label?.none?.join(",") as string,
     );
     expect(screen.getByTestId("summary")).toHaveTextContent(
-      manifest?.summary?.none?.join(",") as string
+      manifest?.summary?.none?.join(",") as string,
     );
   });
 

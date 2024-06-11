@@ -14,7 +14,9 @@
     {
       "id": "https://dc.library.northwestern.edu/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd",
       "type": "Text",
-      "label": { "none": ["Commedia dell'Arte: The Masks of Antonio Fava"] },
+      "label": {
+        "none": ["Commedia dell'Arte: The Masks of Antonio Fava"]
+      },
       "format": "text/html"
     }
   ],
@@ -104,7 +106,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/052bb6f0-b6f5-4590-951b-ffdf49ffaf03",
           "type": "Text",
-          "label": { "none": ["Pulcinella \"Stronzo\" o \"Arcigno\""] },
+          "label": {
+            "none": ["Pulcinella \"Stronzo\" o \"Arcigno\""]
+          },
           "format": "text/html"
         }
       ]

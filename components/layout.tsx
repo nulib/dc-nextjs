@@ -25,11 +25,11 @@ const Layout: React.FC<LayoutProps> = ({
   children,
   description = defaultOpenGraphData["og:description"],
   header = "default",
-  title
+  title,
 }) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
-  const titleTagText = `${title ? `${title} - ` : ''}${defaultOpenGraphData["og:site_name"]}`;
+  const titleTagText = `${title ? `${title} - ` : ""}${defaultOpenGraphData["og:site_name"]}`;
   const metaDescriptionContent = description;
 
   React.useEffect(() => {

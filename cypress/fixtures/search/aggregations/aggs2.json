@@ -23,7 +23,10 @@
         },
         { "key": "Los Angeles (Calif.)", "doc_count": 5 },
         { "key": "University of California, Berkeley", "doc_count": 5 },
-        { "key": "University of California, Los Angeles", "doc_count": 5 },
+        {
+          "key": "University of California, Los Angeles",
+          "doc_count": 5
+        },
         {
           "key": "Berkeley Folk Music Festival (7th : 1964 : Berkeley, Calif.)",
           "doc_count": 4

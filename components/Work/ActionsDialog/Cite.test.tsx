@@ -9,7 +9,7 @@ describe("WorkDialogCite", () => {
     return render(
       <WorkProvider initialState={{ manifest: undefined, work: sampleWork1 }}>
         <WorkDialogCite />
-      </WorkProvider>
+      </WorkProvider>,
     );
   }
   it("renders thumbnail column content", async () => {
@@ -35,7 +35,7 @@ describe("WorkDialogCite", () => {
     expect(within(div).getAllByText(/ark/i, { exact: false }));
     expect(within(div).getByText(/apa format/i, { exact: false }));
     expect(
-      within(div).getByText(/chicago\/turabian format/i, { exact: false })
+      within(div).getByText(/chicago\/turabian format/i, { exact: false }),
     );
     expect(within(div).getByText(/mla format/i, { exact: false }));
     expect(within(div).getByText(/wiki citation/i, { exact: false }));
@@ -43,7 +43,7 @@ describe("WorkDialogCite", () => {
     // <dd>s
     metadataValues.forEach((value) => {
       expect(
-        within(div).getAllByText(value as string, { exact: false }).length
+        within(div).getAllByText(value as string, { exact: false }).length,
       ).toBeGreaterThan(0);
     });
   });
@@ -62,11 +62,11 @@ describe("WorkDialogCite", () => {
 
     const apaFormatEl = within(div).getByText(
       `University Archives, Northwestern University Libraries. (${today}). Hawking dental products in outdoor market, Cuernavaca, Mexico, Retrieved from http://localhost/items/c16029ff-d027-496a-98b7-6f259395a8f7`,
-      { exact: false }
+      { exact: false },
     );
     const mlaFormatEl = within(div).getByText(
       `University Archives, Northwestern University Libraries. "Hawking dental products in outdoor market, Cuernavaca, Mexico", Jim Roberts Photographs, 1968-1972 ${today}. http://localhost/items/c16029ff-d027-496a-98b7-6f259395a8f7`,
-      { exact: false }
+      { exact: false },
     );
 
     expect(apaFormatEl).toBeVisible();

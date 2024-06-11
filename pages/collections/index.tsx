@@ -16,7 +16,7 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 
 const CollectionList: NextPage = () => {
   const [collectionList, setCollectionList] = useState<CollectionListShape[]>(
-    []
+    [],
   );
   const [filteredList, setFilteredList] = useState<CollectionListShape[]>([]);
   const [search, setSearch] = useState("");
@@ -41,8 +41,8 @@ const CollectionList: NextPage = () => {
     if (!collectionList) return;
     setFilteredList(
       collectionList.filter((collection) =>
-        collection.title.toLowerCase().includes(search)
-      )
+        collection.title.toLowerCase().includes(search),
+      ),
     );
   }, [collectionList, search]);
 

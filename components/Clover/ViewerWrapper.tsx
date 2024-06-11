@@ -18,7 +18,7 @@ export const CloverViewer = dynamic(
   () => import("@samvera/clover-iiif/viewer"),
   {
     ssr: false,
-  }
+  },
 );
 
 interface WrapperProps {

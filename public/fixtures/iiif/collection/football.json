@@ -14,7 +14,9 @@
     {
       "id": "https://dc.library.northwestern.edu/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd",
       "type": "Text",
-      "label": { "none": ["Commedia dell'Arte: The Masks of Antonio Fava"] },
+      "label": {
+        "none": ["Commedia dell'Arte: The Masks of Antonio Fava"]
+      },
       "format": "text/html"
     }
   ],
@@ -44,7 +46,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/4b193e9d-5326-4208-acf6-7da7e36baf2c",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Wisconsin, 1937"] },
+          "label": {
+            "none": ["Northwestern Football vs. Wisconsin, 1937"]
+          },
           "format": "text/html"
         }
       ]
@@ -74,7 +78,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/cf4e3336-1025-4f0f-a635-5364fdedf9d5",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Ohio State, 1963"] },
+          "label": {
+            "none": ["Northwestern Football vs. Ohio State, 1963"]
+          },
           "format": "text/html"
         }
       ]
@@ -104,7 +110,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/ee50c557-160b-42e3-9353-99eb83acbd8b",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Wisconsin, 1973"] },
+          "label": {
+            "none": ["Northwestern Football vs. Wisconsin, 1973"]
+          },
           "format": "text/html"
         }
       ]
@@ -134,7 +142,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/0ca455c5-3b5f-4089-a219-c1c271b5b8bc",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Notre Dame, 1935"] },
+          "label": {
+            "none": ["Northwestern Football vs. Notre Dame, 1935"]
+          },
           "format": "text/html"
         }
       ]
@@ -164,7 +174,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/2dcb09a7-5dbc-44a9-b407-4d8adcd20e12",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Purdue, 1931"] },
+          "label": {
+            "none": ["Northwestern Football vs. Purdue, 1931"]
+          },
           "format": "text/html"
         }
       ]
@@ -194,7 +206,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/1b582de6-3958-4ff8-9d3c-98983a834a93",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Iowa, 1976"] },
+          "label": {
+            "none": ["Northwestern Football vs. Iowa, 1976"]
+          },
           "format": "text/html"
         }
       ]
@@ -224,7 +238,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/74aa4b9c-e60d-480a-ae35-5e1a90c957d8",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Michigan, 1987"] },
+          "label": {
+            "none": ["Northwestern Football vs. Michigan, 1987"]
+          },
           "format": "text/html"
         }
       ]

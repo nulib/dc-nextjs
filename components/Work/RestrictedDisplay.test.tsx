@@ -19,7 +19,7 @@ describe("WorkRestrictedDisplay component", () => {
         thumbnail="foobar.jpg"
         workId={workId}
         workTitle={workTitle}
-      />
+      />,
     );
     const emailLink = screen.getByText("repository@northwestern.edu");
     expect(emailLink).toHaveAttribute("href", expect.stringContaining("12345"));
@@ -27,9 +27,9 @@ describe("WorkRestrictedDisplay component", () => {
       "href",
       expect.stringContaining(
         encodeURIComponent(
-          `Hello, I have a question about "${workTitle}".\n\nhttps://dc.library.northwestern.edu/items/${workId}\n\nQUESTION: `
-        )
-      )
+          `Hello, I have a question about "${workTitle}".\n\nhttps://dc.library.northwestern.edu/items/${workId}\n\nQUESTION: `,
+        ),
+      ),
     );
   });
 });

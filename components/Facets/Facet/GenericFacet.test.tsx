@@ -83,7 +83,7 @@ describe("Facet GenericFacet UI component", () => {
           id: "genre",
           label: "Genre",
         }}
-      />
+      />,
     );
   }
   it("renders facet title", async () => {

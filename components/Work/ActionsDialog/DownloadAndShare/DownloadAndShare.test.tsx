@@ -29,7 +29,7 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
     expect(screen.getByText("Adam Test Work")).toBeInTheDocument();
     expect(screen.getByTestId("download-embed-items")).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
     expect(screen.getByText("Embed Viewer")).toBeInTheDocument();
     expect(screen.getByText(embedWarningText)).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
 
     expect(screen.getByText("Midnight")).toBeInTheDocument();
@@ -90,7 +90,7 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
 
     expect(screen.queryByTestId("mirador-announcement")).toBeNull();
@@ -115,11 +115,11 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
 
     expect(
-      await screen.findByTestId("mirador-announcement")
+      await screen.findByTestId("mirador-announcement"),
     ).toBeInTheDocument();
     expect(screen.getByText("View in Mirador")).not.toHaveAttribute("href");
 
@@ -138,11 +138,11 @@ describe("DownloadAndShare", () => {
         }}
       >
         <DownloadAndShare />
-      </WorkProvider>
+      </WorkProvider>,
     );
 
     expect(
-      await screen.findByTestId("mirador-announcement")
+      await screen.findByTestId("mirador-announcement"),
     ).toBeInTheDocument();
     expect(screen.getByText("View in Mirador")).not.toHaveAttribute("href");
   });

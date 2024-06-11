@@ -58,7 +58,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
     );
-  }
+  },
 );
 
 type SelectItemProps = { children: React.ReactNode; value: string };
@@ -74,5 +74,5 @@ export const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
         </StyledItemIndicator>
       </StyledItem>
     );
-  }
+  },
 );

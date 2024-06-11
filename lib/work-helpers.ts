@@ -38,14 +38,14 @@ export function getWorkSliders(work: Work) {
     const encodedCollectionLabel = encodeURIComponent(work.collection.title);
     const collectionSummary = `Collection`;
     workSliderUrls.push(
-      `${DC_API_SEARCH_URL}?query=collection.id:"${work.collection.id}"&collectionLabel=${encodedCollectionLabel}&collectionSummary=${collectionSummary}&as=iiif`
+      `${DC_API_SEARCH_URL}?query=collection.id:"${work.collection.id}"&collectionLabel=${encodedCollectionLabel}&collectionSummary=${collectionSummary}&as=iiif`,
     );
   }
 
   /** More Like This */
   const encodedSimilarLabel = encodeURIComponent(`Similar to ${work.title}`);
   workSliderUrls.push(
-    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${encodedSimilarLabel}&as=iiif`
+    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${encodedSimilarLabel}&as=iiif`,
   );
 
   /**
@@ -58,7 +58,7 @@ export function getWorkSliders(work: Work) {
     subjects.forEach((subject: string) => {
       const encodedSubject = encodeURIComponent(subject);
       workSliderUrls.push(
-        `${DC_API_SEARCH_URL}?query=subject.label:"${encodedSubject}"&collectionLabel=${encodedSubject}&collectionSummary=Subject&as=iiif`
+        `${DC_API_SEARCH_URL}?query=subject.label:"${encodedSubject}"&collectionLabel=${encodedSubject}&collectionSummary=Subject&as=iiif`,
       );
     });
   }

@@ -21,12 +21,12 @@ const HoneybadgerConfig = JSON.stringify(
     HONEYBADGER_REVISION,
   },
   null,
-  2
+  2,
 );
 
 fs.writeFileSync(
   "lib/honeybadger/config.vars.js",
-  `module.exports = ${HoneybadgerConfig};`
+  `module.exports = ${HoneybadgerConfig};`,
 );
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -81,7 +81,7 @@ module.exports = withBundleAnalyzer({
           apiKey: HONEYBADGER_API_KEY,
           assetsUrl: `${NEXT_PUBLIC_DC_URL}/_next`,
           revision: HONEYBADGER_REVISION,
-        })
+        }),
       );
     }
 
