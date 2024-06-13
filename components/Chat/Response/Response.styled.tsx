@@ -13,14 +13,9 @@ const StyledResponse = styled("section", {
   position: "relative",
   gap: "$gr5",
   zIndex: "0",
-  margin: "0 $gr4",
 
-  "@xl": {
-    margin: "0 $gr4",
-  },
-
-  "@lg": {
-    margin: "0",
+  "h1, h2, h3, h4, h5, h6, strong": {
+    fontFamily: "$northwesternSansBold",
   },
 });
 
@@ -39,9 +34,7 @@ const StyledResponseContent = styled("div", {
 });
 
 const StyledResponseWrapper = styled("div", {
-  background:
-    "linear-gradient(0deg, $white calc(100% - 100px), $brightBlueB calc(100% + 100px))",
-  padding: "$gr6 0 $gr4",
+  padding: "0",
 });
 
 const StyledImages = styled("div", {
@@ -78,9 +71,10 @@ const StyledImages = styled("div", {
 });
 
 const StyledQuestion = styled("h3", {
-  fontFamily: "$northwesternDisplayBold",
+  fontFamily: "$northwesternSansBold",
   fontWeight: "400",
   fontSize: "$gr6",
+  letterSpacing: "-0.012em",
   lineHeight: "1.35em",
   margin: "0",
   padding: "0 0 $gr3 0",
@@ -112,8 +106,15 @@ const StyledStreamedAnswer = styled("article", {
   },
 });
 
+const StyledResponseActions = styled("div", {
+  display: "flex",
+  gap: "$gr2",
+  padding: "$gr5 0 0",
+});
+
 export {
   StyledResponse,
+  StyledResponseActions,
   StyledResponseAside,
   StyledResponseContent,
   StyledResponseWrapper,

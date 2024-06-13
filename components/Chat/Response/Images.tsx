@@ -4,10 +4,21 @@ import GridItem from "@/components/Grid/Item";
 import { StyledImages } from "@/components/Chat/Response/Response.styled";
 import { Work } from "@nulib/dcapi-types";
 
-const ResponseImages = ({ sourceDocuments }: { sourceDocuments: Work[] }) => {
+const ResponseImages = ({
+  isStreamingComplete,
+  sourceDocuments,
+}: {
+  isStreamingComplete: boolean;
+  sourceDocuments: Work[];
+}) => {
   const [nextIndex, setNextIndex] = useState(0);
 
   useEffect(() => {
+    if (isStreamingComplete) {
+      setNextIndex(sourceDocuments.length);
+      return;
+    }
+
     if (nextIndex < sourceDocuments.length) {
       const timer = setTimeout(() => {
         setNextIndex(nextIndex + 1);
@@ -15,7 +26,7 @@ const ResponseImages = ({ sourceDocuments }: { sourceDocuments: Work[] }) => {
 
       return () => clearTimeout(timer);
     }
-  }, [nextIndex, sourceDocuments.length]);
+  }, [isStreamingComplete, nextIndex, sourceDocuments.length]);
 
   return (
     <StyledImages>
