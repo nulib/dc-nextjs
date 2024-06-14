@@ -1,6 +1,8 @@
 import React from "react";
 import { StyledStreamedAnswer } from "@/components/Chat/Response/Response.styled";
-import useMarkdown from "@/hooks/useMarkdown";
+import useMarkdown from "@nulib/use-markdown";
+
+const cursor = "<!--PLACEHOLDER_CURSOR-->";
 
 const ResponseStreamedAnswer = ({
   isStreamingComplete,
@@ -9,12 +11,22 @@ const ResponseStreamedAnswer = ({
   isStreamingComplete: boolean;
   streamedAnswer: string;
 }) => {
-  const { jsx: content } = useMarkdown({
-    hasCursor: !isStreamingComplete,
-    markdown: streamedAnswer,
-  });
+  const preparedMarkdown = !isStreamingComplete
+    ? streamedAnswer + cursor
+    : streamedAnswer;
 
-  return <StyledStreamedAnswer>{content}</StyledStreamedAnswer>;
+  const { html } = useMarkdown(preparedMarkdown);
+
+  const cursorRegex = new RegExp(cursor, "g");
+  const updatedHtml = !isStreamingComplete
+    ? html.replace(cursorRegex, `<span class="markdown-cursor"></span>`)
+    : html;
+
+  return (
+    <StyledStreamedAnswer>
+      <div dangerouslySetInnerHTML={{ __html: updatedHtml }} />
+    </StyledStreamedAnswer>
+  );
 };
 
 export default ResponseStreamedAnswer;
