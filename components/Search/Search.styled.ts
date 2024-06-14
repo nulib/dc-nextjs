@@ -141,6 +141,22 @@ const ResultsWrapper = styled("div", {
   minHeight: "80vh",
 });
 
+const StyledResponseWrapper = styled("div", {
+  padding: "0 0 $gr6",
+
+  variants: {
+    isAiResponse: {
+      true: {
+        background:
+          "linear-gradient(-5deg, $white calc(100% - 150px), $brightBlueB calc(100% + 100px))",
+      },
+      false: {
+        background: "inherit",
+      },
+    },
+  },
+});
+
 export {
   Button,
   Clear,
@@ -149,4 +165,5 @@ export {
   ResultsMessage,
   ResultsWrapper,
   SearchStyled,
+  StyledResponseWrapper,
 };

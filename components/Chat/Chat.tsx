@@ -5,21 +5,26 @@ import { Work } from "@nulib/dcapi-types";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
+import { useSearchState } from "@/context/search-context";
 
 const Chat = () => {
-  const { searchTerm: question } = useQueryParams();
+  const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
+  const { searchDispatch, searchState } = useSearchState();
+  const { chat } = searchState;
+  const { answer, documents = [], question } = chat;
 
-  const [isStreamingComplete, setIsStreamingComplete] = useState(false);
+  const sameQuestionExists = !!question && searchTerm === question;
+
   const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
   const [streamedAnswer, setStreamedAnswer] = useState("");
 
   useEffect(() => {
-    if (question && isConnected && authToken) {
-      const preparedQuestion = prepareQuestion(question, authToken);
+    if (!sameQuestionExists && isConnected && authToken) {
+      const preparedQuestion = prepareQuestion(searchTerm, authToken);
       sendMessage(preparedQuestion);
     }
-  }, [authToken, isConnected, question, sendMessage]);
+  }, [authToken, isConnected, sameQuestionExists, searchTerm, sendMessage]);
 
   useEffect(() => {
     if (!message) return;
@@ -31,21 +36,27 @@ const Chat = () => {
         return prev + message.token;
       });
     } else if (message.answer) {
-      setStreamedAnswer(message.answer);
-      setIsStreamingComplete(true);
+      searchDispatch({
+        chat: {
+          answer: message.answer,
+          documents: sourceDocuments,
+          question: searchTerm || "",
+        },
+        type: "updateChat",
+      });
     }
-  }, [message]);
+  }, [message, searchTerm, sourceDocuments, searchDispatch]);
 
-  if (!question) return null;
+  if (!searchTerm) return null;
 
   return (
     <ChatResponse
-      isStreamingComplete={isStreamingComplete}
-      question={question}
-      sourceDocuments={sourceDocuments}
-      streamedAnswer={streamedAnswer}
+      isStreamingComplete={!!answer}
+      searchTerm={searchTerm}
+      sourceDocuments={sameQuestionExists ? documents : sourceDocuments}
+      streamedAnswer={sameQuestionExists ? answer : streamedAnswer}
     />
   );
 };
 
-export default Chat;
+export default React.memo(Chat);

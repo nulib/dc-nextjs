@@ -18,6 +18,7 @@ import { UrlFacets } from "@/types/context/filter-context";
 import { getAllFacetIds } from "@/lib/utils/facet-helpers";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -26,6 +27,7 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { ai, urlFacets } = useQueryParams();
+  const { searchDispatch } = useSearchState();
 
   const searchRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -49,6 +51,11 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       if (allFacetsIds.includes(facetKey)) {
         updatedFacets[facetKey] = urlFacets[facetKey];
       }
+    });
+
+    searchDispatch({
+      type: "updateActiveTab",
+      activeTab: ai ? "stream" : "results",
     });
 
     router.push({
@@ -103,6 +110,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         data-testid="search-ui-component"
       >
         <Input
+          id="dc-search"
           placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
           onChange={handleSearchChange}
           onFocus={handleSearchFocus}

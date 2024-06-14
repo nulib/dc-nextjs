@@ -15,23 +15,23 @@ import { Work } from "@nulib/dcapi-types";
 
 interface ChatResponseProps {
   isStreamingComplete: boolean;
-  question: string;
+  searchTerm: string;
   sourceDocuments: Work[];
   streamedAnswer?: string;
 }
 
 const ChatResponse: React.FC<ChatResponseProps> = ({
   isStreamingComplete,
-  question,
+  searchTerm,
   sourceDocuments,
   streamedAnswer,
 }) => {
   return (
     <StyledResponseWrapper>
-      <Container containerType="wide">
+      <Container>
         <StyledResponse>
           <StyledResponseContent>
-            <StyledQuestion>{question}</StyledQuestion>
+            <StyledQuestion>{searchTerm}</StyledQuestion>
             {streamedAnswer ? (
               <ResponseStreamedAnswer
                 isStreamingComplete={isStreamingComplete}
@@ -43,7 +43,10 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           </StyledResponseContent>
           {sourceDocuments.length > 0 && (
             <StyledResponseAside>
-              <ResponseImages sourceDocuments={sourceDocuments} />
+              <ResponseImages
+                isStreamingComplete={isStreamingComplete}
+                sourceDocuments={sourceDocuments}
+              />
             </StyledResponseAside>
           )}
         </StyledResponse>
