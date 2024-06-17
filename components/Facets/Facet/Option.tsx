@@ -40,7 +40,10 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
        */
       const facetObject = getFacetById(facet);
       if (facetObject) {
-        filterDispatch({ facet: facetObject, type: "updateRecentFacet" });
+        filterDispatch({
+          facet: facetObject,
+          type: "updateRecentFacet",
+        });
       }
     } else {
       /**

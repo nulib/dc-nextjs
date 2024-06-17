@@ -27,7 +27,7 @@ export function buildWorkDescription(work: Work | null) {
 }
 
 export function buildWorkOpenGraphData(
-  work: Work | null
+  work: Work | null,
 ): ObjectLiteral | OpenGraphData {
   if (!work) return {};
 

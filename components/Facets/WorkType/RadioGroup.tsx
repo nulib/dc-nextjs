@@ -25,7 +25,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
 
   const repositionHighlight = (
     e: MouseEvent<HTMLButtonElement>,
-    option: string
+    option: string,
   ) => {
     if (!option || !wrapperRef?.current) return;
 

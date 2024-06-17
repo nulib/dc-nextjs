@@ -18,7 +18,9 @@ describe("SearchSimilar component", () => {
     expect(title).toBeInTheDocument();
 
     expect(
-      screen.getByRole("link", { name: /ima source work for similar results/i })
+      screen.getByRole("link", {
+        name: /ima source work for similar results/i,
+      }),
     ).toHaveAttribute("href", "/items/abc123");
   });
 

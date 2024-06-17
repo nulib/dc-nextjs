@@ -30,7 +30,7 @@ describe("EmbedViewer", () => {
     expect(infoPanelSelect).toBeInTheDocument();
 
     expect(screen.getByTestId("embed-html")).toHaveTextContent(
-      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`
+      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`,
     );
 
     // Hide the title
@@ -40,7 +40,7 @@ describe("EmbedViewer", () => {
     }) as HTMLOptionElement;
     expect(optionFalse.selected).toBe(true);
     expect(screen.getByTestId("embed-html")).toHaveTextContent(
-      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif%26showTitle%3Dfalse" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`
+      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif%26showTitle%3Dfalse" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`,
     );
 
     // Show info panel open initially
@@ -50,7 +50,7 @@ describe("EmbedViewer", () => {
     }) as HTMLOptionElement;
     expect(optionOpen.selected).toBe(true);
     expect(screen.getByTestId("embed-html")).toHaveTextContent(
-      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif%26informationPanelOpen%3Dtrue%26showTitle%3Dfalse" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`
+      `<iframe src="http://localhost/embedded-viewer/https%3A%2F%2Ftest.edu%2Fapi%2Fv2%2Fworks%2Fc16029ff-d027-496a-98b7-6f259395a8f7%3Fas%3Diiif%26informationPanelOpen%3Dtrue%26showTitle%3Dfalse" title="Hawking dental products in outdoor market, Cuernavaca, Mexico" width="100%" height="800"></iframe>`,
     );
   });
 
@@ -74,7 +74,7 @@ describe("EmbedViewer", () => {
     expect(screen.getByTestId("preview-title")).toHaveTextContent("");
     await userEvent.selectOptions(showTitleSelect, "true");
     expect(screen.getByTestId("preview-title")).toHaveTextContent(
-      "Hawking dental products in outdoor market, Cuernavaca, Mexico"
+      "Hawking dental products in outdoor market, Cuernavaca, Mexico",
     );
 
     // Toggle info panel display

@@ -107,7 +107,9 @@ export const defaultCollection: HeroCollection = {
       label: {
         none: ["Athletic Department Football Films"],
       },
-      summary: { none: ["Northwestern vs. California (Rose Bowl), 1949"] },
+      summary: {
+        none: ["Northwestern vs. California (Rose Bowl), 1949"],
+      },
       thumbnail: [
         {
           duration: 30,
