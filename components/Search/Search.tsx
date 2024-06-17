@@ -54,8 +54,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     });
 
     searchDispatch({
-      type: "updateActiveTab",
       activeTab: ai ? "stream" : "results",
+      type: "updateActiveTab",
     });
 
     router.push({
