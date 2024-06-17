@@ -190,7 +190,7 @@ const SearchPage: NextPage = () => {
 
   function handleResultsTab() {
     if (window.scrollY === 0) {
-      searchDispatch({ type: "updateActiveTab", activeTab: "results" });
+      searchDispatch({ activeTab: "results", type: "updateActiveTab" });
       return;
     }
 
@@ -198,7 +198,7 @@ const SearchPage: NextPage = () => {
 
     const checkScroll = () => {
       if (window.scrollY === 0) {
-        searchDispatch({ type: "updateActiveTab", activeTab: "results" });
+        searchDispatch({ activeTab: "results", type: "updateActiveTab" });
         window.removeEventListener("scroll", checkScroll);
       }
     };
@@ -260,8 +260,8 @@ const SearchPage: NextPage = () => {
             value={activeTab}
             onValueChange={(value) =>
               searchDispatch({
-                type: "updateActiveTab",
                 activeTab: value as ActiveTab,
+                type: "updateActiveTab",
               })
             }
           >
