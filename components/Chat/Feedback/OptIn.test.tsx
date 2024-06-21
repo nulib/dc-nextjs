@@ -6,11 +6,11 @@ import { UserContext } from "@/context/user-context";
 
 const mockUserContextValue = {
   user: {
-    name: "foo",
     email: "foo@bar.com",
-    sub: "123",
     isLoggedIn: true,
     isReadingRoom: false,
+    name: "foo",
+    sub: "123",
   },
 };
 

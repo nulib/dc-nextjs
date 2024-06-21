@@ -16,7 +16,7 @@ interface SearchProps {
 }
 
 const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
-  const search = useRef<HTMLInputElement>(null);
+  const search = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
     }
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setSearchValue(value);
     setShowJumpTo(Boolean(value));

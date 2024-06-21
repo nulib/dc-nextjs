@@ -117,8 +117,6 @@ Run Typescript's `tsc` compiler for type-checking directly.
 npm run ts-lint
 ```
 
-A pre-commit hook will ensure code is linted before committed.
-
 ## Testing
 
 ### End to end tests
