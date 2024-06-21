@@ -85,4 +85,23 @@ describe("Search component", () => {
     await user.type(screen.getByRole("search"), "foo");
     expect(wrapper).toHaveTextContent("true");
   });
+
+  it("renders standard placeholder text for non AI search", () => {
+    render(<Search isSearchActive={mockIsSearchActive} />);
+    const input = screen.getByPlaceholderText(
+      "Search by keyword or phrase, ex: Berkeley Music Festival"
+    );
+    expect(input).toBeInTheDocument();
+  });
+
+  it("renders generative AI placeholder text when AI search is active", () => {
+    mockRouter.setCurrentUrl("/search?ai=true");
+
+    render(<Search isSearchActive={mockIsSearchActive} />);
+    const input = screen.getByPlaceholderText(
+      "What can I show you from our collections?"
+    );
+
+    expect(input).toBeInTheDocument();
+  });
 });

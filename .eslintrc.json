@@ -16,8 +16,8 @@
     }
   ],
   "rules": {
-    "sort-keys": "error",
-    "sort-imports": "error",
+    "sort-keys": 2,
+    "sort-imports": 2,
     "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "warn",

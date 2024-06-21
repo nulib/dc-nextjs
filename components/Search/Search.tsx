@@ -29,24 +29,31 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { ai, urlFacets } = useQueryParams();
   const { searchDispatch } = useSearchState();
 
-  const searchRef = useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+  const placeholderText = ai
+    ? "What can I show you from our collections?"
+    : "Search by keyword or phrase, ex: Berkeley Music Festival";
+
+  const handleSubmit = (
+    e:
+      | SyntheticEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     e.preventDefault();
 
     const updatedFacets: UrlFacets = {};
-
-    /* Guard against searching from a page with dynamic route params */
     const allFacetsIds = getAllFacetIds();
 
     // Account for the "similar" facet (comes from "View All" in sliders)
     allFacetsIds.push("similar");
 
+    // Guard against searching from a page with dynamic route params
     Object.keys(urlFacets).forEach((facetKey) => {
       if (allFacetsIds.includes(facetKey)) {
         updatedFacets[facetKey] = urlFacets[facetKey];
@@ -72,7 +79,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     setSearchFocus(e.type === "focus");
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setSearchValue(value);
   };
@@ -111,13 +118,19 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       >
         <Input
           id="dc-search"
-          placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
+          placeholder={placeholderText}
           onChange={handleSearchChange}
           onFocus={handleSearchFocus}
           onBlur={handleSearchFocus}
           ref={searchRef}
           name="search"
           role="search"
+          onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
         />
         {searchValue && (
           <Clear onClick={clearSearchResults} type="reset">

@@ -34,21 +34,37 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
   useEffect(() => {
     if (!message) return;
 
-    if (message.source_documents) {
-      setSourceDocuments(message.source_documents);
-    } else if (message.token) {
-      setStreamedAnswer((prev) => {
-        return prev + message.token;
-      });
-    } else if (message.answer) {
+    const updateSourceDocuments = () => {
+      setSourceDocuments(message.source_documents!);
+    };
+
+    const updateStreamedAnswer = () => {
+      setStreamedAnswer((prev) => prev + message.token);
+    };
+
+    const updateChat = () => {
       searchDispatch({
         chat: {
-          answer: message.answer,
+          answer: message.answer || "",
           documents: sourceDocuments,
           question: searchTerm || "",
         },
         type: "updateChat",
       });
+    };
+
+    if (message.source_documents) {
+      updateSourceDocuments();
+      return;
+    }
+
+    if (message.token) {
+      updateStreamedAnswer();
+      return;
+    }
+
+    if (message.answer) {
+      updateChat();
     }
   }, [message, searchTerm, sourceDocuments, searchDispatch]);
 
@@ -78,7 +94,15 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
     }
   }
 
-  if (!searchTerm) return null;
+  if (!searchTerm)
+    return (
+      <Container>
+        <p>
+          What can I help you find? Try searching for `john cage scrapbooks` or
+          `famous speeches`
+        </p>
+      </Container>
+    );
 
   return (
     <>
