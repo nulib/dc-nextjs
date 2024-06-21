@@ -96,7 +96,6 @@ const SearchPage: NextPage = () => {
         const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
         const requestUrl = new URL(DC_API_SEARCH_URL);
-        const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
 
         // If there is a "similar" facet, get the work and set the state
         if (urlFacets?.similar) {
@@ -120,9 +119,13 @@ const SearchPage: NextPage = () => {
 
         // Request as a "hybrid" OpensSearch query
         // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
-        if (!!body?.query?.hybrid && pipeline) {
-          requestUrl.searchParams.append("search_pipeline", pipeline);
+        if (!!body?.query?.hybrid) {
+          requestUrl.searchParams.append(
+            "search_pipeline",
+            "dc-v2-work-pipeline"
+          );
         }
+
         const response = await apiPostRequest<ApiSearchResponse>({
           body,
           url: requestUrl.toString(),
