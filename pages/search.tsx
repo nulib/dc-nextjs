@@ -241,6 +241,7 @@ const SearchPage: NextPage = () => {
             <Tabs.Content value="stream">
               <Chat totalResults={totalResults} />
             </Tabs.Content>
+
             <Tabs.Content value="results">
               <Container containerType="wide">
                 <ResultsWrapper>

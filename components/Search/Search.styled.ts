@@ -39,17 +39,18 @@ const SearchStyled = styled("form", {
   },
 });
 
-const Input = styled("input", {
+const Input = styled("textarea", {
   position: "relative",
   display: "flex",
   width: "100%",
   border: "none",
   backgroundColor: "transparent",
-  padding: "1px $gr3 0 $gr5",
+  padding: "calc($gr4 / 2) $gr3 calc($gr4 / 2) $gr5",
   fontSize: "$gr3",
   zIndex: "1",
   fontFamily: "$northwesternSansRegular",
-  whiteSpace: "nowrap",
+  lineHeight: "1.2rem",
+  resize: "none",
 
   "&::placeholder": {
     overflow: "hidden",

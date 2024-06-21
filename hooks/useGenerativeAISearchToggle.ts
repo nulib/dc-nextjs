@@ -25,10 +25,11 @@ export default function useGenerativeAISearchToggle() {
   // If the "ai" query param is present and the user is not logged in on
   // initial load, show the dialog
   useEffect(() => {
-    if (isAiQueryParam && !user?.isLoggedIn) {
-      setDialog((prevDialog) => ({ ...prevDialog, isOpen: true }));
+    if (!user) return;
+    if (isAiQueryParam) {
+      setDialog((prevDialog) => ({ ...prevDialog, isOpen: !user?.isLoggedIn }));
     }
-  }, [isAiQueryParam, user?.isLoggedIn]);
+  }, [isAiQueryParam, user]);
 
   function goToLocation() {
     const currentUrl = `${window.location.origin}${router.asPath}`;
