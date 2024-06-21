@@ -1,20 +1,31 @@
-// import { render, screen, within } from "@/test-utils";
 import { act, render, renderHook, screen } from "@testing-library/react";
 import singletonRouter, { useRouter } from "next/router";
+
 import { FilterProvider } from "@/context/filter-context";
 import React from "react";
+import { SearchContextStore } from "@/types/context/search-context";
 import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
-const searchStateDefault = {
+const searchStateDefault: SearchContextStore = {
+  activeTab: "results",
   aggregations: {},
-  q: "",
+  chat: {
+    answer: "",
+    documents: [],
+    question: "",
+  },
   searchFixed: false,
 };
 
-const searchState = {
+const searchState: SearchContextStore = {
+  activeTab: "results",
   aggregations: {},
-  q: "",
+  chat: {
+    answer: "",
+    documents: [],
+    question: "",
+  },
   searchFixed: false,
 };
 
