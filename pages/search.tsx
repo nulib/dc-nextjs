@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
-import { Button } from "@nulib/design-system";
 import Chat from "@/components/Chat/Chat";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
@@ -28,7 +27,6 @@ import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import SearchOptions from "@/components/Search/Options";
 import SearchSimilar from "@/components/Search/Similar";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
-import { StyledResponseActions } from "@/components/Chat/Response/Response.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -54,17 +52,10 @@ const SearchPage: NextPage = () => {
 
   const { user } = React.useContext(UserContext);
   const queryParams = useQueryParams();
-  const { searchTerm, ai } = queryParams;
+  const { ai } = queryParams;
   const { searchState, searchDispatch } = useSearchState();
-  const {
-    activeTab,
-    chat: { question },
-  } = searchState;
+  const { activeTab } = searchState;
 
-  const showStreamedResponse = Boolean(user?.isLoggedIn && ai);
-  const checkScrollRef = React.useRef<() => void>();
-
-  const [isStreamComplete, setIsStreamComplete] = useState(false);
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
@@ -82,9 +73,9 @@ const SearchPage: NextPage = () => {
     },
   });
 
-  useEffect(() => {
-    setIsStreamComplete(question === searchTerm);
-  }, [question, searchTerm]);
+  const showStreamedResponse = Boolean(user?.isLoggedIn && ai);
+  const { data: apiData, error, loading } = requestState;
+  const totalResults = requestState.data?.pagination?.total_hits;
 
   /**
    * Make requests to the search API endpoint
@@ -188,45 +179,6 @@ const SearchPage: NextPage = () => {
     });
   }
 
-  function handleResultsTab() {
-    if (window.scrollY === 0) {
-      searchDispatch({ activeTab: "results", type: "updateActiveTab" });
-      return;
-    }
-
-    window.scrollTo({ behavior: "instant", top: 0 });
-
-    const checkScroll = () => {
-      if (window.scrollY === 0) {
-        searchDispatch({ activeTab: "results", type: "updateActiveTab" });
-        window.removeEventListener("scroll", checkScroll);
-      }
-    };
-
-    checkScrollRef.current = checkScroll;
-    window.addEventListener("scroll", checkScroll);
-  }
-
-  function handleNewQuestion() {
-    const input = document.getElementById("dc-search") as HTMLInputElement;
-    if (input) {
-      input.focus();
-      input.value = "";
-    }
-  }
-
-  useEffect(() => {
-    return () => {
-      // Clean up the event listener when the component unmounts
-      if (checkScrollRef.current) {
-        window.removeEventListener("scroll", checkScrollRef.current);
-      }
-    };
-  }, []);
-
-  const { data: apiData, error, loading } = requestState;
-  const totalResults = requestState.data?.pagination.total_hits;
-
   return (
     <>
       {/* Google Structured Data via JSON-LD */}
@@ -287,19 +239,7 @@ const SearchPage: NextPage = () => {
               renderTabList={showStreamedResponse}
             />
             <Tabs.Content value="stream">
-              <Chat />
-              {isStreamComplete && (
-                <Container>
-                  <StyledResponseActions>
-                    <Button isPrimary isLowercase onClick={handleResultsTab}>
-                      View {pluralize("Result", totalResults || 0)}
-                    </Button>
-                    <Button isLowercase onClick={handleNewQuestion}>
-                      Ask another Question
-                    </Button>
-                  </StyledResponseActions>
-                </Container>
-              )}
+              <Chat totalResults={totalResults} />
             </Tabs.Content>
             <Tabs.Content value="results">
               <Container containerType="wide">

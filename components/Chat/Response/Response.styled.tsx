@@ -109,7 +109,7 @@ const StyledStreamedAnswer = styled("article", {
 const StyledResponseActions = styled("div", {
   display: "flex",
   gap: "$gr2",
-  padding: "$gr5 0 0",
+  padding: "$gr4 0",
 });
 
 export {
