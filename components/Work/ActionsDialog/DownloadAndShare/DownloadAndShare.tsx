@@ -37,13 +37,13 @@ const DownloadAndShare: React.FC = () => {
     useWorkAuth(work);
 
   const showEmbedWarning = Boolean(
-    isWorkRestricted || (isUserLoggedIn && isWorkInstitution)
+    isWorkRestricted || (isUserLoggedIn && isWorkInstitution),
   );
 
   useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
       const imageCanvases = manifest.items.filter(
-        (item) => getAnnotationBodyType(item) === "Image"
+        (item) => getAnnotationBodyType(item) === "Image",
       );
       const alternateFormatItems = manifest.rendering
         ? [...manifest.rendering]

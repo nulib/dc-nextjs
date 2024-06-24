@@ -16,7 +16,7 @@ describe("UserFacet UI component", () => {
         handleRemoval={() => {
           // nada
         }}
-      />
+      />,
     );
 
     const value = screen.getByRole("button");

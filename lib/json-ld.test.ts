@@ -45,7 +45,7 @@ describe("collection structured data", () => {
   it("returns the expected collection structured data ", () => {
     const obj = loadCollectionStructuredData(
       collectionMock as Collection,
-      pathName
+      pathName,
     );
     expect(obj["@type"]).toEqual("Collection");
     expect(obj).toHaveProperty("@context");
@@ -59,7 +59,7 @@ describe("collection structured data", () => {
     anotherMock.description = "";
     const obj = loadCollectionStructuredData(
       anotherMock as Collection,
-      pathName
+      pathName,
     );
     expect(obj).not.toHaveProperty("description");
   });
@@ -74,7 +74,7 @@ describe("work structured data", () => {
     expect(obj.about).toEqual(["Mexico--Cuernavaca", "Mexicans"]);
     expect(obj.contentLocation).toEqual("");
     expect(obj.contentUrl).toEqual(
-      "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json"
+      "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json",
     );
     expect(obj.contributor).toEqual('"Roberts, James S."');
     expect(obj.dateCreated).toEqual("2021-03-16T15:52:00.377715Z");
@@ -85,19 +85,19 @@ describe("work structured data", () => {
     }
 
     expect(obj.image).toEqual(
-      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731"
+      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731",
     );
     expect(obj.license).toEqual(
-      "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+      "http://rightsstatements.org/vocab/InC-EDU/1.0/",
     );
     expect(obj.name).toEqual(
-      "Hawking dental products in outdoor market, Cuernavaca, Mexico"
+      "Hawking dental products in outdoor market, Cuernavaca, Mexico",
     );
     expect(obj.thumbnail).toEqual(
-      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731/full/!300,300/0/default.jpg"
+      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/93d75ffe-20d8-48ea-9206-8db9114f2731/full/!300,300/0/default.jpg",
     );
     expect(obj.url).toEqual(
-      "https://digitalcollections.library.northwestern.edu/ima/path"
+      "https://digitalcollections.library.northwestern.edu/ima/path",
     );
   });
 });

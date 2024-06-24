@@ -33,7 +33,7 @@ const HeaderPrimary: React.FC = () => {
         searchFixed: scrollPosition > 0,
         type: "updateSearchFixed",
       }),
-    [searchDispatch, scrollPosition]
+    [searchDispatch, scrollPosition],
   );
 
   const handleIsSearchActive = (status: boolean) => {

@@ -14,7 +14,9 @@
     {
       "id": "https://dc.library.northwestern.edu/collections/c373ecd2-2c45-45f2-9f9e-52dc244870bd",
       "type": "Text",
-      "label": { "none": ["Commedia dell'Arte: The Masks of Antonio Fava"] },
+      "label": {
+        "none": ["Commedia dell'Arte: The Masks of Antonio Fava"]
+      },
       "format": "text/html"
     }
   ],
@@ -26,12 +28,12 @@
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/b287374d-c6eb-48bc-ad38-43533fe32926",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -44,7 +46,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/4b193e9d-5326-4208-acf6-7da7e36baf2c",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Wisconsin, 1937"] },
+          "label": {
+            "none": ["Northwestern Football vs. Wisconsin, 1937"]
+          },
           "format": "text/html"
         }
       ]
@@ -56,12 +60,12 @@
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/df13396b-46e6-47e0-aa60-3b7a7b0585f4",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -74,24 +78,26 @@
         {
           "id": "https://dc.library.northwestern.edu/items/cf4e3336-1025-4f0f-a635-5364fdedf9d5",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Ohio State, 1963"] },
+          "label": {
+            "none": ["Northwestern Football vs. Ohio State, 1963"]
+          },
           "format": "text/html"
         }
       ]
     },
     {
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/ee/50/c5/57/-1/60/b-/42/e3/-9/35/3-/99/eb/83/ac/bd/8b-manifest.json",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/ee/50/c5/57/-1/60/b-/42/e3/-9/35/3-/99/eb/83/ac/bd/8b-manifest.json",
       "type": "Manifest",
       "label": { "none": ["Northwestern Football vs. Wisconsin, 1973"] },
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/d184195b-2a7a-4faa-8221-d6c761441d26/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/d184195b-2a7a-4faa-8221-d6c761441d26/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/d184195b-2a7a-4faa-8221-d6c761441d26",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/d184195b-2a7a-4faa-8221-d6c761441d26",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -104,24 +110,26 @@
         {
           "id": "https://dc.library.northwestern.edu/items/ee50c557-160b-42e3-9353-99eb83acbd8b",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Wisconsin, 1973"] },
+          "label": {
+            "none": ["Northwestern Football vs. Wisconsin, 1973"]
+          },
           "format": "text/html"
         }
       ]
     },
     {
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/0c/a4/55/c5/-3/b5/f-/40/89/-a/21/9-/c1/c2/71/b5/b8/bc-manifest.json",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/0c/a4/55/c5/-3/b5/f-/40/89/-a/21/9-/c1/c2/71/b5/b8/bc-manifest.json",
       "type": "Manifest",
       "label": { "none": ["Northwestern Football vs. Notre Dame, 1935"] },
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/2a429d80-e696-470f-b88d-935cfb24b01d/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/2a429d80-e696-470f-b88d-935cfb24b01d/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/2a429d80-e696-470f-b88d-935cfb24b01d",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/2a429d80-e696-470f-b88d-935cfb24b01d",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -134,24 +142,26 @@
         {
           "id": "https://dc.library.northwestern.edu/items/0ca455c5-3b5f-4089-a219-c1c271b5b8bc",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Notre Dame, 1935"] },
+          "label": {
+            "none": ["Northwestern Football vs. Notre Dame, 1935"]
+          },
           "format": "text/html"
         }
       ]
     },
     {
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/2d/cb/09/a7/-5/db/c-/44/a9/-b/40/7-/4d/8a/dc/d2/0e/12-manifest.json",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/2d/cb/09/a7/-5/db/c-/44/a9/-b/40/7-/4d/8a/dc/d2/0e/12-manifest.json",
       "type": "Manifest",
       "label": { "none": ["Northwestern Football vs. Purdue, 1931"] },
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/49668e48-8d55-4e33-a6be-adc8a44edd74/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/49668e48-8d55-4e33-a6be-adc8a44edd74/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/49668e48-8d55-4e33-a6be-adc8a44edd74",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/49668e48-8d55-4e33-a6be-adc8a44edd74",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -164,24 +174,26 @@
         {
           "id": "https://dc.library.northwestern.edu/items/2dcb09a7-5dbc-44a9-b407-4d8adcd20e12",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Purdue, 1931"] },
+          "label": {
+            "none": ["Northwestern Football vs. Purdue, 1931"]
+          },
           "format": "text/html"
         }
       ]
     },
     {
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/1b/58/2d/e6/-3/95/8-/4f/f8/-9/d3/c-/98/98/3a/83/4a/93-manifest.json",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/1b/58/2d/e6/-3/95/8-/4f/f8/-9/d3/c-/98/98/3a/83/4a/93-manifest.json",
       "type": "Manifest",
       "label": { "none": ["Northwestern Football vs. Iowa, 1976"] },
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/2c5b2a7c-cf15-4bc0-b181-bc909f17fefa/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/2c5b2a7c-cf15-4bc0-b181-bc909f17fefa/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/2c5b2a7c-cf15-4bc0-b181-bc909f17fefa",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/2c5b2a7c-cf15-4bc0-b181-bc909f17fefa",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -194,24 +206,26 @@
         {
           "id": "https://dc.library.northwestern.edu/items/1b582de6-3958-4ff8-9d3c-98983a834a93",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Iowa, 1976"] },
+          "label": {
+            "none": ["Northwestern Football vs. Iowa, 1976"]
+          },
           "format": "text/html"
         }
       ]
     },
     {
-      "id": "https://iiif.stack.rdc.library.northwestern.edu/public/iiif3/74/aa/4b/9c/-e/60/d-/48/0a/-a/e3/5-/5e/1a/90/c9/57/d8-manifest.json",
+      "id": "https://iiif.dc.library.northwestern.edu/public/iiif3/74/aa/4b/9c/-e/60/d-/48/0a/-a/e3/5-/5e/1a/90/c9/57/d8-manifest.json",
       "type": "Manifest",
       "label": { "none": ["Northwestern Football vs. Michigan, 1987"] },
       "summary": { "none": ["Video"] },
       "thumbnail": [
         {
-          "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ccf35071-c43a-42b1-bac7-7cec3a7f8de0/full/200,/0/default.jpg",
+          "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/ccf35071-c43a-42b1-bac7-7cec3a7f8de0/full/200,/0/default.jpg",
           "type": "Image",
           "format": "image/jpeg",
           "service": [
             {
-              "id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/posters/ccf35071-c43a-42b1-bac7-7cec3a7f8de0",
+              "id": "https://iiif.dc.library.northwestern.edu/iiif/2/posters/ccf35071-c43a-42b1-bac7-7cec3a7f8de0",
               "profile": "http://iiif.io/api/image/2/level2.json",
               "type": "ImageService2"
             }
@@ -224,7 +238,9 @@
         {
           "id": "https://dc.library.northwestern.edu/items/74aa4b9c-e60d-480a-ae35-5e1a90c957d8",
           "type": "Text",
-          "label": { "none": ["Northwestern Football vs. Michigan, 1987"] },
+          "label": {
+            "none": ["Northwestern Football vs. Michigan, 1987"]
+          },
           "format": "text/html"
         }
       ]

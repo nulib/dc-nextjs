@@ -22,7 +22,7 @@ const GenericFacet: React.FC<GenericFacetProps> = ({ facet }) => {
   /* eslint-disable */
   const debouncedHandler = React.useCallback(
     debounce(handleFindChange, 200),
-    []
+    [],
   );
   /* eslint-enable */
 

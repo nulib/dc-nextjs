@@ -57,7 +57,7 @@ resource "aws_amplify_app" "dc-next" {
             - npm ci --force
         build:
           commands:
-            - npm run test:ci && npm run ts-lint && npm run build
+            - npm run test:ci && npm run ts-lint && npm run prettier:check && npm run build
       artifacts:
         baseDirectory: .next
         files:

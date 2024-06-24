@@ -84,7 +84,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
               __html: JSON.stringify(
                 loadItemStructuredData(work, `/items/${work.id}`),
                 null,
-                "\t"
+                "\t",
               ),
             }}
           ></script>

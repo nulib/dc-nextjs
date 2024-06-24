@@ -41,7 +41,7 @@ export const defaultCollection: HeroCollection = {
   },
   items: [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest.json",
       type: "Collection",
       label: { none: ["Edward S. Curtis's The North American Indian"] },
       summary: {
@@ -49,12 +49,12 @@ export const defaultCollection: HeroCollection = {
       },
       thumbnail: [
         {
-          id: `https://iiif.stack.rdc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df/210,210,2650,1720/1536,/0/default.jpg`,
+          id: `https://iiif.dc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df/210,210,2650,1720/1536,/0/default.jpg`,
           type: "Image",
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/440bcf10-a7ee-4824-a1fb-e505cad222df",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -72,7 +72,7 @@ export const defaultCollection: HeroCollection = {
       nul_hero_region: "210,210,2650,1720",
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest2.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest2.json",
       type: "Collection",
       label: { none: ["Berkeley Folk Music Festival"] },
       summary: {
@@ -80,12 +80,12 @@ export const defaultCollection: HeroCollection = {
       },
       thumbnail: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/6877a6d9-1580-421d-ba51-e44b97f746a2/full/2000,/0/default.jpg",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/6877a6d9-1580-421d-ba51-e44b97f746a2/full/2000,/0/default.jpg",
           type: "Image",
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/6877a6d9-1580-421d-ba51-e44b97f746a2",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/6877a6d9-1580-421d-ba51-e44b97f746a2",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -102,12 +102,14 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest3.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest3.json",
       type: "Collection",
       label: {
         none: ["Athletic Department Football Films"],
       },
-      summary: { none: ["Northwestern vs. California (Rose Bowl), 1949"] },
+      summary: {
+        none: ["Northwestern vs. California (Rose Bowl), 1949"],
+      },
       thumbnail: [
         {
           duration: 30,
@@ -126,18 +128,18 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest.json",
       type: "Collection",
       label: { none: ["Commedia dell'Arte: The Masks of Antonio Fava"] },
       summary: { none: ['Pulcinella "Stronzo" o "Arcigno"'] },
       thumbnail: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da/full/1600,/0/default.jpg",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da/full/1600,/0/default.jpg",
           type: "Image",
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/0d3531f0-2d7f-4e53-bb07-8019f94e44da",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -154,7 +156,7 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest4.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/72/98/fd/ce/-a/dc/1-/45/01/-9/e1/4-/9e/8b/d9/85/e1/49-manifest4.json",
       type: "Collection",
       label: { none: ["Jim Roberts Photographs"] },
       summary: {
@@ -162,12 +164,12 @@ export const defaultCollection: HeroCollection = {
       },
       thumbnail: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/175c24b7-a5b7-4dfc-b01e-92bb075e360c/full/1496,/0/default.jpg",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/175c24b7-a5b7-4dfc-b01e-92bb075e360c/full/1496,/0/default.jpg",
           type: "Image",
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/175c24b7-a5b7-4dfc-b01e-92bb075e360c",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/175c24b7-a5b7-4dfc-b01e-92bb075e360c",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -184,18 +186,18 @@ export const defaultCollection: HeroCollection = {
       ],
     },
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest2.json",
+      id: "https://iiif.dc.library.northwestern.edu/public/05/2b/b6/f0/-b/6f/5-/45/90/-9/51/b-/ff/df/49/ff/af/03-manifest2.json",
       type: "Collection",
       label: { none: ["World War II Poster Collection"] },
       summary: { none: ["A careless word-- a needless sinking"] },
       thumbnail: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/b725ab5e-8bc1-4bcc-9f9c-7c90db4e7e69/100,450,1600,1200/800,/0/default.jpg",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/b725ab5e-8bc1-4bcc-9f9c-7c90db4e7e69/100,450,1600,1200/800,/0/default.jpg",
           type: "Image",
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/b725ab5e-8bc1-4bcc-9f9c-7c90db4e7e69",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/b725ab5e-8bc1-4bcc-9f9c-7c90db4e7e69",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -226,7 +228,7 @@ export const defaultCollection: HeroCollection = {
           format: "image/jpeg",
           service: [
             {
-              id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/37a27b1d-ea5a-4bbe-b38a-fcd2f5904f25",
+              id: "https://iiif.dc.library.northwestern.edu/iiif/2/37a27b1d-ea5a-4bbe-b38a-fcd2f5904f25",
               profile: "http://iiif.io/api/image/2/level2.json",
               type: "ImageService2",
             },
@@ -249,12 +251,12 @@ export const defaultCollection: HeroCollection = {
 export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/461,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/461,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/092b31cb-810a-4ab8-8d65-7cf9a61ca2fe",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/092b31cb-810a-4ab8-8d65-7cf9a61ca2fe",
           profile: "http://iiif.io/api/image/2/level2.json",
           type: "ImageService2",
         },
@@ -265,12 +267,12 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150//full/384,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150//full/384,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150",
           profile: "http://iiif.io/api/image/2/level2.json",
           type: "ImageService2",
         },
@@ -281,12 +283,12 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/618,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/618,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05",
           profile: "http://iiif.io/api/image/2/level2.json",
           type: "ImageService2",
         },
@@ -297,12 +299,12 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd/full/384,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd/full/384,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/70b391d0-51ef-429d-9c3c-3488e7a331fd",
           profile: "http://iiif.io/api/image/2/level2.json",
           type: "ImageService2",
         },
@@ -323,12 +325,12 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a/full/446,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a/full/446,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
         {
-          id: "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a",
+          id: "https://iiif.dc.library.northwestern.edu/iiif/2/83aa87d5-0e0a-4733-9133-a53fb00c3b5a",
           profile: "http://iiif.io/api/image/2/level2.json",
           type: "ImageService2",
         },

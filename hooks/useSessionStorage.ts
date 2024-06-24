@@ -45,7 +45,7 @@ function useSessionStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
     // Prevent build error "window is undefined" but keeps working
     if (typeof window == "undefined") {
       console.warn(
-        `Tried setting sessionStorage key “${key}” even though environment is not a client`
+        `Tried setting sessionStorage key “${key}” even though environment is not a client`,
       );
     }
 
@@ -78,7 +78,7 @@ function useSessionStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
       }
       setStoredValue(readValue());
     },
-    [key, readValue]
+    [key, readValue],
   );
 
   // this only works for other documents, not the current one

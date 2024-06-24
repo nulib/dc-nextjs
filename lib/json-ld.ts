@@ -27,7 +27,7 @@ export function loadDefaultStructuredData() {
 
 export function loadCollectionStructuredData(
   collection: Collection,
-  pathname: string
+  pathname: string,
 ) {
   const obj = {
     "@context": "https://schema.org/",

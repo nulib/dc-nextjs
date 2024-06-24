@@ -55,7 +55,7 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       break;
     default:
       console.error(
-        `Screen value "${screen} is not valid on <FacetsCurrentUser>"`
+        `Screen value "${screen} is not valid on <FacetsCurrentUser>"`,
       );
       break;
   }
