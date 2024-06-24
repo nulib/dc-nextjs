@@ -15,7 +15,7 @@ describe("RelatedItems component", () => {
     render(<RelatedItems {...props} />);
     expect(await screen.findByTestId("related-items")).toBeInTheDocument();
     expect(await screen.findByRole("heading", { level: 2 })).toHaveTextContent(
-      "Explore Further"
+      "Explore Further",
     );
   });
 

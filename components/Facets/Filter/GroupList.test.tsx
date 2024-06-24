@@ -75,7 +75,7 @@ describe("FacetsGroupList component", () => {
         }}
       >
         <FacetsGroupList />
-      </FilterProvider>
+      </FilterProvider>,
     );
     /**
      * Looks like Radix puts this active state data attribute

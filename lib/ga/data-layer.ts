@@ -34,7 +34,7 @@ export function buildWorkDataLayer(work: Work): DataLayer {
 
   const creators = work?.creator.map((creator) => creator.label);
   const contributors = work?.contributor.map(
-    (contributor) => contributor.label
+    (contributor) => contributor.label,
   );
   const creatorsContributors: string[] = [];
   if (creators && creators.length > 0) {

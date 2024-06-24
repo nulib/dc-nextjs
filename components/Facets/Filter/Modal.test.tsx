@@ -72,7 +72,7 @@ describe("FilterModal component while `open`", () => {
             <FilterModal q="joan" setIsModalOpen={() => false} />
           </Dialog.Content>
         </Dialog.Portal>
-      </Dialog.Root>
+      </Dialog.Root>,
     );
 
   it("Has text rendering the search query param.", async () => {
@@ -81,7 +81,7 @@ describe("FilterModal component while `open`", () => {
 
     const content = await screen.findByTestId("modal-content");
     expect(content).toContainHTML(
-      `<em>Results for “<strong>joan</strong>”</em>`
+      `<em>Results for “<strong>joan</strong>”</em>`,
     );
     expect(singletonRouter).toMatchObject({
       asPath: "/search?q=joan",

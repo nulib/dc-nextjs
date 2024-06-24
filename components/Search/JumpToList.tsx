@@ -88,7 +88,7 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
       } catch (err) {
         console.error(
           "Error getting Collection title in JumpTo component",
-          err
+          err,
         );
       }
     }

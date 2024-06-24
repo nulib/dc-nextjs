@@ -20,7 +20,10 @@ const mockSetShowJumpTo = jest.fn();
 describe("SearchJumpToList component", () => {
   it("renders search value in list items", () => {
     render(
-      <SearchJumpToList searchValue="Dylan" setShowJumpTo={mockSetShowJumpTo} />
+      <SearchJumpToList
+        searchValue="Dylan"
+        setShowJumpTo={mockSetShowJumpTo}
+      />,
     );
     expect(screen.getByTestId("jump-to-wrapper"));
     expect(screen.getAllByText("Dylan")).toHaveLength(2);
@@ -28,7 +31,7 @@ describe("SearchJumpToList component", () => {
 
   it("renders Helper components in each JumpTo item", () => {
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />
+      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
     );
     const helpers = screen.getAllByTestId("helper");
     expect(helpers[0]).toHaveTextContent(/in this collection/i);
@@ -37,7 +40,7 @@ describe("SearchJumpToList component", () => {
 
   it.only("renders route query params in JumpTo items", async () => {
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />
+      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
     );
 
     await act(async () => {
@@ -48,19 +51,19 @@ describe("SearchJumpToList component", () => {
     });
 
     expect(
-      await screen.findByTestId("helper-anchor-collection")
+      await screen.findByTestId("helper-anchor-collection"),
     ).toHaveAttribute("href", `/search?collection=Best+Collection+Ever&q=foo`);
 
     expect(screen.getByTestId("helper-anchor-all")).toHaveAttribute(
       "href",
-      "/search?q=foo"
+      "/search?q=foo",
     );
   });
 
   it("selects items correctly on arrow key presses", async () => {
     const user = userEvent.setup();
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />
+      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
     );
     const listItems = await screen.findAllByRole("option");
 
@@ -86,7 +89,7 @@ describe("SearchJumpToList component", () => {
   it("handles the Escape key press", async () => {
     const user = userEvent.setup();
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />
+      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
     );
 
     await user.keyboard("{Escape}");

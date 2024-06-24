@@ -13,7 +13,7 @@ describe("Card component", () => {
     render(<Card {...props} />);
     expect(screen.getByTestId("card-wrapper"));
     expect(screen.getByTestId("card-description")).toHaveTextContent(
-      "Ima description"
+      "Ima description",
     );
     expect(screen.getByText("123 items"));
   });

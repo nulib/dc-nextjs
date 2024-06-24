@@ -16,7 +16,7 @@
                   "@context": "http://iiif.io/api/image/2/context.json",
                   "@id": "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/907c8fde-38a3-4a72-8ea4-0a35605d1ab7"
                 },
-                "@id": "https://iiif.stack.rdc.library.northwestern.edu/iiif/2/76c26a0a-0454-48d8-a225-9fc26735315b/full/pct:10/0/default.jpg",
+                "@id": "https://iiif.dc.library.northwestern.edu/iiif/2/76c26a0a-0454-48d8-a225-9fc26735315b/full/pct:10/0/default.jpg",
                 "@type": "dctypes:Image"
               },
               "@type": "oa:Annotation"

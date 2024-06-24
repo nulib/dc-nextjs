@@ -50,7 +50,7 @@ describe("Search page component", () => {
       const paginationResults = getPaginationResults(s.expectedResultCount);
       verifyGridItemCount(s.expectedResultCount);
       cy.contains(
-        `Showing 1 to ${paginationResults} of ${paginationResults} results`
+        `Showing 1 to ${paginationResults} of ${paginationResults} results`,
       );
     });
 
@@ -161,7 +161,7 @@ describe("Search page component", () => {
       cy.get("@facetFilterInput").should(
         "have.attr",
         "placeholder",
-        "Find Style Period"
+        "Find Style Period",
       );
       cy.get("[data-testid='facet-options']")
         .as("facetOptions")
@@ -235,7 +235,7 @@ describe("Search page component", () => {
         .click();
       cy.get("@activeUserFacet").should("have.length", 2);
       cy.get("@activeUserFacet").contains(
-        "Curtis, Edward S., 1868-1952 (Publisher)"
+        "Curtis, Edward S., 1868-1952 (Publisher)",
       );
       cy.get("@activeUserFacet").contains("Contributor");
 

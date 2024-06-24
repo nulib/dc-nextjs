@@ -8,7 +8,7 @@ describe("WorkDialogFind", () => {
     return render(
       <WorkProvider initialState={{ manifest: undefined, work: sampleWork1 }}>
         <WorkDialogFind />
-      </WorkProvider>
+      </WorkProvider>,
     );
   }
   it("renders thumbnail column content", async () => {

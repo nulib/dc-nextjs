@@ -21,12 +21,12 @@ const HoneybadgerConfig = JSON.stringify(
     HONEYBADGER_REVISION,
   },
   null,
-  2
+  2,
 );
 
 fs.writeFileSync(
   "lib/honeybadger/config.vars.js",
-  `module.exports = ${HoneybadgerConfig};`
+  `module.exports = ${HoneybadgerConfig};`,
 );
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -51,7 +51,7 @@ module.exports = withBundleAnalyzer({
     domains: [
       "dcapi.rdc.library.northwestern.edu",
       "dcapi.rdc-staging.library.northwestern.edu",
-      "iiif.stack.rdc.library.northwestern.edu",
+      "iiif.dc.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
       "api.dc.library.northwestern.edu",
     ],
@@ -81,7 +81,7 @@ module.exports = withBundleAnalyzer({
           apiKey: HONEYBADGER_API_KEY,
           assetsUrl: `${NEXT_PUBLIC_DC_URL}/_next`,
           revision: HONEYBADGER_REVISION,
-        })
+        }),
       );
     }
 

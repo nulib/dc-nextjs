@@ -1,3 +1,4 @@
+import { GoogleTagManager, sendGTMEvent } from "@next/third-parties/google";
 import {
   akkurat,
   akkuratBold,
@@ -12,7 +13,6 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ObjectLiteral } from "@/types";
 import React from "react";
-import Script from "next/script";
 import { SearchProvider } from "@/context/search-context";
 import Transition from "@/components/Transition";
 import { User } from "@/types/context/user";
@@ -22,6 +22,7 @@ import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 
+// Init Honeybadger
 setupHoneyBadger();
 
 interface MyAppProps extends AppProps {
@@ -52,14 +53,11 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         isLoggedIn: user?.isLoggedIn,
       };
 
-      // send pageProps to dataLayer
-      // @ts-ignore
-      window.dataLayer?.push(payload);
-
-      // send VirtualPageView event to dataLayer
-      // @ts-ignore
-      window.dataLayer?.push({
+      // "VirtualPageView" is a custom event that we use to track page views.
+      // Also pass in updated page data to dataLayer object which GTM will use to track events.
+      sendGTMEvent({
         event: "VirtualPageView",
+        ...payload,
       });
     }
   }, [mounted, pageProps, user]);
@@ -75,17 +73,8 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       </Head>
 
       <UserProvider>
-        <SearchProvider>
-          <Transition>
-            <Script id="google-tag-manager" strategy="afterInteractive">
-              {`
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-NDJXLQW');
-                `}
-            </Script>
+        <Transition>
+          <SearchProvider>
             <style jsx global>{`
               :root {
                 --font-akkurat-light: ${akkuratLight.style.fontFamily};
@@ -99,8 +88,9 @@ function MyApp({ Component, pageProps }: MyAppProps) {
               }
             `}</style>
             {mounted && <Component {...pageProps} />}
-          </Transition>
-        </SearchProvider>
+            <GoogleTagManager gtmId="GTM-NDJXLQW" />
+          </SearchProvider>
+        </Transition>
       </UserProvider>
     </>
   );

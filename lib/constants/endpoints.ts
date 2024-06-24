@@ -2,8 +2,7 @@ const DCAPI_PRODUCTION_ENDPOINT =
   "https://api.dc.library.northwestern.edu/api/v2";
 
 const IIIF_IMAGE_SERVICE_ENDPOINT =
-  "https://iiif.stack.rdc.library.northwestern.edu/iiif/2";
-
+  "https://iiif.dc.library.northwestern.edu/iiif/2";
 const PRODUCTION_URL = "https://digitalcollections.library.northwestern.edu";
 
 const DC_URL = process.env.NEXT_PUBLIC_DC_URL;

@@ -54,7 +54,7 @@ describe("UserFacet UI component", () => {
         <FilterProvider initialState={filterStateDefault}>
           <UserFacets screen="search" urlFacets={{}} />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
     const userFacets = screen.queryByText(`facet-user-component`);
 
@@ -83,7 +83,7 @@ describe("UserFacet UI component", () => {
             }}
           />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
     const userFacets = await screen.findByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();
@@ -112,7 +112,7 @@ describe("UserFacet UI component", () => {
             }}
           />
         </FilterProvider>
-      </SearchProvider>
+      </SearchProvider>,
     );
     const userFacets = screen.getByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();

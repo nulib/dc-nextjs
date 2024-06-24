@@ -16,10 +16,10 @@ describe("WorkMetadata component", () => {
       if (manifest.metadata) {
         const { label, value } = manifest.metadata[index];
         expect(within(group).getByRole("term")).toHaveTextContent(
-          label?.none?.join(", ") as string
+          label?.none?.join(", ") as string,
         );
         expect(within(group).getByRole("definition")).toHaveTextContent(
-          value?.none?.join("") as string
+          value?.none?.join("") as string,
         );
       }
     });

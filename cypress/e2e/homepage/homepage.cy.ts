@@ -11,7 +11,7 @@ describe("Homepage component", () => {
         .should(
           "have.attr",
           "href",
-          "https://dc-next.rdc-staging.library.northwestern.edu/collections/55ff2504-dd53-4943-b2cb-aeea46e77bc3"
+          "https://dc-next.rdc-staging.library.northwestern.edu/collections/55ff2504-dd53-4943-b2cb-aeea46e77bc3",
         );
       cy.contains("Crossing the Pend d'Oreille - Kalispel");
 
@@ -20,7 +20,7 @@ describe("Homepage component", () => {
       cy.contains("Berkeley Folk Music Festival").should(
         "have.attr",
         "href",
-        "https://dc-next.rdc-staging.library.northwestern.edu/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7"
+        "https://dc-next.rdc-staging.library.northwestern.edu/collections/18ec4c6b-192a-4ab8-9903-ea0f393c35f7",
       );
       cy.contains("Joan Baez");
     });
