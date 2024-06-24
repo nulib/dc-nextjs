@@ -1,5 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 
+import { GetServerSideProps, NextPage } from "next";
 import {
   NoResultsMessage,
   ResultsMessage,
@@ -21,7 +22,6 @@ import Heading from "@/components/Heading/Heading";
 import Icon from "@/components/Shared/Icon";
 import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
-import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import SearchOptions from "@/components/Search/Options";
@@ -280,8 +280,12 @@ const SearchPage: NextPage = () => {
   );
 };
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
+  const isUsingAI = query?.ai === "true";
+
   const dataLayer = buildDataLayer({
+    isUsingAI,
     pageTitle: "Search page",
   });
 
@@ -293,6 +297,6 @@ export async function getStaticProps() {
   return {
     props: { dataLayer, openGraphData },
   };
-}
+};
 
 export default SearchPage;
