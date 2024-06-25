@@ -1,6 +1,8 @@
 import { render, screen } from "@/test-utils";
 
 import Search from "./Search";
+import { UserContext } from "@/context/user-context";
+import { UserContext as UserContextType } from "@/types/context/user";
 import mockRouter from "next-router-mock";
 import { renderHook } from "@testing-library/react";
 import { useRouter } from "next/router";
@@ -8,7 +10,28 @@ import userEvent from "@testing-library/user-event";
 
 const mockIsSearchActive = jest.fn();
 
+const defaultUser = {
+  user: {
+    email: "ace@northewestern.edu",
+    isLoggedIn: true,
+    isReadingRoom: false,
+    name: "Ace Frehley",
+    sub: "xyz123",
+  },
+};
+
+const withUserProvider = (
+  Component: React.ReactNode,
+  user: UserContextType = defaultUser,
+) => {
+  return <UserContext.Provider value={user}>{Component}</UserContext.Provider>;
+};
+
 describe("Search component", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it("renders the search ui component", () => {
     render(<Search isSearchActive={() => ({})} />);
     const wrapper = screen.getByTestId("search-ui-component");
@@ -71,19 +94,19 @@ describe("Search component", () => {
   it("renders standard placeholder text for non AI search", () => {
     render(<Search isSearchActive={mockIsSearchActive} />);
     const input = screen.getByPlaceholderText(
-      "Search by keyword or phrase, ex: Berkeley Music Festival"
+      "Search by keyword or phrase, ex: Berkeley Music Festival",
     );
     expect(input).toBeInTheDocument();
   });
 
   it("renders generative AI placeholder text when AI search is active", () => {
-    mockRouter.setCurrentUrl("/search?ai=true");
+    localStorage.setItem("ai", JSON.stringify("true"));
 
-    render(<Search isSearchActive={mockIsSearchActive} />);
+    render(withUserProvider(<Search isSearchActive={mockIsSearchActive} />));
+
     const input = screen.getByPlaceholderText(
-      "What can I show you from our collections?"
+      "What can I show you from our collections?",
     );
-
     expect(input).toBeInTheDocument();
   });
 });
