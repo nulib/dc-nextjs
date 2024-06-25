@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { UserContext } from "@/context/user-context";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 const defaultModalState = {
   isOpen: false,
@@ -13,6 +14,8 @@ const aiQueryParam = "ai";
 
 export default function useGenerativeAISearchToggle() {
   const router = useRouter();
+  const { searchDispatch } = useSearchState();
+
   const [dialog, setDialog] = useState(defaultModalState);
 
   const { user } = React.useContext(UserContext);
@@ -28,6 +31,13 @@ export default function useGenerativeAISearchToggle() {
     if (!user) return;
     if (isAiQueryParam) {
       setDialog((prevDialog) => ({ ...prevDialog, isOpen: !user?.isLoggedIn }));
+    }
+    // Ensure Chat AI active tab = "stream" on search page
+    if (isChecked) {
+      searchDispatch({
+        activeTab: "stream",
+        type: "updateActiveTab",
+      });
     }
   }, [isAiQueryParam, user]);
 
