@@ -18,7 +18,7 @@ const SiteContentMessage = () => {
   const [status, setStatus] = useSessionStorage("message_status", true);
   const [timestamp, setTimestamp] = useSessionStorage(
     "message_timestamp",
-    current
+    current,
   );
 
   const handleDismiss = () => {

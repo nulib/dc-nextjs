@@ -17,7 +17,7 @@ describe("SearchJumpTo component", () => {
       <div data-testid="page">
         <span>Outside search form</span>
         <SearchJumpTo isSearchActive={mockIsSearchActive} />
-      </div>
+      </div>,
     );
     const form = screen.getByTestId("search-jump-to-form");
 

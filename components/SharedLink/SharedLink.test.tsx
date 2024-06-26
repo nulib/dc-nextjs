@@ -9,7 +9,7 @@ describe("SharedLink component", () => {
   it("renders error announcment when no work or manifest passed in", async () => {
     render(<SharedLink manifest={null} work={work} />);
     expect(
-      await screen.findByTestId("shared-link-wrapper")
+      await screen.findByTestId("shared-link-wrapper"),
     ).toBeInTheDocument();
     expect(await screen.findByTestId("error-announcement")).toBeInTheDocument();
   });

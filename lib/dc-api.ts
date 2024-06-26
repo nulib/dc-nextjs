@@ -20,7 +20,7 @@ async function apiGetStatus(url: string) {
 
 async function apiGetRequest<R>(
   obj: ApiGetRequestParams,
-  rawResponse?: boolean
+  rawResponse?: boolean,
 ): Promise<R | undefined> {
   const { url } = obj;
 
@@ -38,7 +38,7 @@ async function apiGetRequest<R>(
 }
 
 async function apiPostRequest<R>(
-  obj: ApiPostRequestParams
+  obj: ApiPostRequestParams,
 ): Promise<R | undefined> {
   const { body, url } = obj;
   try {

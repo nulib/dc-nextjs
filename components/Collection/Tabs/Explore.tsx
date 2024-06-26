@@ -28,7 +28,7 @@ const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
       subject.value.map((subjectValue) => {
         const str = `${url}/search?query=collection.id:"${collectionId}" AND ${subject.field}:"${subjectValue}"&collectionLabel=${subjectValue}&collectionSummary=${""}&as=iiif`;
         return str;
-      })
+      }),
     );
   }, [collectionId, topMetadata]);
 

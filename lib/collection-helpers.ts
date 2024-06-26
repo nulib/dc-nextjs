@@ -47,7 +47,7 @@ export type WorkTypeCountMap = {
 };
 
 export async function getCollection(
-  id: string
+  id: string,
 ): Promise<Collection | undefined> {
   try {
     const response = await apiGetRequest<Collection>({
@@ -100,7 +100,7 @@ export async function getCollections() {
             ? { ...workCountMap[id] }
             : { ...defaultCountTotals }),
         };
-      }
+      },
     );
 
     return collectionList;
@@ -139,11 +139,11 @@ export async function getCollectionWorkCount(collectionId: string) {
 
 /* eslint sort-keys:0 */
 export async function getCollectionWorkCounts(
-  collectionId = ""
+  collectionId = "",
 ): Promise<CollectionWorkCountMap | null> {
   function getCount(
     buckets: ApiResponseBucket[],
-    targetWorkType: "Audio" | "Image" | "Video"
+    targetWorkType: "Audio" | "Image" | "Video",
   ) {
     const found = buckets.find((bucket) => bucket.key === targetWorkType);
     return found ? found.doc_count : 0;

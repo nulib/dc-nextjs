@@ -4,7 +4,7 @@ const DCAPI_PRODUCTION_ENDPOINT =
 const DC_API_SEARCH_URL = `${DCAPI_ENDPOINT}/search`;
 const DC_URL = process.env.NEXT_PUBLIC_DC_URL;
 const IIIF_IMAGE_SERVICE_ENDPOINT =
-  "https://iiif.stack.rdc.library.northwestern.edu/iiif/2";
+  "https://iiif.dc.library.northwestern.edu/iiif/2";
 const PRODUCTION_URL = "https://digitalcollections.library.northwestern.edu";
 
 export {

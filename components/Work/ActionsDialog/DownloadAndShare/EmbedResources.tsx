@@ -52,7 +52,7 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
   React.useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
       const imageCanvases = manifest.items.filter(
-        (item) => getAnnotationBodyType(item) === "Image"
+        (item) => getAnnotationBodyType(item) === "Image",
       );
       setImageCanvases(imageCanvases);
     }
@@ -166,13 +166,13 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
   }
 
   const embedHTMLString = `<img src="${embedHTMLStringArray?.join(
-    "/"
+    "/",
   )}" alt="Northwestern Libraries Digital Collections Fileset image for ${
     isValidStringArray ? embedHTMLStringArray[5] : ""
   }" />`;
 
   const handleDownloadClick = async (
-    e: React.SyntheticEvent<HTMLButtonElement>
+    e: React.SyntheticEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
 
@@ -183,7 +183,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
 
     const response = await makeBlob(
       `${getInfoResponse(item)}/full/3000,/0/default.jpg`,
-      { credentials: "include" }
+      { credentials: "include" },
     );
 
     if (!response || response.error) {

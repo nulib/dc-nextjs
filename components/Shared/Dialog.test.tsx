@@ -12,7 +12,7 @@ describe("SharedDialog component", () => {
     render(
       <SharedDialogComponent {...props}>
         <p>I am dialog content</p>
-      </SharedDialogComponent>
+      </SharedDialogComponent>,
     );
     expect(screen.getByText("Ima title"));
     expect(screen.getByText("I am dialog content"));

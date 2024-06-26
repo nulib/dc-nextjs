@@ -97,10 +97,10 @@ export const scrollButtonStyles = {
 
 export const StyledScrollUpButton = styled(
   SelectPrimitive.ScrollUpButton,
-  scrollButtonStyles
+  scrollButtonStyles,
 );
 
 export const StyledScrollDownButton = styled(
   SelectPrimitive.ScrollDownButton,
-  scrollButtonStyles
+  scrollButtonStyles,
 );

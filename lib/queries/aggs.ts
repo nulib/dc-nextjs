@@ -11,7 +11,7 @@ import { facetRegex } from "@/lib/utils/facet-helpers";
 export const buildAggs = (
   facets: FacetsInstance[],
   facetFilterValue: string | undefined,
-  userFacets: UrlFacets
+  userFacets: UrlFacets,
 ) => {
   const aggs: Aggs = {};
   let cleanFilterValue: string;

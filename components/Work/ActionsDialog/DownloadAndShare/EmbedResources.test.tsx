@@ -15,17 +15,17 @@ describe("EmbedResources", () => {
         alternateFormatItems={[]}
         showEmbedWarning={false}
         work={work1}
-      />
+      />,
     );
     expect(
-      screen.getByRole("heading", { name: "Download and Embed" })
+      screen.getByRole("heading", { name: "Download and Embed" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Images" })).toBeInTheDocument();
 
     const downloadEmbedItems = screen.getByTestId("download-embed-items");
 
     expect(downloadEmbedItems).toHaveTextContent(
-      "BFMF_B06_F12_006_022n_am.tif"
+      "BFMF_B06_F12_006_022n_am.tif",
     );
     expect(downloadEmbedItems).toHaveTextContent("Download JPG");
     expect(downloadEmbedItems).toHaveTextContent("Embed HTML");
@@ -33,7 +33,7 @@ describe("EmbedResources", () => {
 
     // Alternate Formats should not be rendered
     expect(
-      screen.queryByRole("heading", { name: "Alternate Formats" })
+      screen.queryByRole("heading", { name: "Alternate Formats" }),
     ).toBeNull();
   });
 
@@ -44,11 +44,11 @@ describe("EmbedResources", () => {
         alternateFormatItems={alternateFormatItems}
         showEmbedWarning={false}
         work={work1}
-      />
+      />,
     );
 
     expect(
-      screen.getByRole("heading", { name: "Alternate Formats" })
+      screen.getByRole("heading", { name: "Alternate Formats" }),
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Test PDF (pdf)" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Transcript XYZ" })).toBeVisible();

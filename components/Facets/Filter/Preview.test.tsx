@@ -10,7 +10,7 @@ describe("Submit component", () => {
   it("renders the component with heading 3", () => {
     renderHelper();
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
-      "Preview Results"
+      "Preview Results",
     );
   });
 
@@ -29,7 +29,7 @@ describe("Submit component", () => {
     expect(links.length).toBe(2);
     links.forEach((link, index) => {
       expect(link.getAttribute("href")).toBe(
-        `/items/${sampleSearchShape[index].id}`
+        `/items/${sampleSearchShape[index].id}`,
       );
     });
   });
