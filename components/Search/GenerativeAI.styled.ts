@@ -8,7 +8,11 @@ const GenerativeAIToggleWrapper = styled("div", {
   color: "$black50",
   fontSize: "$gr2",
   display: "flex",
+  position: "relative",
+  flexDirection: "row",
+  flexWrap: "nowrap",
   flexShrink: "0",
+  height: "$gr5",
   alignItems: "center",
   marginRight: "$gr1",
 

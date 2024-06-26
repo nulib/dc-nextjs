@@ -16,10 +16,10 @@ export const CheckboxRoot = styled(Checkbox.Root, {
   padding: "0",
   cursor: "pointer",
   borderRadius: "3px",
-  color: "$purple30",
+  color: "$white",
 
   svg: {
-    padding: "1px",
+    padding: "2px",
   },
 
   "&:hover, &:focus": {

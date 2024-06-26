@@ -1,9 +1,5 @@
-import { Button, Clear, Input, SearchStyled } from "./Search.styled";
-import {
-  IconArrowForward,
-  IconClear,
-  IconSearch,
-} from "@/components/Shared/SVG/Icons";
+import { Button, SearchStyled } from "@/components/Search/Search.styled";
+import { IconArrowForward, IconSearch } from "@/components/Shared/SVG/Icons";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -14,6 +10,7 @@ import React, {
 } from "react";
 
 import GenerativeAIToggle from "./GenerativeAIToggle";
+import SearchTextArea from "@/components/Search/TextArea";
 import { UrlFacets } from "@/types/context/filter-context";
 import { getAllFacetIds } from "@/lib/utils/facet-helpers";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -35,10 +32,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
-
-  const placeholderText = ai
-    ? "What can I show you from our collections?"
-    : "Search by keyword or phrase, ex: Berkeley Music Festival";
 
   const handleSubmit = (
     e:
@@ -75,7 +68,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     });
   };
 
-  const handleSearchFocus = (e: FocusEvent) => {
+  const handleSearchFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
     setSearchFocus(e.type === "focus");
   };
 
@@ -110,40 +103,28 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   }, [searchFocus, searchValue, isSearchActive]);
 
   return (
-    <>
-      <SearchStyled
-        ref={formRef}
-        onSubmit={handleSubmit}
-        data-testid="search-ui-component"
-      >
-        <Input
-          id="dc-search"
-          placeholder={placeholderText}
-          onChange={handleSearchChange}
-          onFocus={handleSearchFocus}
-          onBlur={handleSearchFocus}
-          ref={searchRef}
-          name="search"
-          role="search"
-          onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              handleSubmit(e);
-            }
-          }}
-        />
-        {searchValue && (
-          <Clear onClick={clearSearchResults} type="reset">
-            <IconClear />
-          </Clear>
-        )}
-        <GenerativeAIToggle isSearchActive={!!searchValue} />
-        <Button type="submit" data-testid="submit-button">
-          Search <IconArrowForward />
-        </Button>
-        {isLoaded && <IconSearch />}
-      </SearchStyled>
-    </>
+    <SearchStyled
+      ref={formRef}
+      onSubmit={handleSubmit}
+      data-testid="search-ui-component"
+      isFocused={searchFocus}
+    >
+      <SearchTextArea
+        isAi={!!ai}
+        isFocused={searchFocus}
+        searchValue={searchValue}
+        handleSearchChange={handleSearchChange}
+        handleSearchFocus={handleSearchFocus}
+        handleSubmit={handleSubmit}
+        clearSearchResults={clearSearchResults}
+        ref={searchRef}
+      />
+      <GenerativeAIToggle />
+      <Button type="submit" data-testid="submit-button">
+        Search <IconArrowForward />
+      </Button>
+      {isLoaded && <IconSearch />}
+    </SearchStyled>
   );
 };
 

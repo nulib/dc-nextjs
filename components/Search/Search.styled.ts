@@ -7,11 +7,24 @@ const SearchStyled = styled("form", {
   display: "flex",
   flexShrink: "0",
   flexGrow: "1",
-  backgroundColor: "$white",
-  height: "$gr5",
-  marginRight: "$gr5",
-  boxShadow: "3px -3px 19px #fff1",
+  marginRight: "$gr4",
   transition: "$dcAll",
+  borderRadius: "3px",
+
+  variants: {
+    isFocused: {
+      true: {
+        backgroundColor: "$white !important",
+        boxShadow: "3px 3px 11px #0001",
+        outline: "2px solid $purple60",
+      },
+      false: {
+        backgroundColor: "#f0f0f0",
+        boxShadow: "none",
+        outline: "2px solid transparent",
+      },
+    },
+  },
 
   "@sm": {
     width: "100%",
@@ -22,10 +35,11 @@ const SearchStyled = styled("form", {
     marginRight: "$gr3",
   },
 
-  svg: {
+  "> svg": {
     position: "absolute",
     display: "flex",
     left: "0",
+    top: "3px",
     height: "$gr5",
     width: "$gr5",
     justifyContent: "center",
@@ -34,70 +48,34 @@ const SearchStyled = styled("form", {
     border: "none",
     backgroundColor: "transparent",
     zIndex: "0",
-    fill: "$black80",
-    padding: "$gr2",
-  },
-});
-
-const Input = styled("textarea", {
-  position: "relative",
-  display: "flex",
-  width: "100%",
-  border: "none",
-  backgroundColor: "transparent",
-  padding: "calc($gr4 / 2) $gr3 calc($gr4 / 2) $gr5",
-  fontSize: "$gr3",
-  zIndex: "1",
-  fontFamily: "$northwesternSansRegular",
-  lineHeight: "1.2rem",
-  resize: "none",
-
-  "&::placeholder": {
-    overflow: "hidden",
-    color: "$black80",
-    textOverflow: "ellipsis",
-    marginRight: "$gr5",
+    fill: "$black50",
+    padding: "15px",
   },
 });
 
 const Button = styled("button", {
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
   border: "none",
-  backgroundColor: "$purple120",
-  padding: "0 $gr3 ",
+  backgroundColor: "$purple",
+  alignItems: "center",
+  padding: "0 $gr2",
+  margin: "7px",
+  height: "38px",
   color: "$white",
-  fontSize: "$gr4",
+  fontSize: "$gr3",
+  borderRadius: "3px",
   fontFamily: "$northwesternSansRegular",
   cursor: "pointer",
   textRendering: "optimizeLegibility",
-});
+  gap: "$gr1",
+  position: "relative",
 
-const Clear = styled("button", {
-  position: "absolute",
-  display: "flex",
-  right: "5rem",
-  height: "$gr5",
-  width: "calc($gr5 + $gr2)",
-  justifyContent: "center",
-  textAlign: "center",
-  alignItems: "center",
-  cursor: "pointer",
-  border: "none",
-  background: "linear-gradient(90deg, #fff0 0, #fff  38.2%)",
-  zIndex: "1",
-  fill: "$black80",
-
-  "&:focus, &:hover": {
-    fill: "$purple30",
-  },
-
-  svg: {
-    fill: "inherit",
-    padding: "$gr2",
-    marginLeft: "$gr2",
-    transition: "$dcAll",
+  "> svg": {
+    width: "$gr3",
+    height: "$gr3",
+    marginTop: "-2px",
+    fontFamily: "Times !important",
+    color: "$purple60",
   },
 });
 
@@ -144,24 +122,10 @@ const ResultsWrapper = styled("div", {
 
 const StyledResponseWrapper = styled("div", {
   padding: "0 0 $gr6",
-
-  variants: {
-    isAiResponse: {
-      true: {
-        background:
-          "linear-gradient(-5deg, $white calc(100% - 150px), $brightBlueB calc(100% + 100px))",
-      },
-      false: {
-        background: "inherit",
-      },
-    },
-  },
 });
 
 export {
   Button,
-  Clear,
-  Input,
   NoResultsMessage,
   ResultsMessage,
   ResultsWrapper,

@@ -197,7 +197,7 @@ const SearchPage: NextPage = () => {
         data-testid="search-page-wrapper"
         title={HEAD_META["SEARCH"].title}
       >
-        <StyledResponseWrapper isAiResponse={showStreamedResponse}>
+        <StyledResponseWrapper>
           <Heading as="h1" isHidden>
             Northwestern
           </Heading>
