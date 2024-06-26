@@ -44,11 +44,7 @@ describe("GenerativeAIToggle", () => {
 
   it("renders the generative AI toggle UI and toggles state for a logged in user", async () => {
     const user = userEvent.setup();
-    render(
-      withUserProvider(
-        withSearchProvider(<GenerativeAIToggle isSearchActive={true} />)
-      )
-    );
+    render(withUserProvider(withSearchProvider(<GenerativeAIToggle />)));
 
     const label = screen.getByLabelText("Use Generative AI");
     const checkbox = screen.getByRole("checkbox");
@@ -61,7 +57,7 @@ describe("GenerativeAIToggle", () => {
   });
 
   it("renders the generative AI tooltip", () => {
-    render(withSearchProvider(<GenerativeAIToggle isSearchActive={true} />));
+    render(withSearchProvider(<GenerativeAIToggle />));
     // Target the svg icon itself
     const tooltip = screen.getByText("Information Circle");
 
@@ -79,7 +75,7 @@ describe("GenerativeAIToggle", () => {
 
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle isSearchActive={true} />),
+        withSearchProvider(<GenerativeAIToggle />),
         nonLoggedInUser
       )
     );
@@ -103,10 +99,7 @@ describe("GenerativeAIToggle", () => {
     mockRouter.setCurrentUrl("/search?ai=true");
     render(
       withUserProvider(
-        withSearchProvider(
-          <GenerativeAIToggle isSearchActive={true} />,
-          activeSearchState
-        )
+        withSearchProvider(<GenerativeAIToggle />, activeSearchState)
       )
     );
 
@@ -121,10 +114,7 @@ describe("GenerativeAIToggle", () => {
 
     render(
       withUserProvider(
-        withSearchProvider(
-          <GenerativeAIToggle isSearchActive={false} />,
-          defaultSearchState
-        )
+        withSearchProvider(<GenerativeAIToggle />, defaultSearchState)
       )
     );
 

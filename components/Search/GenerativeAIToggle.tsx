@@ -37,21 +37,13 @@ function GenerativeAITooltip() {
   );
 }
 
-type GenerativeAIToggleProps = {
-  isSearchActive: boolean;
-};
-
-export default function GenerativeAIToggle({
-  isSearchActive,
-}: GenerativeAIToggleProps) {
+export default function GenerativeAIToggle() {
   const { closeDialog, dialog, isChecked, handleCheckChange, handleLogin } =
     useGenerativeAISearchToggle();
 
   return (
     <>
-      <GenerativeAIToggleWrapper
-        {...(isSearchActive ? { css: { marginRight: "$gr5" } } : {})}
-      >
+      <GenerativeAIToggleWrapper data-testid="generative-ai-toggle">
         <CheckboxRootStyled
           checked={isChecked}
           id="isGenerativeAI"

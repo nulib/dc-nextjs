@@ -49,7 +49,7 @@ const FacetExtras = styled("div", {
 const Wrapper = styled("div", {
   height: "38px",
   transition: "$dcScrollHeight",
-  margin: "$gr4 0",
+  margin: "0 0 $gr4",
 
   "@sm": {
     margin: "-$gr4 0 $gr4",

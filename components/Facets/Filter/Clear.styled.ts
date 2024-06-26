@@ -26,6 +26,7 @@ const FilterClearStyled = styled("button", {
   variants: {
     isFixed: {
       true: {
+        backgroundColor: "$white",
         boxShadow: "2px 2px 5px #0002",
       },
     },

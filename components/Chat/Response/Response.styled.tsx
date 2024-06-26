@@ -20,7 +20,6 @@ const StyledResponse = styled("section", {
 });
 
 const StyledResponseAside = styled("aside", {
-  // background: "linear-gradient(7deg, $white 0%, $gray6 100%)",
   width: "38.2%",
   flexShrink: 0,
   borderRadius: "inherit",
@@ -77,17 +76,24 @@ const StyledQuestion = styled("h3", {
   letterSpacing: "-0.012em",
   lineHeight: "1.35em",
   margin: "0",
-  padding: "0 0 $gr3 0",
+  padding: "0 0 $gr4 0",
   color: "$black",
 });
 
 const StyledStreamedAnswer = styled("article", {
   fontSize: "$gr3",
-  lineHeight: "1.7em",
+  lineHeight: "1.63em",
 
-  strong: {
+  "h1, h2, h3, h4, h5, h6, strong": {
     fontWeight: "400",
     fontFamily: "$northwesternSansBold",
+  },
+
+  a: {
+    textDecoration: "underline",
+    textDecorationThickness: "min(2px,max(1px,.05em))",
+    textUnderlineOffset: "calc(.05em + 2px)",
+    textDecorationColor: "$purple10",
   },
 
   "span.markdown-cursor": {

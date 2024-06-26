@@ -69,34 +69,34 @@ const StyledOptionsTabs = styled("div", {
     flexGrow: "0",
     flexWrap: "nowrap",
     height: "38px",
-    boxShadow: "0px 3px 15px #0002",
     borderRadius: "50px",
     overflow: "hidden",
 
     button: {
       cursor: "pointer",
-      backgroundColor: "$purple",
+      backgroundColor: "transparent",
       border: "0",
-      color: "$white",
+      color: "$purple",
       fontFamily: "$northwesternSansRegular",
       fontSize: "$gr3",
       padding: "0 $gr3",
+      height: "2rem",
       transition: "$dcAll",
       whiteSpace: "nowrap",
       display: "flex",
       alignItems: "center",
 
       "&[data-state=active]": {
-        backgroundColor: "$purple",
+        color: "$black",
+        fontFamily: "$northwesternSansBold",
 
         [`& ${IconStyled}`]: {
-          color: "$purple30",
-          fill: "$purple30",
+          color: "$purple",
+          fill: "$purple",
         },
       },
 
       "&[data-state=inactive]": {
-        backgroundColor: "$white",
         color: "$black50",
 
         [`& ${IconStyled}`]: {
@@ -110,12 +110,11 @@ const StyledOptionsTabs = styled("div", {
       },
 
       "&:hover": {
-        backgroundColor: "$purple120",
-        color: "$white",
+        color: "$purple",
 
         [`& ${IconStyled}`]: {
-          color: "$white",
-          fill: "$white",
+          color: "$purple",
+          fill: "$purple",
         },
       },
     },
@@ -129,8 +128,7 @@ const StyledOptionsTabs = styled("div", {
 const StyledOptions = styled("div", {
   height: "38px",
   transition: "$dcScrollHeight",
-  padding: "$gr4 0 0",
-  margin: "0 0 $gr6",
+  margin: "0 0 $gr5",
 
   "@sm": {
     backgroundColor: "$gray6",
@@ -165,6 +163,10 @@ const StyledOptions = styled("div", {
       transform: "translate(-50%)",
       backfaceVisibility: "hidden",
       webkitFontSmoothing: "subpixel-antialiased",
+
+      [`& ${StyledOptionsTabs}`]: {
+        display: "none",
+      },
 
       "@sm": {
         top: "$gr5",

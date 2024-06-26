@@ -7,6 +7,7 @@ import {
   camptonExtraBold,
   camptonExtraLight,
 } from "./fonts";
+
 import { globalCss } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
@@ -36,6 +37,9 @@ const defaults = {
     color: "$black80",
     fontFamily: "$northwesternSansRegular",
     fontSize: `${rem}px`,
+    optimizeLegibility: "auto",
+    textRendering: "optimizeLegibility",
+    fontSizeAdjust: 0.5,
   },
 
   p: {

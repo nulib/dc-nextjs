@@ -1,4 +1,5 @@
 import { VariantProps, styled } from "@/stitches.config";
+
 import { ContainerStyled } from "@/components/Shared/Container";
 import { NavStyled } from "@/components/Nav/Nav.styled";
 import { SearchStyled } from "@/components/Search/Search.styled";
@@ -7,13 +8,14 @@ import { SearchStyled } from "@/components/Search/Search.styled";
 
 const Lockup = styled("div", {
   position: "relative",
-  padding: "$gr4 0 $gr5",
-  fontSize: "$gr6",
-  fontFamily: "$northwesternSansLight",
+  padding: "$gr4 0",
+  fontSize: "$gr5",
+  fontFamily: "$northwesternSansRegular",
   zIndex: "1",
+  color: "$purple",
 
   a: {
-    color: "$white !important",
+    color: "inherit !important",
     textDecoration: "none",
   },
 });
@@ -58,7 +60,6 @@ const MenuToggle = styled("button", {
 const PrimaryInner = styled("div", {
   display: "flex",
   flexGrow: "1",
-  alignItems: "center",
 
   "@sm": {
     "& nav": {
@@ -70,13 +71,14 @@ const PrimaryInner = styled("div", {
 const Primary = styled("div", {
   color: "$black",
   display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "center",
   margin: "0 auto",
+  paddingBottom: "$gr4",
   zIndex: "1",
   transition: "$dcAll",
   position: "relative",
   top: "unset",
-  height: "$gr5",
-  boxShadow: "2px 2px 5px #0001",
 
   [`& ${ContainerStyled}`]: {
     display: "flex",
@@ -87,15 +89,13 @@ const Primary = styled("div", {
     transition: "$dcAll",
 
     [`& ${NavStyled}`]: {
-      backgroundColor: "$purple120",
-      fontSize: "$gr4",
+      fontSize: "$gr3",
       fontFamily: "$northwesternSansRegular",
       display: "flex",
       height: "$gr5",
-      boxShadow: "3px -3px 19px #fff1",
 
       a: {
-        color: "$white",
+        color: "$purple",
         display: "flex",
         height: "100%",
         justifyContent: "center",
@@ -123,13 +123,16 @@ const Primary = styled("div", {
   "&[data-search-fixed='true']": {
     zIndex: "2",
 
+    form: {
+      backgroundColor: "white",
+      boxShadow: "0px 5px 19px #0002",
+    },
+
     [`& ${ContainerStyled}`]: {
       position: "fixed",
       top: "0",
       maxWidth: "100%",
       padding: "0",
-      backgroundColor: "white",
-      boxShadow: "0px 3px 11px #0003",
       transition: "$dcAll",
 
       "> span": {
@@ -155,7 +158,7 @@ const Primary = styled("div", {
 
 const Super = styled("div", {
   position: "relative",
-  backgroundColor: "$purple120",
+  backgroundColor: "$purple",
   color: "$purple10",
   zIndex: "10",
 
@@ -196,23 +199,27 @@ const User = styled("span", {
 });
 
 const HeaderStyled = styled("header", {
-  backgroundColor: "$purple",
-  color: "$white",
   flexDirection: "column",
 
   variants: {
     isHero: {
       true: {
-        [`& ${Lockup}`]: {
-          textShadow: "1px 1px 3px #0003",
+        backgroundColor: "$purple",
+
+        [`& ${Super}`]: {
+          boxShadow: "0px 5px 19px #0002",
         },
 
-        [`& ${Primary}`]: {
-          boxShadow: "unset",
+        [`& ${Lockup}`]: {
+          color: "$white !important",
+        },
 
-          [`& ${SearchStyled}, & ${NavStyled}`]: {
-            boxShadow: "8px 8px 19px #0003",
-          },
+        [`& ${SearchStyled}`]: {
+          background: "$white",
+        },
+
+        [`& ${NavStyled} a`]: {
+          color: "$white !important",
         },
       },
     },

@@ -137,7 +137,11 @@ const Collection: NextPage = () => {
         </Head>
       )}
 
-      <Layout title={collection?.title || ""} description={description || ""}>
+      <Layout
+        description={description || ""}
+        header="hero"
+        title={collection?.title || ""}
+      >
         {collection && (
           <>
             <HeroWrapper>

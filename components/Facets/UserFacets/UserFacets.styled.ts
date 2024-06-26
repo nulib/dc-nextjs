@@ -1,11 +1,12 @@
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
+
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
 const DropdownToggle = styled(Dropdown.Trigger, {
   display: "flex",
-  padding: "0 $gr2",
+  padding: "0 $gr1",
   border: "none",
   position: "relative",
   backgroundColor: "transparent",
@@ -21,7 +22,6 @@ const DropdownToggle = styled(Dropdown.Trigger, {
 
   svg: {
     width: "$gr4",
-    marginBottom: "-3px",
     color: "$purple120",
     transform: "rotate(0deg)",
     transition: "$dcAll",
@@ -41,7 +41,8 @@ const DropdownToggle = styled(Dropdown.Trigger, {
     height: "19px",
     borderRadius: "50%",
     marginTop: "-$gr4",
-    marginRight: "calc(-$gr3 + 4px)",
+    position: "absolute",
+    right: "-6px",
   },
 
   [`&:hover`]: {
