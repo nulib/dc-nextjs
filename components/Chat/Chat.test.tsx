@@ -3,6 +3,7 @@ import { render, screen } from "@/test-utils";
 import Chat from "@/components/Chat/Chat";
 import { SearchProvider } from "@/context/search-context";
 import mockRouter from "next-router-mock";
+import useChatSocket from "@/hooks/useChatSocket";
 
 const mockSendMessage = jest.fn();
 
@@ -38,16 +39,15 @@ jest.mock("@/components/Chat/Response/Response", () => {
   };
 });
 
-jest.mock("@/hooks/useChatSocket", () => {
-  return function useChatSocket() {
-    return {
-      authToken: "fake-token",
-      isConnected: false,
-      message: { answer: "fake-answer" },
-      sendMessage: mockSendMessage,
-    };
-  };
-});
+// Mock the useChatSocket hook and provide a default mock
+// implementation which can be overridden in individual tests
+jest.mock("@/hooks/useChatSocket");
+(useChatSocket as jest.Mock).mockImplementation(() => ({
+  authToken: "fake-token-1",
+  isConnected: false,
+  message: { answer: "fake-answer-1" },
+  sendMessage: mockSendMessage,
+}));
 
 describe("Chat component", () => {
   it("renders default ai response placeholder text", () => {
@@ -58,7 +58,7 @@ describe("Chat component", () => {
       "What can I help you find? Try searching for",
       {
         exact: false,
-      }
+      },
     );
     expect(wrapper).toBeInTheDocument();
   });
@@ -69,7 +69,7 @@ describe("Chat component", () => {
     render(
       <SearchProvider>
         <Chat />
-      </SearchProvider>
+      </SearchProvider>,
     );
 
     const el = screen.getByTestId("mock-chat-response");
@@ -82,5 +82,43 @@ describe("Chat component", () => {
       sourceDocuments: [],
       streamedAnswer: "",
     });
+  });
+
+  it("sends a websocket message when the search term changes", () => {
+    const mockMessage = jest.fn();
+
+    (useChatSocket as jest.Mock).mockImplementation(() => ({
+      authToken: "fake-token",
+      isConnected: true,
+      message: { answer: "fake-answer-1" },
+      sendMessage: mockMessage,
+    }));
+
+    mockRouter.setCurrentUrl("/search?q=boats&ai=true");
+
+    render(
+      <SearchProvider>
+        <Chat />
+      </SearchProvider>,
+    );
+
+    expect(mockMessage).toHaveBeenCalledWith(
+      expect.objectContaining({
+        auth: "fake-token",
+        message: "chat",
+        question: "boats",
+      }),
+    );
+  });
+
+  it("doesn't send a websocket message if the search term is empty", () => {
+    mockRouter.setCurrentUrl("/search?ai=true");
+    render(
+      <SearchProvider>
+        <Chat />
+      </SearchProvider>,
+    );
+
+    expect(mockSendMessage).not.toHaveBeenCalled();
   });
 });
