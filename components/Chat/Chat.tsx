@@ -25,7 +25,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
   const [streamedAnswer, setStreamedAnswer] = useState("");
 
   useEffect(() => {
-    if (!sameQuestionExists && isConnected && authToken) {
+    if (!sameQuestionExists && isConnected && authToken && searchTerm) {
       const preparedQuestion = prepareQuestion(searchTerm, authToken);
       sendMessage(preparedQuestion);
     }
