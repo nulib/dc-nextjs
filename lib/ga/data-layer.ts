@@ -4,6 +4,7 @@ interface DataLayer {
   adminset?: string;
   collections?: string | null;
   creatorsContributors?: Array<string> | string;
+  isUsingAI?: boolean;
   isLoggedIn?: boolean;
   pageTitle: string;
   rightsStatement?: string | null;
@@ -15,6 +16,7 @@ const defaultDataLayer = {
   adminset: "",
   collections: "",
   creatorsContributors: "",
+  isUsingAI: false,
   isLoggedIn: false,
   pageTitle: "",
   rightsStatement: "",
