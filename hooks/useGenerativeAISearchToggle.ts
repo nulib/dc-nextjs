@@ -42,7 +42,12 @@ export default function useGenerativeAISearchToggle() {
   }, [router.asPath]);
 
   function goToLocation() {
-    const currentUrl = `${window.location.origin}${router.asPath}`;
+    const currentUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}${router.asPath}`
+        : "";
+    if (!currentUrl) return;
+
     const url = new URL(currentUrl);
     url.searchParams.set("ai", "true");
     return encodeURIComponent(url.href);

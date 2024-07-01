@@ -99,7 +99,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
       <Container>
         <p>
           What can I help you find? Try searching for `john cage scrapbooks` or
-          `famous speeches`
+          `who played at the Berkeley Folk Music Festival in 1965?`
         </p>
       </Container>
     );

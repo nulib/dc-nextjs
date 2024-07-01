@@ -279,12 +279,8 @@ const SearchPage: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const isUsingAI = query?.ai === "true";
-
+export const getServerSideProps: GetServerSideProps = async () => {
   const dataLayer = buildDataLayer({
-    isUsingAI,
     pageTitle: "Search page",
   });
 
