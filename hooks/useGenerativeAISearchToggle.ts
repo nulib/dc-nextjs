@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { UserContext } from "@/context/user-context";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
 const defaultModalState = {
@@ -9,35 +10,47 @@ const defaultModalState = {
   title: "Use Generative AI",
 };
 
-const aiQueryParam = "ai";
-
 export default function useGenerativeAISearchToggle() {
   const router = useRouter();
-  const [dialog, setDialog] = useState(defaultModalState);
 
+  const [ai, setAI] = useLocalStorage("ai", "false");
   const { user } = React.useContext(UserContext);
 
-  const isAiQueryParam = router.query[aiQueryParam] === "true";
-  const isChecked = isAiQueryParam && user?.isLoggedIn;
+  const [dialog, setDialog] = useState(defaultModalState);
+
+  const isAIPreference = ai === "true";
+  const isChecked = isAIPreference && user?.isLoggedIn;
 
   const loginUrl = `${DCAPI_ENDPOINT}/auth/login?goto=${goToLocation()}`;
 
-  // If the "ai" query param is present and the user is not logged in on
-  // initial load, show the dialog
+  // If "ai" is saved in localStorage and the user is
+  // not logged in on initial load, show the alert dialog
   useEffect(() => {
     if (!user) return;
-    if (isAiQueryParam) {
+    if (isAIPreference) {
       setDialog((prevDialog) => ({ ...prevDialog, isOpen: !user?.isLoggedIn }));
     }
-  }, [isAiQueryParam, user]);
+  }, [isAIPreference, user]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const { query } = router;
+      if (query.ai === "true") {
+        setAI("true");
+      }
+    }
+  }, [router.asPath]);
 
   function goToLocation() {
-    const currentUrl = `${window.location.origin}${router.asPath}`;
-    const url = new URL(currentUrl);
+    const currentUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}${router.asPath}`
+        : "";
+    if (!currentUrl) return;
 
-    url.searchParams.set(aiQueryParam, "true");
-    const encodedUri = encodeURIComponent(url.href);
-    return encodedUri;
+    const url = new URL(currentUrl);
+    url.searchParams.set("ai", "true");
+    return encodeURIComponent(url.href);
   }
 
   function closeDialog() {
@@ -48,17 +61,7 @@ export default function useGenerativeAISearchToggle() {
     if (!user?.isLoggedIn) {
       setDialog({ ...dialog, isOpen: checked });
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [aiQueryParam]: _, ...query } = router.query;
-
-      if (checked) {
-        query[aiQueryParam] = checked.toString();
-      }
-
-      router.push({
-        pathname: router.pathname,
-        query,
-      });
+      setAI(checked ? "true" : "false");
     }
   }
 

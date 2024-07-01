@@ -7,7 +7,7 @@ import {
   ResultsWrapper,
   StyledResponseWrapper,
 } from "@/components/Search/Search.styled";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -36,9 +36,8 @@ import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
-import useQueryParams from "@/hooks/useQueryParams";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 type RequestState = {
   data: ApiSearchResponse | null;
@@ -48,20 +47,23 @@ type RequestState = {
 
 const SearchPage: NextPage = () => {
   const size = 40;
+
   const router = useRouter();
+  const prevRouterQuery = useRef(router.query);
 
   const { user } = React.useContext(UserContext);
-  const queryParams = useQueryParams();
-  const { ai } = queryParams;
-  const { searchState, searchDispatch } = useSearchState();
-  const { activeTab } = searchState;
+  const { isChecked } = useGenerativeAISearchToggle();
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
     loading: true,
   });
+
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
+
   const [similarTo, setSimilarTo] = useState<{
     visible: boolean;
     work: { id: string; title: string };
@@ -73,7 +75,7 @@ const SearchPage: NextPage = () => {
     },
   });
 
-  const showStreamedResponse = Boolean(user?.isLoggedIn && ai);
+  const showStreamedResponse = Boolean(user?.isLoggedIn && isChecked);
   const { data: apiData, error, loading } = requestState;
   const totalResults = requestState.data?.pagination?.total_hits;
 
@@ -153,6 +155,23 @@ const SearchPage: NextPage = () => {
   }, [pageQueryUrl]);
 
   /**
+   * Maintain tab state when filtering in the Gen AI Chat component
+   */
+  useEffect(() => {
+    const routerQueryParamsChanged =
+      JSON.stringify(prevRouterQuery.current) !== JSON.stringify(router.query);
+
+    if (routerQueryParamsChanged) {
+      setActiveTab(
+        routerQueryParamsChanged ? "results" : isChecked ? "stream" : "results",
+      );
+
+      // Update the previous value for the next render
+      prevRouterQuery.current = router.query;
+    }
+  }, [router.query]);
+
+  /**
    * Handle any network errors
    */
   function handleErrors(err: Error | unknown) {
@@ -210,12 +229,7 @@ const SearchPage: NextPage = () => {
 
           <Tabs.Root
             value={activeTab}
-            onValueChange={(value) =>
-              searchDispatch({
-                activeTab: value as ActiveTab,
-                type: "updateActiveTab",
-              })
-            }
+            onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
             <SearchOptions
               tabs={
@@ -280,12 +294,8 @@ const SearchPage: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { query } = context;
-  const isUsingAI = query?.ai === "true";
-
+export const getServerSideProps: GetServerSideProps = async () => {
   const dataLayer = buildDataLayer({
-    isUsingAI,
     pageTitle: "Search page",
   });
 
