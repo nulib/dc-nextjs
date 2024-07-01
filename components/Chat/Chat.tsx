@@ -68,24 +68,6 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
     }
   }, [message, searchTerm, sourceDocuments, searchDispatch]);
 
-  function handleResultsTab() {
-    if (window.scrollY === 0) {
-      searchDispatch({ activeTab: "results", type: "updateActiveTab" });
-      return;
-    }
-
-    window.scrollTo({ behavior: "instant", top: 0 });
-
-    const checkScroll = () => {
-      if (window.scrollY === 0) {
-        searchDispatch({ activeTab: "results", type: "updateActiveTab" });
-        window.removeEventListener("scroll", checkScroll);
-      }
-    };
-
-    window.addEventListener("scroll", checkScroll);
-  }
-
   function handleNewQuestion() {
     const input = document.getElementById("dc-search") as HTMLInputElement;
     if (input) {
@@ -116,7 +98,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
         <>
           <Container>
             <StyledResponseActions>
-              <Button isPrimary isLowercase onClick={handleResultsTab}>
+              <Button isPrimary isLowercase>
                 View {pluralize("Result", totalResults || 0)}
               </Button>
               <Button isLowercase onClick={handleNewQuestion}>

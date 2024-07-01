@@ -23,14 +23,14 @@ const defaultUser = {
 
 const withUserProvider = (
   Component: React.ReactNode,
-  user: UserContextType = defaultUser
+  user: UserContextType = defaultUser,
 ) => {
   return <UserContext.Provider value={user}>{Component}</UserContext.Provider>;
 };
 
 const withSearchProvider = (
   Component: React.ReactNode,
-  initialState = defaultSearchState
+  initialState = defaultSearchState,
 ) => {
   return (
     <SearchProvider initialState={initialState}>{Component}</SearchProvider>
@@ -40,6 +40,9 @@ const withSearchProvider = (
 describe("GenerativeAIToggle", () => {
   beforeEach(() => {
     mockRouter.setCurrentUrl("/");
+
+    // Note: localStorage mocked in "jest.setup.js"
+    localStorage.clear();
   });
 
   it("renders the generative AI toggle UI and toggles state for a logged in user", async () => {
@@ -54,6 +57,7 @@ describe("GenerativeAIToggle", () => {
 
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("data-state", "checked");
+    expect(localStorage.getItem("ai")).toEqual(JSON.stringify("true"));
   });
 
   it("renders the generative AI tooltip", () => {
@@ -76,54 +80,53 @@ describe("GenerativeAIToggle", () => {
     render(
       withUserProvider(
         withSearchProvider(<GenerativeAIToggle />),
-        nonLoggedInUser
-      )
+        nonLoggedInUser,
+      ),
     );
 
     const checkbox = await screen.findByRole("checkbox");
     await user.click(checkbox);
 
     const generativeAIDialog = await screen.findByText(
-      "You must be logged in with a Northwestern NetID to use the Generative AI search feature."
+      "You must be logged in with a Northwestern NetID to use the Generative AI search feature.",
     );
 
     expect(generativeAIDialog).toBeInTheDocument();
   });
 
-  it("renders a toggled generative ai state when a query param is set and user is logged in", () => {
+  it("renders a toggled generative ai state when localStorage variable is set and user is logged in", () => {
     const activeSearchState = {
       ...defaultSearchState,
-      isGenerativeAI: true,
     };
 
-    mockRouter.setCurrentUrl("/search?ai=true");
+    localStorage.setItem("ai", JSON.stringify("true"));
+
+    mockRouter.setCurrentUrl("/search");
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle />, activeSearchState)
-      )
+        withSearchProvider(<GenerativeAIToggle />, activeSearchState),
+      ),
     );
 
     const checkbox = screen.getByRole("checkbox");
     expect(checkbox).toHaveAttribute("data-state", "checked");
   });
 
-  it("sets a query param in the URL when generative AI checkbox is clicked", async () => {
+  it("updates localStorage ai variable when generative AI checkbox is clicked", async () => {
     const user = userEvent.setup();
 
     mockRouter.setCurrentUrl("/");
 
+    localStorage.setItem("ai", JSON.stringify("false"));
+
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle />, defaultSearchState)
-      )
+        withSearchProvider(<GenerativeAIToggle />, defaultSearchState),
+      ),
     );
 
     await user.click(screen.getByRole("checkbox"));
 
-    expect(mockRouter).toMatchObject({
-      asPath: "/?ai=true",
-      pathname: "/",
-      query: { ai: "true" },
-    });
+    expect(localStorage.getItem("ai")).toEqual(JSON.stringify("true"));
   });
 });
