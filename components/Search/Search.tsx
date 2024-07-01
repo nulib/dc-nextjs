@@ -15,7 +15,6 @@ import { UrlFacets } from "@/types/context/filter-context";
 import { getAllFacetIds } from "@/lib/utils/facet-helpers";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -24,7 +23,6 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { ai, urlFacets } = useQueryParams();
-  const { searchDispatch } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -53,16 +51,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       }
     });
 
-    searchDispatch({
-      activeTab: ai ? "stream" : "results",
-      type: "updateActiveTab",
-    });
-
     router.push({
       pathname: "/search",
       query: {
         q: searchValue,
-        ...(ai && { ai }),
         ...updatedFacets,
       },
     });

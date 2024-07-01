@@ -36,9 +36,8 @@ import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
-import useQueryParams from "@/hooks/useQueryParams";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 type RequestState = {
   data: ApiSearchResponse | null;
@@ -51,17 +50,18 @@ const SearchPage: NextPage = () => {
   const router = useRouter();
 
   const { user } = React.useContext(UserContext);
-  const queryParams = useQueryParams();
-  const { ai } = queryParams;
-  const { searchState, searchDispatch } = useSearchState();
-  const { activeTab } = searchState;
+  const { isChecked } = useGenerativeAISearchToggle();
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
   const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     error: "",
     loading: true,
   });
+
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
+
   const [similarTo, setSimilarTo] = useState<{
     visible: boolean;
     work: { id: string; title: string };
@@ -73,7 +73,7 @@ const SearchPage: NextPage = () => {
     },
   });
 
-  const showStreamedResponse = Boolean(user?.isLoggedIn && ai);
+  const showStreamedResponse = Boolean(user?.isLoggedIn && isChecked);
   const { data: apiData, error, loading } = requestState;
   const totalResults = requestState.data?.pagination?.total_hits;
 
@@ -152,6 +152,10 @@ const SearchPage: NextPage = () => {
     })();
   }, [pageQueryUrl]);
 
+  useEffect(() => {
+    setActiveTab(isChecked ? "stream" : "results");
+  }, [isChecked]);
+
   /**
    * Handle any network errors
    */
@@ -210,12 +214,7 @@ const SearchPage: NextPage = () => {
 
           <Tabs.Root
             value={activeTab}
-            onValueChange={(value) =>
-              searchDispatch({
-                activeTab: value as ActiveTab,
-                type: "updateActiveTab",
-              })
-            }
+            onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
             <SearchOptions
               tabs={

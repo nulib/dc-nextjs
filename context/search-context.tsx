@@ -5,7 +5,6 @@ import React from "react";
 import { Work } from "@nulib/dcapi-types";
 
 type Action =
-  | { type: "updateActiveTab"; activeTab: ActiveTab }
   | {
       type: "updateAggregations";
       aggregations: ApiResponseAggregation | undefined;
@@ -29,7 +28,6 @@ type SearchProviderProps = {
 };
 
 const defaultState: SearchContextStore = {
-  activeTab: "results",
   aggregations: {},
   chat: {
     answer: "",
@@ -45,12 +43,6 @@ const SearchStateContext = React.createContext<
 
 function searchReducer(state: State, action: Action) {
   switch (action.type) {
-    case "updateActiveTab": {
-      return {
-        ...state,
-        activeTab: action.activeTab,
-      };
-    }
     case "updateAggregations": {
       return {
         ...state,
