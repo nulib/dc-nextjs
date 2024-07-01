@@ -17,7 +17,7 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
   const {
     query: { q },
   } = router;
-  const { ai, urlFacets } = useQueryParams();
+  const { urlFacets } = useQueryParams();
 
   const {
     filterDispatch,
@@ -34,7 +34,6 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
       ...(q && { q }),
       ...urlFacets,
       ...userFacetsUnsubmitted,
-      ...(ai && { ai }),
     };
 
     router.push({

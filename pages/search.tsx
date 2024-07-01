@@ -7,7 +7,7 @@ import {
   ResultsWrapper,
   StyledResponseWrapper,
 } from "@/components/Search/Search.styled";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -47,7 +47,9 @@ type RequestState = {
 
 const SearchPage: NextPage = () => {
   const size = 40;
+
   const router = useRouter();
+  const prevRouterQuery = useRef(router.query);
 
   const { user } = React.useContext(UserContext);
   const { isChecked } = useGenerativeAISearchToggle();
@@ -152,9 +154,22 @@ const SearchPage: NextPage = () => {
     })();
   }, [pageQueryUrl]);
 
+  /**
+   * Maintain tab state when filtering in the Gen AI Chat component
+   */
   useEffect(() => {
-    setActiveTab(isChecked ? "stream" : "results");
-  }, [isChecked]);
+    const routerQueryParamsChanged =
+      JSON.stringify(prevRouterQuery.current) !== JSON.stringify(router.query);
+
+    if (routerQueryParamsChanged) {
+      setActiveTab(
+        routerQueryParamsChanged ? "results" : isChecked ? "stream" : "results",
+      );
+
+      // Update the previous value for the next render
+      prevRouterQuery.current = router.query;
+    }
+  }, [router.query]);
 
   /**
    * Handle any network errors
