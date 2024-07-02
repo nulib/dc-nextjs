@@ -5,6 +5,7 @@ import {
   StyledToggle,
   Wrapper,
 } from "@/components/Shared/Switch.styled";
+
 import React from "react";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";

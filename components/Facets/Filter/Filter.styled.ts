@@ -21,7 +21,7 @@ const FilterActivate = styled(Dialog.Trigger, {
   borderRadius: "50px",
   transition: "$dcAll",
   padding: "0 $gr3 0 $gr1",
-  boxShadow: "0px 3px 15px #0002",
+  boxShadow: "2px 2px 5px #0002",
 
   [`& ${IconStyled}`]: {
     color: "$purple60",

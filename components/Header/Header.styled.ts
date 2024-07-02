@@ -100,6 +100,10 @@ const Primary = styled("div", {
         justifyContent: "center",
         alignItems: "center",
         padding: "0 $gr3",
+        textDecoration: "underline",
+        textDecorationThickness: "min(2px,max(1px,.05em))",
+        textUnderlineOffset: "calc(.05em + 2px)",
+        textDecorationColor: "$purple10",
       },
     },
 

@@ -37,9 +37,6 @@ const defaults = {
     color: "$black80",
     fontFamily: "$northwesternSansRegular",
     fontSize: `${rem}px`,
-    optimizeLegibility: "auto",
-    textRendering: "optimizeLegibility",
-    fontSizeAdjust: 0.5,
   },
 
   p: {
