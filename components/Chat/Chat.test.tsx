@@ -50,8 +50,7 @@ jest.mock("@/hooks/useChatSocket");
 }));
 
 describe("Chat component", () => {
-  it("renders default ai response placeholder text", () => {
-    mockRouter.setCurrentUrl("/search?ai=true");
+  it("renders default placeholder text when no search term is present", () => {
     render(<Chat />);
 
     const wrapper = screen.getByText(
@@ -64,7 +63,7 @@ describe("Chat component", () => {
   });
 
   it("renders the chat response component when search term is present", () => {
-    mockRouter.setCurrentUrl("/search?q=tell+me+about+boats&ai=true");
+    mockRouter.setCurrentUrl("/search?q=tell+me+about+boats");
 
     render(
       <SearchProvider>
@@ -94,7 +93,7 @@ describe("Chat component", () => {
       sendMessage: mockMessage,
     }));
 
-    mockRouter.setCurrentUrl("/search?q=boats&ai=true");
+    mockRouter.setCurrentUrl("/search?q=boats");
 
     render(
       <SearchProvider>
@@ -112,7 +111,7 @@ describe("Chat component", () => {
   });
 
   it("doesn't send a websocket message if the search term is empty", () => {
-    mockRouter.setCurrentUrl("/search?ai=true");
+    mockRouter.setCurrentUrl("/search");
     render(
       <SearchProvider>
         <Chat />

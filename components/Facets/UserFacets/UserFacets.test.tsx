@@ -8,7 +8,6 @@ import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
 const searchStateDefault: SearchContextStore = {
-  activeTab: "results",
   aggregations: {},
   chat: {
     answer: "",
@@ -19,7 +18,6 @@ const searchStateDefault: SearchContextStore = {
 };
 
 const searchState: SearchContextStore = {
-  activeTab: "results",
   aggregations: {},
   chat: {
     answer: "",
@@ -87,9 +85,11 @@ describe("UserFacet UI component", () => {
     );
     const userFacets = await screen.findByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();
+
     const toggle = screen.getByTestId(`facet-user-component-popover-toggle`);
     expect(toggle).toBeInTheDocument();
     expect(toggle).toHaveTextContent("1");
+
     const content = screen.queryByText(`facet-user-component-popover-content`);
     expect(content).toBeNull();
   });
@@ -114,8 +114,10 @@ describe("UserFacet UI component", () => {
         </FilterProvider>
       </SearchProvider>,
     );
+
     const userFacets = screen.getByTestId(`facet-user-component`);
     expect(userFacets).toBeInTheDocument();
+
     const values = screen.getAllByTestId(`facet-user-value-component`);
     expect(values.length).toBe(3);
   });
