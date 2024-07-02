@@ -9,7 +9,7 @@ const DC_URL = process.env.NEXT_PUBLIC_DC_URL;
 const DCAPI_ENDPOINT = process.env.NEXT_PUBLIC_DCAPI_ENDPOINT;
 
 const DC_API_SEARCH_URL = `${DCAPI_ENDPOINT}/search`;
-const DCAPI_CHAT_ENDPOINT = `${DCAPI_ENDPOINT}/chat-endpoint`;
+const DCAPI_CHAT_ENDPOINT = `${DCAPI_ENDPOINT}/chat/endpoint`;
 
 export {
   DC_URL,
