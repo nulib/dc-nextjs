@@ -1,5 +1,7 @@
 import * as AspectRatio from "@radix-ui/react-aspect-ratio";
+
 import { VariantProps, styled } from "@/stitches.config";
+
 import { IconLock } from "@/components/Shared/SVG/Icons";
 import Image from "next/image";
 
@@ -78,10 +80,10 @@ const FigurePlaceholder = styled(AspectRatio.Root, {
 
 const FigureSupplementalInfo = styled("span", {
   fontSize: "$gr2",
+  fontFamily: "$northwesternSansRegular",
   color: "$black50",
   marginTop: "$gr1",
   display: "block",
-  fontFamily: "$northwesternSansLight",
 });
 
 const FigureTitle = styled("span", {
