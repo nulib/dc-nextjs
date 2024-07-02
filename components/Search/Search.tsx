@@ -13,6 +13,7 @@ import GenerativeAIToggle from "./GenerativeAIToggle";
 import SearchTextArea from "@/components/Search/TextArea";
 import { UrlFacets } from "@/types/context/filter-context";
 import { getAllFacetIds } from "@/lib/utils/facet-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
@@ -22,7 +23,9 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
-  const { ai, urlFacets } = useQueryParams();
+  const { urlFacets } = useQueryParams();
+
+  const { isChecked } = useGenerativeAISearchToggle();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -34,7 +37,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const handleSubmit = (
     e:
       | SyntheticEvent<HTMLFormElement>
-      | React.KeyboardEvent<HTMLTextAreaElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault();
 
@@ -102,7 +105,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       isFocused={searchFocus}
     >
       <SearchTextArea
-        isAi={!!ai}
+        isAi={!!isChecked}
         isFocused={searchFocus}
         searchValue={searchValue}
         handleSearchChange={handleSearchChange}

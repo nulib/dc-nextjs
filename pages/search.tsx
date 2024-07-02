@@ -7,7 +7,7 @@ import {
   ResultsWrapper,
   StyledResponseWrapper,
 } from "@/components/Search/Search.styled";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -37,6 +37,7 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
+import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
 type RequestState = {
@@ -49,7 +50,8 @@ const SearchPage: NextPage = () => {
   const size = 40;
 
   const router = useRouter();
-  const prevRouterQuery = useRef(router.query);
+
+  const { urlFacets } = useQueryParams();
 
   const { user } = React.useContext(UserContext);
   const { isChecked } = useGenerativeAISearchToggle();
@@ -155,21 +157,15 @@ const SearchPage: NextPage = () => {
   }, [pageQueryUrl]);
 
   /**
-   * Maintain tab state when filtering in the Gen AI Chat component
+   * Maintain "stream / results" tab state when filtering in the Gen AI Chat component
    */
   useEffect(() => {
-    const routerQueryParamsChanged =
-      JSON.stringify(prevRouterQuery.current) !== JSON.stringify(router.query);
-
-    if (routerQueryParamsChanged) {
-      setActiveTab(
-        routerQueryParamsChanged ? "results" : isChecked ? "stream" : "results",
-      );
-
-      // Update the previous value for the next render
-      prevRouterQuery.current = router.query;
+    if (Object.keys(urlFacets).length > 0) {
+      setActiveTab("results");
+    } else if (isChecked) {
+      setActiveTab("stream");
     }
-  }, [router.query]);
+  }, [urlFacets, isChecked]);
 
   /**
    * Handle any network errors
