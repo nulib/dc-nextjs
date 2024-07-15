@@ -1,51 +1,28 @@
+import { GetServerSideProps, NextPage } from "next";
 import { apiGetRequest, getIIIFResource } from "@/lib/dc-api";
-import { useEffect, useState } from "react";
 
 import { AxiosResponse } from "axios";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import { Manifest } from "@iiif/presentation-3";
-import { NextPage } from "next";
 import SharedLink from "@/components/SharedLink/SharedLink";
 import type { Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
+import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
-import { useRouter } from "next/router";
 
-const SharedPage: NextPage = () => {
-  const [work, setWork] = useState<Work>();
-  const [manifest, setManifest] = useState<Manifest>();
-  const router = useRouter();
-  const [linkExpiration, setLinkExpiration] = useState<string>("");
+interface SharedPageProps {
+  linkExpiration: string;
+  manifest: Manifest;
+  work: Work;
+}
 
-  async function getWorkAndManifest(id: string) {
-    try {
-      const response = await apiGetRequest<AxiosResponse>(
-        {
-          url: `${DCAPI_ENDPOINT}/shared-links/${id}`,
-        },
-        true,
-      );
-      if (!response) return;
-      setWork(response.data.data);
-      const manifest = await getIIIFResource<Manifest>(
-        response.data.data.iiif_manifest,
-      );
-      setManifest(manifest);
-      setLinkExpiration(response.data.info.link_expiration || "");
-    } catch (err) {
-      console.error("err", err);
-    }
-    return true;
-  }
-
-  useEffect(() => {
-    !!router.query.id && getWorkAndManifest(router.query.id as string);
-  }, [router.query.id]);
-
-  if (!(work && manifest)) return <></>;
-
+const SharedPage: NextPage<SharedPageProps> = ({
+  linkExpiration,
+  manifest,
+  work,
+}) => {
   return (
     <WorkProvider initialState={{ manifest: manifest, work: work }}>
       {/* Google Structured Data via JSON-LD */}
@@ -59,7 +36,7 @@ const SharedPage: NextPage = () => {
           }}
         />
       </Head>
-      <Layout title={work.title || ""}>
+      <Layout title={work?.title || ""}>
         <SharedLink
           manifest={manifest}
           work={work}
@@ -68,6 +45,47 @@ const SharedPage: NextPage = () => {
       </Layout>
     </WorkProvider>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const sharedId = decodeURIComponent(context?.params?.id as string);
+
+  try {
+    const response = await apiGetRequest<AxiosResponse>(
+      {
+        url: `${DCAPI_ENDPOINT}/shared-links/${sharedId}`,
+      },
+      true,
+    );
+
+    if (!response) throw new Error("No response from API");
+
+    const work = response.data.data as Work;
+
+    const manifest =
+      (await getIIIFResource<Manifest>(work.iiif_manifest)) || null;
+
+    const dataLayer = buildWorkDataLayer(work);
+
+    return {
+      props: {
+        dataLayer,
+        linkExpiration: (response.data.info.link_expiration as string) || "",
+        manifest,
+        work,
+      },
+    };
+  } catch (err) {
+    console.error("err", err);
+    return {
+      props: {
+        dataLayer: [],
+        linkExpiration: "",
+        manifest: null,
+        work: null,
+      },
+    };
+  }
 };
 
 export default SharedPage;
