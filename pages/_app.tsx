@@ -78,24 +78,21 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       </Head>
 
       <UserProvider>
-        <Transition>
-          <SearchProvider>
-            <style jsx global>{`
-              :root {
-                --font-akkurat-light: ${akkuratLight.style.fontFamily};
-                --font-akkurat: ${akkurat.style.fontFamily};
-                --font-akkurat-bold: ${akkuratBold.style.fontFamily};
-                --font-campton: ${campton.style.fontFamily};
-                --font-campton-bold: ${camptonBold.style.fontFamily};
-                --font-campton-extra-bold: ${camptonExtraBold.style.fontFamily};
-                --font-campton-extra-light: ${camptonExtraLight.style
-                  .fontFamily};
-              }
-            `}</style>
-            {mounted && <Component {...pageProps} />}
-            <GoogleTagManager gtmId="GTM-NDJXLQW" />
-          </SearchProvider>
-        </Transition>
+        <SearchProvider>
+          <style jsx global>{`
+            :root {
+              --font-akkurat-light: ${akkuratLight.style.fontFamily};
+              --font-akkurat: ${akkurat.style.fontFamily};
+              --font-akkurat-bold: ${akkuratBold.style.fontFamily};
+              --font-campton: ${campton.style.fontFamily};
+              --font-campton-bold: ${camptonBold.style.fontFamily};
+              --font-campton-extra-bold: ${camptonExtraBold.style.fontFamily};
+              --font-campton-extra-light: ${camptonExtraLight.style.fontFamily};
+            }
+          `}</style>
+          {mounted && <Component {...pageProps} />}
+          <GoogleTagManager gtmId="GTM-NDJXLQW" />
+        </SearchProvider>
       </UserProvider>
     </>
   );

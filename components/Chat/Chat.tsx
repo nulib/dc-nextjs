@@ -12,7 +12,7 @@ import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useSearchState } from "@/context/search-context";
 
-const Chat = ({ totalResults }: { totalResults?: number }) => {
+const Chat = () => {
   const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
   const { searchDispatch, searchState } = useSearchState();
@@ -64,6 +64,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
     }
 
     if (message.answer) {
+      console.log("message.answer", message.answer);
       updateChat();
     }
   }, [message, searchTerm, sourceDocuments, searchDispatch]);
@@ -99,7 +100,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
           <Container>
             <StyledResponseActions>
               <Button isPrimary isLowercase>
-                View {pluralize("Result", totalResults || 0)}
+                {/* View {pluralize("Result", totalResults || 0)} */}
               </Button>
               <Button isLowercase onClick={handleNewQuestion}>
                 Ask another Question

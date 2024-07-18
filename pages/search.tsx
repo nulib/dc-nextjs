@@ -249,7 +249,7 @@ const SearchPage: NextPage = () => {
               renderTabList={showStreamedResponse}
             />
             <Tabs.Content value="stream">
-              <Chat totalResults={totalResults} />
+              <Chat />
             </Tabs.Content>
 
             <Tabs.Content value="results">
