@@ -20,13 +20,13 @@ export class SearchPage {
   async verifyGridItemCount(totalCount = 0) {
     const paginationResultsCount = this.getPaginationResults(totalCount);
     await expect(this.page.getByTestId(`grid-item`)).toHaveCount(
-      paginationResultsCount
+      paginationResultsCount,
     );
   }
 
   async verifyTopResultsCount(count: number) {
     await expect(this.page.getByTestId(`results-count`)).toContainText(
-      `${count} results`
+      `${count} results`,
     );
   }
 
@@ -38,7 +38,7 @@ export class SearchPage {
     total: number;
   }) {
     await expect(this.page.getByTestId("results")).toHaveText(
-      `Showing 1 to ${count} of ${total} results`
+      `Showing 1 to ${count} of ${total} results`,
     );
   }
 }

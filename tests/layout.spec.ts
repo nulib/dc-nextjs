@@ -10,15 +10,15 @@ test("top header renders logo and links", async ({ page }) => {
   const navEl = page.getByTestId("super-nav");
 
   await expect(
-    navEl.getByRole("link", { exact: true, name: "Libraries" })
+    navEl.getByRole("link", { exact: true, name: "Libraries" }),
   ).toHaveAttribute("href", "https://www.library.northwestern.edu/");
 
   await expect(
-    navEl.getByRole("link", { exact: true, name: "About" })
+    navEl.getByRole("link", { exact: true, name: "About" }),
   ).toHaveAttribute("href", "/about");
 
   await expect(
-    navEl.getByRole("link", { exact: true, name: "Contact" })
+    navEl.getByRole("link", { exact: true, name: "Contact" }),
   ).toHaveAttribute("href", "/contact");
 
   await expect(navEl.getByRole("link", { name: "Sign in" })).toBeVisible();
@@ -32,13 +32,13 @@ test("footer renders", async ({ page }) => {
   // This component is coming from NUL Design System; not necessary to test everything in it
   await expect(footerEl).toBeVisible();
   await expect(
-    footerEl.getByAltText("Northwestern University logo")
+    footerEl.getByAltText("Northwestern University logo"),
   ).toBeVisible();
 
   // Display NUL ethics message
   await expect(
     page.getByText(
-      "Northwestern University Libraries is dedicated to the fair and ethical"
-    )
+      "Northwestern University Libraries is dedicated to the fair and ethical",
+    ),
   ).toBeVisible();
 });

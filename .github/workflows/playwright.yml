@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
-  push:
-    branches: []
+  # push:
+  #   branches: []
   pull_request:
-    branches: []
+    branches: [main, deploy/staging]
 jobs:
   test:
     timeout-minutes: 10
@@ -25,7 +25,7 @@ jobs:
           NEXT_PUBLIC_DCAPI_ENDPOINT: ${{ secrets.NEXT_PUBLIC_DCAPI_ENDPOINT }}
 
       - name: Start app
-        run: npm run start &
+        run: npm run start:playwright &
 
       - name: Wait for server
         run: npx wait-on http://localhost:3000

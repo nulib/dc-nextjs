@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Run Unit Tests and Code Quality Checks
 
 on:
   push:
@@ -20,6 +20,19 @@ jobs:
       - name: Get files
         uses: actions/checkout@v4
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -27,6 +40,17 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --force
+
+      - name: Check code formatting with Prettier
+        run: |
+          echo "Running Prettier check..."
+          npx prettier --check "**/*.{js,jsx,ts,tsx,json,md,css,scss}"
+
+      - name: Report Prettier results
+        if: failure()
+        run: |
+          echo "Prettier check failed. Please run 'npm run format' locally and commit the changes."
+          exit 1
 
       - name: Run tests
         run: npm run test:ci
