@@ -6,13 +6,12 @@
     "prettier"
   ],
   "overrides": [
-    // Only uses Testing Library lint rules in test files
+    // Overrides for Playwright tests
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
+      "files": ["tests/**/*.[jt]s?(x)"],
+      "rules": {
+        "testing-library/prefer-screen-queries": "off"
+      }
     }
   ],
   "rules": {
