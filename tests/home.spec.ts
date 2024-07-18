@@ -14,11 +14,11 @@ ogTest(
   async ({ openGraphPage }) => {
     await openGraphPage.hasOGSiteName();
     await openGraphPage.hasMetaTitle(
-      "Digital Collections - Northwestern University Libraries"
+      "Digital Collections - Northwestern University Libraries",
     );
     await openGraphPage.hasDefaultDescription();
     await openGraphPage.hasDefaultOGDescription();
     await openGraphPage.hasOGUrl("");
     await openGraphPage.hasDefaultOGImage();
-  }
+  },
 );

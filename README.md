@@ -131,8 +131,6 @@ Run Typescript's `tsc` compiler for type-checking directly.
 npm run ts-lint
 ```
 
-A pre-commit hook will ensure code is linted before committed.
-
 ## Testing
 
 ### End to end tests
@@ -147,7 +145,7 @@ NEXT_PUBLIC_DCAPI_ENDPOINT="https://dc-test-api.rdc-staging.library.northwestern
 
 ```bash
 # Start local server (automatically points NEXT_PUBLIC_DCAPI_ENDPOINT to the test data API)
-npm run dev:test-env
+npm run dev:playwright
 
 # If in AWS Dev Environment, set a BASE_URL environment variable in a .env.local file
 BASE_URL="[YOUR_DEV_ID].dev.rdc.library.northwestern.edu"
@@ -156,7 +154,7 @@ BASE_URL="[YOUR_DEV_ID].dev.rdc.library.northwestern.edu"
 npm run test:playwright
 ```
 
-To run more visual tests, try experimenting with:
+To run visual tests or debug errors, try experimenting with:
 
 ```bash
 # Run in an interactive test browser to visually see tests run
