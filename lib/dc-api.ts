@@ -4,6 +4,7 @@ import type { ApiSearchRequestBody } from "@/types/api/request";
 
 interface ApiGetRequestParams {
   url: string;
+  headers?: Record<string, string>;
 }
 
 interface ApiPostRequestParams {
@@ -22,12 +23,9 @@ async function apiGetRequest<R>(
   obj: ApiGetRequestParams,
   rawResponse?: boolean,
 ): Promise<R | undefined> {
-  const { url } = obj;
-
   try {
     const response = await axios({
-      url,
-      withCredentials: true,
+      ...obj,
     });
     const work = response.data?.data as R;
     // @ts-ignore
@@ -55,13 +53,23 @@ async function apiPostRequest<R>(
   }
 }
 
-async function getIIIFResource<R>(uri: string | null): Promise<R | undefined> {
+async function getIIIFResource<R>(
+  uri: string | null,
+  headers?: any,
+): Promise<R | undefined> {
   if (!uri) return Promise.resolve(undefined);
   try {
+    // console.log(`uri`, uri);
+    // console.log(`manifest request`, {
+    //   url: uri,
+    //   headers,
+    //   withCredentials: true,
+    // });
     const response = await axios({
       url: uri,
-      withCredentials: true,
+      headers,
     });
+    // console.log(`manifest response`, response);
     return response.data;
   } catch (err) {
     handleError(err);

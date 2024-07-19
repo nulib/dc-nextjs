@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
 import { apiGetRequest, getIIIFResource } from "@/lib/dc-api";
+import { getCookies, setCookie } from "cookies-next";
 
 import { AxiosResponse } from "axios";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
@@ -48,22 +49,37 @@ const SharedPage: NextPage<SharedPageProps> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, res } = context;
+
+  const cookies = getCookies({ req, res });
+
+  // are these cookies properly set?
+  const headers = {
+    Cookie: Object.entries(cookies)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("; "),
+  };
+  console.log(`headers`, headers);
+
   const sharedId = decodeURIComponent(context?.params?.id as string);
 
   try {
     const response = await apiGetRequest<AxiosResponse>(
       {
         url: `${DCAPI_ENDPOINT}/shared-links/${sharedId}`,
+        headers,
       },
       true,
     );
+
+    // console.log(`response`, response);
 
     if (!response) throw new Error("No response from API");
 
     const work = response.data.data as Work;
 
     const manifest =
-      (await getIIIFResource<Manifest>(work.iiif_manifest)) || null;
+      (await getIIIFResource<Manifest>(work.iiif_manifest, headers)) || null;
 
     const dataLayer = buildWorkDataLayer(work);
 
