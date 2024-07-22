@@ -49,32 +49,39 @@ const SharedPage: NextPage<SharedPageProps> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
-
-  const cookies = getCookies({ req, res });
-
-  // are these cookies properly set?
-  const headers = {
-    Cookie: Object.entries(cookies)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("; "),
-  };
-  console.log(`headers`, headers);
-
   const sharedId = decodeURIComponent(context?.params?.id as string);
 
   try {
+    const url = `${DCAPI_ENDPOINT}/shared-links/${sharedId}`;
     const response = await apiGetRequest<AxiosResponse>(
       {
-        url: `${DCAPI_ENDPOINT}/shared-links/${sharedId}`,
-        headers,
+        url,
       },
       true,
     );
 
-    // console.log(`response`, response);
-
     if (!response) throw new Error("No response from API");
+
+    const responseHeadersCookie = response.headers["set-cookie"];
+
+    if (!responseHeadersCookie)
+      throw new Error(`No shared link response for ${url}`);
+
+    const dcApiCookie = responseHeadersCookie[0].split(" ")[0].split("=");
+    const dcApiCookieKey = dcApiCookie[0];
+    const dcApiCookieValue = dcApiCookie[1].slice(0, -1);
+
+    const headers = {
+      Cookie: `${dcApiCookieKey}=${dcApiCookieValue}`,
+    };
+
+    const { req, res } = context;
+    setCookie(dcApiCookieKey, dcApiCookieValue, {
+      req,
+      res,
+      domain: ".library.northwestern.edu",
+      secure: true,
+    });
 
     const work = response.data.data as Work;
 
