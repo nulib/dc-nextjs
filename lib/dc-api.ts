@@ -1,10 +1,9 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosHeaders } from "axios";
 
 import type { ApiSearchRequestBody } from "@/types/api/request";
 
 interface ApiGetRequestParams {
   url: string;
-  headers?: Record<string, string>;
 }
 
 interface ApiPostRequestParams {
@@ -23,9 +22,12 @@ async function apiGetRequest<R>(
   obj: ApiGetRequestParams,
   rawResponse?: boolean,
 ): Promise<R | undefined> {
+  const { url } = obj;
+
   try {
     const response = await axios({
-      ...obj,
+      url,
+      withCredentials: true,
     });
     const work = response.data?.data as R;
     // @ts-ignore
@@ -55,19 +57,14 @@ async function apiPostRequest<R>(
 
 async function getIIIFResource<R>(
   uri: string | null,
-  headers?: any,
+  headers?: AxiosHeaders,
 ): Promise<R | undefined> {
   if (!uri) return Promise.resolve(undefined);
   try {
-    // console.log(`uri`, uri);
-    // console.log(`manifest request`, {
-    //   url: uri,
-    //   headers,
-    //   withCredentials: true,
-    // });
     const response = await axios({
       url: uri,
       headers,
+      withCredentials: Boolean(headers) ? false : true,
     });
     // console.log(`manifest response`, response);
     return response.data;
