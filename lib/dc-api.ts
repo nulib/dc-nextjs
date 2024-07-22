@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosHeaders } from "axios";
+import axios, { AxiosError, RawAxiosRequestHeaders } from "axios";
 
 import type { ApiSearchRequestBody } from "@/types/api/request";
 
@@ -57,7 +57,7 @@ async function apiPostRequest<R>(
 
 async function getIIIFResource<R>(
   uri: string | null,
-  headers?: AxiosHeaders,
+  headers?: RawAxiosRequestHeaders,
 ): Promise<R | undefined> {
   if (!uri) return Promise.resolve(undefined);
   try {
