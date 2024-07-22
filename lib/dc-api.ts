@@ -66,7 +66,6 @@ async function getIIIFResource<R>(
       headers,
       withCredentials: Boolean(headers) ? false : true,
     });
-    // console.log(`manifest response`, response);
     return response.data;
   } catch (err) {
     handleError(err);
