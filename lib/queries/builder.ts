@@ -6,7 +6,6 @@ import { QueryDslQueryContainer } from "@elastic/elasticsearch/api/types";
 import { UrlFacets } from "@/types/context/filter-context";
 import { buildAggs } from "@/lib/queries/aggs";
 import { buildFacetFilters } from "@/lib/queries/facet";
-import { isAiChatActive } from "../utils/get-url-search-params";
 
 type BuildQueryProps = {
   aggs?: FacetsInstance[];
@@ -16,12 +15,10 @@ type BuildQueryProps = {
   urlFacets: UrlFacets;
 };
 
-export function buildQuery(obj: BuildQueryProps) {
+export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
   let queryValue;
-
-  const isAiChat = isAiChatActive();
 
   // Build the "must" part of the query
   if (term) must.push(buildSearchPart(term));
@@ -35,7 +32,7 @@ export function buildQuery(obj: BuildQueryProps) {
   }
 
   // User facets exist and we are not in AI chat mode
-  if (must.length > 0 && !isAiChat) {
+  if (must.length > 0 && !isAI) {
     queryValue = {
       bool: {
         must,
@@ -44,7 +41,7 @@ export function buildQuery(obj: BuildQueryProps) {
   }
 
   // We are in AI chat mode and a search term exists
-  if (isAiChat && term) {
+  if (isAI && term) {
     queryValue = {
       hybrid: {
         queries: [
