@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Announcement from "@/components/Shared/Announcement";
 import { Button } from "@nulib/design-system";
 import ChatFeedback from "@/components/Chat/Feedback/Feedback";
 import ChatResponse from "@/components/Chat/Response/Response";
@@ -18,6 +19,8 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
   const { searchDispatch, searchState } = useSearchState();
   const { chat } = searchState;
   const { answer, documents = [], question } = chat;
+
+  const [streamingError, setStreamingError] = useState("");
 
   const sameQuestionExists = !!question && searchTerm === question;
 
@@ -63,6 +66,22 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
       return;
     }
 
+    if (message.end) {
+      switch (message.end.reason) {
+        case "length":
+          setStreamingError("The response has hit the LLM token limit.");
+          break;
+        case "timeout":
+          setStreamingError("The response has timed out.");
+          break;
+        case "eos_token":
+          setStreamingError("This should never happen.");
+          break;
+        default:
+          break;
+      }
+    }
+
     if (message.answer) {
       updateChat();
     }
@@ -94,6 +113,13 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
         sourceDocuments={sameQuestionExists ? documents : sourceDocuments}
         streamedAnswer={sameQuestionExists ? answer : streamedAnswer}
       />
+      {streamingError && (
+        <Container>
+          <Announcement css={{ marginTop: "1rem" }}>
+            {streamingError}
+          </Announcement>
+        </Container>
+      )}
       {answer && (
         <>
           <Container>

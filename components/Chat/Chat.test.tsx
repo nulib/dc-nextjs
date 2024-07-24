@@ -21,6 +21,7 @@ jest.mock("@/context/search-context", () => {
         chat: {
           answer: "",
           documents: [],
+          end: "stop",
           question: "",
         },
         searchFixed: false,
@@ -45,7 +46,7 @@ jest.mock("@/hooks/useChatSocket");
 (useChatSocket as jest.Mock).mockImplementation(() => ({
   authToken: "fake-token-1",
   isConnected: false,
-  message: { answer: "fake-answer-1" },
+  message: { answer: "fake-answer-1", end: "stop" },
   sendMessage: mockSendMessage,
 }));
 
@@ -119,5 +120,55 @@ describe("Chat component", () => {
     );
 
     expect(mockSendMessage).not.toHaveBeenCalled();
+  });
+
+  it("displays an error message when the response hits the LLM token limit", () => {
+    (useChatSocket as jest.Mock).mockImplementation(() => ({
+      authToken: "fake",
+      isConnected: true,
+      message: {
+        end: {
+          reason: "length",
+          ref: "fake",
+        },
+      },
+      sendMessage: mockSendMessage,
+    }));
+
+    mockRouter.setCurrentUrl("/search?q=boats");
+
+    render(
+      <SearchProvider>
+        <Chat />
+      </SearchProvider>,
+    );
+
+    const error = screen.getByText("The response has hit the LLM token limit.");
+    expect(error).toBeInTheDocument();
+  });
+
+  it("displays an error message when the response times out", () => {
+    (useChatSocket as jest.Mock).mockImplementation(() => ({
+      authToken: "fake",
+      isConnected: true,
+      message: {
+        end: {
+          reason: "timeout",
+          ref: "fake",
+        },
+      },
+      sendMessage: mockSendMessage,
+    }));
+
+    mockRouter.setCurrentUrl("/search?q=boats");
+
+    render(
+      <SearchProvider>
+        <Chat />
+      </SearchProvider>,
+    );
+
+    const error = screen.getByText("The response has timed out.");
+    expect(error).toBeInTheDocument();
   });
 });
