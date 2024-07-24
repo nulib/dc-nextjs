@@ -5,6 +5,7 @@ import {
   StyledToggle,
   Wrapper,
 } from "@/components/Shared/Switch.styled";
+
 import React from "react";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
@@ -32,7 +33,7 @@ const SearchPublicOnlyWorks = () => {
     <StyledToggle>
       <Wrapper>
         <Label htmlFor={switchId} css={checked ? { opacity: "1" } : {}}>
-          Public works only
+          Public only
         </Label>
         <StyledSwitch
           checked={checked}

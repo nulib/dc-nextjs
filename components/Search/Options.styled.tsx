@@ -12,6 +12,12 @@ const StyledOptionsBar = styled("div", {
   transition: "$dcScrollLeft",
   zIndex: "1",
   gap: "$gr3",
+  flexWrap: "wrap",
+  alignItems: "center",
+
+  "@md": {
+    gap: "$gr2",
+  },
 
   [`& ${WorkTypeWrapper}`]: {
     borderRight: "1px solid $black10",
@@ -26,7 +32,6 @@ const StyledOptionsBar = styled("div", {
   },
 
   "@sm": {
-    padding: "$gr4 0",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -45,7 +50,7 @@ const StyledOptionsFacets = styled("div", {
       },
       true: {
         display: "flex",
-        width: "100%",
+        flexGrow: "1",
         justifyContent: "space-between",
       },
     },
@@ -56,17 +61,13 @@ const StyledOptionsExtras = styled("div", {
   display: "flex",
 
   "@sm": {
-    marginTop: "$gr4",
-    flexDirection: "column-reverse",
-    alignItems: "center",
+    display: "none",
   },
 });
 
 const StyledOptionsTabs = styled("div", {
   [`div[role="tablist"]`]: {
     display: "flex",
-    flexShrink: "0",
-    flexGrow: "0",
     flexWrap: "nowrap",
     height: "38px",
     borderRadius: "50px",
@@ -85,6 +86,10 @@ const StyledOptionsTabs = styled("div", {
       whiteSpace: "nowrap",
       display: "flex",
       alignItems: "center",
+
+      "@md": {
+        padding: "0 $gr2",
+      },
 
       "&[data-state=active]": {
         color: "$black",
@@ -126,23 +131,18 @@ const StyledOptionsTabs = styled("div", {
 });
 
 const StyledOptions = styled("div", {
-  height: "38px",
   transition: "$dcScrollHeight",
   margin: "0 0 $gr5",
 
-  "@sm": {
-    backgroundColor: "$gray6",
-    height: "225px",
-  },
-
   ".facets-ui-container": {
     transition: "$dcAll",
+    height: "unset",
   },
 
   "&[data-filter-fixed='true']": {
     flexGrow: "0",
     flexShrink: "1",
-    height: "38px",
+    height: "unset",
 
     "@sm": {
       backgroundColor: "transparent",
@@ -170,6 +170,7 @@ const StyledOptions = styled("div", {
 
       "@sm": {
         top: "$gr5",
+        marginTop: "$gr4",
       },
     },
   },

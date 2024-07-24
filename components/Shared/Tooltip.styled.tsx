@@ -5,19 +5,18 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 export const TooltipArrow = styled(Tooltip.Arrow, {
-  fill: "$brightBlueB",
+  fill: "$white",
 });
 
 export const TooltipBody = styled("div", {
   background: "$white",
-  boxShadow: "0 13px 21px 0 rgba(0, 0, 0, 0.13)",
+  boxShadow: "5px 5px 19px 0 #0002",
   width: "450px",
   lineHeight: "1.5em",
   fontSize: "$gr2 !important",
   fontFamily: "$northwesternSansRegular",
   padding: "$gr3",
-  borderRadius: "6px",
-  borderTop: "2px solid $brightBlueB",
+  borderRadius: "3px",
 
   em: {
     color: "$black50",

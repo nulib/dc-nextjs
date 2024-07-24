@@ -51,9 +51,13 @@ const StyledWorkType = styled("ul", {
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
-        height: "2rem",
+        height: "$gr2",
         cursor: "pointer",
-        padding: "0 1rem",
+        padding: "0 $gr3",
+
+        "@md": {
+          padding: "0 $gr2",
+        },
       },
     },
   },

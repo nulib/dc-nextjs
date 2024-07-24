@@ -17,6 +17,12 @@ const StyledResponse = styled("section", {
   "h1, h2, h3, h4, h5, h6, strong": {
     fontFamily: "$northwesternSansBold",
   },
+
+  "@sm": {
+    flexDirection: "column",
+    gap: "$gr3",
+    marginBottom: "$gr4",
+  },
 });
 
 const StyledResponseAside = styled("aside", {
@@ -25,11 +31,19 @@ const StyledResponseAside = styled("aside", {
   borderRadius: "inherit",
   borderTopLeftRadius: "unset",
   borderBottomLeftRadius: "unset",
+
+  "@sm": {
+    width: "unset",
+  },
 });
 
 const StyledResponseContent = styled("div", {
   width: "61.8%",
   flexGrow: 0,
+
+  "@sm": {
+    width: "unset",
+  },
 });
 
 const StyledResponseWrapper = styled("div", {
@@ -45,8 +59,24 @@ const StyledImages = styled("div", {
   "> div": {
     width: "calc(33% - 20px)",
 
+    "@md": {
+      width: "calc(50% - 20px)",
+    },
+
+    "@sm": {
+      width: "calc(33% - 20px)",
+    },
+
     "&:nth-child(1)": {
       width: "calc(66% - 10px)",
+
+      "@md": {
+        width: "100%",
+      },
+
+      "@sm": {
+        width: "calc(33% - 20px)",
+      },
     },
 
     figure: {
@@ -82,11 +112,12 @@ const StyledQuestion = styled("h3", {
 
 const StyledStreamedAnswer = styled("article", {
   fontSize: "$gr3",
-  lineHeight: "1.63em",
+  lineHeight: "162.8%",
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontWeight: "400",
     fontFamily: "$northwesternSansBold",
+    fontSizeAdjust: "none",
   },
 
   a: {

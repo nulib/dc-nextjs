@@ -76,7 +76,6 @@ const Primary = styled("div", {
   margin: "0 auto",
   paddingBottom: "$gr4",
   zIndex: "1",
-  transition: "$dcAll",
   position: "relative",
   top: "unset",
 
@@ -101,6 +100,10 @@ const Primary = styled("div", {
         justifyContent: "center",
         alignItems: "center",
         padding: "0 $gr3",
+        textDecoration: "underline",
+        textDecorationThickness: "min(2px,max(1px,.05em))",
+        textUnderlineOffset: "calc(.05em + 2px)",
+        textDecorationColor: "$purple10",
       },
     },
 
@@ -122,10 +125,12 @@ const Primary = styled("div", {
 
   "&[data-search-fixed='true']": {
     zIndex: "2",
+    paddingTop: "$gr5",
 
     form: {
       backgroundColor: "white",
-      boxShadow: "0px 5px 19px #0002",
+      boxShadow: "0px 5px 19px #0003",
+      borderRadius: "0",
     },
 
     [`& ${ContainerStyled}`]: {
