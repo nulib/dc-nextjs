@@ -25,7 +25,7 @@ const GenerativeAIToggleWrapper = styled("div", {
 
   "& svg": {
     position: "relative",
-    padding: "0 0 1px",
+    padding: "1px 0",
     height: "$gr3",
     width: "$gr3",
     fill: "$black50",
