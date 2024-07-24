@@ -21,6 +21,7 @@ import Preview from "./Preview";
 import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 import { useFilterState } from "@/context/filter-context";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 export type SetIsModalOpenType = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -35,13 +36,18 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
 
+  const { isChecked } = useGenerativeAISearchToggle();
+
   useEffect(() => {
     async function getData() {
-      const body: ApiSearchRequestBody = buildQuery({
-        size: 5,
-        term: q as string,
-        urlFacets: userFacetsUnsubmitted,
-      });
+      const body: ApiSearchRequestBody = buildQuery(
+        {
+          size: 5,
+          term: q as string,
+          urlFacets: userFacetsUnsubmitted,
+        },
+        !!isChecked,
+      );
 
       const response = await apiPostRequest<ApiSearchResponse>({
         body: body,

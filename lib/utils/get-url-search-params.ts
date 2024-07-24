@@ -15,8 +15,3 @@ export function getUrlSearchParams(url: string) {
 
   return paramsObj;
 }
-
-export function isAiChatActive() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("ai") === "true";
-}

@@ -107,11 +107,14 @@ const SearchPage: NextPage = () => {
           });
         }
 
-        const body: ApiSearchRequestBody = buildQuery({
-          size,
-          term: q as string,
-          urlFacets,
-        });
+        const body: ApiSearchRequestBody = buildQuery(
+          {
+            size,
+            term: q as string,
+            urlFacets,
+          },
+          !!isChecked,
+        );
 
         // Request as a "hybrid" OpensSearch query
         // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
@@ -158,9 +161,12 @@ const SearchPage: NextPage = () => {
 
   /**
    * Maintain "stream / results" tab state when filtering in the Gen AI Chat component
+   *
+   * TODO: Handle a scenario where user is on the "stream" tab and then filters
+   * to a point where there are no results. In this case, the "results" tab should be active.
    */
   useEffect(() => {
-    if (Object.keys(urlFacets).length > 0) {
+    if (Object.keys(urlFacets).length > 0 || !isChecked) {
       setActiveTab("results");
     } else if (isChecked) {
       setActiveTab("stream");
