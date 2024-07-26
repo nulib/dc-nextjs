@@ -22,6 +22,10 @@ export type Answer = {
 
 export type StreamingMessage = {
   answer?: string;
+  end?: {
+    reason: "stop" | "length" | "timeout" | "eos_token";
+    ref: string;
+  };
   question?: string;
   ref: string;
   source_documents?: Array<Work>;
