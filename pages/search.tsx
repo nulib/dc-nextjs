@@ -37,7 +37,6 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
-import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
 type RequestState = {
@@ -50,11 +49,10 @@ const SearchPage: NextPage = () => {
   const size = 40;
 
   const router = useRouter();
-
-  const { urlFacets } = useQueryParams();
+  const { page, q } = router.query;
 
   const { user } = React.useContext(UserContext);
-  const { isChecked } = useGenerativeAISearchToggle();
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
@@ -77,9 +75,23 @@ const SearchPage: NextPage = () => {
     },
   });
 
-  const showStreamedResponse = Boolean(user?.isLoggedIn && isChecked);
+  const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
   const { data: apiData, error, loading } = requestState;
   const totalResults = requestState.data?.pagination?.total_hits;
+
+  /**
+   * on a query change, we check to see if the user is using the AI and then
+   * set the active tab to "stream" if they are, otherwise set it to "results"
+   * this also persist the state of the active tab when the user filters search
+   * results navigates pages
+   */
+  useEffect(() => {
+    if (showStreamedResponse) {
+      return setActiveTab("stream");
+    }
+
+    setActiveTab("results");
+  }, [q, showStreamedResponse]);
 
   /**
    * Make requests to the search API endpoint
@@ -88,7 +100,6 @@ const SearchPage: NextPage = () => {
     if (!router.isReady) return;
     (async () => {
       try {
-        const { page, q } = router.query;
         const urlFacets = parseUrlFacets(router.query);
         const requestUrl = new URL(DC_API_SEARCH_URL);
         const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
@@ -113,7 +124,7 @@ const SearchPage: NextPage = () => {
             term: q as string,
             urlFacets,
           },
-          !!isChecked,
+          !!isAI,
         );
 
         // Request as a "hybrid" OpensSearch query
@@ -158,20 +169,6 @@ const SearchPage: NextPage = () => {
       }
     })();
   }, [pageQueryUrl]);
-
-  /**
-   * Maintain "stream / results" tab state when filtering in the Gen AI Chat component
-   *
-   * TODO: Handle a scenario where user is on the "stream" tab and then filters
-   * to a point where there are no results. In this case, the "results" tab should be active.
-   */
-  useEffect(() => {
-    if (Object.keys(urlFacets).length > 0 || !isChecked) {
-      setActiveTab("results");
-    } else if (isChecked) {
-      setActiveTab("stream");
-    }
-  }, [urlFacets, isChecked]);
 
   /**
    * Handle any network errors
