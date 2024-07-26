@@ -13,6 +13,7 @@ const StyledResponse = styled("section", {
   position: "relative",
   gap: "$gr5",
   zIndex: "0",
+  minHeight: "50vh",
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontFamily: "$northwesternSansBold",
@@ -113,6 +114,7 @@ const StyledQuestion = styled("h3", {
 const StyledStreamedAnswer = styled("article", {
   fontSize: "$gr3",
   lineHeight: "162.8%",
+  overflow: "hidden",
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontWeight: "400",

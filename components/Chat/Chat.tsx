@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { defaultState, useSearchState } from "@/context/search-context";
 
 import Announcement from "@/components/Shared/Announcement";
 import { Button } from "@nulib/design-system";
@@ -11,28 +12,35 @@ import { pluralize } from "@/lib/utils/count-helpers";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
-import { useSearchState } from "@/context/search-context";
 
 const Chat = ({ totalResults }: { totalResults?: number }) => {
   const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
-  const { searchDispatch, searchState } = useSearchState();
-  const { chat } = searchState;
-  const { answer, documents = [], question } = chat;
 
   const [streamingError, setStreamingError] = useState("");
 
-  const sameQuestionExists = !!question && searchTerm === question;
+  /**
+   * get the`chat` state and dispatch function from the search context
+   * for persisting the chat state when search screen tabs are switched
+   */
+  const {
+    searchState: { chat },
+    searchDispatch,
+  } = useSearchState();
+  const { question, answer, documents } = chat;
 
   const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
   const [streamedAnswer, setStreamedAnswer] = useState("");
 
+  const isStreamingComplete = !!question && searchTerm === question;
+
   useEffect(() => {
-    if (!sameQuestionExists && isConnected && authToken && searchTerm) {
+    if (!isStreamingComplete && isConnected && authToken && searchTerm) {
+      resetChat();
       const preparedQuestion = prepareQuestion(searchTerm, authToken);
       sendMessage(preparedQuestion);
     }
-  }, [authToken, isConnected, sameQuestionExists, searchTerm, sendMessage]);
+  }, [authToken, isStreamingComplete, isConnected, searchTerm, sendMessage]);
 
   useEffect(() => {
     if (!message) return;
@@ -85,7 +93,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
     if (message.answer) {
       updateChat();
     }
-  }, [message, searchTerm, sourceDocuments, searchDispatch]);
+  }, [message]);
 
   function handleNewQuestion() {
     const input = document.getElementById("dc-search") as HTMLInputElement;
@@ -93,6 +101,15 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
       input.focus();
       input.value = "";
     }
+  }
+
+  function resetChat() {
+    searchDispatch({
+      chat: defaultState.chat,
+      type: "updateChat",
+    });
+    setStreamedAnswer("");
+    setSourceDocuments([]);
   }
 
   if (!searchTerm)
@@ -108,10 +125,10 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
   return (
     <>
       <ChatResponse
-        isStreamingComplete={!!answer}
-        searchTerm={searchTerm}
-        sourceDocuments={sameQuestionExists ? documents : sourceDocuments}
-        streamedAnswer={sameQuestionExists ? answer : streamedAnswer}
+        isStreamingComplete={isStreamingComplete}
+        searchTerm={question || searchTerm}
+        sourceDocuments={isStreamingComplete ? documents : sourceDocuments}
+        streamedAnswer={isStreamingComplete ? answer : streamedAnswer}
       />
       {streamingError && (
         <Container>
@@ -120,7 +137,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
           </Announcement>
         </Container>
       )}
-      {answer && (
+      {isStreamingComplete && (
         <>
           <Container>
             <StyledResponseActions>
