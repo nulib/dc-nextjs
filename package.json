@@ -57,7 +57,8 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "swiper": "^9.4.1",
-    "unified": "^11.0.4"
+    "unified": "^11.0.4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@elastic/elasticsearch": "7.17",
@@ -70,6 +71,7 @@
     "@types/openseadragon": "^3.0.4",
     "@types/react": "^18.2.61",
     "@types/react-sticky-el": "^1.0.3",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "babel-jest": "^29.6.2",
     "cypress": "^12.4.0",
