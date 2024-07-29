@@ -10,6 +10,7 @@ const SearchStyled = styled("form", {
   marginRight: "$gr4",
   transition: "$dcAll",
   borderRadius: "3px",
+  flexWrap: "wrap",
 
   variants: {
     isFocused: {
@@ -26,9 +27,16 @@ const SearchStyled = styled("form", {
     },
   },
 
+  "> div": {
+    display: "flex",
+    flexGrow: "1",
+    justifyContent: "flex-end",
+  },
+
   "@sm": {
     width: "100%",
     marginRight: "0",
+    flexDirection: "column",
   },
 
   "@lg": {
