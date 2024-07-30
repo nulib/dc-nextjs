@@ -114,10 +114,12 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         clearSearchResults={clearSearchResults}
         ref={searchRef}
       />
-      <GenerativeAIToggle />
-      <Button type="submit" data-testid="submit-button">
-        Search <IconArrowForward />
-      </Button>
+      <div>
+        <GenerativeAIToggle />
+        <Button type="submit" data-testid="submit-button">
+          Search <IconArrowForward />
+        </Button>
+      </div>
       {isLoaded && <IconSearch />}
     </SearchStyled>
   );
