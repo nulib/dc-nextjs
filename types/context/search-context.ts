@@ -9,6 +9,7 @@ export interface SearchContextStore {
     answer: string;
     documents: Work[];
     question: string;
+    ref: string;
   };
   searchFixed: boolean;
 }

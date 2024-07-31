@@ -59,6 +59,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
           answer: message.answer || "",
           documents: sourceDocuments,
           question: searchTerm || "",
+          ref: message.ref,
         },
         type: "updateChat",
       });

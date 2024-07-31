@@ -1,4 +1,4 @@
-import { ActiveTab, SearchContextStore } from "@/types/context/search-context";
+import { SearchContextStore } from "@/types/context/search-context";
 
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
@@ -15,6 +15,7 @@ type Action =
         answer: string;
         documents: Work[];
         question: string;
+        ref: string;
       };
     }
   | { type: "updateSearch"; q: string }
@@ -33,6 +34,7 @@ const defaultState: SearchContextStore = {
     answer: "",
     documents: [],
     question: "",
+    ref: "",
   },
   searchFixed: false,
 };
