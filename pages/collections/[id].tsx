@@ -33,6 +33,7 @@ import Container from "@/components/Shared/Container";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
 import Hero from "@/components/Hero/Hero";
+import IIIFShare from "@/components/Shared/IIIF/Share";
 import Layout from "components/layout";
 import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
@@ -172,6 +173,7 @@ const Collection: NextPage = () => {
                 </Facts>
               </Container>
             </Interstitial>
+            <IIIFShare />
             <Container>
               <Tabs defaultValue="explore">
                 <TabsList aria-label="Explore">
