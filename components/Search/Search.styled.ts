@@ -29,8 +29,11 @@ const SearchStyled = styled("form", {
 
   "> div": {
     display: "flex",
-    flexGrow: "1",
     justifyContent: "flex-end",
+
+    "&:first-child": {
+      flexGrow: "1",
+    },
   },
 
   "@sm": {
