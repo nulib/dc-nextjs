@@ -151,13 +151,33 @@ const StyledResponseActions = styled("div", {
   padding: "$gr4 0",
 });
 
+const StyledUnsubmitted = styled("p", {
+  color: "$black50",
+  fontSize: "$gr3",
+  fontFamily: "$northwesternSansLight",
+  textAlign: "center",
+  width: "61.8%",
+  maxWidth: "61.8%",
+  margin: "0 auto",
+  padding: "$gr4 0",
+});
+
+const StyledResponseDisclaimer = styled("p", {
+  color: "$black50",
+  fontSize: "$gr2",
+  fontFamily: "$northwesternSansLight",
+  margin: "0 0 $gr4",
+});
+
 export {
   StyledResponse,
   StyledResponseActions,
   StyledResponseAside,
   StyledResponseContent,
+  StyledResponseDisclaimer,
   StyledResponseWrapper,
   StyledImages,
   StyledQuestion,
   StyledStreamedAnswer,
+  StyledUnsubmitted,
 };

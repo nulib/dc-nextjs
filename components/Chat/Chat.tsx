@@ -1,4 +1,10 @@
+import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import React, { useEffect, useState } from "react";
+import {
+  StyledResponseActions,
+  StyledResponseDisclaimer,
+  StyledUnsubmitted,
+} from "@/components/Chat/Response/Response.styled";
 import { defaultState, useSearchState } from "@/context/search-context";
 
 import Announcement from "@/components/Shared/Announcement";
@@ -6,7 +12,6 @@ import { Button } from "@nulib/design-system";
 import ChatFeedback from "@/components/Chat/Feedback/Feedback";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
-import { StyledResponseActions } from "@/components/Chat/Response/Response.styled";
 import { Work } from "@nulib/dcapi-types";
 import { pluralize } from "@/lib/utils/count-helpers";
 import { prepareQuestion } from "@/lib/chat-helpers";
@@ -116,10 +121,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
   if (!searchTerm)
     return (
       <Container>
-        <p>
-          What can I help you find? Try searching for `john cage scrapbooks` or
-          `who played at the Berkeley Folk Music Festival in 1965?`
-        </p>
+        <StyledUnsubmitted>{AI_SEARCH_UNSUBMITTED}</StyledUnsubmitted>
       </Container>
     );
 
@@ -138,7 +140,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
           </Announcement>
         </Container>
       )}
-      {isStreamingComplete && (
+      {!isStreamingComplete && (
         <>
           <Container>
             <StyledResponseActions>
@@ -149,6 +151,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
                 Ask another Question
               </Button>
             </StyledResponseActions>
+            <StyledResponseDisclaimer>{AI_DISCLAIMER}</StyledResponseDisclaimer>
           </Container>
           <ChatFeedback />
         </>
