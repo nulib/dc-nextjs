@@ -1,6 +1,11 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 import {
+  AI_DISCLAIMER,
+  AI_LOGIN_ALERT,
+  AI_TOGGLE_LABEL,
+} from "@/lib/constants/common";
+import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
@@ -18,8 +23,6 @@ import SharedAlertDialog from "../Shared/AlertDialog";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 function GenerativeAITooltip() {
-  const generativeAIWarning = `The answers and provided links are generated using chatGPT and metadata from Northwestern University Libraries Digital Collections. This is an experiment and results may be inaccurate, irrelevant, or potentially harmful.`;
-
   return (
     <Tooltip.Provider delayDuration={20}>
       <Tooltip.Root data-testid="tooltip">
@@ -29,7 +32,7 @@ function GenerativeAITooltip() {
         <Tooltip.Portal>
           <TooltipContent side="bottom" sideOffset={3} collisionPadding={19}>
             <TooltipArrow />
-            <TooltipBody>{generativeAIWarning}</TooltipBody>
+            <TooltipBody>{AI_DISCLAIMER}</TooltipBody>
           </TooltipContent>
         </Tooltip.Portal>
       </Tooltip.Root>
@@ -53,7 +56,7 @@ export default function GenerativeAIToggle() {
             <IconCheck />
           </CheckboxIndicator>
         </CheckboxRootStyled>
-        <label htmlFor="isGenerativeAI">Use Generative AI</label>
+        <label htmlFor="isGenerativeAI">{AI_TOGGLE_LABEL}</label>
         <GenerativeAITooltip />
       </GenerativeAIToggleWrapper>
 
@@ -62,8 +65,7 @@ export default function GenerativeAIToggle() {
         cancel={{ label: "Cancel", onClick: closeDialog }}
         action={{ label: "Login", onClick: handleLogin }}
       >
-        You must be logged in with a Northwestern NetID to use the Generative AI
-        search feature.
+        {AI_LOGIN_ALERT}
       </SharedAlertDialog>
     </>
   );
