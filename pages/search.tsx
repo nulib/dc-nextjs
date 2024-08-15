@@ -197,6 +197,10 @@ const SearchPage: NextPage = () => {
     });
   }
 
+  function handleViewResultsCallback() {
+    setActiveTab("results");
+  }
+
   return (
     <>
       {/* Google Structured Data via JSON-LD */}
@@ -252,7 +256,10 @@ const SearchPage: NextPage = () => {
               renderTabList={showStreamedResponse}
             />
             <Tabs.Content value="stream">
-              <Chat totalResults={totalResults} />
+              <Chat
+                totalResults={totalResults}
+                viewResultsCallback={handleViewResultsCallback}
+              />
             </Tabs.Content>
 
             <Tabs.Content value="results">
