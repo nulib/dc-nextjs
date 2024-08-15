@@ -140,7 +140,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
           </Announcement>
         </Container>
       )}
-      {!isStreamingComplete && (
+      {isStreamingComplete && (
         <>
           <Container>
             <StyledResponseActions>
