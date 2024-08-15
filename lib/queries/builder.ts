@@ -51,12 +51,12 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                * Reference available index keys/vars:
                * https://github.com/nulib/meadow/blob/deploy/staging/app/priv/elasticsearch/v2/settings/work.json
                */
-              default_operator: "AND",
+              default_operator: "OR",
               fields: [
-                "title^5",
-                // "all_text", // we feel like neural should handle the all_text part
+                "title^1",
+                "collection.title^5",
                 "all_controlled_labels",
-                "all_ids^5", // boost the all_ids field
+                "all_ids^1",
               ],
               query: term,
             },
