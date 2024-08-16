@@ -18,7 +18,13 @@ import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
 
-const Chat = ({ totalResults }: { totalResults?: number }) => {
+const Chat = ({
+  totalResults,
+  viewResultsCallback,
+}: {
+  totalResults?: number;
+  viewResultsCallback: () => void;
+}) => {
   const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
 
@@ -144,7 +150,7 @@ const Chat = ({ totalResults }: { totalResults?: number }) => {
         <>
           <Container>
             <StyledResponseActions>
-              <Button isPrimary isLowercase>
+              <Button isPrimary isLowercase onClick={viewResultsCallback}>
                 View {pluralize("Result", totalResults || 0)}
               </Button>
               <Button isLowercase onClick={handleNewQuestion}>
