@@ -72,11 +72,20 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
   return (
     <TopInfoWrapper>
       <header>
-        <Label label={manifest.label} as="h1" data-testid="title" />
-        <IIIFShare uri={manifest.id} />
-        {manifest?.summary && (
-          <Summary summary={manifest.summary} as="p" data-testid="summary" />
-        )}
+        <div>
+          <div>
+            <Label label={manifest.label} as="h1" data-testid="title" />
+            {manifest?.summary && (
+              <Summary
+                summary={manifest.summary}
+                as="p"
+                data-testid="summary"
+              />
+            )}
+          </div>
+          <IIIFShare uri={manifest.id} />
+        </div>
+
         <ActionButtons>
           <Button
             name="find"

@@ -2,9 +2,11 @@ import {
   NoResultsMessage,
   ResultsMessage,
   ResultsWrapper,
+  ResultsWrapperHeader,
 } from "@/components/Search/Search.styled";
 
 import Grid from "@/components/Grid/Grid";
+import IIIFShare from "../Shared/IIIF/Share";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import { SearchResultsState } from "@/types/components/search";
 import { pluralize } from "@/lib/utils/count-helpers";
@@ -27,9 +29,12 @@ const SearchResults: React.FC<SearchResultsState> = ({
         <>
           {!isAI &&
             (totalResults ? (
-              <ResultsMessage data-testid="results-count">
-                {pluralize("result", totalResults)}
-              </ResultsMessage>
+              <ResultsWrapperHeader>
+                <ResultsMessage data-testid="results-count">
+                  {pluralize("result", totalResults)}
+                </ResultsMessage>
+                <IIIFShare uri="" />
+              </ResultsWrapperHeader>
             ) : (
               <NoResultsMessage>
                 <strong>Your search did not match any results.</strong> Please

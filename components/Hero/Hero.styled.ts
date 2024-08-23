@@ -135,10 +135,11 @@ const HeroStyled = styled("div", {
 
           ".slide-label": {
             fontFamily: "$northwesternDisplayBold",
-            fontSize: "$gr8",
+            fontSize: "$gr7",
             display: "block",
             margin: "0 0 $gr2",
             lineHeight: "1em",
+            letterSpacing: "-0.015em",
 
             "@sm": {
               fontSize: "$gr7",

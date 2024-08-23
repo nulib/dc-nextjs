@@ -26,14 +26,14 @@ const StyledCopyText = styled("button", {
   fontFamily: "$northwesternSans",
   fontSize: "$gr3",
   whiteSpace: "nowrap",
+  textDecoration: "underline",
+  textDecorationThickness: "min(2px,max(1px,.05em))",
+  textUnderlineOffset: "calc(.05em + 2px)",
+  textDecorationColor: "$purple10",
 
   svg: {
     height: "calc($gr3 - 3px)",
     marginRight: "$gr1",
-  },
-
-  "&:hover": {
-    textDecoration: "underline",
   },
 });
 

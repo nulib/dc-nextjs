@@ -1,7 +1,7 @@
+import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "./constants/endpoints";
 import axios, { AxiosError, RawAxiosRequestHeaders } from "axios";
 
 import type { ApiSearchRequestBody } from "@/types/api/request";
-import { DC_API_SEARCH_URL } from "./constants/endpoints";
 import { NextRouter } from "next/router";
 
 interface ApiGetRequestParams {
@@ -74,13 +74,26 @@ async function getIIIFResource<R>(
   }
 }
 
-function iiifSearchUrl(query: NextRouter["query"], size?: number): string {
+function iiifSearchUri(query: NextRouter["query"], size?: number): string {
   const url = new URL(DC_API_SEARCH_URL);
   Object.keys(query).forEach((key) => {
     url.searchParams.append(key, query[key] as string);
   });
+
   if (size) url.searchParams.append("size", size.toString());
   url.searchParams.append("as", "iiif");
+
+  return url.toString();
+}
+
+function iiifCollectionUri(id?: string, size?: number): string | undefined {
+  if (!id) return;
+
+  const url = new URL(`${DCAPI_ENDPOINT}/collections/${id}`);
+
+  if (size) url.searchParams.append("size", size.toString());
+  url.searchParams.append("as", "iiif");
+
   return url.toString();
 }
 
@@ -108,5 +121,6 @@ export {
   apiPostRequest,
   getIIIFResource,
   handleError,
-  iiifSearchUrl,
+  iiifCollectionUri,
+  iiifSearchUri,
 };

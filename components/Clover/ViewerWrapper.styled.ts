@@ -10,6 +10,16 @@ const ViewerWrapperStyled = styled("section", {
     background: "#f0f0f0",
   },
 
+  ".clover-viewer-header": {
+    display: "none",
+  },
+
+  ".clover-viewer-media-wrapper": {
+    "div[role='radiogroup']": {
+      paddingBottom: "0",
+    },
+  },
+
   "& label[for='information-toggle']": {
     boxShadow: "none",
   },
