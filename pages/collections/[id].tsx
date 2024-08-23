@@ -38,6 +38,7 @@ import Layout from "components/layout";
 import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
+import { iiifCollectionUri } from "@/lib/dc-api";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
@@ -57,6 +58,8 @@ const Collection: NextPage = () => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   const description = collection?.description;
+
+  const iiifResource = iiifCollectionUri(collection?.id);
 
   /** Get the Collection */
   useEffect(() => {
@@ -173,7 +176,7 @@ const Collection: NextPage = () => {
                 </Facts>
               </Container>
             </Interstitial>
-            <IIIFShare />
+            <IIIFShare uri={iiifResource} />
             <Container>
               <Tabs defaultValue="explore">
                 <TabsList aria-label="Explore">
