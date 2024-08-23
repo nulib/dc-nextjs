@@ -1,5 +1,6 @@
 import { buildSearchPart, querySearchTemplate } from "@/lib/queries/search";
 
+import { AI_K_VALUE } from "@/lib/constants/common";
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
 import { QueryDslQueryContainer } from "@elastic/elasticsearch/api/types";
@@ -46,19 +47,22 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
       hybrid: {
         queries: [
           {
-            query_string: {
-              /**
-               * Reference available index keys/vars:
-               * https://github.com/nulib/meadow/blob/deploy/staging/app/priv/elasticsearch/v2/settings/work.json
-               */
-              default_operator: "OR",
-              fields: [
-                "title^1",
-                "collection.title^5",
-                "all_controlled_labels",
-                "all_ids^1",
+            bool: {
+              must: [
+                {
+                  query_string: {
+                    default_operator: "OR",
+                    fields: [
+                      "title^1",
+                      "collection.title^5",
+                      "all_controlled_labels",
+                      "all_ids^1",
+                    ],
+                    query: term,
+                  },
+                },
               ],
-              query: term,
+              filter: buildFacetFilters(urlFacets),
             },
           },
           {
@@ -69,7 +73,7 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                     filter: buildFacetFilters(urlFacets),
                   },
                 },
-                k: size || 20,
+                k: AI_K_VALUE,
                 model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
                 query_text: term, // if term has no value, the API returns a 400 error
               },

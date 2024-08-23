@@ -24,6 +24,7 @@ import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
 import SearchSimilar from "@/components/Search/Similar";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
@@ -46,8 +47,6 @@ type RequestState = {
 };
 
 const SearchPage: NextPage = () => {
-  const size = 40;
-
   const router = useRouter();
   const { page, q } = router.query;
 
@@ -120,7 +119,7 @@ const SearchPage: NextPage = () => {
 
         const body: ApiSearchRequestBody = buildQuery(
           {
-            size,
+            size: SEARCH_RESULTS_PER_PAGE,
             term: q as string,
             urlFacets,
           },
