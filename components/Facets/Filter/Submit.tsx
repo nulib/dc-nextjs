@@ -1,6 +1,7 @@
 import { Button } from "@nulib/design-system";
 import { SetIsModalOpenType } from "@/components/Facets/Filter/Modal";
 import { useFilterState } from "@/context/filter-context";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
@@ -14,6 +15,7 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
   total,
 }) => {
   const router = useRouter();
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
   const {
     query: { q },
   } = router;
@@ -44,6 +46,8 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
     setIsModalOpen(false);
   };
 
+  console.log(`isAI`, isAI);
+
   return (
     <div data-testid="facets-submit" style={{ display: "flex" }}>
       <Button
@@ -52,7 +56,7 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
         onClick={handleSubmit}
         data-testid="submit-button"
       >
-        View Results {total ? `(${total})` : undefined}
+        View Results {total && !isAI ? `(${total})` : undefined}
       </Button>
     </div>
   );
