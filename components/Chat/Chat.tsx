@@ -151,10 +151,10 @@ const Chat = ({
           <Container>
             <StyledResponseActions>
               <Button isPrimary isLowercase onClick={viewResultsCallback}>
-                View {pluralize("Result", totalResults || 0)}
+                View More Results
               </Button>
               <Button isLowercase onClick={handleNewQuestion}>
-                Ask another Question
+                Ask Another Question
               </Button>
             </StyledResponseActions>
             <StyledResponseDisclaimer>{AI_DISCLAIMER}</StyledResponseDisclaimer>

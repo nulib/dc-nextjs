@@ -244,7 +244,7 @@ const SearchPage: NextPage = () => {
                   </Tabs.Trigger>
                   <Tabs.Trigger value="results" data-tab="results">
                     {Number.isInteger(totalResults) ? (
-                      <>View {pluralize("Result", totalResults || 0)}</>
+                      "View More Results"
                     ) : (
                       <SpinLoader size="small" />
                     )}
@@ -268,22 +268,26 @@ const SearchPage: NextPage = () => {
                   {error && <p>{error}</p>}
                   {apiData && (
                     <>
-                      {totalResults ? (
-                        <ResultsMessage data-testid="results-count">
-                          {pluralize("Result", totalResults)}
-                        </ResultsMessage>
-                      ) : (
-                        <NoResultsMessage>
-                          <strong>
-                            Your search did not match any results.
-                          </strong>{" "}
-                          Please try broadening your search terms or adjusting
-                          your filters.
-                        </NoResultsMessage>
-                      )}
+                      {!isAI &&
+                        (totalResults ? (
+                          <ResultsMessage data-testid="results-count">
+                            {pluralize("Result", totalResults)}
+                          </ResultsMessage>
+                        ) : (
+                          <NoResultsMessage>
+                            <strong>
+                              Your search did not match any results.
+                            </strong>{" "}
+                            Please try broadening your search terms or adjusting
+                            your filters.
+                          </NoResultsMessage>
+                        ))}
                       <Grid data={apiData.data} info={apiData.info} />
                       {totalResults ? (
-                        <PaginationAltCounts pagination={apiData.pagination} />
+                        <PaginationAltCounts
+                          pagination={apiData.pagination}
+                          showResultCounts={!isAI}
+                        />
                       ) : (
                         <></>
                       )}
