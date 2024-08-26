@@ -1,12 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 
 import { GetServerSideProps, NextPage } from "next";
-import {
-  NoResultsMessage,
-  ResultsMessage,
-  ResultsWrapper,
-  StyledResponseWrapper,
-} from "@/components/Search/Search.styled";
 import React, { useEffect, useState } from "react";
 
 import { ActiveTab } from "@/types/context/search-context";
@@ -15,7 +9,6 @@ import { ApiSearchResponse } from "@/types/api/response";
 import Chat from "@/components/Chat/Chat";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
-import Grid from "@/components/Grid/Grid";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
@@ -23,11 +16,13 @@ import Icon from "@/components/Shared/Icon";
 import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
+import SearchResults from "@/components/Search/Results";
+import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
+import { StyledResponseWrapper } from "@/components/Search/Search.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -36,14 +31,13 @@ import { buildQuery } from "@/lib/queries/builder";
 import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
-import { pluralize } from "@/lib/utils/count-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
-type RequestState = {
-  data: ApiSearchResponse | null;
-  error: string | null;
-  loading: boolean;
+const defaultSearchResultsState: SearchResultsState = {
+  data: null,
+  error: "",
+  loading: true,
 };
 
 const SearchPage: NextPage = () => {
@@ -55,11 +49,9 @@ const SearchPage: NextPage = () => {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
-  const [requestState, setRequestState] = useState<RequestState>({
-    data: null,
-    error: "",
-    loading: true,
-  });
+  const [searchResults, setSearchResults] = useState<SearchResultsState>(
+    defaultSearchResultsState,
+  );
 
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
 
@@ -75,8 +67,7 @@ const SearchPage: NextPage = () => {
   });
 
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
-  const { data: apiData, error, loading } = requestState;
-  const totalResults = requestState.data?.pagination?.total_hits;
+  const totalResults = searchResults.data?.pagination?.total_hits;
 
   /**
    * on a query change, we check to see if the user is using the AI and then
@@ -97,6 +88,10 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!router.isReady) return;
+
+    // Reset search results state
+    setSearchResults(defaultSearchResultsState);
+
     (async () => {
       try {
         const urlFacets = parseUrlFacets(router.query);
@@ -148,7 +143,7 @@ const SearchPage: NextPage = () => {
         handleErrors(err);
       }
     })();
-  }, [router.isReady, router.query]);
+  }, [router.isReady, router.query, isAI]);
 
   /**
    * Get request for page results
@@ -158,7 +153,7 @@ const SearchPage: NextPage = () => {
     (async () => {
       try {
         const response = await axios.get(pageQueryUrl);
-        setRequestState({
+        setSearchResults({
           data: response.data,
           error: "",
           loading: false,
@@ -179,7 +174,7 @@ const SearchPage: NextPage = () => {
     else message = String(err);
     console.error("Error getting data", message);
 
-    setRequestState((prevState) => ({
+    setSearchResults((prevState) => ({
       ...prevState,
       error: message,
       loading: false,
@@ -263,37 +258,7 @@ const SearchPage: NextPage = () => {
 
             <Tabs.Content value="results">
               <Container containerType="wide">
-                <ResultsWrapper>
-                  {loading && <></>}
-                  {error && <p>{error}</p>}
-                  {apiData && (
-                    <>
-                      {!isAI &&
-                        (totalResults ? (
-                          <ResultsMessage data-testid="results-count">
-                            {pluralize("Result", totalResults)}
-                          </ResultsMessage>
-                        ) : (
-                          <NoResultsMessage>
-                            <strong>
-                              Your search did not match any results.
-                            </strong>{" "}
-                            Please try broadening your search terms or adjusting
-                            your filters.
-                          </NoResultsMessage>
-                        ))}
-                      <Grid data={apiData.data} info={apiData.info} />
-                      {totalResults ? (
-                        <PaginationAltCounts
-                          pagination={apiData.pagination}
-                          showResultCounts={!isAI}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  )}
-                </ResultsWrapper>
+                <SearchResults {...searchResults} />
               </Container>
             </Tabs.Content>
           </Tabs.Root>
