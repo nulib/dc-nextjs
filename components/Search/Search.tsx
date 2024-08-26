@@ -25,7 +25,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { urlFacets } = useQueryParams();
 
-  const { isChecked } = useGenerativeAISearchToggle();
+  const { isChecked, handleCheckChange } = useGenerativeAISearchToggle();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -35,11 +35,11 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
 
   const handleSubmit = (
-    e:
+    e?:
       | SyntheticEvent<HTMLFormElement>
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const updatedFacets: UrlFacets = {};
     const allFacetsIds = getAllFacetIds();
@@ -81,9 +81,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     });
   };
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  useEffect(() => setIsLoaded(true), []);
+  useEffect(() => handleSubmit(), [isChecked]);
 
   useEffect(() => {
     if (router) {
