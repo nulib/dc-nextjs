@@ -82,7 +82,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   };
 
   useEffect(() => setIsLoaded(true), []);
-  useEffect(() => handleSubmit(), [isChecked]);
 
   useEffect(() => {
     if (router) {
