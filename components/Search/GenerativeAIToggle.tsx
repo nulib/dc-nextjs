@@ -14,11 +14,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/Search/GenerativeAI.styled";
+import React, { ChangeEvent } from "react";
 import { TooltipArrow, TooltipBody } from "../Shared/Tooltip.styled";
 
+import { CheckboxProps } from "@radix-ui/react-checkbox";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
-import React from "react";
 import SharedAlertDialog from "../Shared/AlertDialog";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
@@ -40,9 +41,18 @@ function GenerativeAITooltip() {
   );
 }
 
-export default function GenerativeAIToggle() {
+const GenerativeAIToggle = ({
+  checkChangeCallback,
+}: {
+  checkChangeCallback: () => void;
+}) => {
   const { closeDialog, dialog, isChecked, handleCheckChange, handleLogin } =
     useGenerativeAISearchToggle();
+
+  const handleOnCheckChange = (checked: boolean) => {
+    checkChangeCallback();
+    handleCheckChange(checked);
+  };
 
   return (
     <>
@@ -50,7 +60,7 @@ export default function GenerativeAIToggle() {
         <CheckboxRootStyled
           checked={isChecked}
           id="isGenerativeAI"
-          onCheckedChange={handleCheckChange}
+          onCheckedChange={handleOnCheckChange}
         >
           <CheckboxIndicator>
             <IconCheck />
@@ -69,4 +79,6 @@ export default function GenerativeAIToggle() {
       </SharedAlertDialog>
     </>
   );
-}
+};
+
+export default GenerativeAIToggle;
