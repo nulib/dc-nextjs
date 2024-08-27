@@ -11,6 +11,7 @@ import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { formatDateLong } from "@/lib/utils/date-helpers";
 import { getWorkSliders } from "@/lib/work-helpers";
 import { styled } from "@/stitches.config";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 const BoldText = styled("strong", {
   fontFamily: "$northwesternSansBold",
@@ -28,7 +29,9 @@ const SharedLink: React.FC<SharedLinkProps> = ({
   manifest,
   work,
 }) => {
-  const related = work ? getWorkSliders(work) : [];
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
+
+  const related = work ? getWorkSliders(work, isAI) : [];
 
   return (
     <div data-testid="shared-link-wrapper">
@@ -65,7 +68,7 @@ const SharedLink: React.FC<SharedLinkProps> = ({
             <WorkViewerWrapper manifestId={work.iiif_manifest} />
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
-              <RelatedItems collectionUris={related} title="Explore Further" />
+              <RelatedItems collections={related} title="Explore Further" />
             </Container>
           </ErrorBoundary>
         </>

@@ -24,6 +24,7 @@ import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { loadItemStructuredData } from "@/lib/json-ld";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
 
@@ -44,9 +45,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const [manifest, setManifest] = useState<Manifest>();
   const { isWorkRestricted } = useWorkAuth(work);
   const router = useRouter();
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
-  const related = work ? getWorkSliders(work) : [];
+  const related = work ? getWorkSliders(work, isAI) : [];
   const collectionWorkTypeCounts =
     collectionWorkCounts &&
     work?.collection &&
@@ -120,10 +122,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
                   />
                 )}
 
-                <RelatedItems
-                  collectionUris={related}
-                  title="Explore Further"
-                />
+                <RelatedItems collections={related} title="Explore Further" />
               </Container>
             </ErrorBoundary>
           </WorkProvider>

@@ -189,19 +189,25 @@ const Collection: NextPage = () => {
                   )}
                   {topMetadata.length > 0 && (
                     <CollectionTabsExplore
-                      collectionId={collection.id}
+                      collection={collection}
                       topMetadata={topMetadata}
                     />
                   )}
                 </TabsContent>
                 <TabsContent value="organization">
                   {series.length > 0 && (
-                    <CollectionTabsOrganization series={series} />
+                    <CollectionTabsOrganization
+                      collection={collection}
+                      series={series}
+                    />
                   )}
                 </TabsContent>
                 <TabsContent value="metadata">
                   {metadata.length > 0 && (
-                    <CollectionTabsMetadata metadata={metadata} />
+                    <CollectionTabsMetadata
+                      collection={collection}
+                      metadata={metadata}
+                    />
                   )}
                 </TabsContent>
               </Tabs>

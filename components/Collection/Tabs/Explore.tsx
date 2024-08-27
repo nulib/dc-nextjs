@@ -1,20 +1,27 @@
+import { DCAPI_ENDPOINT, DC_URL } from "@/lib/constants/endpoints";
 import { useEffect, useState } from "react";
 
+import { Collection } from "@nulib/dcapi-types";
 import type { GetTopMetadataAggsReturn } from "@/lib/collection-helpers";
 import RelatedItems from "@/components/Shared/RelatedItems";
+import { WorkSliders } from "@/lib/work-helpers";
+import { appendHybridSearchParams } from "@/lib/chat-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 interface CollectionTabsExploreProps {
-  collectionId: string;
+  collection: Collection;
   topMetadata: GetTopMetadataAggsReturn[] | [];
 }
 
-const url = process.env.NEXT_PUBLIC_DCAPI_ENDPOINT;
-
 const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
-  collectionId,
+  collection,
   topMetadata,
 }) => {
-  const [urls, setUrls] = useState<string[]>([]);
+  const [subjectWorkSliders, setSubjectWorkSliders] = useState<WorkSliders[]>(
+    [],
+  );
+
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   useEffect(() => {
     /**
@@ -24,18 +31,28 @@ const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
     const subject = topMetadata[0];
 
     // Build "as=iiif" urls for each subject which will feed into the Slider
-    setUrls(
+    setSubjectWorkSliders(
       subject.value.map((subjectValue) => {
-        const str = `${url}/search?query=collection.id:"${collectionId}" AND ${subject.field}:"${subjectValue}"&collectionLabel=${subjectValue}&collectionSummary=${""}&as=iiif`;
-        return str;
+        const iiifCollectionId = `${DCAPI_ENDPOINT}/search?query=collection.id:"${collection.id}" AND ${subject.field}:"${subjectValue}"&collectionLabel=${subjectValue}&collectionSummary=${""}&as=iiif`;
+
+        const searchUrl = new URL("/search", DC_URL);
+        searchUrl.searchParams.append("subject", subjectValue);
+        searchUrl.searchParams.append("collection", collection.title);
+
+        if (isAI) appendHybridSearchParams(searchUrl, subjectValue);
+
+        return {
+          iiifCollectionId,
+          customViewAll: searchUrl.toString(),
+        };
       }),
     );
-  }, [collectionId, topMetadata]);
+  }, [collection.id, topMetadata]);
 
   return (
     <div data-testid="explore-wrapper">
-      {urls.length > 0 && (
-        <RelatedItems collectionUris={urls} title="Top Subjects" />
+      {subjectWorkSliders.length > 0 && (
+        <RelatedItems collections={subjectWorkSliders} title="Top Subjects" />
       )}
     </div>
   );
