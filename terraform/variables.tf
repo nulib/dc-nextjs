@@ -3,11 +3,6 @@ variable "access_token" {
   type = string
 }
 
-variable "amplify_build_custom_image" {
-  type    = string
-  default = "amplify:al2023"
-}
-
 variable "app_username" {
   type    = string
   default = ""
