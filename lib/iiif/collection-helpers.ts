@@ -8,6 +8,7 @@ import { sample, shuffle } from "@/lib/utils/array-helpers";
 import { Collection } from "@nulib/dcapi-types";
 import { HeroCollection } from "@/lib/constants/homepage";
 import type { Work } from "@nulib/dcapi-types";
+import { appendHybridSearchParams } from "../chat-helpers";
 
 export const getRelatedCollections = (work: Work) => {
   if (!work) return;
@@ -64,7 +65,7 @@ export const getRelatedCollections = (work: Work) => {
   return related;
 };
 
-export const getHeroCollection = (collection: Collection) => {
+export const getHeroCollection = (collection: Collection, isAI: boolean) => {
   const { id, finding_aid_url, representative_image, title } = collection;
 
   const thumbnailId = representative_image?.url
@@ -90,7 +91,10 @@ export const getHeroCollection = (collection: Collection) => {
     return seeAlso;
   };
 
-  const searchUrl = `${DC_URL}/search?collection=${encodeURIComponent(title)}`;
+  const searchUrl = new URL("/search", DC_URL);
+  searchUrl.searchParams.append("collection", title);
+
+  if (isAI) appendHybridSearchParams(searchUrl, title);
 
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",
@@ -105,7 +109,7 @@ export const getHeroCollection = (collection: Collection) => {
         ],
         id: `${DCAPI_ENDPOINT}`,
         label: { none: [title] },
-        seeAlso: appendSeeAlso(searchUrl, finding_aid_url),
+        seeAlso: appendSeeAlso(searchUrl.toString(), finding_aid_url),
         thumbnail: [
           {
             format: "image/jpeg",

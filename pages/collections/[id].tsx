@@ -38,6 +38,7 @@ import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
 const Collection: NextPage = () => {
@@ -51,6 +52,8 @@ const Collection: NextPage = () => {
   const [workTypeCounts, setWorkTypeCounts] = useState<WorkTypeCountMap | null>(
     null,
   );
+
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   const description = collection?.description;
 
@@ -145,7 +148,7 @@ const Collection: NextPage = () => {
         {collection && (
           <>
             <HeroWrapper>
-              <Hero collection={getHeroCollection(collection)} />
+              <Hero collection={getHeroCollection(collection, isAI)} />
             </HeroWrapper>
             <Interstitial>
               <Container>
