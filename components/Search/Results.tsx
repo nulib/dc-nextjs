@@ -28,7 +28,7 @@ const SearchResults: React.FC<SearchResultsState> = ({
           {!isAI &&
             (totalResults ? (
               <ResultsMessage data-testid="results-count">
-                {pluralize("Result", totalResults)}
+                {pluralize("result", totalResults)}
               </ResultsMessage>
             ) : (
               <NoResultsMessage>
