@@ -7,6 +7,7 @@ interface ContainerProps {
   containerType?: "default" | "wide";
   isFlex?: boolean;
   maxWidth?: number;
+  [key: string]: unknown;
 }
 
 const Container: React.FC<ContainerProps> = ({
@@ -15,6 +16,7 @@ const Container: React.FC<ContainerProps> = ({
   containerType = "default",
   isFlex = false,
   maxWidth,
+  ...restProps
 }) => {
   const manualWidth = maxWidth ? { maxWidth: maxWidth } : {};
 
@@ -24,6 +26,7 @@ const Container: React.FC<ContainerProps> = ({
       containerType={containerType}
       css={{ ...manualWidth }}
       isFlex={isFlex}
+      {...restProps}
     >
       {children}
     </ContainerStyled>

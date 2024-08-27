@@ -2,6 +2,7 @@ import Head from "next/head";
 import Hero from "@/components/Hero/Hero";
 import Layout from "@/components/layout";
 import type { NextPage } from "next";
+import { buildDataLayer } from "@/lib/ga/data-layer";
 import { collection403 } from "@/lib/constants/error";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { styled } from "@/stitches.config";
@@ -32,5 +33,15 @@ const AccessForbidden: NextPage = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  const dataLayer = buildDataLayer({
+    pageTitle: "403 page",
+  });
+
+  return {
+    props: { dataLayer },
+  };
+}
 
 export default AccessForbidden;
