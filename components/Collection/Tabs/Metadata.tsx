@@ -3,6 +3,7 @@ import { GroupedList } from "@/components/Collection/Tabs/Metadata.styled";
 import Heading from "@/components/Heading/Heading";
 import React from "react";
 import { formatNumber } from "@/lib/utils/count-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
 interface CollectionTabsMetadataProps {
@@ -15,6 +16,7 @@ interface Groups {
 const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
   metadata,
 }) => {
+  const { isChecked: isAI } = useGenerativeAISearchToggle();
   const router = useRouter();
   const grouped: Groups = {};
 
@@ -28,7 +30,13 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
   });
 
   const handleMetadataClick = (key: string) => {
-    router.push({ pathname: "/search", query: { subject: [key] } });
+    router.push({
+      pathname: "/search",
+      query: {
+        subject: [key],
+        ...(isAI === true && { q: [key], tab: "results" }),
+      },
+    });
   };
 
   return (
