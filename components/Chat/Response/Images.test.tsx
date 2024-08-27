@@ -12,7 +12,7 @@ describe("ResponseImages", () => {
       <ResponseImages
         sourceDocuments={sourceDocuments}
         isStreamingComplete={true}
-      />
+      />,
     );
 
     sourceDocuments.forEach(async (doc) => {
@@ -24,7 +24,7 @@ describe("ResponseImages", () => {
         () => {
           expect(screen.getByText(`${doc?.title}`)).toBeInTheDocument();
         },
-        { timeout: 1000 }
+        { timeout: 1000 },
       );
     });
   });

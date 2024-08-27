@@ -31,7 +31,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
       handleSubmit,
       clearSearchResults,
     },
-    textareaRef
+    textareaRef,
   ) => {
     /**
      * Resize the textarea to fit its content
@@ -85,7 +85,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
         )}
       </StyledTextArea>
     );
-  }
+  },
 );
 
 SearchTextArea.displayName = "SearchTextArea";

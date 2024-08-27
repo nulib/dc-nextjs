@@ -6,7 +6,7 @@ import mockRouter from "next-router-mock";
 
 // Tell mockRouter about the dynamic routes in our app:
 mockRouter.useParser(
-  createDynamicRouteParser(["/search", "/collections/[id]"])
+  createDynamicRouteParser(["/search", "/collections/[id]"]),
 );
 
 jest.mock("@/components/Search/Search", () => {
@@ -40,7 +40,7 @@ describe("HeaderPrimary", () => {
 
   it("renders the search jump to component", () => {
     mockRouter.setCurrentUrl(
-      "https://devbox.library.northwestern.edu:3000/collections/1c2e2200-c12d-4c7f-8b87-a935c349898a"
+      "https://devbox.library.northwestern.edu:3000/collections/1c2e2200-c12d-4c7f-8b87-a935c349898a",
     );
     render(<HeaderPrimary />);
 

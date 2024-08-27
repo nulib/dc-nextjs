@@ -19,7 +19,7 @@ describe("ChatFeedbackOptIn", () => {
     render(
       <UserContext.Provider value={mockUserContextValue}>
         <ChatFeedbackOptIn />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     const checkbox = screen.getByRole("checkbox");
@@ -31,7 +31,7 @@ describe("ChatFeedbackOptIn", () => {
     render(
       <UserContext.Provider value={mockUserContextValue}>
         <ChatFeedbackOptIn />
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
     const label = screen.getByText(/please follow up with me/i);
     expect(label).toBeInTheDocument();
