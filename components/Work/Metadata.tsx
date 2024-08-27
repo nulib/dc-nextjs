@@ -7,6 +7,8 @@ import { DC_URL } from "@/lib/constants/endpoints";
 import Link from "next/link";
 import { MetadataItem } from "@iiif/presentation-3";
 import { WORK_METADATA_LABELS } from "@/lib/constants/works";
+import { appendHybridSearchParams } from "@/lib/chat-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 interface WorkMetadataProps {
   metadata: MetadataItem[];
@@ -22,13 +24,24 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
   value,
 }) => {
   if (!value) return <></>;
-  const search = `${DC_URL}/search?${searchParam}=`;
+
+  const { isChecked } = useGenerativeAISearchToggle();
+  const searchUrl = new URL("/search", DC_URL);
+
+  if (searchParam) {
+    searchUrl.searchParams.append(searchParam, value);
+
+    if (isChecked) appendHybridSearchParams(searchUrl, value);
+  }
+
   return (
     <LinkItemStyled>
       {searchParam ? (
-        <Link href={search.concat(encodeURIComponent(value))}>{value}</Link>
+        <Link href={searchUrl.toString()}>{value}</Link>
       ) : (
-        <span dangerouslySetInnerHTML={{ __html: value }} />
+        <>
+          <span dangerouslySetInnerHTML={{ __html: value }} />
+        </>
       )}
     </LinkItemStyled>
   );
