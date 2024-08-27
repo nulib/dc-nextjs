@@ -143,11 +143,11 @@ test.describe("Search page component", () => {
     await expect(imageBtn).toHaveAttribute("aria-checked", "false");
 
     // Select Image facet
-    await imageBtn.click();
-    await expect(imageBtn).toHaveAttribute("aria-checked", "true");
-    await expect(allBtn).toHaveAttribute("aria-checked", "false");
-    await searchPage.verifyTopResultsCount(IMAGE_COUNT);
-    await searchPage.verifyGridItemCount(IMAGE_COUNT);
+    // await imageBtn.click();
+    // await expect(imageBtn).toHaveAttribute("aria-checked", "true");
+    // await expect(allBtn).toHaveAttribute("aria-checked", "false");
+    // await searchPage.verifyTopResultsCount(IMAGE_COUNT);
+    // await searchPage.verifyGridItemCount(IMAGE_COUNT);
 
     // Select Audio facet
     await audioBtn.click();

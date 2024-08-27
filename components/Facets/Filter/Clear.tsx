@@ -37,7 +37,7 @@ const FilterClear: React.FC<FilterClearProps> = ({ isModal = false }) => {
       isFixed={searchFixed}
       isModal={isModal}
     >
-      Clear All
+      Reset
     </FilterClearStyled>
   );
 };

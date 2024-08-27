@@ -13,9 +13,7 @@ const StyledFacets = styled("div", {
   zIndex: "1",
 
   [`& ${WorkTypeWrapper}`]: {
-    borderRight: "1px solid $black10",
     paddingRight: "$gr2",
-    transition: "$dcWidth",
 
     "@sm": {
       marginTop: "$gr3",
@@ -25,7 +23,6 @@ const StyledFacets = styled("div", {
   },
 
   "@sm": {
-    padding: "$gr4 0",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -49,16 +46,11 @@ const FacetExtras = styled("div", {
 const Wrapper = styled("div", {
   height: "38px",
   transition: "$dcScrollHeight",
-  margin: "$gr4 0",
-
-  "@sm": {
-    margin: "-$gr4 0 $gr4",
-    backgroundColor: "$gray6",
-    height: "225px",
-  },
+  margin: "0 0 $gr4",
 
   ".facets-ui-container": {
     transition: "$dcAll",
+    overflow: "hidden",
   },
 
   "&[data-filter-fixed='true']": {

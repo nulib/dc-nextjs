@@ -3,6 +3,7 @@ import {
   PaginationStyled,
   Results,
 } from "@/components/Search/Pagination.styled";
+
 import { Button } from "@nulib/design-system";
 import { Pagination as PaginationShape } from "@/types/api/response";
 import { pluralize } from "@/lib/utils/count-helpers";
@@ -10,9 +11,13 @@ import { useRouter } from "next/router";
 
 interface PaginationProps {
   pagination: PaginationShape;
+  showResultCounts?: boolean;
 }
 
-const PaginationAltCounts: React.FC<PaginationProps> = ({ pagination }) => {
+const PaginationAltCounts: React.FC<PaginationProps> = ({
+  pagination,
+  showResultCounts = true,
+}) => {
   const { current_page, limit, total_hits, total_pages } = pagination;
   const router = useRouter();
 
@@ -37,10 +42,12 @@ const PaginationAltCounts: React.FC<PaginationProps> = ({ pagination }) => {
       css={{ borderTopWidth: "1px", paddingTop: "$gr2" }}
       data-testid="pagination-alt-counts"
     >
-      <Results data-testid="results">
-        Showing <span>{startCount}</span> to <span>{endCount}</span> of{" "}
-        {pluralize("result", total_hits)}
-      </Results>
+      {showResultCounts && (
+        <Results data-testid="results">
+          Showing <span>{startCount}</span> to <span>{endCount}</span> of{" "}
+          {pluralize("result", total_hits)}
+        </Results>
+      )}
 
       <NavWrapper>
         {current_page > 2 && (
