@@ -95,6 +95,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
 
+  function handleCheckCallback() {
+    handleSubmit();
+  }
+
   return (
     <SearchStyled
       ref={formRef}
@@ -113,7 +117,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         ref={searchRef}
       />
       <div>
-        <GenerativeAIToggle />
+        <GenerativeAIToggle checkChangeCallback={handleSubmit} />
         <Button type="submit" data-testid="submit-button">
           Search <IconArrowForward />
         </Button>

@@ -237,13 +237,15 @@ const SearchPage: NextPage = () => {
                     </Icon>
                     AI Response
                   </Tabs.Trigger>
-                  <Tabs.Trigger value="results" data-tab="results">
-                    {Number.isInteger(totalResults) ? (
-                      "View More Results"
-                    ) : (
-                      <SpinLoader size="small" />
-                    )}
-                  </Tabs.Trigger>
+                  {q && (
+                    <Tabs.Trigger value="results" data-tab="results">
+                      {Number.isInteger(totalResults) ? (
+                        "View More Results"
+                      ) : (
+                        <SpinLoader size="small" />
+                      )}
+                    </Tabs.Trigger>
+                  )}
                 </Tabs.List>
               }
               activeTab={activeTab}

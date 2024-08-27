@@ -47,7 +47,13 @@ describe("GenerativeAIToggle", () => {
 
   it("renders the generative AI toggle UI and toggles state for a logged in user", async () => {
     const user = userEvent.setup();
-    render(withUserProvider(withSearchProvider(<GenerativeAIToggle />)));
+    render(
+      withUserProvider(
+        withSearchProvider(
+          <GenerativeAIToggle checkChangeCallback={() => {}} />,
+        ),
+      ),
+    );
 
     const label = screen.getByLabelText("Use Generative AI");
     const checkbox = screen.getByRole("checkbox");
@@ -61,7 +67,9 @@ describe("GenerativeAIToggle", () => {
   });
 
   it("renders the generative AI tooltip", () => {
-    render(withSearchProvider(<GenerativeAIToggle />));
+    render(
+      withSearchProvider(<GenerativeAIToggle checkChangeCallback={() => {}} />),
+    );
     // Target the svg icon itself
     const tooltip = screen.getByText("Information Circle");
 
@@ -79,7 +87,9 @@ describe("GenerativeAIToggle", () => {
 
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle />),
+        withSearchProvider(
+          <GenerativeAIToggle checkChangeCallback={() => {}} />,
+        ),
         nonLoggedInUser,
       ),
     );
@@ -104,7 +114,10 @@ describe("GenerativeAIToggle", () => {
     mockRouter.setCurrentUrl("/search");
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle />, activeSearchState),
+        withSearchProvider(
+          <GenerativeAIToggle checkChangeCallback={() => {}} />,
+          activeSearchState,
+        ),
       ),
     );
 
@@ -121,12 +134,36 @@ describe("GenerativeAIToggle", () => {
 
     render(
       withUserProvider(
-        withSearchProvider(<GenerativeAIToggle />, defaultSearchState),
+        withSearchProvider(
+          <GenerativeAIToggle checkChangeCallback={() => {}} />,
+          defaultSearchState,
+        ),
       ),
     );
 
     await user.click(screen.getByRole("checkbox"));
 
     expect(localStorage.getItem("ai")).toEqual(JSON.stringify("true"));
+  });
+
+  it("submits check change callback on user interaction", async () => {
+    const user = userEvent.setup();
+    let toggled = false;
+    render(
+      withUserProvider(
+        withSearchProvider(
+          <GenerativeAIToggle
+            checkChangeCallback={() => {
+              toggled = !toggled;
+            }}
+          />,
+        ),
+      ),
+    );
+
+    const checkbox = screen.getByRole("checkbox");
+    await user.click(checkbox);
+
+    expect(toggled).toEqual(true);
   });
 });
