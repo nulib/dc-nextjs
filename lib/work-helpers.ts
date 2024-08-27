@@ -1,7 +1,12 @@
-import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import {
+  DCAPI_ENDPOINT,
+  DC_API_SEARCH_URL,
+  DC_URL,
+} from "@/lib/constants/endpoints";
 
 import type { Work } from "@nulib/dcapi-types";
 import { apiGetRequest } from "@/lib/dc-api";
+import { appendHybridSearchParams } from "./chat-helpers";
 import { shuffle } from "@/lib/utils/array-helpers";
 
 export async function getWork(id: string) {
@@ -28,42 +33,83 @@ export async function getWorkManifest(id: string) {
   }
 }
 
-export function getWorkSliders(work: Work) {
+export interface WorkSliders {
+  iiifCollectionId: string;
+  customViewAll: string;
+}
+
+export function getWorkSliders(work: Work, isAI: boolean | undefined) {
   if (!work) return;
 
-  const workSliderUrls = [];
+  const workSliders: WorkSliders[] = [];
 
   /** Collection slider */
   if (work.collection) {
-    const encodedCollectionLabel = encodeURIComponent(work.collection.title);
     const collectionSummary = `Collection`;
-    workSliderUrls.push(
-      `${DC_API_SEARCH_URL}?query=collection.id:"${work.collection.id}"&collectionLabel=${encodedCollectionLabel}&collectionSummary=${collectionSummary}&as=iiif`,
+
+    const collectionUrl = new URL(DC_API_SEARCH_URL);
+    collectionUrl.searchParams.append(
+      "query",
+      `collection.id:"${work.collection.id}"`,
     );
-  }
+    collectionUrl.searchParams.append("collectionLabel", work.collection.title);
+    collectionUrl.searchParams.append("collectionSummary", collectionSummary);
+    collectionUrl.searchParams.append("as", "iiif");
 
-  /** More Like This */
-  const encodedSimilarLabel = encodeURIComponent(`Similar to ${work.title}`);
-  workSliderUrls.push(
-    `${DCAPI_ENDPOINT}/works/${work.id}/similar?collectionLabel=More Like This&collectionSummary=${encodedSimilarLabel}&as=iiif`,
-  );
+    const searchUrl = new URL("/search", DC_URL);
+    searchUrl.searchParams.append("collection", work.collection.title);
 
-  /**
-   * Metadata (Subject for now)
-   * Append `2` subject based IIIF collections
-   */
-  if (work.subject.length > 0) {
-    const subjects = shuffle(work?.subject.map((s) => s.label)).slice(0, 2);
+    if (isAI) appendHybridSearchParams(searchUrl, work.collection.title);
 
-    subjects.forEach((subject: string) => {
-      const encodedSubject = encodeURIComponent(subject);
-      workSliderUrls.push(
-        `${DC_API_SEARCH_URL}?query=subject.label:"${encodedSubject}"&collectionLabel=${encodedSubject}&collectionSummary=Subject&as=iiif`,
-      );
+    workSliders.push({
+      iiifCollectionId: collectionUrl.toString(),
+      customViewAll: searchUrl.toString(),
     });
   }
 
-  return workSliderUrls;
+  /** More Like This */
+  if (!isAI) {
+    const similarUrl = new URL(`${DCAPI_ENDPOINT}/works/${work.id}/similar`);
+    similarUrl.searchParams.append("collectionLabel", "More Like This");
+    similarUrl.searchParams.append(
+      "collectionSummary",
+      `Similar to ${work.title}`,
+    );
+    similarUrl.searchParams.append("as", "iiif");
+
+    workSliders.push({
+      iiifCollectionId: similarUrl.toString(),
+      customViewAll: `http://whatever.com`,
+    });
+  }
+
+  /**
+   * Metadata (Subject for now)
+   * Append `2` subject-based IIIF collections
+   */
+  if (work.subject.length > 0) {
+    const subjects = shuffle(work.subject.map((s) => s.label)).slice(0, 2);
+
+    subjects.forEach((subject: string) => {
+      const subjectUrl = new URL(DC_API_SEARCH_URL);
+      subjectUrl.searchParams.append("query", `subject.label:"${subject}"`);
+      subjectUrl.searchParams.append("collectionLabel", subject);
+      subjectUrl.searchParams.append("collectionSummary", "Subject");
+      subjectUrl.searchParams.append("as", "iiif");
+
+      const searchUrl = new URL("/search", DC_URL);
+      searchUrl.searchParams.append("subject", subject);
+
+      if (isAI) appendHybridSearchParams(searchUrl, subject);
+
+      workSliders.push({
+        iiifCollectionId: subjectUrl.toString(),
+        customViewAll: searchUrl.toString(),
+      });
+    });
+  }
+
+  return workSliders;
 }
 
 export function isImageType(work_type: string | null | undefined) {

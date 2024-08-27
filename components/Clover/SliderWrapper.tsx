@@ -68,16 +68,25 @@ const breakpoints: SwiperBreakpoints = {
   },
 };
 
-const SliderIIIFWrapper = ({ collectionId }: { collectionId: string }) => (
-  <StyledSliderIIIFWrapper>
-    <Slider
-      iiifContent={collectionId}
-      options={{
-        breakpoints: breakpoints,
-        credentials: "include",
-      }}
-    />
-  </StyledSliderIIIFWrapper>
-);
+const SliderIIIFWrapper = ({
+  collectionId,
+  customViewAll,
+}: {
+  collectionId: string;
+  customViewAll: string;
+}) => {
+  return (
+    <StyledSliderIIIFWrapper>
+      <Slider
+        iiifContent={collectionId}
+        options={{
+          breakpoints: breakpoints,
+          credentials: "include",
+          customViewAll,
+        }}
+      />
+    </StyledSliderIIIFWrapper>
+  );
+};
 
 export default SliderIIIFWrapper;
