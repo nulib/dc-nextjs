@@ -1,4 +1,5 @@
 import { ApiResponseBucket } from "@/types/api/response";
+import { Collection } from "@nulib/dcapi-types";
 import { GroupedList } from "@/components/Collection/Tabs/Metadata.styled";
 import Heading from "@/components/Heading/Heading";
 import React from "react";
@@ -7,6 +8,7 @@ import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
 interface CollectionTabsMetadataProps {
+  collection: Collection;
   metadata: ApiResponseBucket[];
 }
 interface Groups {
@@ -14,6 +16,7 @@ interface Groups {
 }
 
 const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
+  collection,
   metadata,
 }) => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
@@ -34,6 +37,7 @@ const CollectionTabsMetadata: React.FC<CollectionTabsMetadataProps> = ({
       pathname: "/search",
       query: {
         subject: [key],
+        collection: collection.title,
         ...(isAI === true && { q: [key], tab: "results" }),
       },
     });
