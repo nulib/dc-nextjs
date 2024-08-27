@@ -3,17 +3,15 @@ import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Heading from "@/components/Heading/Heading";
 import { RelatedItemsStyled } from "@/components/Shared/RelatedItems.styled";
 import SliderWrapper from "@/components/Clover/SliderWrapper";
+import { WorkSliders } from "@/lib/work-helpers";
 
 export interface RelatedItemsProps {
-  collectionUris?: string[];
+  collections?: WorkSliders[];
   title?: string;
 }
 
-const RelatedItems: React.FC<RelatedItemsProps> = ({
-  collectionUris,
-  title,
-}) => {
-  if (collectionUris?.length === 0) return <></>;
+const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
+  if (collections?.length === 0) return <></>;
   return (
     <RelatedItemsStyled data-testid="related-items">
       {title && (
@@ -29,8 +27,12 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({
         </Heading>
       )}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {collectionUris?.map((collectionId) => (
-          <SliderWrapper collectionId={collectionId} key={collectionId} />
+        {collections?.map((workSlider) => (
+          <SliderWrapper
+            collectionId={workSlider.iiifCollectionId}
+            customViewAll={workSlider.customViewAll}
+            key={workSlider.iiifCollectionId}
+          />
         ))}
       </ErrorBoundary>
     </RelatedItemsStyled>

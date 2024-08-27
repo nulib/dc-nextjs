@@ -1,5 +1,8 @@
 import { render, screen } from "@/test-utils";
+
+import { Collection } from "@nulib/dcapi-types";
 import CollectionTabsExplore from "./Explore";
+import { sampleCollection1 } from "@/mocks/sample-collection1";
 
 /**
  * Mocking this component to avoid a Jest error trying
@@ -14,10 +17,15 @@ const topMetadata = [
   },
 ];
 
+const sampleCollection: Collection = sampleCollection1;
+
 describe("CollectionTabsExplore", () => {
   it("renders the description", async () => {
     render(
-      <CollectionTabsExplore collectionId="abc123" topMetadata={topMetadata} />,
+      <CollectionTabsExplore
+        collection={sampleCollection}
+        topMetadata={topMetadata}
+      />,
     );
     expect(screen.getByTestId("explore-wrapper"));
   });

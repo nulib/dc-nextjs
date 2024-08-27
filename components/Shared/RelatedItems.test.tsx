@@ -6,7 +6,12 @@ import { render, screen } from "@/test-utils";
 jest.mock("../Clover/SliderWrapper.tsx");
 
 const props: RelatedItemsProps = {
-  collectionUris: ["http://localhost:3000/something.json"],
+  collections: [
+    {
+      iiifCollectionId: "http://localhost:3000/something.json",
+      customViewAll: "http://localhost:3000/something",
+    },
+  ],
   title: "Explore Further",
 };
 
@@ -21,16 +26,24 @@ describe("RelatedItems component", () => {
 
   it("renders multiple SliderWrappers if passed multiple Collection URIs", async () => {
     const multipleUris = {
-      collectionUris: [
-        "http://localhost:3000/something",
-        "http://localhost:3000/another-thing",
+      collections: [
+        {
+          iiifCollectionId: "http://localhost:3000/something.json",
+          customViewAll: "http://localhost:3000/something",
+        },
+        {
+          iiifCollectionId: "http://localhost:3000/another.json",
+          customViewAll: "http://localhost:3000/another",
+        },
       ],
       title: "Multiple Related Items",
     };
 
     render(<RelatedItems {...multipleUris} />);
-    for (const uri of multipleUris.collectionUris) {
-      expect(await screen.findByText(uri, { exact: false }));
+    for (const collection of multipleUris.collections) {
+      expect(
+        await screen.findByText(collection.iiifCollectionId, { exact: false }),
+      );
     }
   });
 });
