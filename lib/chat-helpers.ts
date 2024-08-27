@@ -34,4 +34,10 @@ async function handleChatFeedbackRequest(payload: any): Promise<{
   }
 }
 
-export { handleChatFeedbackRequest, prepareQuestion };
+const appendHybridSearchParams = (url: URL, value: string) => {
+  url.searchParams.append("q", value);
+  url.searchParams.append("tab", "results");
+  return url;
+};
+
+export { appendHybridSearchParams, handleChatFeedbackRequest, prepareQuestion };

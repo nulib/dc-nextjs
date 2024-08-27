@@ -42,7 +42,7 @@ const defaultSearchResultsState: SearchResultsState = {
 
 const SearchPage: NextPage = () => {
   const router = useRouter();
-  const { page, q } = router.query;
+  const { page, q, tab } = router.query;
 
   const { user } = React.useContext(UserContext);
   const { isChecked: isAI } = useGenerativeAISearchToggle();
@@ -76,12 +76,16 @@ const SearchPage: NextPage = () => {
    * results navigates pages
    */
   useEffect(() => {
+    if (tab) {
+      return setActiveTab(tab as ActiveTab);
+    }
+
     if (showStreamedResponse) {
       return setActiveTab("stream");
     }
 
     setActiveTab("results");
-  }, [q, showStreamedResponse]);
+  }, [q, showStreamedResponse, tab]);
 
   /**
    * Make requests to the search API endpoint
