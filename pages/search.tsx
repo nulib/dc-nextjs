@@ -77,7 +77,7 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (tab) {
-      return setActiveTab(tab);
+      return setActiveTab(tab as ActiveTab);
     }
 
     if (showStreamedResponse) {

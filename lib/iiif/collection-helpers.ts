@@ -65,7 +65,10 @@ export const getRelatedCollections = (work: Work) => {
   return related;
 };
 
-export const getHeroCollection = (collection: Collection, isAI: boolean) => {
+export const getHeroCollection = (
+  collection: Collection,
+  isAI: boolean | undefined,
+) => {
   const { id, finding_aid_url, representative_image, title } = collection;
 
   const thumbnailId = representative_image?.url
