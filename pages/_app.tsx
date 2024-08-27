@@ -21,6 +21,7 @@ import { defaultOpenGraphData } from "@/lib/open-graph";
 import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
 import setupHoneyBadger from "@/lib/honeybadger/config";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 // Init Honeybadger
 setupHoneyBadger();
@@ -37,6 +38,9 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const [mounted, setMounted] = React.useState(false);
   const [user, setUser] = React.useState<User>();
 
+  const [ai] = useLocalStorage("ai", "false");
+  const isUsingAI = ai === "true";
+
   React.useEffect(() => {
     async function getData() {
       const userResponse = await getUser();
@@ -51,6 +55,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       const payload = {
         ...pageProps.dataLayer,
         isLoggedIn: user?.isLoggedIn,
+        isUsingAI: isUsingAI && user?.isLoggedIn,
       };
 
       // "VirtualPageView" is a custom event that we use to track page views.
@@ -73,24 +78,21 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       </Head>
 
       <UserProvider>
-        <Transition>
-          <SearchProvider>
-            <style jsx global>{`
-              :root {
-                --font-akkurat-light: ${akkuratLight.style.fontFamily};
-                --font-akkurat: ${akkurat.style.fontFamily};
-                --font-akkurat-bold: ${akkuratBold.style.fontFamily};
-                --font-campton: ${campton.style.fontFamily};
-                --font-campton-bold: ${camptonBold.style.fontFamily};
-                --font-campton-extra-bold: ${camptonExtraBold.style.fontFamily};
-                --font-campton-extra-light: ${camptonExtraLight.style
-                  .fontFamily};
-              }
-            `}</style>
-            {mounted && <Component {...pageProps} />}
-            <GoogleTagManager gtmId="GTM-NDJXLQW" />
-          </SearchProvider>
-        </Transition>
+        <SearchProvider>
+          <style jsx global>{`
+            :root {
+              --font-akkurat-light: ${akkuratLight.style.fontFamily};
+              --font-akkurat: ${akkurat.style.fontFamily};
+              --font-akkurat-bold: ${akkuratBold.style.fontFamily};
+              --font-campton: ${campton.style.fontFamily};
+              --font-campton-bold: ${camptonBold.style.fontFamily};
+              --font-campton-extra-bold: ${camptonExtraBold.style.fontFamily};
+              --font-campton-extra-light: ${camptonExtraLight.style.fontFamily};
+            }
+          `}</style>
+          {mounted && <Component {...pageProps} />}
+          <GoogleTagManager gtmId="GTM-NDJXLQW" />
+        </SearchProvider>
       </UserProvider>
     </>
   );

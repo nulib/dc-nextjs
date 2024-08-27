@@ -1,4 +1,5 @@
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
+
 import {
   DropdownContent,
   DropdownToggle,
@@ -6,6 +7,7 @@ import {
 } from "./UserFacets.styled";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
+
 import FacetsCurrentUserValue from "@/components/Facets/UserFacets/Value";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { UrlFacets } from "@/types/context/filter-context";
@@ -29,13 +31,15 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
   screen,
   urlFacets,
 }) => {
-  const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
   const { filterDispatch, filterState } = useFilterState();
   const {
     searchState: { searchFixed },
   } = useSearchState();
+
+  const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const handleOpenChange = (status: boolean) => setIsOpen(status);
@@ -84,7 +88,7 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
     if (instance && facets) {
       const { id, value } = instance;
       const {
-        query: { q },
+        query: { q, ai },
       } = router;
       const newObj: UrlFacets = { ...facets };
 
@@ -93,7 +97,11 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       if (screen === "search")
         router.push({
           pathname: "/search",
-          query: { ...(q && { q }), ...newObj },
+          query: {
+            ...(q && { q }),
+            ...newObj,
+            ...(ai && { ai }),
+          },
         });
 
       if (screen === "modal")

@@ -20,7 +20,6 @@ const FilterClear: React.FC<FilterClearProps> = ({ isModal = false }) => {
   } = router;
 
   const handleClear = () => {
-    console.log("Clear click");
     isModal
       ? filterDispatch({
           type: "updateUserFacets",
@@ -38,7 +37,7 @@ const FilterClear: React.FC<FilterClearProps> = ({ isModal = false }) => {
       isFixed={searchFixed}
       isModal={isModal}
     >
-      Clear All
+      Reset
     </FilterClearStyled>
   );
 };

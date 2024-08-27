@@ -1,9 +1,5 @@
-import { Button, Clear, Input, SearchStyled } from "./Search.styled";
-import {
-  IconArrowForward,
-  IconClear,
-  IconSearch,
-} from "@/components/Shared/SVG/Icons";
+import { Button, SearchStyled } from "@/components/Search/Search.styled";
+import { IconArrowForward, IconSearch } from "@/components/Shared/SVG/Icons";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -13,7 +9,11 @@ import React, {
   useState,
 } from "react";
 
-import { ALL_FACETS } from "@/lib/constants/facets-model";
+import GenerativeAIToggle from "./GenerativeAIToggle";
+import SearchTextArea from "@/components/Search/TextArea";
+import { UrlFacets } from "@/types/context/filter-context";
+import { getAllFacetIds } from "@/lib/utils/facet-helpers";
+import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 
@@ -23,61 +23,70 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
-  const search = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [searchFocus, setSearchFocus] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const { urlFacets } = useQueryParams();
 
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const { isChecked, handleCheckChange } = useGenerativeAISearchToggle();
 
-    /* Guard against searching from a page with dynamic route params */
-    const facetIds = ALL_FACETS.facets.map((facet) => facet.id);
+  const searchRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchFocus, setSearchFocus] = useState<boolean>(false);
+
+  const handleSubmit = (
+    e?:
+      | SyntheticEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
+    if (e) e.preventDefault();
+
+    const updatedFacets: UrlFacets = {};
+    const allFacetsIds = getAllFacetIds();
 
     // Account for the "similar" facet (comes from "View All" in sliders)
-    facetIds.push("similar");
+    allFacetsIds.push("similar");
 
-    const urlFacetsKeys = Object.keys(urlFacets);
-    urlFacetsKeys.forEach((key) => {
-      if (!facetIds.includes(key)) {
-        delete urlFacets[key];
+    // Guard against searching from a page with dynamic route params
+    Object.keys(urlFacets).forEach((facetKey) => {
+      if (allFacetsIds.includes(facetKey)) {
+        updatedFacets[facetKey] = urlFacets[facetKey];
       }
     });
 
     router.push({
       pathname: "/search",
-      query: { q: searchValue, ...urlFacets },
+      query: {
+        q: searchValue,
+        ...updatedFacets,
+      },
     });
   };
 
-  const handleSearchFocus = (e: FocusEvent) => {
+  const handleSearchFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
     setSearchFocus(e.type === "focus");
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setSearchValue(value);
   };
 
   const clearSearchResults = () => {
     setSearchValue("");
-    if (search.current) search.current.value = "";
+    if (searchRef.current) searchRef.current.value = "";
     router.push({
       pathname: "/search",
       query: { ...urlFacets },
     });
   };
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  useEffect(() => setIsLoaded(true), []);
 
   useEffect(() => {
     if (router) {
       const { q } = router.query;
-      if (q && search.current) search.current.value = q as string;
+      if (q && searchRef.current) searchRef.current.value = q as string;
       setSearchValue(q as string);
     }
   }, [router]);
@@ -91,24 +100,24 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       ref={formRef}
       onSubmit={handleSubmit}
       data-testid="search-ui-component"
+      isFocused={searchFocus}
     >
-      <Input
-        placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
-        onChange={handleSearchChange}
-        onFocus={handleSearchFocus}
-        onBlur={handleSearchFocus}
-        ref={search}
-        name="search"
-        role="search"
+      <SearchTextArea
+        isAi={!!isChecked}
+        isFocused={searchFocus}
+        searchValue={searchValue}
+        handleSearchChange={handleSearchChange}
+        handleSearchFocus={handleSearchFocus}
+        handleSubmit={handleSubmit}
+        clearSearchResults={clearSearchResults}
+        ref={searchRef}
       />
-      {searchValue && (
-        <Clear onClick={clearSearchResults} type="reset">
-          <IconClear />
-        </Clear>
-      )}
-      <Button type="submit" data-testid="submit-button">
-        Search <IconArrowForward />
-      </Button>
+      <div>
+        <GenerativeAIToggle />
+        <Button type="submit" data-testid="submit-button">
+          Search <IconArrowForward />
+        </Button>
+      </div>
       {isLoaded && <IconSearch />}
     </SearchStyled>
   );

@@ -3,7 +3,7 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const FilterClearStyled = styled("button", {
-  background: "$white",
+  background: "transparent",
   border: "none",
   borderRadius: "50px",
   color: "$black50",
@@ -26,6 +26,7 @@ const FilterClearStyled = styled("button", {
   variants: {
     isFixed: {
       true: {
+        backgroundColor: "$white",
         boxShadow: "2px 2px 5px #0002",
       },
     },

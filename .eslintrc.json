@@ -6,21 +6,20 @@
     "prettier"
   ],
   "overrides": [
-    // Only uses Testing Library lint rules in test files
+    // Overrides for Playwright tests
     {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
+      "files": ["tests/**/*.[jt]s?(x)"],
+      "rules": {
+        "testing-library/prefer-screen-queries": "off"
+      }
     }
   ],
   "rules": {
-    "sort-keys": "error",
-    "sort-imports": "error",
+    "sort-keys": 2,
+    "sort-imports": 2,
     "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/ban-ts-comment": "warn"
   }
 }

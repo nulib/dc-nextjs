@@ -24,11 +24,6 @@ export const HomepageHeroStyled = styled("div", {
 
       ".swiper-slide": {
         figure: {
-          "&::before": {
-            background:
-              "linear-gradient(7deg, #000a 0%, #000a 20%, #0000 61.8%)",
-          },
-
           figcaption: {
             alignItems: "flex-end",
             bottom: "$gr6",
@@ -40,11 +35,6 @@ export const HomepageHeroStyled = styled("div", {
             opacity: "1 !important",
           },
         },
-      },
-
-      ".swiper-wrapper::before": {
-        background:
-          "linear-gradient(173deg, $purple 0%, #4E2A84dd 12%, #0000 31%)",
       },
     },
   },

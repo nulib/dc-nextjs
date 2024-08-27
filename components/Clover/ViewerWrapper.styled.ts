@@ -5,10 +5,9 @@ import { styled } from "@/stitches.config";
 const ViewerWrapperStyled = styled("section", {
   position: "relative",
   zIndex: "1",
-  margin: "1px 0 0 0",
 
-  "[class*='-css']": {
-    boxShadow: "3px 3px 11px #0002",
+  ".clover-viewer-painting": {
+    background: "#f0f0f0",
   },
 
   "& label[for='information-toggle']": {

@@ -8,14 +8,25 @@ const rotation = keyframes({
 });
 
 const SpinLoader = styled("span", {
-  width: "48px",
-  height: "48px",
-  border: "5px solid $black10",
+  border: "3px solid $black10",
   borderBottomColor: "transparent",
   borderRadius: "50%",
   display: "inline-block",
   boxSizing: "border-box",
   animation: `${rotation} 1s linear infinite`,
+
+  variants: {
+    size: {
+      small: {
+        width: "24px",
+        height: "24px",
+      },
+      default: {
+        width: "48px",
+        height: "48px",
+      },
+    },
+  },
 });
 
 export { SpinLoader };

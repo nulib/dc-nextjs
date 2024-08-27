@@ -1,4 +1,5 @@
 import * as Switch from "@radix-ui/react-switch";
+
 import { styled } from "stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -19,7 +20,7 @@ const StyledSwitch = styled(Switch.Root, {
 
   '&[data-state="checked"]': {
     backgroundColor: "$darkBlueA",
-    boxShadow: `inset 2px 2px 5px #0003`,
+    boxShadow: "inset 2px 2px 5px #0002",
   },
 });
 
@@ -29,7 +30,7 @@ const StyledThumb = styled(Switch.Thumb, {
   width: "calc(2rem - 14px)",
   backgroundColor: "$white",
   borderRadius: "100%",
-  boxShadow: `2px 2px 5px #0001`,
+  boxShadow: `2px 2px 5px #0002`,
   transition: "$dcAll",
   transform: "translateX(7px)",
   willChange: "transform",
@@ -42,7 +43,11 @@ const StyledThumb = styled(Switch.Thumb, {
 const Wrapper = styled("div", {
   display: "flex",
   alignItems: "center",
-  paddingLeft: "1.618rem",
+  paddingLeft: "$gr4",
+
+  "@md": {
+    paddingLeft: "$gr3",
+  },
 });
 
 const Label = styled("label", {

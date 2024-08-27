@@ -1,11 +1,22 @@
+import { SearchContextStore } from "@/types/context/search-context";
+
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
-import { SearchContextStore } from "@/types/context/search-context";
+import { Work } from "@nulib/dcapi-types";
 
 type Action =
   | {
       type: "updateAggregations";
       aggregations: ApiResponseAggregation | undefined;
+    }
+  | {
+      type: "updateChat";
+      chat: {
+        answer: string;
+        documents: Work[];
+        question: string;
+        ref: string;
+      };
     }
   | { type: "updateSearch"; q: string }
   | { type: "updateSearchFixed"; searchFixed: boolean };
@@ -19,6 +30,12 @@ type SearchProviderProps = {
 
 const defaultState: SearchContextStore = {
   aggregations: {},
+  chat: {
+    answer: "",
+    documents: [],
+    question: "",
+    ref: "",
+  },
   searchFixed: false,
 };
 
@@ -32,6 +49,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         aggregations: action.aggregations,
+      };
+    }
+    case "updateChat": {
+      return {
+        ...state,
+        chat: action.chat,
       };
     }
     case "updateSearch": {
@@ -73,4 +96,4 @@ function useSearchState() {
   return context;
 }
 
-export { SearchProvider, useSearchState };
+export { SearchProvider, defaultState, useSearchState };

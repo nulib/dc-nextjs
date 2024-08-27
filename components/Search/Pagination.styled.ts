@@ -51,6 +51,9 @@ const LeftNav = styled("div", {
 
 const NavWrapper = styled("div", {
   display: "flex",
+  alignSelf: "flex-end",
+  flexGrow: "1",
+  justifyContent: "flex-end",
 
   "& button": {
     fontSize: "$gr3",

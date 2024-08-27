@@ -1,4 +1,3 @@
-import { Input, SearchStyled } from "./Search.styled";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -9,6 +8,7 @@ import React, {
 
 import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpToList from "@/components/Search/JumpToList";
+import { SearchStyled } from "./Search.styled";
 import Swiper from "swiper";
 
 interface SearchProps {
@@ -16,7 +16,7 @@ interface SearchProps {
 }
 
 const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
-  const search = useRef<HTMLInputElement>(null);
+  const search = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
     }
   };
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setSearchValue(value);
     setShowJumpTo(Boolean(value));
@@ -91,7 +91,8 @@ const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
 
   return (
     <SearchStyled ref={formRef} data-testid="search-jump-to-form">
-      <Input
+      {/* temporarily setting to textarea for later refinement */}
+      <textarea
         placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
         onChange={handleSearchChange}
         onFocus={handleSearchFocus}

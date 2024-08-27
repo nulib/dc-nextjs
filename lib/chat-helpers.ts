@@ -1,0 +1,37 @@
+import axios, { AxiosError } from "axios";
+
+import { DCAPI_CHAT_FEEDBACK } from "./constants/endpoints";
+import { Question } from "@/types/components/chat";
+import { v4 as uuidv4 } from "uuid";
+
+const prepareQuestion = (
+  questionString: string,
+  authToken: string,
+): Question => {
+  return {
+    auth: authToken,
+    message: "chat",
+    question: questionString,
+    ref: uuidv4(),
+  };
+};
+
+async function handleChatFeedbackRequest(payload: any): Promise<{
+  message?: string;
+  err?: AxiosError;
+}> {
+  try {
+    const response = await axios({
+      data: payload,
+      method: "post",
+      url: DCAPI_CHAT_FEEDBACK,
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error("Error submitting feedback", err);
+    return { err: err as AxiosError };
+  }
+}
+
+export { handleChatFeedbackRequest, prepareQuestion };
