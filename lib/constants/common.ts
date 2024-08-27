@@ -3,4 +3,4 @@ export const AI_LOGIN_ALERT = `You must be logged in with a Northwestern NetID t
 export const AI_SEARCH_UNSUBMITTED = `What can I help you find? Try searching for "john cage scrapbooks" or "who played at the Berkeley Folk Music Festival in 1965?"`;
 export const AI_TOGGLE_LABEL = "Use Generative AI";
 export const AI_K_VALUE = 40;
-export const SEARCH_RESULTS_PER_PAGE = 20;
+export const SEARCH_RESULTS_PER_PAGE = 40;
