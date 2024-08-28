@@ -1,6 +1,6 @@
-# Digital Collections v2
+# Digital Collections
 
-Digital Collections v2 (DCv2) is a UI application for discovering and interacting with Collections and Works in NUL's repository.
+Digital Collections is a UI application for discovering and interacting with Collections and Works in NUL's repository.
 
 ## Tech Stack
 
