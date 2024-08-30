@@ -19,6 +19,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn = false,
         isReadingRoom = false,
         name,
+        primaryAffiliation,
         sub,
       } = result;
       setUser({
@@ -26,6 +27,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn,
         isReadingRoom,
         name,
+        primaryAffiliation,
         sub,
       });
     });
