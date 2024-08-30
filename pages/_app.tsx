@@ -14,7 +14,6 @@ import Head from "next/head";
 import { ObjectLiteral } from "@/types";
 import React from "react";
 import { SearchProvider } from "@/context/search-context";
-import Transition from "@/components/Transition";
 import { User } from "@/types/context/user";
 import { UserProvider } from "@/context/user-context";
 import { defaultOpenGraphData } from "@/lib/open-graph";
@@ -56,6 +55,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         ...pageProps.dataLayer,
         isLoggedIn: user?.isLoggedIn,
         isUsingAI: isUsingAI && user?.isLoggedIn,
+        userPrimaryAffiliation: user?.primaryAffiliation,
       };
 
       // "VirtualPageView" is a custom event that we use to track page views.

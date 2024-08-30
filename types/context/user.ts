@@ -1,6 +1,7 @@
 export type User = {
   sub: string;
   name: string;
+  primaryAffiliation: string;
   email: string;
   isLoggedIn: boolean;
   isReadingRoom: boolean;
