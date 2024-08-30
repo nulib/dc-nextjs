@@ -6,6 +6,7 @@ import ExpandableList from "@/components/Shared/ExpandableList";
 import Heading from "@/components/Heading/Heading";
 import { OrganizationStyled } from "@/components/Collection/Tabs/Organization.styled";
 import SliderWrapper from "@/components/Clover/SliderWrapper";
+import { appendHybridSearchParams } from "@/lib/chat-helpers";
 import { pluralize } from "@/lib/utils/count-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
@@ -41,9 +42,9 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
 
           const searchUrl = new URL("/search", DC_URL);
           searchUrl.searchParams.append("collection", collection.title);
-          searchUrl.searchParams.append("q", `series:"${sanitizedKey}"`);
+          searchUrl.searchParams.append("series", sanitizedKey);
 
-          if (isAI) searchUrl.searchParams.append("tab", "results");
+          if (isAI) appendHybridSearchParams(searchUrl, sanitizedKey);
 
           return (
             <ExpandableList.Item
