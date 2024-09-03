@@ -9,10 +9,12 @@ import React, {
   useState,
 } from "react";
 
-import GenerativeAIToggle from "./GenerativeAIToggle";
+import GenerativeAIToggle from "@/components/Search/GenerativeAIToggle";
+import SearchJumpTo from "@/components/Search/JumpTo";
 import SearchTextArea from "@/components/Search/TextArea";
 import { UrlFacets } from "@/types/context/filter-context";
 import { getAllFacetIds } from "@/lib/utils/facet-helpers";
+import { isCollectionPage } from "@/lib/collection-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
@@ -25,7 +27,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { urlFacets } = useQueryParams();
 
-  const { isChecked, handleCheckChange } = useGenerativeAISearchToggle();
+  const { isChecked } = useGenerativeAISearchToggle();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -33,6 +35,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
+
+  const appendSearchJumpTo = isCollectionPage(router?.pathname);
 
   const handleSubmit = (
     e?:
@@ -96,30 +100,41 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   }, [searchFocus, searchValue, isSearchActive]);
 
   return (
-    <SearchStyled
-      ref={formRef}
-      onSubmit={handleSubmit}
-      data-testid="search-ui-component"
-      isFocused={searchFocus}
-    >
-      <SearchTextArea
-        isAi={!!isChecked}
+    <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
+      <SearchStyled
+        ref={formRef}
+        onSubmit={handleSubmit}
+        data-testid="search-ui-component"
         isFocused={searchFocus}
-        searchValue={searchValue}
-        handleSearchChange={handleSearchChange}
-        handleSearchFocus={handleSearchFocus}
-        handleSubmit={handleSubmit}
-        clearSearchResults={clearSearchResults}
-        ref={searchRef}
-      />
-      <div>
-        <GenerativeAIToggle />
-        <Button type="submit" data-testid="submit-button">
-          Search <IconArrowForward />
-        </Button>
-      </div>
-      {isLoaded && <IconSearch />}
-    </SearchStyled>
+      >
+        <SearchTextArea
+          isAi={!!isChecked}
+          isFocused={searchFocus}
+          searchValue={searchValue}
+          handleSearchChange={handleSearchChange}
+          handleSearchFocus={handleSearchFocus}
+          handleSubmit={handleSubmit}
+          clearSearchResults={clearSearchResults}
+          ref={searchRef}
+        />
+        <div>
+          <GenerativeAIToggle />
+          <Button type="submit" data-testid="submit-button">
+            Search <IconArrowForward />
+          </Button>
+        </div>
+        {isLoaded && <IconSearch />}
+      </SearchStyled>
+      {isCollectionPage(router?.pathname) && (
+        <div data-testid="search-jump-to">
+          <SearchJumpTo
+            searchFocus={searchFocus}
+            searchValue={searchValue}
+            top={searchRef.current?.scrollHeight || 0}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

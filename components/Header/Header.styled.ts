@@ -92,6 +92,7 @@ const Primary = styled("div", {
       fontFamily: "$northwesternSansRegular",
       display: "flex",
       height: "$gr5",
+      marginLeft: "$gr4",
 
       a: {
         color: "$purple",
@@ -152,10 +153,7 @@ const Primary = styled("div", {
       [`& ${NavStyled}`]: {
         width: "0",
         opacity: "0",
-      },
-
-      [`& ${SearchStyled}`]: {
-        marginRight: "0",
+        marginLeft: "0",
       },
     },
   },

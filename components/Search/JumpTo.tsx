@@ -1,29 +1,27 @@
-import React, {
-  ChangeEvent,
-  FocusEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpToList from "@/components/Search/JumpToList";
-import { SearchStyled } from "./Search.styled";
 import Swiper from "swiper";
 
 interface SearchProps {
-  isSearchActive: (value: boolean) => void;
+  searchFocus: boolean;
+  searchValue: string;
+  top: number;
 }
 
-const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
-  const search = useRef<HTMLTextAreaElement>(null);
+const SearchJumpTo: React.FC<SearchProps> = ({
+  searchFocus,
+  searchValue,
+  top,
+}) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [searchFocus, setSearchFocus] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [showJumpTo, setShowJumpTo] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (searchFocus) setShowJumpTo(Boolean(searchValue));
+  }, [searchFocus, searchValue]);
+
+  useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
       if (
         showJumpTo &&
@@ -66,49 +64,14 @@ const SearchJumpTo: React.FC<SearchProps> = ({ isSearchActive }) => {
     };
   }, [showJumpTo]);
 
-  const handleSearchFocus = (e: FocusEvent) => {
-    if (e.type === "focus") {
-      setSearchFocus(true);
-      setShowJumpTo(Boolean(searchValue));
-    } else {
-      setSearchFocus(false);
-    }
-  };
-
-  const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setSearchValue(value);
-    setShowJumpTo(Boolean(value));
-  };
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
-  }, [searchFocus, searchValue, isSearchActive]);
+  if (!showJumpTo) return null;
 
   return (
-    <SearchStyled ref={formRef} data-testid="search-jump-to-form">
-      {/* temporarily setting to textarea for later refinement */}
-      <textarea
-        placeholder="Search by keyword or phrase, ex: Berkeley Music Festival"
-        onChange={handleSearchChange}
-        onFocus={handleSearchFocus}
-        onBlur={handleSearchFocus}
-        ref={search}
-        name="search"
-        role="search"
-      />
-      {isLoaded && <IconSearch />}
-      {showJumpTo && (
-        <SearchJumpToList
-          searchValue={searchValue}
-          setShowJumpTo={setShowJumpTo}
-        />
-      )}
-    </SearchStyled>
+    <SearchJumpToList
+      searchValue={searchValue}
+      setShowJumpTo={setShowJumpTo}
+      top={top}
+    />
   );
 };
 
