@@ -5,16 +5,10 @@ import Container from "@/components/Shared/Container";
 import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import Search from "@/components/Search/Search";
-import SearchJumpTo from "@/components/Search/JumpTo";
 import useElementPosition from "@/hooks/useElementPosition";
-import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
 const HeaderPrimary: React.FC = () => {
-  const router = useRouter();
-  const isCollectionPage =
-    router.pathname.includes("collection") && router.query.id;
-
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
   const {
@@ -48,12 +42,7 @@ const HeaderPrimary: React.FC = () => {
       >
         <Container>
           <PrimaryInner>
-            {!isCollectionPage && (
-              <Search isSearchActive={handleIsSearchActive} />
-            )}
-            {isCollectionPage && (
-              <SearchJumpTo isSearchActive={handleIsSearchActive} />
-            )}
+            <Search isSearchActive={handleIsSearchActive} />
             <Nav>
               <Link href="/collections">Browse Collections</Link>
             </Nav>

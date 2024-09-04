@@ -99,6 +99,12 @@ describe("Search component", () => {
     expect(input).toBeInTheDocument();
   });
 
+  it("renders the jump to component for collection routes", () => {
+    mockRouter.setCurrentUrl("/collections/123");
+    render(<Search isSearchActive={mockIsSearchActive} />);
+    expect(screen.getByTestId("search-jump-to")).toBeInTheDocument();
+  });
+
   it("renders generative AI placeholder text when AI search is active", () => {
     localStorage.setItem("ai", JSON.stringify("true"));
 

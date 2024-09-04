@@ -1,43 +1,19 @@
 import { render, screen } from "@/test-utils";
-import SearchJumpTo from "@/components/Search/JumpTo";
-import userEvent from "@testing-library/user-event";
 
-const mockIsSearchActive = jest.fn();
+import SearchJumpTo from "@/components/Search/JumpTo";
 
 describe("SearchJumpTo component", () => {
-  it("renders the component", () => {
-    render(<SearchJumpTo isSearchActive={() => ({})} />);
-    const wrapper = screen.getByTestId("search-jump-to-form");
-    expect(wrapper).toBeInTheDocument();
-  });
-
   it("conditionally renders the SearchJumpTo component", async () => {
-    const user = userEvent.setup();
-    render(
-      <div data-testid="page">
-        <span>Outside search form</span>
-        <SearchJumpTo isSearchActive={mockIsSearchActive} />
-      </div>,
-    );
-    const form = screen.getByTestId("search-jump-to-form");
+    render(<SearchJumpTo searchFocus={true} searchValue={"foo"} top={45} />);
 
-    await user.type(screen.getByRole("search"), "foo");
+    const listbox = screen.getByRole("listbox");
+    expect(listbox).toBeInTheDocument();
+    expect(listbox).toHaveStyle({ top: "45px" });
 
-    // JumpTo should be visible
-    expect(form).toHaveFormValues({ search: "foo" });
-    expect(screen.getByRole("listbox"));
-
-    // Click outside SearchJumpTo form, it should close JumpTo
-    await user.click(screen.getByText("Outside search form"));
-
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-
-    // Type back in main search input, it should re-open JumpTo
-    await user.type(screen.getByRole("search"), "baz");
-
-    expect(form).toHaveFormValues({
-      search: "foobaz",
-    });
-    expect(screen.getByRole("listbox"));
+    for (let i = 0; i < listbox.children.length; i++) {
+      const item = listbox.children[i];
+      expect(item).toBeInTheDocument();
+      expect(item).toHaveTextContent("foo");
+    }
   });
 });

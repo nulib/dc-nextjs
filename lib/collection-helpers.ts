@@ -336,3 +336,16 @@ export const sortAggsByKey = (arr: GenericAggsReturn[]) => {
     return collator.compare(a.key, b.key);
   });
 };
+
+/**
+ * Determines if current router.pathname is a dynamic collection route
+ */
+export const isCollectionPage = (pathname: string) => {
+  const pathSegments = pathname.split("/").filter(Boolean); // Filter removes any empty strings
+
+  return (
+    pathSegments[0] === "collections" &&
+    pathSegments[1] !== undefined &&
+    pathSegments[1] !== ""
+  );
+};

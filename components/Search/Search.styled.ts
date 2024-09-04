@@ -7,7 +7,6 @@ const SearchStyled = styled("form", {
   display: "flex",
   flexShrink: "0",
   flexGrow: "1",
-  marginRight: "$gr4",
   transition: "$dcAll",
   borderRadius: "3px",
   flexWrap: "wrap",
@@ -40,10 +39,6 @@ const SearchStyled = styled("form", {
     width: "100%",
     marginRight: "0",
     flexDirection: "column",
-  },
-
-  "@lg": {
-    marginRight: "$gr3",
   },
 
   "> svg": {

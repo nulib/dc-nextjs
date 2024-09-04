@@ -1,8 +1,10 @@
 import {
   GenericAggsReturn,
   GetTopMetadataAggsReturn,
+  isCollectionPage,
   sortAggsByKey,
 } from "@/lib/collection-helpers";
+
 import { getTopMetadataAggs } from "@/lib/collection-helpers";
 
 /* eslint sort-keys: 0 */
@@ -153,5 +155,30 @@ describe("sortAggsByKey() function", () => {
     output.forEach((agg, index) => {
       expect(agg.key).toBe(expectedAggs[index].key);
     });
+  });
+});
+
+describe("isCollectionPage", () => {
+  it("should return true for valid collection page paths", () => {
+    const pathname = "/collections/123";
+    expect(isCollectionPage(pathname)).toBe(true);
+  });
+
+  it('should return false if the first part of the path is not "collections"', () => {
+    const pathname = "/items/123";
+    expect(isCollectionPage(pathname)).toBe(false);
+  });
+
+  it("should return false if the second part of the path is undefined or empty", () => {
+    const pathname1 = "/collections/";
+    const pathname2 = "/collections";
+
+    expect(isCollectionPage(pathname1)).toBe(false);
+    expect(isCollectionPage(pathname2)).toBe(false);
+  });
+
+  it("should handle edge cases with extra slashes", () => {
+    const pathname = "//collections//123/";
+    expect(isCollectionPage(pathname)).toBe(true);
   });
 });
