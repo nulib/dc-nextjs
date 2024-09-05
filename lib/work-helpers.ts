@@ -70,6 +70,8 @@ export function getWorkSliders(work: Work, isAI: boolean | undefined) {
   /** More Like This */
   if (!isAI) {
     const similarUrl = new URL(`${DCAPI_ENDPOINT}/works/${work.id}/similar`);
+    const searchUrl = new URL("/search", DC_URL);
+    searchUrl.searchParams.append("similar", work.id);
     similarUrl.searchParams.append("collectionLabel", "More Like This");
     similarUrl.searchParams.append(
       "collectionSummary",
@@ -79,7 +81,7 @@ export function getWorkSliders(work: Work, isAI: boolean | undefined) {
 
     workSliders.push({
       iiifCollectionId: similarUrl.toString(),
-      customViewAll: "#",
+      customViewAll: searchUrl.toString(),
     });
   }
 
