@@ -51,7 +51,7 @@ export const parseUrlFacets = (routerQuery: NextJSRouterQuery) => {
   const allFacetIds = getAllFacetIds();
 
   for (const [key, value] of Object.entries(routerQuery)) {
-    if (allFacetIds.includes(key)) {
+    if (allFacetIds.includes(key) || key === "similar") {
       if (key && value) {
         urlFacets[key] = Array.isArray(value) ? value : [value];
       }
