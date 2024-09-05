@@ -79,7 +79,7 @@ export function getWorkSliders(work: Work, isAI: boolean | undefined) {
 
     workSliders.push({
       iiifCollectionId: similarUrl.toString(),
-      customViewAll: "#",
+      customViewAll: similarUrl.toString(),
     });
   }
 
