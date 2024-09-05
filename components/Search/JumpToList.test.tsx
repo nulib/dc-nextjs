@@ -23,6 +23,7 @@ describe("SearchJumpToList component", () => {
       <SearchJumpToList
         searchValue="Dylan"
         setShowJumpTo={mockSetShowJumpTo}
+        top={0}
       />,
     );
     expect(screen.getByTestId("jump-to-wrapper"));
@@ -31,7 +32,11 @@ describe("SearchJumpToList component", () => {
 
   it("renders Helper components in each JumpTo item", () => {
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
+      <SearchJumpToList
+        searchValue="foo"
+        setShowJumpTo={mockSetShowJumpTo}
+        top={0}
+      />,
     );
     const helpers = screen.getAllByTestId("helper");
     expect(helpers[0]).toHaveTextContent(/in this collection/i);
@@ -40,7 +45,11 @@ describe("SearchJumpToList component", () => {
 
   it.only("renders route query params in JumpTo items", async () => {
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
+      <SearchJumpToList
+        searchValue="foo"
+        setShowJumpTo={mockSetShowJumpTo}
+        top={0}
+      />,
     );
 
     await act(async () => {
@@ -63,7 +72,11 @@ describe("SearchJumpToList component", () => {
   it("selects items correctly on arrow key presses", async () => {
     const user = userEvent.setup();
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
+      <SearchJumpToList
+        searchValue="foo"
+        setShowJumpTo={mockSetShowJumpTo}
+        top={0}
+      />,
     );
     const listItems = await screen.findAllByRole("option");
 
@@ -89,7 +102,11 @@ describe("SearchJumpToList component", () => {
   it("handles the Escape key press", async () => {
     const user = userEvent.setup();
     render(
-      <SearchJumpToList searchValue="foo" setShowJumpTo={mockSetShowJumpTo} />,
+      <SearchJumpToList
+        searchValue="foo"
+        setShowJumpTo={mockSetShowJumpTo}
+        top={0}
+      />,
     );
 
     await user.keyboard("{Escape}");

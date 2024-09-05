@@ -4,6 +4,7 @@ import {
   JumpItem,
   JumpToListStyled,
 } from "@/components/Search/JumpTo.styled";
+
 import { IconReturnDownBack } from "@/components/Shared/SVG/Icons";
 import Link from "next/link";
 import { getCollection } from "@/lib/collection-helpers";
@@ -13,11 +14,13 @@ import { useRouter } from "next/router";
 interface SearchJumpToListProps {
   searchValue: string;
   setShowJumpTo: Dispatch<React.SetStateAction<boolean>>;
+  top: number;
 }
 
 const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   searchValue,
   setShowJumpTo,
+  top,
 }) => {
   const router = useRouter();
   const [collectionTitle, setCollectionTitle] = useState<string>("");
@@ -96,7 +99,11 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   }, [router.query.id]);
 
   return (
-    <JumpToListStyled data-testid="jump-to-wrapper" role="listbox">
+    <JumpToListStyled
+      data-testid="jump-to-wrapper"
+      role="listbox"
+      style={{ top }}
+    >
       {jumpToItems.map((item, index) => (
         <JumpItem
           key={item.dataTestId}

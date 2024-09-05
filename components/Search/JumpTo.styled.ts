@@ -28,9 +28,9 @@ const HelperStyled = styled("div", {
 });
 
 const JumpToListStyled = styled("ul", {
-  position: "absolute",
-  left: "0px",
-  display: "block",
+  display: "flex",
+  flexDirection: "column",
+  alignSelf: "flex-end",
   margin: "0",
   padding: "0",
   background: "$white",
@@ -38,20 +38,18 @@ const JumpToListStyled = styled("ul", {
   fontSize: "$gr2",
   listStyle: "none",
   top: "50px",
-  border: "1px solid $black10",
-  boxShadow: "3px 3px 8px #0003",
+  borderRadius: "3px",
+  boxShadow: "3px 3px 11px #0001",
 });
 
 const JumpItem = styled("li", {
   position: "relative",
-  backgroundColor: "$gray6",
   transition: "$dcAll",
 
   "& a": {
     display: "block",
     padding: "$gr3",
     borderTopWidth: "1px",
-    borderTopColor: "$black20",
     borderTopStyle: "solid",
     cursor: "pointer",
     color: "$purple120",
@@ -59,11 +57,12 @@ const JumpItem = styled("li", {
 
   "&[aria-selected='true']": {
     background: "$purple10",
+    fontFamily: "$northwesternSansBold",
 
     [`${HelperStyled}`]: {
       color: "$purple10",
-      background: "$purple",
-      boxShadow: "2px 2px 5px #0001",
+      background: "$purple120",
+      fontFamily: "$northwesternSansRegular",
 
       svg: {
         width: "$gr3",
