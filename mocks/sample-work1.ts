@@ -37,6 +37,7 @@ export const sampleWork1: Work = {
   embedding: [2345, 2345],
   embedding_model:
     "huggingface/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2-stack-p-indexing-embedding",
+  embedding_text_length: "0",
   file_sets: [
     {
       accession_number: "inu-dil-50575a78-a47a-4a07-939f-6e1d6a9d7065",
