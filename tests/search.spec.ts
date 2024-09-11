@@ -19,6 +19,7 @@ const test = base.extend<SearchPageFixtures>({
     await openGraphPage.goto();
     await use(openGraphPage);
   },
+
   // A fixture to help with the Search Page shared functionality
   searchPage: async ({ page }, use) => {
     const searchPage = new SearchPage(page);
@@ -91,6 +92,7 @@ test.describe("Search page component", () => {
     await searchInput.fill(searches[1].term);
     await searchBtn.click();
 
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`/search?q=${searches[1].term}`);
     await searchPage.verifyTopResultsCount(searches[1].expectedResultCount);
     await expect(searchInput).toHaveValue(searches[1].term);
@@ -99,6 +101,7 @@ test.describe("Search page component", () => {
       searches[1].expectedResultCount,
     );
 
+    await page.waitForLoadState("domcontentloaded");
     await searchPage.verifyTopResultsCount(searches[1].expectedResultCount);
     await searchPage.verifyTotalsResultDisplay({
       count: search2,
@@ -110,6 +113,7 @@ test.describe("Search page component", () => {
     await expect(page).toHaveURL(/\/search/);
 
     // Verify original counts are back in place
+    await page.waitForLoadState("domcontentloaded");
     await searchPage.verifyTopResultsCount(TOTAL_RESULTS);
     await searchPage.verifyGridItemCount(TOTAL_RESULTS);
   });
@@ -124,10 +128,10 @@ test.describe("Search page component", () => {
     const audioBtn = facetInlineComponent.getByRole("radio", { name: "Audio" });
     const videoBtn = facetInlineComponent.getByRole("radio", { name: "Video" });
     const clearAllBtn = page.getByRole("button", {
-      name: "Clear All",
+      name: "Reset",
     });
     const publicWorksToggle = page.getByRole("switch", {
-      name: "Public works only",
+      name: "Public only",
     });
     const facetUserComponent = page
       .getByTestId("facet-user-component")
@@ -139,18 +143,21 @@ test.describe("Search page component", () => {
     const PUBLIC_WORKS_COUNT = 179;
 
     // Work Type facet button checks
+    await page.waitForLoadState("domcontentloaded");
     await expect(allBtn).toHaveAttribute("aria-checked", "true");
     await expect(imageBtn).toHaveAttribute("aria-checked", "false");
 
     // Select Image facet
-    // await imageBtn.click();
-    // await expect(imageBtn).toHaveAttribute("aria-checked", "true");
-    // await expect(allBtn).toHaveAttribute("aria-checked", "false");
-    // await searchPage.verifyTopResultsCount(IMAGE_COUNT);
-    // await searchPage.verifyGridItemCount(IMAGE_COUNT);
+    await imageBtn.click();
+    await page.waitForLoadState("domcontentloaded");
+    await expect(imageBtn).toHaveAttribute("aria-checked", "true");
+    await expect(allBtn).toHaveAttribute("aria-checked", "false");
+    await searchPage.verifyTopResultsCount(IMAGE_COUNT);
+    await searchPage.verifyGridItemCount(IMAGE_COUNT);
 
     // Select Audio facet
     await audioBtn.click();
+    await page.waitForLoadState("domcontentloaded");
     await expect(audioBtn).toHaveAttribute("aria-checked", "true");
     await expect(imageBtn).toHaveAttribute("aria-checked", "false");
     await searchPage.verifyTopResultsCount(AUDIO_COUNT);
@@ -158,19 +165,23 @@ test.describe("Search page component", () => {
 
     // Select Video facet
     await videoBtn.click();
+    await page.waitForLoadState("domcontentloaded");
     await expect(videoBtn).toHaveAttribute("aria-checked", "true");
     await expect(audioBtn).toHaveAttribute("aria-checked", "false");
     await searchPage.verifyTopResultsCount(VIDEO_COUNT);
     await searchPage.verifyGridItemCount(VIDEO_COUNT);
 
-    // Toggle Public Works
+    // Select All (work types) facet
     await allBtn.click();
     await page.waitForLoadState("domcontentloaded");
+    await searchPage.verifyTopResultsCount(TOTAL_RESULTS);
+
+    // Toggle Public Works
     await publicWorksToggle.click();
     await page.waitForLoadState("domcontentloaded");
-
     await searchPage.verifyTopResultsCount(PUBLIC_WORKS_COUNT);
     await searchPage.verifyGridItemCount(PUBLIC_WORKS_COUNT);
+    await expect(facetUserComponent).toContainText("1");
 
     // Test Filter Facet Toggle UI
     await clearAllBtn.click();
@@ -179,9 +190,12 @@ test.describe("Search page component", () => {
 
     await imageBtn.click();
     await page.waitForLoadState("domcontentloaded");
+    await publicWorksToggle.click();
+    await page.waitForLoadState("domcontentloaded");
     await expect(facetUserComponent).toContainText("1");
 
     await publicWorksToggle.click();
+    await page.waitForLoadState("domcontentloaded");
     await expect(facetUserComponent).toContainText("2");
   });
 });

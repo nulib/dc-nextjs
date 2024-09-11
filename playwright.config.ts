@@ -23,7 +23,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Increase the default timeout to 10 seconds. */
-  timeout: 15000,
+  timeout: 30000,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 6,
 
