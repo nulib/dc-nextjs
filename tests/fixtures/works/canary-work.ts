@@ -75,6 +75,7 @@ export const canaryWork: WorkExtended = {
   ],
   embedding: [123, 1234],
   embedding_model: "embed model here",
+  embedding_text_length: "0",
   file_sets: [
     {
       accession_number: "TEST_canary_002_001",
