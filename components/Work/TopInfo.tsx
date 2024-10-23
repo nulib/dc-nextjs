@@ -15,6 +15,7 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
+import IIIFShare from "../Shared/IIIF/Share";
 import { Manifest } from "@iiif/presentation-3";
 import type { Work } from "@nulib/dcapi-types";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
@@ -71,10 +72,20 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
   return (
     <TopInfoWrapper>
       <header>
-        <Label label={manifest.label} as="h1" data-testid="title" />
-        {manifest?.summary && (
-          <Summary summary={manifest.summary} as="p" data-testid="summary" />
-        )}
+        <div>
+          <div>
+            <Label label={manifest.label} as="h1" data-testid="title" />
+            {manifest?.summary && (
+              <Summary
+                summary={manifest.summary}
+                as="p"
+                data-testid="summary"
+              />
+            )}
+          </div>
+          <IIIFShare uri={manifest.id} />
+        </div>
+
         <ActionButtons>
           <Button
             name="find"

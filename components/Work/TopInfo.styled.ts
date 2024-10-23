@@ -11,7 +11,6 @@ const ActionButtons = styled("div", {
 
   button: {
     marginRight: "$gr3",
-    fontFamily: "$northwesternSansLight",
     paddingTop: "$gr3",
 
     "&:last-child": {
@@ -53,25 +52,17 @@ const TopInfoWrapper = styled("section", {
 
     h1: {
       lineHeight: "1em",
+      fontWeight: "400",
       fontFamily: "$northwesternDisplayBold",
-      fontSize: "$8",
-      letterSpacing: "-0.015em",
+      fontSize: "$gr7",
+      letterSpacing: "-0.025em",
       margin: "0",
-
-      "@sm": {
-        fontSize: "$gr7",
-      },
     },
 
     p: {
-      fontSize: "$gr5",
+      fontSize: "$gr4",
       color: "$black50",
-      fontFamily: "$northwesternSansLight",
       lineHeight: "1.47em",
-
-      "@sm": {
-        fontSize: "$gr4",
-      },
     },
   },
 });

@@ -87,7 +87,6 @@ const Button = styled("button", {
 
 const ResultsMessage = styled("span", {
   color: "$black50",
-  padding: "0 $gr4 $gr4",
   fontSize: "$gr3",
 
   "@lg": {
@@ -126,6 +125,14 @@ const ResultsWrapper = styled("div", {
   minHeight: "80vh",
 });
 
+const ResultsWrapperHeader = styled("header", {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "0 $gr4 $gr4",
+});
+
 const StyledResponseWrapper = styled("div", {
   padding: "0 0 $gr6",
 });
@@ -135,6 +142,7 @@ export {
   NoResultsMessage,
   ResultsMessage,
   ResultsWrapper,
+  ResultsWrapperHeader,
   SearchStyled,
   StyledResponseWrapper,
 };

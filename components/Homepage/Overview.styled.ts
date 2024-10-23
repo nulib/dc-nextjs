@@ -12,19 +12,21 @@ const Content = styled("div", {
   },
 
   h2: {
-    fontFamily: "$northwesternDisplayBold",
-    margin: "0 0 $gr2",
+    fontFamily: "$northwesternDisplayBook",
+    margin: "0 0 $gr3",
     fontSize: "$gr6",
     fontWeight: "400",
     lineHeight: "1.15",
+    letterSpacing: "-0.015em",
   },
 
   p: {
-    fontFamily: "$northwesternSansLight",
-    fontSize: "$4",
+    fontFamily: "$northwesternSansRegular",
+    fontSize: "$gr4",
     lineHeight: "1.55em",
     margin: "0 0 $gr4",
     padding: "0",
+    color: "$black50",
   },
 });
 
