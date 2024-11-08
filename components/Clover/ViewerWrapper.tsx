@@ -8,6 +8,7 @@ import type {
 } from "@samvera/clover-iiif";
 
 import Announcement from "@/components/Shared/Announcement";
+import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { UserContext } from "@/context/user-context";
@@ -76,24 +77,26 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   };
 
   return (
-    <ViewerWrapperStyled data-testid="work-viewer-wrapper">
-      {manifestId && (
-        <CloverViewer
-          // @ts-ignore
-          customTheme={customTheme}
-          iiifContent={manifestId}
-          options={options}
-        />
-      )}
-      {isWorkRestricted && userAuth?.user?.isReadingRoom && (
-        <Announcement>
-          <AnnouncementContent>
-            <IconInfo />
-            <p>You have access to Work because you are in the reading room</p>
-          </AnnouncementContent>
-        </Announcement>
-      )}
-    </ViewerWrapperStyled>
+    <Container containerType="wide">
+      <ViewerWrapperStyled data-testid="work-viewer-wrapper">
+        {manifestId && (
+          <CloverViewer
+            // @ts-ignore
+            customTheme={customTheme}
+            iiifContent={manifestId}
+            options={options}
+          />
+        )}
+        {isWorkRestricted && userAuth?.user?.isReadingRoom && (
+          <Announcement>
+            <AnnouncementContent>
+              <IconInfo />
+              <p>You have access to Work because you are in the reading room</p>
+            </AnnouncementContent>
+          </Announcement>
+        )}
+      </ViewerWrapperStyled>
+    </Container>
   );
 };
 

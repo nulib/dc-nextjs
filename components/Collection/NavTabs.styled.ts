@@ -1,4 +1,5 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
+
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -63,7 +64,6 @@ const StyledContent = styled(TabsPrimitive.Content, {
   borderBottomLeftRadius: 6,
   borderBottomRightRadius: 6,
   outline: "none",
-  "&:focus": { boxShadow: `0 0 0 2px #f0f0f0` },
 
   "& a": {
     color: "$purple",

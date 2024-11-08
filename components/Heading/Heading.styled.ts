@@ -35,9 +35,10 @@ const StyledHeading = styled("h2", {
   },
 
   "&[data-level=h2]": {
-    color: "$purple",
     fontFamily: "$northwesternDisplayBold",
+    color: "$black80",
     fontSize: "$gr7",
+    letterSpacing: "-0.015em",
     fontWeight: "400",
     marginBottom: "$gr5",
   },

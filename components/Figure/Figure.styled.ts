@@ -93,6 +93,7 @@ const FigureTitle = styled("span", {
   color: "$purple",
   display: "flex",
   alignItems: "flex-start",
+  lineHeight: "1.25em",
 });
 
 const FigureText = styled("div", {
