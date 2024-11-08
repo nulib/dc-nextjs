@@ -10,6 +10,8 @@ export const sampleCollection1 = {
   featured: true,
   finding_aid_url: null,
   id: "04c17199-1b74-4f9f-853c-1c069f1c4f2e",
+  iiif_collection:
+    "https://api.dc.library.northwestern.edu/api/v2/works/04c17199-1b74-4f9f-853c-1c069f1c4f2e?as=iiif",
   indexed_at: "what goes here",
   keywords: [],
   modified_date: "2022-02-24T23:51:15.854797Z",

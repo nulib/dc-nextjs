@@ -1,12 +1,23 @@
+import { CSS } from "@stitches/react";
 import { ReactNode } from "react";
 import { styled } from "@/stitches.config";
 
 interface IconProps {
   children: ReactNode;
+  style?: CSS;
+  hasSVGPadding?: boolean;
 }
 
-const Icon: React.FC<IconProps> = ({ children }) => {
-  return <IconStyled>{children}</IconStyled>;
+const Icon: React.FC<IconProps> = ({
+  children,
+  style,
+  hasSVGPadding = true,
+}) => {
+  return (
+    <IconStyled css={{ ...style }} hasSVGPadding={hasSVGPadding}>
+      {children}
+    </IconStyled>
+  );
 };
 
 /* eslint sort-keys: 0 */
@@ -32,7 +43,21 @@ export const IconStyled = styled("span", {
     color: "inherit",
     fill: "inherit",
     stroke: "inherit",
-    padding: "8px",
+  },
+
+  variants: {
+    hasSVGPadding: {
+      true: {
+        svg: {
+          padding: "0.5em",
+        },
+      },
+      false: {
+        svg: {
+          padding: "0",
+        },
+      },
+    },
   },
 });
 

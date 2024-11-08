@@ -1,18 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
 
-export type CopyStatus = "copied" | "failed" | undefined;
+export type CopyStatus = "✔" | "✗" | undefined;
 
 export const useCopyToClipboard = (
   text: string,
-  notifyTimeout = 2500,
-): [CopyStatus, () => void] => {
+  notifyTimeout = 5000,
+): [CopyStatus, (event: MouseEvent) => void] => {
   const [copyStatus, setCopyStatus] = useState<CopyStatus>();
-  const copy = useCallback(() => {
-    navigator.clipboard.writeText(text).then(
-      () => setCopyStatus("copied"),
-      () => setCopyStatus("failed"),
-    );
-  }, [text]);
+  const copy = useCallback(
+    (event: MouseEvent) => {
+      event?.preventDefault();
+      navigator.clipboard.writeText(text).then(
+        () => setCopyStatus("✔"),
+        () => setCopyStatus("✗"),
+      );
+    },
+    [text],
+  );
 
   useEffect(() => {
     if (!copyStatus) {

@@ -48,18 +48,19 @@ const IIIFManifest: React.FC<IIIFManifestProps> = ({ manifest, work }) => {
             manifestId={manifest.id}
           />
         </ShareURLActions>
-        {(isWorkInstitution || isWorkPrivate) && (
-          <Announcement
-            css={{
-              marginTop: "1rem",
-            }}
-            data-testid="mirador-announcement"
-          >
-            Opening in external tools like Mirador is not supported for works
-            that require authentication.
-          </Announcement>
-        )}
       </ShareURL>
+
+      {(isWorkInstitution || isWorkPrivate) && (
+        <Announcement
+          css={{
+            marginTop: "1rem",
+          }}
+          data-testid="mirador-announcement"
+        >
+          Opening in external tools like Mirador is not supported for works that
+          require authentication.
+        </Announcement>
+      )}
     </>
   );
 };

@@ -4,7 +4,6 @@ import { styled } from "@/stitches.config";
 
 const WorkCountStyled = styled("div", {
   display: "inline-flex",
-  backgroundColor: "$purple10",
   color: "$white",
   fontSize: "$gr1",
   borderRadius: "1rem",

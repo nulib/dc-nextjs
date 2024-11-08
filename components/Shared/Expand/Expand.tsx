@@ -38,7 +38,12 @@ const Expand: React.FC<ExpandProps & ExpandVariants> = ({
     >
       <ExpandContent ref={contentRef}>{children}</ExpandContent>
       <ExpandEdge>
-        <ExpandButton onClick={handleExpand} isLowercase disabled={isExpanded}>
+        <ExpandButton
+          onClick={handleExpand}
+          isLowercase
+          isPrimary
+          disabled={isExpanded}
+        >
           {buttonText}
         </ExpandButton>
       </ExpandEdge>

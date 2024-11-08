@@ -37,6 +37,7 @@ const HeroStyled = styled("div", {
     width: "100%",
     height: "100%",
     position: "relative",
+    zIndex: "1",
 
     ".swiper-wrapper": {
       "&::before": {
@@ -115,7 +116,7 @@ const HeroStyled = styled("div", {
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
-          textShadow: "2px 2px 2px #000",
+          textShadow: "3px 3px 8px #0006",
           maxWidth: "$gr11",
           textAlign: "left",
 
@@ -135,10 +136,12 @@ const HeroStyled = styled("div", {
 
           ".slide-label": {
             fontFamily: "$northwesternDisplayBold",
-            fontSize: "$gr8",
+            fontWeight: "400",
+            fontSize: "$gr7",
             display: "block",
             margin: "0 0 $gr2",
             lineHeight: "1em",
+            letterSpacing: "-0.015em",
 
             "@sm": {
               fontSize: "$gr7",
@@ -146,7 +149,7 @@ const HeroStyled = styled("div", {
           },
 
           ".slide-summary": {
-            fontFamily: "$northwesternSansLightItalic",
+            fontFamily: "$northwesternSansRegular",
             fontSize: "$gr4",
             display: "block",
             color: "$black20",
