@@ -15,6 +15,10 @@ provider "aws" {
   }
 }
 
+provider "awscc" {
+  region = var.aws_region
+}
+
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect  = "Allow"
@@ -119,17 +123,20 @@ resource "aws_amplify_branch" "production" {
 
 }
 
-resource "aws_amplify_domain_association" "dc_next_domain" {
-  app_id      = aws_amplify_app.dc-next.id
-  domain_name = "${var.project}.${var.dns_zone}"
+resource "awscc_amplify_domain" "dc_next_domain" {
+  app_id                 = aws_amplify_app.dc-next.id
+  domain_name            = "${var.project}.${var.dns_zone}"
+  enable_auto_sub_domain = var.auto_branch_creation
+  auto_sub_domain_creation_patterns = [ "preview/*" ]
 
-  sub_domain {
-    branch_name = aws_amplify_branch.production.branch_name
-    prefix      = ""
-  }
-
-  sub_domain {
-    branch_name = aws_amplify_branch.production.branch_name
-    prefix      = "www"
-  }
+  sub_domain_settings = [
+    {
+      branch_name = aws_amplify_branch.production.branch_name
+      prefix      = ""
+    },
+    {
+      branch_name = aws_amplify_branch.production.branch_name
+      prefix      = "www"
+    }
+  ]
 }
