@@ -16,6 +16,7 @@ import React from "react";
 import { SearchProvider } from "@/context/search-context";
 import { User } from "@/types/context/user";
 import { UserProvider } from "@/context/user-context";
+import { defaultAIState } from "@/hooks/useGenerativeAISearchToggle";
 import { defaultOpenGraphData } from "@/lib/open-graph";
 import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
@@ -37,8 +38,8 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const [mounted, setMounted] = React.useState(false);
   const [user, setUser] = React.useState<User>();
 
-  const [ai] = useLocalStorage("ai", "false");
-  const isUsingAI = ai === "true";
+  const [ai, setAI] = useLocalStorage("ai", defaultAIState);
+  const isUsingAI = ai?.enabled === "true";
 
   React.useEffect(() => {
     async function getData() {
@@ -47,6 +48,9 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       setMounted(true);
     }
     getData();
+
+    // Check if AI is enabled and if it has expired
+    if (ai?.expires && ai.expires < Date.now()) setAI(defaultAIState);
   }, []);
 
   React.useEffect(() => {

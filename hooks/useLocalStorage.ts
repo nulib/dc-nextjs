@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-function useLocalStorage(key: string, initialValue: string) {
+function useLocalStorage(key: string, initialValue: any) {
   // Get the initial value from localStorage or use the provided initialValue
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window !== "undefined") {

@@ -15,6 +15,7 @@ import { NavResponsiveOnly } from "@/components/Nav/Nav.styled";
 import { NorthwesternWordmark } from "@/components/Shared/SVG/Northwestern";
 import React from "react";
 import { UserContext } from "@/context/user-context";
+import { defaultAIState } from "@/hooks/useGenerativeAISearchToggle";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 const nav = [
@@ -35,7 +36,7 @@ const nav = [
 export default function HeaderSuper() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [ai, setAI] = useLocalStorage("ai", "false");
+  const [ai, setAI] = useLocalStorage("ai", defaultAIState);
 
   React.useEffect(() => {
     setIsLoaded(true);
@@ -45,7 +46,7 @@ export default function HeaderSuper() {
   const handleMenu = () => setIsExpanded(!isExpanded);
 
   const handleLogout = () => {
-    if (ai === "true") setAI("false");
+    if (ai.enabled === "true") setAI(defaultAIState);
     window.location.href = `${DCAPI_ENDPOINT}/auth/logout`;
   };
 
