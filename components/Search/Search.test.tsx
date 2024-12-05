@@ -106,7 +106,10 @@ describe("Search component", () => {
   });
 
   it("renders generative AI placeholder text when AI search is active", () => {
-    localStorage.setItem("ai", JSON.stringify("true"));
+    localStorage.setItem(
+      "ai",
+      JSON.stringify({ enabled: "true", expires: 9733324925021 }),
+    );
 
     render(withUserProvider(<Search isSearchActive={mockIsSearchActive} />));
 

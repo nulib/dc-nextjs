@@ -57,7 +57,11 @@ describe("GenerativeAIToggle", () => {
 
     await user.click(checkbox);
     expect(checkbox).toHaveAttribute("data-state", "checked");
-    expect(localStorage.getItem("ai")).toEqual(JSON.stringify("true"));
+
+    const ai = JSON.parse(String(localStorage.getItem("ai")));
+    expect(ai?.enabled).toEqual("true");
+    expect(typeof ai?.expires).toEqual("number");
+    expect(ai?.expires).toBeGreaterThan(Date.now());
   });
 
   it("renders the generative AI tooltip", () => {
@@ -99,7 +103,10 @@ describe("GenerativeAIToggle", () => {
       ...defaultSearchState,
     };
 
-    localStorage.setItem("ai", JSON.stringify("true"));
+    localStorage.setItem(
+      "ai",
+      JSON.stringify({ enabled: "true", expires: 9733324925021 }),
+    );
 
     mockRouter.setCurrentUrl("/search");
     render(
@@ -117,7 +124,7 @@ describe("GenerativeAIToggle", () => {
 
     mockRouter.setCurrentUrl("/");
 
-    localStorage.setItem("ai", JSON.stringify("false"));
+    localStorage.setItem("ai", JSON.stringify({ enabled: "false" }));
 
     render(
       withUserProvider(
@@ -127,6 +134,9 @@ describe("GenerativeAIToggle", () => {
 
     await user.click(screen.getByRole("checkbox"));
 
-    expect(localStorage.getItem("ai")).toEqual(JSON.stringify("true"));
+    const ai = JSON.parse(String(localStorage.getItem("ai")));
+    expect(ai?.enabled).toEqual("true");
+    expect(typeof ai?.expires).toEqual("number");
+    expect(ai?.expires).toBeGreaterThan(Date.now());
   });
 });
