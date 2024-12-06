@@ -1,4 +1,5 @@
 import {
+  CollectionHeader,
   Description,
   HeroWrapper,
   Interstitial,
@@ -32,11 +33,14 @@ import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
+import Heading from "@/components/Heading/Heading";
 import Hero from "@/components/Hero/Hero";
+import IIIFShare from "@/components/Shared/IIIF/Share";
 import Layout from "components/layout";
 import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
+import { iiifCollectionUri } from "@/lib/dc-api";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
@@ -56,6 +60,8 @@ const Collection: NextPage = () => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
 
   const description = collection?.description;
+
+  const iiifResource = iiifCollectionUri(collection?.id);
 
   /** Get the Collection */
   useEffect(() => {
@@ -182,9 +188,20 @@ const Collection: NextPage = () => {
                   <TabsTrigger value="metadata">All Subjects</TabsTrigger>
                 </TabsList>
                 <TabsContent value="explore">
+                  <CollectionHeader>
+                    <Heading
+                      as="h2"
+                      css={{
+                        margin: "0 0 $gr2 !important",
+                      }}
+                    >
+                      {collection?.title}
+                    </Heading>{" "}
+                    <IIIFShare uri={String(collection.iiif_collection)} />
+                  </CollectionHeader>
                   {description && (
                     <Description data-testid="description">
-                      <ReadMore text={description} words={55} />
+                      {<ReadMore text={description} words={55} />}
                     </Description>
                   )}
                   {topMetadata.length > 0 && (

@@ -1,10 +1,10 @@
 import { VariantProps, styled } from "@/stitches.config";
+
 import { Button } from "@nulib/design-system";
 
 /* eslint sort-keys: 0 */
 
 const ExpandButton = styled(Button, {
-  margin: "0 auto",
   opacity: "1",
   transition: "$dcAll",
 });
@@ -14,9 +14,9 @@ const ExpandEdge = styled("div", {
   width: "100%",
   bottom: "0",
   display: "flex",
-  justifyContent: "center",
-  padding: "$4 0 0",
   backgroundColor: "$white",
+  justifyContent: "flex-start",
+  paddingTop: "$gr7",
   background: "linear-gradient(to bottom, #fff0 0%, #fff 61.8%)",
   transition: "$dcAll",
   overflow: "hidden",

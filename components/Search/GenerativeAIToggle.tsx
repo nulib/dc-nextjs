@@ -63,7 +63,8 @@ export default function GenerativeAIToggle() {
       <SharedAlertDialog
         isOpen={dialog.isOpen}
         cancel={{ label: "Cancel", onClick: closeDialog }}
-        action={{ label: "Login", onClick: handleLogin }}
+        action={{ label: "Sign in", onClick: handleLogin }}
+        title="Sign in to Digital Collections"
       >
         {AI_LOGIN_ALERT}
       </SharedAlertDialog>

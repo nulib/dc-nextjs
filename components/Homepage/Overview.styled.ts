@@ -13,18 +13,20 @@ const Content = styled("div", {
 
   h2: {
     fontFamily: "$northwesternDisplayBold",
-    margin: "0 0 $gr2",
+    margin: "0 0 $gr3",
     fontSize: "$gr6",
     fontWeight: "400",
     lineHeight: "1.15",
+    letterSpacing: "-0.015em",
   },
 
   p: {
-    fontFamily: "$northwesternSansLight",
-    fontSize: "$4",
+    fontFamily: "$northwesternSansRegular",
+    fontSize: "$gr4",
     lineHeight: "1.55em",
     margin: "0 0 $gr4",
     padding: "0",
+    color: "$black50",
   },
 });
 
@@ -34,11 +36,9 @@ const Images = styled("div", {
   gridTemplateColumns: "1fr 2fr 3fr 3fr 3fr 1fr",
   gridTemplateRows: "repeat(6,auto)",
   gridGap: "$gr2",
-  marginLeft: "$gr5",
 
   "@sm": {
-    width: "100%",
-    marginLeft: "0",
+    width: "300px",
   },
 
   "img, video": {
@@ -82,13 +82,14 @@ const Images = styled("div", {
 
 const Inner = styled("div", {
   display: "flex",
-  padding: "$gr6",
+  padding: "$gr5",
   width: "auto",
   alignItems: "center",
+  gap: "$gr5",
 
   "@sm": {
     flexDirection: "column-reverse",
-    padding: "$gr4 $gr3",
+    gap: "$gr3",
   },
 });
 

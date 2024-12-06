@@ -11,7 +11,6 @@ const ActionButtons = styled("div", {
 
   button: {
     marginRight: "$gr3",
-    fontFamily: "$northwesternSansLight",
     paddingTop: "$gr3",
 
     "&:last-child": {
@@ -45,7 +44,7 @@ const TopInfoContent = styled("div", {
 });
 
 const TopInfoWrapper = styled("section", {
-  margin: "$gr5 0",
+  margin: "$gr5 0 $gr6",
 
   [`> header`]: {
     display: "flex",
@@ -53,25 +52,42 @@ const TopInfoWrapper = styled("section", {
 
     h1: {
       lineHeight: "1em",
+      fontWeight: "400",
       fontFamily: "$northwesternDisplayBold",
-      fontSize: "$8",
-      letterSpacing: "-0.015em",
+      fontSize: "$gr7",
+      letterSpacing: "-0.025em",
       margin: "0",
-
-      "@sm": {
-        fontSize: "$gr7",
-      },
     },
 
     p: {
-      fontSize: "$gr5",
+      fontSize: "$gr4",
       color: "$black50",
-      fontFamily: "$northwesternSansLight",
       lineHeight: "1.47em",
+    },
+  },
+});
 
-      "@sm": {
-        fontSize: "$gr4",
-      },
+const TopInfoHeaderContent = styled("div", {
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "0 0 $gr3",
+  gap: "$gr2",
+
+  "@sm": {
+    flexDirection: "column",
+    gap: "0",
+  },
+
+  "> div:last-child": {
+    flexShrink: 0,
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    width: "38.2%",
+
+    "@sm": {
+      justifyContent: "center",
+      width: "100%",
     },
   },
 });
@@ -86,4 +102,10 @@ const TopInfoCollection = styled("div", {
   },
 });
 
-export { ActionButtons, TopInfoCollection, TopInfoContent, TopInfoWrapper };
+export {
+  ActionButtons,
+  TopInfoCollection,
+  TopInfoContent,
+  TopInfoHeaderContent,
+  TopInfoWrapper,
+};

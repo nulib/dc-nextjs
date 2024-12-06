@@ -4,15 +4,15 @@ import { styled } from "@/stitches.config";
 
 const DefinitionListWrapper = styled("div", {
   lineHeight: "1.47em",
+  fontSize: "$gr3",
 
   "& dt": {
-    fontSize: "$gr3",
     color: "$black",
-    fontFamily: "$northwesternDisplayBold",
+    fontFamily: "$northwesternSansBold",
   },
   "& dd": {
     marginInlineStart: "0",
-    paddingBottom: "$gr2",
+    paddingBottom: "$gr3",
   },
 });
 

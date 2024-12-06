@@ -5,7 +5,12 @@ import { UserContext } from "@/context/user-context";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/router";
 
-const defaultModalState = {
+export const defaultAIState = {
+  enabled: "false",
+  expires: undefined,
+};
+
+export const defaultModalState = {
   isOpen: false,
   title: "Use Generative AI",
 };
@@ -13,12 +18,13 @@ const defaultModalState = {
 export default function useGenerativeAISearchToggle() {
   const router = useRouter();
 
-  const [ai, setAI] = useLocalStorage("ai", "false");
+  const [ai, setAI] = useLocalStorage("ai", defaultAIState);
   const { user } = React.useContext(UserContext);
 
   const [dialog, setDialog] = useState(defaultModalState);
 
-  const isAIPreference = ai === "true";
+  const expires = Date.now() + 1000 * 60 * 60;
+  const isAIPreference = ai.enabled === "true";
   const isChecked = isAIPreference && user?.isLoggedIn;
 
   const loginUrl = `${DCAPI_ENDPOINT}/auth/login?goto=${goToLocation()}`;
@@ -36,7 +42,7 @@ export default function useGenerativeAISearchToggle() {
     if (router.isReady) {
       const { query } = router;
       if (query.ai === "true") {
-        setAI("true");
+        setAI({ enabled: "true", expires });
       }
     }
   }, [router.asPath]);
@@ -61,7 +67,10 @@ export default function useGenerativeAISearchToggle() {
     if (!user?.isLoggedIn) {
       setDialog({ ...dialog, isOpen: checked });
     } else {
-      setAI(checked ? "true" : "false");
+      setAI({
+        enabled: checked ? "true" : "false",
+        expires: checked ? expires : undefined,
+      });
     }
   }
 
