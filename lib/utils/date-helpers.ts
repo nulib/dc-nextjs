@@ -7,12 +7,9 @@ export function formatDateLong(date: string | undefined): string {
   if (!date) return "";
 
   const dateObj = new Date(date);
-  const hour =
-    dateObj.getHours() > 12 ? dateObj.getHours() - 12 : dateObj.getHours();
-  // Write a JS Date object to a string in the format like "November 14, 2023, 1:14pm"
-  return `${dateObj.toLocaleString("en-US", {
-    month: "long",
-  })} ${dateObj.getDate()}, ${dateObj.getFullYear()}, ${hour}:${dateObj.getMinutes()}${
-    dateObj.getHours() > 12 ? "pm" : "am"
-  }`;
+  const hour = dateObj.getHours() % 12 || 12; // Handle midnight and noon
+  const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+  const ampm = dateObj.getHours() >= 12 ? "pm" : "am";
+
+  return `${dateObj.toLocaleString("en-US", { month: "long" })} ${dateObj.getDate()}, ${dateObj.getFullYear()}, ${hour}:${minutes}${ampm}`;
 }
