@@ -1,35 +1,57 @@
 import { Work } from "@nulib/dcapi-types";
 
-export type QuestionRendered = {
-  question: string;
-  ref: string;
+export type MessageTypes =
+  | "answer"
+  | "aggregation_result"
+  | "final"
+  | "final_message"
+  | "search_result"
+  | "start"
+  | "stop"
+  | "token"
+  | "tool_start";
+
+type MessageAggregationResult = {
+  buckets: [
+    {
+      key: string;
+      doc_count: number;
+    },
+  ];
+  doc_count_error_upper_bound: number;
+  sum_other_doc_count: number;
 };
 
-export type Question = {
-  auth: string;
-  message: "chat";
-  question: string;
-  ref: string;
+type MessageSearchResult = Array<Work>;
+
+type MessageModel = {
+  model: string;
 };
 
-export type Answer = {
-  answer: string;
-  isComplete: boolean;
-  question?: string;
-  ref: string;
-  source_documents: Array<Work>;
+type MessageTool = {
+  input: {
+    query:
+      | string
+      | {
+          agg_field: string;
+          term_field: string;
+          term: string;
+        };
+  };
+  tool: "search" | "aggregate";
 };
+
+type MessageShape =
+  | string
+  | MessageAggregationResult
+  | MessageSearchResult
+  | MessageModel
+  | MessageTool;
 
 export type StreamingMessage = {
-  answer?: string;
-  end?: {
-    reason: "stop" | "length" | "timeout" | "eos_token";
-    ref: string;
-  };
-  question?: string;
   ref: string;
-  source_documents?: Array<Work>;
-  token?: string;
+  message?: MessageShape;
+  type: MessageTypes;
 };
 
 export type ChatConfig = {

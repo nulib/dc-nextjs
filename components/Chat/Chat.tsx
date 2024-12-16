@@ -1,4 +1,5 @@
 import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
+import { MessageTypes, StreamingMessage } from "@/types/components/chat";
 import React, { useEffect, useState } from "react";
 import {
   StyledResponseActions,
@@ -13,7 +14,6 @@ import ChatFeedback from "@/components/Chat/Feedback/Feedback";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
 import { Work } from "@nulib/dcapi-types";
-import { pluralize } from "@/lib/utils/count-helpers";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
@@ -23,10 +23,11 @@ const Chat = ({
   viewResultsCallback,
 }: {
   totalResults?: number;
-  viewResultsCallback: () => void;
+  viewResultsCallback?: () => void;
 }) => {
   const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
+  const [conversationRef, setConversationRef] = useState<string>();
 
   const [streamingError, setStreamingError] = useState("");
 
@@ -42,13 +43,13 @@ const Chat = ({
 
   const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
   const [streamedAnswer, setStreamedAnswer] = useState("");
-
-  const isStreamingComplete = !!question && searchTerm === question;
+  const [isStreamingComplete, setIsStreamingComplete] = useState(false);
 
   useEffect(() => {
     if (!isStreamingComplete && isConnected && authToken && searchTerm) {
       resetChat();
       const preparedQuestion = prepareQuestion(searchTerm, authToken);
+      setConversationRef(preparedQuestion.ref);
       sendMessage(preparedQuestion);
     }
   }, [authToken, isStreamingComplete, isConnected, searchTerm, sendMessage]);
@@ -56,54 +57,54 @@ const Chat = ({
   useEffect(() => {
     if (!message) return;
 
-    const updateSourceDocuments = () => {
-      setSourceDocuments(message.source_documents!);
-    };
+    // const updateSourceDocuments = () => {
+    //   setSourceDocuments(message.source_documents!);
+    // };
 
-    const updateStreamedAnswer = () => {
-      setStreamedAnswer((prev) => prev + message.token);
-    };
+    // const updateStreamedAnswer = () => {
+    //   setStreamedAnswer((prev) => prev + message.token);
+    // };
 
-    const updateChat = () => {
-      searchDispatch({
-        chat: {
-          answer: message.answer || "",
-          documents: sourceDocuments,
-          question: searchTerm || "",
-          ref: message.ref,
-        },
-        type: "updateChat",
-      });
-    };
+    // const updateChat = () => {
+    //   searchDispatch({
+    //     chat: {
+    //       answer: message.answer || "",
+    //       documents: sourceDocuments,
+    //       question: searchTerm || "",
+    //       ref: message.ref,
+    //     },
+    //     type: "updateChat",
+    //   });
+    // };
 
-    if (message.source_documents) {
-      updateSourceDocuments();
-      return;
-    }
+    // if (message.source_documents) {
+    //   updateSourceDocuments();
+    //   return;
+    // }
 
-    if (message.token) {
-      updateStreamedAnswer();
-      return;
-    }
+    // if (message.token) {
+    //   updateStreamedAnswer();
+    //   return;
+    // }
 
-    if (message.end) {
-      switch (message.end.reason) {
-        case "length":
-          setStreamingError("The response has hit the LLM token limit.");
-          break;
-        case "timeout":
-          setStreamingError("The response has timed out.");
-          break;
-        case "eos_token":
-          setStreamingError("This should never happen.");
-          break;
-        default:
-          break;
-      }
-    }
+    // if (message.end) {
+    //   switch (message.end.reason) {
+    //     case "length":
+    //       setStreamingError("The response has hit the LLM token limit.");
+    //       break;
+    //     case "timeout":
+    //       setStreamingError("The response has timed out.");
+    //       break;
+    //     case "eos_token":
+    //       setStreamingError("This should never happen.");
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
 
-    if (message.answer) {
-      updateChat();
+    if (message?.type === "final_message") {
+      setIsStreamingComplete(true);
     }
   }, [message]);
 
@@ -136,8 +137,8 @@ const Chat = ({
       <ChatResponse
         isStreamingComplete={isStreamingComplete}
         searchTerm={question || searchTerm}
-        sourceDocuments={isStreamingComplete ? documents : sourceDocuments}
-        streamedAnswer={isStreamingComplete ? answer : streamedAnswer}
+        message={message}
+        conversationRef={conversationRef}
       />
       {streamingError && (
         <Container>

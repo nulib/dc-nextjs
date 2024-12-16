@@ -1,54 +1,80 @@
+import React, { useEffect, useState } from "react";
 import {
   StyledQuestion,
   StyledResponse,
-  StyledResponseAside,
-  StyledResponseContent,
   StyledResponseWrapper,
 } from "./Response.styled";
 
 import BouncingLoader from "@/components/Shared/BouncingLoader";
 import Container from "@/components/Shared/Container";
-import React from "react";
 import ResponseImages from "@/components/Chat/Response/Images";
-import ResponseStreamedAnswer from "@/components/Chat/Response/StreamedAnswer";
+import ResponseMarkdown from "@/components/Chat/Response/Markdown";
+import { StreamingMessage } from "@/types/components/chat";
 import { Work } from "@nulib/dcapi-types";
 
 interface ChatResponseProps {
-  isStreamingComplete: boolean;
+  conversationRef?: string;
+  message?: StreamingMessage;
   searchTerm: string;
-  sourceDocuments: Work[];
-  streamedAnswer?: string;
+  isStreamingComplete: boolean;
 }
 
 const ChatResponse: React.FC<ChatResponseProps> = ({
-  isStreamingComplete,
+  conversationRef,
+  message,
   searchTerm,
-  sourceDocuments,
-  streamedAnswer,
+  isStreamingComplete,
 }) => {
+  const [renderedMessage, setRenderedMessage] = useState<any>();
+  const [streamedMessage, setStreamedMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (!message || message.ref !== conversationRef) return;
+
+    const { type } = message;
+
+    if (type === "token") {
+      setStreamedMessage((prev) => prev + message?.message);
+    }
+
+    if (type === "answer") {
+      resetStreamedMessage();
+
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <ResponseMarkdown content={streamedMessage} />
+        </>
+      ));
+    }
+
+    if (type === "search_result") {
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <ResponseImages
+            works={message?.message as Work[]}
+            isStreamingComplete={isStreamingComplete}
+          />
+        </>
+      ));
+    }
+  }, [message]);
+
+  function resetStreamedMessage() {
+    setStreamedMessage("");
+  }
+
   return (
     <StyledResponseWrapper>
       <Container>
         <StyledResponse>
-          <StyledResponseContent>
-            <StyledQuestion>{searchTerm}</StyledQuestion>
-            {streamedAnswer ? (
-              <ResponseStreamedAnswer
-                isStreamingComplete={isStreamingComplete}
-                streamedAnswer={streamedAnswer}
-              />
-            ) : (
-              <BouncingLoader />
-            )}
-          </StyledResponseContent>
-          {sourceDocuments.length > 0 && (
-            <StyledResponseAside>
-              <ResponseImages
-                isStreamingComplete={isStreamingComplete}
-                sourceDocuments={sourceDocuments}
-              />
-            </StyledResponseAside>
-          )}
+          <StyledQuestion>{searchTerm}</StyledQuestion>
+          {renderedMessage}
+          {streamedMessage && <ResponseMarkdown content={streamedMessage} />}
+          {!isStreamingComplete && <BouncingLoader />}
         </StyledResponse>
       </Container>
     </StyledResponseWrapper>
