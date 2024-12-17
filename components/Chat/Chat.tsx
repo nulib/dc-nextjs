@@ -1,22 +1,21 @@
-import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
-import { MessageTypes, StreamingMessage } from "@/types/components/chat";
-import React, { useEffect, useState } from "react";
 import {
   StyledResponseActions,
   StyledResponseDisclaimer,
   StyledUnsubmitted,
 } from "@/components/Chat/Response/Response.styled";
 import { defaultState, useSearchState } from "@/context/search-context";
+import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
+import React, { useEffect, useState } from "react";
 
-import Announcement from "@/components/Shared/Announcement";
-import { Button } from "@nulib/design-system";
 import ChatFeedback from "@/components/Chat/Feedback/Feedback";
 import ChatResponse from "@/components/Chat/Response/Response";
+import Announcement from "@/components/Shared/Announcement";
 import Container from "@/components/Shared/Container";
-import { Work } from "@nulib/dcapi-types";
-import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
+import { prepareQuestion } from "@/lib/chat-helpers";
+import { Work } from "@nulib/dcapi-types";
+import { Button } from "@nulib/design-system";
 
 const Chat = ({
   totalResults,

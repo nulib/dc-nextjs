@@ -6,12 +6,11 @@ import {
   StyledResponseWrapper,
 } from "./Response.styled";
 
-import BouncingLoader from "@/components/Shared/BouncingLoader";
-import Container from "@/components/Shared/Container";
 import ResponseImages from "@/components/Chat/Response/Images";
 import ResponseMarkdown from "@/components/Chat/Response/Markdown";
+import BouncingLoader from "@/components/Shared/BouncingLoader";
+import Container from "@/components/Shared/Container";
 import { StreamingMessage } from "@/types/components/chat";
-import { Work } from "@nulib/dcapi-types";
 
 interface ChatResponseProps {
   conversationRef?: string;
@@ -35,7 +34,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     const { type } = message;
 
     if (type === "token") {
-      setStreamedMessage((prev) => prev + message?.message);
+      setStreamedMessage((prev) => prev + message.message);
     }
 
     if (type === "answer") {
@@ -51,19 +50,18 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     }
 
     if (type === "tool_start") {
-      // @ts-ignore
-      const { tool, input } = message?.message;
+      const { tool, input } = message.message;
       let interstitialMessage = "";
       switch (tool) {
         case "discover_fields":
           interstitialMessage = "Discovering fields";
           break;
         case "search":
-          interstitialMessage = `Searching for: ${input?.query}`;
+          interstitialMessage = `Searching for: ${input.query}`;
           break;
         case "aggregate":
           console.log(`aggregate input`, input);
-          interstitialMessage = `Aggregating ${input?.agg_field} by ${input?.term_field} ${input?.term}`;
+          interstitialMessage = `Aggregating ${input.agg_field} by ${input.term_field} ${input.term}`;
           break;
         default:
           console.warn("Unknown tool_start message", message);
@@ -87,7 +85,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         <>
           {prev}
           <ResponseImages
-            works={message?.message as Work[]}
+            works={message.message}
             isStreamingComplete={isStreamingComplete}
           />
         </>

@@ -1,61 +1,89 @@
 import { Work } from "@nulib/dcapi-types";
 
-export type MessageTypes =
-  | "answer"
-  | "aggregation_result"
-  | "final"
-  | "final_message"
-  | "search_result"
-  | "start"
-  | "stop"
-  | "token"
-  | "tool_start";
-
-type MessageAggregationResult = {
-  buckets: [
-    {
-      key: string;
-      doc_count: number;
-    },
-  ];
-  doc_count_error_upper_bound: number;
-  sum_other_doc_count: number;
-};
-
-type MessageSearchResult = Array<Work>;
-
-type MessageModel = {
-  model: string;
-};
-
-type MessageTool =
-  | {
-      tool: "discover_fields";
-      input: {};
-    }
-  | {
-      tool: "search";
-      input: {
-        query: string;
-      };
-    }
-  | {
-      tool: "aggregate";
-      input: { agg_field: string; term_field: string; term: string };
-    };
-
-type MessageShape =
-  | string
-  | MessageAggregationResult
-  | MessageSearchResult
-  | MessageModel
-  | MessageTool;
-
-export type StreamingMessage = {
+export type Ref = {
   ref: string;
-  message?: MessageShape;
-  type: MessageTypes;
 };
+
+export type AggregationResultMessage = {
+  type: "aggregation_result";
+  message: {
+    buckets: [
+      {
+        key: string;
+        doc_count: number;
+      },
+    ];
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+  };
+};
+
+export type AgentFinalMessage = {
+  type: "final";
+  message: string;
+};
+
+export type LLMAnswerMessage = {
+  type: "answer";
+  message: string;
+};
+
+export type LLMFinalMessage = {
+  type: "final_message";
+};
+
+export type LLMTokenMessage = {
+  type: "token";
+  message: string;
+};
+
+export type LLMStopMessage = {
+  type: "stop";
+};
+
+export type SearchResultMessage = {
+  type: "search_result";
+  message: Array<Work>;
+};
+
+export type StartMessage = {
+  type: "start";
+  message: {
+    model: string;
+  };
+};
+
+export type ToolStartMessage = {
+  type: "tool_start";
+  message:
+    | {
+        tool: "discover_fields";
+        input: {};
+      }
+    | {
+        tool: "search";
+        input: {
+          query: string;
+        };
+      }
+    | {
+        tool: "aggregate";
+        input: { agg_field: string; term_field: string; term: string };
+      };
+};
+
+export type StreamingMessage = Ref &
+  (
+    | AggregationResultMessage
+    | AgentFinalMessage
+    | LLMAnswerMessage
+    | LLMFinalMessage
+    | LLMTokenMessage
+    | LLMStopMessage
+    | SearchResultMessage
+    | StartMessage
+    | ToolStartMessage
+  );
 
 export type ChatConfig = {
   auth: string;
