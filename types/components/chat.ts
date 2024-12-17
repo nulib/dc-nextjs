@@ -28,18 +28,21 @@ type MessageModel = {
   model: string;
 };
 
-type MessageTool = {
-  input: {
-    query:
-      | string
-      | {
-          agg_field: string;
-          term_field: string;
-          term: string;
-        };
-  };
-  tool: "search" | "aggregate";
-};
+type MessageTool =
+  | {
+      tool: "discover_fields";
+      input: {};
+    }
+  | {
+      tool: "search";
+      input: {
+        query: string;
+      };
+    }
+  | {
+      tool: "aggregate";
+      input: { agg_field: string; term_field: string; term: string };
+    };
 
 type MessageShape =
   | string

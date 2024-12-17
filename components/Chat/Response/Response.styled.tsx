@@ -27,6 +27,26 @@ const StyledResponse = styled("section", {
   },
 });
 
+const StyledInterstitial = styled("div", {
+  color: "$black",
+  padding: "$gr2 0",
+  fontFamily: "$northwesternSansBold",
+  fontSize: "$gr3",
+  display: "flex",
+  alignItems: "center",
+  gap: "$gr2",
+  margin: "0",
+
+  div: {
+    display: "block",
+    width: "1.5rem",
+    height: "1.5rem",
+    borderRadius: "50%",
+    backgroundColor: "$brightBlueB",
+    content: "",
+  },
+});
+
 const StyledResponseAside = styled("aside", {});
 
 const StyledResponseContent = styled("div", {});
@@ -154,6 +174,7 @@ export {
   StyledResponseDisclaimer,
   StyledResponseWrapper,
   StyledImages,
+  StyledInterstitial,
   StyledQuestion,
   StyledResponseMarkdown,
   StyledUnsubmitted,
