@@ -12,21 +12,19 @@ import { Button } from "@nulib/design-system";
 import ChatFeedback from "@/components/Chat/Feedback/Feedback";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
-import { Work } from "@nulib/dcapi-types";
-import { pluralize } from "@/lib/utils/count-helpers";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import useQueryParams from "@/hooks/useQueryParams";
+import { v4 as uuidv4 } from "uuid";
 
 const Chat = ({
-  totalResults,
   viewResultsCallback,
 }: {
-  totalResults?: number;
-  viewResultsCallback: () => void;
+  viewResultsCallback?: () => void;
 }) => {
   const { searchTerm = "" } = useQueryParams();
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
+  const [conversationRef, setConversationRef] = useState<string>();
 
   const [streamingError, setStreamingError] = useState("");
 
@@ -38,73 +36,42 @@ const Chat = ({
     searchState: { chat },
     searchDispatch,
   } = useSearchState();
-  const { question, answer, documents } = chat;
+  const { question, answer } = chat;
 
-  const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
-  const [streamedAnswer, setStreamedAnswer] = useState("");
-
-  const isStreamingComplete = !!question && searchTerm === question;
+  const [isStreamingComplete, setIsStreamingComplete] = useState(false);
 
   useEffect(() => {
-    if (!isStreamingComplete && isConnected && authToken && searchTerm) {
+    if (
+      !isStreamingComplete &&
+      isConnected &&
+      authToken &&
+      searchTerm &&
+      conversationRef
+    ) {
       resetChat();
-      const preparedQuestion = prepareQuestion(searchTerm, authToken);
+      const preparedQuestion = prepareQuestion(
+        searchTerm,
+        authToken,
+        conversationRef,
+      );
       sendMessage(preparedQuestion);
     }
-  }, [authToken, isStreamingComplete, isConnected, searchTerm, sendMessage]);
+  }, [
+    authToken,
+    isStreamingComplete,
+    isConnected,
+    searchTerm,
+    conversationRef,
+    sendMessage,
+  ]);
 
   useEffect(() => {
-    if (!message) return;
+    setIsStreamingComplete(false);
+    setConversationRef(uuidv4());
+  }, [searchTerm]);
 
-    const updateSourceDocuments = () => {
-      setSourceDocuments(message.source_documents!);
-    };
-
-    const updateStreamedAnswer = () => {
-      setStreamedAnswer((prev) => prev + message.token);
-    };
-
-    const updateChat = () => {
-      searchDispatch({
-        chat: {
-          answer: message.answer || "",
-          documents: sourceDocuments,
-          question: searchTerm || "",
-          ref: message.ref,
-        },
-        type: "updateChat",
-      });
-    };
-
-    if (message.source_documents) {
-      updateSourceDocuments();
-      return;
-    }
-
-    if (message.token) {
-      updateStreamedAnswer();
-      return;
-    }
-
-    if (message.end) {
-      switch (message.end.reason) {
-        case "length":
-          setStreamingError("The response has hit the LLM token limit.");
-          break;
-        case "timeout":
-          setStreamingError("The response has timed out.");
-          break;
-        case "eos_token":
-          setStreamingError("This should never happen.");
-          break;
-        default:
-          break;
-      }
-    }
-
-    if (message.answer) {
-      updateChat();
-    }
+  useEffect(() => {
+    if (!message || !conversationRef) return;
   }, [message]);
 
   function handleNewQuestion() {
@@ -120,8 +87,6 @@ const Chat = ({
       chat: defaultState.chat,
       type: "updateChat",
     });
-    setStreamedAnswer("");
-    setSourceDocuments([]);
   }
 
   if (!searchTerm)
@@ -131,13 +96,42 @@ const Chat = ({
       </Container>
     );
 
+  const handleResponseCallback = (content: any) => {
+    if (!conversationRef) return;
+
+    setIsStreamingComplete(true);
+    searchDispatch({
+      chat: {
+        // content here is now a react element
+        // once continued conversations ar e in place
+        // see note below for question refactor
+        answer: content,
+
+        // documents should be eventually removed as
+        // they are now integrated into content
+        // doing so will require some careful refactoring
+        // as the documents are used in feedback form
+        documents: [],
+
+        // question should become an entry[] with
+        // entry[n].question and entry[n].content
+        question: searchTerm || "",
+
+        ref: conversationRef,
+      },
+      type: "updateChat",
+    });
+  };
+
   return (
     <>
       <ChatResponse
+        conversationRef={conversationRef}
         isStreamingComplete={isStreamingComplete}
-        searchTerm={question || searchTerm}
-        sourceDocuments={isStreamingComplete ? documents : sourceDocuments}
-        streamedAnswer={isStreamingComplete ? answer : streamedAnswer}
+        key={conversationRef}
+        message={message}
+        question={searchTerm}
+        responseCallback={handleResponseCallback}
       />
       {streamingError && (
         <Container>

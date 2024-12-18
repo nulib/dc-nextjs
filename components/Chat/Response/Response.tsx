@@ -1,54 +1,122 @@
+import React, { use, useEffect, useState } from "react";
 import {
   StyledQuestion,
   StyledResponse,
-  StyledResponseAside,
-  StyledResponseContent,
   StyledResponseWrapper,
-} from "./Response.styled";
+} from "@/components/Chat/Response/Response.styled";
 
 import BouncingLoader from "@/components/Shared/BouncingLoader";
 import Container from "@/components/Shared/Container";
-import React from "react";
 import ResponseImages from "@/components/Chat/Response/Images";
-import ResponseStreamedAnswer from "@/components/Chat/Response/StreamedAnswer";
-import { Work } from "@nulib/dcapi-types";
+import ResponseInterstitial from "@/components/Chat/Response/Interstitial";
+import ResponseMarkdown from "@/components/Chat/Response/Markdown";
+import { StreamingMessage } from "@/types/components/chat";
 
 interface ChatResponseProps {
+  conversationRef?: string;
   isStreamingComplete: boolean;
-  searchTerm: string;
-  sourceDocuments: Work[];
-  streamedAnswer?: string;
+  message?: StreamingMessage;
+  question: string;
+  responseCallback?: (renderedMessage: any) => void;
 }
 
 const ChatResponse: React.FC<ChatResponseProps> = ({
+  conversationRef,
   isStreamingComplete,
-  searchTerm,
-  sourceDocuments,
-  streamedAnswer,
+  message,
+  question,
+  responseCallback,
 }) => {
+  const [renderedMessage, setRenderedMessage] = useState<any>();
+  const [streamedMessage, setStreamedMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (!message || message.ref !== conversationRef) return;
+
+    const { type } = message;
+
+    if (type === "token") {
+      setStreamedMessage((prev) => prev + message.message);
+    }
+
+    if (type === "answer") {
+      resetStreamedMessage();
+
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <ResponseMarkdown content={streamedMessage} />
+        </>
+      ));
+    }
+
+    if (type === "tool_start") {
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <ResponseInterstitial message={message.message} />
+        </>
+      ));
+    }
+
+    if (type === "search_result") {
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <ResponseImages
+            works={message.message}
+            isStreamingComplete={isStreamingComplete}
+          />
+        </>
+      ));
+    }
+
+    if (type === "aggregation_result") {
+      console.log(`aggregation result`, message.message);
+
+      // @ts-ignore
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <></>
+        </>
+      ));
+    }
+
+    /**
+     * Final message is the last message in the response
+     * and is used to trigger the responseCallback
+     * to store this response.
+     */
+    if (type === "final_message") {
+      if (responseCallback) responseCallback(renderedMessage);
+    }
+  }, [message]);
+
+  useEffect(() => {
+    resetRenderedMessage();
+    resetStreamedMessage();
+  }, [conversationRef]);
+
+  function resetStreamedMessage() {
+    setStreamedMessage("");
+  }
+
+  function resetRenderedMessage() {
+    setRenderedMessage(undefined);
+  }
+
   return (
     <StyledResponseWrapper>
       <Container>
         <StyledResponse>
-          <StyledResponseContent>
-            <StyledQuestion>{searchTerm}</StyledQuestion>
-            {streamedAnswer ? (
-              <ResponseStreamedAnswer
-                isStreamingComplete={isStreamingComplete}
-                streamedAnswer={streamedAnswer}
-              />
-            ) : (
-              <BouncingLoader />
-            )}
-          </StyledResponseContent>
-          {sourceDocuments.length > 0 && (
-            <StyledResponseAside>
-              <ResponseImages
-                isStreamingComplete={isStreamingComplete}
-                sourceDocuments={sourceDocuments}
-              />
-            </StyledResponseAside>
-          )}
+          <StyledQuestion>{question}</StyledQuestion>
+          {renderedMessage}
+          {streamedMessage && <ResponseMarkdown content={streamedMessage} />}
+          {!isStreamingComplete && <BouncingLoader />}
         </StyledResponse>
       </Container>
     </StyledResponseWrapper>
