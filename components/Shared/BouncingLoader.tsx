@@ -23,7 +23,7 @@ const bouncingLoader = keyframes({
 
 const StyledBouncingLoader = styled("div", {
   display: "flex",
-  margin: "$gr2 auto",
+  margin: "$gr2 0",
 
   "& > div": {
     width: "$gr2",

@@ -19,7 +19,7 @@ const AlertDialogOverlay = styled(AlertDialog.Overlay, {
 
 const AlertDialogContent = styled(AlertDialog.Content, {
   backgroundColor: "white",
-  borderRadius: 6,
+  borderRadius: "6px",
   boxShadow:
     "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
   position: "fixed",
@@ -29,8 +29,9 @@ const AlertDialogContent = styled(AlertDialog.Content, {
   width: "90vw",
   maxWidth: "500px",
   maxHeight: "85vh",
-  padding: 25,
+  padding: "$gr4",
   zIndex: "2",
+  fontSize: "$gr3",
 
   "&:focus": { outline: "none" },
 });
@@ -46,7 +47,11 @@ const AlertDialogTitle = styled(AlertDialog.Title, {
 
 const AlertDialogButtonRow = styled("div", {
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
+
+  "> button": {
+    margin: 0,
+  },
 
   "& > *:not(:last-child)": {
     marginRight: "$gr3",

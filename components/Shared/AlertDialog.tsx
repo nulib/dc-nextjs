@@ -43,13 +43,13 @@ export default function SharedAlertDialog({
           <AlertDialog.Description>{children}</AlertDialog.Description>
           <AlertDialogButtonRow>
             {cancel && (
-              <Button isText onClick={cancel?.onClick}>
+              <Button onClick={cancel?.onClick} isLowercase>
                 {cancelLabel}
               </Button>
             )}
 
             <AlertDialog.Action asChild>
-              <Button isPrimary onClick={action.onClick}>
+              <Button isPrimary onClick={action.onClick} isLowercase>
                 {action.label}
               </Button>
             </AlertDialog.Action>

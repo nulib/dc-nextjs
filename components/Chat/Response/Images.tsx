@@ -4,33 +4,35 @@ import GridItem from "@/components/Grid/Item";
 import { StyledImages } from "@/components/Chat/Response/Response.styled";
 import { Work } from "@nulib/dcapi-types";
 
+const INITIAL_MAX_ITEMS = 5;
+
 const ResponseImages = ({
   isStreamingComplete,
-  sourceDocuments,
+  works,
 }: {
   isStreamingComplete: boolean;
-  sourceDocuments: Work[];
+  works: Work[];
 }) => {
   const [nextIndex, setNextIndex] = useState(0);
 
   useEffect(() => {
     if (isStreamingComplete) {
-      setNextIndex(sourceDocuments.length);
+      setNextIndex(works.length);
       return;
     }
 
-    if (nextIndex < sourceDocuments.length) {
+    if (nextIndex < works.length && nextIndex < INITIAL_MAX_ITEMS) {
       const timer = setTimeout(() => {
         setNextIndex(nextIndex + 1);
-      }, 382);
+      }, 100);
 
       return () => clearTimeout(timer);
     }
-  }, [isStreamingComplete, nextIndex, sourceDocuments.length]);
+  }, [isStreamingComplete, nextIndex, works.length]);
 
   return (
     <StyledImages>
-      {sourceDocuments.slice(0, nextIndex).map((document: Work) => (
+      {works.slice(0, nextIndex).map((document: Work) => (
         <GridItem key={document.id} item={document} />
       ))}
     </StyledImages>

@@ -1,18 +1,17 @@
 import axios, { AxiosError } from "axios";
 
 import { DCAPI_CHAT_FEEDBACK } from "./constants/endpoints";
-import { Question } from "@/types/components/chat";
-import { v4 as uuidv4 } from "uuid";
 
 const prepareQuestion = (
   questionString: string,
   authToken: string,
-): Question => {
+  conversationRef: string,
+) => {
   return {
     auth: authToken,
     message: "chat",
     question: questionString,
-    ref: uuidv4(),
+    ref: conversationRef,
   };
 };
 

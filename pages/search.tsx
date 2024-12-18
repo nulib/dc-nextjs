@@ -254,10 +254,7 @@ const SearchPage: NextPage = () => {
               renderTabList={showStreamedResponse}
             />
             <Tabs.Content value="stream">
-              <Chat
-                totalResults={totalResults}
-                viewResultsCallback={handleViewResultsCallback}
-              />
+              <Chat viewResultsCallback={handleViewResultsCallback} />
             </Tabs.Content>
 
             <Tabs.Content value="results">
