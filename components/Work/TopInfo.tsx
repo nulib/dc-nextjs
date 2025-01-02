@@ -16,6 +16,7 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
+import IIIFContentState from "../Shared/IIIF/ContentState";
 import IIIFShare from "../Shared/IIIF/Share";
 import { Manifest } from "@iiif/presentation-3";
 import type { Work } from "@nulib/dcapi-types";
@@ -26,6 +27,7 @@ import type { WorkTypeCountMap } from "@/lib/collection-helpers";
 
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;
+  contentState?: any;
   manifest?: Manifest;
   work: Work;
 }
@@ -36,6 +38,7 @@ export interface ActionsDialog {
 
 const WorkTopInfo: React.FC<TopInfoProps> = ({
   collectionWorkTypeCounts,
+  contentState,
   manifest,
   work,
 }) => {
@@ -84,7 +87,10 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
               />
             )}
           </div>
-          <IIIFShare uri={manifest.id} />
+          <div>
+            {contentState && <IIIFContentState contentState={contentState} />}
+            <IIIFShare uri={manifest.id} />
+          </div>
         </TopInfoHeaderContent>
 
         <ActionButtons>

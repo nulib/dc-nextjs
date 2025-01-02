@@ -43,9 +43,15 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const userAuthContext = useContext(UserContext);
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
+  const [contentState, setContentState] = useState<any>();
   const { isWorkRestricted } = useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
+  const { query } = router;
+
+  const iiifContent = query["iiif-content"]
+    ? (query["iiif-content"] as string)
+    : undefined;
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
@@ -72,6 +78,14 @@ const WorkPage: NextPage<WorkPageProps> = ({
 
     getData();
   }, [id, router, status]);
+
+  function handleContentStateCallback(activeCanvas: string) {
+    console.log({
+      contentState,
+      activeCanvas,
+    });
+    if (contentState !== activeCanvas) setContentState(activeCanvas);
+  }
 
   return (
     <>
@@ -102,7 +116,9 @@ const WorkPage: NextPage<WorkPageProps> = ({
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               {work.iiif_manifest && (isReadingRoom || !isWorkRestricted) && (
                 <WorkViewerWrapper
+                  contentStateCallback={handleContentStateCallback}
                   manifestId={work.iiif_manifest}
+                  iiifContent={iiifContent}
                   isWorkRestricted={isWorkRestricted}
                 />
               )}
@@ -119,6 +135,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
                     manifest={manifest}
                     work={work}
                     collectionWorkTypeCounts={collectionWorkTypeCounts}
+                    contentState={contentState}
                   />
                 )}
 
