@@ -29,7 +29,7 @@ const DialogBody = styled("div", {
   maxHeight: "calc(100% - 3.5rem)",
   minHeight: "calc(100% - 3.5rem)",
   overflow: "scroll",
-  padding: "$gr3",
+  padding: "0 $gr3 $gr3",
 
   "&:before": {
     position: "absolute",

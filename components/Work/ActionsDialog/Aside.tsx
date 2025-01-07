@@ -4,10 +4,12 @@ import { useWorkState } from "@/context/work-context";
 
 interface ActionsDialogAsideProps {
   children?: React.ReactNode | React.ReactNode[];
+  dialogSize?: "small" | undefined;
 }
 
 const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
   children,
+  dialogSize,
 }) => {
   const { workState } = useWorkState();
   const { work } = workState;
@@ -15,7 +17,10 @@ const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
   const WorkType = () => <>{work?.work_type}</>;
 
   return (
-    <ActionsDialogAsideStyled data-testid="actions-dialog-aside">
+    <ActionsDialogAsideStyled
+      dialogSize={dialogSize}
+      data-testid="actions-dialog-aside"
+    >
       {work && (
         <Card
           title={work.title || ""}

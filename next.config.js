@@ -53,6 +53,7 @@ module.exports = withBundleAnalyzer({
       "dcapi.rdc-staging.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
+      "iiif.stack.rdc-staging.library.northwestern.edu",
       "api.dc.library.northwestern.edu",
     ],
   },
