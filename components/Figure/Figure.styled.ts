@@ -88,7 +88,7 @@ const FigureSupplementalInfo = styled("span", {
 
 const FigureTitle = styled("span", {
   marginTop: "$gr3",
-  fontSize: "$gr3",
+  fontSize: "$gr4",
   fontFamily: "$northwesternSansRegular",
   color: "$purple",
   display: "flex",
@@ -120,12 +120,11 @@ const FigureStyled = styled("figure", {
         paddingBottom: "$gr3",
 
         [`& ${FigureTitle}`]: {
-          fontSize: "$5",
-          fontFamily: "$northwesternDisplayBook",
+          fontFamily: "$northwesternSansBold",
         },
 
         [`& ${FigureSupplementalInfo}`]: {
-          fontSize: "$2",
+          fontSize: "$gr2",
         },
       },
     },

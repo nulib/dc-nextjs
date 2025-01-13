@@ -45,10 +45,11 @@ const StyledHeading = styled("h2", {
 
   "&[data-level=h3]": {
     color: "$black50",
-    fontFamily: "$northwesternSansLight",
     fontSize: "$gr6",
     fontWeight: "400",
     marginBottom: "$gr3",
+    fontFamily: "$northwesternDisplayRegular",
+    paddingTop: "0.2em",
   },
 
   "&[data-level=h4]": {

@@ -6,7 +6,7 @@ import {
   StyledIIIFContentStateOptions,
   StyledIIIFContentStateURI,
 } from "./ContentState.styled";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import { ActionsDialogStyled } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
@@ -46,7 +46,7 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
   );
   const activeCanvasThumbnail = activeCanvas?.thumbnail?.[0]?.id;
 
-  const canvasCount = manifest?.items?.length;
+  const canvasCount = Number(manifest?.items?.length);
   const canvasIndex =
     Number(manifest?.items?.findIndex((item) => item.id === activeCanvasId)) +
     1;
@@ -56,6 +56,7 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
     activeCanvas?.items?.[0]?.items?.[0]?.body?.type;
 
   const title = "Share";
+  const currentFileLabel = `${canvasIndex} of ${canvasCount}`;
 
   function handleClick() {
     setIsOpen(true);
@@ -66,7 +67,11 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
   }
 
   const uri = new URL(window.location.href);
-  uri.searchParams.set("iiif-content", encodeContentState(contentState));
+
+  // set the iiif-content query param to the current content state
+  if (isCurrentFileset)
+    uri.searchParams.set("iiif-content", encodeContentState(contentState));
+
   const shareUrl = uri.toString();
 
   function handleIsCurrentFileSetChange(
@@ -77,7 +82,13 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
 
   function handleIsNoteChange(event: React.ChangeEvent<HTMLInputElement>) {
     setIsNote(event.target.checked);
+    // focus on the note textarea
+    if (event.target.checked) noteRef.current?.focus();
   }
+
+  useEffect(() => {
+    if (isNote) noteRef.current?.focus();
+  }, [isNote]);
 
   return (
     <StyledIIIFContentState>
@@ -94,20 +105,45 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
         {work && (
           <ActionsDialogStyled>
             <ActionsDialogAside>
-              {work.title && work.thumbnail && (
-                <SharedSocial
-                  title={work.title}
-                  media={work.thumbnail}
-                  description={work.description}
-                />
-              )}
+              <div
+                style={{
+                  padding: "1rem 1rem 0.618rem",
+                  borderRadius: "3px",
+                  background: "#f0f0f0",
+                  marginTop: "1em",
+                }}
+              >
+                <strong
+                  style={{
+                    fontSize: "0.7222rem",
+                    fontWeight: "normal",
+                    marginBottom: "1rem",
+                    display: "block",
+                  }}
+                >
+                  Currently viewing file {currentFileLabel}
+                </strong>
+                <StyledIIIFContentStateActiveFile>
+                  <img
+                    src={activeCanvasThumbnail as string}
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                    }}
+                  />
+                  <div>
+                    <Label label={activeCanvas?.label} />
+                    <span>{activeCanvasResourceType}</span>
+                  </div>
+                </StyledIIIFContentStateActiveFile>
+              </div>
             </ActionsDialogAside>
             <StyledIIIFContentStateInner>
               <Heading
                 as="h3"
                 css={{ margin: "0", fontSize: "1em !important" }}
               >
-                Current Item
+                Link
               </Heading>
               <StyledIIIFContentStateURI>
                 <input value={shareUrl} />
@@ -119,44 +155,23 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
                     type="checkbox"
                     onChange={handleIsCurrentFileSetChange}
                   />
-                  <span>Share active file</span>
-                  <StyledIIIFContentStateActiveFile>
-                    <em>
-                      {canvasIndex} of {canvasCount}
-                    </em>
-                    <Image
-                      alt="Thumbnail of the active canvas"
-                      width={rem}
-                      height={rem}
-                      src={activeCanvasThumbnail as string}
-                      style={{
-                        objectFit: "cover",
-                        borderRadius: "3px",
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em",
-                        marginTop: "-2px",
-                      }}
-                    />
-                    <Label label={activeCanvas?.label} />
-                  </StyledIIIFContentStateActiveFile>
+                  <span>Jump to current file</span>{" "}
+                  <em>({currentFileLabel})</em>
                 </label>
 
-                {isCurrentFileset ? (
-                  ["Video", "Audio"].includes(activeCanvasResourceType) ? (
-                    <label>
-                      <input type="checkbox" />
-                      <span>
-                        Start at <em>5:39</em>
-                      </span>
-                    </label>
-                  ) : (
-                    <label>
-                      <input type="checkbox" />
-                      <span>Share zoom level</span>
-                    </label>
-                  )
-                ) : null}
-
+                {["Video", "Audio"].includes(activeCanvasResourceType) ? (
+                  <label>
+                    <input type="checkbox" />
+                    <span>
+                      Start at <em>5:39</em>
+                    </span>
+                  </label>
+                ) : (
+                  <label>
+                    <input type="checkbox" />
+                    <span>Share zoom level</span>
+                  </label>
+                )}
                 <label>
                   <input type="checkbox" onChange={handleIsNoteChange} />
                   <span>Add note</span>
@@ -165,7 +180,6 @@ const IIIFContentState: React.FC<IIIFContentStateProps> = ({
                   ref={noteRef}
                   style={{ display: isNote ? "block" : "none" }}
                 />
-
                 <div style={{ marginTop: "1em", fontSize: "100% !important" }}>
                   <Button isPrimary isLowercase>
                     Copy Share URL

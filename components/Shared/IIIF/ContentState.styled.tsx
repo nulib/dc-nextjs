@@ -64,19 +64,25 @@ const StyledIIIFContentStateOptions = styled("div", {
   display: "flex",
   flexDirection: "column",
   gap: "$gr1",
-  padding: "$gr1 $gr2",
 
   label: {
-    display: "inline-flex",
-    fontSize: "$gr2",
+    fontSize: "$gr3",
     gap: "$gr1",
     alignItems: "center",
+    whiteSpace: "nowrap",
 
     em: {
       color: "$black50",
       fontStyle: "normal",
       fontFamily: "$northwesternSansBold",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
     },
+  },
+
+  input: {
+    marginRight: "$gr1",
   },
 
   textarea: {
@@ -91,9 +97,35 @@ const StyledIIIFContentStateActiveFile = styled("div", {
   display: "flex",
   alignItems: "center",
   fontFamily: "$northwesternSansBold",
+  gap: "$gr2",
+  fontSize: "$gr3",
+  padding: "0 0 $gr2",
 
-  em: {
-    marginRight: "$gr1",
+  div: {
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    gap: "$gr1",
+
+    span: {
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+
+      "&:last-child": {
+        color: "$black50",
+        fontSize: "$gr2",
+        fontFamily: "$northwesternSansRegular",
+      },
+    },
+  },
+
+  img: {
+    objectFit: "cover",
+    borderRadius: "2px",
+    marginTop: "-2px",
+    color: "transparent",
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
   },
 });
 

@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+
 import { CardStyled } from "@/components/Shared/Card.styled";
 import Figure from "@/components/Figure/Figure";
 import Link from "next/link";

@@ -3,7 +3,7 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const ActionsDialogAsideStyled = styled("aside", {
-  width: "25%",
+  width: "33.33%",
 
   variants: {
     dialogSize: {

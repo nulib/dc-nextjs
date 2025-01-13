@@ -25,6 +25,7 @@ const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
         <Card
           title={work.title || ""}
           imageUrl={work.thumbnail || ""}
+          description={work.description[0] || ""}
           supplementalInfo={<WorkType />}
         />
       )}
