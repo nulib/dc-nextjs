@@ -3,25 +3,29 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const ActionsDialogAsideStyled = styled("aside", {
-  width: "25%",
-  padding: "0 2rem 0 0 ",
+  width: "33.33%",
+
+  variants: {
+    dialogSize: {
+      small: {
+        width: "33.33%",
+      },
+    },
+  },
 
   "@sm": {
     width: "100%",
-    paddingRight: "0",
   },
 });
 
 const Content = styled("div", {
-  width: "75%",
-
-  "@sm": {
-    width: "100%",
-  },
+  flexGrow: 1,
 });
 
 const ActionsDialogStyled = styled("section", {
   display: "flex",
+  gap: "$gr4",
+  width: "100%",
 
   "@sm": {
     flexDirection: "column",

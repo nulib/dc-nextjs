@@ -18,6 +18,7 @@ const CardStyled = styled("div", {
     fontFamily: "$northwesternSansRegular",
     fontSize: "$gr3",
     lineHeight: "1.47em",
+    color: "$black50",
 
     a: {
       cursor: "pointer",
