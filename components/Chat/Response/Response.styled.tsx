@@ -1,7 +1,5 @@
 import { keyframes, styled } from "@/stitches.config";
 
-import { width } from "@/styles/media";
-
 /* eslint sort-keys: 0 */
 
 const CursorKeyframes = keyframes({
@@ -78,10 +76,10 @@ const StyledQuestion = styled("h3", {
   lineHeight: "1.35em",
   padding: "$gr2 $gr3",
   margin: "0",
-  color: "$black",
+  color: "$purple120",
   alignSelf: "flex-end",
   borderRadius: "1rem",
-  backgroundColor: "$gray6",
+  backgroundColor: "$purple10",
 });
 
 const StyledResponseMarkdown = styled("div", {
@@ -167,12 +165,13 @@ const StyledResponseActions = styled("div", {
 const StyledUnsubmitted = styled("p", {
   color: "$black50",
   fontSize: "$gr3",
-  fontFamily: "$northwesternSansLight",
+  fontFamily: "$northwesternSansRegular",
   textAlign: "center",
   width: "61.8%",
   maxWidth: "61.8%",
   margin: "0 auto",
-  padding: "$gr4 0",
+  padding: "$gr5 0",
+  minHeight: "38.2vh",
 });
 
 const StyledResponseDisclaimer = styled("p", {
