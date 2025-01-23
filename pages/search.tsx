@@ -236,9 +236,6 @@ const SearchPage: NextPage = () => {
               tabs={
                 <Tabs.List>
                   <Tabs.Trigger value="stream" data-tab="stream">
-                    <Icon>
-                      <IconSparkles />
-                    </Icon>
                     AI Response
                   </Tabs.Trigger>
                   <Tabs.Trigger value="results" data-tab="results">

@@ -62,6 +62,7 @@ const useChatSocket = () => {
 
   const sendMessage = useCallback((data: object) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      console.log("Sending message", data);
       socketRef.current.send(JSON.stringify(data));
     }
   }, []);

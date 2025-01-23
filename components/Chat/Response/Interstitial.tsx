@@ -1,9 +1,9 @@
+import { IconSearch, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   StyledInterstitial,
   StyledInterstitialIcon,
 } from "@/components/Chat/Response/Interstitial.styled";
 
-import { IconSearch } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { ToolStartMessage } from "@/types/components/chat";
 
@@ -20,19 +20,22 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
   switch (tool) {
     case "aggregate":
       text = (
-        <>
-          Aggregating {input.agg_field} by {input.term_field} {input.term}
-        </>
+        <label>
+          Aggregating <strong>{input.agg_field}</strong> by{" "}
+          <strong>
+            {input.term_field} {input.term}
+          </strong>
+        </label>
       );
       break;
     case "discover_fields":
-      text = <>Discovering fields</>;
+      text = <label>Discovering fields</label>;
       break;
     case "search":
       text = (
-        <>
-          Searching for <em>{input.query}</em>
-        </>
+        <label>
+          Searching for <strong>{input.query}</strong>
+        </label>
       );
       break;
     default:
@@ -42,7 +45,7 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
   return (
     <StyledInterstitial data-testid="response-interstitial" data-tool={tool}>
       <StyledInterstitialIcon>
-        <IconSearch />
+        <IconSparkles />
       </StyledInterstitialIcon>
       <label>{text}</label>
     </StyledInterstitial>

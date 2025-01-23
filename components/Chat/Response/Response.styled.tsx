@@ -1,5 +1,7 @@
 import { keyframes, styled } from "@/stitches.config";
 
+import { width } from "@/styles/media";
+
 /* eslint sort-keys: 0 */
 
 const CursorKeyframes = keyframes({
@@ -8,13 +10,13 @@ const CursorKeyframes = keyframes({
   },
 });
 
-const StyledResponse = styled("section", {
+const StyledResponse = styled("article", {
   display: "flex",
   position: "relative",
   flexDirection: "column",
   gap: "$gr3",
   zIndex: "0",
-  minHeight: "50vh",
+  marginBottom: "$gr4",
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontFamily: "$northwesternSansBold",
@@ -30,10 +32,6 @@ const StyledResponse = styled("section", {
 const StyledResponseAside = styled("aside", {});
 
 const StyledResponseContent = styled("div", {});
-
-const StyledResponseWrapper = styled("div", {
-  padding: "0",
-});
 
 const StyledImages = styled("div", {
   display: "grid",
@@ -76,18 +74,26 @@ const StyledImages = styled("div", {
 const StyledQuestion = styled("h3", {
   fontFamily: "$northwesternSansBold",
   fontWeight: "400",
-  fontSize: "$gr6",
-  letterSpacing: "-0.012em",
+  fontSize: "$gr3",
   lineHeight: "1.35em",
-  margin: "0 0 $gr4",
-  padding: "0",
+  padding: "$gr2 $gr3",
+  margin: "0",
   color: "$black",
+  alignSelf: "flex-end",
+  borderRadius: "1rem",
+  backgroundColor: "$gray6",
 });
 
-const StyledResponseMarkdown = styled("article", {
+const StyledResponseMarkdown = styled("div", {
   fontSize: "$gr3",
   lineHeight: "1.47em",
-  overflow: "hidden",
+
+  ".table-wrapper": {
+    overflowX: "auto",
+    width: "100%",
+    "-webkit-overflow-scrolling": "touch",
+    margin: "$gr4 0",
+  },
 
   p: {
     lineHeight: "inherit",
@@ -104,6 +110,36 @@ const StyledResponseMarkdown = styled("article", {
     textDecorationThickness: "min(2px,max(1px,.05em))",
     textUnderlineOffset: "calc(.05em + 2px)",
     textDecorationColor: "$purple10",
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    borderSpacing: "0",
+    marginBottom: "$gr4",
+    borderLeft: "1px solid $gray6",
+    borderRight: "1px solid $gray6",
+    borderTop: "1px solid $gray6",
+    margin: "0",
+
+    th: {
+      padding: "$gr2",
+      textAlign: "left",
+      fontWeight: "400",
+      fontFamily: "$northwesternSansBold",
+      borderBottom: "1px solid $gray6",
+    },
+
+    td: {
+      padding: "$gr2",
+      borderBottom: "1px solid $gray6",
+    },
+  },
+
+  img: {
+    maxWidth: "$gr7",
+    maxHeight: "$gr7",
+    borderRadius: "3px",
   },
 
   "span.markdown-cursor": {
@@ -152,7 +188,6 @@ export {
   StyledResponseAside,
   StyledResponseContent,
   StyledResponseDisclaimer,
-  StyledResponseWrapper,
   StyledImages,
   StyledQuestion,
   StyledResponseMarkdown,

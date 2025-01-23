@@ -9,16 +9,11 @@ const gradientAnimation = keyframes({
 
 const StyledInterstitialIcon = styled("div", {
   display: "flex",
-  width: "1.5rem",
-  height: "1.5rem",
+  width: "0.75rem",
+  height: "0.75rem",
   alignItems: "center",
   justifyContent: "center",
   borderRadius: "50%",
-  background:
-    "linear-gradient(73deg, $purple120 0%, $purple 38.2%, $brightBlueB 61.8%)",
-  backgroundSize: "250%",
-  backgroundPosition: "61.8%",
-  animation: `${gradientAnimation} 5s infinite alternate`,
   transition: "$dcAll",
   content: "",
 
@@ -34,22 +29,31 @@ const StyledInterstitialIcon = styled("div", {
   },
 
   svg: {
-    fill: "$white",
-    width: "0.85rem",
-    height: "0.85rem",
+    fill: "$purple",
+    width: "0.75rem",
+    height: "0.75rem",
   },
 });
 
 const StyledInterstitial = styled("div", {
-  color: "$black",
-  fontFamily: "$northwesternSansBold",
-  fontSize: "$gr4",
-  display: "flex",
+  fontFamily: "$northwesternSansRegular",
+  fontWeight: "400",
+  fontSize: "$gr2",
+  display: "inline-flex",
   alignItems: "center",
-  gap: "$gr2",
+  gap: "$gr1",
+  // marginLeft: "calc(-1.5rem - $gr2)",
+  width: "fit-content",
+  color: "$purple120",
+  borderRadius: "1em",
+  paddingRight: "$gr2",
+  backgroundSize: "250%",
+  backgroundPosition: "61.8%",
+  animation: `${gradientAnimation} 5s infinite alternate`,
 
-  em: {
-    color: "$purple",
+  strong: {
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
   },
 });
 
