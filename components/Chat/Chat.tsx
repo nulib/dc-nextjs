@@ -1,93 +1,54 @@
-import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import React, { useEffect, useState } from "react";
-import {
-  StyledResponseActions,
-  StyledResponseDisclaimer,
-  StyledUnsubmitted,
-} from "@/components/Chat/Response/Response.styled";
-import { defaultState, useSearchState } from "@/context/search-context";
 
-import Announcement from "@/components/Shared/Announcement";
-import { Button } from "@nulib/design-system";
-import ChatFeedback from "@/components/Chat/Feedback/Feedback";
+import { AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
+import ChatConversation from "./Conversation";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
-import { prepareQuestion } from "@/lib/chat-helpers";
-import useChatSocket from "@/hooks/useChatSocket";
+import { StyledUnsubmitted } from "./Response/Response.styled";
+import { styled } from "@/stitches.config";
 import useQueryParams from "@/hooks/useQueryParams";
 import { v4 as uuidv4 } from "uuid";
 
-const Chat = ({
-  viewResultsCallback,
-}: {
-  viewResultsCallback?: () => void;
-}) => {
-  const { searchTerm = "" } = useQueryParams();
-  const { authToken, isConnected, message, sendMessage } = useChatSocket();
+interface Conversation {
+  question: string;
+  answer: string;
+}
+
+const Chat = () => {
+  const { searchTerm } = useQueryParams();
+
+  const initialConversation = {
+    question: searchTerm,
+    answer: "",
+  };
+
   const [conversationRef, setConversationRef] = useState<string>();
-
-  const [streamingError, setStreamingError] = useState("");
-
-  /**
-   * get the`chat` state and dispatch function from the search context
-   * for persisting the chat state when search screen tabs are switched
-   */
-  const {
-    searchState: { chat },
-    searchDispatch,
-  } = useSearchState();
-  const { question, answer } = chat;
-
-  const [isStreamingComplete, setIsStreamingComplete] = useState(false);
-
-  useEffect(() => {
-    if (
-      !isStreamingComplete &&
-      isConnected &&
-      authToken &&
-      searchTerm &&
-      conversationRef
-    ) {
-      resetChat();
-      const preparedQuestion = prepareQuestion(
-        searchTerm,
-        authToken,
-        conversationRef,
-      );
-      sendMessage(preparedQuestion);
-    }
-  }, [
-    authToken,
-    isStreamingComplete,
-    isConnected,
-    searchTerm,
-    conversationRef,
-    sendMessage,
+  const [conversation, setConversation] = useState<Conversation[]>([
+    initialConversation,
   ]);
+  const [isStreaming, setIsStreaming] = useState(false);
 
   useEffect(() => {
-    setIsStreamingComplete(false);
-    setConversationRef(uuidv4());
+    const conversationRef = uuidv4();
+    setIsStreaming(true);
+    setConversationRef(conversationRef);
+    setConversation([initialConversation]);
   }, [searchTerm]);
 
-  useEffect(() => {
-    if (!message || !conversationRef) return;
-  }, [message]);
+  const handleConversationCallback = (value: string) => {
+    setIsStreaming(true);
+    setConversation([
+      ...conversation,
+      {
+        question: value,
+        answer: "",
+      },
+    ]);
+  };
 
-  function handleNewQuestion() {
-    const input = document.getElementById("dc-search") as HTMLInputElement;
-    if (input) {
-      input.focus();
-      input.value = "";
-    }
-  }
-
-  function resetChat() {
-    searchDispatch({
-      chat: defaultState.chat,
-      type: "updateChat",
-    });
-  }
+  const handleResponseCallback = (content: any) => {
+    setIsStreaming(false);
+  };
 
   if (!searchTerm)
     return (
@@ -96,68 +57,36 @@ const Chat = ({
       </Container>
     );
 
-  const handleResponseCallback = (content: any) => {
-    if (!conversationRef) return;
-
-    setIsStreamingComplete(true);
-    searchDispatch({
-      chat: {
-        // content here is now a react element
-        // once continued conversations ar e in place
-        // see note below for question refactor
-        answer: content,
-
-        // documents should be eventually removed as
-        // they are now integrated into content
-        // doing so will require some careful refactoring
-        // as the documents are used in feedback form
-        documents: [],
-
-        // question should become an entry[] with
-        // entry[n].question and entry[n].content
-        question: searchTerm || "",
-
-        ref: conversationRef,
-      },
-      type: "updateChat",
-    });
-  };
-
   return (
-    <>
-      <ChatResponse
-        conversationRef={conversationRef}
-        isStreamingComplete={isStreamingComplete}
-        key={conversationRef}
-        message={message}
-        question={searchTerm}
-        responseCallback={handleResponseCallback}
-      />
-      {streamingError && (
-        <Container>
-          <Announcement css={{ marginTop: "1rem" }}>
-            {streamingError}
-          </Announcement>
-        </Container>
-      )}
-      {isStreamingComplete && (
-        <>
-          <Container>
-            <StyledResponseActions>
-              <Button isPrimary isLowercase onClick={viewResultsCallback}>
-                View More Results
-              </Button>
-              <Button isLowercase onClick={handleNewQuestion}>
-                Ask Another Question
-              </Button>
-            </StyledResponseActions>
-            <StyledResponseDisclaimer>{AI_DISCLAIMER}</StyledResponseDisclaimer>
-          </Container>
-          <ChatFeedback />
-        </>
-      )}
-    </>
+    <Container>
+      <StyledChat
+        data-conversation-initial={searchTerm}
+        data-conversation-length={conversation.length}
+        data-conversation-ref={conversationRef}
+      >
+        {conversation
+          .filter((entry) => entry.question)
+          .map((entry, index) => {
+            return (
+              <ChatResponse
+                conversationRef={conversationRef}
+                key={index}
+                question={entry.question}
+                responseCallback={handleResponseCallback}
+              />
+            );
+          })}
+        <ChatConversation
+          conversationCallback={handleConversationCallback}
+          isStreaming={isStreaming}
+        />
+      </StyledChat>
+    </Container>
   );
 };
 
-export default React.memo(Chat);
+const StyledChat = styled("section", {
+  padding: "$gr5 0",
+});
+
+export default Chat;

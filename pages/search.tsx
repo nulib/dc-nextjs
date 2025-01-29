@@ -12,8 +12,6 @@ import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
-import Icon from "@/components/Shared/Icon";
-import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
@@ -195,10 +193,6 @@ const SearchPage: NextPage = () => {
     });
   }
 
-  function handleViewResultsCallback() {
-    setActiveTab("results");
-  }
-
   return (
     <>
       {/* Google Structured Data via JSON-LD */}
@@ -233,28 +227,13 @@ const SearchPage: NextPage = () => {
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
             <SearchOptions
-              tabs={
-                <Tabs.List>
-                  <Tabs.Trigger value="stream" data-tab="stream">
-                    <Icon>
-                      <IconSparkles />
-                    </Icon>
-                    AI Response
-                  </Tabs.Trigger>
-                  <Tabs.Trigger value="results" data-tab="results">
-                    {Number.isInteger(totalResults) ? (
-                      "View More Results"
-                    ) : (
-                      <SpinLoader size="small" />
-                    )}
-                  </Tabs.Trigger>
-                </Tabs.List>
-              }
+              tabs={<></>} // placeholder for back tab
               activeTab={activeTab}
               renderTabList={showStreamedResponse}
             />
+
             <Tabs.Content value="stream">
-              <Chat viewResultsCallback={handleViewResultsCallback} />
+              <Chat />
             </Tabs.Content>
 
             <Tabs.Content value="results">
