@@ -216,13 +216,15 @@ const StyledChatFeedbackActivate = styled("div", {
   margin: "0 0 $gr2 ",
   display: "flex",
   alignItems: "center",
-  fontSize: "$gr3",
-  gap: "$gr2",
+  borderTop: "1px solid $gray6",
+  padding: "$gr3 0",
+
+  "> span": {
+    marginRight: "$gr2",
+  },
 });
 
-const StyledChatFeedbackConfirmation = styled("div", {
-  fontSize: "$gr3",
-});
+const StyledChatFeedbackConfirmation = styled("div", {});
 
 const StyledChatFeedbackForm = styled("form", {
   margin: "$gr3 0",
@@ -244,6 +246,9 @@ const StyledChatFeedbackForm = styled("form", {
 });
 
 const StyledChatFeedback = styled("div", {
+  fontSize: "$gr2",
+  color: "$black50",
+
   variants: {
     isSubmitted: {
       true: {
@@ -257,7 +262,7 @@ const StyledChatFeedback = styled("div", {
 });
 
 const StyledSentimentButton = styled("button", {
-  backgroundColor: "$purple10",
+  backgroundColor: "transparent",
   border: "none",
   padding: 0,
   height: "40px",
@@ -270,8 +275,8 @@ const StyledSentimentButton = styled("button", {
   borderRadius: "50%",
 
   "> span": {
-    height: "36px",
-    width: "36px",
+    height: "32px",
+    width: "32px",
   },
 
   "&:not([disabled])": {
@@ -290,7 +295,7 @@ const StyledSentimentButton = styled("button", {
 
   "&[data-is-selected=false]": {
     "> span": {
-      fill: "$purple30",
+      fill: "$black20",
     },
   },
 });

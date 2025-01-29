@@ -2,7 +2,6 @@ import React, { use, useEffect, useState } from "react";
 import {
   StyledQuestion,
   StyledResponse,
-  StyledResponseWrapper,
 } from "@/components/Chat/Response/Response.styled";
 
 import BouncingLoader from "@/components/Shared/BouncingLoader";
@@ -10,27 +9,46 @@ import Container from "@/components/Shared/Container";
 import ResponseImages from "@/components/Chat/Response/Images";
 import ResponseInterstitial from "@/components/Chat/Response/Interstitial";
 import ResponseMarkdown from "@/components/Chat/Response/Markdown";
-import { StreamingMessage } from "@/types/components/chat";
+import ResponseOptions from "./Options";
+import { prepareQuestion } from "@/lib/chat-helpers";
+import useChatSocket from "@/hooks/useChatSocket";
 
 interface ChatResponseProps {
   conversationRef?: string;
-  isStreamingComplete: boolean;
-  message?: StreamingMessage;
   question: string;
-  responseCallback?: (renderedMessage: any) => void;
+  responseCallback?: (response: any) => void;
 }
 
 const ChatResponse: React.FC<ChatResponseProps> = ({
   conversationRef,
-  isStreamingComplete,
-  message,
   question,
   responseCallback,
 }) => {
-  const [renderedMessage, setRenderedMessage] = useState<any>();
-  const [streamedMessage, setStreamedMessage] = useState<string>("");
+  const { authToken, isConnected, message, sendMessage } = useChatSocket();
 
   useEffect(() => {
+    console.log(`trying to send message`);
+    if (isConnected && authToken && question && conversationRef) {
+      const preparedQuestion = prepareQuestion(
+        question,
+        authToken,
+        conversationRef,
+      );
+      sendMessage(preparedQuestion);
+    }
+  }, [isConnected, authToken, question, conversationRef]);
+
+  const [renderedMessage, setRenderedMessage] = useState<any>();
+  const [streamedMessage, setStreamedMessage] = useState<string>("");
+  const [isStreamingComplete, setIsStreamingComplete] = useState(false);
+
+  useEffect(() => {
+    setIsStreamingComplete(false);
+  }, [conversationRef, question]);
+
+  useEffect(() => {
+    console.log(`message`, message);
+
     if (!message || message.ref !== conversationRef) return;
 
     const { type } = message;
@@ -66,10 +84,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <ResponseImages
-            works={message.message}
-            isStreamingComplete={isStreamingComplete}
-          />
+          <ResponseImages works={message.message} />
         </>
       ));
     }
@@ -92,6 +107,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
      * to store this response.
      */
     if (type === "final_message") {
+      setIsStreamingComplete(true);
       if (responseCallback) responseCallback(renderedMessage);
     }
   }, [message]);
@@ -110,16 +126,14 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   }
 
   return (
-    <StyledResponseWrapper>
-      <Container>
-        <StyledResponse>
-          <StyledQuestion>{question}</StyledQuestion>
-          {renderedMessage}
-          {streamedMessage && <ResponseMarkdown content={streamedMessage} />}
-          {!isStreamingComplete && <BouncingLoader />}
-        </StyledResponse>
-      </Container>
-    </StyledResponseWrapper>
+    <StyledResponse>
+      <StyledQuestion>{question}</StyledQuestion>
+      <div>
+        {renderedMessage}
+        {streamedMessage && <ResponseMarkdown content={streamedMessage} />}
+        {isStreamingComplete ? <ResponseOptions /> : <BouncingLoader />}
+      </div>
+    </StyledResponse>
   );
 };
 

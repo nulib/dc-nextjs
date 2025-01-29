@@ -27,13 +27,15 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { urlFacets } = useQueryParams();
 
+  const { q } = router.query;
+
   const { isChecked } = useGenerativeAISearchToggle();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>(q as string);
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
 
   const appendSearchJumpTo = isCollectionPage(router?.pathname);
@@ -88,12 +90,13 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => setIsLoaded(true), []);
 
   useEffect(() => {
-    if (router) {
-      const { q } = router.query;
+    if (q) {
       if (q && searchRef.current) searchRef.current.value = q as string;
       setSearchValue(q as string);
+    } else {
+      setSearchValue("");
     }
-  }, [router]);
+  }, [q]);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
