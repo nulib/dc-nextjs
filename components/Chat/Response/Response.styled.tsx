@@ -8,13 +8,19 @@ const CursorKeyframes = keyframes({
   },
 });
 
-const StyledResponse = styled("section", {
+const StyledResponse = styled("article", {
   display: "flex",
   position: "relative",
   flexDirection: "column",
   gap: "$gr3",
   zIndex: "0",
-  minHeight: "50vh",
+  marginBottom: "$gr5",
+
+  "> div": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "$gr3",
+  },
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontFamily: "$northwesternSansBold",
@@ -30,10 +36,6 @@ const StyledResponse = styled("section", {
 const StyledResponseAside = styled("aside", {});
 
 const StyledResponseContent = styled("div", {});
-
-const StyledResponseWrapper = styled("div", {
-  padding: "0",
-});
 
 const StyledImages = styled("div", {
   display: "grid",
@@ -56,10 +58,6 @@ const StyledImages = styled("div", {
     figure: {
       padding: "0",
 
-      "> div": {
-        boxShadow: "5px 5px 13px rgba(0, 0, 0, 0.25)",
-      },
-
       figcaption: {
         "span:first-of-type": {
           textOverflow: "ellipsis",
@@ -73,24 +71,36 @@ const StyledImages = styled("div", {
   },
 });
 
-const StyledQuestion = styled("h3", {
+const StyledQuestion = styled("header", {
   fontFamily: "$northwesternSansBold",
   fontWeight: "400",
-  fontSize: "$gr6",
-  letterSpacing: "-0.012em",
+  fontSize: "$gr3",
   lineHeight: "1.35em",
-  margin: "0 0 $gr4",
-  padding: "0",
-  color: "$black",
+  padding: "$gr2 $gr3",
+  margin: "0",
+  color: "$purple120",
+  alignSelf: "flex-end",
+  borderRadius: "1rem",
+  backgroundColor: "$purple10",
 });
 
-const StyledResponseMarkdown = styled("article", {
+const StyledResponseMarkdown = styled("div", {
   fontSize: "$gr3",
   lineHeight: "1.47em",
-  overflow: "hidden",
 
-  p: {
+  ".table-wrapper": {
+    overflowX: "auto",
+    width: "100%",
+    "-webkit-overflow-scrolling": "touch",
+    margin: "$gr4 0",
+  },
+
+  "p, li": {
     lineHeight: "inherit",
+  },
+
+  li: {
+    marginBottom: "$gr1",
   },
 
   "h1, h2, h3, h4, h5, h6, strong": {
@@ -104,6 +114,36 @@ const StyledResponseMarkdown = styled("article", {
     textDecorationThickness: "min(2px,max(1px,.05em))",
     textUnderlineOffset: "calc(.05em + 2px)",
     textDecorationColor: "$purple10",
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    borderSpacing: "0",
+    marginBottom: "$gr4",
+    borderLeft: "1px solid $gray6",
+    borderRight: "1px solid $gray6",
+    borderTop: "1px solid $gray6",
+    margin: "0",
+
+    th: {
+      padding: "$gr2",
+      textAlign: "left",
+      fontWeight: "400",
+      fontFamily: "$northwesternSansBold",
+      borderBottom: "1px solid $gray6",
+    },
+
+    td: {
+      padding: "$gr2",
+      borderBottom: "1px solid $gray6",
+    },
+  },
+
+  img: {
+    maxWidth: "$gr7",
+    maxHeight: "$gr7",
+    borderRadius: "3px",
   },
 
   "span.markdown-cursor": {
@@ -131,12 +171,13 @@ const StyledResponseActions = styled("div", {
 const StyledUnsubmitted = styled("p", {
   color: "$black50",
   fontSize: "$gr3",
-  fontFamily: "$northwesternSansLight",
+  fontFamily: "$northwesternSansRegular",
   textAlign: "center",
   width: "61.8%",
   maxWidth: "61.8%",
   margin: "0 auto",
-  padding: "$gr4 0",
+  padding: "$gr5 0",
+  minHeight: "38.2vh",
 });
 
 const StyledResponseDisclaimer = styled("p", {
@@ -152,7 +193,6 @@ export {
   StyledResponseAside,
   StyledResponseContent,
   StyledResponseDisclaimer,
-  StyledResponseWrapper,
   StyledImages,
   StyledQuestion,
   StyledResponseMarkdown,

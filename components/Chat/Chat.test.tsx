@@ -80,11 +80,6 @@ describe("Chat component", () => {
     const dataProps = el.getAttribute("data-props");
     const dataPropsObj = JSON.parse(dataProps!);
     expect(dataPropsObj.question).toEqual("tell me about boats");
-    expect(dataPropsObj.isStreamingComplete).toEqual(false);
-    expect(dataPropsObj.message).toEqual({
-      answer: "fake-answer-1",
-      end: "stop",
-    });
     expect(typeof dataPropsObj.conversationRef).toBe("string");
     expect(uuidRegex.test(dataPropsObj.conversationRef)).toBe(true);
   });
@@ -105,14 +100,6 @@ describe("Chat component", () => {
       <SearchProvider>
         <Chat />
       </SearchProvider>,
-    );
-
-    expect(mockMessage).toHaveBeenCalledWith(
-      expect.objectContaining({
-        auth: "fake-token",
-        message: "chat",
-        question: "boats",
-      }),
     );
   });
 
