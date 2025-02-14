@@ -53,10 +53,10 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                   query_string: {
                     default_operator: "OR",
                     fields: [
-                      "title^1",
+                      "title^10",
                       "collection.title^5",
                       "all_controlled_labels",
-                      "all_ids^1",
+                      "all_ids^10",
                     ],
                     query: term,
                   },
