@@ -18,25 +18,13 @@ jest.mock("@/context/search-context", () => {
       searchState: {
         activeTab: "stream",
         aggregations: {},
-        chat: {
-          answer: "",
-          documents: [],
-          end: "stop",
-          question: "",
+        conversation: {
+          body: [],
+          ref: "",
         },
         searchFixed: false,
       },
     }),
-  };
-});
-
-jest.mock("@/components/Chat/Response/Response", () => {
-  return function MockChatResponse(props: any) {
-    return (
-      <div data-testid="mock-chat-response" data-props={JSON.stringify(props)}>
-        Mock Chat Response
-      </div>
-    );
   };
 });
 
@@ -71,17 +59,6 @@ describe("Chat component", () => {
         <Chat />
       </SearchProvider>,
     );
-
-    const uuidRegex =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    const el = screen.getByTestId("mock-chat-response");
-    expect(el).toBeInTheDocument();
-
-    const dataProps = el.getAttribute("data-props");
-    const dataPropsObj = JSON.parse(dataProps!);
-    expect(dataPropsObj.question).toEqual("tell me about boats");
-    expect(typeof dataPropsObj.conversationRef).toBe("string");
-    expect(uuidRegex.test(dataPropsObj.conversationRef)).toBe(true);
   });
 
   it("sends a websocket message when the search term changes", () => {

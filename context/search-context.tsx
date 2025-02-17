@@ -1,4 +1,4 @@
-import { SearchContextStore } from "@/types/context/search-context";
+import { Article, SearchContextStore } from "@/types/context/search-context";
 
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
@@ -10,12 +10,18 @@ type Action =
       aggregations: ApiResponseAggregation | undefined;
     }
   | {
-      type: "updateChat";
-      chat: {
-        answer: string;
-        documents: Work[];
-        question: string;
+      type: "updateConversation";
+      conversation: {
+        body: Article[];
         ref: string;
+      };
+    }
+  | {
+      type: "updatePanel";
+      panel: {
+        interstitial?: string;
+        open: boolean;
+        query?: string;
       };
     }
   | { type: "updateSearch"; q: string }
@@ -30,11 +36,14 @@ type SearchProviderProps = {
 
 const defaultState: SearchContextStore = {
   aggregations: {},
-  chat: {
-    answer: "",
-    documents: [],
-    question: "",
-    ref: "",
+  conversation: {
+    body: [],
+    ref: undefined,
+  },
+  panel: {
+    interstitial: undefined,
+    open: false,
+    query: undefined,
   },
   searchFixed: false,
 };
@@ -51,10 +60,10 @@ function searchReducer(state: State, action: Action) {
         aggregations: action.aggregations,
       };
     }
-    case "updateChat": {
+    case "updateConversation": {
       return {
         ...state,
-        chat: action.chat,
+        conversation: action.conversation,
       };
     }
     case "updateSearch": {
@@ -67,6 +76,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         searchFixed: action.searchFixed,
+      };
+    }
+    case "updatePanel": {
+      return {
+        ...state,
+        panel: action.panel,
       };
     }
     default: {

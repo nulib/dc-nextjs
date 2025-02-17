@@ -1,11 +1,11 @@
-import { IconArrowForward, IconRefresh, IconReply } from "../Shared/SVG/Icons";
+import { IconRefresh, IconReply, IconSparkles } from "../Shared/SVG/Icons";
+import {
+  StyledChatConversation,
+  StyledResetButton,
+} from "./Conversation.styled";
+import { useEffect, useRef } from "react";
 
-import { styled } from "@/stitches.config";
-import { transform } from "next/dist/build/swc";
-import { useRef } from "react";
 import { useRouter } from "next/router";
-
-const textareaPlaceholder = "Ask a followup question...";
 
 interface ChatConversationProps {
   conversationCallback: (message: string) => void;
@@ -17,12 +17,25 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
   isStreaming,
 }) => {
   const router = useRouter();
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  const textareaPlaceholder = "Ask a followup question";
+
+  const handleScroll = () => {
+    // handle scrolling
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submitConversationCallback();
+    textareaRef.current!.focus();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -52,6 +65,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     const textarea = document.getElementById(
       "dc-search",
     ) as HTMLTextAreaElement;
+
     if (textarea) {
       textarea.value = "";
       textarea.innerText = "";
@@ -65,7 +79,12 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   return (
     <StyledChatConversation data-testid="chat-conversation">
-      <form onSubmit={handleSubmit} ref={formRef} data-is-focused="false">
+      <form
+        onSubmit={handleSubmit}
+        ref={formRef}
+        data-is-focused="false"
+        data-is-streaming={isStreaming}
+      >
         <textarea
           ref={textareaRef}
           onKeyDown={handleKeyDown}
@@ -74,7 +93,16 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
           onBlur={handleFocus}
         ></textarea>
         <button type="submit" disabled={isStreaming}>
-          Reply <IconReply />
+          {isStreaming ? (
+            <>
+              Responding
+              <IconSparkles />
+            </>
+          ) : (
+            <>
+              Reply <IconReply />
+            </>
+          )}
         </button>
       </form>
       <StyledResetButton onClick={handleClearConversation}>
@@ -84,142 +112,5 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     </StyledChatConversation>
   );
 };
-
-const StyledResetButton = styled("button", {
-  border: "none",
-  backgroundColor: "$white",
-  display: "inline-flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "$gr1",
-  fontFamily: "$northwesternSansRegular",
-  fontSize: "$gr3",
-  color: "$purple",
-  padding: "$gr3",
-  borderRadius: "3px",
-  cursor: "pointer",
-  transition: "$dcAll",
-  textDecoration: "underline",
-  textDecorationThickness: "min(2px,max(1px,.05em))",
-  textUnderlineOffset: "calc(.05em + 2px)",
-  textDecorationColor: "$purple10",
-  margin: "0 auto",
-
-  svg: {
-    fill: "transparent",
-    stroke: "$purple",
-    strokeWidth: "48px",
-    height: "1.25em",
-    width: "1.25em",
-    transform: "rotate(45deg) scaleX(-1)",
-  },
-});
-
-const StyledChatConversation = styled("div", {
-  display: "flex",
-  flexDirection: "column",
-  margin: "$gr5 0 $gr4",
-  gap: "$gr3",
-
-  form: {
-    position: "relative",
-    transition: "$dcAll",
-    borderRadius: "3px",
-    flexWrap: "wrap",
-    overflow: "hidden",
-    flexGrow: 1,
-    zIndex: 0,
-    height: "62px",
-
-    ["&[data-is-focused=true]"]: {
-      backgroundColor: "$white !important",
-      boxShadow: "3px 3px 11px #0001",
-      outline: "2px solid $purple60",
-
-      button: {
-        backgroundColor: "$purple",
-        color: "$white",
-      },
-    },
-
-    ["&[data-is-focused=false]"]: {
-      backgroundColor: "#f0f0f0",
-      boxShadow: "none",
-      outline: "2px solid transparent",
-
-      textarea: {
-        color: "$black50",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-      },
-    },
-
-    textarea: {
-      width: "100%",
-      height: "100%",
-      padding: "15px $gr3",
-      border: "none",
-      resize: "none",
-      backgroundColor: "$gray6",
-      fontSize: "$gr3",
-      lineHeight: "147%",
-      zIndex: "1",
-      fontFamily: "$northwesternSansRegular",
-      overflow: "hidden",
-      outline: "none",
-      transition: "$dcAll",
-      boxSizing: "border-box",
-
-      "&::placeholder": {
-        overflow: "hidden",
-        color: "$black50",
-        textOverflow: "ellipsis",
-      },
-    },
-
-    button: {
-      position: "absolute",
-      bottom: "$gr2",
-      right: "$gr2",
-      height: "38px",
-      borderRadius: "3px",
-      background: "$purple",
-      border: "none",
-      color: "$white",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      transition: "$dcAll",
-      cursor: "pointer",
-      fontSize: "$gr2",
-      padding: "0 $gr2",
-      gap: "$gr2",
-      fontFamily: "$northwesternSansRegular",
-
-      "&:hover, &:focus": {
-        backgroundColor: "$purple120",
-        color: "$white",
-      },
-
-      svg: {
-        width: "1rem",
-        height: "1rem",
-        fill: "transparent",
-        stroke: "$white",
-        // transform: "rotate(-90deg)",
-
-        path: {
-          strokeWidth: "32px",
-        },
-      },
-
-      "&:disabled": {
-        backgroundColor: "$black20",
-        color: "$white",
-      },
-    },
-  },
-});
 
 export default ChatConversation;

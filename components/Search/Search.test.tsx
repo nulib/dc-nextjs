@@ -114,7 +114,7 @@ describe("Search component", () => {
     render(withUserProvider(<Search isSearchActive={mockIsSearchActive} />));
 
     const input = screen.getByPlaceholderText(
-      "What can I show you from our collections?",
+      "What can we show you from our collections?",
     );
     expect(input).toBeInTheDocument();
   });

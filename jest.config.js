@@ -14,7 +14,8 @@ const customJestConfig = {
     "^@/context/(.*)$": "<rootDir>/context/$1",
     "^@/lib/(.*)$": "<rootDir>/lib/$1",
     "^@/mocks/(.*)$": "<rootDir>/mocks/$1",
-    "^@/pages/(.*)$": "<rootDir>/pages/$1",
+    "^@/pages/(.*)$": "<rootDir>/pages/$1", // Adjust path as needed
+    "^@nulib/use-markdown$": "<rootDir>/mocks/use-markdown.js",
   },
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",

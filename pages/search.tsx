@@ -16,10 +16,10 @@ import Layout from "@/components/layout";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
+import SearchPanel from "@/components/Search/Panel";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
 import { StyledResponseWrapper } from "@/components/Search/Search.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
@@ -31,6 +31,7 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
@@ -44,6 +45,8 @@ const SearchPage: NextPage = () => {
 
   const { user } = React.useContext(UserContext);
   const { isChecked: isAI } = useGenerativeAISearchToggle();
+  const { searchState } = useSearchState();
+  const { panel } = searchState;
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
@@ -226,14 +229,34 @@ const SearchPage: NextPage = () => {
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
-            <SearchOptions
-              tabs={<></>} // placeholder for back tab
-              activeTab={activeTab}
-              renderTabList={showStreamedResponse}
-            />
+            {activeTab === "results" && (
+              <SearchOptions
+                tabs={<></>} // placeholder for back tab
+                activeTab={activeTab}
+                renderTabList={showStreamedResponse}
+              />
+            )}
 
-            <Tabs.Content value="stream">
-              <Chat />
+            <Tabs.Content
+              value="stream"
+              style={{
+                position: "relative",
+                overflow: "hidden",
+                marginTop: "-30px",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  transition: "all 382ms ease-in-out",
+                  opacity: panel.open ? 0 : 1,
+                  filter: panel.open ? "grayscale(1)" : "none",
+                  // right: panel.open ? "calc(100vw - 382px)" : 0,
+                }}
+              >
+                <Chat />
+              </div>
+              <SearchPanel />
             </Tabs.Content>
 
             <Tabs.Content value="results">

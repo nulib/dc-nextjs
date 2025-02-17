@@ -2,7 +2,7 @@ import { slate } from "@radix-ui/colors";
 
 /* eslint sort-keys: 0 */
 
-const black = {
+export const black = {
   black: "#000000",
   black80: "#342F2E",
   black50: "#716C6B",
@@ -10,14 +10,15 @@ const black = {
   black10: "#D8D6D6",
 };
 
-const purple = {
+export const purple = {
   purple: "#4E2A84",
   purple120: "#401f68",
   purple60: "#836EAA",
   purple30: "#B6ACD1",
   purple10: "#E4E0EE",
+  purple5: "#E4E0EE80", // not a brand color but useful for UI
 };
-const secondary = {
+export const secondary = {
   brightGreen: "#58B947",
   brightBlueA: "#7FCECD",
   brightBlueB: "#5091CD",
@@ -32,7 +33,7 @@ const secondary = {
   darkOrange: "#D85820",
 };
 
-const basic = {
+export const basic = {
   white: "#ffffff",
   gray6: "#f0f0f0",
 };
@@ -40,7 +41,7 @@ const basic = {
 /**
  * influence bloom-iiif color tokens
  */
-const bloom = {
+export const bloom = {
   accent: `${purple.purple} !important`,
   accentAlt: `${purple.purple60} !important`,
   secondary: `${basic.white} !important`,

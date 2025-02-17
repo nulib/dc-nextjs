@@ -7,7 +7,6 @@ import ChatFeedbackOptIn from "@/components/Chat/Feedback/OptIn";
 import ChatFeedbackOption from "@/components/Chat/Feedback/Option";
 import ChatFeedbackTextArea from "@/components/Chat/Feedback/TextArea";
 import Container from "@/components/Shared/Container";
-import { DC_URL } from "@/lib/constants/endpoints";
 import Icon from "@/components/Shared/Icon";
 import { UserContext } from "@/context/user-context";
 import { handleChatFeedbackRequest } from "@/lib/chat-helpers";
@@ -46,7 +45,7 @@ const ChatFeedback = () => {
 
   const {
     searchState: {
-      chat: { question, answer, documents, ref },
+      conversation: { body, ref },
     },
   } = useSearchState();
 
@@ -61,10 +60,10 @@ const ChatFeedback = () => {
       email: "",
     },
     context: {
-      ref,
-      question,
-      answer,
-      source_documents: documents.map(({ id }) => `${DC_URL}/items/${id}`),
+      ref: String(ref),
+      question: body[0]?.question || "",
+      answer: body[0]?.answer || "",
+      source_documents: [],
     },
   };
 
@@ -277,26 +276,15 @@ const StyledSentimentButton = styled("button", {
   "> span": {
     height: "32px",
     width: "32px",
+    fill: "$black20",
   },
 
   "&:not([disabled])": {
     cursor: "pointer",
-
-    "> span": {
-      fill: "$purple60 !important",
-    },
   },
 
-  "&[data-is-selected=true]": {
-    "> span": {
-      fill: "$purple120",
-    },
-  },
-
-  "&[data-is-selected=false]": {
-    "> span": {
-      fill: "$black20",
-    },
+  "&[data-is-selected=true] > span": {
+    fill: "$purple",
   },
 });
 

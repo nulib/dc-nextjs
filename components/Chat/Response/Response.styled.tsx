@@ -1,5 +1,7 @@
 import { keyframes, styled } from "@/stitches.config";
 
+import { purple } from "@/styles/colors";
+
 /* eslint sort-keys: 0 */
 
 const CursorKeyframes = keyframes({
@@ -14,7 +16,7 @@ const StyledResponse = styled("article", {
   flexDirection: "column",
   gap: "$gr3",
   zIndex: "0",
-  marginBottom: "$gr5",
+  marginBottom: "$gr4",
 
   "> div": {
     display: "flex",
@@ -41,6 +43,7 @@ const StyledImages = styled("div", {
   display: "grid",
   gap: "$gr4",
   gridTemplateColumns: "repeat(5, 1fr)",
+  marginBottom: "$gr3",
 
   "@md": {
     gridTemplateColumns: "repeat(4, 1fr)",
@@ -72,16 +75,17 @@ const StyledImages = styled("div", {
 });
 
 const StyledQuestion = styled("header", {
-  fontFamily: "$northwesternSansBold",
+  fontFamily: "$northwesternSansRegular",
   fontWeight: "400",
   fontSize: "$gr3",
   lineHeight: "1.35em",
   padding: "$gr2 $gr3",
-  margin: "0",
+  marginBottom: "$gr6",
+  margin: "0 0 $gr2",
   color: "$purple120",
   alignSelf: "flex-end",
   borderRadius: "1rem",
-  backgroundColor: "$purple10",
+  background: "$purple10",
 });
 
 const StyledResponseMarkdown = styled("div", {

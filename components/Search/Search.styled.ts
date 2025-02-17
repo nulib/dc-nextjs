@@ -89,6 +89,12 @@ const ResultsMessage = styled("span", {
   color: "$black50",
   fontSize: "$gr3",
 
+  strong: {
+    color: "$purple",
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+  },
+
   "@lg": {
     padding: "0 0 $gr3",
   },

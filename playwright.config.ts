@@ -31,6 +31,7 @@ export default defineConfig({
     baseURL: BASE_URL,
     /* Collect trace when retrying the failed test. */
     trace: "on-first-retry",
+    ignoreHTTPSErrors: true,
   },
 
   /* Configure projects for major browsers */

@@ -1,25 +1,28 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyledQuestion,
   StyledResponse,
 } from "@/components/Chat/Response/Response.styled";
 
 import BouncingLoader from "@/components/Shared/BouncingLoader";
-import Container from "@/components/Shared/Container";
+import ResponseAggregations from "@/components/Chat/Response/Aggregations";
 import ResponseImages from "@/components/Chat/Response/Images";
 import ResponseInterstitial from "@/components/Chat/Response/Interstitial";
 import ResponseMarkdown from "@/components/Chat/Response/Markdown";
 import ResponseOptions from "./Options";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
+import { v4 as uuidv4 } from "uuid";
 
 interface ChatResponseProps {
+  conversationIndex: number;
   conversationRef?: string;
   question: string;
   responseCallback?: (response: any) => void;
 }
 
 const ChatResponse: React.FC<ChatResponseProps> = ({
+  conversationIndex,
   conversationRef,
   question,
   responseCallback,
@@ -27,7 +30,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   const { authToken, isConnected, message, sendMessage } = useChatSocket();
 
   useEffect(() => {
-    console.log(`trying to send message`);
     if (isConnected && authToken && question && conversationRef) {
       const preparedQuestion = prepareQuestion(
         question,
@@ -47,8 +49,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   }, [conversationRef, question]);
 
   useEffect(() => {
-    console.log(`message`, message);
-
     if (!message || message.ref !== conversationRef) return;
 
     const { type } = message;
@@ -64,7 +64,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <ResponseMarkdown content={streamedMessage} />
+          <ResponseMarkdown content={message.message} messageType={type} />
         </>
       ));
     }
@@ -74,7 +74,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <ResponseInterstitial message={message.message} />
+          <ResponseInterstitial message={message.message} id={uuidv4()} />
         </>
       ));
     }
@@ -90,13 +90,11 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     }
 
     if (type === "aggregation_result") {
-      console.log(`aggregation result`, message.message);
-
       // @ts-ignore
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <></>
+          <ResponseAggregations message={message.message} />
         </>
       ));
     }
@@ -126,12 +124,22 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   }
 
   return (
-    <StyledResponse>
+    <StyledResponse
+      data-index={conversationIndex}
+      data-ref={conversationRef}
+      data-question={question}
+    >
       <StyledQuestion>{question}</StyledQuestion>
-      <div>
+      <div data-testid="response-content">
         {renderedMessage}
-        {streamedMessage && <ResponseMarkdown content={streamedMessage} />}
-        {isStreamingComplete ? <ResponseOptions /> : <BouncingLoader />}
+        {streamedMessage && (
+          <ResponseMarkdown content={streamedMessage} messageType="token" />
+        )}
+        {isStreamingComplete ? (
+          <ResponseOptions conversationIndex={conversationIndex} />
+        ) : (
+          <BouncingLoader />
+        )}
       </div>
     </StyledResponse>
   );
