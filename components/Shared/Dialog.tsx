@@ -32,6 +32,7 @@ const SharedDialog: React.FC<SharedDialogProps> = ({
         <DialogOverlay />
         <DialogContent
           onInteractOutside={handleCloseClick}
+          onEscapeKeyDown={handleCloseClick}
           {...(size ? { size } : {})}
         >
           <DialogHeader>

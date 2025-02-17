@@ -11,6 +11,8 @@ const ReadMore: React.FC<ReadMoreProps> = ({ text, words = 15 }) => {
     setIsReadMore(!isReadMore);
   };
 
+  console.log("text", text);
+
   const array = text.split(" ");
   const fragment = array.slice(0, words).join(" ");
 

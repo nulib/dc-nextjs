@@ -12,7 +12,6 @@ import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { UserContext } from "@/context/user-context";
-import type { Work } from "@nulib/dcapi-types";
 import dynamic from "next/dynamic";
 
 export const CloverViewer = dynamic(
@@ -23,14 +22,18 @@ export const CloverViewer = dynamic(
 );
 
 interface WrapperProps {
-  manifestId: Work["iiif_manifest"];
+  contentStateCallback?: (contentState: any) => void;
+  iiifContent?: string;
   isWorkRestricted?: boolean;
+  manifestId: string | null;
   viewerOptions?: ViewerConfigOptions;
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
-  manifestId,
+  contentStateCallback,
+  iiifContent,
   isWorkRestricted,
+  manifestId,
   viewerOptions = {},
 }) => {
   const userAuth = React.useContext(UserContext);
@@ -76,14 +79,39 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     ...viewerOptions,
   };
 
+  function handleCanvasIdCallback(activeCanvas: string) {
+    if (activeCanvas && contentStateCallback) {
+      const contentStateAnnotationId = `${manifestId}/content-state}`;
+      const contentState = {
+        "@context": "http://iiif.io/api/presentation/3/context.json",
+        id: contentStateAnnotationId,
+        type: "Annotation",
+        motivation: ["contentState"],
+        target: {
+          id: activeCanvas,
+          type: "Canvas",
+          partOf: [
+            {
+              id: manifestId,
+              type: "Manifest",
+            },
+          ],
+        },
+      };
+
+      contentStateCallback(JSON.stringify(contentState));
+    }
+  }
+
   return (
     <Container containerType="wide">
       <ViewerWrapperStyled data-testid="work-viewer-wrapper">
         {manifestId && (
           <CloverViewer
             // @ts-ignore
+            canvasIdCallback={handleCanvasIdCallback}
             customTheme={customTheme}
-            iiifContent={manifestId}
+            iiifContent={iiifContent || manifestId}
             options={options}
           />
         )}
@@ -100,4 +128,4 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   );
 };
 
-export default WorkViewerWrapper;
+export default React.memo(WorkViewerWrapper);
