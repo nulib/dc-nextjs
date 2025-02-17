@@ -16,6 +16,24 @@ type BuildQueryProps = {
   urlFacets: UrlFacets;
 };
 
+const searchPipeline = {
+  phase_results_processors: [
+    {
+      "normalization-processor": {
+        combination: {
+          parameters: {
+            weights: [0.25, 0.75],
+          },
+          technique: "arithmetic_mean",
+        },
+        normalization: {
+          technique: "l2",
+        },
+      },
+    },
+  ],
+};
+
 export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
@@ -88,6 +106,9 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     ...querySearchTemplate,
     ...(queryValue && {
       query: queryValue,
+    }),
+    ...(isAI && {
+      search_pipeline: searchPipeline,
     }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),

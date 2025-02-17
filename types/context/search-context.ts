@@ -1,15 +1,22 @@
 import { ApiResponseAggregation } from "@/types/api/response";
-import { Work } from "@nulib/dcapi-types";
 
 export type ActiveTab = "stream" | "results";
 
+export interface Article {
+  question: string;
+  answer: string;
+}
+
 export interface SearchContextStore {
   aggregations?: ApiResponseAggregation;
-  chat: {
-    answer: string;
-    documents: Work[];
-    question: string;
-    ref: string;
+  conversation: {
+    body: Article[];
+    ref?: string;
+  };
+  panel: {
+    interstitial?: string;
+    open: boolean;
+    query?: string;
   };
   searchFixed: boolean;
 }

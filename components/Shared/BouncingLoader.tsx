@@ -4,7 +4,11 @@ import React from "react";
 
 const BouncingLoader = () => {
   return (
-    <StyledBouncingLoader aria-label="loading" role="status">
+    <StyledBouncingLoader
+      aria-label="loading"
+      data-loading={true}
+      role="status"
+    >
       <div></div>
       <div></div>
       <div></div>

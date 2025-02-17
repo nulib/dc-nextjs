@@ -6,51 +6,65 @@ import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
 import { StyledUnsubmitted } from "./Response/Response.styled";
 import { styled } from "@/stitches.config";
-import useQueryParams from "@/hooks/useQueryParams";
+import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
 
-interface Conversation {
-  question: string;
-  answer: string;
-}
-
 const Chat = () => {
-  const { searchTerm } = useQueryParams();
+  const { searchState, searchDispatch } = useSearchState();
 
-  const initialConversation = {
-    question: searchTerm,
-    answer: "",
-  };
+  const {
+    conversation: { body, ref },
+  } = searchState;
 
-  const [conversationRef, setConversationRef] = useState<string>();
-  const [conversation, setConversation] = useState<Conversation[]>([
-    initialConversation,
-  ]);
+  /** get initial question  */
+  const initialQuestion = body.length > 0 && body[0].question;
+
   const [isStreaming, setIsStreaming] = useState(false);
 
   useEffect(() => {
+    if (!initialQuestion) return;
+
     const conversationRef = uuidv4();
     setIsStreaming(true);
-    setConversationRef(conversationRef);
-    setConversation([initialConversation]);
-  }, [searchTerm]);
+
+    searchDispatch({
+      type: "updateConversation",
+      conversation: {
+        body: [
+          {
+            question: initialQuestion,
+            answer: "",
+          },
+        ],
+        ref: conversationRef,
+      },
+    });
+  }, [initialQuestion]);
 
   const handleConversationCallback = (value: string) => {
     setIsStreaming(true);
-    setConversation([
-      ...conversation,
-      {
-        question: value,
-        answer: "",
-      },
-    ]);
+
+    if (ref && value)
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          body: [
+            ...body,
+            {
+              question: value,
+              answer: "",
+            },
+          ],
+          ref,
+        },
+      });
   };
 
   const handleResponseCallback = (content: any) => {
     setIsStreaming(false);
   };
 
-  if (!searchTerm)
+  if (!initialQuestion)
     return (
       <Container>
         <StyledUnsubmitted>{AI_SEARCH_UNSUBMITTED}</StyledUnsubmitted>
@@ -60,16 +74,17 @@ const Chat = () => {
   return (
     <Container>
       <StyledChat
-        data-conversation-initial={searchTerm}
-        data-conversation-length={conversation.length}
-        data-conversation-ref={conversationRef}
+        data-conversation-initial={initialQuestion}
+        data-conversation-length={body.length}
+        data-conversation-ref={ref}
       >
-        {conversation
+        {body
           .filter((entry) => entry.question)
           .map((entry, index) => {
             return (
               <ChatResponse
-                conversationRef={conversationRef}
+                conversationIndex={index}
+                conversationRef={ref}
                 key={index}
                 question={entry.question}
                 responseCallback={handleResponseCallback}
@@ -86,7 +101,8 @@ const Chat = () => {
 };
 
 const StyledChat = styled("section", {
-  padding: "$gr5 0",
+  padding: "$gr6 0",
+  position: "relative",
 });
 
 export default Chat;

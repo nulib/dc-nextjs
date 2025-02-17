@@ -1,12 +1,5 @@
 import { keyframes, styled } from "@/stitches.config";
 
-const gradientAnimation = keyframes({
-  to: {
-    backgroundSize: "500%",
-    backgroundPosition: "38.2%",
-  },
-});
-
 const StyledInterstitialIcon = styled("div", {
   display: "flex",
   width: "1rem",
@@ -35,6 +28,12 @@ const StyledInterstitialIcon = styled("div", {
   },
 });
 
+const StyledInterstitialWrapper = styled("div", {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+
 const StyledInterstitial = styled("div", {
   fontFamily: "$northwesternSansRegular",
   fontWeight: "400",
@@ -47,9 +46,7 @@ const StyledInterstitial = styled("div", {
   color: "$purple60",
   borderRadius: "1em",
   paddingRight: "$gr2",
-  backgroundSize: "250%",
   backgroundPosition: "61.8%",
-  animation: `${gradientAnimation} 5s infinite alternate`,
 
   strong: {
     fontFamily: "$northwesternSansBold",
@@ -58,4 +55,45 @@ const StyledInterstitial = styled("div", {
   },
 });
 
-export { StyledInterstitial, StyledInterstitialIcon };
+const StyledInterstitialAction = styled("button", {
+  display: "inline-flex",
+  padding: "0 $gr2",
+  height: "38px",
+  alignItems: "center",
+  gap: "$gr1",
+  color: "$purple",
+  background: "transparent",
+  fontFamily: "$northwesternSansBold",
+  fontSize: "$gr3",
+  border: "none",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+
+  svg: {
+    height: "1rem",
+    width: "1rem",
+    stroke: "$purple30",
+    transition: "$dcAll",
+    margin: "-2px 0 0",
+
+    path: {
+      stroke: "inherit",
+      strokeWidth: "48px",
+    },
+  },
+
+  "&:hover": {
+    svg: {
+      marginLeft: "3px",
+      marginRight: "-3px",
+      stroke: "$purple",
+    },
+  },
+});
+
+export {
+  StyledInterstitial,
+  StyledInterstitialAction,
+  StyledInterstitialIcon,
+  StyledInterstitialWrapper,
+};

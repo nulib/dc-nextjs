@@ -33,23 +33,21 @@ const HeaderPrimary: React.FC = () => {
   };
 
   return (
-    <>
-      <Primary
-        data-search-active={searchActive}
-        data-search-fixed={searchFixed}
-        data-testid="header-primary-ui-component"
-        ref={primaryRef}
-      >
-        <Container>
-          <PrimaryInner>
-            <Search isSearchActive={handleIsSearchActive} />
-            <Nav>
-              <Link href="/collections">Browse Collections</Link>
-            </Nav>
-          </PrimaryInner>
-        </Container>
-      </Primary>
-    </>
+    <Primary
+      data-search-active={searchActive}
+      data-search-fixed={searchFixed}
+      data-testid="header-primary-ui-component"
+      ref={primaryRef}
+    >
+      <Container>
+        <PrimaryInner>
+          <Search isSearchActive={handleIsSearchActive} />
+          <Nav>
+            <Link href="/collections">Browse Collections</Link>
+          </Nav>
+        </PrimaryInner>
+      </Container>
+    </Primary>
   );
 };
 
