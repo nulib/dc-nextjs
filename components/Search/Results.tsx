@@ -36,7 +36,8 @@ const SearchResults: React.FC<SearchResultsState> = ({
             (totalResults ? (
               <ResultsWrapperHeader>
                 <ResultsMessage data-testid="results-count">
-                  {pluralize("result", totalResults)}
+                  {pluralize("result", totalResults)} for{" "}
+                  <strong>{router.query.q}</strong>
                 </ResultsMessage>
                 <IIIFShare uri={iiifCollection} />
               </ResultsWrapperHeader>

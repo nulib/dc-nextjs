@@ -5,19 +5,16 @@ import React, {
   KeyboardEvent,
   forwardRef,
   useEffect,
-  useRef,
 } from "react";
-
-import { IconClear } from "@/components/Shared/SVG/Icons";
 
 interface SearchTextAreaProps {
   isAi: boolean;
   isFocused: boolean;
-  searchValue: string;
   handleSearchChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleSearchFocus: (e: FocusEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
   clearSearchResults: () => void;
+  searchValue: string;
 }
 
 const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
@@ -25,11 +22,10 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
     {
       isAi,
       isFocused,
-      searchValue,
       handleSearchChange,
       handleSearchFocus,
       handleSubmit,
-      clearSearchResults,
+      searchValue,
     },
     textareaRef,
   ) => {
@@ -42,7 +38,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
       if (textarea) {
         textarea.style.height = `${textarea.scrollHeight}px`;
       }
-    }, [searchValue, isFocused]);
+    }, [isFocused]);
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       handleSearchChange(e);
@@ -55,7 +51,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
     };
 
     const placeholderText = isAi
-      ? "What can I show you from our collections?"
+      ? "What can we show you from our collections?"
       : "Search by keyword or phrase, ex: Berkeley Music Festival";
 
     return (
@@ -78,11 +74,6 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
           role="search"
           value={searchValue}
         />
-        {searchValue && (
-          <Clear onClick={clearSearchResults} type="reset">
-            <IconClear />
-          </Clear>
-        )}
       </StyledTextArea>
     );
   },

@@ -22,13 +22,22 @@ function addTableWrapper(html: string) {
   return parsedHtml;
 }
 
-const ResponseMarkdown = ({ content }: { content: string }) => {
+const ResponseMarkdown = ({
+  content,
+  messageType,
+}: {
+  content: string;
+  messageType?: "answer" | "token";
+}) => {
   const { html } = useMarkdown(content);
 
   const parsedHtml = addTableWrapper(html);
 
   return (
-    <StyledResponseMarkdown dangerouslySetInnerHTML={{ __html: parsedHtml }} />
+    <StyledResponseMarkdown
+      dangerouslySetInnerHTML={{ __html: parsedHtml }}
+      data-message-type={messageType}
+    />
   );
 };
 

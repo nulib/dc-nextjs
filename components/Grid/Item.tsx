@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+
 import Figure from "@/components/Figure/Figure";
 import { GridItem as ItemStyled } from "@/components/Grid/Grid.styled";
 import Link from "next/link";
@@ -46,7 +47,7 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
                 ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
                 : item.thumbnail || "",
             supplementalInfo: item.work_type,
-            title: item.title || "",
+            title: item.title || "ok",
           }}
         />
       </Link>

@@ -16,6 +16,24 @@ type BuildQueryProps = {
   urlFacets: UrlFacets;
 };
 
+const searchPipeline = {
+  phase_results_processors: [
+    {
+      "normalization-processor": {
+        combination: {
+          parameters: {
+            weights: [0.25, 0.75],
+          },
+          technique: "arithmetic_mean",
+        },
+        normalization: {
+          technique: "l2",
+        },
+      },
+    },
+  ],
+};
+
 export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
@@ -53,10 +71,10 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                   query_string: {
                     default_operator: "OR",
                     fields: [
-                      "title^1",
+                      "title^10",
                       "collection.title^5",
                       "all_controlled_labels",
-                      "all_ids^1",
+                      "all_ids^10",
                     ],
                     query: term,
                   },
@@ -88,6 +106,9 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     ...querySearchTemplate,
     ...(queryValue && {
       query: queryValue,
+    }),
+    ...(isAI && {
+      search_pipeline: searchPipeline,
     }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),
