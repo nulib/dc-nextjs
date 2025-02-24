@@ -1,14 +1,5 @@
-import {
-  akkurat,
-  akkuratBold,
-  akkuratLight,
-  campton,
-  camptonBold,
-  camptonExtraBold,
-  camptonExtraLight,
-} from "./fonts";
-
 import { globalCss } from "@stitches/react";
+import { northwesternFonts } from "@/styles/fonts";
 
 /* eslint sort-keys: 0 */
 
@@ -45,29 +36,12 @@ const defaults = {
 };
 
 const fonts = {
-  "@font-face": [
-    {
-      fontFamily: akkuratLight.style.fontFamily,
-    },
-    {
-      fontFamily: akkurat.style.fontFamily,
-    },
-    {
-      fontFamily: akkuratBold.style.fontFamily,
-    },
-    {
-      fontFamily: campton.style.fontFamily,
-    },
-    {
-      fontFamily: camptonBold.style.fontFamily,
-    },
-    {
-      fontFamily: camptonExtraBold.style.fontFamily,
-    },
-    {
-      fontFamily: camptonExtraLight.style.fontFamily,
-    },
-  ],
+  "@font-face": northwesternFonts.map((font) => ({
+    fontFamily: `${font.name}`,
+    src: `url(${font.value}) format("woff")`,
+    fontWeight: "normal",
+    fontStyle: "normal",
+  })),
 };
 
 const globalStyles = globalCss({
