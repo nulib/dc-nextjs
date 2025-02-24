@@ -1,13 +1,4 @@
 import { GoogleTagManager, sendGTMEvent } from "@next/third-parties/google";
-import {
-  akkurat,
-  akkuratBold,
-  akkuratLight,
-  campton,
-  camptonBold,
-  camptonExtraBold,
-  camptonExtraLight,
-} from "@/styles/fonts";
 
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -85,13 +76,6 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         <SearchProvider>
           <style jsx global>{`
             :root {
-              --font-akkurat-light: ${akkuratLight.style.fontFamily};
-              --font-akkurat: ${akkurat.style.fontFamily};
-              --font-akkurat-bold: ${akkuratBold.style.fontFamily};
-              --font-campton: ${campton.style.fontFamily};
-              --font-campton-bold: ${camptonBold.style.fontFamily};
-              --font-campton-extra-bold: ${camptonExtraBold.style.fontFamily};
-              --font-campton-extra-light: ${camptonExtraLight.style.fontFamily};
             }
           `}</style>
           {mounted && <Component {...pageProps} />}
