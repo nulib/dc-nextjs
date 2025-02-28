@@ -102,8 +102,8 @@ const SearchPanel = () => {
     if (e.key === "Escape") handleBack();
   };
 
-  const handleBack = () => {
-    router.push({
+  const handleBack = async () => {
+    await router.push({
       pathname: "/search",
       query: {},
     });
