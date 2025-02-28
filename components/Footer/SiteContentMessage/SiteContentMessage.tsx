@@ -48,10 +48,7 @@ const SiteContentMessage = () => {
               contain materials that reflect the beliefs and norms of their eras
               and culture in which they were created or collected. The site may
               contain imagery, language, or opinions that are offensive and may
-              not be appropriate for all audiences. The Libraries are committed
-              to the ethical digitization and description of materials that
-              offer alternative histories and center voices from marginalized
-              cultures. Please direct questions to{" "}
+              not be appropriate for all audiences. Please direct questions to{" "}
               <a href="mailto:library@northwestern.edu">
                 library@northwestern.edu
               </a>
