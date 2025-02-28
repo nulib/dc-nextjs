@@ -54,20 +54,21 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
 
     const interstitialElement = document.getElementById(`interstitial-${id}`);
 
-    if(!interstitialElement) return;
+    if (!interstitialElement) return;
 
-    const parentArticle = interstitialElement.closest('article');
+    const parentArticle = interstitialElement.closest("article");
 
-    const parentIndex = parentArticle?.getAttribute('data-index');
+    const parentIndex = parentArticle?.getAttribute("data-index");
 
     // if the parent article is the first one, exit
-    if(!parentIndex || parentIndex === "0") return;
+    if (!parentIndex || parentIndex === "0") return;
 
     // the search bar is absolutely positioned,
     // grab it's height to offset the scroll position
     const searchBar = document.getElementById("dc-search");
     const offset = searchBar?.offsetHeight || 0;
-    const topPos = interstitialElement.getBoundingClientRect().top + window.scrollY - offset;
+    const topPos =
+      interstitialElement.getBoundingClientRect().top + window.scrollY - offset;
 
     window.scrollTo({
       top: topPos - 25, // 25 is to offset the box-shadow
