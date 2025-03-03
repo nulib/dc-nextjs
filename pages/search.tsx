@@ -20,7 +20,10 @@ import SearchPanel from "@/components/Search/Panel";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
-import { StyledResponseWrapper } from "@/components/Search/Search.styled";
+import {
+  StyledResponseWrapper,
+  StyledTabsContent,
+} from "@/components/Search/Search.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -227,6 +230,12 @@ const SearchPage: NextPage = () => {
 
           <Tabs.Root
             value={activeTab}
+            className="tabs-wrapper"
+            style={{
+              maxWidth: "1120px",
+              margin: "0 auto",
+              overflow: "hidden",
+            }}
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
             {activeTab === "results" && (
@@ -237,27 +246,18 @@ const SearchPage: NextPage = () => {
               />
             )}
 
-            <Tabs.Content
-              value="stream"
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                marginTop: "-30px",
-              }}
-            >
+            <StyledTabsContent value="stream">
               <div
                 style={{
-                  position: "relative",
                   transition: "all 382ms ease-in-out",
                   opacity: panel.open ? 0 : 1,
                   filter: panel.open ? "grayscale(1)" : "none",
-                  // right: panel.open ? "calc(100vw - 382px)" : 0,
                 }}
               >
                 <Chat />
               </div>
               <SearchPanel />
-            </Tabs.Content>
+            </StyledTabsContent>
 
             <Tabs.Content value="results">
               <Container containerType="wide">

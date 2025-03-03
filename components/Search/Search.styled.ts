@@ -1,4 +1,5 @@
 import { styled } from "@/stitches.config";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 /* eslint sort-keys: 0 */
 
@@ -143,6 +144,16 @@ const StyledResponseWrapper = styled("div", {
   padding: "0 0 $gr6",
 });
 
+const StyledTabsContent = styled(TabsContent, {
+  display: "grid",
+  marginTop: "-30px",
+  // small padding ensures followup box is not cutoff
+  padding: "0 $gr1",
+  "> *": {
+    gridArea: "1 / 1",
+  },
+});
+
 export {
   Button,
   NoResultsMessage,
@@ -151,4 +162,5 @@ export {
   ResultsWrapperHeader,
   SearchStyled,
   StyledResponseWrapper,
+  StyledTabsContent,
 };
