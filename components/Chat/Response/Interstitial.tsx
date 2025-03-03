@@ -60,11 +60,11 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
 
     const parentIndex = parentArticle?.getAttribute("data-index");
 
-    // if the parent article is the first one, exit
+    // if the parent article is the first result, exit
     if (!parentIndex || parentIndex === "0") return;
 
-    // the search bar is absolutely positioned,
-    // grab it's height to offset the scroll position
+    // because the search bar is absolutely positioned,
+    // grab its height to offset the scroll position
     const searchBar = document.getElementById("dc-search");
     const offset = searchBar?.offsetHeight || 0;
     const topPos =
