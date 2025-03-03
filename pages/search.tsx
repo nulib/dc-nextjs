@@ -250,7 +250,6 @@ const SearchPage: NextPage = () => {
                   transition: "all 382ms ease-in-out",
                   opacity: panel.open ? 0 : 1,
                   filter: panel.open ? "grayscale(1)" : "none",
-                  height: panel.open ? 0 : "auto",
                 }}
               >
                 <Chat />

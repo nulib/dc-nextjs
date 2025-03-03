@@ -150,6 +150,7 @@ const StyledTabsContent = styled(TabsContent, {
   marginTop: "-30px",
   ">*:first-child": {
     gridColumn: "2 / 3",
+    gridRow: "1",
     width: "100%",
   },
   ">*:nth-child(2)": {
