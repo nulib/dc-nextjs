@@ -146,11 +146,16 @@ const StyledResponseWrapper = styled("div", {
 
 const StyledTabsContent = styled(TabsContent, {
   display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
   marginTop: "-30px",
-  // small padding ensures followup box is not cutoff
-  padding: "0 $gr1",
-  "> *": {
-    gridArea: "1 / 1",
+  ">*:first-child": {
+    gridColumn: "2 / 3",
+    width: "100%",
+  },
+  ">*:nth-child(2)": {
+    gridColumn: "1 / 4",
+    gridRow: "1",
+    width: "100%",
   },
 });
 
