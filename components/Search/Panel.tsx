@@ -72,7 +72,7 @@ const SearchPanel = () => {
         const requestUrl = new URL(DC_API_SEARCH_URL);
         const body: ApiSearchRequestBody = buildQuery(
           {
-            size: 40, // SEARCH_RESULTS_PER_PAGE
+            size: SEARCH_RESULTS_PER_PAGE,
             term: String(query),
             urlFacets,
           },
