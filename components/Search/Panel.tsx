@@ -5,7 +5,7 @@ import {
   StyledSearchPanel,
   StyledSearchPanelContent,
 } from "./Panel.styled";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
@@ -50,7 +50,7 @@ const SearchPanel = () => {
   }, [open]);
 
   useEffect(() => {
-    if (!query) return;
+    if (!query || isNavigatingBack.current) return;
 
     (async () => {
       setSearchResults({
@@ -102,11 +102,15 @@ const SearchPanel = () => {
     if (e.key === "Escape") handleBack();
   };
 
+  const isNavigatingBack = useRef(false);
   const handleBack = async () => {
-    await router.push({
-      pathname: "/search",
-      query: {},
-    });
+    isNavigatingBack.current = true;
+    await router
+      .push({
+        pathname: "/search",
+        query: {},
+      })
+      .then(() => (isNavigatingBack.current = false));
 
     searchDispatch({
       type: "updatePanel",
