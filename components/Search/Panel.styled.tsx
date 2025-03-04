@@ -52,22 +52,21 @@ const StyledBackButton = styled("button", {
 });
 
 const StyledSearchPanel = styled("aside", {
-  position: "absolute",
-  top: "0",
-  right: "-100%",
   width: "100%",
   height: "100%",
-  zIndex: "1",
   transition: "all 382ms ease-in-out",
   opacity: "0",
   variants: {
     isOpen: {
       true: {
-        right: "0",
         opacity: "1",
+        height: "100%",
+        transform: "translateX(0)",
       },
       false: {
         opacity: "0",
+        height: "0",
+        transform: "translateX(100%)",
       },
     },
   },

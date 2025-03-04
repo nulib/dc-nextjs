@@ -47,16 +47,33 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
   let action: InterstitialContent;
 
   useEffect(() => {
-    if (open && !interstitial) return;
+    // if the panel is being opened or there is no interstitial, exit
+    if (open || !interstitial) return;
 
-    if (id === interstitial) {
-      const interstitialElement = document.getElementById(`interstitial-${id}`);
-      // if (interstitialElement)
-      //   interstitialElement.scrollIntoView({
-      //     behavior: "smooth",
-      //     block: "start",
-      //   });
-    }
+    if (id !== interstitial) return;
+
+    const interstitialElement = document.getElementById(`interstitial-${id}`);
+
+    if (!interstitialElement) return;
+
+    const parentArticle = interstitialElement.closest("article");
+
+    const parentIndex = parentArticle?.getAttribute("data-index");
+
+    // if the parent article is the first result, exit
+    if (!parentIndex || parentIndex === "0") return;
+
+    // because the search bar is absolutely positioned,
+    // grab its height to offset the scroll position
+    const searchBar = document.getElementById("dc-search");
+    const offset = searchBar?.offsetHeight || 0;
+    const topPos =
+      interstitialElement.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top: topPos - 25, // 25 is to offset the box-shadow
+      behavior: "smooth",
+    });
   }, [open]);
 
   switch (tool) {

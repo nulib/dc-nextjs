@@ -1,19 +1,23 @@
 import { IconStyled } from "../Shared/Icon";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
 import { styled } from "@/stitches.config";
+import { timingFunction } from "@/styles/transitions";
+import { keyframes } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
+
+const slideInFromRight = keyframes({
+  "0%": { transform: "translateX(100vw)" },
+  "100%": { transform: "translateX0)" },
+});
 
 const StyledOptionsBar = styled("div", {
   display: "flex",
   justifyContent: "space-between",
-  position: "relative",
-  left: "0",
-  transition: "$dcScrollLeft",
-  zIndex: "1",
   gap: "$gr3",
   flexWrap: "wrap",
   alignItems: "center",
+  animation: `${slideInFromRight} 1s ${timingFunction};`,
 
   "@md": {
     gap: "$gr2",
@@ -130,6 +134,11 @@ const StyledOptionsTabs = styled("div", {
   },
 });
 
+const slideInFromLeft = keyframes({
+  "0%": { transform: "translateX(-100vw)" },
+  "100%": { transform: "translateX0)" },
+});
+
 const StyledOptions = styled("div", {
   transition: "$dcScrollHeight",
   margin: "0 0 $gr5",
@@ -158,11 +167,11 @@ const StyledOptions = styled("div", {
       position: "fixed",
       margin: "0",
       top: "$gr6",
-      left: "50%",
       zIndex: "1",
-      transform: "translate(-50%)",
+      transform: "translateX(0)",
       backfaceVisibility: "hidden",
       webkitFontSmoothing: "subpixel-antialiased",
+      animation: `${slideInFromLeft} 1s ${timingFunction};`,
 
       [`& ${StyledOptionsTabs}`]: {
         display: "none",
