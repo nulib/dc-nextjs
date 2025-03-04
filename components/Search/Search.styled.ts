@@ -1,4 +1,5 @@
 import { styled } from "@/stitches.config";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 /* eslint sort-keys: 0 */
 
@@ -143,6 +144,22 @@ const StyledResponseWrapper = styled("div", {
   padding: "0 0 $gr6",
 });
 
+const StyledTabsContent = styled(TabsContent, {
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
+  marginTop: "-30px",
+  ">*:first-child": {
+    gridColumn: "2 / 3",
+    gridRow: "1",
+    width: "100%",
+  },
+  ">*:nth-child(2)": {
+    gridColumn: "1 / 4",
+    gridRow: "1",
+    width: "100%",
+  },
+});
+
 export {
   Button,
   NoResultsMessage,
@@ -151,4 +168,5 @@ export {
   ResultsWrapperHeader,
   SearchStyled,
   StyledResponseWrapper,
+  StyledTabsContent,
 };
