@@ -27,7 +27,7 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({
   renderTabList,
 }) => {
   const {
-    searchState: { searchFixed },
+    searchState: { searchFixed, panel },
   } = useSearchState();
 
   const optionsRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,9 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({
 
   // When used in the Panel component, create a portal to the body
   // because the Panel component has a transform applied, breaking the fixed positioning
-  return searchFixed ? createPortal(content, document.body) : content;
+  return searchFixed && panel.open
+    ? createPortal(content, document.body)
+    : content;
 };
 
 export default SearchOptions;
