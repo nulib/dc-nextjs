@@ -1,6 +1,8 @@
 import { IconStyled } from "../Shared/Icon";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
 import { styled } from "@/stitches.config";
+import { timingFunction } from "@/styles/transitions";
+import { keyframes } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
 
@@ -130,6 +132,11 @@ const StyledOptionsTabs = styled("div", {
   },
 });
 
+const slideInFromLeft = keyframes({
+  "0%": { transform: "translateX(-100vw)" },
+  "100%": { transform: "translateX(calc(50vw - 50%))" },
+});
+
 const StyledOptions = styled("div", {
   transition: "$dcScrollHeight",
   margin: "0 0 $gr5",
@@ -158,11 +165,11 @@ const StyledOptions = styled("div", {
       position: "fixed",
       margin: "0",
       top: "$gr6",
-      left: "50%",
       zIndex: "1",
-      transform: "translate(-50%)",
+      transform: "translateX(calc(50vw - 50%))",
       backfaceVisibility: "hidden",
       webkitFontSmoothing: "subpixel-antialiased",
+      animation: `${slideInFromLeft} 1s ${timingFunction};`,
 
       [`& ${StyledOptionsTabs}`]: {
         display: "none",
