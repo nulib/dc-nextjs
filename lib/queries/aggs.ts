@@ -55,13 +55,22 @@ export const buildAggs = (
 
     if (userFacetsValues) {
       aggs.userFacets = {
-        terms: {
-          field: facet.field,
-          include: userFacetsValues,
-          order: {
-            _count: desc,
+        filter: {
+          bool: {
+            must: buildFacetFilters(userFacets),
           },
-          size: 20,
+        },
+        aggs: {
+          [facet.id]: {
+            terms: {
+              field: facet.field,
+              include: userFacetsValues,
+              order: {
+                _count: desc,
+              },
+              size: 20,
+            },
+          },
         },
       };
     }

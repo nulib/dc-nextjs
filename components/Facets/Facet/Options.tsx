@@ -90,7 +90,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       !userBuckets.some((userBucket) => userBucket.key === bucket.key),
   );
 
-  const renderBuckets = [...userBuckets, ...filteredAggBuckets];
+  const renderBuckets = [...filteredAggBuckets, ...userBuckets];
 
   return (
     <Options
