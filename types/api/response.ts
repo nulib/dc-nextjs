@@ -10,7 +10,9 @@ export interface ApiResponse {
 
 export interface ApiResponseAggregation {
   [key: string]: {
-    buckets: ApiResponseBucket[];
+    [key: string]: {
+      buckets: ApiResponseBucket[];
+    };
   };
 }
 

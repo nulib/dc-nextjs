@@ -70,27 +70,27 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       </SpinWrapper>
     );
 
-  if (
-    !aggregations ||
-    !aggregations[facet.id] ||
-    aggregations[facet.id].buckets.length === 0
-  )
+  const facetAggregation = aggregations?.[facet.id]?.[facet.id];
+  const buckets = facetAggregation?.buckets ?? [];
+
+  if (buckets.length === 0) {
     return (
       <p>
         No options for <strong>{facet.label}</strong> on your current filters.
       </p>
     );
+  }
 
-  const userFacetsAggregation = aggregations.userFacets;
-  const userBuckets = userFacetsAggregation
-    ? userFacetsAggregation.buckets
+  const userBuckets = Array.isArray(aggregations?.userFacets?.buckets)
+    ? aggregations.userFacets.buckets
     : [];
 
-  const filteredAggBuckets = aggregations[facet.id].buckets.filter((bucket) => {
-    return !userBuckets.find((userBucket) => userBucket.key == bucket.key);
-  });
+  const filteredAggBuckets = buckets.filter(
+    (bucket) =>
+      !userBuckets.some((userBucket) => userBucket.key === bucket.key),
+  );
 
-  const buckets = [...userBuckets, ...filteredAggBuckets];
+  const renderBuckets = [...userBuckets, ...filteredAggBuckets];
 
   return (
     <Options
@@ -98,7 +98,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       className="facet-options skeleton-loader"
       data-testid="facet-options"
     >
-      {buckets.map((bucket, index) => (
+      {renderBuckets.map((bucket, index) => (
         <Option
           bucket={bucket}
           facet={facet.id}
