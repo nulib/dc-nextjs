@@ -101,7 +101,7 @@ const Chat = () => {
 };
 
 const StyledChat = styled("section", {
-  padding: "$gr6 0",
+  padding: "$gr5 0",
   position: "relative",
 });
 
