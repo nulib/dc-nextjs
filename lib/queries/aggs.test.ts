@@ -18,23 +18,45 @@ describe("buildAggs function", () => {
     const response = aggs.buildAggs(facets, facetFilterValue, userFacets);
 
     expect(response).toEqual({
-      genre: {
-        terms: {
-          field: "genre.label",
-          order: {
-            _count: "desc",
+      userFacets: {
+        filter: {
+          bool: {
+            must: [
+              { term: { "genre.label": "paintings (visual works)" } },
+              { term: { "subject.label": "Painting" } },
+              { term: { "subject.label": "19th century" } },
+            ],
           },
-          size: 20,
+        },
+        aggs: {
+          userFacets: {
+            terms: {
+              field: "genre.label",
+              include: ["paintings (visual works)"],
+              order: { _count: "desc" },
+              size: 20,
+            },
+          },
         },
       },
-      userFacets: {
-        terms: {
-          field: "genre.label",
-          include: ["paintings (visual works)"],
-          order: {
-            _count: "desc",
+      genre: {
+        filter: {
+          bool: {
+            must: [
+              { term: { "genre.label": "paintings (visual works)" } },
+              { term: { "subject.label": "Painting" } },
+              { term: { "subject.label": "19th century" } },
+            ],
           },
-          size: 20,
+        },
+        aggs: {
+          genre: {
+            terms: {
+              field: "genre.label",
+              order: { _count: "desc" },
+              size: 20,
+            },
+          },
         },
       },
     });
@@ -52,15 +74,19 @@ describe("buildAggs function", () => {
     const userFacets = {};
 
     const response = aggs.buildAggs(facets, facetFilterValue, userFacets);
+
     expect(response).toEqual({
       subject: {
-        terms: {
-          field: "subject.label",
-          include: ".*(A|a)(R|r)(C|c)(H|h)(I|i)(T|t)(E|e)(C|c).*",
-          order: {
-            _count: "desc",
+        filter: { bool: { must: [] } },
+        aggs: {
+          subject: {
+            terms: {
+              field: "subject.label",
+              include: ".*(A|a)(R|r)(C|c)(H|h)(I|i)(T|t)(E|e)(C|c).*",
+              order: { _count: "desc" },
+              size: 20,
+            },
           },
-          size: 20,
         },
       },
     });
@@ -78,15 +104,21 @@ describe("buildAggs function", () => {
     const userFacets = {};
 
     const response = aggs.buildAggs(facets, facetFilterValue, userFacets);
+
+    console.log(JSON.stringify(response));
+
     expect(response).toEqual({
       subject: {
-        terms: {
-          field: "subject.label",
-          include: '.*"Art".*',
-          order: {
-            _count: "desc",
+        filter: { bool: { must: [] } },
+        aggs: {
+          subject: {
+            terms: {
+              field: "subject.label",
+              include: '.*"Art".*',
+              order: { _count: "desc" },
+              size: 20,
+            },
           },
-          size: 20,
         },
       },
     });
@@ -95,13 +127,18 @@ describe("buildAggs function", () => {
     const singleQuoteResponse = aggs.buildAggs(facets, `"`, userFacets);
     expect(singleQuoteResponse).toEqual({
       subject: {
-        terms: {
-          field: "subject.label",
-          include: " ",
-          order: {
-            _count: "desc",
+        filter: { bool: { must: [] } },
+        aggs: {
+          subject: {
+            terms: {
+              field: "subject.label",
+              include: " ",
+              order: {
+                _count: "desc",
+              },
+              size: 20,
+            },
           },
-          size: 20,
         },
       },
     });
