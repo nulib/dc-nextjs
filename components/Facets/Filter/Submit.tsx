@@ -46,8 +46,6 @@ const FacetsFilterSubmit: React.FC<FacetsFilterSubmitProps> = ({
     setIsModalOpen(false);
   };
 
-  console.log(`isAI`, isAI);
-
   return (
     <div data-testid="facets-submit" style={{ display: "flex" }}>
       <Button

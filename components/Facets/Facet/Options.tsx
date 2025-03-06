@@ -1,5 +1,6 @@
 import {
   ApiResponseAggregation,
+  ApiResponseFilteredAggregation,
   ApiSearchResponse,
 } from "@/types/api/response";
 import { Options, SpinWrapper } from "./GenericFacet.styled";
@@ -26,7 +27,8 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   facet,
 }) => {
   const { searchTerm } = useQueryParams();
-  const [aggregations, setAggregations] = useState<ApiResponseAggregation>();
+  const [aggregations, setAggregations] =
+    useState<ApiResponseFilteredAggregation>();
   const [loading, setLoading] = useState(true);
 
   const { isChecked } = useGenerativeAISearchToggle();
@@ -55,7 +57,9 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
           url: DC_API_SEARCH_URL,
         });
 
-        setAggregations(response?.aggregations);
+        setAggregations(
+          response?.aggregations as ApiResponseFilteredAggregation,
+        );
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -70,27 +74,41 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       </SpinWrapper>
     );
 
-  if (
-    !aggregations ||
-    !aggregations[facet.id] ||
-    aggregations[facet.id].buckets.length === 0
-  )
+  const facetAggregation = aggregations?.[facet.id]?.[facet.id];
+  const buckets = facetAggregation?.buckets ?? [];
+
+  function getBucketOrder(bucketKey: string) {
+    const urlFacet = userFacetsUnsubmitted[facet.id];
+
+    if (!urlFacet) {
+      return Infinity;
+    }
+
+    const index = urlFacet.findIndex((facet) => facet.includes(bucketKey));
+
+    return index === -1 ? Infinity : index;
+  }
+
+  if (buckets.length === 0) {
     return (
       <p>
         No options for <strong>{facet.label}</strong> on your current filters.
       </p>
     );
+  }
 
-  const userFacetsAggregation = aggregations.userFacets;
-  const userBuckets = userFacetsAggregation
-    ? userFacetsAggregation.buckets
+  buckets.sort((a, b) => getBucketOrder(a.key) - getBucketOrder(b.key));
+
+  const userBuckets = Array.isArray(aggregations?.userFacets?.buckets)
+    ? aggregations.userFacets.buckets
     : [];
 
-  const filteredAggBuckets = aggregations[facet.id].buckets.filter((bucket) => {
-    return !userBuckets.find((userBucket) => userBucket.key == bucket.key);
-  });
+  const filteredAggBuckets = buckets.filter(
+    (bucket) =>
+      !userBuckets.some((userBucket) => userBucket.key === bucket.key),
+  );
 
-  const buckets = [...userBuckets, ...filteredAggBuckets];
+  const renderBuckets = [...filteredAggBuckets, ...userBuckets];
 
   return (
     <Options
@@ -98,7 +116,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       className="facet-options skeleton-loader"
       data-testid="facet-options"
     >
-      {buckets.map((bucket, index) => (
+      {renderBuckets.map((bucket, index) => (
         <Option
           bucket={bucket}
           facet={facet.id}

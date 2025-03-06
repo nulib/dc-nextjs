@@ -39,6 +39,8 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const must: QueryDslQueryContainer[] = [];
   let queryValue;
 
+  console.log({ aggs });
+
   // Build the "must" part of the query
   if (term) must.push(buildSearchPart(term));
 
@@ -80,16 +82,17 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                   },
                 },
               ],
-              filter: buildFacetFilters(urlFacets),
             },
           },
           {
             neural: {
               embedding: {
                 filter: {
-                  bool: {
-                    filter: buildFacetFilters(urlFacets),
-                  },
+                  bool: !aggs
+                    ? {
+                        filter: buildFacetFilters(urlFacets),
+                      }
+                    : {},
                 },
                 k: AI_K_VALUE,
                 model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
@@ -102,7 +105,7 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     };
   }
 
-  return {
+  const requestBody = {
     ...querySearchTemplate,
     ...(queryValue && {
       query: queryValue,
@@ -112,7 +115,14 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),
+    post_filter: {
+      bool: {
+        must: buildFacetFilters(urlFacets),
+      },
+    },
   } as ApiSearchRequestBody;
+
+  return requestBody;
 }
 
 export function addFacetsToQuery(urlFacets: UrlFacets) {

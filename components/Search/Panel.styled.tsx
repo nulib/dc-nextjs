@@ -80,7 +80,6 @@ const StyledSearchPanel = styled("aside", {
 
 const StyledSearchPanelContent = styled("div", {
   height: "100%",
-  padding: "$gr4 0",
   background: "white",
 });
 
