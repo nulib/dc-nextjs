@@ -2,6 +2,7 @@ import { Aggs } from "@/types/api/request";
 import { FacetsInstance } from "@/types/components/facets";
 import { SortOrder } from "@elastic/elasticsearch/api/types";
 import { UrlFacets } from "@/types/context/filter-context";
+import { buildFacetFilters } from "./facet";
 import { facetRegex } from "@/lib/utils/facet-helpers";
 
 /**
@@ -54,13 +55,22 @@ export const buildAggs = (
 
     if (userFacetsValues) {
       aggs.userFacets = {
-        terms: {
-          field: facet.field,
-          include: userFacetsValues,
-          order: {
-            _count: desc,
+        filter: {
+          bool: {
+            must: buildFacetFilters(userFacets),
           },
-          size: 20,
+        },
+        aggs: {
+          userFacets: {
+            terms: {
+              field: facet.field,
+              include: userFacetsValues,
+              order: {
+                _count: desc,
+              },
+              size: 20,
+            },
+          },
         },
       };
     }
@@ -69,7 +79,14 @@ export const buildAggs = (
      * Default agg values for the active Facet
      */
     aggs[facet.id] = {
-      terms,
+      filter: {
+        bool: {
+          must: buildFacetFilters(userFacets),
+        },
+      },
+      aggs: {
+        [facet.id]: { terms: terms },
+      },
     };
   });
 

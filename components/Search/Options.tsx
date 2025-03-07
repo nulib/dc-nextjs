@@ -4,7 +4,6 @@ import {
   StyledOptionsBar,
   StyledOptionsExtras,
   StyledOptionsFacets,
-  StyledOptionsTabs,
   StyledOptionsWidth,
 } from "@/components/Search/Options.styled";
 
@@ -39,7 +38,6 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({
         maxWidth={searchFixed ? optionsRef.current?.clientWidth : undefined}
       >
         <StyledOptionsBar data-testid="facets-ui-wrapper" ref={optionsRef}>
-          {renderTabList && <StyledOptionsTabs>{tabs}</StyledOptionsTabs>}
           <StyledOptionsFacets isTabResults={activeTab === "results"}>
             <Facets />
             <StyledOptionsExtras>

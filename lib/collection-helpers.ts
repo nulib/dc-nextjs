@@ -1,5 +1,9 @@
 import { Aggs, ApiSearchRequestBody } from "@/types/api/request";
-import { ApiResponseBucket, ApiSearchResponse } from "@/types/api/response";
+import {
+  ApiResponseAggregation,
+  ApiResponseBucket,
+  ApiSearchResponse,
+} from "@/types/api/response";
 import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
 
 import type { Collection } from "@nulib/dcapi-types";
@@ -188,7 +192,10 @@ export async function getCollectionWorkCounts(
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
     });
 
-    const collectionBuckets = response?.aggregations?.collections?.buckets;
+    const collectionAggregations =
+      response?.aggregations as ApiResponseAggregation;
+
+    const collectionBuckets = collectionAggregations?.collections?.buckets;
     if (!collectionBuckets || collectionBuckets.length === 0) {
       /** The Collection has no Works, send default zero counts */
       if (collectionId) {
@@ -263,7 +270,9 @@ export async function getMetadataAggs(collectionId: string, field: string) {
     });
 
     if (response?.aggregations) {
-      return response.aggregations.collectionMetadata.buckets;
+      const aggregations = response.aggregations as ApiResponseAggregation;
+
+      return aggregations.collectionMetadata.buckets;
     }
     return null;
   } catch (err) {
@@ -312,7 +321,8 @@ export async function getTopMetadataAggs({
     });
 
     if (response?.aggregations) {
-      for (const [key, value] of Object.entries(response?.aggregations)) {
+      const aggregations = response.aggregations as ApiResponseAggregation;
+      for (const [key, value] of Object.entries(aggregations)) {
         topMetadata.push({
           field: key,
           value: shuffle(value.buckets.map((bucket) => bucket.key)).slice(0, 3),

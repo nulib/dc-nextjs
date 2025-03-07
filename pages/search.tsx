@@ -2,6 +2,10 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import { GetServerSideProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
+import {
+  StyledResponseWrapper,
+  StyledTabsContent,
+} from "@/components/Search/Search.styled";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -20,10 +24,6 @@ import SearchPanel from "@/components/Search/Panel";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
-import {
-  StyledResponseWrapper,
-  StyledTabsContent,
-} from "@/components/Search/Search.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -71,7 +71,6 @@ const SearchPage: NextPage = () => {
   });
 
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
-  const totalResults = searchResults.data?.pagination?.total_hits;
 
   /**
    * on a query change, we check to see if the user is using the AI and then
@@ -96,9 +95,6 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!router.isReady) return;
-
-    // Reset search results state
-    setSearchResults(defaultSearchResultsState);
 
     (async () => {
       try {
@@ -158,6 +154,10 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!pageQueryUrl) return;
+
+    // Reset search results state
+    setSearchResults(defaultSearchResultsState);
+
     (async () => {
       try {
         const response = await axios.get(pageQueryUrl);
@@ -231,9 +231,6 @@ const SearchPage: NextPage = () => {
           <Tabs.Root
             value={activeTab}
             className="tabs-wrapper"
-            style={{
-              overflow: "hidden",
-            }}
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
             {activeTab === "results" && (

@@ -1,4 +1,7 @@
-import { ApiResponseAggregation } from "@/types/api/response";
+import {
+  ApiResponseAggregation,
+  ApiResponseFilteredAggregation,
+} from "@/types/api/response";
 
 export type ActiveTab = "stream" | "results";
 
@@ -8,7 +11,7 @@ export interface Article {
 }
 
 export interface SearchContextStore {
-  aggregations?: ApiResponseAggregation;
+  aggregations?: ApiResponseAggregation | ApiResponseFilteredAggregation;
   conversation: {
     body: Article[];
     ref?: string;
