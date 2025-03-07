@@ -5,10 +5,6 @@ import React from "react";
 
 type Action =
   | {
-      type: "updateAggregations";
-      aggregations: ApiResponseAggregation | undefined;
-    }
-  | {
       type: "updateConversation";
       conversation: SearchContextStore["conversation"];
     }
@@ -49,12 +45,6 @@ const SearchStateContext = React.createContext<
 
 function searchReducer(state: State, action: Action) {
   switch (action.type) {
-    case "updateAggregations": {
-      return {
-        ...state,
-        aggregations: action.aggregations,
-      };
-    }
     case "updateConversation": {
       return {
         ...state,
