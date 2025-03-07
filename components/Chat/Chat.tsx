@@ -12,12 +12,12 @@ import { v4 as uuidv4 } from "uuid";
 const Chat = () => {
   const { searchState, searchDispatch } = useSearchState();
 
-  const {
-    conversation: { body, ref },
-  } = searchState;
+  const { conversation } = searchState;
 
+  const ref = conversation.ref;
   /** get initial question  */
-  const initialQuestion = body.length > 0 && body[0].question;
+  const firstTurn = conversation.turns.length ? conversation.turns[0] : null;
+  const initialQuestion = firstTurn?.question ?? "";
 
   const [isStreaming, setIsStreaming] = useState(false);
 
@@ -30,13 +30,15 @@ const Chat = () => {
     searchDispatch({
       type: "updateConversation",
       conversation: {
-        body: [
+        ref: conversationRef,
+        turns: [
           {
             question: initialQuestion,
             answer: "",
+            aggregations: [],
+            works: [],
           },
         ],
-        ref: conversationRef,
       },
     });
   }, [initialQuestion]);
@@ -48,19 +50,21 @@ const Chat = () => {
       searchDispatch({
         type: "updateConversation",
         conversation: {
-          body: [
-            ...body,
+          ref,
+          turns: [
+            ...searchState["conversation"].turns,
             {
               question: value,
               answer: "",
+              aggregations: [],
+              works: [],
             },
           ],
-          ref,
         },
       });
   };
 
-  const handleResponseCallback = (content: any) => {
+  const handleResponseCallback = (_: any) => {
     setIsStreaming(false);
   };
 
@@ -75,18 +79,19 @@ const Chat = () => {
     <Container>
       <StyledChat
         data-conversation-initial={initialQuestion}
-        data-conversation-length={body.length}
+        // TODO: not sure what this represents
+        data-conversation-length={conversation.turns.length}
         data-conversation-ref={ref}
       >
-        {body
-          .filter((entry) => entry.question)
-          .map((entry, index) => {
+        {conversation.turns
+          .filter((turn) => turn.question)
+          .map((turn, index) => {
             return (
               <ChatResponse
                 conversationIndex={index}
                 conversationRef={ref}
                 key={index}
-                question={entry.question}
+                question={turn.question}
                 responseCallback={handleResponseCallback}
               />
             );

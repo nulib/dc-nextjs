@@ -1,8 +1,7 @@
-import { Article, SearchContextStore } from "@/types/context/search-context";
+import { SearchContextStore } from "@/types/context/search-context";
 
 import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
-import { Work } from "@nulib/dcapi-types";
 
 type Action =
   | {
@@ -11,10 +10,7 @@ type Action =
     }
   | {
       type: "updateConversation";
-      conversation: {
-        body: Article[];
-        ref: string;
-      };
+      conversation: SearchContextStore["conversation"];
     }
   | {
       type: "updatePanel";
@@ -35,10 +31,9 @@ type SearchProviderProps = {
 };
 
 const defaultState: SearchContextStore = {
-  aggregations: {},
   conversation: {
-    body: [],
     ref: undefined,
+    turns: [],
   },
   panel: {
     interstitial: undefined,

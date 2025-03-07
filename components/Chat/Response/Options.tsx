@@ -10,7 +10,7 @@ const ResponseOptions = ({
       data-testid="response-options"
       data-conversation-options-index={conversationIndex}
     >
-      <ChatFeedback />
+      <ChatFeedback conversationIndex={conversationIndex} />
     </footer>
   );
 };

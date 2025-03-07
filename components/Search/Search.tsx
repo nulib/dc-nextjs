@@ -70,13 +70,15 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     searchDispatch({
       type: "updateConversation",
       conversation: {
-        body: [
+        ref: "",
+        turns: [
           {
             question: searchValue,
             answer: "",
+            aggregations: [],
+            works: [],
           },
         ],
-        ref: "",
       },
     });
 

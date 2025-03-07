@@ -35,7 +35,7 @@ const defaultSubmittedState = {
   sentiment: "",
 };
 
-const ChatFeedback = () => {
+const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -44,9 +44,7 @@ const ChatFeedback = () => {
   const [isError, setIsError] = useState(false);
 
   const {
-    searchState: {
-      conversation: { body, ref },
-    },
+    searchState: { conversation },
   } = useSearchState();
 
   const { user } = useContext(UserContext);
@@ -60,10 +58,12 @@ const ChatFeedback = () => {
       email: "",
     },
     context: {
-      ref: String(ref),
-      question: body[0]?.question || "",
-      answer: body[0]?.answer || "",
-      source_documents: [],
+      ref: conversation.ref || "",
+      question: conversation.turns[conversationIndex].question || "",
+      answer: conversation.turns[conversationIndex].answer || "",
+      source_documents: conversation.turns[conversationIndex].works.map(
+        (w) => w.id, // TODO: is this the right value?
+      ) || [""],
     },
   };
 

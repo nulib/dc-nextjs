@@ -2,6 +2,7 @@ import {
   ApiResponseAggregation,
   ApiResponseFilteredAggregation,
 } from "@/types/api/response";
+import { Work } from "@nulib/dcapi-types";
 
 export type ActiveTab = "stream" | "results";
 
@@ -10,11 +11,15 @@ export interface Article {
   answer: string;
 }
 
+export interface Turn extends Article {
+  aggregations: (ApiResponseAggregation | ApiResponseFilteredAggregation)[];
+  works: Work[];
+}
+
 export interface SearchContextStore {
-  aggregations?: ApiResponseAggregation | ApiResponseFilteredAggregation;
   conversation: {
-    body: Article[];
     ref?: string;
+    turns: Turn[];
   };
   panel: {
     interstitial?: string;
