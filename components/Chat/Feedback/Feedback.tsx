@@ -12,7 +12,7 @@ import { UserContext } from "@/context/user-context";
 import { handleChatFeedbackRequest } from "@/lib/chat-helpers";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
-import { SearchContextStore } from "@/types/context/search-context";
+import type { SearchContextStore } from "@/types/context/search-context";
 
 type ChatFeedbackSentiment = "positive" | "negative" | "";
 
