@@ -1,6 +1,4 @@
 import { SearchContextStore } from "@/types/context/search-context";
-
-import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
 
 type Action =
@@ -29,6 +27,7 @@ type SearchProviderProps = {
 const defaultState: SearchContextStore = {
   conversation: {
     ref: undefined,
+    initialQuestion: "",
     turns: [],
   },
   panel: {

@@ -14,11 +14,14 @@ export interface Article {
 export interface Turn extends Article {
   aggregations: (ApiResponseAggregation | ApiResponseFilteredAggregation)[];
   works: Work[];
+  renderedContent?: React.JSX.Element;
 }
 
 export interface SearchContextStore {
   conversation: {
     ref?: string;
+    /** the question that kickstarts a conversation */
+    initialQuestion: string;
     turns: Turn[];
   };
   panel: {

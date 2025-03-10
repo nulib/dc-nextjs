@@ -100,13 +100,14 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
 
     setIsSubmitted({ ...isSubmitted, completed: true });
 
-    const response = await handleChatFeedbackRequest(payload);
-    response.err && handleError();
+    // const response = await handleChatFeedbackRequest(payload);
+    // response.err && handleError();
   }
 
   const handleSentimentSubmission = async (
     e: SyntheticEvent<HTMLButtonElement>,
   ) => {
+    debugger;
     const sentiment = e.currentTarget.value;
     if (!sentiment) return;
 
@@ -123,8 +124,8 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
       sentiment,
     };
 
-    const response = await handleChatFeedbackRequest(payload);
-    response.err && handleError();
+    // const response = await handleChatFeedbackRequest(payload);
+    // response.err && handleError();
   };
 
   function handleError() {

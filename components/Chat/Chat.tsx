@@ -8,6 +8,7 @@ import { StyledUnsubmitted } from "./Response/Response.styled";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
+import { Turn } from "@/types/context/search-context";
 
 const Chat = () => {
   const { searchState, searchDispatch } = useSearchState();
@@ -16,8 +17,7 @@ const Chat = () => {
 
   const ref = conversation.ref;
   /** get initial question  */
-  const firstTurn = conversation.turns.length ? conversation.turns[0] : null;
-  const initialQuestion = firstTurn?.question ?? "";
+  const initialQuestion = conversation.initialQuestion;
 
   const [isStreaming, setIsStreaming] = useState(false);
 
@@ -30,29 +30,23 @@ const Chat = () => {
     searchDispatch({
       type: "updateConversation",
       conversation: {
+        ...conversation,
         ref: conversationRef,
-        turns: [
-          {
-            question: initialQuestion,
-            answer: "",
-            aggregations: [],
-            works: [],
-          },
-        ],
       },
     });
   }, [initialQuestion]);
 
   const handleConversationCallback = (value: string) => {
+    debugger;
     setIsStreaming(true);
 
     if (ref && value)
       searchDispatch({
         type: "updateConversation",
         conversation: {
-          ref,
+          ...conversation,
           turns: [
-            ...searchState["conversation"].turns,
+            ...conversation.turns,
             {
               question: value,
               answer: "",
@@ -64,7 +58,7 @@ const Chat = () => {
       });
   };
 
-  const handleResponseCallback = (_: any) => {
+  const handleResponseCallback = () => {
     setIsStreaming(false);
   };
 
@@ -92,6 +86,7 @@ const Chat = () => {
                 conversationRef={ref}
                 key={index}
                 question={turn.question}
+                content={turn.renderedContent}
                 responseCallback={handleResponseCallback}
               />
             );
