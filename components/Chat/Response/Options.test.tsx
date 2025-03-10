@@ -1,16 +1,20 @@
 import { SearchProvider, useSearchState } from "@/context/search-context";
 import { render, screen } from "@testing-library/react";
+import type { SearchContextStore } from "@/types/context/search-context";
 
 import ResponseOptions from "@/components/Chat/Response/Options";
 
-const mockConversation = {
-  body: [
+const mockConversation: SearchContextStore["conversation"] = {
+  ref: "1234",
+  initialQuestion: "Do you have photos of Joan Baez in your collection?",
+  turns: [
     {
       question: "Do you have photos of Joan Baez in your collection?",
       answer: "",
+      aggregations: [],
+      works: [],
     },
   ],
-  ref: "1234",
 };
 
 const mockSearchDispatch = jest.fn();
@@ -49,8 +53,7 @@ describe("ResponseOptions", () => {
       searchState: { conversation },
     } = useSearchState();
 
-    //
-    expect(conversation.body[conversationIndex].question).toBe(
+    expect(conversation.turns[conversationIndex].question).toBe(
       "Do you have photos of Joan Baez in your collection?",
     );
   });

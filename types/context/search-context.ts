@@ -1,7 +1,5 @@
-import {
-  ApiResponseAggregation,
-  ApiResponseFilteredAggregation,
-} from "@/types/api/response";
+import { Work } from "@nulib/dcapi-types";
+import type { AggregationResultMessage } from "types/components/chat";
 
 export type ActiveTab = "stream" | "results";
 
@@ -10,11 +8,18 @@ export interface Article {
   answer: string;
 }
 
+export interface Turn extends Article {
+  aggregations: Omit<AggregationResultMessage, "type">["message"][];
+  works: Work[][];
+  renderedContent?: React.JSX.Element;
+}
+
 export interface SearchContextStore {
-  aggregations?: ApiResponseAggregation | ApiResponseFilteredAggregation;
   conversation: {
-    body: Article[];
     ref?: string;
+    /** the question that kickstarts a conversation */
+    initialQuestion: string;
+    turns: Turn[];
   };
   panel: {
     interstitial?: string;
