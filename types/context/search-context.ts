@@ -1,8 +1,5 @@
-import {
-  ApiResponseAggregation,
-  ApiResponseFilteredAggregation,
-} from "@/types/api/response";
 import { Work } from "@nulib/dcapi-types";
+import type { AggregationResultMessage } from "types/components/chat";
 
 export type ActiveTab = "stream" | "results";
 
@@ -12,8 +9,8 @@ export interface Article {
 }
 
 export interface Turn extends Article {
-  aggregations: (ApiResponseAggregation | ApiResponseFilteredAggregation)[];
-  works: Work[];
+  aggregations: Omit<AggregationResultMessage, "type">["message"][];
+  works: Work[][];
   renderedContent?: React.JSX.Element;
 }
 

@@ -37,7 +37,6 @@ const Chat = () => {
   }, [initialQuestion]);
 
   const handleConversationCallback = (value: string) => {
-    debugger;
     setIsStreaming(true);
 
     if (ref && value)

@@ -12,9 +12,24 @@ import { UserContext } from "@/context/user-context";
 import { handleChatFeedbackRequest } from "@/lib/chat-helpers";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
+import { SearchContextStore } from "@/types/context/search-context";
 
 type ChatFeedbackSentiment = "positive" | "negative" | "";
 
+type OmitRenderedContent<T> = Omit<T, "renderedContent">;
+type TurnWithoutRenderedContent = OmitRenderedContent<
+  SearchContextStore["conversation"]["turns"][0]
+>;
+type ConversationWithoutRenderedContent = Omit<
+  SearchContextStore["conversation"],
+  "turns"
+> & { turns: TurnWithoutRenderedContent[] };
+
+/**
+ * @remarks
+ *
+ * Conforms to the schema defined in [dc-api](https://github.com/nulib/dc-api-v2/blob/main/node/src/handlers/post-chat-feedback.js)
+ */
 type ChatFeedbackFormPayload = {
   sentiment: ChatFeedbackSentiment;
   feedback: {
@@ -22,12 +37,8 @@ type ChatFeedbackFormPayload = {
     text: string;
     email: string;
   };
-  context: {
-    ref: string;
-    question: string;
-    answer: string;
-    source_documents: string[];
-  };
+  timestamp: string;
+  context: ConversationWithoutRenderedContent;
 };
 
 const defaultSubmittedState = {
@@ -35,7 +46,7 @@ const defaultSubmittedState = {
   sentiment: "",
 };
 
-const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
+const ChatFeedback = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -57,13 +68,14 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
       text: "",
       email: "",
     },
+    timestamp: new Date().toISOString(),
     context: {
-      ref: conversation.ref || "",
-      question: conversation.turns[conversationIndex].question || "",
-      answer: conversation.turns[conversationIndex].answer || "",
-      source_documents: conversation.turns[conversationIndex].works.map(
-        (w) => w.id, // TODO: is this the right value?
-      ) || [""],
+      ref: conversation.ref,
+      initialQuestion: conversation.initialQuestion,
+      turns: conversation.turns.map((t) => {
+        const { renderedContent, ...rest } = t;
+        return rest;
+      }),
     },
   };
 
@@ -100,14 +112,13 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
 
     setIsSubmitted({ ...isSubmitted, completed: true });
 
-    // const response = await handleChatFeedbackRequest(payload);
-    // response.err && handleError();
+    const response = await handleChatFeedbackRequest(payload);
+    response.err && handleError();
   }
 
   const handleSentimentSubmission = async (
     e: SyntheticEvent<HTMLButtonElement>,
   ) => {
-    debugger;
     const sentiment = e.currentTarget.value;
     if (!sentiment) return;
 
@@ -124,8 +135,8 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
       sentiment,
     };
 
-    // const response = await handleChatFeedbackRequest(payload);
-    // response.err && handleError();
+    const response = await handleChatFeedbackRequest(payload);
+    response.err && handleError();
   };
 
   function handleError() {

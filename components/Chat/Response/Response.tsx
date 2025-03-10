@@ -94,7 +94,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseImages works={message.message} />
         </>
       ));
-      setTurnWorks(turnWorks.concat(message.message));
+      setTurnWorks([...turnWorks, message.message]);
     }
 
     if (type === "aggregation_result") {
@@ -105,13 +105,14 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         </>
       ));
       // TODO: this is not correct, the types are all wrong
-      setTurnAggregations(turnAggregations.concat([]));
+      var foo = message.message;
+      setTurnAggregations([...turnAggregations, message.message]);
     }
 
     /**
      * Final message is the last message in the response
      * and is used to trigger the responseCallback
-     * to store this response.
+     * and store this response to the conversation.
      */
     if (type === "final_message") {
       setIsStreamingComplete(true);
@@ -130,7 +131,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         type: "updateConversation",
         conversation: {
           ...searchState.conversation,
-          turns: [...turns],
+          turns,
         },
       });
 
@@ -151,35 +152,31 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     setRenderedMessage(undefined);
   }
 
-  function contentWrapper(content: React.JSX.Element) {
-    return (
-      <StyledResponse
-        data-index={conversationIndex}
-        data-ref={conversationRef}
-        data-question={question}
-      >
-        <StyledQuestion>{question}</StyledQuestion>
-        <div data-testid="response-content">{content}</div>
-      </StyledResponse>
-    );
-  }
-
-  if (content) {
-    return contentWrapper(content);
-  }
-
-  return contentWrapper(
-    <>
-      {renderedMessage}
-      {streamedMessage && (
-        <ResponseMarkdown content={streamedMessage} messageType="token" />
-      )}
-      {isStreamingComplete ? (
-        <ResponseOptions conversationIndex={conversationIndex} />
-      ) : (
-        <BouncingLoader />
-      )}
-    </>,
+  return (
+    <StyledResponse
+      data-index={conversationIndex}
+      data-ref={conversationRef}
+      data-question={question}
+    >
+      <StyledQuestion>{question}</StyledQuestion>
+      <div data-testid="response-content">
+        {content ? (
+          content
+        ) : (
+          <>
+            {renderedMessage}
+            {streamedMessage && (
+              <ResponseMarkdown content={streamedMessage} messageType="token" />
+            )}
+          </>
+        )}
+        {isStreamingComplete ? (
+          <ResponseOptions conversationIndex={conversationIndex} />
+        ) : (
+          <BouncingLoader />
+        )}
+      </div>
+    </StyledResponse>
   );
 };
 
