@@ -60,6 +60,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       open: false,
       renderAbout: false,
       renderToggle: false,
+      defaultTab: "manifest-annotations",
     },
     openSeadragon: {
       gestureSettingsMouse: {
