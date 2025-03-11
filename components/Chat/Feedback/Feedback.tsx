@@ -12,9 +12,24 @@ import { UserContext } from "@/context/user-context";
 import { handleChatFeedbackRequest } from "@/lib/chat-helpers";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
+import type { SearchContextStore } from "@/types/context/search-context";
 
 type ChatFeedbackSentiment = "positive" | "negative" | "";
 
+type OmitRenderedContent<T> = Omit<T, "renderedContent">;
+type TurnWithoutRenderedContent = OmitRenderedContent<
+  SearchContextStore["conversation"]["turns"][0]
+>;
+type ConversationWithoutRenderedContent = Omit<
+  SearchContextStore["conversation"],
+  "turns"
+> & { turns: TurnWithoutRenderedContent[] };
+
+/**
+ * @remarks
+ *
+ * Conforms to the schema defined in [dc-api](https://github.com/nulib/dc-api-v2/blob/main/node/src/handlers/post-chat-feedback.js)
+ */
 type ChatFeedbackFormPayload = {
   sentiment: ChatFeedbackSentiment;
   feedback: {
@@ -22,12 +37,8 @@ type ChatFeedbackFormPayload = {
     text: string;
     email: string;
   };
-  context: {
-    ref: string;
-    question: string;
-    answer: string;
-    source_documents: string[];
-  };
+  timestamp: string;
+  context: ConversationWithoutRenderedContent;
 };
 
 const defaultSubmittedState = {
@@ -44,9 +55,7 @@ const ChatFeedback = () => {
   const [isError, setIsError] = useState(false);
 
   const {
-    searchState: {
-      conversation: { body, ref },
-    },
+    searchState: { conversation },
   } = useSearchState();
 
   const { user } = useContext(UserContext);
@@ -59,11 +68,14 @@ const ChatFeedback = () => {
       text: "",
       email: "",
     },
+    timestamp: new Date().toISOString(),
     context: {
-      ref: String(ref),
-      question: body[0]?.question || "",
-      answer: body[0]?.answer || "",
-      source_documents: [],
+      ref: conversation.ref,
+      initialQuestion: conversation.initialQuestion,
+      turns: conversation.turns.map((t) => {
+        const { renderedContent, ...rest } = t;
+        return rest;
+      }),
     },
   };
 
