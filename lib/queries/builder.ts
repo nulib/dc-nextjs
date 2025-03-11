@@ -39,8 +39,6 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const must: QueryDslQueryContainer[] = [];
   let queryValue;
 
-  console.log({ aggs });
-
   // Build the "must" part of the query
   if (term) must.push(buildSearchPart(term));
 

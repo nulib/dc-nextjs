@@ -105,8 +105,6 @@ describe("buildAggs function", () => {
 
     const response = aggs.buildAggs(facets, facetFilterValue, userFacets);
 
-    console.log(JSON.stringify(response));
-
     expect(response).toEqual({
       subject: {
         filter: { bool: { must: [] } },
