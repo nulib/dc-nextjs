@@ -38,6 +38,9 @@ type ChatFeedbackFormPayload = {
     email: string;
   };
   timestamp: string;
+  /** An id which serves as the file name in S3 */
+  id: `${string}::${number}`;
+  conversationIndex: number;
   context: ConversationWithoutRenderedContent;
 };
 
@@ -46,7 +49,7 @@ const defaultSubmittedState = {
   sentiment: "",
 };
 
-const ChatFeedback = () => {
+const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -61,6 +64,7 @@ const ChatFeedback = () => {
   const { user } = useContext(UserContext);
   const userEmail = user?.email || "";
 
+  const submittedTime = new Date().toISOString();
   const initialPayload: ChatFeedbackFormPayload = {
     sentiment: "",
     feedback: {
@@ -68,7 +72,9 @@ const ChatFeedback = () => {
       text: "",
       email: "",
     },
-    timestamp: new Date().toISOString(),
+    timestamp: submittedTime,
+    id: `${conversation?.ref ?? submittedTime}::${conversationIndex}`,
+    conversationIndex: conversationIndex,
     context: {
       ref: conversation.ref,
       initialQuestion: conversation.initialQuestion,
