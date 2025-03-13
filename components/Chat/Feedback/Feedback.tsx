@@ -39,7 +39,7 @@ type ChatFeedbackFormPayload = {
   };
   timestamp: string;
   ref: SearchContextStore["conversation"]["ref"];
-  conversationIndex: number;
+  refIndex: number;
   context: ConversationWithoutRenderedContent;
 };
 
@@ -72,7 +72,7 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
     },
     timestamp: new Date().toISOString(),
     ref: conversation.ref,
-    conversationIndex: conversationIndex,
+    refIndex: conversationIndex,
     context: {
       ref: conversation.ref,
       initialQuestion: conversation.initialQuestion,
