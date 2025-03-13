@@ -38,6 +38,8 @@ type ChatFeedbackFormPayload = {
     email: string;
   };
   timestamp: string;
+  ref: SearchContextStore["conversation"]["ref"];
+  refIndex: number;
   context: ConversationWithoutRenderedContent;
 };
 
@@ -46,7 +48,7 @@ const defaultSubmittedState = {
   sentiment: "",
 };
 
-const ChatFeedback = () => {
+const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -69,6 +71,8 @@ const ChatFeedback = () => {
       email: "",
     },
     timestamp: new Date().toISOString(),
+    ref: conversation.ref,
+    refIndex: conversationIndex,
     context: {
       ref: conversation.ref,
       initialQuestion: conversation.initialQuestion,
@@ -80,6 +84,11 @@ const ChatFeedback = () => {
   };
 
   async function handleSubmit() {
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
+
     const formData = formRef.current?.elements || [];
     const payload = { ...initialPayload };
 
@@ -121,6 +130,11 @@ const ChatFeedback = () => {
   ) => {
     const sentiment = e.currentTarget.value;
     if (!sentiment) return;
+
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
 
     if (sentiment === "negative") setIsExpanded(true);
 
