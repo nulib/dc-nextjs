@@ -38,8 +38,7 @@ type ChatFeedbackFormPayload = {
     email: string;
   };
   timestamp: string;
-  /** An id which serves as the file name in S3 */
-  id: `${string}::${number}`;
+  ref: SearchContextStore["conversation"]["ref"];
   conversationIndex: number;
   context: ConversationWithoutRenderedContent;
 };
@@ -64,7 +63,6 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   const { user } = useContext(UserContext);
   const userEmail = user?.email || "";
 
-  const submittedTime = new Date().toISOString();
   const initialPayload: ChatFeedbackFormPayload = {
     sentiment: "",
     feedback: {
@@ -72,8 +70,8 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
       text: "",
       email: "",
     },
-    timestamp: submittedTime,
-    id: `${conversation?.ref ?? submittedTime}::${conversationIndex}`,
+    timestamp: new Date().toISOString(),
+    ref: conversation.ref,
     conversationIndex: conversationIndex,
     context: {
       ref: conversation.ref,
@@ -86,6 +84,11 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   };
 
   async function handleSubmit() {
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
+
     const formData = formRef.current?.elements || [];
     const payload = { ...initialPayload };
 
@@ -127,6 +130,11 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   ) => {
     const sentiment = e.currentTarget.value;
     if (!sentiment) return;
+
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
 
     if (sentiment === "negative") setIsExpanded(true);
 
