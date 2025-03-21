@@ -104,7 +104,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseAggregations message={message.message} />
         </>
       ));
-      var foo = message.message;
+
       setTurnAggregations([...turnAggregations, message.message]);
     }
 
