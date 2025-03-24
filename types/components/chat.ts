@@ -69,6 +69,10 @@ export type ToolStartMessage = {
     | {
         tool: "aggregate";
         input: { agg_field: string; term_field: string; term: string };
+      }
+    | {
+        tool: "retrieve_documents";
+        input: { doc_ids: string[] };
       };
 };
 

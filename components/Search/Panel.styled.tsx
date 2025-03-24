@@ -8,7 +8,7 @@ const SearchResultsLabel = styled(StyledInterstitial, {
   justifyContent: "space-between",
   width: "100%",
 
-  div: {
+  "> div": {
     display: "flex",
     alignItems: "center",
     gap: "$gr2",
