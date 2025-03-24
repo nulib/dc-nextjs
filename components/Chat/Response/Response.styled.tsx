@@ -18,7 +18,7 @@ const StyledResponse = styled("article", {
   zIndex: "0",
   marginBottom: "$gr4",
 
-  "> div": {
+  "> div:not(.response-images)": {
     display: "flex",
     flexDirection: "column",
     gap: "$gr3",

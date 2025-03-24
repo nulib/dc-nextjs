@@ -83,6 +83,10 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
     case "discover_fields":
       text = `Discovering`;
       break;
+    case "retrieve_documents":
+      const docCount = input.doc_ids.length;
+      text = `Retrieving ${docCount} document${docCount > 1 ? "s" : ""}`;
+      break;
     case "search":
       text = `Searching for <strong>${input.query}</strong>`;
       action = input.query;
