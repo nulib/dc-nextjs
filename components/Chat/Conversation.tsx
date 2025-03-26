@@ -6,6 +6,7 @@ import {
 import { useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 interface ChatConversationProps {
   conversationCallback: (message: string) => void;
@@ -17,11 +18,16 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
   isStreaming,
 }) => {
   const router = useRouter();
+  const {
+    searchState: { conversation },
+  } = useSearchState();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const textareaPlaceholder = "Ask a followup question";
+  const textareaPlaceholder = conversation.latestDocs
+    ? "Ask about these documents"
+    : "Ask a followup question";
 
   const handleScroll = () => {
     // handle scrolling

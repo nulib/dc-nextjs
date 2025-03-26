@@ -147,6 +147,7 @@ const StyledResponseWrapper = styled("div", {
 const StyledTabsContent = styled(TabsContent, {
   display: "grid",
   overflowX: "hidden",
+  overflowY: "clip",
   gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
 
   ">*:first-child": {
@@ -156,6 +157,7 @@ const StyledTabsContent = styled(TabsContent, {
   },
 
   ">*:nth-child(2)": {
+    minHeight: 0,
     gridColumn: "1 / 4",
     gridRow: "1",
     width: "100%",

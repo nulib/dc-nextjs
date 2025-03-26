@@ -15,11 +15,13 @@ import useChatSocket from "@/hooks/useChatSocket";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
 import type { Turn } from "@/types/context/search-context";
+import InterstitialDocuments from "./InterstitialDocuments";
 
 interface ChatResponseProps {
   conversationIndex: number;
   conversationRef?: string;
   question: string;
+  userDocs: Turn["userDocs"];
   content?: React.JSX.Element;
   responseCallback?: (response?: any) => void;
 }
@@ -28,6 +30,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   conversationIndex,
   conversationRef,
   question,
+  userDocs,
   content,
   responseCallback,
 }) => {
@@ -45,6 +48,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         question,
         authToken,
         conversationRef,
+        userDocs,
       );
       sendMessage(preparedQuestion);
     }
@@ -104,7 +108,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseAggregations message={message.message} />
         </>
       ));
-      var foo = message.message;
+
       setTurnAggregations([...turnAggregations, message.message]);
     }
 
@@ -158,6 +162,9 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       data-question={question}
     >
       <StyledQuestion>{question}</StyledQuestion>
+      {userDocs && userDocs.length > 0 && (
+        <InterstitialDocuments documents={userDocs} canRemove={false} />
+      )}
       <div data-testid="response-content">
         {content ? (
           content

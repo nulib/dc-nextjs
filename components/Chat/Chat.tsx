@@ -8,7 +8,7 @@ import { StyledUnsubmitted } from "./Response/Response.styled";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
-import { Turn } from "@/types/context/search-context";
+import InterstitialDocuments from "./Response/InterstitialDocuments";
 
 const Chat = () => {
   const { searchState, searchDispatch } = useSearchState();
@@ -39,7 +39,7 @@ const Chat = () => {
   const handleConversationCallback = (value: string) => {
     setIsStreaming(true);
 
-    if (ref && value)
+    if (ref && value) {
       searchDispatch({
         type: "updateConversation",
         conversation: {
@@ -48,13 +48,22 @@ const Chat = () => {
             ...conversation.turns,
             {
               question: value,
+              userDocs: conversation.latestDocs
+                ? conversation.latestDocs
+                : undefined,
               answer: "",
               aggregations: [],
               works: [],
             },
           ],
+          // if the user is using faceted docs in a question
+          // reset the latest docs
+          latestDocs: conversation.latestDocs
+            ? undefined
+            : conversation.latestDocs,
         },
       });
+    }
   };
 
   const handleResponseCallback = () => {
@@ -85,10 +94,17 @@ const Chat = () => {
                 key={index}
                 question={turn.question}
                 content={turn.renderedContent}
+                userDocs={turn.userDocs}
                 responseCallback={handleResponseCallback}
               />
             );
           })}
+        {conversation.latestDocs && conversation.latestDocs.length > 0 && (
+          <InterstitialDocuments
+            documents={conversation.latestDocs}
+            canRemove={true}
+          />
+        )}
         <ChatConversation
           conversationCallback={handleConversationCallback}
           isStreaming={isStreaming}

@@ -87,6 +87,7 @@ const StyledOptions = styled("div", {
     flexGrow: "0",
     flexShrink: "1",
     height: "unset",
+    margin: "0",
 
     "@sm": {
       backgroundColor: "transparent",

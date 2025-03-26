@@ -1,5 +1,10 @@
 import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
+  CheckboxIndicator,
+  CheckboxRoot as CheckboxRootStyled,
+} from "@/components/Shared/Checkbox.styled";
+import { IconCheck } from "@/components/Shared/SVG/Icons";
+import {
   SearchResultsLabel,
   StyledBackButton,
   StyledSearchPanel,
@@ -32,9 +37,11 @@ const defaultSearchResultsState: SearchResultsState = {
 const SearchPanel = () => {
   const router = useRouter();
   const { searchState, searchDispatch } = useSearchState();
+  const [useFacetedDocs, setUseFacetedDocs] = useState(true);
 
   const {
     panel: { open, query, interstitial },
+    conversation,
   } = searchState;
 
   const urlFacets = parseUrlFacets(router.query);
@@ -112,12 +119,24 @@ const SearchPanel = () => {
       })
       .then(() => (isNavigatingBack.current = false));
 
+    const docs = searchResults.data?.data;
+    if (useFacetedDocs && docs) {
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          ...conversation,
+          //@ts-ignore - docs is a Partial<Work>[], but latestDocs expects a Work[]
+          latestDocs: docs.slice(0, 20),
+        },
+      });
+    }
+
     searchDispatch({
       type: "updatePanel",
       panel: {
         open: false,
         query: undefined,
-        interstitial,
+        interstitial: useFacetedDocs ? "latestdocs" : interstitial,
       },
     });
   };
@@ -138,9 +157,32 @@ const SearchPanel = () => {
             />
             {query && (
               <SearchResultsLabel>
-                <StyledBackButton onClick={handleBack}>
-                  <IconArrowBack /> Back to conversation
-                </StyledBackButton>
+                <div>
+                  <StyledBackButton onClick={handleBack}>
+                    <IconArrowBack /> Back to conversation
+                  </StyledBackButton>
+                  {Boolean(Object.keys(urlFacets).length) && (
+                    <div style={{ display: "flex" }}>
+                      <CheckboxRootStyled
+                        checked={useFacetedDocs}
+                        id="useFacetedDocs"
+                        onCheckedChange={() =>
+                          setUseFacetedDocs(!useFacetedDocs)
+                        }
+                      >
+                        <CheckboxIndicator>
+                          <IconCheck />
+                        </CheckboxIndicator>
+                      </CheckboxRootStyled>
+                      <label
+                        htmlFor="use-faceted-docs"
+                        data-selected={useFacetedDocs}
+                      >
+                        Add results to conversation
+                      </label>
+                    </div>
+                  )}
+                </div>
 
                 <div>
                   <StyledInterstitialIcon>
