@@ -3,12 +3,14 @@ import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
+import type { CheckboxProps } from "@radix-ui/react-checkbox";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import {
   SearchResultsLabel,
   StyledBackButton,
   StyledSearchPanel,
   StyledSearchPanelContent,
+  StyledIncludeResults,
 } from "./Panel.styled";
 import { useEffect, useState, useRef } from "react";
 
@@ -27,6 +29,7 @@ import { buildQuery } from "@/lib/queries/builder";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
+import Stack from "../Chat/Stack/Stack";
 
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
@@ -35,12 +38,13 @@ const defaultSearchResultsState: SearchResultsState = {
 };
 
 const SearchPanel = () => {
+  const [useDocsAsContext, setUseDocsAsContext] = useState(false);
+  const didUrlFacetsChange = useRef(false);
   const router = useRouter();
   const { searchState, searchDispatch } = useSearchState();
-  const [useFacetedDocs, setUseFacetedDocs] = useState(true);
 
   const {
-    panel: { open, query, interstitial },
+    panel: { open, query },
     conversation,
   } = searchState;
 
@@ -105,6 +109,44 @@ const SearchPanel = () => {
     })();
   }, [open, query, page, JSON.stringify(urlFacets)]);
 
+  useEffect(() => {
+    // whenever there are search results, add them to the conversation context
+    searchDispatch({
+      type: "updateConversation",
+      conversation: {
+        ...conversation,
+        context: {
+          // @ts-ignore - data is a Partial<Work>[], but works expects a Work[]
+          works: searchResults.data?.data.slice(0, 20),
+          query: query || "",
+          facets: urlFacets,
+        },
+      },
+    });
+  }, [searchResults]);
+
+  useEffect(() => {
+    // if this is the first time the url facets are being set, set the useDocsAsContext to true
+    // causing the checkbox to be checked
+    if (!didUrlFacetsChange.current && Boolean(Object.keys(urlFacets).length)) {
+      didUrlFacetsChange.current = true;
+      setUseDocsAsContext(true);
+      return;
+    }
+
+    // if the url facets are empty and the checkbox is checked, set the useDocsAsContext to false
+    // causing the checkbox to be unchecked
+    if (didUrlFacetsChange.current && !Boolean(Object.keys(urlFacets).length)) {
+      didUrlFacetsChange.current = false;
+      setUseDocsAsContext(false);
+      return;
+    }
+  }, [urlFacets]);
+
+  const handleCheckChange = (e: CheckboxProps["checked"]) => {
+    setUseDocsAsContext(e?.valueOf() ? true : false);
+  };
+
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key === "Escape") handleBack();
   };
@@ -119,26 +161,23 @@ const SearchPanel = () => {
       })
       .then(() => (isNavigatingBack.current = false));
 
-    const docs = searchResults.data?.data;
-    if (useFacetedDocs && docs) {
-      searchDispatch({
-        type: "updateConversation",
-        conversation: {
-          ...conversation,
-          //@ts-ignore - docs is a Partial<Work>[], but latestDocs expects a Work[]
-          latestDocs: docs.slice(0, 20),
-        },
-      });
-    }
-
     searchDispatch({
       type: "updatePanel",
       panel: {
         open: false,
         query: undefined,
-        interstitial: useFacetedDocs ? "latestdocs" : interstitial,
       },
     });
+
+    if (!useDocsAsContext) {
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          ...conversation,
+          context: undefined,
+        },
+      });
+    }
   };
 
   return (
@@ -158,32 +197,38 @@ const SearchPanel = () => {
             {query && (
               <SearchResultsLabel>
                 <div>
-                  <StyledBackButton onClick={handleBack}>
-                    <IconArrowBack /> Back to conversation
-                  </StyledBackButton>
-                  {Boolean(Object.keys(urlFacets).length) && (
-                    <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <StyledBackButton onClick={handleBack}>
+                      <IconArrowBack /> Back to conversation
+                    </StyledBackButton>
+                    <StyledIncludeResults>
                       <CheckboxRootStyled
-                        checked={useFacetedDocs}
-                        id="useFacetedDocs"
-                        onCheckedChange={() =>
-                          setUseFacetedDocs(!useFacetedDocs)
-                        }
+                        id="useDocsAsContext"
+                        checked={useDocsAsContext}
+                        onCheckedChange={(e) => handleCheckChange(e)}
                       >
                         <CheckboxIndicator>
                           <IconCheck />
                         </CheckboxIndicator>
                       </CheckboxRootStyled>
-                      <label
-                        htmlFor="use-faceted-docs"
-                        data-selected={useFacetedDocs}
-                      >
-                        Add results to conversation
+                      <label htmlFor="useDocsAsContext">
+                        Chat about results
                       </label>
-                    </div>
-                  )}
+                    </StyledIncludeResults>
+                  </div>
+                  {conversation.context?.works &&
+                    conversation.context.works.length > 0 && (
+                      <Stack
+                        context={conversation.context}
+                        isDismissable={false}
+                      />
+                    )}
                 </div>
-
                 <div>
                   <StyledInterstitialIcon>
                     <IconSparkles />

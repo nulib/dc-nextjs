@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
+import Stack from "./Stack/Stack";
 
 interface ChatConversationProps {
   conversationCallback: (message: string) => void;
@@ -20,14 +21,13 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
   const router = useRouter();
   const {
     searchState: { conversation },
+    searchDispatch,
   } = useSearchState();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const textareaPlaceholder = conversation.latestDocs
-    ? "Ask about these documents"
-    : "Ask a followup question";
+  const textareaPlaceholder = "Ask a followup question";
 
   const handleScroll = () => {
     // handle scrolling
@@ -67,6 +67,16 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     formRef.current!.dataset.isFocused = isFocused;
   };
 
+  const handleStackDismiss = () => {
+    searchDispatch({
+      type: "updateConversation",
+      conversation: {
+        ...conversation,
+        context: undefined,
+      },
+    });
+  };
+
   const handleClearConversation = () => {
     const textarea = document.getElementById(
       "dc-search",
@@ -98,6 +108,14 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
           onFocus={handleFocus}
           onBlur={handleFocus}
         ></textarea>
+        {conversation.context?.works &&
+          conversation.context.works.length > 0 && (
+            <Stack
+              context={conversation.context}
+              isDismissable
+              dismissCallback={handleStackDismiss}
+            />
+          )}
         <button type="submit" disabled={isStreaming}>
           {isStreaming ? (
             <>

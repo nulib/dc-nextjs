@@ -8,11 +8,17 @@ export interface Article {
   answer: string;
 }
 
+export interface ChatContext {
+  works: Work[];
+  query: string;
+  facets: UserFacets;
+}
+
 export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
   works: Work[][];
   /** Docs users can send along in addition to a question */
-  userDocs?: Work[];
+  context?: ChatContext;
   renderedContent?: React.JSX.Element;
 }
 
@@ -21,8 +27,7 @@ export interface SearchContextStore {
     ref?: string;
     /** the question that kickstarts a conversation */
     initialQuestion: string;
-    /** Docs user adds to context, but not asked a question about */
-    latestDocs?: Work[];
+    context?: ChatContext;
     turns: Turn[];
   };
   panel: {

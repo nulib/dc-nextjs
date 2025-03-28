@@ -86,6 +86,9 @@ const StyledQuestion = styled("header", {
   alignSelf: "flex-end",
   borderRadius: "1rem",
   background: "$purple10",
+  display: "flex",
+  alignItems: "center",
+  gap: "$gr2",
 });
 
 const StyledResponseMarkdown = styled("div", {

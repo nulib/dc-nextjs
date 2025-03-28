@@ -1,13 +1,10 @@
 import { act, render, screen } from "@/test-utils";
 
 import ChatResponse from "./Response";
-import exp from "constants";
 import { sampleWork1 } from "@/mocks/sample-work1";
 import { sampleWork2 } from "@/mocks/sample-work2";
 import useChatSocket from "@/hooks/useChatSocket";
 import { useState } from "react";
-import { work1 } from "@/mocks/work-page/work1";
-import { workManifest1 } from "@/mocks/work-page/work-manifest1";
 
 const mockSendMessage = jest.fn();
 
@@ -44,7 +41,11 @@ describe("ChatResponse component", () => {
 
   it("renders default state", () => {
     render(
-      <ChatResponse question={question} conversationRef={conversationRef} />,
+      <ChatResponse
+        question={question}
+        conversationIndex={0}
+        conversationRef={conversationRef}
+      />,
     );
 
     const article = screen.getByRole("article");
@@ -77,7 +78,11 @@ describe("ChatResponse component", () => {
     });
 
     render(
-      <ChatResponse question={question} conversationRef={conversationRef} />,
+      <ChatResponse
+        question={question}
+        conversationIndex={0}
+        conversationRef={conversationRef}
+      />,
     );
 
     const content = screen.getByTestId("response-content");
@@ -130,7 +135,11 @@ describe("ChatResponse component", () => {
     });
 
     render(
-      <ChatResponse question={question} conversationRef={conversationRef} />,
+      <ChatResponse
+        question={question}
+        conversationIndex={0}
+        conversationRef={conversationRef}
+      />,
     );
 
     const content = screen.getByTestId("response-content");
@@ -179,7 +188,11 @@ describe("ChatResponse component", () => {
     });
 
     render(
-      <ChatResponse question={question} conversationRef={conversationRef} />,
+      <ChatResponse
+        question={question}
+        conversationIndex={0}
+        conversationRef={conversationRef}
+      />,
     );
 
     const content = screen.getByTestId("response-content");
@@ -233,7 +246,11 @@ describe("ChatResponse component", () => {
     });
 
     render(
-      <ChatResponse question={question} conversationRef={conversationRef} />,
+      <ChatResponse
+        question={question}
+        conversationIndex={0}
+        conversationRef={conversationRef}
+      />,
     );
 
     const content = screen.getByTestId("response-content");
