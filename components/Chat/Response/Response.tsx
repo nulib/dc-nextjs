@@ -15,13 +15,13 @@ import useChatSocket from "@/hooks/useChatSocket";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
 import type { Turn } from "@/types/context/search-context";
-import InterstitialDocuments from "./InterstitialDocuments";
+import Stack from "../Stack/Stack";
 
 interface ChatResponseProps {
   conversationIndex: number;
   conversationRef?: string;
   question: string;
-  userDocs: Turn["userDocs"];
+  context?: Turn["context"];
   content?: React.JSX.Element;
   responseCallback?: (response?: any) => void;
 }
@@ -30,7 +30,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   conversationIndex,
   conversationRef,
   question,
-  userDocs,
+  context,
   content,
   responseCallback,
 }) => {
@@ -48,7 +48,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         question,
         authToken,
         conversationRef,
-        userDocs,
+        context?.works,
       );
       sendMessage(preparedQuestion);
     }
@@ -161,10 +161,12 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       data-ref={conversationRef}
       data-question={question}
     >
-      <StyledQuestion>{question}</StyledQuestion>
-      {userDocs && userDocs.length > 0 && (
-        <InterstitialDocuments documents={userDocs} canRemove={false} />
-      )}
+      <StyledQuestion>
+        {question}
+        {context?.works && context.works.length > 0 && (
+          <Stack context={context} isDismissable={false} />
+        )}
+      </StyledQuestion>
       <div data-testid="response-content">
         {content ? (
           content

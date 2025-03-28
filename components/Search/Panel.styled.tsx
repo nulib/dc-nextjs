@@ -4,6 +4,7 @@ import { styled } from "@/stitches.config";
 
 const SearchResultsLabel = styled(StyledInterstitial, {
   marginBottom: "$gr4",
+  alignItems: "baseline",
   textAlign: "center",
   justifyContent: "space-between",
   width: "100%",
@@ -13,11 +14,16 @@ const SearchResultsLabel = styled(StyledInterstitial, {
     alignItems: "center",
     gap: "$gr2",
   },
+
+  "@sm": {
+    flexDirection: "column",
+    alignItems: "center",
+  },
 });
 
 const StyledBackButton = styled("button", {
   display: "inline-flex",
-  padding: "0 $gr2",
+  padding: "0",
   height: "38px",
   alignItems: "center",
   gap: "$gr1",
@@ -83,9 +89,23 @@ const StyledSearchPanelContent = styled("div", {
   background: "white",
 });
 
+const StyledIncludeResults = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  fontSize: "$gr2",
+  color: "$black50",
+  cursor: "pointer",
+  paddingInlineStart: "calc(1rem + $gr1)",
+
+  input: {
+    margin: "0",
+  },
+});
+
 export {
   StyledSearchPanel,
   StyledSearchPanelContent,
   SearchResultsLabel,
   StyledBackButton,
+  StyledIncludeResults,
 };

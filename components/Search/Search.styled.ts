@@ -146,9 +146,19 @@ const StyledResponseWrapper = styled("div", {
 
 const StyledTabsContent = styled(TabsContent, {
   display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
+
+  // The overflow-x ensures that when the conversation panel is longer than the SearchPanel,
+  // the conversation panel will not be longer than the SearchPanel.
   overflowX: "hidden",
   overflowY: "clip",
-  gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
+
+  // The overflow-x inadvertently casuses the span in the UserFacets which displays the number of selected facets
+  // to be cut off.
+  // Setting the padding at the top and then a negative margin ensures the number is visible,
+  // while also keep visual consistency with the non-AI search results
+  paddingBlockStart: "$gr3",
+  marginBlockStart: "-$gr3",
 
   ">*:first-child": {
     gridColumn: "2 / 3",

@@ -241,7 +241,7 @@ const SearchPage: NextPage = () => {
               />
             )}
 
-            <StyledTabsContent value="stream">
+            <StyledTabsContent value="stream" id="foo">
               <div
                 style={{
                   transition: "all 382ms ease-in-out",

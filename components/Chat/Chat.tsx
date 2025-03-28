@@ -8,7 +8,6 @@ import { StyledUnsubmitted } from "./Response/Response.styled";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
-import InterstitialDocuments from "./Response/InterstitialDocuments";
 
 const Chat = () => {
   const { searchState, searchDispatch } = useSearchState();
@@ -48,19 +47,13 @@ const Chat = () => {
             ...conversation.turns,
             {
               question: value,
-              userDocs: conversation.latestDocs
-                ? conversation.latestDocs
-                : undefined,
+              context: conversation.context, // move the chat context to the next turn
               answer: "",
               aggregations: [],
               works: [],
             },
           ],
-          // if the user is using faceted docs in a question
-          // reset the latest docs
-          latestDocs: conversation.latestDocs
-            ? undefined
-            : conversation.latestDocs,
+          context: undefined, // clear chat context on new question
         },
       });
     }
@@ -94,17 +87,11 @@ const Chat = () => {
                 key={index}
                 question={turn.question}
                 content={turn.renderedContent}
-                userDocs={turn.userDocs}
+                context={turn.context}
                 responseCallback={handleResponseCallback}
               />
             );
           })}
-        {conversation.latestDocs && conversation.latestDocs.length > 0 && (
-          <InterstitialDocuments
-            documents={conversation.latestDocs}
-            canRemove={true}
-          />
-        )}
         <ChatConversation
           conversationCallback={handleConversationCallback}
           isStreaming={isStreaming}
