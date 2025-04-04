@@ -1,19 +1,23 @@
 import { IconStyled } from "../Shared/Icon";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
 import { styled } from "@/stitches.config";
+import { timingFunction } from "@/styles/transitions";
+import { keyframes } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
+
+const slideInFromRight = keyframes({
+  "0%": { transform: "translateX(100vw)" },
+  "100%": { transform: "translateX0)" },
+});
 
 const StyledOptionsBar = styled("div", {
   display: "flex",
   justifyContent: "space-between",
-  position: "relative",
-  left: "0",
-  transition: "$dcScrollLeft",
-  zIndex: "1",
   gap: "$gr3",
   flexWrap: "wrap",
   alignItems: "center",
+  animation: `${slideInFromRight} 1s ${timingFunction};`,
 
   "@md": {
     gap: "$gr2",
@@ -65,69 +69,9 @@ const StyledOptionsExtras = styled("div", {
   },
 });
 
-const StyledOptionsTabs = styled("div", {
-  [`div[role="tablist"]`]: {
-    display: "flex",
-    flexWrap: "nowrap",
-    height: "38px",
-    borderRadius: "50px",
-    overflow: "hidden",
-
-    button: {
-      cursor: "pointer",
-      backgroundColor: "transparent",
-      border: "0",
-      color: "$purple",
-      fontFamily: "$northwesternSansRegular",
-      fontSize: "$gr3",
-      padding: "0 $gr3",
-      height: "2rem",
-      transition: "$dcAll",
-      whiteSpace: "nowrap",
-      display: "flex",
-      alignItems: "center",
-
-      "@md": {
-        padding: "0 $gr2",
-      },
-
-      "&[data-state=active]": {
-        color: "$black",
-        fontFamily: "$northwesternSansBold",
-
-        [`& ${IconStyled}`]: {
-          color: "$purple",
-          fill: "$purple",
-        },
-      },
-
-      "&[data-state=inactive]": {
-        color: "$black50",
-
-        [`& ${IconStyled}`]: {
-          color: "$black20",
-          fill: "$black20",
-        },
-      },
-
-      "&:first-child": {
-        paddingLeft: "$gr1",
-      },
-
-      "&:hover": {
-        color: "$purple",
-
-        [`& ${IconStyled}`]: {
-          color: "$purple",
-          fill: "$purple",
-        },
-      },
-    },
-
-    "@sm": {
-      marginBottom: "$gr3",
-    },
-  },
+const slideInFromLeft = keyframes({
+  "0%": { transform: "translateX(-100vw)" },
+  "100%": { transform: "translateX0)" },
 });
 
 const StyledOptions = styled("div", {
@@ -143,6 +87,7 @@ const StyledOptions = styled("div", {
     flexGrow: "0",
     flexShrink: "1",
     height: "unset",
+    margin: "0",
 
     "@sm": {
       backgroundColor: "transparent",
@@ -158,15 +103,11 @@ const StyledOptions = styled("div", {
       position: "fixed",
       margin: "0",
       top: "$gr6",
-      left: "50%",
       zIndex: "1",
-      transform: "translate(-50%)",
+      transform: "translateX(0)",
       backfaceVisibility: "hidden",
       webkitFontSmoothing: "subpixel-antialiased",
-
-      [`& ${StyledOptionsTabs}`]: {
-        display: "none",
-      },
+      animation: `${slideInFromLeft} 1s ${timingFunction};`,
 
       "@sm": {
         top: "$gr5",
@@ -181,6 +122,5 @@ export {
   StyledOptionsBar,
   StyledOptionsExtras,
   StyledOptionsFacets,
-  StyledOptionsTabs,
   StyledOptionsWidth,
 };

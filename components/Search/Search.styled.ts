@@ -1,3 +1,4 @@
+import { TabsContent } from "@radix-ui/react-tabs";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -89,6 +90,12 @@ const ResultsMessage = styled("span", {
   color: "$black50",
   fontSize: "$gr3",
 
+  strong: {
+    color: "$purple",
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+  },
+
   "@lg": {
     padding: "0 0 $gr3",
   },
@@ -137,6 +144,36 @@ const StyledResponseWrapper = styled("div", {
   padding: "0 0 $gr6",
 });
 
+const StyledTabsContent = styled(TabsContent, {
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) min(1120px, 100%) minmax(0, 1fr)",
+
+  // The overflow-x ensures that when the conversation panel is longer than the SearchPanel,
+  // the conversation panel will not be longer than the SearchPanel.
+  overflowX: "hidden",
+  overflowY: "clip",
+
+  // The overflow-x inadvertently casuses the span in the UserFacets which displays the number of selected facets
+  // to be cut off.
+  // Setting the padding at the top and then a negative margin ensures the number is visible,
+  // while also keep visual consistency with the non-AI search results
+  paddingBlockStart: "$gr3",
+  marginBlockStart: "-$gr3",
+
+  ">*:first-child": {
+    gridColumn: "2 / 3",
+    gridRow: "1",
+    width: "100%",
+  },
+
+  ">*:nth-child(2)": {
+    minHeight: 0,
+    gridColumn: "1 / 4",
+    gridRow: "1",
+    width: "100%",
+  },
+});
+
 export {
   Button,
   NoResultsMessage,
@@ -145,4 +182,5 @@ export {
   ResultsWrapperHeader,
   SearchStyled,
   StyledResponseWrapper,
+  StyledTabsContent,
 };

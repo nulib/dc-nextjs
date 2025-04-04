@@ -74,7 +74,7 @@ export const sampleWork2: Work = {
       variants: [],
     },
   ],
-  id: "c16029ff-d027-496a-98b7-6f259395a8f7",
+  id: "c16029ff-d027-496a-98b7-6f259395a8f8",
   identifier: ["MS 63"],
   iiif_manifest:
     "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json",

@@ -1,36 +1,13 @@
-import { useEffect, useState } from "react";
-
 import GridItem from "@/components/Grid/Item";
 import { StyledImages } from "@/components/Chat/Response/Response.styled";
 import { Work } from "@nulib/dcapi-types";
 
-const ResponseImages = ({
-  isStreamingComplete,
-  sourceDocuments,
-}: {
-  isStreamingComplete: boolean;
-  sourceDocuments: Work[];
-}) => {
-  const [nextIndex, setNextIndex] = useState(0);
+export const INITIAL_MAX_ITEMS = 5;
 
-  useEffect(() => {
-    if (isStreamingComplete) {
-      setNextIndex(sourceDocuments.length);
-      return;
-    }
-
-    if (nextIndex < sourceDocuments.length) {
-      const timer = setTimeout(() => {
-        setNextIndex(nextIndex + 1);
-      }, 382);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isStreamingComplete, nextIndex, sourceDocuments.length]);
-
+const ResponseImages = ({ works }: { works: Work[] }) => {
   return (
-    <StyledImages>
-      {sourceDocuments.slice(0, nextIndex).map((document: Work) => (
+    <StyledImages className="response-images">
+      {works.slice(0, INITIAL_MAX_ITEMS).map((document: Work) => (
         <GridItem key={document.id} item={document} />
       ))}
     </StyledImages>

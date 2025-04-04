@@ -7,15 +7,29 @@ import ChatFeedbackOptIn from "@/components/Chat/Feedback/OptIn";
 import ChatFeedbackOption from "@/components/Chat/Feedback/Option";
 import ChatFeedbackTextArea from "@/components/Chat/Feedback/TextArea";
 import Container from "@/components/Shared/Container";
-import { DC_URL } from "@/lib/constants/endpoints";
 import Icon from "@/components/Shared/Icon";
 import { UserContext } from "@/context/user-context";
 import { handleChatFeedbackRequest } from "@/lib/chat-helpers";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
+import type { SearchContextStore } from "@/types/context/search-context";
 
 type ChatFeedbackSentiment = "positive" | "negative" | "";
 
+type OmitRenderedContent<T> = Omit<T, "renderedContent">;
+type TurnWithoutRenderedContent = OmitRenderedContent<
+  SearchContextStore["conversation"]["turns"][0]
+>;
+type ConversationWithoutRenderedContent = Omit<
+  SearchContextStore["conversation"],
+  "turns"
+> & { turns: TurnWithoutRenderedContent[] };
+
+/**
+ * @remarks
+ *
+ * Conforms to the schema defined in [dc-api](https://github.com/nulib/dc-api-v2/blob/main/node/src/handlers/post-chat-feedback.js)
+ */
 type ChatFeedbackFormPayload = {
   sentiment: ChatFeedbackSentiment;
   feedback: {
@@ -23,12 +37,10 @@ type ChatFeedbackFormPayload = {
     text: string;
     email: string;
   };
-  context: {
-    ref: string;
-    question: string;
-    answer: string;
-    source_documents: string[];
-  };
+  timestamp: string;
+  ref: SearchContextStore["conversation"]["ref"];
+  refIndex: number;
+  context: ConversationWithoutRenderedContent;
 };
 
 const defaultSubmittedState = {
@@ -36,7 +48,7 @@ const defaultSubmittedState = {
   sentiment: "",
 };
 
-const ChatFeedback = () => {
+const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -45,9 +57,7 @@ const ChatFeedback = () => {
   const [isError, setIsError] = useState(false);
 
   const {
-    searchState: {
-      chat: { question, answer, documents, ref },
-    },
+    searchState: { conversation },
   } = useSearchState();
 
   const { user } = useContext(UserContext);
@@ -60,15 +70,25 @@ const ChatFeedback = () => {
       text: "",
       email: "",
     },
+    timestamp: new Date().toISOString(),
+    ref: conversation.ref,
+    refIndex: conversationIndex,
     context: {
-      ref,
-      question,
-      answer,
-      source_documents: documents.map(({ id }) => `${DC_URL}/items/${id}`),
+      ref: conversation.ref,
+      initialQuestion: conversation.initialQuestion,
+      turns: conversation.turns.map((t) => {
+        const { renderedContent, ...rest } = t;
+        return rest;
+      }),
     },
   };
 
   async function handleSubmit() {
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
+
     const formData = formRef.current?.elements || [];
     const payload = { ...initialPayload };
 
@@ -110,6 +130,11 @@ const ChatFeedback = () => {
   ) => {
     const sentiment = e.currentTarget.value;
     if (!sentiment) return;
+
+    if (!initialPayload.ref) {
+      handleError();
+      return;
+    }
 
     if (sentiment === "negative") setIsExpanded(true);
 
@@ -216,13 +241,15 @@ const StyledChatFeedbackActivate = styled("div", {
   margin: "0 0 $gr2 ",
   display: "flex",
   alignItems: "center",
-  fontSize: "$gr3",
-  gap: "$gr2",
+  borderTop: "1px solid $gray6",
+  padding: "$gr3 0",
+
+  "> span": {
+    marginRight: "$gr2",
+  },
 });
 
-const StyledChatFeedbackConfirmation = styled("div", {
-  fontSize: "$gr3",
-});
+const StyledChatFeedbackConfirmation = styled("div", {});
 
 const StyledChatFeedbackForm = styled("form", {
   margin: "$gr3 0",
@@ -244,6 +271,9 @@ const StyledChatFeedbackForm = styled("form", {
 });
 
 const StyledChatFeedback = styled("div", {
+  fontSize: "$gr2",
+  color: "$black50",
+
   variants: {
     isSubmitted: {
       true: {
@@ -257,7 +287,7 @@ const StyledChatFeedback = styled("div", {
 });
 
 const StyledSentimentButton = styled("button", {
-  backgroundColor: "$purple10",
+  backgroundColor: "transparent",
   border: "none",
   padding: 0,
   height: "40px",
@@ -270,28 +300,17 @@ const StyledSentimentButton = styled("button", {
   borderRadius: "50%",
 
   "> span": {
-    height: "36px",
-    width: "36px",
+    height: "32px",
+    width: "32px",
+    fill: "$black20",
   },
 
   "&:not([disabled])": {
     cursor: "pointer",
-
-    "> span": {
-      fill: "$purple60 !important",
-    },
   },
 
-  "&[data-is-selected=true]": {
-    "> span": {
-      fill: "$purple120",
-    },
-  },
-
-  "&[data-is-selected=false]": {
-    "> span": {
-      fill: "$purple30",
-    },
+  "&[data-is-selected=true] > span": {
+    fill: "$purple",
   },
 });
 

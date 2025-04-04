@@ -72,9 +72,9 @@ const IconChevronDown: React.FC = () => (
   </svg>
 );
 
-const IconClear: React.FC = () => (
+const IconClear: React.FC<{ title?: string }> = ({ title = "Clear" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-    <title>Clear</title>
+    <title>{title}</title>
     <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z" />
   </svg>
 );
@@ -133,6 +133,20 @@ const IconMenu: React.FC = () => (
       strokeWidth="48"
       d="M88 152h336M88 256h336M88 360h336"
     />
+  </svg>
+);
+
+const IconRefresh: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <path d="M320 146s24.36-12-64-12a160 160 0 10160 160" />
+    <path d="M256 58l80 80-80 80" />
+  </svg>
+);
+
+const IconReply: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 224">
+    <path d="m80,16L16,80l64,64" />
+    <path d="m32,80h106c58.76,0,106,49.33,106,108v20" />
   </svg>
 );
 
@@ -241,6 +255,8 @@ export {
   IconInfo,
   IconLock,
   IconMenu,
+  IconRefresh,
+  IconReply,
   IconReturnDownBack,
   IconSearch,
   IconSocialFacebook,

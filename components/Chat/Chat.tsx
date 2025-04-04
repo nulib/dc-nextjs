@@ -1,130 +1,69 @@
-import { AI_DISCLAIMER, AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import React, { useEffect, useState } from "react";
-import {
-  StyledResponseActions,
-  StyledResponseDisclaimer,
-  StyledUnsubmitted,
-} from "@/components/Chat/Response/Response.styled";
-import { defaultState, useSearchState } from "@/context/search-context";
 
-import Announcement from "@/components/Shared/Announcement";
-import { Button } from "@nulib/design-system";
-import ChatFeedback from "@/components/Chat/Feedback/Feedback";
+import { AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
+import ChatConversation from "./Conversation";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
-import { Work } from "@nulib/dcapi-types";
-import { pluralize } from "@/lib/utils/count-helpers";
-import { prepareQuestion } from "@/lib/chat-helpers";
-import useChatSocket from "@/hooks/useChatSocket";
-import useQueryParams from "@/hooks/useQueryParams";
+import { StyledUnsubmitted } from "./Response/Response.styled";
+import { styled } from "@/stitches.config";
+import { useSearchState } from "@/context/search-context";
+import { v4 as uuidv4 } from "uuid";
 
-const Chat = ({
-  totalResults,
-  viewResultsCallback,
-}: {
-  totalResults?: number;
-  viewResultsCallback: () => void;
-}) => {
-  const { searchTerm = "" } = useQueryParams();
-  const { authToken, isConnected, message, sendMessage } = useChatSocket();
+const Chat = () => {
+  const { searchState, searchDispatch } = useSearchState();
 
-  const [streamingError, setStreamingError] = useState("");
+  const { conversation } = searchState;
 
-  /**
-   * get the`chat` state and dispatch function from the search context
-   * for persisting the chat state when search screen tabs are switched
-   */
-  const {
-    searchState: { chat },
-    searchDispatch,
-  } = useSearchState();
-  const { question, answer, documents } = chat;
+  const ref = conversation.ref;
+  /** get initial question  */
+  const initialQuestion = conversation.initialQuestion;
 
-  const [sourceDocuments, setSourceDocuments] = useState<Work[]>([]);
-  const [streamedAnswer, setStreamedAnswer] = useState("");
-
-  const isStreamingComplete = !!question && searchTerm === question;
+  const [isStreaming, setIsStreaming] = useState(false);
 
   useEffect(() => {
-    if (!isStreamingComplete && isConnected && authToken && searchTerm) {
-      resetChat();
-      const preparedQuestion = prepareQuestion(searchTerm, authToken);
-      sendMessage(preparedQuestion);
-    }
-  }, [authToken, isStreamingComplete, isConnected, searchTerm, sendMessage]);
+    if (!initialQuestion) return;
 
-  useEffect(() => {
-    if (!message) return;
+    const conversationRef = uuidv4();
+    setIsStreaming(true);
 
-    const updateSourceDocuments = () => {
-      setSourceDocuments(message.source_documents!);
-    };
-
-    const updateStreamedAnswer = () => {
-      setStreamedAnswer((prev) => prev + message.token);
-    };
-
-    const updateChat = () => {
-      searchDispatch({
-        chat: {
-          answer: message.answer || "",
-          documents: sourceDocuments,
-          question: searchTerm || "",
-          ref: message.ref,
-        },
-        type: "updateChat",
-      });
-    };
-
-    if (message.source_documents) {
-      updateSourceDocuments();
-      return;
-    }
-
-    if (message.token) {
-      updateStreamedAnswer();
-      return;
-    }
-
-    if (message.end) {
-      switch (message.end.reason) {
-        case "length":
-          setStreamingError("The response has hit the LLM token limit.");
-          break;
-        case "timeout":
-          setStreamingError("The response has timed out.");
-          break;
-        case "eos_token":
-          setStreamingError("This should never happen.");
-          break;
-        default:
-          break;
-      }
-    }
-
-    if (message.answer) {
-      updateChat();
-    }
-  }, [message]);
-
-  function handleNewQuestion() {
-    const input = document.getElementById("dc-search") as HTMLInputElement;
-    if (input) {
-      input.focus();
-      input.value = "";
-    }
-  }
-
-  function resetChat() {
     searchDispatch({
-      chat: defaultState.chat,
-      type: "updateChat",
+      type: "updateConversation",
+      conversation: {
+        ...conversation,
+        ref: conversationRef,
+      },
     });
-    setStreamedAnswer("");
-    setSourceDocuments([]);
-  }
+  }, [initialQuestion]);
 
-  if (!searchTerm)
+  const handleConversationCallback = (value: string) => {
+    setIsStreaming(true);
+
+    if (ref && value) {
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          ...conversation,
+          turns: [
+            ...conversation.turns,
+            {
+              question: value,
+              context: conversation.context, // move the chat context to the next turn
+              answer: "",
+              aggregations: [],
+              works: [],
+            },
+          ],
+          context: undefined, // clear chat context on new question
+        },
+      });
+    }
+  };
+
+  const handleResponseCallback = () => {
+    setIsStreaming(false);
+  };
+
+  if (!initialQuestion)
     return (
       <Container>
         <StyledUnsubmitted>{AI_SEARCH_UNSUBMITTED}</StyledUnsubmitted>
@@ -132,38 +71,39 @@ const Chat = ({
     );
 
   return (
-    <>
-      <ChatResponse
-        isStreamingComplete={isStreamingComplete}
-        searchTerm={question || searchTerm}
-        sourceDocuments={isStreamingComplete ? documents : sourceDocuments}
-        streamedAnswer={isStreamingComplete ? answer : streamedAnswer}
-      />
-      {streamingError && (
-        <Container>
-          <Announcement css={{ marginTop: "1rem" }}>
-            {streamingError}
-          </Announcement>
-        </Container>
-      )}
-      {isStreamingComplete && (
-        <>
-          <Container>
-            <StyledResponseActions>
-              <Button isPrimary isLowercase onClick={viewResultsCallback}>
-                View More Results
-              </Button>
-              <Button isLowercase onClick={handleNewQuestion}>
-                Ask Another Question
-              </Button>
-            </StyledResponseActions>
-            <StyledResponseDisclaimer>{AI_DISCLAIMER}</StyledResponseDisclaimer>
-          </Container>
-          <ChatFeedback />
-        </>
-      )}
-    </>
+    <Container>
+      <StyledChat
+        data-conversation-initial={initialQuestion}
+        data-conversation-length={conversation.turns.length}
+        data-conversation-ref={ref}
+      >
+        {conversation.turns
+          .filter((turn) => turn.question)
+          .map((turn, index) => {
+            return (
+              <ChatResponse
+                conversationIndex={index}
+                conversationRef={ref}
+                key={index}
+                question={turn.question}
+                content={turn.renderedContent}
+                context={turn.context}
+                responseCallback={handleResponseCallback}
+              />
+            );
+          })}
+        <ChatConversation
+          conversationCallback={handleConversationCallback}
+          isStreaming={isStreaming}
+        />
+      </StyledChat>
+    </Container>
   );
 };
 
-export default React.memo(Chat);
+const StyledChat = styled("section", {
+  padding: "$gr5 0",
+  position: "relative",
+});
+
+export default Chat;

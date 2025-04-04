@@ -16,6 +16,24 @@ type BuildQueryProps = {
   urlFacets: UrlFacets;
 };
 
+const searchPipeline = {
+  phase_results_processors: [
+    {
+      "normalization-processor": {
+        combination: {
+          parameters: {
+            weights: [0.25, 0.75],
+          },
+          technique: "arithmetic_mean",
+        },
+        normalization: {
+          technique: "l2",
+        },
+      },
+    },
+  ],
+};
+
 export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
@@ -62,16 +80,17 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                   },
                 },
               ],
-              filter: buildFacetFilters(urlFacets),
             },
           },
           {
             neural: {
               embedding: {
                 filter: {
-                  bool: {
-                    filter: buildFacetFilters(urlFacets),
-                  },
+                  bool: !aggs
+                    ? {
+                        filter: buildFacetFilters(urlFacets),
+                      }
+                    : {},
                 },
                 k: AI_K_VALUE,
                 model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
@@ -84,14 +103,24 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     };
   }
 
-  return {
+  const requestBody = {
     ...querySearchTemplate,
     ...(queryValue && {
       query: queryValue,
     }),
+    ...(isAI && {
+      search_pipeline: searchPipeline,
+    }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),
+    post_filter: {
+      bool: {
+        must: buildFacetFilters(urlFacets),
+      },
+    },
   } as ApiSearchRequestBody;
+
+  return requestBody;
 }
 
 export function addFacetsToQuery(urlFacets: UrlFacets) {

@@ -1,21 +1,17 @@
 import { SearchContextStore } from "@/types/context/search-context";
-
-import { ApiResponseAggregation } from "@/types/api/response";
 import React from "react";
-import { Work } from "@nulib/dcapi-types";
 
 type Action =
   | {
-      type: "updateAggregations";
-      aggregations: ApiResponseAggregation | undefined;
+      type: "updateConversation";
+      conversation: SearchContextStore["conversation"];
     }
   | {
-      type: "updateChat";
-      chat: {
-        answer: string;
-        documents: Work[];
-        question: string;
-        ref: string;
+      type: "updatePanel";
+      panel: {
+        interstitial?: string;
+        open: boolean;
+        query?: string;
       };
     }
   | { type: "updateSearch"; q: string }
@@ -29,12 +25,15 @@ type SearchProviderProps = {
 };
 
 const defaultState: SearchContextStore = {
-  aggregations: {},
-  chat: {
-    answer: "",
-    documents: [],
-    question: "",
-    ref: "",
+  conversation: {
+    ref: undefined,
+    initialQuestion: "",
+    turns: [],
+  },
+  panel: {
+    interstitial: undefined,
+    open: false,
+    query: undefined,
   },
   searchFixed: false,
 };
@@ -45,16 +44,10 @@ const SearchStateContext = React.createContext<
 
 function searchReducer(state: State, action: Action) {
   switch (action.type) {
-    case "updateAggregations": {
+    case "updateConversation": {
       return {
         ...state,
-        aggregations: action.aggregations,
-      };
-    }
-    case "updateChat": {
-      return {
-        ...state,
-        chat: action.chat,
+        conversation: action.conversation,
       };
     }
     case "updateSearch": {
@@ -67,6 +60,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         searchFixed: action.searchFixed,
+      };
+    }
+    case "updatePanel": {
+      return {
+        ...state,
+        panel: action.panel,
       };
     }
     default: {
