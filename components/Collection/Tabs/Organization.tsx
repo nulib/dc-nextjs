@@ -15,6 +15,8 @@ interface CollectionTabsOrganizationProps {
   series: GenericAggsReturn[];
 }
 
+const escapeDoubleQuotes = (key: string) => key.replaceAll(`"`, `\\"`);
+
 const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
   collection,
   series,
@@ -34,17 +36,24 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
           const summary =
             doc_count > 1 ? `${doc_count} Items` : `${doc_count}  Item`;
 
-          const sanitizedKey = key.replace(/&/g, "%26");
-          const collectionId = `${DCAPI_ENDPOINT}/search?query=series:"${sanitizedKey}"&collectionLabel=${sanitizedKey}&collectionSummary=${summary}&as=iiif`;
+          const collectionId = new URL("/search", DCAPI_ENDPOINT);
+          collectionId.searchParams.append(
+            "query",
+            `series:"${escapeDoubleQuotes(key)}"`,
+          );
+          collectionId.searchParams.append("collectionLabel", key);
+          collectionId.searchParams.append("collectionSummary", summary);
+          collectionId.searchParams.append("as", "iiif");
+
           const value = `series-${index}`;
           const title = entry.key;
           const indicator = pluralize("Item", entry.doc_count);
 
           const searchUrl = new URL("/search", DC_URL);
           searchUrl.searchParams.append("collection", collection.title);
-          searchUrl.searchParams.append("series", sanitizedKey);
+          searchUrl.searchParams.append("series", key);
 
-          if (isAI) appendHybridSearchParams(searchUrl, sanitizedKey);
+          if (isAI) appendHybridSearchParams(searchUrl, key);
 
           return (
             <ExpandableList.Item

@@ -64,9 +64,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const mId = decodeURIComponent(context?.params?.manifestId as string);
 
-  const workId = mId
-    .replace(`${DCAPI_ENDPOINT}/works/`, "")
-    .replace("?as=iiif", "");
+  const workId = new URL(mId).pathname.split("/").pop()!;
 
   const work = await getWork(workId);
   const dataLayer = work ? buildWorkDataLayer(work) : [];

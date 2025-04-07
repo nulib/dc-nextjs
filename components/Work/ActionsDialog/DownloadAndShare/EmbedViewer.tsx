@@ -79,7 +79,7 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
     ? `<iframe src="${
         window.location.origin
       }/embedded-viewer/${encodeURIComponent(encodeSearchParams())}" title="${
-        work?.title || work.accession_number
+        work?.title?.replaceAll(`"`, `&quot;`) || work.accession_number
       }" width="100%" height="800"></iframe>`
     : "";
 
