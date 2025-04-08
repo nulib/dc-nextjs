@@ -40,6 +40,7 @@ export const work1: Work = {
       description: null,
       download_url: "http://download.me",
       duration: null,
+      group_with: null,
       height: 3059,
       id: "04c0f01c-610b-44d4-a4d3-ec69e7bf404a",
       label: "BFMF_B06_F12_006_022n_am.tif",
@@ -59,6 +60,7 @@ export const work1: Work = {
       description: "Kathy and Carol in a tree",
       download_url: "http://download.me",
       duration: null,
+      group_with: null,
       height: 3059,
       id: "f9bfb944-0157-4e85-bffd-198787830e54",
       label:
