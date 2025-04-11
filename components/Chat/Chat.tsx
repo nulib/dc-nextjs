@@ -7,38 +7,18 @@ import Container from "@/components/Shared/Container";
 import { StyledUnsubmitted } from "./Response/Response.styled";
 import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
-import { v4 as uuidv4 } from "uuid";
 
 const Chat = () => {
-  const { searchState, searchDispatch } = useSearchState();
-
-  const { conversation } = searchState;
-
-  const ref = conversation.ref;
-  /** get initial question  */
-  const initialQuestion = conversation.initialQuestion;
-
   const [isStreaming, setIsStreaming] = useState(false);
-
-  useEffect(() => {
-    if (!initialQuestion) return;
-
-    const conversationRef = uuidv4();
-    setIsStreaming(true);
-
-    searchDispatch({
-      type: "updateConversation",
-      conversation: {
-        ...conversation,
-        ref: conversationRef,
-      },
-    });
-  }, [initialQuestion]);
+  const {
+    searchState: { conversation },
+    searchDispatch,
+  } = useSearchState();
 
   const handleConversationCallback = (value: string) => {
     setIsStreaming(true);
 
-    if (ref && value) {
+    if (conversation.ref && value) {
       searchDispatch({
         type: "updateConversation",
         conversation: {
@@ -63,7 +43,7 @@ const Chat = () => {
     setIsStreaming(false);
   };
 
-  if (!initialQuestion)
+  if (!conversation?.initialQuestion)
     return (
       <Container>
         <StyledUnsubmitted>{AI_SEARCH_UNSUBMITTED}</StyledUnsubmitted>
@@ -73,9 +53,9 @@ const Chat = () => {
   return (
     <Container>
       <StyledChat
-        data-conversation-initial={initialQuestion}
+        data-conversation-initial={conversation.initialQuestion}
         data-conversation-length={conversation.turns.length}
-        data-conversation-ref={ref}
+        data-conversation-ref={conversation.ref}
       >
         {conversation.turns
           .filter((turn) => turn.question)
@@ -83,8 +63,8 @@ const Chat = () => {
             return (
               <ChatResponse
                 conversationIndex={index}
-                conversationRef={ref}
-                key={index}
+                conversationRef={conversation.ref}
+                key={`${conversation.ref}--${index}`}
                 question={turn.question}
                 content={turn.renderedContent}
                 context={turn.context}
