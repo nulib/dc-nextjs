@@ -49,7 +49,7 @@ const SearchPage: NextPage = () => {
   const { user } = React.useContext(UserContext);
   const { isChecked: isAI } = useGenerativeAISearchToggle();
   const { searchState } = useSearchState();
-  const { panel } = searchState;
+  const { conversation, panel } = searchState;
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
@@ -250,7 +250,7 @@ const SearchPage: NextPage = () => {
                   height: panel.open ? 0 : "auto",
                 }}
               >
-                <Chat />
+                <Chat key={conversation.ref} />
               </div>
               <SearchPanel />
             </StyledTabsContent>

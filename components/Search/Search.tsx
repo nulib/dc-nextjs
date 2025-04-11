@@ -19,6 +19,7 @@ import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
+import { v4 as uuidv4 } from "uuid";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -29,7 +30,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { urlFacets } = useQueryParams();
 
   const { isChecked } = useGenerativeAISearchToggle();
-  const { searchDispatch } = useSearchState();
+  const {
+    searchDispatch,
+    searchState: { conversation },
+  } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -70,7 +74,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     searchDispatch({
       type: "updateConversation",
       conversation: {
-        ref: undefined,
+        ref: uuidv4(),
         initialQuestion: searchValue,
         turns: [
           {
@@ -114,6 +118,25 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   };
 
   useEffect(() => setIsLoaded(true), []);
+
+  useEffect(() => {
+    if (isChecked) {
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          ...conversation,
+          ref: uuidv4(),
+          turns: conversation.turns.slice(0, 1).map((turn) => ({
+            ...turn,
+            answer: "",
+            aggregations: [],
+            renderedContent: undefined,
+            works: [],
+          })),
+        },
+      });
+    }
+  }, [isChecked]);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
