@@ -14,6 +14,14 @@ export interface ApiResponseAggregation {
   };
 }
 
+export interface ApiResponseFilteredAggregation {
+  [key: string]: {
+    [key: string]: {
+      buckets: ApiResponseBucket[];
+    };
+  };
+}
+
 export type ApiResponseBucket = {
   doc_count: number;
   key: string;
@@ -24,7 +32,7 @@ export type ApiResponseBucket = {
 export type ApiResponseData = Collection | SearchShape[] | Work;
 
 export interface ApiSearchResponse extends ApiResponse {
-  aggregations?: ApiResponseAggregation;
+  aggregations?: ApiResponseAggregation | ApiResponseFilteredAggregation;
   data: SearchShape[];
   pagination: Pagination;
 }

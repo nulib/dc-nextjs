@@ -2,6 +2,10 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import { GetServerSideProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
+import {
+  StyledResponseWrapper,
+  StyledTabsContent,
+} from "@/components/Search/Search.styled";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -12,17 +16,14 @@ import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
-import Icon from "@/components/Shared/Icon";
-import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import Layout from "@/components/layout";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
+import SearchPanel from "@/components/Search/Panel";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
-import { StyledResponseWrapper } from "@/components/Search/Search.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -33,6 +34,7 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
 
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
@@ -46,6 +48,8 @@ const SearchPage: NextPage = () => {
 
   const { user } = React.useContext(UserContext);
   const { isChecked: isAI } = useGenerativeAISearchToggle();
+  const { searchState } = useSearchState();
+  const { conversation, panel } = searchState;
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
 
@@ -67,7 +71,6 @@ const SearchPage: NextPage = () => {
   });
 
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
-  const totalResults = searchResults.data?.pagination?.total_hits;
 
   /**
    * on a query change, we check to see if the user is using the AI and then
@@ -92,9 +95,6 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!router.isReady) return;
-
-    // Reset search results state
-    setSearchResults(defaultSearchResultsState);
 
     (async () => {
       try {
@@ -154,6 +154,10 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!pageQueryUrl) return;
+
+    // Reset search results state
+    setSearchResults(defaultSearchResultsState);
+
     (async () => {
       try {
         const response = await axios.get(pageQueryUrl);
@@ -195,10 +199,6 @@ const SearchPage: NextPage = () => {
     });
   }
 
-  function handleViewResultsCallback() {
-    setActiveTab("results");
-  }
-
   return (
     <>
       {/* Google Structured Data via JSON-LD */}
@@ -230,35 +230,30 @@ const SearchPage: NextPage = () => {
 
           <Tabs.Root
             value={activeTab}
+            className="tabs-wrapper"
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
-            <SearchOptions
-              tabs={
-                <Tabs.List>
-                  <Tabs.Trigger value="stream" data-tab="stream">
-                    <Icon>
-                      <IconSparkles />
-                    </Icon>
-                    AI Response
-                  </Tabs.Trigger>
-                  <Tabs.Trigger value="results" data-tab="results">
-                    {Number.isInteger(totalResults) ? (
-                      "View More Results"
-                    ) : (
-                      <SpinLoader size="small" />
-                    )}
-                  </Tabs.Trigger>
-                </Tabs.List>
-              }
-              activeTab={activeTab}
-              renderTabList={showStreamedResponse}
-            />
-            <Tabs.Content value="stream">
-              <Chat
-                totalResults={totalResults}
-                viewResultsCallback={handleViewResultsCallback}
+            {activeTab === "results" && (
+              <SearchOptions
+                tabs={<></>} // placeholder for back tab
+                activeTab={activeTab}
+                renderTabList={showStreamedResponse}
               />
-            </Tabs.Content>
+            )}
+
+            <StyledTabsContent value="stream" id="foo">
+              <div
+                style={{
+                  transition: "all 382ms ease-in-out",
+                  opacity: panel.open ? 0 : 1,
+                  filter: panel.open ? "grayscale(1)" : "none",
+                  height: panel.open ? 0 : "auto",
+                }}
+              >
+                <Chat key={conversation.ref} />
+              </div>
+              <SearchPanel />
+            </StyledTabsContent>
 
             <Tabs.Content value="results">
               <Container containerType="wide">

@@ -36,6 +36,9 @@ const WORK_METADATA_LABELS: WorkMetadata[] = [
     searchParam: "genre",
   },
   {
+    label: "Identifier",
+  },
+  {
     label: "Keyword",
   },
   {

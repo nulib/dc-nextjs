@@ -1,5 +1,7 @@
 import { keyframes, styled } from "@/stitches.config";
 
+import { purple } from "@/styles/colors";
+
 /* eslint sort-keys: 0 */
 
 const CursorKeyframes = keyframes({
@@ -8,12 +10,19 @@ const CursorKeyframes = keyframes({
   },
 });
 
-const StyledResponse = styled("section", {
+const StyledResponse = styled("article", {
   display: "flex",
   position: "relative",
-  gap: "$gr5",
+  flexDirection: "column",
+  gap: "$gr3",
   zIndex: "0",
-  minHeight: "50vh",
+  marginBottom: "$gr4",
+
+  "> div:not(.response-images)": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "$gr3",
+  },
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontFamily: "$northwesternSansBold",
@@ -26,72 +35,37 @@ const StyledResponse = styled("section", {
   },
 });
 
-const StyledResponseAside = styled("aside", {
-  width: "38.2%",
-  flexShrink: 0,
-  borderRadius: "inherit",
-  borderTopLeftRadius: "unset",
-  borderBottomLeftRadius: "unset",
+const StyledResponseAside = styled("aside", {});
 
-  "@sm": {
-    width: "unset",
-  },
-});
-
-const StyledResponseContent = styled("div", {
-  width: "61.8%",
-  flexGrow: 0,
-
-  "@sm": {
-    width: "unset",
-  },
-});
-
-const StyledResponseWrapper = styled("div", {
-  padding: "0",
-});
+const StyledResponseContent = styled("div", {});
 
 const StyledImages = styled("div", {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
+  display: "grid",
   gap: "$gr4",
+  gridTemplateColumns: "repeat(5, 1fr)",
+  marginBottom: "$gr3",
+
+  "@md": {
+    gridTemplateColumns: "repeat(4, 1fr)",
+  },
+
+  "@sm": {
+    gridTemplateColumns: "repeat(3, 1fr)",
+  },
+
+  "@xs": {
+    gridTemplateColumns: "repeat(2, 1fr)",
+  },
 
   "> div": {
-    width: "calc(33% - 20px)",
-
-    "@md": {
-      width: "calc(50% - 20px)",
-    },
-
-    "@sm": {
-      width: "calc(33% - 20px)",
-    },
-
-    "&:nth-child(1)": {
-      width: "calc(66% - 10px)",
-
-      "@md": {
-        width: "100%",
-      },
-
-      "@sm": {
-        width: "calc(33% - 20px)",
-      },
-    },
-
     figure: {
       padding: "0",
-
-      "> div": {
-        boxShadow: "5px 5px 13px rgba(0, 0, 0, 0.25)",
-      },
 
       figcaption: {
         "span:first-of-type": {
           textOverflow: "ellipsis",
           display: "-webkit-box",
-          WebkitLineClamp: "3",
+          WebkitLineClamp: "2",
           WebkitBoxOrient: "vertical",
           overflow: "hidden",
         },
@@ -100,21 +74,41 @@ const StyledImages = styled("div", {
   },
 });
 
-const StyledQuestion = styled("h3", {
-  fontFamily: "$northwesternSansBold",
+const StyledQuestion = styled("header", {
+  fontFamily: "$northwesternSansRegular",
   fontWeight: "400",
-  fontSize: "$gr6",
-  letterSpacing: "-0.012em",
+  fontSize: "$gr3",
   lineHeight: "1.35em",
-  margin: "0",
-  padding: "0 0 $gr4 0",
-  color: "$black",
+  padding: "$gr2 $gr3",
+  marginBottom: "$gr6",
+  margin: "0 0 $gr2",
+  color: "$purple120",
+  alignSelf: "flex-end",
+  borderRadius: "1rem",
+  background: "$purple10",
+  display: "flex",
+  alignItems: "center",
+  gap: "$gr2",
 });
 
-const StyledStreamedAnswer = styled("article", {
+const StyledResponseMarkdown = styled("div", {
   fontSize: "$gr3",
-  lineHeight: "162.8%",
-  overflow: "hidden",
+  lineHeight: "1.47em",
+
+  ".table-wrapper": {
+    overflowX: "auto",
+    width: "100%",
+    "-webkit-overflow-scrolling": "touch",
+    margin: "$gr4 0",
+  },
+
+  "p, li": {
+    lineHeight: "inherit",
+  },
+
+  li: {
+    marginBottom: "$gr1",
+  },
 
   "h1, h2, h3, h4, h5, h6, strong": {
     fontWeight: "400",
@@ -127,6 +121,36 @@ const StyledStreamedAnswer = styled("article", {
     textDecorationThickness: "min(2px,max(1px,.05em))",
     textUnderlineOffset: "calc(.05em + 2px)",
     textDecorationColor: "$purple10",
+  },
+
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    borderSpacing: "0",
+    marginBottom: "$gr4",
+    borderLeft: "1px solid $gray6",
+    borderRight: "1px solid $gray6",
+    borderTop: "1px solid $gray6",
+    margin: "0",
+
+    th: {
+      padding: "$gr2",
+      textAlign: "left",
+      fontWeight: "400",
+      fontFamily: "$northwesternSansBold",
+      borderBottom: "1px solid $gray6",
+    },
+
+    td: {
+      padding: "$gr2",
+      borderBottom: "1px solid $gray6",
+    },
+  },
+
+  img: {
+    maxWidth: "$gr7",
+    maxHeight: "$gr7",
+    borderRadius: "3px",
   },
 
   "span.markdown-cursor": {
@@ -154,12 +178,13 @@ const StyledResponseActions = styled("div", {
 const StyledUnsubmitted = styled("p", {
   color: "$black50",
   fontSize: "$gr3",
-  fontFamily: "$northwesternSansLight",
+  fontFamily: "$northwesternSansRegular",
   textAlign: "center",
   width: "61.8%",
   maxWidth: "61.8%",
   margin: "0 auto",
-  padding: "$gr4 0",
+  padding: "$gr5 0",
+  minHeight: "38.2vh",
 });
 
 const StyledResponseDisclaimer = styled("p", {
@@ -175,9 +200,8 @@ export {
   StyledResponseAside,
   StyledResponseContent,
   StyledResponseDisclaimer,
-  StyledResponseWrapper,
   StyledImages,
   StyledQuestion,
-  StyledStreamedAnswer,
+  StyledResponseMarkdown,
   StyledUnsubmitted,
 };

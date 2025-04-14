@@ -70,7 +70,7 @@ const StyledTextArea = styled("div", {
 
     "&::placeholder": {
       overflow: "hidden",
-      color: "$black80",
+      color: "$black50 !important",
       textOverflow: "ellipsis",
     },
   },

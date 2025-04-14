@@ -1,5 +1,4 @@
 import { Button, SearchStyled } from "@/components/Search/Search.styled";
-import { IconArrowForward, IconSearch } from "@/components/Shared/SVG/Icons";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -10,6 +9,7 @@ import React, {
 } from "react";
 
 import GenerativeAIToggle from "@/components/Search/GenerativeAIToggle";
+import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpTo from "@/components/Search/JumpTo";
 import SearchTextArea from "@/components/Search/TextArea";
 import { UrlFacets } from "@/types/context/filter-context";
@@ -18,6 +18,8 @@ import { isCollectionPage } from "@/lib/collection-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
+import { useSearchState } from "@/context/search-context";
+import { v4 as uuidv4 } from "uuid";
 
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
@@ -28,6 +30,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { urlFacets } = useQueryParams();
 
   const { isChecked } = useGenerativeAISearchToggle();
+  const {
+    searchDispatch,
+    searchState: { conversation },
+  } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -35,8 +41,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
-
-  const appendSearchJumpTo = isCollectionPage(router?.pathname);
 
   const handleSubmit = (
     e?:
@@ -58,6 +62,31 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       }
     });
 
+    searchDispatch({
+      type: "updatePanel",
+      panel: {
+        open: false,
+        query: undefined,
+        interstitial: undefined,
+      },
+    });
+
+    searchDispatch({
+      type: "updateConversation",
+      conversation: {
+        ref: uuidv4(),
+        initialQuestion: searchValue,
+        turns: [
+          {
+            question: searchValue,
+            answer: "",
+            aggregations: [],
+            works: [],
+          },
+        ],
+      },
+    });
+
     router.push({
       pathname: "/search",
       query: {
@@ -65,6 +94,9 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         ...updatedFacets,
       },
     });
+
+    setSearchValue("");
+    if (searchRef.current) searchRef.current.blur();
   };
 
   const handleSearchFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
@@ -88,12 +120,23 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => setIsLoaded(true), []);
 
   useEffect(() => {
-    if (router) {
-      const { q } = router.query;
-      if (q && searchRef.current) searchRef.current.value = q as string;
-      setSearchValue(q as string);
+    if (isChecked) {
+      searchDispatch({
+        type: "updateConversation",
+        conversation: {
+          ...conversation,
+          ref: uuidv4(),
+          turns: conversation.turns.slice(0, 1).map((turn) => ({
+            ...turn,
+            answer: "",
+            aggregations: [],
+            renderedContent: undefined,
+            works: [],
+          })),
+        },
+      });
     }
-  }, [router]);
+  }, [isChecked]);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
@@ -110,17 +153,17 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         <SearchTextArea
           isAi={!!isChecked}
           isFocused={searchFocus}
-          searchValue={searchValue}
           handleSearchChange={handleSearchChange}
           handleSearchFocus={handleSearchFocus}
           handleSubmit={handleSubmit}
           clearSearchResults={clearSearchResults}
+          searchValue={searchValue}
           ref={searchRef}
         />
         <div>
           <GenerativeAIToggle />
           <Button type="submit" data-testid="submit-button">
-            Search <IconArrowForward />
+            Search
           </Button>
         </div>
         {isLoaded && <IconSearch />}

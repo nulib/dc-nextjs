@@ -1,7 +1,7 @@
 import React from "react";
 
-const SliderWrapperMock = ({ collectionId }: { collectionId: string }) => (
-  <div>Mock SliderWrapper with props: {collectionId}</div>
+const SliderWrapperMock = ({ collectionId }: { collectionId: URL }) => (
+  <div>Mock SliderWrapper with props: {collectionId.toString()}</div>
 );
 
 export default SliderWrapperMock;

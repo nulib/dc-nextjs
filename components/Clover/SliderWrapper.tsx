@@ -72,13 +72,13 @@ const SliderIIIFWrapper = ({
   collectionId,
   customViewAll,
 }: {
-  collectionId: string;
+  collectionId: URL;
   customViewAll: string;
 }) => {
   return (
     <StyledSliderIIIFWrapper>
       <Slider
-        iiifContent={collectionId}
+        iiifContent={collectionId.toString()}
         options={{
           breakpoints: breakpoints,
           credentials: "include",

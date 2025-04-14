@@ -27,13 +27,16 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ collections, title }) => {
         </Heading>
       )}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {collections?.map((workSlider) => (
-          <SliderWrapper
-            collectionId={workSlider.iiifCollectionId}
-            customViewAll={workSlider.customViewAll}
-            key={workSlider.iiifCollectionId}
-          />
-        ))}
+        {collections?.map((workSlider) => {
+          const collectionId = new URL(workSlider.iiifCollectionId);
+          return (
+            <SliderWrapper
+              collectionId={collectionId}
+              customViewAll={workSlider.customViewAll}
+              key={workSlider.iiifCollectionId}
+            />
+          );
+        })}
       </ErrorBoundary>
     </RelatedItemsStyled>
   );

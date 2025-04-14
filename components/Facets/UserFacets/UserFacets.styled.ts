@@ -141,6 +141,8 @@ const StyledValue = styled("button", {
 const ValueWrapper = styled("div", {
   display: "flex",
   flexWrap: "wrap",
+  position: "relative",
+  zIndex: 2,
 
   variants: {
     isModal: {

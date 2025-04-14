@@ -44,6 +44,7 @@ export const sampleWork2: Work = {
       description: "Something",
       download_url: "http://download.me",
       duration: null,
+      group_with: null,
       height: 1000,
       id: "93d75ffe-20d8-48ea-9206-8db9114f2731",
       label: "inu-dil-50575a78-a47a-4a07-939f-6e1d6a9d7065.tif",
@@ -74,7 +75,7 @@ export const sampleWork2: Work = {
       variants: [],
     },
   ],
-  id: "c16029ff-d027-496a-98b7-6f259395a8f7",
+  id: "c16029ff-d027-496a-98b7-6f259395a8f8",
   identifier: ["MS 63"],
   iiif_manifest:
     "https://iiif.stack.rdc-staging.library.northwestern.edu/public/c1/60/29/ff/-d/02/7-/49/6a/-9/8b/7-/6f/25/93/95/a8/f7-manifest.json",

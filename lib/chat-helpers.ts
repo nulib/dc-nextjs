@@ -1,18 +1,36 @@
 import axios, { AxiosError } from "axios";
 
 import { DCAPI_CHAT_FEEDBACK } from "./constants/endpoints";
-import { Question } from "@/types/components/chat";
-import { v4 as uuidv4 } from "uuid";
+import { Work } from "@nulib/dcapi-types";
+
+function mapWorksToApiDocs(works: Work[]) {
+  if (!works) {
+    return [];
+  }
+
+  return works.map((d) => {
+    return {
+      id: d.id || "",
+      title: d.title || "",
+      visibility: d.visibility || "",
+      work_type: d.work_type || "",
+      thumbnail: d.thumbnail || "",
+    };
+  });
+}
 
 const prepareQuestion = (
   questionString: string,
   authToken: string,
-): Question => {
+  conversationRef: string,
+  userDocs?: Work[],
+) => {
   return {
     auth: authToken,
     message: "chat",
     question: questionString,
-    ref: uuidv4(),
+    ref: conversationRef,
+    docs: userDocs ? mapWorksToApiDocs(userDocs) : userDocs,
   };
 };
 
