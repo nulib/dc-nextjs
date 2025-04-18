@@ -4,7 +4,7 @@ const next = require("next");
 const fs = require("fs");
 const port = 3000;
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "devbox.library.northwestern.edu";
+const hostname = "local.dev.rdc.library.northwestern.edu";
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
