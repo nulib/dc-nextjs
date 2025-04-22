@@ -5,7 +5,7 @@ import { HeroCollection } from "./homepage";
 
 export const collection403: HeroCollection = {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  id: "https://devbox.library.northwestern.edu:3000/homepage-hero.json",
+  id: "https://local.dev.rdc.library.northwestern.edu:3000/homepage-hero.json",
   type: "Collection",
   label: {
     none: ["Access Restricted"],
@@ -60,7 +60,7 @@ export const collection403: HeroCollection = {
 
 export const collection404: HeroCollection = {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  id: "https://devbox.library.northwestern.edu:3000/homepage-hero.json",
+  id: "https://local.dev.rdc.library.northwestern.edu:3000/homepage-hero.json",
   type: "Collection",
   label: {
     none: ["Page Not Found"],

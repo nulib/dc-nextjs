@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Open [http://devbox.library.northwestern.edu:3000](http://devbox.library.northwestern.edu:3000) in your browser.
+Open [http://local.dev.rdc.library.northwestern.edu:3000](http://local.dev.rdc.library.northwestern.edu:3000) in your browser.
 
 ### AWS Developer Environment (Northwestern dev team only)
 
@@ -48,7 +48,7 @@ Open a remote SSH dev environment connection in VSCode.
 
 ```js
 // Change
-const hostname = "devbox.library.northwestern.edu";
+const hostname = "local.dev.rdc.library.northwestern.edu";
 // ...to
 const hostname = "localhost";
 ```
