@@ -34,7 +34,7 @@ export interface HeroCollection {
 
 export const defaultCollection: HeroCollection = {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  id: "https://devbox.library.northwestern.edu:3000/homepage-hero.json",
+  id: "https://local.dev.rdc.library.northwestern.edu:3000/homepage-hero.json",
   type: "Collection",
   label: {
     none: ["Commedia dell'Arte: The Masks of Antonio Fava"],

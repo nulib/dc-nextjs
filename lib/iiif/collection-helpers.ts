@@ -101,7 +101,7 @@ export const getHeroCollection = (
 
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",
-    id: "https://devbox.library.northwestern.edu:3000/collection.json",
+    id: "https://local.dev.rdc.library.northwestern.edu:3000/collection.json",
     items: [
       {
         homepage: [

@@ -7,7 +7,8 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 const BASE_URL =
-  process.env.BASE_URL || `https://devbox.library.northwestern.edu:${PORT}`;
+  process.env.BASE_URL ||
+  `https://local.dev.rdc.library.northwestern.edu:${PORT}`;
 
 export default defineConfig({
   testDir: "./tests",
