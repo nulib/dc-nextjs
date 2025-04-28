@@ -25,6 +25,10 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
 
   const list = sortAggsByKey(series);
 
+  // creates new API endpoint string that has a trailing
+  // slash and is path friendly for a URL constructor
+  const dcApiEndpoint = `${DCAPI_ENDPOINT}/`;
+
   return (
     <OrganizationStyled data-testid="organization-wrapper">
       <Heading as="h2" css={{ "@sm": { textAlign: "center" } }}>
@@ -36,7 +40,7 @@ const CollectionTabsOrganization: React.FC<CollectionTabsOrganizationProps> = ({
           const summary =
             doc_count > 1 ? `${doc_count} Items` : `${doc_count}  Item`;
 
-          const collectionId = new URL("/search", DCAPI_ENDPOINT);
+          const collectionId = new URL("search", dcApiEndpoint);
           collectionId.searchParams.append(
             "query",
             `series:"${escapeDoubleQuotes(key)}"`,
