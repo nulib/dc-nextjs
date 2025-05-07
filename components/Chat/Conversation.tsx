@@ -4,10 +4,11 @@ import {
   StyledResetButton,
 } from "./Conversation.styled";
 import { useEffect, useRef } from "react";
-
+import { styled } from "@/stitches.config";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 import Stack from "./Stack/Stack";
+import { AI_SYS_PROMPT_MSG } from "@/lib/constants/common";
 
 interface ChatConversationProps {
   conversationCallback: (message: string) => void;
@@ -95,40 +96,45 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   return (
     <StyledChatConversation data-testid="chat-conversation">
-      <form
-        onSubmit={handleSubmit}
-        ref={formRef}
-        data-is-focused="false"
-        data-is-streaming={isStreaming}
-      >
-        <textarea
-          ref={textareaRef}
-          onKeyDown={handleKeyDown}
-          placeholder={textareaPlaceholder}
-          onFocus={handleFocus}
-          onBlur={handleFocus}
-        ></textarea>
-        {conversation.context?.works &&
-          conversation.context.works.length > 0 && (
-            <Stack
-              context={conversation.context}
-              isDismissable
-              dismissCallback={handleStackDismiss}
-            />
-          )}
-        <button type="submit" disabled={isStreaming}>
-          {isStreaming ? (
-            <>
-              Responding
-              <IconSparkles />
-            </>
-          ) : (
-            <>
-              Reply <IconReply />
-            </>
-          )}
-        </button>
-      </form>
+      <div>
+        <form
+          onSubmit={handleSubmit}
+          ref={formRef}
+          data-is-focused="false"
+          data-is-streaming={isStreaming}
+        >
+          <textarea
+            ref={textareaRef}
+            onKeyDown={handleKeyDown}
+            placeholder={textareaPlaceholder}
+            onFocus={handleFocus}
+            onBlur={handleFocus}
+          ></textarea>
+          {conversation.context?.works &&
+            conversation.context.works.length > 0 && (
+              <Stack
+                context={conversation.context}
+                isDismissable
+                dismissCallback={handleStackDismiss}
+              />
+            )}
+          <button type="submit" disabled={isStreaming}>
+            {isStreaming ? (
+              <>
+                Responding
+                <IconSparkles />
+              </>
+            ) : (
+              <>
+                Reply <IconReply />
+              </>
+            )}
+          </button>
+        </form>
+        <StyledSystemPrompt>
+          <AI_SYS_PROMPT_MSG />
+        </StyledSystemPrompt>
+      </div>
       <StyledResetButton onClick={handleClearConversation}>
         Start new conversation
         <IconRefresh />
@@ -136,5 +142,15 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     </StyledChatConversation>
   );
 };
+
+export const StyledSystemPrompt = styled("p", {
+  margin: 0,
+  fontSize: "$gr1",
+  color: "$black50",
+  marginBlockStart: "$gr1",
+  a: {
+    cursor: "pointer",
+  },
+});
 
 export default ChatConversation;
