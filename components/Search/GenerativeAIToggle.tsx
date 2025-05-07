@@ -4,6 +4,7 @@ import {
   AI_DISCLAIMER,
   AI_LOGIN_ALERT,
   AI_TOGGLE_LABEL,
+  AI_SYS_PROMPT_MSG,
 } from "@/lib/constants/common";
 import {
   CheckboxIndicator,
@@ -32,7 +33,12 @@ function GenerativeAITooltip() {
         <Tooltip.Portal>
           <TooltipContent side="bottom" sideOffset={3} collisionPadding={19}>
             <TooltipArrow />
-            <TooltipBody>{AI_DISCLAIMER}</TooltipBody>
+            <TooltipBody>
+              {AI_DISCLAIMER}
+              <p>
+                <AI_SYS_PROMPT_MSG />
+              </p>
+            </TooltipBody>
           </TooltipContent>
         </Tooltip.Portal>
       </Tooltip.Root>
