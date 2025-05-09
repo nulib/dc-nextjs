@@ -298,6 +298,7 @@ export async function getTopMetadataAggs({
   });
 
   const body = {
+    _source: false,
     aggs,
     query: {
       bool: {
