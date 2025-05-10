@@ -81,7 +81,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
 
   function handleCanvasIdCallback(activeCanvas: string) {
     if (activeCanvas && contentStateCallback) {
-      const contentStateAnnotationId = `${manifestId}/content-state}`;
+      const contentStateAnnotationId = `${manifestId}/content-state`;
       const contentState = {
         "@context": "http://iiif.io/api/presentation/3/context.json",
         id: contentStateAnnotationId,
