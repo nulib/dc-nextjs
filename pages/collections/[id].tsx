@@ -40,7 +40,6 @@ import Layout from "components/layout";
 import ReadMore from "@/components/Shared/ReadMore";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { getHeroCollection } from "@/lib/iiif/collection-helpers";
-import { iiifCollectionUri } from "@/lib/dc-api";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
@@ -61,14 +60,19 @@ const Collection: NextPage = () => {
 
   const description = collection?.description;
 
-  const iiifResource = iiifCollectionUri(collection?.id);
-
   /** Get the Collection */
   useEffect(() => {
-    async function getData() {
-      const id = router.query.id;
-      if (!id || Array.isArray(id)) return;
-      const data = await getCollection(id);
+    if (!router.isReady || !router.query.id) {
+      return;
+    }
+
+    const collectionId = router.query.id;
+    if (!collectionId || Array.isArray(collectionId)) {
+      return;
+    }
+
+    async function getCollectionData(collectionId: string) {
+      const data = await getCollection(collectionId);
 
       // This is not preferred, but auth is only respected client side
       // so need this for items to display in Reading Room
@@ -76,48 +80,66 @@ const Collection: NextPage = () => {
 
       setCollection(data);
     }
-    router.isReady && getData();
-  }, [router, router.isReady, router.query.id]);
 
-  /** Get dependant data */
-  useEffect(() => {
-    async function getData() {
-      if (!collection) return;
-
+    async function getMetadataData(collectionId: string) {
       /** Get metadata */
-      const metadataAggs = await getMetadataAggs(
-        collection.id,
+      const metadataAggsPromise = getMetadataAggs(
+        collectionId,
         "subject.label",
       );
 
       /** Get some data to build out "About" slider content for the Explore tab */
-      const topMetadataResponse = await getTopMetadataAggs({
-        collectionId: collection.id,
+      const topMetadataPromise = getTopMetadataAggs({
+        collectionId,
         metadataFields: ["subject.label", "genre.label"],
       });
 
-      const collectionWorkCounts = await getCollectionWorkCounts(collection.id);
-      const workTypeCountsValue = collectionWorkCounts
-        ? collectionWorkCounts[collection.id]
-        : null;
+      const collectionWorkCountsPromise = getCollectionWorkCounts(collectionId);
 
-      const seriesResponse = await getMetadataAggs(collection.id, "series");
+      const seriesPromise = getMetadataAggs(collectionId, "series");
 
-      if (metadataAggs) {
-        setMetadata(metadataAggs);
+      const responses = await Promise.allSettled([
+        metadataAggsPromise,
+        topMetadataPromise,
+        collectionWorkCountsPromise,
+        seriesPromise,
+      ]);
+
+      const [
+        metadataAggs,
+        topMetadataResponse,
+        collectionWorkCounts,
+        seriesResponse,
+      ] = responses;
+
+      if (metadataAggs.status === "fulfilled" && metadataAggs.value) {
+        setMetadata(metadataAggs.value);
       }
-      if (topMetadataResponse) {
-        setTopMetadata(topMetadataResponse);
+
+      if (
+        topMetadataResponse.status === "fulfilled" &&
+        topMetadataResponse.value
+      ) {
+        setTopMetadata(topMetadataResponse.value);
       }
+
+      const workTypeCountsValue =
+        collectionWorkCounts.status === "fulfilled" &&
+        collectionWorkCounts.value
+          ? collectionWorkCounts.value[collectionId]
+          : null;
       if (workTypeCountsValue) {
         setWorkTypeCounts(workTypeCountsValue);
       }
-      if (seriesResponse) {
-        setSeries(seriesResponse);
+
+      if (seriesResponse.status === "fulfilled" && seriesResponse.value) {
+        setSeries(seriesResponse.value);
       }
     }
-    collection && getData();
-  }, [collection]);
+
+    getCollectionData(collectionId);
+    getMetadataData(collectionId);
+  }, [router, router.isReady, router.query.id]);
 
   const totalAudio = workTypeCounts?.totalAudio || 0;
   const totalImage = workTypeCounts?.totalImage || 0;

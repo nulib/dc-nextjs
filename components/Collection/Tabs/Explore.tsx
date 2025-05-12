@@ -33,7 +33,7 @@ const CollectionTabsExplore: React.FC<CollectionTabsExploreProps> = ({
     // Build "as=iiif" urls for each subject which will feed into the Slider
     setSubjectWorkSliders(
       subject.value.map((subjectValue) => {
-        const iiifCollectionId = `${DCAPI_ENDPOINT}/search?query=collection.id:"${collection.id}" AND ${subject.field}:"${subjectValue}"&collectionLabel=${subjectValue}&collectionSummary=${""}&as=iiif`;
+        const iiifCollectionId = `${DCAPI_ENDPOINT}/search?query=collection.id:"${collection.id}" AND ${subject.field}:"${subjectValue}"&collectionLabel=${subjectValue}&collectionSummary=${""}&size=10&as=iiif`;
 
         const searchUrl = new URL("/search", DC_URL);
         searchUrl.searchParams.append("subject", subjectValue);
