@@ -33,12 +33,9 @@ const DownloadAndShare: React.FC = () => {
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
 
-  const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
-    useWorkAuth(work);
+  const { isWorkPrivate, isWorkInstitution } = useWorkAuth(work);
 
-  const showEmbedWarning = Boolean(
-    isWorkRestricted || (isUserLoggedIn && isWorkInstitution),
-  );
+  const showEmbedWarning = Boolean(isWorkPrivate || isWorkInstitution);
 
   useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {

@@ -24,13 +24,13 @@ export const CloverViewer = dynamic(
 
 interface WrapperProps {
   manifestId: Work["iiif_manifest"];
-  isWorkRestricted?: boolean;
+  isWorkReadingRoomOnly?: boolean;
   viewerOptions?: ViewerConfigOptions;
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
   manifestId,
-  isWorkRestricted,
+  isWorkReadingRoomOnly,
   viewerOptions = {},
 }) => {
   const userAuth = React.useContext(UserContext);
@@ -88,11 +88,13 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
             options={options}
           />
         )}
-        {isWorkRestricted && userAuth?.user?.isReadingRoom && (
+        {isWorkReadingRoomOnly && (
           <Announcement>
             <AnnouncementContent>
               <IconInfo />
-              <p>You have access to Work because you are in the reading room</p>
+              <p>
+                You have access to this Work because you are in the reading room
+              </p>
             </AnnouncementContent>
           </Announcement>
         )}

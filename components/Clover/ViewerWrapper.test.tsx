@@ -10,10 +10,14 @@ const userContextValue = {
     isReadingRoom: false,
     name: "Joan Doe",
     sub: "jdoe2399",
+    isInstitution: true,
+    scopes: ["read:Public", "read:Institution", "read:Published", "chat"],
+    primaryAffiliation: "staff",
+    provider: "nusso",
   },
 };
 const readingRoomMessage =
-  /You have access to Work because you are in the reading room/i;
+  /You have access to this Work because you are in the reading room/i;
 
 describe("WorkViewerWrapper", () => {
   it("renders a wrapping element for Clover", async () => {
@@ -31,7 +35,7 @@ describe("WorkViewerWrapper", () => {
     render(
       <UserContext.Provider value={readingUserContext}>
         <WorkViewerWrapper
-          isWorkRestricted={true}
+          isWorkReadingRoomOnly={true}
           manifestId="http://testing.com"
         />
       </UserContext.Provider>,
@@ -47,7 +51,7 @@ describe("WorkViewerWrapper", () => {
     render(
       <UserContext.Provider value={readingUserContext}>
         <WorkViewerWrapper
-          isWorkRestricted={false}
+          isWorkReadingRoomOnly={false}
           manifestId="http://testing.com"
         />
       </UserContext.Provider>,

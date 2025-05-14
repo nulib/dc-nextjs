@@ -5,17 +5,30 @@ import React from "react";
 import { manifest } from "@/mocks/work-page/download-and-share";
 import { work1 } from "@/mocks/work-page/work1";
 
+import { UserContext } from "@/context/user-context";
+
+const userContextValue = {
+  user: {
+    isLoggedIn: false,
+    scopes: ["read:Public", "read:Published"],
+    isReadingRoom: false,
+    isInstitution: false,
+  },
+};
+
 const alternateFormatItems = manifest.rendering ? [...manifest.rendering] : [];
 
 describe("EmbedResources", () => {
   it("should render the Download and Embed section with standard images ", () => {
     render(
-      <EmbedResources
-        manifest={manifest}
-        alternateFormatItems={[]}
-        showEmbedWarning={false}
-        work={work1}
-      />,
+      <UserContext.Provider value={userContextValue}>
+        <EmbedResources
+          manifest={manifest}
+          alternateFormatItems={[]}
+          showEmbedWarning={false}
+          work={work1}
+        />
+      </UserContext.Provider>,
     );
     expect(
       screen.getByRole("heading", { name: "Download and Embed" }),
@@ -39,12 +52,14 @@ describe("EmbedResources", () => {
 
   it("should render the Download and Embed section with alternate formats. It should also include 'pdf' in the link if it's a PDF mime/type", () => {
     render(
-      <EmbedResources
-        manifest={manifest}
-        alternateFormatItems={alternateFormatItems}
-        showEmbedWarning={false}
-        work={work1}
-      />,
+      <UserContext.Provider value={userContextValue}>
+        <EmbedResources
+          manifest={manifest}
+          alternateFormatItems={alternateFormatItems}
+          showEmbedWarning={false}
+          work={work1}
+        />
+      </UserContext.Provider>,
     );
 
     expect(
