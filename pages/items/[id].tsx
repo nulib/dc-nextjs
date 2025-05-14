@@ -43,11 +43,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const userAuthContext = useContext(UserContext);
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
-  const { isWorkRestricted } = useWorkAuth(work);
+  const { userCanRead, isWorkReadingRoomOnly } = useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
 
-  const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
   const collectionWorkTypeCounts =
     collectionWorkCounts &&
@@ -100,13 +99,13 @@ const WorkPage: NextPage<WorkPageProps> = ({
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              {work.iiif_manifest && (isReadingRoom || !isWorkRestricted) && (
+              {work.iiif_manifest && userCanRead && (
                 <WorkViewerWrapper
                   manifestId={work.iiif_manifest}
-                  isWorkRestricted={isWorkRestricted}
+                  isWorkReadingRoomOnly={isWorkReadingRoomOnly}
                 />
               )}
-              {work && !isReadingRoom && isWorkRestricted && (
+              {work && !userCanRead && (
                 <WorkRestrictedDisplay
                   thumbnail={work.thumbnail}
                   workId={work.id}

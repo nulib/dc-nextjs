@@ -18,7 +18,7 @@ interface EmbeddedViewerPageProps {
 
 const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
   const router = useRouter();
-  const { isWorkRestricted } = useWorkAuth(work);
+  const { userCanRead } = useWorkAuth(work);
   const thumbnail = work?.thumbnail || "";
 
   const searchParams = getUrlSearchParams(decodeURIComponent(router.asPath));
@@ -49,7 +49,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
 
   return (
     <>
-      {!isWorkRestricted ? (
+      {userCanRead ? (
         <WorkViewerWrapper
           manifestId={work.iiif_manifest}
           viewerOptions={viewerOptions}

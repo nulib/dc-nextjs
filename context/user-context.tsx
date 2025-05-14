@@ -16,18 +16,24 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       if (!result) return;
       const {
         email,
+        isInstitution = false,
         isLoggedIn = false,
         isReadingRoom = false,
         name,
         primaryAffiliation,
+        provider,
+        scopes,
         sub,
       } = result;
       setUser({
         email,
+        isInstitution,
         isLoggedIn,
         isReadingRoom,
         name,
         primaryAffiliation,
+        provider,
+        scopes,
         sub,
       });
     });

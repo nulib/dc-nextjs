@@ -9,15 +9,23 @@ const useWorkAuth = (work: Work | null | undefined) => {
   const isWorkPrivate = work?.visibility === "Private";
   const isWorkPublic = work?.visibility === "Public";
 
-  const isWorkRestricted =
-    isWorkPrivate || (!isUserLoggedIn && isWorkInstitution);
+  const publishedStatus = work?.published ? "Published" : "Unpublished";
+  const userCanRead =
+    userAuthContext?.user?.scopes.includes(`read:${work?.visibility}`) &&
+    userAuthContext?.user?.scopes.includes(`read:${publishedStatus}`);
+
+  const isWorkReadingRoomOnly =
+    userAuthContext?.user?.isReadingRoom &&
+    (isWorkPrivate ||
+      (isWorkInstitution && !userAuthContext?.user?.isInstitution));
 
   return {
     isUserLoggedIn,
     isWorkInstitution,
     isWorkPrivate,
     isWorkPublic,
-    isWorkRestricted,
+    isWorkReadingRoomOnly,
+    userCanRead,
   };
 };
 

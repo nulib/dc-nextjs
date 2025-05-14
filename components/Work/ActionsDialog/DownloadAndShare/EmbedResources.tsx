@@ -46,7 +46,7 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
 }) => {
   const router = useRouter();
   const [imageCanvases, setImageCanvases] = React.useState<Canvas[]>([]);
-  const { isWorkRestricted } = useWorkAuth(work);
+  const { userCanRead } = useWorkAuth(work);
   const isSharedLinkPage = router.pathname.includes("/shared");
 
   React.useEffect(() => {
@@ -62,13 +62,13 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
     <EmbedResourcesWrapper>
       <Heading as="h3">Download and Embed</Heading>
 
-      {isWorkRestricted && !isSharedLinkPage && (
+      {!userCanRead && !isSharedLinkPage && (
         <Announcement>
           Download requires Northwestern University NetID authentication{" "}
         </Announcement>
       )}
 
-      {(!isWorkRestricted || isSharedLinkPage) && (
+      {(userCanRead || isSharedLinkPage) && (
         <>
           {alternateFormatItems && alternateFormatItems.length > 0 && (
             <>
