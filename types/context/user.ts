@@ -15,4 +15,7 @@ export type User = {
 
 export type UserContext = {
   user: User | null;
+  isSignInModalOpen: boolean;
+  openSignInModal: () => void;
+  closeSignInModal: () => void;
 };

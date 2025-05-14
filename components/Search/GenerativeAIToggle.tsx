@@ -2,7 +2,6 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 
 import {
   AI_DISCLAIMER,
-  AI_LOGIN_ALERT,
   AI_TOGGLE_LABEL,
   AI_SYS_PROMPT_MSG,
 } from "@/lib/constants/common";
@@ -20,7 +19,6 @@ import { TooltipArrow, TooltipBody } from "../Shared/Tooltip.styled";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
-import SharedAlertDialog from "../Shared/AlertDialog";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 
 function GenerativeAITooltip() {
@@ -47,8 +45,7 @@ function GenerativeAITooltip() {
 }
 
 export default function GenerativeAIToggle() {
-  const { closeDialog, dialog, isChecked, handleCheckChange, handleLogin } =
-    useGenerativeAISearchToggle();
+  const { isChecked, handleCheckChange } = useGenerativeAISearchToggle();
 
   return (
     <>
@@ -65,15 +62,6 @@ export default function GenerativeAIToggle() {
         <label htmlFor="isGenerativeAI">{AI_TOGGLE_LABEL}</label>
         <GenerativeAITooltip />
       </GenerativeAIToggleWrapper>
-
-      <SharedAlertDialog
-        isOpen={dialog.isOpen}
-        cancel={{ label: "Cancel", onClick: closeDialog }}
-        action={{ label: "Sign in", onClick: handleLogin }}
-        title="Sign in to Digital Collections"
-      >
-        {AI_LOGIN_ALERT}
-      </SharedAlertDialog>
     </>
   );
 }

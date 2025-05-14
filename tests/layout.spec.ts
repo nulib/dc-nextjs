@@ -21,7 +21,7 @@ test("top header renders logo and links", async ({ page }) => {
     navEl.getByRole("link", { exact: true, name: "Contact" }),
   ).toHaveAttribute("href", "/contact");
 
-  await expect(navEl.getByRole("link", { name: "Sign in" })).toBeVisible();
+  await expect(navEl.getByRole("button", { name: "Sign in" })).toBeVisible();
 });
 
 test("footer renders", async ({ page }) => {

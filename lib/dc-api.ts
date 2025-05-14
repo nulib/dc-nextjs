@@ -36,6 +36,7 @@ async function apiGetRequest<R>(
     return rawResponse ? (response as unknown) : work;
   } catch (err) {
     handleError(err);
+    throw err;
   }
 }
 

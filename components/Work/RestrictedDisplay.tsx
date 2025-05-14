@@ -1,8 +1,8 @@
 import Announcement from "@/components/Shared/Announcement";
 import BlurredBgImage from "@/components/Shared/BlurredBgImage";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
-import Link from "next/link";
-import React from "react";
+import { UserContext } from "@/context/user-context";
+import React, { useContext } from "react";
+import { Button } from "@nulib/design-system";
 
 interface Props {
   thumbnail: string | null;
@@ -15,6 +15,7 @@ const WorkRestrictedDisplay: React.FC<Props> = ({
   workId,
   workTitle = "",
 }) => {
+  const { openSignInModal } = useContext(UserContext);
   return (
     <div data-testid="restricted-display">
       {thumbnail && (
@@ -30,12 +31,9 @@ const WorkRestrictedDisplay: React.FC<Props> = ({
         <p>
           This Work requires Northwestern University NetID authentication.
           Please{" "}
-          <Link
-            href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}
-            style={{ cursor: "pointer" }}
-          >
+          <Button onClick={openSignInModal} isText isLowercase as="a">
             sign in
-          </Link>
+          </Button>
         </p>
         <p>
           If you are not a member of the Northwestern Community, email{" "}

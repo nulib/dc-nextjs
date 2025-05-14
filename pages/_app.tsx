@@ -13,7 +13,7 @@ import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 import useLocalStorage from "@/hooks/useLocalStorage";
-
+import AuthDialog from "@/components/Shared/AuthDialog";
 // Init Honeybadger
 setupHoneyBadger();
 
@@ -79,6 +79,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
             }
           `}</style>
           {mounted && <Component {...pageProps} />}
+          <AuthDialog />
           <GoogleTagManager gtmId="GTM-NDJXLQW" />
         </SearchProvider>
       </UserProvider>
