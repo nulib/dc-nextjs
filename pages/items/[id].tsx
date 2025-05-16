@@ -149,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const work = await getWork(id);
 
   const collectionWorkCounts = work?.collection
-    ? await getCollectionWorkCounts(work?.collection.id)
+    ? await getCollectionWorkCounts([work?.collection.id])
     : null;
 
   /** Add values to GTM's dataLayer object */

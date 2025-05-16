@@ -11,6 +11,16 @@ import { DCAPI_ENDPOINT } from "./constants/endpoints";
 import type { Visibility } from "@nulib/dcapi-types";
 import { shuffle } from "@/lib/utils/array-helpers";
 
+export type CollectionSearchResponse = Pick<
+  Collection,
+  | "id"
+  | "title"
+  | "description"
+  | "thumbnail"
+  | "representative_image"
+  | "visibility"
+>;
+
 export type CollectionListShape = {
   description?: string | null;
   id: string;
@@ -63,6 +73,39 @@ export async function getCollection(
   }
 }
 
+export async function getCollectionsData() {
+  try {
+    const response = await apiPostRequest<
+      Record<"data", CollectionSearchResponse[]>
+    >({
+      url: `${DCAPI_ENDPOINT}/search/collections?size=200&sort=title:asc`,
+      body: {
+        _source: [
+          "id",
+          "title",
+          "description",
+          "thumbnail",
+          "representative_image",
+          "visibility",
+        ],
+        query: {
+          match_all: {},
+        },
+      },
+    });
+
+    if (!response) {
+      console.error("No collections found");
+      return [];
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching collections data", error);
+    return [];
+  }
+}
+
 /** Get all Collections */
 export async function getCollections() {
   let collectionList: CollectionListShape[] = [];
@@ -74,14 +117,11 @@ export async function getCollections() {
   };
 
   try {
-    const collections = await apiGetRequest<Collection[] | undefined>({
-      url: `${DCAPI_ENDPOINT}/collections?size=200&sort=title:asc`,
-    });
-
-    if (!collections) return [];
-
+    const collections = await getCollectionsData();
     /** Get Work counts (Image / Audio / Video) for all Collections */
-    const workCountMap = await getCollectionWorkCounts();
+    const workCountMap = await getCollectionWorkCounts(
+      collections.map((c) => c.id),
+    );
 
     /** Stitch together only the Collection list info this page requires */
     collectionList = collections.map(
@@ -114,36 +154,14 @@ export async function getCollections() {
   }
 }
 
-export async function getCollectionWorkCount(collectionId: string) {
-  const body = {
-    _source: ["id"],
-    query: {
-      match: {
-        "collection.id": collectionId,
-      },
-    },
-    aggs: {},
-    size: 0,
-  };
-
-  try {
-    const response = await apiPostRequest<ApiSearchResponse>({
-      body,
-      url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/search`,
-    });
-
-    if (response?.pagination) {
-      return response.pagination.total_hits;
-    }
-    return null;
-  } catch (err) {
-    console.error("Error getting Collection Work count", err);
-  }
-}
-
 /* eslint sort-keys:0 */
+/**
+ * Perform an aggregation query to get the Work counts for an array of Collections
+ *
+ * @param collectionIds - Array of Collection IDs to get Work counts for; if empty array, query on all collections
+ */
 export async function getCollectionWorkCounts(
-  collectionId = "",
+  collectionIds: string[] = [],
 ): Promise<CollectionWorkCountMap | null> {
   function getCount(
     buckets: ApiResponseBucket[],
@@ -153,14 +171,14 @@ export async function getCollectionWorkCounts(
     return found ? found.doc_count : 0;
   }
 
-  /** Get data for all Collections */
+  /** Get data for specified Collections or all Collections if empty array */
   const body = {
     _source: ["id"],
     aggs: {
       collections: {
         terms: {
           field: "collection.id",
-          size: collectionId ? 1 : 10000,
+          size: collectionIds.length > 0 ? collectionIds.length : 10000,
         },
         aggs: {
           workTypes: {
@@ -172,17 +190,22 @@ export async function getCollectionWorkCounts(
         },
       },
     },
-    query: collectionId
-      ? {
-          match: {
-            "collection.id": collectionId,
+    query:
+      collectionIds.length > 0
+        ? {
+            bool: {
+              should: collectionIds.map((id) => ({
+                match: {
+                  "collection.id": id,
+                },
+              })),
+            },
+          }
+        : {
+            query_string: {
+              query: "*",
+            },
           },
-        }
-      : {
-          query_string: {
-            query: "*",
-          },
-        },
     size: 0,
   };
 
@@ -197,16 +220,19 @@ export async function getCollectionWorkCounts(
 
     const collectionBuckets = collectionAggregations?.collections?.buckets;
     if (!collectionBuckets || collectionBuckets.length === 0) {
-      /** The Collection has no Works, send default zero counts */
-      if (collectionId) {
-        return {
-          [collectionId]: {
+      /** The Collections have no Works, send default zero counts */
+      if (collectionIds.length > 0) {
+        // Create an object with zero counts for each requested collection ID
+        const emptyCountMap: CollectionWorkCountMap = {};
+        collectionIds.forEach((id) => {
+          emptyCountMap[id] = {
             totalWorks: 0,
             totalImage: 0,
             totalAudio: 0,
             totalVideo: 0,
-          },
-        };
+          };
+        });
+        return emptyCountMap;
       }
       /** All Collections - something went wrong in API if this evaluates */
       return null;
@@ -228,9 +254,23 @@ export async function getCollectionWorkCounts(
       };
     });
 
+    // Add zero counts for any requested collection IDs that weren't returned in the results
+    if (collectionIds.length > 0) {
+      collectionIds.forEach((id) => {
+        if (!countMap[id]) {
+          countMap[id] = {
+            totalWorks: 0,
+            totalImage: 0,
+            totalAudio: 0,
+            totalVideo: 0,
+          };
+        }
+      });
+    }
+
     return countMap;
   } catch (err) {
-    console.error("Error getting Collection subjects", err);
+    console.error("Error getting Collection work counts", err);
     return null;
   }
 }

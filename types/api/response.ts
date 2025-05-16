@@ -5,7 +5,13 @@ export interface ApiResponse {
   data: ApiResponseData;
   info: {
     total: number;
+    link_expiration: string;
   };
+}
+
+export interface ApiCollectionResponse {
+  data: Collection[];
+  pagination: Pagination;
 }
 
 export interface ApiResponseAggregation {
