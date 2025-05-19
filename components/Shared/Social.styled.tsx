@@ -7,11 +7,10 @@ export const SocialStyled = styled("div", {
   display: "flex",
 
   [`${IconStyled}`]: {
-    width: "$gr4",
-    height: "$gr4",
-    margin: "0 $gr2 0 0",
-    backgroundColor: "$purple",
-    fill: "$white",
+    width: "$gr5",
+    height: "$gr5",
+    backgroundColor: "$white",
+    fill: "$purple",
     color: "$white",
     stroke: "$white",
     cursor: "pointer",

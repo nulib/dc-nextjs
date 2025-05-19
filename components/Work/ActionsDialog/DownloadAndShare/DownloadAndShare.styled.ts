@@ -4,14 +4,6 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const EmbedViewer = styled("div", {
-  border: "2px dashed $black10",
-  width: "calc(100% - $gr4)",
-  padding: "$gr4",
-
-  "@sm": {
-    width: "100%",
-  },
-
   pre: {
     margin: "0 0 $gr3",
     whiteSpace: "break-spaces",
@@ -19,6 +11,8 @@ const EmbedViewer = styled("div", {
     fontSize: "$gr2",
     lineHeight: "1.55em",
     wordBreak: "break-word",
+    backgroundColor: "$gray6",
+    padding: "$gr3",
   },
 });
 
@@ -161,6 +155,34 @@ const EmbedLayoutPreviewInfoPanel = styled("div", {
   width: "$gr9",
 });
 
+const StyledShareURL = styled("div", {
+  background: "$gray6",
+  borderRadius: "2em",
+  padding: "$gr2 $gr4 $gr2 $gr3",
+  marginBottom: "$gr2",
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+
+  input: {
+    background: "transparent",
+    border: "none",
+    flexGrow: 1,
+    fontFamily: "$northwesternSansRegular",
+    fontSize: "$gr3",
+    paddingRight: "$gr2",
+    color: "$black50",
+    maskImage:
+      "linear-gradient(to right, rgba(0, 0, 0, 1) 61.8%, rgba(0, 0, 0, 0))",
+  },
+
+  button: {
+    fontFamily: "$northwesternSansBold",
+    fontSize: "$gr2",
+    fontWeight: "400",
+  },
+});
+
 const ShareURL = styled(EmbedHTML, {
   "> a": {
     fontSize: "$gr3",
@@ -183,7 +205,7 @@ const ShareURLActions = styled(EmbedHTMLActionRow, {
   },
 });
 
-const EmbedResourcesWrapper = styled("div", {
+const EmbedResourcesWrapper = styled("section", {
   paddingBottom: "$gr3",
 });
 
@@ -231,4 +253,5 @@ export {
   PdfLabel,
   ShareURL,
   ShareURLActions,
+  StyledShareURL,
 };

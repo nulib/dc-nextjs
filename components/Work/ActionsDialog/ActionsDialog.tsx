@@ -21,7 +21,7 @@ const WorkActionsDialog: React.FC<WorkActionsDialogProps> = ({
       case "FIND":
         return "Find this item";
       case "DOWNLOAD":
-        return "Download this item";
+        return "Share this item";
       default:
         return "";
     }

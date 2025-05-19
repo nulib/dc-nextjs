@@ -17,11 +17,7 @@ const ActionsDialogAside: React.FC<ActionsDialogAsideProps> = ({
   return (
     <ActionsDialogAsideStyled data-testid="actions-dialog-aside">
       {work && (
-        <Card
-          title={work.title || ""}
-          imageUrl={work.thumbnail || ""}
-          supplementalInfo={<WorkType />}
-        />
+        <Card title={work.title || ""} imageUrl={work.thumbnail || ""} />
       )}
       {children}
     </ActionsDialogAsideStyled>

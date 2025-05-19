@@ -51,7 +51,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
     <>
       {userCanRead ? (
         <WorkViewerWrapper
-          manifestId={work.iiif_manifest}
+          iiifContent={work.iiif_manifest}
           viewerOptions={viewerOptions}
         />
       ) : (
