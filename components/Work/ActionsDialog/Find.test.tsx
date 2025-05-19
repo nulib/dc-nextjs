@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+
 import WorkDialogFind from "@/components/Work/ActionsDialog/Find";
 import { WorkProvider } from "@/context/work-context";
 import { sampleWork1 } from "@/mocks/sample-work1";
@@ -15,7 +16,6 @@ describe("WorkDialogFind", () => {
     setup();
     const div = screen.getByTestId("actions-dialog-aside");
     expect(within(div).getByAltText(`${sampleWork1.title}`));
-    expect(within(div).getByText(sampleWork1.work_type || ""));
   });
 
   it("renders expected metadata content", () => {

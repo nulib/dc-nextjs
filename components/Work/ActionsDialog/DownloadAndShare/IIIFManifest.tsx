@@ -1,12 +1,14 @@
 import {
   ShareURL,
   ShareURLActions,
+  StyledShareURL,
 } from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.styled";
 
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
-import IIIFLogo from "@/components/Shared/SVG/IIIF";
+import IIIFShare from "@/components/Shared/IIIF/Share";
+import IIIFShareHelperLink from "@/components/Shared/IIIF/HelperLink";
 import { Manifest } from "@iiif/presentation-3";
 import MiradorLink from "./MiradorLink";
 import React from "react";
@@ -22,33 +24,24 @@ const IIIFManifest: React.FC<IIIFManifestProps> = ({ manifest, work }) => {
   const { isWorkInstitution, isWorkPrivate } = useWorkAuth(work);
 
   return (
-    <>
+    <section>
       <Heading as="h3" css={{ marginTop: "0" }}>
         IIIF Manifest
       </Heading>
-      <ShareURL>
-        <a href={manifest.id} target="_blank" rel="noreferrer">
-          {manifest.id}
-        </a>
-        <ShareURLActions>
-          <CopyText
-            renderIcon={IIIFLogo}
-            textPrompt="Copy Manifest Link"
-            textToCopy={manifest.id}
-          />
-          <a
-            href="https://iiif.io/get-started/why-iiif/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            What is IIIF?
-          </a>
-          <MiradorLink
-            showWarning={isWorkInstitution || isWorkPrivate}
-            manifestId={manifest.id}
-          />
-        </ShareURLActions>
-      </ShareURL>
+      <StyledShareURL>
+        <input type="text" value={manifest.id} readOnly />
+        <IIIFShare uri={manifest.id} />
+      </StyledShareURL>
+
+      <div
+        style={{
+          display: "flex",
+          padding: "0.5rem 1rem",
+          justifyContent: "flex-end",
+        }}
+      >
+        <IIIFShareHelperLink />
+      </div>
 
       {(isWorkInstitution || isWorkPrivate) && (
         <Announcement
@@ -57,11 +50,12 @@ const IIIFManifest: React.FC<IIIFManifestProps> = ({ manifest, work }) => {
           }}
           data-testid="mirador-announcement"
         >
-          Opening in external tools like Mirador is not supported for works that
-          require authentication.
+          Opening in external applications using IIIF Viewers such as Clover,
+          Mirador, and Theseus is not supported for works that require
+          authentication.
         </Announcement>
       )}
-    </>
+    </section>
   );
 };
 

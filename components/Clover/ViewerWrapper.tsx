@@ -11,9 +11,9 @@ import Announcement from "@/components/Shared/Announcement";
 import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React from "react";
-import { UserContext } from "@/context/user-context";
-import type { Work } from "@nulib/dcapi-types";
+import { decodeContentState } from "@iiif/helpers";
 import dynamic from "next/dynamic";
+import { useWorkState } from "@/context/work-context";
 
 export const CloverViewer = dynamic(
   () => import("@samvera/clover-iiif/viewer"),
@@ -23,17 +23,19 @@ export const CloverViewer = dynamic(
 );
 
 interface WrapperProps {
-  manifestId: Work["iiif_manifest"];
   isWorkReadingRoomOnly?: boolean;
+  isLoggingContentState?: boolean;
+  iiifContent: string | null;
   viewerOptions?: ViewerConfigOptions;
 }
 
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
-  manifestId,
   isWorkReadingRoomOnly,
+  isLoggingContentState = false,
+  iiifContent,
   viewerOptions = {},
 }) => {
-  const userAuth = React.useContext(UserContext);
+  const { workDispatch, workState } = useWorkState();
 
   const customTheme = {
     colors: {
@@ -77,14 +79,35 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     ...viewerOptions,
   };
 
+  const handleContentStateCallback = (contentState: string) => {
+    if (
+      isLoggingContentState &&
+      contentState &&
+      // @ts-ignore
+      workState?.contentState?.encoded !== contentState?.encoded
+    ) {
+      workDispatch({
+        type: "updateContentState",
+        contentState,
+      });
+    }
+  };
+
+  try {
+    // @ts-ignore
+    const iiifContentState = JSON?.parse(decodeContentState(iiifContent));
+    if (iiifContentState?.id) console.log(iiifContentState?.id);
+  } catch (error) {}
+
   return (
     <Container containerType="wide">
       <ViewerWrapperStyled data-testid="work-viewer-wrapper">
-        {manifestId && (
+        {iiifContent && (
           <CloverViewer
             // @ts-ignore
+            contentStateCallback={handleContentStateCallback}
             customTheme={customTheme}
-            iiifContent={manifestId}
+            iiifContent={iiifContent}
             options={options}
           />
         )}
@@ -103,4 +126,4 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   );
 };
 
-export default WorkViewerWrapper;
+export default React.memo(WorkViewerWrapper);

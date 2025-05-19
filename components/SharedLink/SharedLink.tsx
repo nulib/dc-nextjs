@@ -65,7 +65,7 @@ const SharedLink: React.FC<SharedLinkProps> = ({
             </div>
           </Announcement>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <WorkViewerWrapper manifestId={work.iiif_manifest} />
+            <WorkViewerWrapper iiifContent={work.iiif_manifest} />
             <Container>
               <WorkTopInfo manifest={manifest} work={work} />
               <RelatedItems collections={related} title="Explore Further" />

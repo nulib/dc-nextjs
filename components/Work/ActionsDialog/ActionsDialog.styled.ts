@@ -1,10 +1,12 @@
+import { ExpandableListItemStyled } from "@/components/Shared/ExpandableList.styled";
+import { FigureTitle } from "@/components/Figure/Figure.styled";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
 const ActionsDialogAsideStyled = styled("aside", {
-  width: "25%",
-  padding: "0 2rem 0 0 ",
+  width: "300px",
+  flexShrink: 0,
 
   "@sm": {
     width: "100%",
@@ -13,15 +15,40 @@ const ActionsDialogAsideStyled = styled("aside", {
 });
 
 const Content = styled("div", {
-  width: "75%",
+  paddingRight: "$gr4",
+  flexGrow: 1,
 
-  "@sm": {
-    width: "100%",
+  [`${ExpandableListItemStyled}`]: {
+    "> div": {
+      padding: "$gr2 0",
+    },
+
+    h3: {
+      display: "none !important",
+    },
   },
 });
 
-const ActionsDialogStyled = styled("section", {
+const ActionsDialogStyled = styled("div", {
   display: "flex",
+  gap: "$gr5",
+
+  [`${FigureTitle}`]: {
+    fontFamily: "$northwesternSansBold !important",
+    color: "$black80 !important",
+    fontWeight: "400 !important",
+  },
+
+  h3: {
+    fontSize: "$gr4 !important",
+    fontWeight: "400 !important",
+    fontFamily: "$northwesternSansRegular !important",
+    color: "$black80 !important",
+  },
+
+  section: {
+    paddingBottom: "$gr5",
+  },
 
   "@sm": {
     flexDirection: "column",

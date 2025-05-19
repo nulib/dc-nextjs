@@ -5,6 +5,7 @@ import {
   TopInfoHeaderContent,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
+import IIIFShare, { StyledIIIFShare } from "../Shared/IIIF/Share";
 import {
   Label,
   RequiredStatement,
@@ -16,13 +17,15 @@ import { Button } from "@nulib/design-system";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
-import IIIFShare from "../Shared/IIIF/Share";
+import Icon from "../Shared/Icon";
+import { IconShare } from "../Shared/SVG/Icons";
 import { Manifest } from "@iiif/presentation-3";
 import type { Work } from "@nulib/dcapi-types";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 import WorkMetadata from "@/components/Work/Metadata";
 import type { WorkTypeCountMap } from "@/lib/collection-helpers";
+import { useWorkState } from "@/context/work-context";
 
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;
@@ -39,6 +42,10 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
   manifest,
   work,
 }) => {
+  const {
+    workState: { contentState },
+  } = useWorkState();
+
   const [actionsDialog, setActionsDialog] = React.useState<ActionsDialog>({
     activeDialog: undefined,
   });
@@ -70,6 +77,11 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
     return { audio: totalAudio, image: totalImage, video: totalVideo };
   }
 
+  const contentStateUrl = new URL(window.location.href);
+  contentStateUrl.pathname = `/items/${work.id}`;
+  if (contentState)
+    contentStateUrl.searchParams.set("iiif-content", contentState.encoded);
+
   return (
     <TopInfoWrapper>
       <header>
@@ -84,7 +96,23 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
               />
             )}
           </div>
-          <IIIFShare uri={manifest.id} />
+          <div>
+            <StyledIIIFShare>
+              <button
+                name="download"
+                onClick={handleActionsButtonClick}
+                style={{
+                  paddingRight: "1em",
+                }}
+              >
+                <Icon>
+                  <IconShare />
+                </Icon>
+                Share
+              </button>
+            </StyledIIIFShare>
+            <IIIFShare uri={manifest.id} />
+          </div>
         </TopInfoHeaderContent>
 
         <ActionButtons>
@@ -137,7 +165,6 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
         </Expand>
 
         <TopInfoCollection>
-          {/* <Heading as="h2">Part of {work.collection?.title}</Heading> */}
           <Card
             title={work.collection?.title || ""}
             description={work.collection?.description}

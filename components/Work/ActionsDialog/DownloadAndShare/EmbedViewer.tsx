@@ -84,7 +84,7 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
     : "";
 
   return (
-    <>
+    <section>
       <Heading as="h3">Embed Viewer</Heading>
       {showEmbedWarning && <Announcement>{embedWarningMessage}</Announcement>}
       {!showEmbedWarning && (
@@ -143,7 +143,7 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
           </EmbedHTMLActionRow>
         </EmbedViewerStyled>
       )}
-    </>
+    </section>
   );
 };
 

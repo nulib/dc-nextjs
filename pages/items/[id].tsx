@@ -47,6 +47,11 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
 
+  const iiifContent = router?.query["iiif-content"]
+    ? (router?.query["iiif-content"] as string)
+    : work?.iiif_manifest;
+
+  const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
   const collectionWorkTypeCounts =
     collectionWorkCounts &&
@@ -99,9 +104,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              {work.iiif_manifest && userCanRead && (
+              {iiifContent && userCanRead && (
                 <WorkViewerWrapper
-                  manifestId={work.iiif_manifest}
+                  iiifContent={iiifContent}
+                  isLoggingContentState={true}
                   isWorkReadingRoomOnly={isWorkReadingRoomOnly}
                 />
               )}

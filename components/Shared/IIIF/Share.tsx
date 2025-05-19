@@ -1,11 +1,11 @@
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
 
-import { IconChevronDown, IconExternalLink } from "../SVG/Icons";
-
 import CopyText from "../CopyText";
 import IIIFLogo from "../SVG/IIIF";
+import IIIFShareHelperLink from "./HelperLink";
 import IIIFViewerLink from "./ViewerLink";
 import Icon from "../Icon";
+import { IconChevronDown } from "../SVG/Icons";
 import Link from "next/link";
 import { styled } from "@/stitches.config";
 
@@ -65,7 +65,7 @@ const IIIFShare = ({
           <StyledDropdownSeparator />
           <Dropdown.Item>
             <Link href={uri} target="_blank" rel="noreferrer">
-              View Raw JSON
+              View JSON
             </Link>
           </Dropdown.Item>
           <Dropdown.Item>
@@ -73,27 +73,7 @@ const IIIFShare = ({
           </Dropdown.Item>
           <StyledDropdownSeparator />
           <Dropdown.Item>
-            <Link
-              href="https://iiif.io/get-started/why-iiif/"
-              target="_blank"
-              rel="noreferrer"
-              data-id="what-is-iiif"
-            >
-              What is IIIF?
-              <Icon
-                style={{
-                  display: "inline-flex",
-                  width: "12px",
-                  height: "12px",
-                  color: "$black50",
-                  fill: "$black50",
-                  marginLeft: "0.25em",
-                }}
-                hasSVGPadding={false}
-              >
-                <IconExternalLink />
-              </Icon>
-            </Link>
+            <IIIFShareHelperLink />
           </Dropdown.Item>
         </StyledIIIFShareContent>
       </Dropdown.Root>
@@ -101,9 +81,14 @@ const IIIFShare = ({
   );
 };
 
-const StyledIIIFShare = styled("div", {
+export const StyledIIIFShare = styled("div", {
   position: "relative",
   zIndex: 1,
+  padding: "0 $gr1",
+
+  "&:last-child": {
+    paddingRight: "0",
+  },
 
   "> button": {
     backgroundColor: "transparent",
@@ -126,17 +111,17 @@ const StyledIIIFShare = styled("div", {
         path: {
           fill: "$purple !important",
         },
+
+        "&.icon-chevron-down path": {
+          stroke: "$black50 !important",
+          fill: "none !important",
+        },
       },
 
       "&:last-child": {
         display: "inline-flex",
         alignItems: "center",
         gap: "$gr1",
-
-        "svg path": {
-          stroke: "$black50 !important",
-          fill: "none !important",
-        },
       },
     },
 
