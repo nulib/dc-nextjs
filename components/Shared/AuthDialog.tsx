@@ -23,7 +23,7 @@ import axios from "axios";
 export default function AuthDialog() {
   const { closeSignInModal, isSignInModalOpen } = useContext(UserContext);
   const router = useRouter();
-  const [gotoUrl, setGotoUrl] = useState("");
+  const [ssoUrl, setSsoUrl] = useState("");
   const [magicLinkResponse, setMagicLinkResponse] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
@@ -52,18 +52,18 @@ export default function AuthDialog() {
     setMagicLinkResponse("sending");
     setDisableMagicLinkButton(true);
     apiGetRequest({
-      url: `${DCAPI_ENDPOINT}/auth/login/magic?email=${encodeURIComponent(userEmail)}`,
+      url: `${DCAPI_ENDPOINT}/auth/login/magic?email=${encodeURIComponent(userEmail)}&goto=${encodeURIComponent(getGotoLocation(window))}`,
     })
       .then(() => {
         setMagicLinkResponse("success");
+        setTimeout(() => {
+          setMagicLinkResponse("idle");
+        }, 2000);
       })
       .catch((error) => {
         console.error(error);
         setMagicLinkResponse("error");
       });
-    setTimeout(() => {
-      setMagicLinkResponse("idle");
-    }, 2000);
     setDisableMagicLinkButton(false);
   }
 
@@ -83,7 +83,7 @@ export default function AuthDialog() {
 
   useEffect(() => {
     if (!window) return;
-    setGotoUrl(
+    setSsoUrl(
       `${DCAPI_ENDPOINT}/auth/login?goto=${encodeURIComponent(getGotoLocation(window))}`,
     );
   }, [router.isReady]);
@@ -118,7 +118,7 @@ export default function AuthDialog() {
               isPrimary
               isLowercase
               //@ts-ignore - by setting as="a" we lose the type but href is set
-              href={gotoUrl}
+              href={ssoUrl}
             >
               Northwestern NetID
             </Button>
