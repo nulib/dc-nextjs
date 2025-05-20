@@ -1,5 +1,9 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "./constants/endpoints";
-import axios, { AxiosError, RawAxiosRequestHeaders } from "axios";
+import axios, {
+  AxiosError,
+  RawAxiosRequestHeaders,
+  AxiosResponse,
+} from "axios";
 
 import type { ApiSearchRequestBody } from "@/types/api/request";
 import { NextRouter } from "next/router";
@@ -18,6 +22,17 @@ async function apiGetStatus(url: string) {
     .head(url, { withCredentials: true })
     .then((response) => response.status)
     .catch((error) => error.response.status);
+}
+
+async function apiGetRawRequest<T>(
+  obj: ApiGetRequestParams,
+): Promise<AxiosResponse<T>> {
+  const { url } = obj;
+
+  return await axios({
+    url,
+    withCredentials: true,
+  });
 }
 
 async function apiGetRequest<R>(
@@ -119,6 +134,7 @@ function handleError(err: unknown) {
   }
 }
 export {
+  apiGetRawRequest,
   apiGetRequest,
   apiGetStatus,
   apiPostRequest,

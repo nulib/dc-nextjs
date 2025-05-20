@@ -21,6 +21,7 @@ interface Figure {
   src: string;
   supplementalInfo?: ReactNode;
   title: string;
+  priority?: boolean;
 }
 
 interface FigureProps {
@@ -48,14 +49,17 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
     <FigureStyled data-orientation={orientation} {...props}>
       <FigureImageWrapper>
         <FigurePlaceholder ratio={aspectRatio ? aspectRatio : 1}>
-          <FigureLQIP
-            alt=""
-            fill={true}
-            sizes={srcSetSizes}
-            src={lqip.toString()}
-            priority={true}
-            unoptimized={true}
-          />
+          {!data.priority && (
+            <FigureLQIP
+              alt=""
+              fill={true}
+              sizes={srcSetSizes}
+              src={lqip.toString()}
+              priority={true}
+              unoptimized={true}
+            />
+          )}
+
           <FigureImage
             alt={title}
             fill={true}
@@ -65,6 +69,7 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
             sizes={srcSetSizes}
             src={src}
             unoptimized={true}
+            priority={data.priority ?? false}
           />
         </FigurePlaceholder>
       </FigureImageWrapper>

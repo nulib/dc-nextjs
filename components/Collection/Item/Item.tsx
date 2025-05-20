@@ -13,7 +13,7 @@ import { LinkStyled } from "@/components/Shared/LinkStyled";
 import ReadMore from "@/components/Shared/ReadMore";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 
-const CollectionItem: React.FC<CollectionListShape> = ({
+const CollectionItem: React.FC<CollectionListShape & { priority: boolean }> = ({
   title,
   description,
   id,
@@ -21,6 +21,7 @@ const CollectionItem: React.FC<CollectionListShape> = ({
   totalAudio,
   totalImage,
   totalVideo,
+  priority,
 }) => {
   return (
     <ItemStyled data-collection={id}>
@@ -30,6 +31,7 @@ const CollectionItem: React.FC<CollectionListShape> = ({
             data={{
               src: `${thumbnail}?aspect=square`,
               title,
+              priority,
             }}
           />
         </Link>

@@ -94,7 +94,9 @@ const Collection: NextPage = () => {
         metadataFields: ["subject.label", "genre.label"],
       });
 
-      const collectionWorkCountsPromise = getCollectionWorkCounts(collectionId);
+      const collectionWorkCountsPromise = getCollectionWorkCounts([
+        collectionId,
+      ]);
 
       const seriesPromise = getMetadataAggs(collectionId, "series");
 

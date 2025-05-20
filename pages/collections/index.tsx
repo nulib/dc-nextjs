@@ -1,7 +1,13 @@
 import { CollectionListShape, getCollections } from "@/lib/collection-helpers";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import { StyledForm, StyledInput } from "@/components/Shared/Form.styled";
-
+import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import CollectionItem from "@/components/Collection/Item/Item";
 import Container from "@/components/Shared/Container";
 import { HEAD_META } from "@/lib/constants/head-meta";
@@ -10,41 +16,90 @@ import Heading from "@/components/Heading/Heading";
 import Layout from "components/layout";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 
-const CollectionList: NextPage = () => {
-  const [collectionList, setCollectionList] = useState<CollectionListShape[]>(
-    [],
-  );
-  const [filteredList, setFilteredList] = useState<CollectionListShape[]>([]);
+const CollectionList: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ collections }) => {
+  const [entireCollectionsList, setEntireCollectionsList] = useState<
+    CollectionListShape[]
+  >([]);
+  const [cacheCollectionsList, setCacheCollectionsList] = useState<
+    CollectionListShape[]
+  >([]);
+  const [renderedCollectionsList, setRenderedCollectionsList] = useState<
+    CollectionListShape[]
+  >([]);
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastCollectionElementRef = useRef<HTMLDivElement | null>(null);
+
+  function spliceArray<T>(array: T[], start: number, end: number) {
+    const newArray = [...array];
+    const splicedArray = newArray.splice(start, end);
+    return [splicedArray, newArray];
+  }
+
+  const loadInitialCollections = useCallback(async () => {
+    const [first, rest] = spliceArray(collections, 0, 5);
+    setRenderedCollectionsList(first);
+    setCacheCollectionsList(rest);
+    setEntireCollectionsList(collections);
+  }, []);
 
   useEffect(() => {
-    async function getData() {
-      const list = await getCollections();
-      setCollectionList(list);
-      setFilteredList(list);
-      setIsLoading(false);
+    loadInitialCollections();
+  }, [loadInitialCollections]);
+
+  const loadMoreCollections = useCallback(() => {
+    const [first, rest] = spliceArray(cacheCollectionsList, 0, 10);
+    setRenderedCollectionsList([...renderedCollectionsList, ...first]);
+    setCacheCollectionsList(rest);
+  }, [cacheCollectionsList, renderedCollectionsList]);
+
+  useEffect(() => {
+    // Disconnect previous observer if it exists
+    if (observer.current) {
+      observer.current.disconnect();
     }
-    getData();
-  }, []);
+
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && cacheCollectionsList.length > 0) {
+          loadMoreCollections();
+        }
+      },
+      { threshold: 0 },
+    );
+
+    // Observe the last collection element unless search is active
+    if (!search && lastCollectionElementRef.current) {
+      observer.current.observe(lastCollectionElementRef.current);
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, [renderedCollectionsList, cacheCollectionsList, loadMoreCollections]);
 
   const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    setSearch(event?.target?.value.toLowerCase());
-  };
+    const search = event?.target?.value.toLowerCase();
 
-  useEffect(() => {
-    if (!collectionList) return;
-    setFilteredList(
-      collectionList.filter((collection) =>
-        collection.title.toLowerCase().includes(search),
-      ),
+    if (!search) {
+      setRenderedCollectionsList(entireCollectionsList);
+      return;
+    }
+
+    const filteredList = entireCollectionsList.filter((collection) =>
+      collection.title.toLowerCase().includes(search),
     );
-  }, [collectionList, search]);
+    setSearch(search);
+    setRenderedCollectionsList(filteredList);
+  };
 
   return (
     <>
@@ -69,30 +124,41 @@ const CollectionList: NextPage = () => {
               onChange={handleFilterChange}
             />
           </StyledForm>
-
-          {isLoading && (
-            <SpinLoader css={{ marginLeft: "$gr4", marginTop: "$gr2" }} />
-          )}
-          {!isLoading && (
+          {
             <>
-              {filteredList.length > 0 ? (
-                filteredList.map((item) => (
-                  <CollectionItem {...item} key={item.id} />
-                ))
+              {renderedCollectionsList.length > 0 ? (
+                <>
+                  {renderedCollectionsList.map((item, index) => (
+                    <div
+                      key={item.id}
+                      ref={
+                        index === renderedCollectionsList.length - 1
+                          ? lastCollectionElementRef
+                          : null
+                      }
+                    >
+                      <CollectionItem
+                        {...item}
+                        // set the priority for the first 3 images
+                        priority={[0, 1, 2].includes(index)}
+                      />
+                    </div>
+                  ))}
+                </>
               ) : (
                 <p>
                   No results found for <strong>{search}</strong>.
                 </p>
               )}
             </>
-          )}
+          }
         </Container>
       </Layout>
     </>
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps = (async () => {
   const dataLayer = buildDataLayer({
     pageTitle: "Collections page",
   });
@@ -102,9 +168,11 @@ export async function getServerSideProps() {
     "og:url": `${PRODUCTION_URL}/collections`,
   };
 
+  const collections = await getCollections();
+
   return {
-    props: { dataLayer, openGraphData },
+    props: { dataLayer, openGraphData, collections },
   };
-}
+}) satisfies GetServerSideProps<{ collections: CollectionListShape[] }>;
 
 export default CollectionList;
