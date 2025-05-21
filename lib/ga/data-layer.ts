@@ -2,6 +2,7 @@ import type { Work } from "@nulib/dcapi-types";
 
 interface DataLayer {
   adminset?: string;
+  campaign?: string;
   collections?: string | null;
   creatorsContributors?: Array<string> | string;
   isUsingAI?: boolean;
@@ -14,6 +15,7 @@ interface DataLayer {
 
 const defaultDataLayer = {
   adminset: "",
+  campaign: "",
   collections: "",
   creatorsContributors: "",
   isUsingAI: false,
@@ -31,7 +33,7 @@ export function buildDataLayer(obj: DataLayer) {
   };
 }
 
-export function buildWorkDataLayer(work: Work): DataLayer {
+export function buildWorkDataLayer(work: Work, campaign?: string): DataLayer {
   if (!work) return defaultDataLayer;
 
   const creators = work?.creator.map((creator) => creator.label);
@@ -52,6 +54,7 @@ export function buildWorkDataLayer(work: Work): DataLayer {
 
   const dataLayer: DataLayer = buildDataLayer({
     adminset: work?.library_unit || "",
+    campaign: campaign || "",
     collections: work?.collection?.title ? work.collection.title : null,
     creatorsContributors,
     pageTitle: work?.title || "",
