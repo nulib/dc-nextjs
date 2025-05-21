@@ -21,7 +21,7 @@ import { apiGetRequest } from "@/lib/dc-api";
 import axios from "axios";
 
 export default function AuthDialog() {
-  const { closeSignInModal, isSignInModalOpen } = useContext(UserContext);
+  const { closeSignInModal, isSignInModalOpen, user } = useContext(UserContext);
   const router = useRouter();
   const [ssoUrl, setSsoUrl] = useState("");
   const [magicLinkResponse, setMagicLinkResponse] = useState<
@@ -80,6 +80,15 @@ export default function AuthDialog() {
         setShouldRenderMagicLink(false);
       });
   }, []);
+
+  useEffect(() => {
+    // If a user is logged in via magic link, we don't want to show the magic link option
+    // Note: getUser() in UserContext and the axios call above are both async
+    // so this useEffect tracks both values in orders to run after they have completed.
+    if (user && user.isLoggedIn && user.provider === "magic") {
+      setShouldRenderMagicLink(false);
+    }
+  }, [shouldRenderMagicLink, user]);
 
   useEffect(() => {
     if (!window) return;
