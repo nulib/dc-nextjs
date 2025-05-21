@@ -138,7 +138,16 @@ const WorkPage: NextPage<WorkPageProps> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context?.params?.id as string;
+  const slug = context?.params?.id;
+
+  if (!slug || !Array.isArray(slug) || !slug.length)
+    return {
+      notFound: true,
+    };
+
+  const id = slug[0];
+  const isShared = slug[1] === "share";
+  const campaign = isShared ? "DC Shared URL" : undefined;
 
   /**
    * get status code of the work from the DC API using
@@ -158,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     : null;
 
   /** Add values to GTM's dataLayer object */
-  const dataLayer = work ? buildWorkDataLayer(work) : [];
+  const dataLayer = work ? buildWorkDataLayer(work, campaign) : [];
 
   /** Populate OpenGraph data */
   const openGraphData = work ? buildWorkOpenGraphData(work) : {};

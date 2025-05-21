@@ -27,7 +27,7 @@ const ViewerWrapperStyled = styled("section", {
       cursor: "pointer",
     },
 
-    "&[data-format='text/html']": {
+    "&[data-format='text/plain']": {
       "button > div": {
         display: "flex",
         flexDirection: "column",

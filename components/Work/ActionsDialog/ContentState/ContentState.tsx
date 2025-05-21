@@ -7,6 +7,7 @@ import {
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import SharedSocial from "@/components/Shared/Social";
+import SharedTextArea from "@/components/Shared/TextArea";
 import { StyledShareURL } from "../DownloadAndShare/DownloadAndShare.styled";
 import { convertTime } from "@/lib/utils/time-helpers";
 import { encodeContentState } from "@iiif/helpers";
@@ -69,13 +70,13 @@ const WorkDialogContentState = () => {
           {
             type: "TextualBody",
             value: `${body?.value}\n <em>${appendNote}</em>`,
-            format: "text/html",
+            format: "text/plain",
           },
         ]
       : [];
 
     const url = new URL(window.location.href);
-    url.pathname = `/items/${work?.id}`;
+    url.pathname = `/items/${work?.id}/share`;
 
     const newShareUrl = new URL(url.toString());
     if (canvas?.checked) {
@@ -149,10 +150,11 @@ const WorkDialogContentState = () => {
               )}
               <label aria-disabled={!isCanvasChecked} data-element="textarea">
                 <span>Add an annotation to shared URL</span>
-                <textarea
+                <SharedTextArea
                   name="body"
                   disabled={!isCanvasChecked}
                   placeholder="Add an comment or describe the content in view..."
+                  maxLength={200}
                 />
               </label>
 
