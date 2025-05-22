@@ -4,7 +4,7 @@ import axios, {
   RawAxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
-
+import { getFacetById } from "@/lib/utils/facet-helpers";
 import type { ApiSearchRequestBody } from "@/types/api/request";
 import { NextRouter } from "next/router";
 
@@ -92,11 +92,29 @@ async function getIIIFResource<R>(
 
 function iiifSearchUri(query: NextRouter["query"], size?: number): string {
   const url = new URL(DC_API_SEARCH_URL);
-  Object.keys(query).forEach((key) => {
-    url.searchParams.append(key, query[key] as string);
-    url.searchParams.delete("q");
-    query.q ? url.searchParams.append("query", query.q as string) : null;
+
+  const queries = Object.keys(query).map((key) => {
+    if (key === "q") {
+      return query[key];
+    }
+
+    const facet = getFacetById(key);
+    const value = query[key];
+
+    if (!facet || !value) {
+      return "";
+    }
+
+    if (Array.isArray(value)) {
+      return value.map((v) => `${facet.field}:"${v}"`).join(" AND ");
+    }
+
+    return `${facet.field}:"${value}"`;
   });
+
+  if (queries.length) {
+    url.searchParams.append("query", queries.join(" AND "));
+  }
 
   if (size) url.searchParams.append("size", size.toString());
   url.searchParams.append("as", "iiif");
