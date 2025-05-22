@@ -10,12 +10,18 @@ import Link from "next/link";
 import { styled } from "@/stitches.config";
 
 const IIIFShare = ({
-  uri,
+  encodedContentState,
   dropdownMenuProps,
+  dropdownTriggerContent = "View as IIIF",
+  uri,
 }: {
-  uri: string;
+  encodedContentState?: string;
   dropdownMenuProps?: Dropdown.DropdownMenuProps;
+  dropdownTriggerContent?: string;
+  uri: string;
 }) => {
+  const hasEncodedContentState = Boolean(encodedContentState);
+
   return (
     <StyledIIIFShare data-iiif-uri={uri} data-testid="iiif-share">
       <Dropdown.Root {...dropdownMenuProps}>
@@ -23,7 +29,7 @@ const IIIFShare = ({
           <Icon>
             <IIIFLogo />
           </Icon>
-          <em>View as IIIF</em>
+          <em>{dropdownTriggerContent}</em>
           <Icon>
             <IconChevronDown />
           </Icon>
@@ -41,27 +47,31 @@ const IIIFShare = ({
                 label: "Clover IIIF",
                 href: "https://samvera-labs.github.io/clover-iiif/docs/viewer/demo",
               }}
-              uri={uri}
+              uri={encodedContentState || uri}
             />
           </Dropdown.Item>
-          <Dropdown.Item>
-            <IIIFViewerLink
-              viewer={{
-                label: "Mirador",
-                href: "https://projectmirador.org/embed",
-              }}
-              uri={uri}
-            />
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <IIIFViewerLink
-              viewer={{
-                label: "Theseus",
-                href: "https://theseusviewer.org",
-              }}
-              uri={uri}
-            />
-          </Dropdown.Item>
+          {!hasEncodedContentState && (
+            <>
+              <Dropdown.Item>
+                <IIIFViewerLink
+                  viewer={{
+                    label: "Mirador",
+                    href: "https://projectmirador.org/embed",
+                  }}
+                  uri={uri}
+                />
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <IIIFViewerLink
+                  viewer={{
+                    label: "Theseus",
+                    href: "https://theseusviewer.org",
+                  }}
+                  uri={uri}
+                />
+              </Dropdown.Item>
+            </>
+          )}
           <StyledDropdownSeparator />
           <Dropdown.Item>
             <Link href={uri} target="_blank" rel="noreferrer">
@@ -71,6 +81,14 @@ const IIIFShare = ({
           <Dropdown.Item>
             <CopyText textPrompt="Copy IIIF JSON" textToCopy={uri} />
           </Dropdown.Item>
+          {encodedContentState && (
+            <Dropdown.Item>
+              <CopyText
+                textPrompt="Copy IIIF Content State"
+                textToCopy={encodedContentState}
+              />
+            </Dropdown.Item>
+          )}
           <StyledDropdownSeparator />
           <Dropdown.Item>
             <IIIFShareHelperLink />

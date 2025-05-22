@@ -6,6 +6,7 @@ import {
 
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
+import IIIFShare from "@/components/Shared/IIIF/Share";
 import SharedSocial from "@/components/Shared/Social";
 import SharedTextArea from "@/components/Shared/TextArea";
 import { StyledShareURL } from "../DownloadAndShare/DownloadAndShare.styled";
@@ -15,7 +16,8 @@ import { getContentStateMetadata } from "@/lib/iiif/content-state-helpers";
 import { useWorkState } from "@/context/work-context";
 
 const WorkDialogContentState = () => {
-  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [shareUrl, setShareUrl] = useState<string>();
+  const [encodedContentState, setEncodedContentState] = useState<string>();
   const [isCanvasChecked, setIsCanvasChecked] = useState(false);
 
   const {
@@ -65,6 +67,9 @@ const WorkDialogContentState = () => {
       };
     }
 
+    /**
+     * Construct the new content state object
+     */
     newContentState.body = body?.value
       ? [
           {
@@ -75,19 +80,25 @@ const WorkDialogContentState = () => {
         ]
       : [];
 
+    /**
+     * Construct the new share URL
+     */
     const url = new URL(window.location.href);
     url.pathname = `/items/${work?.id}/share`;
 
     const newShareUrl = new URL(url.toString());
     if (canvas?.checked) {
-      newShareUrl.searchParams.set(
-        "iiif-content",
-        encodeContentState(JSON.stringify(newContentState)),
-      );
+      const contentState = encodeContentState(JSON.stringify(newContentState));
+      newShareUrl.searchParams.set("iiif-content", contentState);
+      setEncodedContentState(contentState);
     } else {
       newShareUrl.searchParams.delete("iiif-content");
+      setEncodedContentState(undefined);
     }
 
+    /**
+     * Set the new share URL and content state
+     */
     setIsCanvasChecked(canvas?.checked);
     setShareUrl(newShareUrl.toString());
   };
@@ -113,7 +124,13 @@ const WorkDialogContentState = () => {
           <div>
             <StyledShareURL>
               <input type="text" value={String(shareUrl)} readOnly />
-              {shareUrl && <CopyText textPrompt="Copy" textToCopy={shareUrl} />}
+              {shareUrl && manifest?.id && (
+                <IIIFShare
+                  encodedContentState={encodedContentState}
+                  dropdownTriggerContent="Preview"
+                  uri={manifest.id}
+                />
+              )}
             </StyledShareURL>
           </div>
           {contentState && (
