@@ -184,5 +184,30 @@ describe("AuthDialog", () => {
         expect(magicLinkButton).toHaveClass(/isDanger/);
       });
     });
+
+    it("should not display the magic link option if the user is logged in with the magic link", async () => {
+      const userContextWithMagicLink: UserContextType = {
+        ...defaultUserContext,
+        user: {
+          isInstitution: false,
+          isLoggedIn: true,
+          isReadingRoom: false,
+          scopes: [],
+          provider: "magic",
+        },
+      };
+      render(withUserProvider(<AuthDialog />, userContextWithMagicLink));
+
+      // useEfect will be called immediately, so we can check if the API was called
+      await waitFor(() => {
+        expect(mockedAxios.get).toHaveBeenCalled();
+      });
+
+      // let the final useEffect run
+      await waitFor(() => {
+        const magicLinkSection = screen.queryByTestId("magic-link");
+        expect(magicLinkSection).not.toBeInTheDocument();
+      });
+    });
   });
 });
