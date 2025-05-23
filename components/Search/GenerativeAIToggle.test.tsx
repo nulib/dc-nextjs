@@ -11,21 +11,31 @@ import { UserContext as UserContextType } from "@/types/context/user";
 import mockRouter from "next-router-mock";
 import userEvent from "@testing-library/user-event";
 
-const defaultUser = {
+const defaultUserContext: UserContextType = {
   user: {
     email: "ace@northewestern.edu",
+    primaryAffiliation: "student",
     isLoggedIn: true,
     isReadingRoom: false,
     name: "Ace Frehley",
     sub: "xyz123",
   },
+  isSignInModalOpen: false,
+  openSignInModal: jest.fn(() => {
+    defaultUserContext.isSignInModalOpen = true;
+  }),
+  closeSignInModal: jest.fn(() => {
+    defaultUserContext.isSignInModalOpen = false;
+  }),
 };
 
 const withUserProvider = (
   Component: React.ReactNode,
-  user: UserContextType = defaultUser,
+  userContext: UserContextType = defaultUserContext,
 ) => {
-  return <UserContext.Provider value={user}>{Component}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={userContext}>{Component}</UserContext.Provider>
+  );
 };
 
 const withSearchProvider = (
@@ -74,11 +84,18 @@ describe("GenerativeAIToggle", () => {
 
   it("renders a login dialog for a non-logged-in user when generative ai checkbox is checked", async () => {
     const user = userEvent.setup();
-    const nonLoggedInUser = {
+    const nonLoggedInUser: UserContextType = {
+      ...defaultUserContext,
       user: {
-        ...defaultUser.user,
+        ...defaultUserContext.user!,
         isLoggedIn: false,
       },
+      openSignInModal: jest.fn(() => {
+        nonLoggedInUser.isSignInModalOpen = true;
+      }),
+      closeSignInModal: jest.fn(() => {
+        nonLoggedInUser.isSignInModalOpen = false;
+      }),
     };
 
     render(
@@ -91,11 +108,7 @@ describe("GenerativeAIToggle", () => {
     const checkbox = await screen.findByRole("checkbox");
     await user.click(checkbox);
 
-    const generativeAIDialog = await screen.findByText(
-      "You must be logged in with a Northwestern NetID to use the Generative AI search feature.",
-    );
-
-    expect(generativeAIDialog).toBeInTheDocument();
+    expect(nonLoggedInUser.isSignInModalOpen).toBe(true);
   });
 
   it("renders a toggled generative ai state when localStorage variable is set and user is logged in", () => {

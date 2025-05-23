@@ -1,5 +1,6 @@
 import { IconClear, IconMenu } from "../Shared/SVG/Icons";
 import {
+  Login,
   Logout,
   Menu,
   MenuToggle,
@@ -77,11 +78,7 @@ export default function HeaderSuper() {
               </Link>
             ))}
             {!userAuthContext?.user?.isLoggedIn && (
-              <Link
-                href={`${DCAPI_ENDPOINT}/auth/login?goto=${window.location}`}
-              >
-                Sign in
-              </Link>
+              <Login onClick={userAuthContext.openSignInModal}>Sign in</Login>
             )}
             {userAuthContext?.user?.isLoggedIn && (
               <>

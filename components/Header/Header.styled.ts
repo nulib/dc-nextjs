@@ -201,6 +201,14 @@ const User = styled("span", {
   },
 });
 
+const Login = styled("button", {
+  border: "none",
+  background: "none",
+  color: "$white",
+  cursor: "pointer",
+  paddingLeft: "$gr2",
+});
+
 const Logout = styled("button", {
   border: "none",
   background: "none",
@@ -241,6 +249,7 @@ export type HeaderVariants = VariantProps<typeof HeaderStyled>;
 
 export {
   Lockup,
+  Login,
   Logout,
   Menu,
   MenuToggle,

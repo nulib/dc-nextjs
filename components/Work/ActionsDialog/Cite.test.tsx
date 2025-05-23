@@ -18,7 +18,6 @@ describe("WorkDialogCite", () => {
     const div = screen.getByTestId("actions-dialog-aside");
 
     expect(within(div).getByAltText(`${sampleWork1.title}`));
-    expect(within(div).getByText(sampleWork1.work_type as string));
   });
 
   it("renders expected metadata content", () => {

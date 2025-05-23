@@ -1,6 +1,10 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "./constants/endpoints";
-import axios, { AxiosError, RawAxiosRequestHeaders } from "axios";
-
+import axios, {
+  AxiosError,
+  RawAxiosRequestHeaders,
+  AxiosResponse,
+} from "axios";
+import { getFacetById } from "@/lib/utils/facet-helpers";
 import type { ApiSearchRequestBody } from "@/types/api/request";
 import { NextRouter } from "next/router";
 
@@ -20,6 +24,17 @@ async function apiGetStatus(url: string) {
     .catch((error) => error.response.status);
 }
 
+async function apiGetRawRequest<T>(
+  obj: ApiGetRequestParams,
+): Promise<AxiosResponse<T>> {
+  const { url } = obj;
+
+  return await axios({
+    url,
+    withCredentials: true,
+  });
+}
+
 async function apiGetRequest<R>(
   obj: ApiGetRequestParams,
   rawResponse?: boolean,
@@ -36,6 +51,7 @@ async function apiGetRequest<R>(
     return rawResponse ? (response as unknown) : work;
   } catch (err) {
     handleError(err);
+    throw err;
   }
 }
 
@@ -76,11 +92,29 @@ async function getIIIFResource<R>(
 
 function iiifSearchUri(query: NextRouter["query"], size?: number): string {
   const url = new URL(DC_API_SEARCH_URL);
-  Object.keys(query).forEach((key) => {
-    url.searchParams.append(key, query[key] as string);
-    url.searchParams.delete("q");
-    query.q ? url.searchParams.append("query", query.q as string) : null;
+
+  const queries = Object.keys(query).map((key) => {
+    if (key === "q") {
+      return query[key];
+    }
+
+    const facet = getFacetById(key);
+    const value = query[key];
+
+    if (!facet || !value) {
+      return "";
+    }
+
+    if (Array.isArray(value)) {
+      return value.map((v) => `${facet.field}:"${v}"`).join(" AND ");
+    }
+
+    return `${facet.field}:"${value}"`;
   });
+
+  if (queries.length) {
+    url.searchParams.append("query", queries.join(" AND "));
+  }
 
   if (size) url.searchParams.append("size", size.toString());
   url.searchParams.append("as", "iiif");
@@ -118,6 +152,7 @@ function handleError(err: unknown) {
   }
 }
 export {
+  apiGetRawRequest,
   apiGetRequest,
   apiGetStatus,
   apiPostRequest,

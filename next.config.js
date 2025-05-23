@@ -53,10 +53,11 @@ module.exports = withBundleAnalyzer({
       "dcapi.rdc-staging.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
+      "iiif.stack.rdc-staging.library.northwestern.edu",
       "api.dc.library.northwestern.edu",
     ],
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   webpack: (config) => {
     // When all the Honeybadger configuration env variables are
@@ -84,6 +85,13 @@ module.exports = withBundleAnalyzer({
         }),
       );
     }
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@samvera/clover-iiif/viewer": require.resolve(
+        "./node_modules/@samvera/clover-iiif/dist/viewer/index.mjs",
+      ),
+    };
 
     return config;
   },

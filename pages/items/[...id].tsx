@@ -43,9 +43,13 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const userAuthContext = useContext(UserContext);
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
-  const { isWorkRestricted } = useWorkAuth(work);
+  const { userCanRead, isWorkReadingRoomOnly } = useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
+
+  const iiifContent = router?.query["iiif-content"]
+    ? (router?.query["iiif-content"] as string)
+    : work?.iiif_manifest;
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
@@ -100,13 +104,14 @@ const WorkPage: NextPage<WorkPageProps> = ({
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
-              {work.iiif_manifest && (isReadingRoom || !isWorkRestricted) && (
+              {iiifContent && userCanRead && (
                 <WorkViewerWrapper
-                  manifestId={work.iiif_manifest}
-                  isWorkRestricted={isWorkRestricted}
+                  iiifContent={iiifContent}
+                  isLoggingContentState={true}
+                  isWorkReadingRoomOnly={isWorkReadingRoomOnly}
                 />
               )}
-              {work && !isReadingRoom && isWorkRestricted && (
+              {work && !userCanRead && (
                 <WorkRestrictedDisplay
                   thumbnail={work.thumbnail}
                   workId={work.id}
@@ -133,7 +138,16 @@ const WorkPage: NextPage<WorkPageProps> = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context?.params?.id as string;
+  const slug = context?.params?.id;
+
+  if (!slug || !Array.isArray(slug) || !slug.length)
+    return {
+      notFound: true,
+    };
+
+  const id = slug[0];
+  const isShared = slug[1] === "share";
+  const campaign = isShared ? "DC Shared URL" : undefined;
 
   /**
    * get status code of the work from the DC API using
@@ -149,11 +163,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const work = await getWork(id);
 
   const collectionWorkCounts = work?.collection
-    ? await getCollectionWorkCounts(work?.collection.id)
+    ? await getCollectionWorkCounts([work?.collection.id])
     : null;
 
   /** Add values to GTM's dataLayer object */
-  const dataLayer = work ? buildWorkDataLayer(work) : [];
+  const dataLayer = work ? buildWorkDataLayer(work, campaign) : [];
 
   /** Populate OpenGraph data */
   const openGraphData = work ? buildWorkOpenGraphData(work) : {};

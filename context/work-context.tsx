@@ -5,6 +5,10 @@ import { WorkContextStore } from "@/types/context/work-context";
 
 type Action =
   | {
+      type: "updateContentState";
+      contentState: any;
+    }
+  | {
       type: "updateManifest";
       manifest: Manifest | undefined;
     }
@@ -20,6 +24,7 @@ type WorkProviderProps = {
 };
 
 const defaultState: WorkContextStore = {
+  contentState: undefined,
   manifest: undefined,
   work: undefined,
 };
@@ -30,6 +35,12 @@ const WorkStateContext = React.createContext<
 
 function workReducer(state: State, action: Action) {
   switch (action.type) {
+    case "updateContentState": {
+      return {
+        ...state,
+        contentState: action.contentState,
+      };
+    }
     case "updateManifest": {
       return {
         ...state,

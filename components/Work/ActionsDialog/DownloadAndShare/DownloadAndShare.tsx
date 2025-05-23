@@ -2,6 +2,9 @@ import {
   ActionsDialogStyled,
   Content,
 } from "@/components/Work/ActionsDialog/ActionsDialog.styled";
+import ExpandableList, {
+  ExpandableListItem,
+} from "@/components/Shared/ExpandableList";
 import {
   LabeledContentResource,
   NULWorkManifest,
@@ -10,10 +13,11 @@ import React, { useEffect, useState } from "react";
 
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import { Canvas } from "@iiif/presentation-3";
+import ContentStateActiveCanvas from "../ContentState/ActiveCanvas";
 import EmbedResources from "./EmbedResources";
 import EmbedViewer from "@/components/Work/ActionsDialog/DownloadAndShare/EmbedViewer";
 import IIIFManifest from "./IIIFManifest";
-import SharedSocial from "@/components/Shared/Social";
+import WorkDialogContentState from "../ContentState/ContentState";
 import { getAnnotationBodyType } from "@/lib/iiif/manifest-helpers";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
@@ -24,7 +28,7 @@ export const embedWarningMessage =
 
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
-  const { manifest, work } = workState;
+  const { manifest, work, contentState } = workState;
   const [imageCanvases, setImageCanvases] = useState<Canvas[]>([]);
   const [alternateFormatItems, setAlternateFormatItems] = useState<
     LabeledContentResource[]
@@ -33,12 +37,9 @@ const DownloadAndShare: React.FC = () => {
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
 
-  const { isUserLoggedIn, isWorkInstitution, isWorkRestricted } =
-    useWorkAuth(work);
+  const { isWorkPrivate, isWorkInstitution } = useWorkAuth(work);
 
-  const showEmbedWarning = Boolean(
-    isWorkRestricted || (isUserLoggedIn && isWorkInstitution),
-  );
+  const showEmbedWarning = Boolean(isWorkPrivate || isWorkInstitution);
 
   useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
@@ -58,31 +59,41 @@ const DownloadAndShare: React.FC = () => {
   return (
     <ActionsDialogStyled>
       <ActionsDialogAside>
-        {work.title && work.thumbnail && (
-          <SharedSocial
-            title={work.title}
-            media={work.thumbnail}
-            description={work.description}
-          />
-        )}
+        {contentState && <ContentStateActiveCanvas />}
       </ActionsDialogAside>
       <Content>
-        {!isSharedLinkPage && <IIIFManifest manifest={manifest} work={work} />}
-
-        <EmbedViewer
-          manifestId={work.iiif_manifest}
-          showEmbedWarning={showEmbedWarning}
-          work={work}
-        />
-
-        {(imageCanvases.length > 0 || alternateFormatItems.length > 0) && (
-          <EmbedResources
-            manifest={manifest as NULWorkManifest}
-            alternateFormatItems={alternateFormatItems}
-            showEmbedWarning={showEmbedWarning}
-            work={work}
-          />
-        )}
+        <ExpandableList defaultValue="share-url">
+          {!isSharedLinkPage && (
+            <ExpandableListItem title="Share Url" value="share-url">
+              <WorkDialogContentState />
+            </ExpandableListItem>
+          )}
+          {!isSharedLinkPage && (
+            <ExpandableListItem title="IIIF Manifest" value="iiif">
+              <IIIFManifest manifest={manifest} work={work} />
+            </ExpandableListItem>
+          )}
+          <ExpandableListItem title="Embed Viewer" value="embed-viewer">
+            <EmbedViewer
+              manifestId={work.iiif_manifest}
+              showEmbedWarning={showEmbedWarning}
+              work={work}
+            />
+          </ExpandableListItem>
+          {(imageCanvases.length > 0 || alternateFormatItems.length > 0) && (
+            <ExpandableListItem
+              title="Download and Embed"
+              value="embed-resources"
+            >
+              <EmbedResources
+                manifest={manifest as NULWorkManifest}
+                alternateFormatItems={alternateFormatItems}
+                showEmbedWarning={showEmbedWarning}
+                work={work}
+              />
+            </ExpandableListItem>
+          )}
+        </ExpandableList>
       </Content>
     </ActionsDialogStyled>
   );

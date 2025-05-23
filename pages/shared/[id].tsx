@@ -1,14 +1,13 @@
 import { GetServerSideProps, NextPage } from "next";
-import { apiGetRequest, getIIIFResource } from "@/lib/dc-api";
-import { getCookies, setCookie } from "cookies-next";
-
-import { AxiosResponse } from "axios";
+import { apiGetRawRequest, getIIIFResource } from "@/lib/dc-api";
+import { setCookie } from "cookies-next";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import Head from "next/head";
 import Layout from "@/components/layout";
 import { Manifest } from "@iiif/presentation-3";
 import SharedLink from "@/components/SharedLink/SharedLink";
 import type { Work } from "@nulib/dcapi-types";
+import { ApiResponse } from "@/types/api/response";
 import { WorkProvider } from "@/context/work-context";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
@@ -53,12 +52,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const url = `${DCAPI_ENDPOINT}/shared-links/${sharedId}`;
-    const response = await apiGetRequest<AxiosResponse>(
-      {
-        url,
-      },
-      true,
-    );
+    const response = await apiGetRawRequest<ApiResponse>({
+      url,
+    });
 
     if (!response) throw new Error("No response from API");
 
@@ -83,7 +79,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       secure: true,
     });
 
-    const work = response.data.data as Work;
+    const work = response.data.data;
+
+    function isWork(work: any): work is Work {
+      return work && typeof work === "object" && "id" in work;
+    }
+
+    if (!isWork(work)) {
+      throw new Error("Invalid work data");
+    }
 
     const manifest =
       (await getIIIFResource<Manifest>(work.iiif_manifest, headers)) || null;

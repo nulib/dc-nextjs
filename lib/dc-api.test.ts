@@ -38,9 +38,9 @@ describe("iiifSearchUri", () => {
     const params = new URLSearchParams(uri.search);
 
     // check that the facets are appended as params
-    expect(params.get("query")).toEqual("Muddy Waters");
+    expect(params.get("query")).toEqual(
+      'Muddy Waters AND work_type:"Image" AND genre.label:"photographs"',
+    );
     expect(params.get("as")).toEqual("iiif");
-    expect(params.get("workType")).toEqual("Image");
-    expect(params.get("genre")).toEqual("photographs");
   });
 });

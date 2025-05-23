@@ -1,4 +1,5 @@
 import * as Accordion from "@radix-ui/react-accordion";
+
 import {
   ExpandableListItemHeading,
   ExpandableListItemIndicator,
@@ -6,6 +7,7 @@ import {
   ExpandableListItemTrigger,
 } from "@/components/Shared/ExpandableList.styled";
 import React, { ReactNode } from "react";
+
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 
 interface ExpandableListItemProps {
@@ -45,12 +47,17 @@ interface ExpandableListComposition {
 
 interface ExpandableListProps {
   children: ReactNode | ReactNode[];
+  defaultValue?: string;
 }
 
 const ExpandableList: ExpandableListComposition &
-  React.FC<ExpandableListProps> = ({ children }) => {
+  React.FC<ExpandableListProps> = ({ children, defaultValue }) => {
   return (
-    <Accordion.Root type="single" collapsible={true}>
+    <Accordion.Root
+      type="single"
+      collapsible={true}
+      defaultValue={defaultValue}
+    >
       {children}
     </Accordion.Root>
   );

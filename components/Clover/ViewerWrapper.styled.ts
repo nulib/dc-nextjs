@@ -20,6 +20,48 @@ const ViewerWrapperStyled = styled("section", {
     },
   },
 
+  ".clover-iiif-annotation-item": {
+    button: {
+      border: "none",
+      background: "none",
+      cursor: "pointer",
+    },
+
+    "&[data-format='text/plain']": {
+      "button > div": {
+        display: "flex",
+        flexDirection: "column",
+        gap: "$gr1",
+        lineHeight: "1.35em",
+
+        em: {
+          display: "flex",
+          fontSize: "$gr2",
+          lineHeight: "1rem",
+          color: "$black50",
+        },
+      },
+    },
+  },
+
+  ".clover-iiif-image-openseadragon-annotation": {
+    fontSize: "$gr3",
+
+    label: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "$gr1",
+      lineHeight: "1.35em !important",
+
+      em: {
+        fontSize: "$gr2",
+        fontWeight: "500",
+        color: "$black20",
+        lineHeight: "1rem",
+      },
+    },
+  },
+
   "& label[for='information-toggle']": {
     boxShadow: "none",
   },

@@ -259,11 +259,11 @@ const StyledChatFeedbackForm = styled("form", {
   variants: {
     isExpanded: {
       true: {
-        opacity: "1",
+        visibility: "visible",
         height: "auto",
       },
       false: {
-        opacity: "0",
+        visibility: "hidden",
         height: "0",
       },
     },

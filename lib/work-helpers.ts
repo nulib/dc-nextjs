@@ -21,18 +21,6 @@ export async function getWork(id: string) {
   }
 }
 
-export async function getWorkManifest(id: string) {
-  try {
-    const response = await apiGetRequest({
-      url: `${DC_API_SEARCH_URL}/works/${id}?as=iiif`,
-    });
-    return response;
-  } catch (err) {
-    console.error("Error getting the work", id);
-    return null;
-  }
-}
-
 export interface WorkSliders {
   iiifCollectionId: string;
   customViewAll: string;
