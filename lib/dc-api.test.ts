@@ -13,7 +13,7 @@ describe("iiifSearchUri", () => {
     expect(DC_API_SEARCH_URL).toContain(uri.pathname);
 
     // check that the query string has the expected params
-    expect(params.get("query")).toEqual("Joan Baez");
+    expect(params.get("query")).toEqual("(Joan Baez)");
     expect(params.get("as")).toEqual("iiif");
   });
 
@@ -23,7 +23,7 @@ describe("iiifSearchUri", () => {
     const params = new URLSearchParams(uri.search);
 
     // check that the size param is set to 100
-    expect(params.get("query")).toEqual("John Fahey");
+    expect(params.get("query")).toEqual("(John Fahey)");
     expect(params.get("as")).toEqual("iiif");
     expect(params.get("size")).toEqual("100");
   });
@@ -39,7 +39,7 @@ describe("iiifSearchUri", () => {
 
     // check that the facets are appended as params
     expect(params.get("query")).toEqual(
-      'Muddy Waters AND work_type:"Image" AND genre.label:"photographs"',
+      '(Muddy Waters) AND work_type:"Image" AND genre.label:"photographs"',
     );
     expect(params.get("as")).toEqual("iiif");
   });

@@ -1,12 +1,13 @@
 import { DCAPI_ENDPOINT, DC_API_SEARCH_URL } from "./constants/endpoints";
 import axios, {
   AxiosError,
-  RawAxiosRequestHeaders,
   AxiosResponse,
+  RawAxiosRequestHeaders,
 } from "axios";
-import { getFacetById } from "@/lib/utils/facet-helpers";
+
 import type { ApiSearchRequestBody } from "@/types/api/request";
 import { NextRouter } from "next/router";
+import { getFacetById } from "@/lib/utils/facet-helpers";
 
 interface ApiGetRequestParams {
   url: string;
@@ -95,7 +96,7 @@ function iiifSearchUri(query: NextRouter["query"], size?: number): string {
 
   const queries = Object.keys(query).map((key) => {
     if (key === "q") {
-      return query[key];
+      return `(${query[key]})`;
     }
 
     const facet = getFacetById(key);
