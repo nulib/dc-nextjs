@@ -69,7 +69,7 @@ export default function AuthDialog() {
 
   useEffect(() => {
     axios
-      .get(`${DCAPI_ENDPOINT}/capabilities/magic/chat`)
+      .get(`${DCAPI_ENDPOINT}/capabilities/magic/login`)
       .then((response) => {
         const resp: { enabled: boolean; provider: string; feature: string } =
           response.data;
