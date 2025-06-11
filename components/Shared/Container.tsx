@@ -37,6 +37,7 @@ const Container: React.FC<ContainerProps> = ({
 
 export const ContainerStyled = styled("div", {
   margin: "0 auto",
+  padding: "0 $gr3",
   variants: {
     containerType: {
       default: {
@@ -55,11 +56,8 @@ export const ContainerStyled = styled("div", {
   },
   width: "100%",
 
-  "@sm": {
+  "@md": {
     padding: "0 $gr2",
-  },
-  "@lg": {
-    padding: "0 $gr3",
   },
 });
 
