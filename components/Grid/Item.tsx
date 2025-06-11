@@ -21,6 +21,8 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
     );
   };
 
+  const noTitleString = "No title";
+
   useEffect(() => {
     switch (item.api_model) {
       case "Work":
@@ -47,7 +49,7 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
                 ? `${item.representative_file_set.url}/square/512,/0/default.jpg`
                 : item.thumbnail || "",
             supplementalInfo: item.work_type,
-            title: item.title || "ok",
+            title: item.title || noTitleString,
           }}
         />
       </Link>
