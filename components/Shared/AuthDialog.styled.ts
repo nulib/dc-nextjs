@@ -5,7 +5,7 @@ import { styled } from "@/stitches.config";
 /* eslint sort-keys: 0 */
 
 const AuthDialogOverlay = styled(Dialog.Overlay, {
-  background: "rgba(0 0 0 / 0.382)",
+  background: "rgba(0 0 0 / 0.618)",
   position: "fixed",
   top: 0,
   left: 0,
@@ -14,7 +14,7 @@ const AuthDialogOverlay = styled(Dialog.Overlay, {
   display: "grid",
   placeItems: "center",
   overflowY: "auto",
-  zIndex: "1",
+  zIndex: "10",
 });
 
 const AuthDialogContent = styled(Dialog.Content, {
@@ -30,7 +30,7 @@ const AuthDialogContent = styled(Dialog.Content, {
   maxWidth: "500px",
   maxHeight: "85vh",
   padding: "$gr4",
-  zIndex: "2",
+  zIndex: "20",
   fontSize: "$gr3",
   display: "flex",
   flexDirection: "column",
@@ -46,12 +46,27 @@ const AuthDialogContent = styled(Dialog.Content, {
 });
 
 const AuthDialogTitle = styled(Dialog.Title, {
-  fontSize: "$gr6",
+  fontSize: "$gr5",
   lineHeight: "1.5rem",
   padding: "0",
   margin: "0",
-  color: "$black50",
+  color: "$black80",
+  fontFamily: "$sansBold",
   fontWeight: "400",
+  letterSpacing: "-0.02em",
+});
+
+const AuthDialogDescription = styled(Dialog.Description, {
+  color: "$black50",
+});
+
+const AuthDialogOptions = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "$gr4",
+  marginBottom: "$gr3",
+  width: "100%",
 });
 
 const AuthDialogColumn = styled("div", {
@@ -61,7 +76,7 @@ const AuthDialogColumn = styled("div", {
   justifyContent: "center",
   textAlign: "center",
   "text-wrap": "balance",
-  gap: "$gr1",
+  gap: "$gr2",
   width: "100%",
 
   "> *": {
@@ -80,15 +95,18 @@ const AuthDialogColumn = styled("div", {
 });
 
 const MagicLinkInput = styled("input", {
-  width: "100%",
   height: "2.5rem",
-  padding: "$gr1",
-  borderWidth: "1px",
-  borderColor: "$black10",
-  borderStyle: "solid",
+  padding: "$gr2",
+  border: "none !important",
+  backgroundColor: "$gray6",
   fontSize: "$gr3",
   lineHeight: "1.5rem",
-  color: "$black50",
+  color: "$black",
+  fontFamily: "$sansRegular",
+
+  "&::placeholder": {
+    color: "$black50",
+  },
 
   "&:user-invalid": {
     borderColor: "$brightRed",
@@ -99,14 +117,14 @@ const AuthDialogDivider = styled("div", {
   display: "flex",
   alignItems: "center",
   width: "100%",
-  color: "$black20",
-  fontSize: "$gr3",
+  color: "$black50",
+  fontSize: "$gr2",
 
   "&::before, &::after": {
     content: '""',
     flex: "1",
     height: "1px",
-    backgroundColor: "$black20",
+    backgroundColor: "$black10",
   },
 
   "&::before": {
@@ -144,7 +162,9 @@ const IconButton = styled("button", {
 export {
   AuthDialogContent,
   AuthDialogColumn,
+  AuthDialogDescription,
   AuthDialogDivider,
+  AuthDialogOptions,
   AuthDialogOverlay,
   AuthDialogTitle,
   IconButton,

@@ -1,14 +1,14 @@
 import Container from "@/components/Shared/Container";
+import { FooterContent } from "@/components/Footer/Content";
 import { FooterStyled } from "@/components/Footer/Footer.styled";
-import { Footer as NUFooter } from "@nulib/design-system";
 import React from "react";
-import SiteContentMessage from "./SiteContentMessage/SiteContentMessage";
+import SiteContentMessage from "@/components/Footer/SiteContentMessage/SiteContentMessage";
 
 export default function Footer() {
   return (
     <FooterStyled>
       <Container data-testid="footer">
-        <NUFooter isCopyright />
+        <FooterContent />
       </Container>
       <SiteContentMessage />
     </FooterStyled>
