@@ -11,6 +11,7 @@ import { getUrlSearchParams } from "@/lib/utils/get-url-search-params";
 import { getWork } from "@/lib/work-helpers";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
+import { WorkProvider } from "@/context/work-context";
 
 interface EmbeddedViewerPageProps {
   work: Work;
@@ -48,7 +49,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
   };
 
   return (
-    <>
+    <WorkProvider>
       {userCanRead ? (
         <WorkViewerWrapper
           iiifContent={work.iiif_manifest}
@@ -57,7 +58,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
       ) : (
         <WorkRestrictedDisplay thumbnail={thumbnail} />
       )}
-    </>
+    </WorkProvider>
   );
 };
 
