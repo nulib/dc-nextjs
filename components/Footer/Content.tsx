@@ -50,7 +50,8 @@ export const FooterContent: React.FC = () => {
             </li>
             <li>
               <a href="https://www.northwestern.edu/privacy/">Privacy Policy</a>
-            </li>
+            </li>{" "}
+            w
             <li>
               <a href="https://www.northwestern.edu/disclaimer.html">
                 Disclaimer
@@ -71,7 +72,7 @@ export const FooterContent: React.FC = () => {
 
         {/* Column 2 */}
         <FooterContentColumn className="contact">
-          <FooterList>
+          <FooterList as="div">
             <FooterIcon
               css={{
                 background:
@@ -80,10 +81,12 @@ export const FooterContent: React.FC = () => {
             >
               <span className="hide-label">Address</span>
             </FooterIcon>
-            <li>1970 Campus Drive</li>
-            <li>Evanston, IL 60208</li>
+            <span>
+              1970 Campus Drive
+              <br /> Evanston, IL 60208
+            </span>
           </FooterList>
-          <FooterList>
+          <FooterList as="div">
             <FooterIcon
               css={{
                 background:
@@ -92,24 +95,24 @@ export const FooterContent: React.FC = () => {
             >
               <span className="hide-label">Phone number</span>
             </FooterIcon>
-            <li>(847) 491-7658</li>
+            <span>(847) 491-7658</span>
           </FooterList>
-          <FooterList>
+          <FooterList as="div">
             <FooterIcon
               css={{
                 background:
                   "url('https://common.northwestern.edu/v8/css/images/icons/email.svg') no-repeat",
-                left: "-2.2rem",
+                top: "2px",
               }}
             >
               <span className="hide-label">Email Address</span>
             </FooterIcon>
 
-            <li>
+            <span>
               <a href="mailto:library@northwestern.edu">
                 library@northwestern.edu
               </a>
-            </li>
+            </span>
           </FooterList>
         </FooterContentColumn>
 

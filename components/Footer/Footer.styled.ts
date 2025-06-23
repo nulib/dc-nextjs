@@ -34,45 +34,53 @@ export const FooterStyled = styled("footer", {
   variants: {
     isGrey: {
       true: {
-        background: "$richBlack80",
+        background: "$black80",
       },
     },
   },
 });
 
 export const FooterContentColumn = styled("div", {
-  marginRight: "5.15464%",
-  display: "inline-block",
-  position: "relative",
-  verticalAlign: "top",
-
   "&.contact": {
-    "& ul": {
-      margin: "0 0 1rem 2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "$gr3",
+
+    span: {
+      lineHeight: "145%",
+    },
+
+    "& div": {
+      marginLeft: "$gr4",
       position: "relative",
+
+      "@xs": {
+        marginLeft: "0",
+      },
     },
   },
 
-  "@bp1": {
+  "@sm": {
     marginBottom: "$2",
-  },
-  "@bp2": {
-    marginBottom: "0",
   },
 });
 
 export const FooterContentWrapper = styled("div", {
   width: "100%",
   display: "grid",
-  gap: "$4",
-  gridTemplateColumns: "1",
+  gap: "$gr4",
+  gridTemplateColumns: "repeat(4, 1fr)",
 
-  "@bp2": {
+  "@sm": {
     gridTemplateColumns: "repeat(2, 1fr)",
   },
 
-  "@bp3": {
-    gridTemplateColumns: "repeat(4, 1fr)",
+  "@xs": {
+    gridTemplateColumns: "repeat(1, 1fr)",
+
+    [`${FooterContentColumn}`]: {
+      textAlign: "center",
+    },
   },
 });
 
@@ -94,10 +102,14 @@ export const FooterCopyright = styled("div", {
 export const FooterIcon = styled("li", {
   backgroundSize: "18px 24px",
   position: "absolute",
-  top: "2px",
-  left: "-2rem",
+  top: "-2px",
+  left: "-$gr4",
   height: "24px",
   width: "18px",
+
+  "@xs": {
+    display: "none",
+  },
 });
 
 export const FooterList = styled("ul", {
@@ -119,7 +131,7 @@ export const Social = styled("a", {
   display: "inline-block",
   verticalAlign: "bottom",
   overflow: "hidden",
-  margin: "4px",
+  margin: "$gr1",
   width: "39px",
   height: "39px",
   fontSize: "0",
