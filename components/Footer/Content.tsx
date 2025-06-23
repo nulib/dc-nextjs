@@ -50,8 +50,7 @@ export const FooterContent: React.FC = () => {
             </li>
             <li>
               <a href="https://www.northwestern.edu/privacy/">Privacy Policy</a>
-            </li>{" "}
-            w
+            </li>
             <li>
               <a href="https://www.northwestern.edu/disclaimer.html">
                 Disclaimer
