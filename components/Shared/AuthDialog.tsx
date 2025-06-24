@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { UserContext } from "@/context/user-context";
+
 import {
-  AuthDialogContent,
   AuthDialogColumn,
+  AuthDialogContent,
+  AuthDialogDescription,
   AuthDialogDivider,
+  AuthDialogOptions,
   AuthDialogOverlay,
   AuthDialogTitle,
   IconButton,
   MagicLinkInput,
 } from "@/components/Shared/AuthDialog.styled";
+import { useEffect, useState } from "react";
+
 import { Button } from "@nulib/design-system";
-import { useContext } from "react";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { SpinLoader } from "@/components/Shared/Loader.styled";
-import { useRouter } from "next/router";
+import { UserContext } from "@/context/user-context";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { apiGetRequest } from "@/lib/dc-api";
 import axios from "axios";
+import { useContext } from "react";
+import { useRouter } from "next/router";
 
 export default function AuthDialog() {
   const { closeSignInModal, isSignInModalOpen, user } = useContext(UserContext);
@@ -99,8 +103,8 @@ export default function AuthDialog() {
 
   return (
     <Dialog.Root open={isSignInModalOpen} onOpenChange={handleClose}>
+      <AuthDialogOverlay />
       <Dialog.Portal>
-        <AuthDialogOverlay />
         <AuthDialogContent
           onEscapeKeyDown={closeSignInModal}
           data-testid="auth-dialog"
@@ -109,66 +113,76 @@ export default function AuthDialog() {
             <AuthDialogTitle>Sign in to Digital Collections</AuthDialogTitle>
             {!shouldRenderMagicLink ? (
               <VisuallyHidden asChild>
-                <Dialog.Description>
+                <AuthDialogDescription>
                   Sign in with your Northwestern NetID
-                </Dialog.Description>
+                </AuthDialogDescription>
               </VisuallyHidden>
             ) : (
-              <Dialog.Description>
-                Choose your preferred login method below
-              </Dialog.Description>
+              <AuthDialogDescription>
+                Choose your preferred method
+              </AuthDialogDescription>
             )}
           </AuthDialogColumn>
 
-          <AuthDialogColumn data-testid="sso-login">
-            Login with your NetID {shouldRenderMagicLink && "for full access"}
-            <Button
-              as="a"
-              isPrimary
-              isLowercase
-              //@ts-ignore - by setting as="a" we lose the type but href is set
-              href={ssoUrl}
-            >
-              Northwestern NetID
-            </Button>
-          </AuthDialogColumn>
+          <AuthDialogOptions>
+            <AuthDialogColumn data-testid="sso-login">
+              Sign in with your NetID{" "}
+              {shouldRenderMagicLink && "for full access"}
+              <Button
+                as="a"
+                isPrimary
+                isLowercase
+                //@ts-ignore - by setting as="a" we lose the type but href is set
+                href={ssoUrl}
+              >
+                Northwestern NetID
+              </Button>
+            </AuthDialogColumn>
 
-          {shouldRenderMagicLink && (
-            <>
-              <AuthDialogColumn>
-                <AuthDialogDivider>OR</AuthDialogDivider>
-              </AuthDialogColumn>
+            {shouldRenderMagicLink && (
+              <>
+                <AuthDialogColumn>
+                  <AuthDialogDivider>OR</AuthDialogDivider>
+                </AuthDialogColumn>
+                <AuthDialogColumn data-testid="magic-link">
+                  <MagicLinkInput
+                    data-testid="magic-link-input"
+                    type="email"
+                    onChange={handleEmailChange}
+                    aria-label="Enter your email address"
+                    placeholder="name@email.com"
+                  />
+                  <Button
+                    isDanger={magicLinkResponse === "error"}
+                    onClick={handleMagicLinkRequest}
+                    isLowercase
+                    disabled={disableMagicLinkButton}
+                    data-testid="magic-link-button"
+                  >
+                    {magicLinkResponse === "idle" &&
+                      (disableMagicLinkButton
+                        ? "Enter a valid email"
+                        : "Get temporary access")}
+                    {magicLinkResponse === "sending" && (
+                      <SpinLoader data-testid="spin-loader" size={"small"} />
+                    )}
+                    {magicLinkResponse === "success" &&
+                      "Sent! Check your email."}
+                    {magicLinkResponse === "error" &&
+                      "There was an error sending the link. Please try again."}
+                  </Button>
+                </AuthDialogColumn>
+              </>
+            )}
+          </AuthDialogOptions>
 
-              <AuthDialogColumn data-testid="magic-link">
-                <MagicLinkInput
-                  data-testid="magic-link-input"
-                  type="email"
-                  onChange={handleEmailChange}
-                  aria-label="Enter your email address"
-                  placeholder="name@email.com"
-                />
-                <Button
-                  isLight={magicLinkResponse !== "error"}
-                  isDanger={magicLinkResponse === "error"}
-                  onClick={handleMagicLinkRequest}
-                  isLowercase
-                  disabled={disableMagicLinkButton}
-                  data-testid="magic-link-button"
-                >
-                  {magicLinkResponse === "idle" &&
-                    (disableMagicLinkButton
-                      ? "Enter a valid email"
-                      : "Get a temporary magic link")}
-                  {magicLinkResponse === "sending" && (
-                    <SpinLoader data-testid="spin-loader" size={"small"} />
-                  )}
-                  {magicLinkResponse === "success" && "Sent! Check your email."}
-                  {magicLinkResponse === "error" &&
-                    "There was an error sending the link. Please try again."}
-                </Button>
-              </AuthDialogColumn>
-            </>
-          )}
+          <a
+            href="https://www.northwestern.edu/privacy/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
 
           <Dialog.Close asChild>
             <IconButton aria-label="Close">
