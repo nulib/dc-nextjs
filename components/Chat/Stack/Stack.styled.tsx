@@ -30,8 +30,9 @@ const StyledStackItem = styled("div", {
 });
 
 const StyledStackFillerItem = styled(StyledStackItem, {
-  borderBottom: "1px solid $black20",
-  borderRight: "1px solid $black20",
+  backgroundColor: "$white",
+  borderBottom: "1px solid #0004",
+  borderRight: "1px solid #0004",
   borderRadius: `0 0 ${gr(2)}px 0`,
 });
 
@@ -46,21 +47,23 @@ const StyledStackContent = styled(StyledStack, {
   ["& > :first-child"]: {
     // this is the first child of the stack
     // ensures the Tooltip is hoverable
-    zIndex: 1,
+    zIndex: 2,
   },
 
   [`& ${StyledStackItem}`]: {
     width: "2rem",
     height: "2rem",
-    boxShadow: "2px 2px 5px #0002",
+    boxShadow: "2px 2px 5px #0001",
   },
 
   [`${StyledStackItem}:nth-child(1 of ${StyledStackFillerItem})`]: {
     transform: "translateX(2px) translateY(2px)",
+    zIndex: 1,
   },
 
   [`${StyledStackItem}:nth-child(2 of ${StyledStackFillerItem})`]: {
     transform: "translateX(4px) translateY(4px)",
+    zIndex: 0,
   },
 });
 
