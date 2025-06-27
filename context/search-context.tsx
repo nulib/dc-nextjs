@@ -1,5 +1,5 @@
-import { SearchContextStore } from "@/types/context/search-context";
 import React from "react";
+import { SearchContextStore } from "@/types/context/search-context";
 
 type Action =
   | {
