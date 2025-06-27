@@ -217,7 +217,7 @@ const SearchPage: NextPage = () => {
         data-testid="search-page-wrapper"
         title={HEAD_META["SEARCH"].title}
       >
-        <StyledResponseWrapper>
+        <StyledResponseWrapper id="search-wrapper">
           <Heading as="h1" isHidden>
             Northwestern
           </Heading>
@@ -241,10 +241,9 @@ const SearchPage: NextPage = () => {
               />
             )}
 
-            <StyledTabsContent value="stream" id="foo">
+            <StyledTabsContent value="stream">
               <div
                 style={{
-                  transition: "all 382ms ease-in-out",
                   opacity: panel.open ? 0 : 1,
                   filter: panel.open ? "grayscale(1)" : "none",
                   height: panel.open ? 0 : "auto",
