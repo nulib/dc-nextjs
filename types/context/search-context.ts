@@ -1,5 +1,5 @@
-import { Work } from "@nulib/dcapi-types";
 import type { AggregationResultMessage } from "types/components/chat";
+import { Work } from "@nulib/dcapi-types";
 
 export type ActiveTab = "stream" | "results";
 
@@ -14,11 +14,18 @@ export interface ChatContext {
   facets: UserFacets;
 }
 
+// a facet looks { "subject.label": "Nigeria" } or { "collection.title.keyword": "E. H. Duckworth Photograph Collection" }
+
+export interface Facet {
+  [key: string]: string;
+}
+
 export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
+  context?: ChatContext;
+  facets?: Facet[];
   works: Work[][];
   /** Docs users can send along in addition to a question */
-  context?: ChatContext;
   renderedContent?: React.JSX.Element;
 }
 
@@ -35,6 +42,7 @@ export interface SearchContextStore {
     open: boolean;
     query?: string;
   };
+  searchCollection?: string;
   searchFixed: boolean;
 }
 

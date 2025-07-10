@@ -42,33 +42,6 @@ const JumpToListStyled = styled("ul", {
   boxShadow: "3px 3px 11px #0001",
 });
 
-const JumpItem = styled("li", {
-  position: "relative",
-  transition: "$dcAll",
-
-  "& a": {
-    display: "block",
-    padding: "$gr3",
-    borderTopWidth: "1px",
-    borderTopStyle: "solid",
-    cursor: "pointer",
-    color: "$purple120",
-  },
-
-  "&[aria-selected='true']": {
-    background: "$purple10",
-    fontFamily: "$northwesternSansBold",
-
-    [`${HelperStyled}`]: {
-      color: "$purple10",
-      background: "$purple120",
-      fontFamily: "$northwesternSansRegular",
-
-      svg: {
-        width: "$gr3",
-      },
-    },
-  },
-});
+const JumpItem = styled("div", {});
 
 export { HelperStyled, JumpItem, JumpToListStyled };

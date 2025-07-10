@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import ChatConversation from "./Conversation";
@@ -31,6 +31,7 @@ const Chat = () => {
               answer: "",
               aggregations: [],
               works: [],
+              facets: [],
             },
           ],
           context: undefined, // clear chat context on new question
