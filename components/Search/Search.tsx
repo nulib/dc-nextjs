@@ -8,6 +8,7 @@ import React, {
   useState,
 } from "react";
 
+import CollectionToggle from "./CollectionToggle";
 import GenerativeAIToggle from "@/components/Search/GenerativeAIToggle";
 import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpTo from "@/components/Search/JumpTo";
@@ -32,7 +33,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { isChecked } = useGenerativeAISearchToggle();
   const {
     searchDispatch,
-    searchState: { conversation },
+    searchState: { conversation, searchCollection },
   } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
@@ -76,6 +77,13 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       conversation: {
         ref: uuidv4(),
         initialQuestion: searchValue,
+        context: searchCollection
+          ? {
+              works: [],
+              query: searchValue,
+              facets: [{ "collection.title.keyword": searchCollection }],
+            }
+          : undefined,
         turns: [
           {
             question: searchValue,
@@ -157,10 +165,12 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           handleSearchFocus={handleSearchFocus}
           handleSubmit={handleSubmit}
           clearSearchResults={clearSearchResults}
+          searchCollection={searchCollection}
           searchValue={searchValue}
           ref={searchRef}
         />
         <div>
+          {isCollectionPage(router?.pathname) && <CollectionToggle />}
           <GenerativeAIToggle />
           <Button type="submit" data-testid="submit-button">
             Search
@@ -168,15 +178,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         </div>
         {isLoaded && <IconSearch />}
       </SearchStyled>
-      {isCollectionPage(router?.pathname) && (
-        <div data-testid="search-jump-to">
-          <SearchJumpTo
-            searchFocus={searchFocus}
-            searchValue={searchValue}
-            top={searchRef.current?.scrollHeight || 0}
-          />
-        </div>
-      )}
     </div>
   );
 };

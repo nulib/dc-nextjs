@@ -1,35 +1,35 @@
-import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
-import type { CheckboxProps } from "@radix-ui/react-checkbox";
-import { IconCheck } from "@/components/Shared/SVG/Icons";
+import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   SearchResultsLabel,
   StyledBackButton,
+  StyledIncludeResults,
   StyledSearchPanel,
   StyledSearchPanelContent,
-  StyledIncludeResults,
 } from "./Panel.styled";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import BouncingLoader from "@/components/Shared/BouncingLoader";
+import type { CheckboxProps } from "@radix-ui/react-checkbox";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
+import Stack from "../Chat/Context/Stack/Stack";
 import { StyledInterstitialIcon } from "@/components/Chat/Response/Interstitial.styled";
 import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
-import Stack from "../Chat/Stack/Stack";
 
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
@@ -110,6 +110,8 @@ const SearchPanel = () => {
   }, [open, query, page, JSON.stringify(urlFacets)]);
 
   useEffect(() => {
+    console.log(urlFacets);
+
     // whenever there are search results, add them to the conversation context
     searchDispatch({
       type: "updateConversation",

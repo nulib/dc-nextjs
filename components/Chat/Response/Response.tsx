@@ -10,7 +10,7 @@ import ResponseImages from "@/components/Chat/Response/Images";
 import ResponseInterstitial from "@/components/Chat/Response/Interstitial";
 import ResponseMarkdown from "@/components/Chat/Response/Markdown";
 import ResponseOptions from "./Options";
-import Stack from "../Stack/Stack";
+import Stack from "@/components/Chat/Context/Stack/Stack";
 import type { Turn } from "@/types/context/search-context";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";

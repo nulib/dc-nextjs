@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 
+import { ChatContext } from "@/types/context/search-context";
 import { DCAPI_CHAT_FEEDBACK } from "./constants/endpoints";
 import { Work } from "@nulib/dcapi-types";
 
@@ -23,14 +24,17 @@ const prepareQuestion = (
   questionString: string,
   authToken: string,
   conversationRef: string,
-  userDocs?: Work[],
+  context?: ChatContext,
 ) => {
+  console.log(context?.facets, "context facets in prepareQuestion");
+
   return {
     auth: authToken,
     message: "chat",
     question: questionString,
     ref: conversationRef,
-    docs: userDocs ? mapWorksToApiDocs(userDocs) : userDocs,
+    docs: context?.works ? mapWorksToApiDocs(context?.works) : undefined,
+    facets: context?.facets || undefined,
   };
 };
 

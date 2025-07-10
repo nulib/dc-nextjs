@@ -98,6 +98,13 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
     getCollectionTitle();
   }, [router.query.id]);
 
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log(e);
+  };
+
   return (
     <JumpToListStyled
       data-testid="jump-to-wrapper"
@@ -111,16 +118,13 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
           aria-selected={index === activeIndex}
           onMouseEnter={() => handleItemHover(index)}
         >
-          <Link
-            href={{
-              pathname: item.pathName,
-              query: item.query,
-            }}
+          <button
             tabIndex={0}
             data-testid={item.dataTestId}
+            onClick={handleSubmit}
           >
-            {searchValue} <Helper label={item.helperLabel} />
-          </Link>
+            {searchValue} {item.helperLabel}
+          </button>
         </JumpItem>
       ))}
     </JumpToListStyled>

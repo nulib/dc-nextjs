@@ -1,4 +1,3 @@
-import { IconClear } from "@/components/Shared/SVG/Icons";
 import { gr } from "@/styles/sizes";
 import { styled } from "@/stitches.config";
 

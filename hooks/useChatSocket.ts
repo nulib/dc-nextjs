@@ -23,8 +23,11 @@ const useChatSocket = () => {
         const { auth: authToken, endpoint } = response.data;
         if (!authToken || !endpoint) return;
 
+        const temporaryEndpoint =
+          "wss://0cjj7geo7h.execute-api.us-east-1.amazonaws.com/latest";
+
         setAuthToken(authToken);
-        setUrl(endpoint);
+        setUrl(temporaryEndpoint);
       })
       .catch((error) => {
         console.error(error);

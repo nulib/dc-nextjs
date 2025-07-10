@@ -15,6 +15,7 @@ type Action =
       };
     }
   | { type: "updateSearch"; q: string }
+  | { type: "updateSearchCollection"; searchCollection?: string }
   | { type: "updateSearchFixed"; searchFixed: boolean };
 
 type Dispatch = (action: Action) => void;
@@ -35,6 +36,7 @@ const defaultState: SearchContextStore = {
     open: false,
     query: undefined,
   },
+  searchCollection: undefined,
   searchFixed: false,
 };
 
@@ -54,6 +56,12 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         q: action.q,
+      };
+    }
+    case "updateSearchCollection": {
+      return {
+        ...state,
+        searchCollection: action.searchCollection,
       };
     }
     case "updateSearchFixed": {
