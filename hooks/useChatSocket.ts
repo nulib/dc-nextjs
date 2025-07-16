@@ -23,6 +23,9 @@ const useChatSocket = () => {
         const { auth: authToken, endpoint } = response.data;
         if (!authToken || !endpoint) return;
 
+        // const temporaryEndpoint =
+        //   "wss://0cjj7geo7h.execute-api.us-east-1.amazonaws.com/latest";
+
         setAuthToken(authToken);
         setUrl(endpoint);
       })
@@ -62,7 +65,6 @@ const useChatSocket = () => {
 
   const sendMessage = useCallback((data: object) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      console.log("Sending message", data);
       socketRef.current.send(JSON.stringify(data));
     }
   }, []);

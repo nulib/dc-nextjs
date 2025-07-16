@@ -1,20 +1,19 @@
-import type { Work } from "@nulib/dcapi-types";
-import { useState } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { TooltipArrow, TooltipBody } from "../../Shared/Tooltip.styled";
-import {
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/Search/GenerativeAI.styled";
+
 import {
   StyledStack,
   StyledStackContent,
-  StyledStackItem,
-  StyledStackFillerItem,
   StyledStackDismiss,
+  StyledStackFillerItem,
+  StyledStackItem,
 } from "./Stack.styled";
-import { IconClear } from "@/components/Shared/SVG/Icons";
+import { TooltipArrow, TooltipBody } from "@/components/Shared/Tooltip.styled";
+
 import { ChatContext } from "@/types/context/search-context";
+import { IconClear } from "@/components/Shared/SVG/Icons";
+import type { Work } from "@nulib/dcapi-types";
+import { styled } from "@/stitches.config";
+import { useState } from "react";
 
 interface StackProps {
   context: ChatContext;
@@ -100,5 +99,14 @@ const Stack = ({
     </StyledStack>
   );
 };
+
+const TooltipTrigger = styled(Tooltip.Trigger, {
+  background: "transparent",
+  border: "none",
+});
+
+const TooltipContent = styled(Tooltip.Content, {
+  zIndex: 2,
+});
 
 export default Stack;

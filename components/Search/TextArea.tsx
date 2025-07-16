@@ -51,7 +51,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
     };
 
     const placeholderText = isAi
-      ? "What can we show you from our collections?"
+      ? `What can we show you from our collections?`
       : "Search by keyword or phrase, ex: Berkeley Music Festival";
 
     return (

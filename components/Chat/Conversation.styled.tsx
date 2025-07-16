@@ -1,6 +1,7 @@
 import { keyframes, styled } from "@/stitches.config";
 
-import { StyledStack } from "./Stack/Stack.styled";
+import { StyledStack } from "@/components/Chat/Context/Stack/Stack.styled";
+import { px } from "framer-motion";
 
 const gradientAnimation = keyframes({
   to: {
@@ -65,8 +66,8 @@ const StyledChatConversation = styled("div", {
     flexWrap: "wrap",
     flexGrow: 1,
     zIndex: 0,
-    height: "62px",
     background: "$gray6",
+    overflow: "hidden",
 
     ["&[data-is-focused=true]"]: {
       boxShadow: "3px 3px 11px #0001",
@@ -104,7 +105,7 @@ const StyledChatConversation = styled("div", {
 
     textarea: {
       width: "100%",
-      height: "100%",
+      height: "62px",
       padding: "$gr3",
       border: "none",
       resize: "none",
@@ -128,7 +129,7 @@ const StyledChatConversation = styled("div", {
 
     [`& > ${StyledStack}`]: {
       position: "absolute",
-      top: "calc($gr2)",
+      bottom: "calc($gr2)",
       left: "calc($gr2)",
       zIndex: 1,
     },
@@ -136,7 +137,7 @@ const StyledChatConversation = styled("div", {
     // 40px is a too magic numbery
     [`&:has(${StyledStack}[data-isdismissed=false])`]: {
       textarea: {
-        textIndent: "50px",
+        paddingLeft: "calc(50px + $gr3)",
         "&::placeholder": {},
       },
     },

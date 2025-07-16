@@ -174,6 +174,34 @@ const StyledTabsContent = styled(TabsContent, {
   },
 });
 
+const StyledSearchToggle = styled("div", {
+  color: "$black50",
+  fontSize: "$gr2",
+  display: "flex",
+  position: "relative",
+  flexDirection: "row",
+  flexWrap: "nowrap",
+  flexShrink: "0",
+  height: "$gr5",
+  alignItems: "center",
+  marginRight: "$gr1",
+
+  "& label": {
+    cursor: "pointer",
+    flexShrink: "0",
+    marginLeft: "3px",
+    marginRight: "4px",
+  },
+
+  "& svg": {
+    position: "relative",
+    padding: "1px 0",
+    height: "$gr3",
+    width: "$gr3",
+    fill: "$black50",
+  },
+});
+
 export {
   Button,
   NoResultsMessage,
@@ -183,4 +211,5 @@ export {
   SearchStyled,
   StyledResponseWrapper,
   StyledTabsContent,
+  StyledSearchToggle,
 };

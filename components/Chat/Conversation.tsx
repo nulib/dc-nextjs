@@ -7,7 +7,8 @@ import { defaultState, useSearchState } from "@/context/search-context";
 import { useEffect, useRef } from "react";
 
 import { AI_SYS_PROMPT_MSG } from "@/lib/constants/common";
-import Stack from "./Stack/Stack";
+import ChatContextFacets from "./Context/Facets";
+import Stack from "@/components/Chat/Context/Stack/Stack";
 import { styled } from "@/stitches.config";
 import { useRouter } from "next/router";
 
@@ -120,6 +121,8 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       pathname: "/search",
     });
   };
+
+  console.log(conversation.context);
 
   return (
     <StyledChatConversation data-testid="chat-conversation">

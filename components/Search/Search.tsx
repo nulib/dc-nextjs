@@ -32,7 +32,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { isChecked } = useGenerativeAISearchToggle();
   const {
     searchDispatch,
-    searchState: { conversation },
+    searchState: { conversation, searchCollection },
   } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
@@ -81,7 +81,17 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
             question: searchValue,
             answer: "",
             aggregations: [],
-            works: [],
+            context: {
+              query: searchValue,
+              facets: searchCollection
+                ? [
+                    {
+                      "collection.title.keyword": searchCollection,
+                    },
+                  ]
+                : [],
+              works: [],
+            },
           },
         ],
       },
@@ -150,6 +160,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         data-testid="search-ui-component"
         isFocused={searchFocus}
       >
+        {isLoaded && <IconSearch />}
         <SearchTextArea
           isAi={!!isChecked}
           isFocused={searchFocus}
@@ -166,7 +177,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
             Search
           </Button>
         </div>
-        {isLoaded && <IconSearch />}
       </SearchStyled>
       {isCollectionPage(router?.pathname) && (
         <div data-testid="search-jump-to">
