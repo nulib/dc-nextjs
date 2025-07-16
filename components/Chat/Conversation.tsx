@@ -133,9 +133,6 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
           data-is-focused="false"
           data-is-streaming={isStreaming}
         >
-          {conversation.context?.facets && (
-            <ChatContextFacets facets={conversation.context.facets} />
-          )}
           <textarea
             ref={textareaRef}
             onKeyDown={handleKeyDown}

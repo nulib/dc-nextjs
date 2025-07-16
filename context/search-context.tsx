@@ -47,6 +47,7 @@ const SearchStateContext = React.createContext<
 function searchReducer(state: State, action: Action) {
   switch (action.type) {
     case "updateConversation": {
+      console.log("Updating conversation", action.conversation);
       return {
         ...state,
         conversation: action.conversation,

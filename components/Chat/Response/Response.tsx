@@ -42,13 +42,15 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   >([]);
   const [turnWorks, setTurnWorks] = useState<Turn["works"]>([]);
 
+  console.log("chatresponse", context);
+
   useEffect(() => {
     if (isConnected && authToken && question && conversationRef) {
       const preparedQuestion = prepareQuestion(
         question,
         authToken,
         conversationRef,
-        context?.works,
+        context,
       );
       sendMessage(preparedQuestion);
     }

@@ -14,7 +14,6 @@ interface SearchTextAreaProps {
   handleSearchFocus: (e: FocusEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
   clearSearchResults: () => void;
-  searchCollection?: string;
   searchValue: string;
 }
 
@@ -26,7 +25,6 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
       handleSearchChange,
       handleSearchFocus,
       handleSubmit,
-      searchCollection,
       searchValue,
     },
     textareaRef,
@@ -53,7 +51,7 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
     };
 
     const placeholderText = isAi
-      ? `What can we show you from ${searchCollection || "our collections"}?`
+      ? `What can we show you from our collections?`
       : "Search by keyword or phrase, ex: Berkeley Music Festival";
 
     return (

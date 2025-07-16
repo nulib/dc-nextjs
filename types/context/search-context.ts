@@ -11,7 +11,7 @@ export interface Article {
 export interface ChatContext {
   works: Work[];
   query: string;
-  facets: UserFacets;
+  facets: Facet[];
 }
 
 // a facet looks { "subject.label": "Nigeria" } or { "collection.title.keyword": "E. H. Duckworth Photograph Collection" }
@@ -23,8 +23,6 @@ export interface Facet {
 export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
   context?: ChatContext;
-  facets?: Facet[];
-  works: Work[][];
   /** Docs users can send along in addition to a question */
   renderedContent?: React.JSX.Element;
 }
@@ -34,7 +32,6 @@ export interface SearchContextStore {
     ref?: string;
     /** the question that kickstarts a conversation */
     initialQuestion: string;
-    context?: ChatContext;
     turns: Turn[];
   };
   panel: {

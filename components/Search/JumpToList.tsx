@@ -1,4 +1,4 @@
-import { Dispatch, KeyboardEvent, useEffect, useState } from "react";
+import { Dispatch, KeyboardEvent, useState } from "react";
 import {
   HelperStyled,
   JumpItem,
@@ -6,49 +6,37 @@ import {
 } from "@/components/Search/JumpTo.styled";
 
 import { IconReturnDownBack } from "@/components/Shared/SVG/Icons";
-import Link from "next/link";
-import { getCollection } from "@/lib/collection-helpers";
 import useEventListener from "@/hooks/useEventListener";
 import { useRouter } from "next/router";
 
 interface SearchJumpToListProps {
   searchValue: string;
   setShowJumpTo: Dispatch<React.SetStateAction<boolean>>;
+  setScopeValue: (value: string) => void;
   top: number;
 }
 
 const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   searchValue,
   setShowJumpTo,
+  setScopeValue,
   top,
 }) => {
   const router = useRouter();
-  const [collectionTitle, setCollectionTitle] = useState<string>("");
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const jumpToItems = [
     {
       dataTestId: "helper-anchor-collection",
       helperLabel: "In this Collection",
-      pathName: "/search",
-      query: {
-        collection: collectionTitle,
-        q: searchValue,
-      },
+      value: "collection",
     },
     {
       dataTestId: "helper-anchor-all",
       helperLabel: "All Digital Collections",
-      pathName: "/search",
-      query: {
-        q: searchValue,
-      },
+      value: "all",
     },
   ];
-
-  const handleItemHover = (index: number): void => {
-    setActiveIndex(index);
-  };
 
   const handleKeyEvent = (e: KeyboardEvent) => {
     switch (e.key) {
@@ -64,10 +52,9 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
         break;
       case "Enter":
         e.preventDefault();
-        const activeItem = jumpToItems[activeIndex];
         router.push({
-          pathname: activeItem.pathName,
-          query: activeItem.query,
+          pathname: "/search",
+          query: searchValue,
         });
         break;
       case "Escape":
@@ -81,28 +68,19 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   // @ts-ignore
   useEventListener("keydown", handleKeyEvent);
 
-  useEffect(() => {
-    if (!router?.query?.id) return;
+  const handleValue = (value: string) => {
+    setActiveIndex(jumpToItems.findIndex((item) => item.value === value));
+    setScopeValue(value);
+  };
 
-    async function getCollectionTitle() {
-      try {
-        const data = await getCollection(router.query.id as string);
-        setCollectionTitle(data?.title || "");
-      } catch (err) {
-        console.error(
-          "Error getting Collection title in JumpTo component",
-          err,
-        );
-      }
-    }
-    getCollectionTitle();
-  }, [router.query.id]);
+  const handleItemHover = (e: React.MouseEvent<HTMLLIElement>) => {
+    const value = e.currentTarget.getAttribute("data-value");
+    if (value) handleValue(value);
+  };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    console.log(e);
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value) if (value) handleValue(value);
   };
 
   return (
@@ -116,15 +94,20 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
           key={item.dataTestId}
           role="option"
           aria-selected={index === activeIndex}
-          onMouseEnter={() => handleItemHover(index)}
+          data-value={item.value}
+          onMouseEnter={handleItemHover}
         >
-          <button
-            tabIndex={0}
-            data-testid={item.dataTestId}
-            onClick={handleSubmit}
-          >
-            {searchValue} {item.helperLabel}
-          </button>
+          <label htmlFor={`dc-search-scope-${item.value}`}>
+            <input
+              type="radio"
+              id={`dc-search-scope-${item.value}`}
+              name="dc-search-scope"
+              value={item.value}
+              checked={activeIndex === index}
+              onChange={handleOnChange}
+            />
+            {searchValue} <Helper label={item.helperLabel} />
+          </label>
         </JumpItem>
       ))}
     </JumpToListStyled>

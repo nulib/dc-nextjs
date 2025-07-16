@@ -6,8 +6,7 @@ const StyledChatContextFacetsItem = styled("div", {
 });
 
 const StyledChatContextFacets = styled("div", {
-  background: "rgba(255, 255, 255, 0.618)",
-  borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+  background: "rgba(255, 255, 255, 0.1)",
   boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.06)",
   padding: "$gr2",
   borderRadius: "3px",
