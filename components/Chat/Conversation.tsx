@@ -41,7 +41,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
   }, []);
 
   useEffect(() => {
-    if (conversation?.context?.works?.length && !panel.open) {
+    if (conversation?.stagedContext?.works?.length && !panel.open) {
       const searchWrapper = document.getElementById("search-wrapper");
 
       if (searchWrapper) {
@@ -59,7 +59,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
         textareaRef.current.focus();
       }
     }
-  }, [conversation?.context?.works, panel.open]);
+  }, [conversation?.stagedContext?.works, panel.open]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,7 +95,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       type: "updateConversation",
       conversation: {
         ...conversation,
-        context: undefined,
+        stagedContext: undefined,
       },
     });
   };
@@ -137,10 +137,10 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             onFocus={handleFocus}
             onBlur={handleFocus}
           ></textarea>
-          {conversation.context?.works &&
-            conversation.context.works.length > 0 && (
+          {conversation.stagedContext?.works &&
+            conversation.stagedContext.works.length > 0 && (
               <Stack
-                context={conversation.context}
+                context={conversation.stagedContext}
                 isDismissable
                 dismissCallback={handleStackDismiss}
               />

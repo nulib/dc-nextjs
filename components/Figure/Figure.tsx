@@ -27,12 +27,13 @@ interface Figure {
 interface FigureProps {
   data: Figure;
   orientation?: "horizontal" | "vertical";
+  hideCaption?: boolean;
 }
 
 const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
-  const { data, orientation } = props;
+  const { data, orientation, hideCaption } = props;
   const { aspectRatio, isRestricted, title, supplementalInfo, src } = data;
 
   if (!src) return null;
@@ -73,15 +74,19 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
           />
         </FigurePlaceholder>
       </FigureImageWrapper>
-      <FigureCaption>
-        <FigureText>
-          <FigureTitle>{title}</FigureTitle>
-          {supplementalInfo && (
-            <FigureSupplementalInfo>{supplementalInfo}</FigureSupplementalInfo>
-          )}
-        </FigureText>
-        {isRestricted && <IconLock aria-hidden="true" />}
-      </FigureCaption>
+      {!hideCaption && (
+        <FigureCaption>
+          <FigureText>
+            <FigureTitle>{title}</FigureTitle>
+            {supplementalInfo && (
+              <FigureSupplementalInfo>
+                {supplementalInfo}
+              </FigureSupplementalInfo>
+            )}
+          </FigureText>
+          {isRestricted && <IconLock aria-hidden="true" />}
+        </FigureCaption>
+      )}
     </FigureStyled>
   );
 };

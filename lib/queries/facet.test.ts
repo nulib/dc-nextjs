@@ -62,3 +62,25 @@ describe("buildFacetFilters fn()", () => {
     ]);
   });
 });
+
+describe("getFacetIdByField fn()", () => {
+  it("returns null if no facet is found", () => {
+    const result = facetFns.getFacetIdByField("foo");
+    expect(result).toBeNull();
+  });
+
+  it("returns the correct facet ID for subject.label", () => {
+    const result = facetFns.getFacetIdByField("subject.label");
+    expect(result).toEqual("subject");
+  });
+
+  it("returns the correct facet ID for creator.label", () => {
+    const result = facetFns.getFacetIdByField("creator.label");
+    expect(result).toEqual("creator");
+  });
+
+  it("returns the correct facet ID for collection.title.keyword", () => {
+    const result = facetFns.getFacetIdByField("collection.title.keyword");
+    expect(result).toEqual("collection");
+  });
+});

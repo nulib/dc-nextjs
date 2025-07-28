@@ -60,7 +60,7 @@ const StyledBackButton = styled("button", {
 const StyledSearchPanel = styled("aside", {
   width: "100%",
   height: "100%",
-  transition: "all 382ms ease-in-out",
+  transition: "opacity 382ms ease-in-out",
   opacity: "0",
   variants: {
     isOpen: {
