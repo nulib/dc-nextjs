@@ -24,16 +24,19 @@ const StyledStackItem = styled("div", {
   },
 
   img: {
-    borderRadius: gr(2),
+    borderRadius: "2px",
+    marginLeft: "-2px",
     objectFit: "cover",
   },
 });
 
 const StyledStackFillerItem = styled(StyledStackItem, {
-  backgroundColor: "$white",
-  borderBottom: "1px solid #0004",
-  borderRight: "1px solid #0004",
-  borderRadius: `0 0 ${gr(2)}px 0`,
+  // radial gradient to fill the stack
+  background: `radial-gradient(circle at 25% 25%, $white, $gray6 100%)`,
+  width: "2rem",
+  borderBottom: "1px solid #0003",
+  borderRight: "1px solid #0003",
+  borderRadius: "3px",
 });
 
 const StyledStackContent = styled(StyledStack, {
@@ -53,7 +56,7 @@ const StyledStackContent = styled(StyledStack, {
   [`& ${StyledStackItem}`]: {
     width: "2rem",
     height: "2rem",
-    boxShadow: "2px 2px 5px #0001",
+    boxShadow: "2px 2px 5px #0002",
   },
 
   [`${StyledStackItem}:nth-child(1 of ${StyledStackFillerItem})`]: {

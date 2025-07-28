@@ -59,7 +59,7 @@ describe("GenerativeAIToggle", () => {
     const user = userEvent.setup();
     render(withUserProvider(withSearchProvider(<GenerativeAIToggle />)));
 
-    const label = screen.getByLabelText("Use Generative AI");
+    const label = screen.getByLabelText("AI Mode");
     const checkbox = screen.getByRole("checkbox");
 
     expect(label).toBeInTheDocument();

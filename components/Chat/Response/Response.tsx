@@ -1,3 +1,4 @@
+import type { ChatContext, Turn } from "@/types/context/search-context";
 import React, { useEffect, useState } from "react";
 import {
   StyledQuestion,
@@ -11,7 +12,6 @@ import ResponseInterstitial from "@/components/Chat/Response/Interstitial";
 import ResponseMarkdown from "@/components/Chat/Response/Markdown";
 import ResponseOptions from "./Options";
 import Stack from "../Stack/Stack";
-import type { Turn } from "@/types/context/search-context";
 import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import { useSearchState } from "@/context/search-context";
@@ -40,7 +40,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   const [turnAggregations, setTurnAggregations] = useState<
     Turn["aggregations"]
   >([]);
-  const [turnWorks, setTurnWorks] = useState<Turn["works"]>([]);
+  const [turnWorks, setTurnWorks] = useState<ChatContext["works"]>([]);
 
   useEffect(() => {
     if (isConnected && authToken && question && conversationRef) {
@@ -48,7 +48,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         question,
         authToken,
         conversationRef,
-        context?.works,
+        context,
       );
       sendMessage(preparedQuestion);
     }
@@ -86,7 +86,11 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <ResponseInterstitial message={message.message} id={uuidv4()} />
+          <ResponseInterstitial
+            context={context}
+            message={message.message}
+            id={uuidv4()}
+          />
         </>
       ));
     }
@@ -98,7 +102,12 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseImages works={message.message} />
         </>
       ));
-      setTurnWorks([...turnWorks, message.message]);
+      setTurnWorks([
+        ...turnWorks,
+        ...(Array.isArray(message.message)
+          ? message.message
+          : [message.message]),
+      ]);
     }
 
     if (type === "aggregation_result") {
@@ -126,7 +135,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         ...turns[conversationIndex],
         answer: turnAnswer,
         aggregations: turnAggregations,
-        works: turnWorks,
         renderedContent: renderedMessage,
       };
 
@@ -155,6 +163,14 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     setRenderedMessage(undefined);
   }
 
+  /**
+   * Check if the context has works or facets.
+   * This is used to determine if we should render the Stack component.
+   */
+  const hasContext =
+    (context?.works && context.works.length > 0) ||
+    (context?.facets && context.facets.length > 0);
+
   return (
     <StyledResponse
       data-index={conversationIndex}
@@ -162,10 +178,8 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       data-question={question}
     >
       <StyledQuestion>
+        {hasContext && <Stack context={context} isDismissable={false} />}
         {question}
-        {context?.works && context.works.length > 0 && (
-          <Stack context={context} isDismissable={false} />
-        )}
       </StyledQuestion>
       <div data-testid="response-content">
         {content ? (

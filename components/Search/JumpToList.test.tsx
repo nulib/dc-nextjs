@@ -24,18 +24,22 @@ describe("SearchJumpToList component", () => {
         searchValue="Dylan"
         setShowJumpTo={mockSetShowJumpTo}
         top={0}
+        handleOnClick={jest.fn()}
+        setScopeValue={jest.fn()}
       />,
     );
     expect(screen.getByTestId("jump-to-wrapper"));
     expect(screen.getAllByText("Dylan")).toHaveLength(2);
   });
 
-  it("renders Helper components in each JumpTo item", () => {
+  it("renders helper text for collection and all collections", () => {
     render(
       <SearchJumpToList
         searchValue="foo"
         setShowJumpTo={mockSetShowJumpTo}
         top={0}
+        handleOnClick={jest.fn()}
+        setScopeValue={jest.fn()}
       />,
     );
     const helpers = screen.getAllByTestId("helper");
@@ -49,6 +53,8 @@ describe("SearchJumpToList component", () => {
         searchValue="foo"
         setShowJumpTo={mockSetShowJumpTo}
         top={0}
+        handleOnClick={jest.fn()}
+        setScopeValue={jest.fn()}
       />,
     );
 
@@ -61,11 +67,11 @@ describe("SearchJumpToList component", () => {
 
     expect(
       await screen.findByTestId("helper-anchor-collection"),
-    ).toHaveAttribute("href", `/search?collection=Best+Collection+Ever&q=foo`);
+    ).toHaveAttribute("data-value", "collection");
 
     expect(screen.getByTestId("helper-anchor-all")).toHaveAttribute(
-      "href",
-      "/search?q=foo",
+      "data-value",
+      "all",
     );
   });
 
@@ -76,6 +82,8 @@ describe("SearchJumpToList component", () => {
         searchValue="foo"
         setShowJumpTo={mockSetShowJumpTo}
         top={0}
+        handleOnClick={jest.fn()}
+        setScopeValue={jest.fn()}
       />,
     );
     const listItems = await screen.findAllByRole("option");
@@ -106,6 +114,8 @@ describe("SearchJumpToList component", () => {
         searchValue="foo"
         setShowJumpTo={mockSetShowJumpTo}
         top={0}
+        handleOnClick={jest.fn()}
+        setScopeValue={jest.fn()}
       />,
     );
 

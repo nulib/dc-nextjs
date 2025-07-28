@@ -88,7 +88,7 @@ const StyledQuestion = styled("header", {
   background: "$purple10",
   display: "flex",
   alignItems: "center",
-  gap: "$gr2",
+  gap: "$gr3",
 });
 
 const StyledResponseMarkdown = styled("div", {

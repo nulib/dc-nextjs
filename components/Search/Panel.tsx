@@ -1,35 +1,35 @@
-import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
-import type { CheckboxProps } from "@radix-ui/react-checkbox";
-import { IconCheck } from "@/components/Shared/SVG/Icons";
+import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   SearchResultsLabel,
   StyledBackButton,
+  StyledIncludeResults,
   StyledSearchPanel,
   StyledSearchPanelContent,
-  StyledIncludeResults,
 } from "./Panel.styled";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import BouncingLoader from "@/components/Shared/BouncingLoader";
+import type { CheckboxProps } from "@radix-ui/react-checkbox";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
 import SearchResults from "@/components/Search/Results";
 import { SearchResultsState } from "@/types/components/search";
+import Stack from "../Chat/Stack/Stack";
 import { StyledInterstitialIcon } from "@/components/Chat/Response/Interstitial.styled";
 import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
-import Stack from "../Chat/Stack/Stack";
 
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
@@ -38,22 +38,44 @@ const defaultSearchResultsState: SearchResultsState = {
 };
 
 const SearchPanel = () => {
+  const [searchResults, setSearchResults] = useState<SearchResultsState>(
+    defaultSearchResultsState,
+  );
   const [useDocsAsContext, setUseDocsAsContext] = useState(false);
+
   const didUrlFacetsChange = useRef(false);
   const router = useRouter();
   const { searchState, searchDispatch } = useSearchState();
 
   const {
-    panel: { open, query },
+    panel: { open },
     conversation,
   } = searchState;
 
-  const urlFacets = parseUrlFacets(router.query);
+  /**
+   * Build the request URL and body for the search API
+   * based on the current query and facets.
+   */
+  const query = router.query.q as string;
   const page = (router.query.page as string) || "1";
+  const urlFacets = parseUrlFacets(router.query);
 
-  const [searchResults, setSearchResults] = useState<SearchResultsState>(
-    defaultSearchResultsState,
+  const requestUrl = new URL(DC_API_SEARCH_URL);
+  const body: ApiSearchRequestBody = buildQuery(
+    {
+      size: SEARCH_RESULTS_PER_PAGE,
+      term: query || "",
+      urlFacets,
+    },
+    true,
   );
+
+  requestUrl.searchParams.append("page", page);
+
+  const apiPostRequestObject = {
+    body,
+    url: requestUrl.toString(),
+  };
 
   useEffect(() => {
     document.addEventListener("keydown", handleEscape);
@@ -70,44 +92,20 @@ const SearchPanel = () => {
         loading: true,
       });
 
-      router.push({
-        pathname: "/search",
-        query: {
-          q: query,
-          ...urlFacets,
-          page,
-        },
-      });
-
       try {
-        const requestUrl = new URL(DC_API_SEARCH_URL);
-        const body: ApiSearchRequestBody = buildQuery(
-          {
-            size: SEARCH_RESULTS_PER_PAGE,
-            term: String(query),
-            urlFacets,
-          },
-          true,
-        );
+        const response =
+          await apiPostRequest<ApiSearchResponse>(apiPostRequestObject);
 
-        requestUrl.searchParams.append("page", page);
-        const response = await apiPostRequest<ApiSearchResponse>({
-          body,
-          url: requestUrl.toString(),
+        setSearchResults({
+          data: response || null,
+          error: "",
+          loading: false,
         });
-
-        setTimeout(() => {
-          setSearchResults({
-            data: response || null,
-            error: "",
-            loading: false,
-          });
-        }, 382);
       } catch (error) {
         console.error(error);
       }
     })();
-  }, [open, query, page, JSON.stringify(urlFacets)]);
+  }, [JSON.stringify(apiPostRequestObject)]);
 
   useEffect(() => {
     // whenever there are search results, add them to the conversation context
@@ -115,11 +113,14 @@ const SearchPanel = () => {
       type: "updateConversation",
       conversation: {
         ...conversation,
-        context: {
+        stagedContext: {
           // @ts-ignore - data is a Partial<Work>[], but works expects a Work[]
           works: searchResults.data?.data.slice(0, 20),
           query: query || "",
-          facets: urlFacets,
+          facets: Object.entries(urlFacets).map(([key, value]) => ({
+            field: key,
+            value: Array.isArray(value) ? value.join(",") : value,
+          })),
         },
       },
     });
@@ -174,7 +175,7 @@ const SearchPanel = () => {
         type: "updateConversation",
         conversation: {
           ...conversation,
-          context: undefined,
+          stagedContext: undefined,
         },
       });
     }
@@ -221,10 +222,10 @@ const SearchPanel = () => {
                       </label>
                     </StyledIncludeResults>
                   </div>
-                  {conversation.context?.works &&
-                    conversation.context.works.length > 0 && (
+                  {conversation.stagedContext?.works &&
+                    conversation.stagedContext.works.length > 0 && (
                       <Stack
-                        context={conversation.context}
+                        context={conversation.stagedContext}
                         isDismissable={false}
                       />
                     )}

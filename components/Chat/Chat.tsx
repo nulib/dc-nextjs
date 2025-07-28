@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import ChatConversation from "./Conversation";
@@ -27,13 +27,18 @@ const Chat = () => {
             ...conversation.turns,
             {
               question: value,
-              context: conversation.context, // move the chat context to the next turn
+              /**
+               * Move the chat staged context to the new turn
+               */
+              context: conversation.stagedContext,
               answer: "",
               aggregations: [],
-              works: [],
             },
           ],
-          context: undefined, // clear chat context on new question
+          /**
+           * Clear the staged context after submitting a question
+           */
+          stagedContext: undefined, // clear chat context on new question
         },
       });
     }

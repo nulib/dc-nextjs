@@ -30,4 +30,9 @@ const buildFacetFilters = (urlFacets: UrlFacets) => {
   return filter;
 };
 
-export { buildFacetFilters };
+const getFacetIdByField = (field: string) => {
+  const facet = ALL_FACETS.facets.find((item) => item.field === field);
+  return facet ? facet.id : null;
+};
+
+export { buildFacetFilters, getFacetIdByField };

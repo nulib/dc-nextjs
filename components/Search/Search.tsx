@@ -30,17 +30,26 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const { urlFacets } = useQueryParams();
 
   const { isChecked } = useGenerativeAISearchToggle();
-  const {
-    searchDispatch,
-    searchState: { conversation },
-  } = useSearchState();
+  const { searchDispatch } = useSearchState();
 
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
+  const [searchScope, setSearchScope] = useState<string>("all");
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  /**
+   * Determine if the current page is a collection page
+   * This is used to set the collection label for search queries.
+   */
+  const collectionLabel =
+    typeof document !== "undefined" && isCollectionPage(router?.pathname)
+      ? document
+          .querySelector("meta[property='og:title']")
+          ?.getAttribute("content") || undefined
+      : undefined;
 
   const handleSubmit = (
     e?:
@@ -49,8 +58,33 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   ) => {
     if (e) e.preventDefault();
 
+    setSearchFocus(false);
     const updatedFacets: UrlFacets = {};
     const allFacetsIds = getAllFacetIds();
+
+    const conversation = {
+      ref: uuidv4(),
+      initialQuestion: searchValue,
+      turns: [
+        {
+          question: searchValue,
+          answer: "",
+          aggregations: [],
+          context: {
+            query: searchValue,
+            facets:
+              searchScope === "collection" && collectionLabel
+                ? [
+                    {
+                      "collection.title.keyword": collectionLabel,
+                    },
+                  ]
+                : [],
+            works: [],
+          },
+        },
+      ],
+    };
 
     // Account for the "similar" facet (comes from "View All" in sliders)
     allFacetsIds.push("similar");
@@ -73,24 +107,15 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
 
     searchDispatch({
       type: "updateConversation",
-      conversation: {
-        ref: uuidv4(),
-        initialQuestion: searchValue,
-        turns: [
-          {
-            question: searchValue,
-            answer: "",
-            aggregations: [],
-            works: [],
-          },
-        ],
-      },
+      conversation,
     });
 
     router.push({
       pathname: "/search",
       query: {
         q: searchValue,
+        ...(searchScope === "collection" &&
+          collectionLabel && { collection: collectionLabel }),
         ...updatedFacets,
       },
     });
@@ -120,35 +145,44 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   useEffect(() => setIsLoaded(true), []);
 
   useEffect(() => {
-    if (isChecked) {
-      searchDispatch({
-        type: "updateConversation",
-        conversation: {
-          ...conversation,
-          ref: uuidv4(),
-          turns: conversation.turns.slice(0, 1).map((turn) => ({
-            ...turn,
-            answer: "",
-            aggregations: [],
-            renderedContent: undefined,
-            works: [],
-          })),
-        },
-      });
-    }
-  }, [isChecked]);
-
-  useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
+
+  const handleScopeValue = (value: string) => {
+    switch (value) {
+      case "all":
+        if (formRef.current) {
+          formRef.current.dataset.searchScope = "all";
+          formRef.current.dataset.searchCollection = undefined;
+          setSearchScope("all");
+        }
+        break;
+      case "collection":
+        if (formRef.current) {
+          formRef.current.dataset.searchScope = "collection";
+          formRef.current.dataset.searchCollection = collectionLabel;
+          setSearchScope("collection");
+        }
+        break;
+      default:
+        if (formRef.current) {
+          formRef.current.dataset.searchScope = "all";
+          formRef.current.dataset.searchCollection = undefined;
+          setSearchScope("all");
+        }
+        break;
+    }
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
       <SearchStyled
-        ref={formRef}
-        onSubmit={handleSubmit}
+        data-search-collection={collectionLabel}
+        data-search-scope={searchScope}
         data-testid="search-ui-component"
         isFocused={searchFocus}
+        onSubmit={handleSubmit}
+        ref={formRef}
       >
         <SearchTextArea
           isAi={!!isChecked}
@@ -171,6 +205,8 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       {isCollectionPage(router?.pathname) && (
         <div data-testid="search-jump-to">
           <SearchJumpTo
+            handleOnClick={handleSubmit}
+            handleScopeValue={handleScopeValue}
             searchFocus={searchFocus}
             searchValue={searchValue}
             top={searchRef.current?.scrollHeight || 0}
