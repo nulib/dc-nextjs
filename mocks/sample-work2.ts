@@ -9,6 +9,7 @@ export const sampleWork2: Work = {
   api_model: "Work",
   ark: "ark:/81985/n2kw57t1n",
   batch_ids: [],
+  behavior: "individuals",
   box_name: [],
   box_number: [],
   caption: [],
