@@ -5,6 +5,7 @@ import { DCAPI_CHAT_FEEDBACK } from "./constants/endpoints";
 import { Work } from "@nulib/dcapi-types";
 import { getFacetById } from "./utils/facet-helpers";
 import { getFacetIdByField } from "./queries/facet";
+import { pluralize } from "./utils/count-helpers";
 
 function mapWorksToApiDocs(works: Work[]) {
   if (!works) {
@@ -62,18 +63,26 @@ const appendHybridSearchParams = (url: URL, value: string) => {
   return url;
 };
 
-function createResultsMessageFromContext(context: ChatContext) {
-  if (!context || !context.query) return;
+function createResultsMessageFromContext(
+  context?: ChatContext,
+  totalResults?: number,
+) {
+  const resultsText = totalResults
+    ? pluralize("result", totalResults, "s")
+    : "Results";
+
+  if (!context || !context.query) return resultsText;
 
   const facets = context.facets.map((facet) => {
     const facetId = Object.keys(facet)[0];
     if (facetId === "field") return facet;
 
     const facetField = getFacetIdByField(facetId);
+    const facetValue = facet[facetId].replace(/,/g, ", ");
 
     if (!facetField) return {};
 
-    return { field: facetField, value: facet[facetId] };
+    return { field: facetField, value: facetValue };
   });
 
   let appendFilteredBy = "";
@@ -83,12 +92,13 @@ function createResultsMessageFromContext(context: ChatContext) {
       if (!facet.field || !facet.value) return "";
 
       const facetLabel = getFacetById(facet.field)?.label || facet.field;
-      return `'${facetLabel}: ${facet.value}'`;
+
+      return `<em>${facetLabel.toLowerCase()}</em> for <strong>${facet.value}</strong>`;
     });
     appendFilteredBy = ` filtered by ${facetMessages.join(", ")}`;
   }
 
-  return `Results for '${context.query}'${appendFilteredBy}`;
+  return `${resultsText} for <strong>“${context.query}”</strong>${appendFilteredBy}`;
 }
 
 export {

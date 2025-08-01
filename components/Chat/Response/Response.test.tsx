@@ -223,8 +223,9 @@ describe("ChatResponse component", () => {
       }
 
       if (tool === "search") {
-        expect(content).toHaveTextContent(`Searching for ${query}`);
-        expect(content.querySelector("strong")).toHaveTextContent(query);
+        const interstitial = content.querySelector("[data-tool='search']");
+        const interstitialLabel = interstitial?.querySelector("label");
+        expect(interstitialLabel).toHaveTextContent("Results for “Joan Baez”");
 
         const action = content.querySelector("button");
         expect(action).toHaveTextContent("View results");

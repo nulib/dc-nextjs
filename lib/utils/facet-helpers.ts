@@ -1,6 +1,7 @@
 import { ALL_FACETS, FACETS } from "@/lib/constants/facets-model";
 import { FacetsGroup, FacetsInstance } from "@/types/components/facets";
 
+import { Facet } from "@/types/context/search-context";
 import { UrlFacets } from "@/types/context/filter-context";
 
 /**
@@ -29,6 +30,13 @@ export function facetRegex(str?: string) {
 
 export const getAllFacetIds = () => {
   return ALL_FACETS.facets.map((facet) => facet.id);
+};
+
+export const getContextFacets = (urlFacets: UrlFacets): Facet[] => {
+  return Object.entries(urlFacets).map(([key, value]) => ({
+    field: key,
+    value: Array.isArray(value) ? value.join(", ") : value,
+  }));
 };
 
 export const getFacetById = (id: string): FacetsInstance | undefined => {

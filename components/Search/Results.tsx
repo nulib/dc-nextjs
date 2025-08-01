@@ -1,22 +1,28 @@
 import {
   NoResultsMessage,
-  ResultsMessage,
   ResultsWrapper,
   ResultsWrapperHeader,
 } from "@/components/Search/Search.styled";
 
+import { ChatContext } from "@/types/context/search-context";
 import Grid from "@/components/Grid/Grid";
 import IIIFShare from "../Shared/IIIF/Share";
 import PaginationAltCounts from "@/components/Search/PaginationAltCounts";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
+import SearchResultsMessage from "./ResultsMessage";
 import { SearchResultsState } from "@/types/components/search";
+import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { iiifSearchUri } from "@/lib/dc-api";
-import { pluralize } from "@/lib/utils/count-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 
-const SearchResults: React.FC<SearchResultsState> = ({
+interface SearchResultsStateWithContext extends SearchResultsState {
+  context?: ChatContext;
+}
+
+const SearchResults: React.FC<SearchResultsStateWithContext> = ({
   data,
+  context,
   error,
   loading,
 }) => {
@@ -25,6 +31,7 @@ const SearchResults: React.FC<SearchResultsState> = ({
 
   const iiifCollection = iiifSearchUri(router.query, SEARCH_RESULTS_PER_PAGE);
   const totalResults = data?.pagination?.total_hits;
+  const label = createResultsMessageFromContext(context, totalResults);
 
   return (
     <ResultsWrapper>
@@ -35,10 +42,7 @@ const SearchResults: React.FC<SearchResultsState> = ({
           {!isAI &&
             (totalResults ? (
               <ResultsWrapperHeader>
-                <ResultsMessage data-testid="results-count">
-                  {pluralize("result", totalResults)} for{" "}
-                  <strong>{router.query.q}</strong>
-                </ResultsMessage>
+                {label && <SearchResultsMessage label={label} />}
                 <IIIFShare uri={iiifCollection} />
               </ResultsWrapperHeader>
             ) : (
