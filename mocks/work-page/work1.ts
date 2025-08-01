@@ -11,6 +11,7 @@ export const work1: Work = {
   api_model: "Work",
   ark: "ark:/81985/n29883190",
   batch_ids: ["cbfacc12-c442-4843-b213-d417e511f2ba"],
+  behavior: "individuals",
   box_name: [],
   box_number: ["6"],
   caption: [],
