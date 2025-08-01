@@ -18,6 +18,7 @@ import { ApiSearchRequestBody } from "@/types/api/request";
 import { ChatContext } from "@/types/context/search-context";
 import Figure from "@/components/Figure/Figure";
 import { IconClear } from "@/components/Shared/SVG/Icons";
+import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { buildQuery } from "@/lib/queries/builder";
 import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { getQueryRepresentativeThumbnail } from "@/lib/dc-api";
@@ -26,8 +27,8 @@ import { rem } from "@/styles/global";
 
 interface StackProps {
   context: ChatContext;
-  isDismissable: boolean;
   dismissCallback?: () => void;
+  isDismissable: boolean;
 }
 
 /**
@@ -35,13 +36,13 @@ interface StackProps {
  */
 const Stack = ({
   context,
-  isDismissable = true,
   dismissCallback,
+  isDismissable = true,
 }: StackProps) => {
   const [isDismissed, setIsDismissed] = useState(false);
   const [thumbnail, setThumbnail] = useState<string>("");
 
-  const resultsMessage = createResultsMessageFromContext(context);
+  const label = createResultsMessageFromContext(context);
 
   function handleDismiss() {
     setIsDismissed(true);
@@ -88,13 +89,13 @@ const Stack = ({
   /**
    * If there is no results message, we do not render the stack.
    */
-  if (!resultsMessage) return null;
+  if (!label) return null;
 
   return (
     <StyledStack
       data-testid="stack"
       data-isdismissed={isDismissed}
-      data-results-message={resultsMessage}
+      data-results-message={label}
     >
       <StyledStackContent>
         <Tooltip.Provider delayDuration={20}>
@@ -118,7 +119,9 @@ const Stack = ({
                 collisionPadding={19}
               >
                 <TooltipArrow />
-                <TooltipBody>{resultsMessage}</TooltipBody>
+                <TooltipBody>
+                  <SearchResultsMessage label={label} textAlign="center" />
+                </TooltipBody>
               </TooltipContent>
             </Tooltip.Portal>
           </Tooltip.Root>

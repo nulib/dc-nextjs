@@ -6,6 +6,7 @@ import {
   StyledResponseWrapper,
   StyledTabsContent,
 } from "@/components/Search/Search.styled";
+import { getContextFacets, parseUrlFacets } from "@/lib/utils/facet-helpers";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -31,7 +32,6 @@ import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
 import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
-import { parseUrlFacets } from "@/lib/utils/facet-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
@@ -71,6 +71,7 @@ const SearchPage: NextPage = () => {
   });
 
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
+  const urlFacets = parseUrlFacets(router.query);
 
   /**
    * on a query change, we check to see if the user is using the AI and then
@@ -98,7 +99,6 @@ const SearchPage: NextPage = () => {
 
     (async () => {
       try {
-        const urlFacets = parseUrlFacets(router.query);
         const requestUrl = new URL(DC_API_SEARCH_URL);
         const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
 
@@ -256,7 +256,14 @@ const SearchPage: NextPage = () => {
 
             <Tabs.Content value="results">
               <Container containerType="wide">
-                <SearchResults {...searchResults} />
+                <SearchResults
+                  {...searchResults}
+                  context={{
+                    facets: getContextFacets(urlFacets),
+                    query: String(q),
+                    works: [],
+                  }}
+                />
               </Container>
             </Tabs.Content>
           </Tabs.Root>

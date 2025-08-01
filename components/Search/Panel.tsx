@@ -2,32 +2,36 @@ import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
-import { IconArrowBack, IconSparkles } from "@/components/Shared/SVG/Icons";
 import {
   SearchResultsLabel,
+  SearchResultsLabelMessage,
   StyledBackButton,
   StyledIncludeResults,
   StyledSearchPanel,
   StyledSearchPanelContent,
 } from "./Panel.styled";
+import { getContextFacets, parseUrlFacets } from "@/lib/utils/facet-helpers";
 import { useEffect, useRef, useState } from "react";
 
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
+import Balancer from "react-wrap-balancer";
 import BouncingLoader from "@/components/Shared/BouncingLoader";
 import type { CheckboxProps } from "@radix-ui/react-checkbox";
 import Container from "@/components/Shared/Container";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import { IconArrowBack } from "@/components/Shared/SVG/Icons";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
 import SearchResults from "@/components/Search/Results";
+import SearchResultsMessage from "./ResultsMessage";
 import { SearchResultsState } from "@/types/components/search";
 import Stack from "../Chat/Stack/Stack";
 import { StyledInterstitialIcon } from "@/components/Chat/Response/Interstitial.styled";
 import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
-import { parseUrlFacets } from "@/lib/utils/facet-helpers";
+import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
@@ -59,6 +63,12 @@ const SearchPanel = () => {
   const query = router.query.q as string;
   const page = (router.query.page as string) || "1";
   const urlFacets = parseUrlFacets(router.query);
+
+  const label = createResultsMessageFromContext({
+    facets: getContextFacets(urlFacets),
+    query,
+    works: [],
+  });
 
   const requestUrl = new URL(DC_API_SEARCH_URL);
   const body: ApiSearchRequestBody = buildQuery(
@@ -197,31 +207,8 @@ const SearchPanel = () => {
             />
             {query && (
               <SearchResultsLabel>
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <StyledBackButton onClick={handleBack}>
-                      <IconArrowBack /> Back to conversation
-                    </StyledBackButton>
-                    <StyledIncludeResults>
-                      <CheckboxRootStyled
-                        id="useDocsAsContext"
-                        checked={useDocsAsContext}
-                        onCheckedChange={(e) => handleCheckChange(e)}
-                      >
-                        <CheckboxIndicator>
-                          <IconCheck />
-                        </CheckboxIndicator>
-                      </CheckboxRootStyled>
-                      <label htmlFor="useDocsAsContext">
-                        Chat about results
-                      </label>
-                    </StyledIncludeResults>
-                  </div>
+                <StyledBackButton onClick={handleBack}>
+                  <IconArrowBack /> Back to conversation
                   {conversation.stagedContext?.works &&
                     conversation.stagedContext.works.length > 0 && (
                       <Stack
@@ -229,15 +216,10 @@ const SearchPanel = () => {
                         isDismissable={false}
                       />
                     )}
-                </div>
-                <div>
-                  <StyledInterstitialIcon>
-                    <IconSparkles />
-                  </StyledInterstitialIcon>
-                  <label>
-                    Search results for <strong>{query}</strong>
-                  </label>
-                </div>
+                </StyledBackButton>
+                {label && (
+                  <SearchResultsMessage label={label} textAlign="right" />
+                )}
               </SearchResultsLabel>
             )}
           </Container>

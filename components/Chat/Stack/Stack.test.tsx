@@ -76,7 +76,7 @@ describe("Stack", () => {
 
     expect(screen.getByTestId("stack")).toHaveAttribute(
       "data-results-message",
-      "Results for 'Dogs' filtered by 'Collection: Spaniels Quarterly'",
+      "Results for <strong>“Dogs”</strong> filtered by <em>collection</em> for <strong>Spaniels Quarterly</strong>",
     );
   });
 });

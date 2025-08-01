@@ -10,18 +10,23 @@ export const TooltipArrow = styled(Tooltip.Arrow, {
 
 export const TooltipBody = styled("div", {
   background: "$white",
-  boxShadow: "5px 5px 19px 0 #0002",
-  maxWidth: "450px",
-  lineHeight: "1.5em",
+  boxShadow: "5px 5px 19px #0002",
+  maxWidth: "350px",
+  lineHeight: "1.47em",
   fontSize: "$gr2 !important",
   fontFamily: "$northwesternSansRegular",
   padding: "$gr3",
   borderRadius: "3px",
+  color: "$black50",
+
+  strong: {
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+    color: "$black80",
+  },
 
   em: {
-    color: "$black50",
-    marginTop: "$gr1",
-    display: "block",
-    fontSize: "$gr1",
+    fontStyle: "italic",
+    color: "$black80",
   },
 });

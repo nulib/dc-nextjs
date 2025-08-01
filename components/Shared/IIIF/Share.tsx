@@ -85,6 +85,7 @@ export const StyledIIIFShare = styled("div", {
   position: "relative",
   zIndex: 1,
   padding: "0 $gr1",
+  whiteSpace: "nowrap",
 
   "&:last-child": {
     paddingRight: "0",

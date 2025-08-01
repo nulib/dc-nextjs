@@ -1,5 +1,3 @@
-import { IconClear } from "@/components/Shared/SVG/Icons";
-import { gr } from "@/styles/sizes";
 import { styled } from "@/stitches.config";
 
 const StyledStack = styled("div", {
@@ -31,11 +29,7 @@ const StyledStackItem = styled("div", {
 });
 
 const StyledStackFillerItem = styled(StyledStackItem, {
-  // radial gradient to fill the stack
-  background: `radial-gradient(circle at 25% 25%, $white, $gray6 100%)`,
   width: "2rem",
-  borderBottom: "1px solid #0003",
-  borderRight: "1px solid #0003",
   borderRadius: "3px",
 });
 
@@ -56,16 +50,22 @@ const StyledStackContent = styled(StyledStack, {
   [`& ${StyledStackItem}`]: {
     width: "2rem",
     height: "2rem",
-    boxShadow: "2px 2px 5px #0002",
+    border: "1px solid $gray6",
+    borderRadius: "3px",
+    boxShadow: "2px 2px 5px #0001",
   },
 
   [`${StyledStackItem}:nth-child(1 of ${StyledStackFillerItem})`]: {
     transform: "translateX(2px) translateY(2px)",
+    borderBottom: "1px solid $black10",
+    borderRight: "1px solid $black10",
     zIndex: 1,
   },
 
   [`${StyledStackItem}:nth-child(2 of ${StyledStackFillerItem})`]: {
     transform: "translateX(4px) translateY(4px)",
+    borderBottom: "1px solid $black10",
+    borderRight: "1px solid $black10",
     zIndex: 0,
   },
 });

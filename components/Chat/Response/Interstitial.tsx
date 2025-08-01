@@ -8,8 +8,10 @@ import {
 } from "@/components/Chat/Response/Interstitial.styled";
 
 import { ChatContext } from "@/types/context/search-context";
+import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { ToolStartMessage } from "@/types/components/chat";
 import { UrlFacets } from "@/types/context/filter-context";
+import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { getFacetIdByField } from "@/lib/queries/facet";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
@@ -114,8 +116,13 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
       text = `Discovering`;
       break;
     case "search":
-      text = `Searching for <strong>${input.query}</strong>`;
-      action = input.query;
+      text = createResultsMessageFromContext({
+        ...context,
+        query: String(input?.query),
+        works: context?.works ?? [],
+        facets: context?.facets ?? [],
+      });
+      action = input?.query;
       break;
     default:
       console.warn("Unknown tool_start message", message);
@@ -128,10 +135,7 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
   return (
     <StyledInterstitialWrapper id={`interstitial-${id}`}>
       <StyledInterstitial data-testid="response-interstitial" data-tool={tool}>
-        <StyledInterstitialIcon>
-          <IconSparkles />
-        </StyledInterstitialIcon>
-        {text && <label dangerouslySetInnerHTML={{ __html: text }} />}
+        {text && <SearchResultsMessage label={text} icon={<IconSparkles />} />}
       </StyledInterstitial>
       {action && (
         <StyledInterstitialAction onClick={() => handleViewResults(action)}>
