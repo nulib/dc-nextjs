@@ -36,6 +36,10 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   viewerOptions = {},
 }) => {
   const { workDispatch, workState } = useWorkState();
+  const { work } = workState;
+
+  const isAudioVideoWork =
+    work?.work_type === "Audio" || work?.work_type === "Video";
 
   const customTheme = {
     colors: {
@@ -77,6 +81,12 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   const options: CloverViewerProps["options"] = {
     ...defaultOptions,
     ...viewerOptions,
+    ...(isAudioVideoWork && {
+      informationPanel: {
+        ...defaultOptions.informationPanel,
+        annotationTabLabel: "Chapters",
+      },
+    }),
   };
 
   const handleContentStateCallback = (contentState: string) => {
