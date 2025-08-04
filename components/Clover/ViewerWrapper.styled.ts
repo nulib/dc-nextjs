@@ -1,3 +1,4 @@
+import { p } from "@iiif/helpers/dist/vault-actions-FZxiP2q-";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -22,6 +23,17 @@ const ViewerWrapperStyled = styled("section", {
       border: "none",
       background: "none",
       cursor: "pointer",
+      fontSize: "$gr3",
+      paddingBottom: "$gr1",
+
+      "> div": {
+        fontSize: "inherit",
+      },
+
+      strong: {
+        fontFamily: "$northwesternSansBold",
+        fontWeight: "400",
+      },
     },
 
     "&[data-format='text/plain']": {
@@ -38,6 +50,26 @@ const ViewerWrapperStyled = styled("section", {
           color: "$black50",
         },
       },
+    },
+  },
+
+  ".clover-viewer-information-panel": {
+    "button[role='tab']": {
+      fontFamily: "$northwesternSansRegular",
+      fontWeight: "400",
+      fontSize: "$gr3",
+
+      "&[aria-selected='true']": {
+        fontFamily: "$northwesternSansBold",
+      },
+    },
+
+    header: {
+      fontFamily: "$northwesternSansRegular",
+      fontWeight: "400",
+      fontSize: "$gr2",
+      color: "$black50",
+      marginBottom: "$gr3",
     },
   },
 
