@@ -1,3 +1,4 @@
+import { ALL_FACETS } from "@/lib/constants/facets-model";
 import type { AggregationResultMessage } from "types/components/chat";
 import { Work } from "@nulib/dcapi-types";
 
@@ -14,10 +15,12 @@ export interface ChatContext {
   facets: Facet[];
 }
 
-// a facet looks { "subject.label": "Nigeria" } or { "collection.title.keyword": "E. H. Duckworth Photograph Collection" }
-export interface Facet {
-  [key: string]: string;
-}
+/**
+ * { "subject.label": "Nigeria" } or
+ * { "collection.title.keyword": "E. H. Duckworth Photograph Collection" }
+ */
+export type FacetKey = (typeof ALL_FACETS.facets)[number]["field"];
+export type Facet = Partial<Record<FacetKey, string>>;
 
 export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
@@ -37,7 +40,6 @@ export interface SearchContextStore {
     open: boolean;
     query?: string;
   };
-  searchFixed: boolean;
 }
 
 export interface UserFacets {

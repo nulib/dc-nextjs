@@ -62,26 +62,30 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     const updatedFacets: UrlFacets = {};
     const allFacetsIds = getAllFacetIds();
 
+    const isScopedCollection = searchScope === "collection" && collectionLabel;
+
+    const context = {
+      query: searchValue,
+      facets: isScopedCollection
+        ? [
+            {
+              "collection.title.keyword": collectionLabel,
+            },
+          ]
+        : [],
+      works: [],
+    };
+
     const conversation = {
       ref: uuidv4(),
       initialQuestion: searchValue,
+      stagedContext: isScopedCollection ? context : undefined,
       turns: [
         {
           question: searchValue,
           answer: "",
           aggregations: [],
-          context: {
-            query: searchValue,
-            facets:
-              searchScope === "collection" && collectionLabel
-                ? [
-                    {
-                      "collection.title.keyword": collectionLabel,
-                    },
-                  ]
-                : [],
-            works: [],
-          },
+          context,
         },
       ],
     };

@@ -1,10 +1,10 @@
 import { IconRefresh, IconReply, IconSparkles } from "../Shared/SVG/Icons";
+import React, { useEffect, useRef } from "react";
 import {
   StyledChatConversation,
   StyledResetButton,
 } from "./Conversation.styled";
 import { defaultState, useSearchState } from "@/context/search-context";
-import { useEffect, useRef } from "react";
 
 import { AI_SYS_PROMPT_MSG } from "@/lib/constants/common";
 import Stack from "./Stack/Stack";
@@ -31,17 +31,8 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   const textareaPlaceholder = "Ask a followup question";
 
-  const handleScroll = () => {
-    // handle scrolling
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (conversation?.stagedContext?.works?.length && !panel.open) {
+    if (conversation?.stagedContext?.facets && !panel.open) {
       const searchWrapper = document.getElementById("search-wrapper");
 
       if (searchWrapper) {
@@ -59,7 +50,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
         textareaRef.current.focus();
       }
     }
-  }, [conversation?.stagedContext?.works, panel.open]);
+  }, [conversation?.stagedContext?.facets, panel.open]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -137,14 +128,13 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             onFocus={handleFocus}
             onBlur={handleFocus}
           ></textarea>
-          {conversation.stagedContext?.works &&
-            conversation.stagedContext.works.length > 0 && (
-              <Stack
-                context={conversation.stagedContext}
-                isDismissable
-                dismissCallback={handleStackDismiss}
-              />
-            )}
+          {conversation.stagedContext && (
+            <Stack
+              context={conversation.stagedContext}
+              isDismissable
+              dismissCallback={handleStackDismiss}
+            />
+          )}
           <button type="submit" disabled={isStreaming}>
             {isStreaming ? (
               <>
@@ -180,4 +170,4 @@ export const StyledSystemPrompt = styled("p", {
   },
 });
 
-export default ChatConversation;
+export default React.memo(ChatConversation);

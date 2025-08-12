@@ -14,8 +14,7 @@ type Action =
         query?: string;
       };
     }
-  | { type: "updateSearch"; q: string }
-  | { type: "updateSearchFixed"; searchFixed: boolean };
+  | { type: "updateSearch"; q: string };
 
 type Dispatch = (action: Action) => void;
 type State = SearchContextStore;
@@ -35,7 +34,6 @@ const defaultState: SearchContextStore = {
     open: false,
     query: undefined,
   },
-  searchFixed: false,
 };
 
 const SearchStateContext = React.createContext<
@@ -54,12 +52,6 @@ function searchReducer(state: State, action: Action) {
       return {
         ...state,
         q: action.q,
-      };
-    }
-    case "updateSearchFixed": {
-      return {
-        ...state,
-        searchFixed: action.searchFixed,
       };
     }
     case "updatePanel": {

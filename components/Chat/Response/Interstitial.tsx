@@ -39,6 +39,8 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
 
   const handleViewResults = (action: string) => {
     const facets = context?.facets.map((facet) => {
+      if (facet.field) return facet;
+
       const [key, value] = Object.entries(facet)[0];
       const field = getFacetIdByField(key);
       return { field, value };

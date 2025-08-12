@@ -13,8 +13,8 @@ import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { UrlFacets } from "@/types/context/filter-context";
 import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
+import { useLayoutState } from "@/context/layout-context";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
 
 interface FacetsCurrentUserProps {
   screen: "modal" | "search";
@@ -35,8 +35,8 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
 
   const { filterDispatch, filterState } = useFilterState();
   const {
-    searchState: { searchFixed },
-  } = useSearchState();
+    layoutState: { searchFixed },
+  } = useLayoutState();
 
   const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
   const [isOpen, setIsOpen] = useState(false);

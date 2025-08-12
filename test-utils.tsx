@@ -1,6 +1,8 @@
 import React, { FC, ReactElement, ReactNode } from "react";
 import { RenderOptions, render } from "@testing-library/react";
+
 import { FilterProvider } from "@/context/filter-context";
+import { LayoutProvider } from "./context/layout-context";
 import { SearchProvider } from "@/context/search-context";
 import { WorkProvider } from "./context/work-context";
 
@@ -12,7 +14,9 @@ const AllTheProviders: FC<AllTheProvidersProps> = ({ children }) => {
   return (
     <SearchProvider>
       <FilterProvider>
-        <WorkProvider>{children}</WorkProvider>
+        <LayoutProvider>
+          <WorkProvider>{children}</WorkProvider>
+        </LayoutProvider>
       </FilterProvider>
     </SearchProvider>
   );

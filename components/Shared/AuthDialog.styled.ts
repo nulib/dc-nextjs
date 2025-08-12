@@ -88,7 +88,7 @@ const AuthDialogColumn = styled("div", {
     margin: 0,
   },
 
-  a: {
+  "a[role=button]": {
     color: "$white",
     width: "100%",
   },

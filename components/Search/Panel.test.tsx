@@ -19,6 +19,18 @@ jest.mock("@/context/search-context", () => ({
   }),
 }));
 
+jest.mock("@/context/layout-context", () => ({
+  __esModule: true,
+  useLayoutState: jest.fn(() => {
+    return {
+      layoutDispatch: jest.fn(),
+      layoutState: {
+        searchFixed: false,
+      },
+    };
+  }),
+}));
+
 describe("SearchPanel", () => {
   it("renders the search panel in closed state", async () => {
     render(<SearchPanel />);
