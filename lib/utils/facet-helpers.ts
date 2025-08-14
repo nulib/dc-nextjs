@@ -32,11 +32,36 @@ export const getAllFacetIds = () => {
   return ALL_FACETS.facets.map((facet) => facet.id);
 };
 
-export const getContextFacets = (urlFacets: UrlFacets): Facet[] => {
-  return Object.entries(urlFacets).map(([key, value]) => ({
-    field: key,
-    value: Array.isArray(value) ? value.join(", ") : value,
-  }));
+export const convertUrlFacetsToContextFacets = (
+  urlFacets: UrlFacets,
+): Facet[] => {
+  // url facets may look like [{ "collection": [ "Aldridge Collection" ] }]
+  // we need to lookup the field by its and return field
+  return Object.entries(urlFacets).map(([key, value]) => {
+    const facet = getFacetById(key);
+    if (!facet) return {};
+
+    return { [facet?.field]: Array.isArray(value) ? value.join(", ") : value };
+  });
+};
+
+export const convertContextFacetsToUrlFacets = (
+  contextFacets: Facet[],
+): UrlFacets => {
+  return contextFacets.reduce((acc: UrlFacets, facet) => {
+    const field = getFacetByField(Object.keys(facet)[0]);
+    if (!field) return acc;
+
+    const value = facet[field?.field];
+    if (!value) return acc;
+
+    acc[field.id] = Array.isArray(value) ? value : [value];
+    return acc;
+  }, {});
+};
+
+export const getFacetByField = (field: string): FacetsInstance | undefined => {
+  return ALL_FACETS.facets.find((facet) => facet.field === field);
 };
 
 export const getFacetById = (id: string): FacetsInstance | undefined => {

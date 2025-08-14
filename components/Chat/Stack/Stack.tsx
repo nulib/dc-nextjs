@@ -20,6 +20,7 @@ import Figure from "@/components/Figure/Figure";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { buildQuery } from "@/lib/queries/builder";
+import { convertContextFacetsToUrlFacets } from "@/lib/utils/facet-helpers";
 import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { getQueryRepresentativeThumbnail } from "@/lib/dc-api";
 import { isSanitizedWork } from "@/lib/work-helpers";
@@ -53,38 +54,20 @@ const Stack = ({
 
   useEffect(() => {
     (async () => {
-      const collectionFacet = context.facets.find(
-        (facet) => facet["collection.title.keyword"],
+      const body: ApiSearchRequestBody = buildQuery(
+        {
+          size: 1,
+          term: context.query,
+          urlFacets: convertContextFacetsToUrlFacets(context.facets),
+        },
+        false,
       );
 
-      if (collectionFacet) {
-        const collectionTitle = collectionFacet
-          ? collectionFacet["collection.title.keyword"]
-          : "";
+      const thumb = await getQueryRepresentativeThumbnail(body, 4 * rem);
 
-        const body: ApiSearchRequestBody = buildQuery(
-          {
-            size: 1,
-            term: context.query,
-            urlFacets: {
-              collection: [collectionTitle],
-            },
-          },
-          false,
-        );
-
-        const thumb = await getQueryRepresentativeThumbnail(body, 4 * rem);
-
-        if (thumb) setThumbnail(thumb || "");
-      } else {
-        const candidate = context?.works?.find(
-          (work) => isSanitizedWork(work) && work.thumbnail,
-        );
-
-        if (candidate) setThumbnail(candidate.thumbnail || "");
-      }
+      setThumbnail(thumb || "");
     })();
-  }, [context]);
+  }, [context.query, context.facets]);
 
   /**
    * If there is no results message, we do not render the stack.
@@ -106,7 +89,7 @@ const Stack = ({
                   data={{
                     aspectRatio: 1,
                     src: thumbnail,
-                    title: context.query,
+                    title: label,
                   }}
                   hideCaption={true}
                 />

@@ -35,10 +35,6 @@ const Chat = () => {
               aggregations: [],
             },
           ],
-          /**
-           * Clear the staged context after submitting a question
-           */
-          stagedContext: undefined, // clear chat context on new question
         },
       });
     }

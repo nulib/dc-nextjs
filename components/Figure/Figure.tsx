@@ -47,7 +47,7 @@ const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
   const srcSetSizes = `(max-width: ${width.xxs}px) 100vw`;
 
   return (
-    <FigureStyled data-orientation={orientation} {...props}>
+    <FigureStyled data-orientation={orientation}>
       <FigureImageWrapper>
         <FigurePlaceholder ratio={aspectRatio ? aspectRatio : 1}>
           {!data.priority && (

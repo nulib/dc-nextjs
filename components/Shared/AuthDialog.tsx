@@ -134,6 +134,7 @@ export default function AuthDialog() {
                 isLowercase
                 //@ts-ignore - by setting as="a" we lose the type but href is set
                 href={ssoUrl}
+                role="button"
               >
                 Northwestern NetID
               </Button>

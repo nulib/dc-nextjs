@@ -37,12 +37,12 @@ const useChatSocket = () => {
     socketRef.current = new WebSocket(url);
 
     socketRef.current.onopen = () => {
-      console.log("WebSocket connected");
+      // console.log("WebSocket connected");
       setIsConnected(true);
     };
 
     socketRef.current.onclose = () => {
-      console.log("WebSocket disconnected");
+      // console.log("WebSocket disconnected");
       setIsConnected(false);
     };
 
@@ -62,7 +62,7 @@ const useChatSocket = () => {
 
   const sendMessage = useCallback((data: object) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      console.log("Sending message", data);
+      // console.log("Sending message", data);
       socketRef.current.send(JSON.stringify(data));
     }
   }, []);

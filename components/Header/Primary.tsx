@@ -6,26 +6,26 @@ import Link from "next/link";
 import Nav from "@/components/Nav/Nav";
 import Search from "@/components/Search/Search";
 import useElementPosition from "@/hooks/useElementPosition";
-import { useSearchState } from "@/context/search-context";
+import { useLayoutState } from "@/context/layout-context";
 
 const HeaderPrimary: React.FC = () => {
   const [searchActive, setSearchActive] = useState<boolean>(false);
 
   const {
-    searchDispatch,
-    searchState: { searchFixed },
-  } = useSearchState();
+    layoutDispatch,
+    layoutState: { searchFixed },
+  } = useLayoutState();
 
   const primaryRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useElementPosition(primaryRef);
 
   useEffect(
     () =>
-      searchDispatch({
+      layoutDispatch({
         searchFixed: scrollPosition > 0,
         type: "updateSearchFixed",
       }),
-    [searchDispatch, scrollPosition],
+    [layoutDispatch, scrollPosition],
   );
 
   const handleIsSearchActive = (status: boolean) => {

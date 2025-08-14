@@ -6,7 +6,10 @@ import {
   StyledResponseWrapper,
   StyledTabsContent,
 } from "@/components/Search/Search.styled";
-import { getContextFacets, parseUrlFacets } from "@/lib/utils/facet-helpers";
+import {
+  convertUrlFacetsToContextFacets,
+  parseUrlFacets,
+} from "@/lib/utils/facet-helpers";
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
@@ -233,13 +236,7 @@ const SearchPage: NextPage = () => {
             className="tabs-wrapper"
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
-            {activeTab === "results" && (
-              <SearchOptions
-                tabs={<></>} // placeholder for back tab
-                activeTab={activeTab}
-                renderTabList={showStreamedResponse}
-              />
-            )}
+            {activeTab === "results" && <SearchOptions activeTab={activeTab} />}
 
             <StyledTabsContent value="stream">
               <div
@@ -251,7 +248,7 @@ const SearchPage: NextPage = () => {
               >
                 <Chat key={conversation.ref} />
               </div>
-              <SearchPanel />
+              {panel.open && <SearchPanel />}
             </StyledTabsContent>
 
             <Tabs.Content value="results">
@@ -259,8 +256,8 @@ const SearchPage: NextPage = () => {
                 <SearchResults
                   {...searchResults}
                   context={{
-                    facets: getContextFacets(urlFacets),
-                    query: String(q),
+                    facets: convertUrlFacetsToContextFacets(urlFacets),
+                    query: q ? (q as string) : "",
                     works: [],
                   }}
                 />

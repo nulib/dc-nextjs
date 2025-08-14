@@ -71,13 +71,14 @@ function createResultsMessageFromContext(
     ? pluralize("result", totalResults, "s")
     : "Results";
 
-  if (!context || !context.query) return resultsText;
+  if (!context) return resultsText;
 
   const facets = context.facets.map((facet) => {
     const facetId = Object.keys(facet)[0];
     if (facetId === "field") return facet;
 
     const facetField = getFacetIdByField(facetId);
+    // @ts-ignore
     const facetValue = facet[facetId].replace(/,/g, ", ");
 
     if (!facetField) return {};
@@ -98,7 +99,11 @@ function createResultsMessageFromContext(
     appendFilteredBy = ` filtered by ${facetMessages.join(", ")}`;
   }
 
-  return `${resultsText} for <strong>“${context.query}”</strong>${appendFilteredBy}`;
+  const queryLabel = context.query
+    ? ` for <strong>“${context.query}”</strong>`
+    : "";
+
+  return `${resultsText}${queryLabel}${appendFilteredBy}`;
 }
 
 export {
