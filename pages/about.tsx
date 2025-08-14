@@ -111,7 +111,6 @@ const AboutPage: NextPage = () => {
         description={HEAD_META["ABOUT"].description}
       >
         <HeroBasic bgImage="/images/liz__O8A9903_final.jpg">
-          <HeroTitle>Repository and Digital Curation</HeroTitle>
           <Subhead>Digitizing Our Distinctive Collections</Subhead>
         </HeroBasic>
 
