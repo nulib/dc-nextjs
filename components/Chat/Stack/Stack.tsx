@@ -1,34 +1,35 @@
-import type { Work } from "@nulib/dcapi-types";
-import { useState } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
+
+import React, { useEffect, useState } from "react";
+import {
+  StyledStack,
+  StyledStackContent,
+  StyledStackDismiss,
+  StyledStackFillerItem,
+  StyledStackItem,
+} from "./Stack.styled";
 import { TooltipArrow, TooltipBody } from "../../Shared/Tooltip.styled";
 import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/Search/GenerativeAI.styled";
-import {
-  StyledStack,
-  StyledStackContent,
-  StyledStackItem,
-  StyledStackFillerItem,
-  StyledStackDismiss,
-} from "./Stack.styled";
-import { IconClear } from "@/components/Shared/SVG/Icons";
+
+import { ApiSearchRequestBody } from "@/types/api/request";
 import { ChatContext } from "@/types/context/search-context";
+import Figure from "@/components/Figure/Figure";
+import { IconClear } from "@/components/Shared/SVG/Icons";
+import SearchResultsMessage from "@/components/Search/ResultsMessage";
+import { buildQuery } from "@/lib/queries/builder";
+import { convertContextFacetsToUrlFacets } from "@/lib/utils/facet-helpers";
+import { createResultsMessageFromContext } from "@/lib/chat-helpers";
+import { getQueryRepresentativeThumbnail } from "@/lib/dc-api";
+import { isSanitizedWork } from "@/lib/work-helpers";
+import { rem } from "@/styles/global";
 
 interface StackProps {
   context: ChatContext;
-  isDismissable: boolean;
   dismissCallback?: () => void;
-}
-
-interface SanitizedWork extends Work {
-  title: NonNullable<Work["title"]>;
-  thumbnail: NonNullable<Work["thumbnail"]>;
-}
-
-function isSanitizedWork(work: Partial<Work>): work is SanitizedWork {
-  return work.title && work.thumbnail ? true : false;
+  isDismissable: boolean;
 }
 
 /**
@@ -36,10 +37,13 @@ function isSanitizedWork(work: Partial<Work>): work is SanitizedWork {
  */
 const Stack = ({
   context,
-  isDismissable = true,
   dismissCallback,
+  isDismissable = true,
 }: StackProps) => {
   const [isDismissed, setIsDismissed] = useState(false);
+  const [thumbnail, setThumbnail] = useState<string>("");
+
+  const label = createResultsMessageFromContext(context);
 
   function handleDismiss() {
     setIsDismissed(true);
@@ -48,43 +52,63 @@ const Stack = ({
     }
   }
 
-  const resultsMssg = context
-    ? `Results for '${context.query}' ${Object.keys(context.facets).length ? "filtered on " : ""}${Object.entries(
-        context.facets,
-      )
-        .map(
-          ([key, values]) =>
-            `${key} value(s) ${values?.map((v) => `'${v}'`).join(", ")}`,
-        )
-        .join("; and ")}`
-    : "Filtered search results";
+  useEffect(() => {
+    (async () => {
+      const body: ApiSearchRequestBody = buildQuery(
+        {
+          size: 1,
+          term: context.query,
+          urlFacets: convertContextFacetsToUrlFacets(context.facets),
+        },
+        false,
+      );
+
+      const thumb = await getQueryRepresentativeThumbnail(body, 4 * rem);
+
+      setThumbnail(thumb || "");
+    })();
+  }, [context.query, context.facets]);
+
+  /**
+   * If there is no results message, we do not render the stack.
+   */
+  if (!label) return null;
+
   return (
-    <StyledStack data-testid="stack" data-isdismissed={isDismissed}>
+    <StyledStack
+      data-testid="stack"
+      data-isdismissed={isDismissed}
+      data-results-message={label}
+    >
       <StyledStackContent>
-        {context.works
-          .filter(isSanitizedWork)
-          .slice(0, 1)
-          .map((document) => (
-            <Tooltip.Provider delayDuration={20} key={document.id}>
-              <Tooltip.Root data-testid="stack-tooltip">
-                <TooltipTrigger asChild>
-                  <StyledStackItem>
-                    <img src={document.thumbnail} alt={document.title} />
-                  </StyledStackItem>
-                </TooltipTrigger>
-                <Tooltip.Portal>
-                  <TooltipContent
-                    side="bottom"
-                    sideOffset={3}
-                    collisionPadding={19}
-                  >
-                    <TooltipArrow />
-                    <TooltipBody>{resultsMssg}</TooltipBody>
-                  </TooltipContent>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </Tooltip.Provider>
-          ))}
+        <Tooltip.Provider delayDuration={20}>
+          <Tooltip.Root data-testid="stack-tooltip">
+            <TooltipTrigger>
+              <StyledStackItem>
+                <Figure
+                  data={{
+                    aspectRatio: 1,
+                    src: thumbnail,
+                    title: label,
+                  }}
+                  hideCaption={true}
+                />
+              </StyledStackItem>
+            </TooltipTrigger>
+            <Tooltip.Portal>
+              <TooltipContent
+                side="bottom"
+                sideOffset={3}
+                collisionPadding={19}
+              >
+                <TooltipArrow />
+                <TooltipBody>
+                  <SearchResultsMessage label={label} textAlign="center" />
+                </TooltipBody>
+              </TooltipContent>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        </Tooltip.Provider>
         <StyledStackFillerItem></StyledStackFillerItem>
         <StyledStackFillerItem></StyledStackFillerItem>
       </StyledStackContent>
@@ -101,4 +125,4 @@ const Stack = ({
   );
 };
 
-export default Stack;
+export default React.memo(Stack);

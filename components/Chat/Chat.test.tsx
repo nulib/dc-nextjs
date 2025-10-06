@@ -22,7 +22,6 @@ jest.mock("@/context/search-context", () => {
           body: [],
           ref: "",
         },
-        searchFixed: false,
       },
     }),
   };

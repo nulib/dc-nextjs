@@ -4,7 +4,15 @@ import SearchJumpTo from "@/components/Search/JumpTo";
 
 describe("SearchJumpTo component", () => {
   it("conditionally renders the SearchJumpTo component", async () => {
-    render(<SearchJumpTo searchFocus={true} searchValue={"foo"} top={45} />);
+    render(
+      <SearchJumpTo
+        searchFocus={true}
+        searchValue={"foo"}
+        top={45}
+        handleOnClick={jest.fn()}
+        handleScopeValue={jest.fn()}
+      />,
+    );
 
     const listbox = screen.getByRole("listbox");
     expect(listbox).toBeInTheDocument();

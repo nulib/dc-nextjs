@@ -20,6 +20,7 @@ export const canaryWork: WorkExtended = {
     "512ae70f-13db-46cb-ad5b-bd768302d919",
     "59c46d06-a2be-4b25-9dc5-ceb1671bf1b8",
   ],
+  behavior: "individuals",
   box_name: ["The name of a box"],
   box_number: ["88"],
   canonical_link:

@@ -1,4 +1,5 @@
 import { keyframes, styled } from "@/stitches.config";
+
 import { StyledStack } from "./Stack/Stack.styled";
 
 const gradientAnimation = keyframes({
@@ -73,6 +74,12 @@ const StyledChatConversation = styled("div", {
       animation: "none !important",
       background: "$purple10",
 
+      textarea: {
+        "&::placeholder": {
+          color: "$purple60",
+        },
+      },
+
       ["button[type='submit']"]: {
         backgroundColor: "$purple",
         color: "$white",
@@ -121,15 +128,15 @@ const StyledChatConversation = styled("div", {
 
     [`& > ${StyledStack}`]: {
       position: "absolute",
-      top: "calc($gr3 / 2)",
-      left: "calc($gr3 / 2)",
+      top: "calc($gr2)",
+      left: "calc($gr2)",
       zIndex: 1,
     },
 
     // 40px is a too magic numbery
     [`&:has(${StyledStack}[data-isdismissed=false])`]: {
       textarea: {
-        textIndent: "40px",
+        textIndent: "50px",
         "&::placeholder": {},
       },
     },

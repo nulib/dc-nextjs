@@ -6,8 +6,10 @@ import axios, {
 } from "axios";
 
 import type { ApiSearchRequestBody } from "@/types/api/request";
+import { ApiSearchResponse } from "@/types/api/response";
 import { NextRouter } from "next/router";
 import { getFacetById } from "@/lib/utils/facet-helpers";
+import { isSanitizedWork } from "./work-helpers";
 
 interface ApiGetRequestParams {
   url: string;
@@ -91,6 +93,32 @@ async function getIIIFResource<R>(
   }
 }
 
+async function getQueryRepresentativeThumbnail(
+  body: ApiSearchRequestBody,
+  size: number,
+): Promise<string | undefined> {
+  const results = await apiPostRequest<ApiSearchResponse>({
+    url: DC_API_SEARCH_URL,
+    body,
+  });
+
+  /**
+   * Find the first work with a thumbnail and
+   * return its URL with the specified size.
+   */
+  const item = results?.data?.find(
+    (result) => isSanitizedWork(result) && result.thumbnail,
+  );
+
+  if (!item || !item.thumbnail) return;
+
+  const thumbnail = new URL(item.thumbnail);
+  thumbnail.searchParams.set("size", size.toString());
+  thumbnail.searchParams.set("aspect", "square");
+
+  return thumbnail.toString() || "";
+}
+
 function iiifSearchUri(query: NextRouter["query"], size?: number): string {
   const url = new URL(DC_API_SEARCH_URL);
 
@@ -139,9 +167,9 @@ function handleError(err: unknown) {
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
+    // console.log(error.response.data);
+    // console.log(error.response.status);
+    // console.log(error.response.headers);
   } else if (error.request) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -158,6 +186,7 @@ export {
   apiGetStatus,
   apiPostRequest,
   getIIIFResource,
+  getQueryRepresentativeThumbnail,
   handleError,
   iiifCollectionUri,
   iiifSearchUri,

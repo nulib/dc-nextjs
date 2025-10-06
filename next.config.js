@@ -52,9 +52,14 @@ module.exports = withBundleAnalyzer({
       "dcapi.rdc.library.northwestern.edu",
       "dcapi.rdc-staging.library.northwestern.edu",
       "iiif.dc.library.northwestern.edu",
-      "iiif.dc.library.northwestern.edu",
       "iiif.stack.rdc-staging.library.northwestern.edu",
       "api.dc.library.northwestern.edu",
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
   reactStrictMode: false,

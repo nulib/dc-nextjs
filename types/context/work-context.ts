@@ -10,3 +10,8 @@ export interface WorkContextStore {
   manifest: Manifest | undefined;
   work: Work | undefined;
 }
+
+export interface SanitizedWork extends Work {
+  title: NonNullable<Work["title"]>;
+  thumbnail: NonNullable<Work["thumbnail"]>;
+}

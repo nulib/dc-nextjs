@@ -7,6 +7,18 @@ import { SearchContextStore } from "@/types/context/search-context";
 import { SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
+jest.mock("@/context/layout-context", () => ({
+  __esModule: true,
+  useLayoutState: jest.fn(() => {
+    return {
+      layoutDispatch: jest.fn(),
+      layoutState: {
+        searchFixed: false,
+      },
+    };
+  }),
+}));
+
 const searchStateDefault: SearchContextStore = {
   aggregations: {},
   chat: {
@@ -14,7 +26,6 @@ const searchStateDefault: SearchContextStore = {
     documents: [],
     question: "",
   },
-  searchFixed: false,
 };
 
 const searchState: SearchContextStore = {
@@ -24,7 +35,6 @@ const searchState: SearchContextStore = {
     documents: [],
     question: "",
   },
-  searchFixed: false,
 };
 
 const filterStateDefault = {

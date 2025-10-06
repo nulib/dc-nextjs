@@ -1,5 +1,6 @@
-import { Work } from "@nulib/dcapi-types";
+import { ALL_FACETS } from "@/lib/constants/facets-model";
 import type { AggregationResultMessage } from "types/components/chat";
+import { Work } from "@nulib/dcapi-types";
 
 export type ActiveTab = "stream" | "results";
 
@@ -11,13 +12,18 @@ export interface Article {
 export interface ChatContext {
   works: Work[];
   query: string;
-  facets: UserFacets;
+  facets: Facet[];
 }
+
+/**
+ * { "subject.label": "Nigeria" } or
+ * { "collection.title.keyword": "E. H. Duckworth Photograph Collection" }
+ */
+export type FacetKey = (typeof ALL_FACETS.facets)[number]["field"];
+export type Facet = Partial<Record<FacetKey, string>>;
 
 export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
-  works: Work[][];
-  /** Docs users can send along in addition to a question */
   context?: ChatContext;
   renderedContent?: React.JSX.Element;
 }
@@ -25,9 +31,8 @@ export interface Turn extends Article {
 export interface SearchContextStore {
   conversation: {
     ref?: string;
-    /** the question that kickstarts a conversation */
     initialQuestion: string;
-    context?: ChatContext;
+    stagedContext?: ChatContext;
     turns: Turn[];
   };
   panel: {
@@ -35,7 +40,6 @@ export interface SearchContextStore {
     open: boolean;
     query?: string;
   };
-  searchFixed: boolean;
 }
 
 export interface UserFacets {

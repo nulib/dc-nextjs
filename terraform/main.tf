@@ -44,7 +44,9 @@ resource "aws_amplify_app" "dc-next" {
   dynamic "auto_branch_creation_config" {
     for_each = var.auto_branch_creation ? toset([1]) : toset([])
     content {
-      enable_auto_build = var.auto_branch_creation
+      enable_auto_build      = var.auto_branch_creation
+      enable_basic_auth      = var.app_username != "" ? true : false
+      basic_auth_credentials = var.app_username != "" ? base64encode("${var.app_username}:${var.app_password}") : null
     }
   }
 

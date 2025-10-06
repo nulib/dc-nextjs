@@ -7,38 +7,72 @@ import {
   StyledInterstitialWrapper,
 } from "@/components/Chat/Response/Interstitial.styled";
 
+import { ChatContext } from "@/types/context/search-context";
+import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { ToolStartMessage } from "@/types/components/chat";
+import { UrlFacets } from "@/types/context/filter-context";
+import { createResultsMessageFromContext } from "@/lib/chat-helpers";
+import { getFacetIdByField } from "@/lib/queries/facet";
+import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 
 interface ResponseInterstitialProps {
-  message: ToolStartMessage["message"];
+  context?: ChatContext;
   id: string;
+  message: ToolStartMessage["message"];
 }
 
 type InterstitialContent = string | undefined;
 
 const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
-  message,
+  context,
   id,
+  message,
 }) => {
-  const { tool, input } = message;
-
+  const router = useRouter();
   const { searchState, searchDispatch } = useSearchState();
   const {
     panel: { open, interstitial },
   } = searchState;
 
+  const { tool, input } = message;
+
   const handleViewResults = (action: string) => {
+    const facets = context?.facets.map((facet) => {
+      if (facet.field) return facet;
+
+      const [key, value] = Object.entries(facet)[0];
+      const field = getFacetIdByField(key);
+      return { field, value };
+    });
+
+    const urlFacets: UrlFacets =
+      facets?.reduce((acc, { field, value }) => {
+        if (field && value) {
+          acc[field] = [value];
+        }
+        return acc;
+      }, {} as UrlFacets) || {};
+
     window.scrollTo({
       top: 0,
       behavior: "instant",
     });
+
     searchDispatch({
       type: "updatePanel",
       panel: {
         open: true,
         query: action,
         interstitial: id,
+      },
+    });
+
+    router.push({
+      pathname: "/search",
+      query: {
+        q: action,
+        ...urlFacets,
       },
     });
   };
@@ -84,8 +118,13 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
       text = `Discovering`;
       break;
     case "search":
-      text = `Searching for <strong>${input.query}</strong>`;
-      action = input.query;
+      text = createResultsMessageFromContext({
+        ...context,
+        query: String(input?.query),
+        works: context?.works ?? [],
+        facets: context?.facets ?? [],
+      });
+      action = input?.query;
       break;
     default:
       console.warn("Unknown tool_start message", message);
@@ -98,10 +137,7 @@ const ResponseInterstitial: React.FC<ResponseInterstitialProps> = ({
   return (
     <StyledInterstitialWrapper id={`interstitial-${id}`}>
       <StyledInterstitial data-testid="response-interstitial" data-tool={tool}>
-        <StyledInterstitialIcon>
-          <IconSparkles />
-        </StyledInterstitialIcon>
-        {text && <label dangerouslySetInnerHTML={{ __html: text }} />}
+        {text && <SearchResultsMessage label={text} icon={<IconSparkles />} />}
       </StyledInterstitial>
       {action && (
         <StyledInterstitialAction onClick={() => handleViewResults(action)}>

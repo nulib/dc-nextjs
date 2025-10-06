@@ -84,7 +84,7 @@ describe("ResponseInterstitial", () => {
     const interstitial = screen.getByTestId("response-interstitial");
     expect(interstitial).toBeInTheDocument();
 
-    expect(interstitial).toHaveTextContent("Searching for Joan Baez");
+    expect(interstitial).toHaveTextContent("Results for “Joan Baez”");
     expect(interstitial.querySelector("strong")).toHaveTextContent("Joan Baez");
 
     const action = screen.getByRole("button");

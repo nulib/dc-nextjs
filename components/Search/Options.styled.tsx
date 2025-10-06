@@ -1,15 +1,10 @@
 import { IconStyled } from "../Shared/Icon";
 import { Wrapper as WorkTypeWrapper } from "@/components/Facets/WorkType/WorkType.styled";
+import { keyframes } from "@stitches/react";
 import { styled } from "@/stitches.config";
 import { timingFunction } from "@/styles/transitions";
-import { keyframes } from "@stitches/react";
 
 /* eslint sort-keys: 0 */
-
-const slideInFromRight = keyframes({
-  "0%": { transform: "translateX(100vw)" },
-  "100%": { transform: "translateX0)" },
-});
 
 const StyledOptionsBar = styled("div", {
   display: "flex",
@@ -17,7 +12,6 @@ const StyledOptionsBar = styled("div", {
   gap: "$gr3",
   flexWrap: "wrap",
   alignItems: "center",
-  animation: `${slideInFromRight} 1s ${timingFunction};`,
 
   "@md": {
     gap: "$gr2",

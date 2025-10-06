@@ -1,3 +1,4 @@
+import { StyledSearchResultsMessage } from "./ResultsMessage";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { styled } from "@/stitches.config";
 
@@ -86,21 +87,6 @@ const Button = styled("button", {
   },
 });
 
-const ResultsMessage = styled("span", {
-  color: "$black50",
-  fontSize: "$gr3",
-
-  strong: {
-    color: "$purple",
-    fontFamily: "$northwesternSansBold",
-    fontWeight: "400",
-  },
-
-  "@lg": {
-    padding: "0 0 $gr3",
-  },
-});
-
 const NoResultsMessage = styled("span", {
   display: "flex",
   flexDirection: "column",
@@ -138,6 +124,21 @@ const ResultsWrapperHeader = styled("header", {
   justifyContent: "space-between",
   alignItems: "center",
   padding: "0 $gr4 $gr4",
+
+  [`${StyledSearchResultsMessage}`]: {
+    color: "$black50",
+    fontSize: "$gr3",
+
+    strong: {
+      color: "$purple",
+      fontFamily: "$northwesternSansBold",
+      fontWeight: "400",
+    },
+
+    "@lg": {
+      padding: "0 0 $gr3",
+    },
+  },
 });
 
 const StyledResponseWrapper = styled("div", {
@@ -177,7 +178,6 @@ const StyledTabsContent = styled(TabsContent, {
 export {
   Button,
   NoResultsMessage,
-  ResultsMessage,
   ResultsWrapper,
   ResultsWrapperHeader,
   SearchStyled,

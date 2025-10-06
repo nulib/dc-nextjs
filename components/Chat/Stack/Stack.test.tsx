@@ -1,7 +1,7 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import Stack from "./Stack";
+import { fireEvent, render, screen } from "@testing-library/react";
 
+import React from "react";
+import Stack from "./Stack";
 import { sampleWork1 } from "@/mocks/sample-work1";
 import { sampleWork2 } from "@/mocks/sample-work2";
 
@@ -9,7 +9,7 @@ describe("Stack", () => {
   it("renders stack with no dismiss button", () => {
     const mockContext = {
       query: "Dogs",
-      facets: { subject: ["Spaniel"] },
+      facets: [{ "collection.title.keyword": "Spaniels Quarterly" }],
       works: [sampleWork1, sampleWork2],
     };
     render(<Stack context={mockContext} isDismissable={false} />);
@@ -20,7 +20,7 @@ describe("Stack", () => {
   it("dismisses the stack when dismiss button is clicked", () => {
     const mockContext = {
       query: "Dogs",
-      facets: { subject: ["Spaniel"] },
+      facets: [{ "collection.title.keyword": "Spaniels Quarterly" }],
       works: [sampleWork1, sampleWork2],
     };
     render(<Stack context={mockContext} isDismissable />);
@@ -40,7 +40,7 @@ describe("Stack", () => {
     const mockDismissCallback = jest.fn();
     const mockContext = {
       query: "Dogs",
-      facets: { subject: ["Spaniel"] },
+      facets: [{ "collection.title.keyword": "Spaniels Quarterly" }],
       works: [sampleWork1, sampleWork2],
     };
 
@@ -56,5 +56,27 @@ describe("Stack", () => {
     fireEvent.click(dismissButton);
 
     expect(mockDismissCallback).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders a results message in a tooltip`", () => {
+    const mockDismissCallback = jest.fn();
+    const mockContext = {
+      query: "Dogs",
+      facets: [{ "collection.title.keyword": "Spaniels Quarterly" }],
+      works: [sampleWork1, sampleWork2],
+    };
+
+    render(
+      <Stack
+        context={mockContext}
+        isDismissable
+        dismissCallback={mockDismissCallback}
+      />,
+    );
+
+    expect(screen.getByTestId("stack")).toHaveAttribute(
+      "data-results-message",
+      "Results for <strong>“Dogs”</strong> filtered by <em>collection</em> for <strong>Spaniels Quarterly</strong>",
+    );
   });
 });

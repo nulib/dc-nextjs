@@ -1,6 +1,4 @@
 import { styled } from "@/stitches.config";
-import { gr } from "@/styles/sizes";
-import { IconClear } from "@/components/Shared/SVG/Icons";
 
 const StyledStack = styled("div", {
   width: "fit-content",
@@ -24,15 +22,15 @@ const StyledStackItem = styled("div", {
   },
 
   img: {
-    borderRadius: gr(2),
+    borderRadius: "2px",
+    marginLeft: "-2px",
     objectFit: "cover",
   },
 });
 
 const StyledStackFillerItem = styled(StyledStackItem, {
-  borderBottom: "1px solid $black50",
-  borderRight: "1px solid $black50",
-  borderRadius: `0 0 ${gr(2)}px 0`,
+  width: "2rem",
+  borderRadius: "3px",
 });
 
 const StyledStackContent = styled(StyledStack, {
@@ -46,36 +44,42 @@ const StyledStackContent = styled(StyledStack, {
   ["& > :first-child"]: {
     // this is the first child of the stack
     // ensures the Tooltip is hoverable
-    zIndex: 1,
+    zIndex: 2,
   },
 
   [`& ${StyledStackItem}`]: {
     width: "2rem",
     height: "2rem",
-    boxShadow: "2px 2px 5px -1px #0002",
+    border: "1px solid $gray6",
+    borderRadius: "3px",
+    boxShadow: "2px 2px 5px #0001",
   },
 
   [`${StyledStackItem}:nth-child(1 of ${StyledStackFillerItem})`]: {
-    transform: "translateX(3px) translateY(3px)",
+    transform: "translateX(2px) translateY(2px)",
+    borderBottom: "1px solid $black10",
+    borderRight: "1px solid $black10",
+    zIndex: 1,
   },
 
   [`${StyledStackItem}:nth-child(2 of ${StyledStackFillerItem})`]: {
-    transform: "translateX(6px) translateY(6px)",
+    transform: "translateX(4px) translateY(4px)",
+    borderBottom: "1px solid $black10",
+    borderRight: "1px solid $black10",
+    zIndex: 0,
   },
 });
 
 const StyledStackDismiss = styled("button", {
   borderRadius: "100%",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "$black50",
+  border: "none",
   padding: "calc($gr1 / 4)",
   display: "flex",
-  backgroundColor: "$gray6",
+  backgroundColor: "$white",
   cursor: "pointer",
   width: "$gr3",
   height: "$gr3",
-  transform: "translateX(calc(100% + 10px)) translateY(calc(100% + 10px))",
+  transform: "translateX(calc(100% + 7px)) translateY(calc(100% + 7px))",
   transition: "all 200ms ease-in-out",
   fill: "$black50",
   // ensure dismiss is above the first child of the stack

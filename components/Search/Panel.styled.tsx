@@ -2,23 +2,43 @@ import { ContainerStyled } from "@/components/Shared/Container";
 import { StyledInterstitial } from "@/components/Chat/Response/Interstitial.styled";
 import { styled } from "@/stitches.config";
 
-const SearchResultsLabel = styled(StyledInterstitial, {
-  marginBottom: "$gr4",
-  alignItems: "baseline",
+const SearchResultsLabel = styled("div", {
+  fontFamily: "$northwesternSansRegular",
+  fontWeight: "400",
+  fontSize: "$gr3",
+  display: "flex",
+  alignItems: "center",
+  color: "$purple60",
+  borderRadius: "1em",
+  backgroundPosition: "61.8%",
+  flexGrow: "1",
+  margin: "0 0 $gr4",
+  paddingRight: 0,
   textAlign: "center",
   justifyContent: "space-between",
   width: "100%",
-
-  "> div": {
-    display: "flex",
-    alignItems: "center",
-    gap: "$gr2",
-  },
+  gap: "$gr4",
 
   "@sm": {
     flexDirection: "column",
     alignItems: "center",
   },
+
+  strong: {
+    fontFamily: "$northwesternSansBold",
+    fontWeight: "400",
+    color: "$purple",
+  },
+
+  em: {
+    fontStyle: "italic",
+    color: "$purple",
+  },
+});
+
+const SearchResultsLabelMessage = styled("div", {
+  lineHeight: "1.35em",
+  flexGrow: "1",
 });
 
 const StyledBackButton = styled("button", {
@@ -26,7 +46,7 @@ const StyledBackButton = styled("button", {
   padding: "0",
   height: "38px",
   alignItems: "center",
-  gap: "$gr1",
+  gap: "$gr2",
   color: "$purple",
   background: "transparent",
   fontFamily: "$northwesternSansBold",
@@ -60,7 +80,7 @@ const StyledBackButton = styled("button", {
 const StyledSearchPanel = styled("aside", {
   width: "100%",
   height: "100%",
-  transition: "all 382ms ease-in-out",
+  transition: "opacity 382ms ease-in-out",
   opacity: "0",
   variants: {
     isOpen: {
@@ -106,6 +126,7 @@ export {
   StyledSearchPanel,
   StyledSearchPanelContent,
   SearchResultsLabel,
+  SearchResultsLabelMessage,
   StyledBackButton,
   StyledIncludeResults,
 };

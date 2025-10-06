@@ -1,14 +1,15 @@
 import { IconRefresh, IconReply, IconSparkles } from "../Shared/SVG/Icons";
+import React, { useEffect, useRef } from "react";
 import {
   StyledChatConversation,
   StyledResetButton,
 } from "./Conversation.styled";
-import { useEffect, useRef } from "react";
+import { defaultState, useSearchState } from "@/context/search-context";
+
+import { AI_SYS_PROMPT_MSG } from "@/lib/constants/common";
+import Stack from "./Stack/Stack";
 import { styled } from "@/stitches.config";
 import { useRouter } from "next/router";
-import { useSearchState } from "@/context/search-context";
-import Stack from "./Stack/Stack";
-import { AI_SYS_PROMPT_MSG } from "@/lib/constants/common";
 
 interface ChatConversationProps {
   conversationCallback: (message: string) => void;
@@ -21,7 +22,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 }) => {
   const router = useRouter();
   const {
-    searchState: { conversation },
+    searchState: { conversation, panel },
     searchDispatch,
   } = useSearchState();
 
@@ -30,14 +31,26 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   const textareaPlaceholder = "Ask a followup question";
 
-  const handleScroll = () => {
-    // handle scrolling
-  };
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (conversation?.stagedContext?.facets && !panel.open) {
+      const searchWrapper = document.getElementById("search-wrapper");
+
+      if (searchWrapper) {
+        const searchWrapperBottom =
+          searchWrapper.offsetTop + searchWrapper.offsetHeight;
+        const targetScrollTop = searchWrapperBottom - window.innerHeight;
+
+        window.scrollTo({
+          top: targetScrollTop,
+          behavior: "smooth",
+        });
+      }
+
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    }
+  }, [conversation?.stagedContext?.facets, panel.open]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,7 +86,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       type: "updateConversation",
       conversation: {
         ...conversation,
-        context: undefined,
+        stagedContext: undefined,
       },
     });
   };
@@ -88,6 +101,11 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       textarea.innerText = "";
       textarea.focus();
     }
+
+    searchDispatch({
+      type: "updateConversation",
+      conversation: defaultState.conversation,
+    });
 
     router.push({
       pathname: "/search",
@@ -110,14 +128,13 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             onFocus={handleFocus}
             onBlur={handleFocus}
           ></textarea>
-          {conversation.context?.works &&
-            conversation.context.works.length > 0 && (
-              <Stack
-                context={conversation.context}
-                isDismissable
-                dismissCallback={handleStackDismiss}
-              />
-            )}
+          {conversation.stagedContext && (
+            <Stack
+              context={conversation.stagedContext}
+              isDismissable
+              dismissCallback={handleStackDismiss}
+            />
+          )}
           <button type="submit" disabled={isStreaming}>
             {isStreaming ? (
               <>
@@ -144,13 +161,13 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 };
 
 export const StyledSystemPrompt = styled("p", {
-  margin: 0,
-  fontSize: "$gr1",
+  margin: "$gr2",
+  fontSize: "$gr2",
   color: "$black50",
-  marginBlockStart: "$gr1",
+  textAlign: "right",
   a: {
     cursor: "pointer",
   },
 });
 
-export default ChatConversation;
+export default React.memo(ChatConversation);

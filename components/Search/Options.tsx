@@ -11,23 +11,21 @@ import Container from "@/components/Shared/Container";
 import Facets from "@/components/Facets";
 import FacetsWorkType from "@/components/Facets/WorkType/WorkType";
 import SearchPublicOnlyWorks from "@/components/Search/PublicOnlyWorks";
-import { useSearchState } from "@/context/search-context";
 import { createPortal } from "react-dom";
+import { useLayoutState } from "@/context/layout-context";
+import { useSearchState } from "@/context/search-context";
 
 interface SearchOptionsProps {
-  tabs: React.ReactNode;
   activeTab?: string;
-  renderTabList?: boolean;
 }
 
-const SearchOptions: React.FC<SearchOptionsProps> = ({
-  tabs,
-  activeTab,
-  renderTabList,
-}) => {
+const SearchOptions: React.FC<SearchOptionsProps> = ({ activeTab }) => {
   const {
-    searchState: { searchFixed, panel },
+    searchState: { panel },
   } = useSearchState();
+  const {
+    layoutState: { searchFixed },
+  } = useLayoutState();
 
   const optionsRef = useRef<HTMLDivElement>(null);
 

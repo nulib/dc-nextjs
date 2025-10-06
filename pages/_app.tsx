@@ -1,7 +1,9 @@
 import { GoogleTagManager, sendGTMEvent } from "@next/third-parties/google";
 
 import type { AppProps } from "next/app";
+import AuthDialog from "@/components/Shared/AuthDialog";
 import Head from "next/head";
+import { LayoutProvider } from "@/context/layout-context";
 import { ObjectLiteral } from "@/types";
 import React from "react";
 import { SearchProvider } from "@/context/search-context";
@@ -13,7 +15,7 @@ import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import AuthDialog from "@/components/Shared/AuthDialog";
+
 // Init Honeybadger
 setupHoneyBadger();
 
@@ -74,13 +76,15 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 
       <UserProvider>
         <SearchProvider>
-          <style jsx global>{`
-            :root {
-            }
-          `}</style>
-          {mounted && <Component {...pageProps} />}
-          <AuthDialog />
-          <GoogleTagManager gtmId="GTM-NDJXLQW" />
+          <LayoutProvider>
+            <style jsx global>{`
+              :root {
+              }
+            `}</style>
+            {mounted && <Component {...pageProps} />}
+            <AuthDialog />
+            <GoogleTagManager gtmId="GTM-NDJXLQW" />
+          </LayoutProvider>
         </SearchProvider>
       </UserProvider>
     </>

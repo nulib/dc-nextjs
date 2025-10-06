@@ -1,4 +1,4 @@
-import { keyframes, styled } from "@/stitches.config";
+import { styled } from "@/stitches.config";
 
 const StyledInterstitialIcon = styled("div", {
   display: "flex",
@@ -32,6 +32,7 @@ const StyledInterstitialWrapper = styled("div", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  marginBottom: "$gr1",
 });
 
 const StyledInterstitial = styled("div", {
@@ -41,16 +42,20 @@ const StyledInterstitial = styled("div", {
   display: "inline-flex",
   alignItems: "center",
   gap: "$gr2",
-  marginBottom: "$gr1",
   width: "fit-content",
   color: "$purple60",
   borderRadius: "1em",
-  paddingRight: "$gr2",
   backgroundPosition: "61.8%",
+  flexGrow: "1",
 
   strong: {
     fontFamily: "$northwesternSansBold",
     fontWeight: "400",
+    color: "$purple",
+  },
+
+  em: {
+    fontStyle: "italic",
     color: "$purple",
   },
 });
@@ -58,9 +63,8 @@ const StyledInterstitial = styled("div", {
 const StyledInterstitialAction = styled("button", {
   display: "inline-flex",
   padding: "0 $gr2",
-  height: "38px",
   alignItems: "center",
-  gap: "$gr1",
+  gap: "$gr2",
   color: "$purple",
   background: "transparent",
   fontFamily: "$northwesternSansBold",
