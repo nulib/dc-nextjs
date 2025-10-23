@@ -66,6 +66,11 @@ export const FooterContent: React.FC = () => {
                 University Policies
               </a>
             </li>
+            <li>
+              <a href="#" className="cky-banner-element">
+                Cookie Settings
+              </a>
+            </li>
           </FooterList>
         </FooterContentColumn>
 
