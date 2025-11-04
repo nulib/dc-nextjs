@@ -38,6 +38,11 @@ export default function useGenerativeAISearchToggle() {
 
   function handleCheckChange(checked: boolean) {
     if (!user?.isLoggedIn) {
+      // Save AI preference before opening sign-in modal so it persists after login
+      setAI({
+        enabled: checked ? "true" : "false",
+        expires: checked ? expires : undefined,
+      });
       openSignInModal();
     } else {
       setAI({
