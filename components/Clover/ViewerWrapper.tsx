@@ -63,7 +63,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     canvasBackgroundColor: "$gray6",
     canvasHeight: "640px",
     informationPanel: {
-      open: false,
       renderAbout: false,
       renderToggle: false,
       defaultTab: "manifest-annotations",

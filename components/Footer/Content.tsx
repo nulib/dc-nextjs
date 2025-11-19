@@ -66,6 +66,11 @@ export const FooterContent: React.FC = () => {
                 University Policies
               </a>
             </li>
+            <li>
+              <a href="#" className="cky-banner-element">
+                Cookie Settings
+              </a>
+            </li>
           </FooterList>
         </FooterContentColumn>
 
@@ -195,6 +200,13 @@ export const FooterContent: React.FC = () => {
           holder of any item(s) in this collection or have questions, comments
           or concerns about this exhibit, please contact us via email at{" "}
           <a href="library@northwestern.edu">library@northwestern.edu</a>.
+        </p>
+        <p>
+          Northwestern University Libraries&apos; Digital Collections contain
+          materials that reflect the beliefs and norms of their eras and culture
+          in which they were created or collected. The site may contain imagery,
+          language, or opinions that are offensive and may not be appropriate
+          for all audiences.
         </p>
       </FooterCopyright>
     </FooterStyled>

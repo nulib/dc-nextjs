@@ -111,6 +111,40 @@ describe("GenerativeAIToggle", () => {
     expect(nonLoggedInUser.isSignInModalOpen).toBe(true);
   });
 
+  it("saves AI preference to localStorage before opening login dialog for non-logged-in user", async () => {
+    const user = userEvent.setup();
+    const nonLoggedInUser: UserContextType = {
+      ...defaultUserContext,
+      user: {
+        ...defaultUserContext.user!,
+        isLoggedIn: false,
+      },
+      openSignInModal: jest.fn(() => {
+        nonLoggedInUser.isSignInModalOpen = true;
+      }),
+      closeSignInModal: jest.fn(() => {
+        nonLoggedInUser.isSignInModalOpen = false;
+      }),
+    };
+
+    render(
+      withUserProvider(
+        withSearchProvider(<GenerativeAIToggle />),
+        nonLoggedInUser,
+      ),
+    );
+
+    const checkbox = await screen.findByRole("checkbox");
+    await user.click(checkbox);
+
+    // Verify AI preference was saved to localStorage before opening modal
+    const ai = JSON.parse(String(localStorage.getItem("ai")));
+    expect(ai?.enabled).toEqual("true");
+    expect(typeof ai?.expires).toEqual("number");
+    expect(ai?.expires).toBeGreaterThan(Date.now());
+    expect(nonLoggedInUser.isSignInModalOpen).toBe(true);
+  });
+
   it("renders a toggled generative ai state when localStorage variable is set and user is logged in", () => {
     const activeSearchState = {
       ...defaultSearchState,
