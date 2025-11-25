@@ -200,7 +200,7 @@ const AboutPage: NextPage = () => {
               <p>
                 For more information, visit{" "}
                 <LinkStyled
-                  href="https://www.library.northwestern.edu/research/scholarly/index.html"
+                  href="https://www.library.northwestern.edu/visit/plan-your-visit/policies/rights-permissions-and-reproduction-policy.html"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
