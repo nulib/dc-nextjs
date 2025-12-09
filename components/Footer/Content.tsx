@@ -198,7 +198,7 @@ export const FooterContent: React.FC = () => {
           University Libraries. Northwestern University Libraries does not claim
           the copyright of any materials on this site. If you are the copyright
           holder of any item(s) in this collection or have questions, comments
-          or concerns about this exhibit, please contact us via email at{" "}
+          or concerns about this site, please contact us via email at{" "}
           <a href="library@northwestern.edu">library@northwestern.edu</a>.
         </p>
         <p>
