@@ -15,6 +15,9 @@ const buildFacetFilters = (urlFacets: UrlFacets) => {
 
   /** Loop through facet keys */
   for (const [key, value] of Object.entries(urlFacets)) {
+    // Skip 'similar' as it's handled separately in the query builder
+    if (key === "similar") continue;
+
     /** Lookup facet field by ID to pass to query */
     const facet = ALL_FACETS.facets.find((item) => item.id === key);
 
