@@ -79,7 +79,9 @@ function createResultsMessageFromContext(
 
     const facetField = getFacetIdByField(facetId);
     // @ts-ignore
-    const facetValue = facet[facetId].replace(/,/g, ", ");
+    const rawValue = facet[facetId];
+    const facetValue =
+      typeof rawValue === "string" ? rawValue.replace(/,/g, ", ") : "";
 
     if (!facetField) return {};
 
