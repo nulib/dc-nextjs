@@ -16,6 +16,7 @@ import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
+import { Notification } from "@nulib/design-system";
 
 interface ChatResponseProps {
   conversationIndex: number;
@@ -82,6 +83,32 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setTurnAnswer(turnAnswer + message.message);
     }
 
+    if (type === "rate_limit") {
+      const { remaining, until } = message;
+
+      if (remaining <= 5) {
+        const formattedDate = new Date(until).toLocaleString(undefined, {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+        setRenderedMessage((prev) => (
+          <>
+            {prev}
+            <Notification isWarning>
+              <p>
+                <strong>Rate Limit Warning</strong>
+              </p>
+              <p>
+                You have {remaining} chat{" "}
+                {remaining === 1 ? "message" : "messages"} remaining until{" "}
+                {formattedDate}
+              </p>
+            </Notification>
+          </>
+        ));
+      }
+    }
+
     if (type === "tool_start") {
       setRenderedMessage((prev) => (
         <>
@@ -121,12 +148,26 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       setTurnAggregations([...turnAggregations, message.message]);
     }
 
+    if (type === "error") {
+      setRenderedMessage((prev) => (
+        <>
+          {prev}
+          <Notification isDanger>
+            <p>
+              <strong>Error</strong>
+            </p>
+            <p>{message.message}</p>
+          </Notification>
+        </>
+      ));
+    }
+
     /**
      * Final message is the last message in the response
      * and is used to trigger the responseCallback
      * and store this response to the conversation.
      */
-    if (type === "final_message") {
+    if (type === "final_message" || type === "error") {
       setIsStreamingComplete(true);
 
       // update the corresponding turn with the response
