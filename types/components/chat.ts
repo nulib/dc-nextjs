@@ -53,6 +53,17 @@ export type StartMessage = {
   };
 };
 
+export type RateLimitMessage = {
+  type: "rate_limit";
+  remaining: number;
+  until: string;
+};
+
+export type ErrorMessage = {
+  type: "error";
+  message: string;
+};
+
 export type ToolStartMessage = {
   type: "tool_start";
   message:
@@ -80,10 +91,12 @@ export type StreamingMessage = Ref &
   (
     | AggregationResultMessage
     | AgentFinalMessage
+    | ErrorMessage
     | LLMAnswerMessage
     | LLMFinalMessage
     | LLMTokenMessage
     | LLMStopMessage
+    | RateLimitMessage
     | SearchResultMessage
     | StartMessage
     | ToolStartMessage
