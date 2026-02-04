@@ -42,7 +42,7 @@ Open a remote SSH dev environment connection in VSCode.
 
 1. Open a new terminal.
 
-2. Make sure port 3000 is open by running `sg show`. If you don't see port 3000, run `sg open all 3000`. View more in [AWS convenience scripts](https://github.com/nulib/aws-developer-environment#convenience-scripts).
+2. Make sure port 3000 is open by running `sgport show`. If you don't see port 3000, run `sgport open all 3000`. View more in [AWS convenience scripts](https://github.com/nulib/aws-developer-environment#convenience-scripts).
 
 3. Temporarily change the following line in (`dc-nextjs/server.js`):
 
