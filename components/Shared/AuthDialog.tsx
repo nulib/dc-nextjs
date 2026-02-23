@@ -146,6 +146,11 @@ export default function AuthDialog() {
                   <AuthDialogDivider>OR</AuthDialogDivider>
                 </AuthDialogColumn>
                 <AuthDialogColumn data-testid="magic-link">
+                  <p>
+                    Temporary access enables use of the{" "}
+                    <strong>AI search tool only</strong>. It does not grant
+                    access to restricted collection items.
+                  </p>
                   <MagicLinkInput
                     data-testid="magic-link-input"
                     type="email"

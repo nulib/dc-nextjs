@@ -96,6 +96,17 @@ describe("AuthDialog", () => {
       expect(magicLinkSection).toBeInTheDocument();
     });
 
+    it("should display clarifying text that temporary access is for AI search only", async () => {
+      render(withUserProvider(<AuthDialog />));
+
+      await waitFor(() => {
+        expect(mockedAxios.get).toHaveBeenCalled();
+      });
+
+      expect(screen.getByText(/AI search tool only/i)).toBeInTheDocument();
+      expect(screen.getByText(/does not grant/i)).toBeInTheDocument();
+    });
+
     it("should disable magic link button with invalid email", async () => {
       render(withUserProvider(<AuthDialog />));
 
