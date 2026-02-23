@@ -96,7 +96,7 @@ const AuthDialogColumn = styled("div", {
 
 const MagicLinkInput = styled("input", {
   height: "2.5rem",
-  padding: "$gr2",
+  padding: "$gr2 !important",
   border: "none !important",
   backgroundColor: "$gray6",
   fontSize: "$gr3",
