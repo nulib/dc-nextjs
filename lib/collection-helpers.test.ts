@@ -1,10 +1,12 @@
 import {
   GenericAggsReturn,
   GetTopMetadataAggsReturn,
+  getCollectionWorkCounts,
   isCollectionPage,
   sortAggsByKey,
 } from "@/lib/collection-helpers";
 
+import { apiPostRequest } from "@/lib/dc-api";
 import { getTopMetadataAggs } from "@/lib/collection-helpers";
 
 /* eslint sort-keys: 0 */
@@ -180,5 +182,65 @@ describe("isCollectionPage", () => {
   it("should handle edge cases with extra slashes", () => {
     const pathname = "//collections//123/";
     expect(isCollectionPage(pathname)).toBe(true);
+  });
+});
+
+describe("getCollectionWorkCounts() function", () => {
+  const collectionId = "3c863d97-07c2-4a75-bcb5-5ad3bfb3bcd0";
+
+  const mockWorkCountResponse = {
+    aggregations: {
+      collections: {
+        buckets: [
+          {
+            key: collectionId,
+            doc_count: 100,
+            workTypes: {
+              buckets: [
+                { key: "Image", doc_count: 80 },
+                { key: "Audio", doc_count: 15 },
+                { key: "Video", doc_count: 5 },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  };
+
+  it("returns correct work type counts for a collection", async () => {
+    (apiPostRequest as jest.Mock).mockResolvedValueOnce(mockWorkCountResponse);
+    const result = await getCollectionWorkCounts([collectionId]);
+    expect(result).toEqual({
+      [collectionId]: {
+        totalWorks: 100,
+        totalImage: 80,
+        totalAudio: 15,
+        totalVideo: 5,
+      },
+    });
+  });
+
+  it("uses a must query to filter by collection IDs, not a bare should", async () => {
+    (apiPostRequest as jest.Mock).mockResolvedValueOnce(mockWorkCountResponse);
+    await getCollectionWorkCounts([collectionId]);
+    const { body } = (apiPostRequest as jest.Mock).mock.calls.at(-1)[0];
+    expect(body.query.bool.must).toBeDefined();
+    expect(body.query.bool.should).toBeUndefined();
+  });
+
+  it("returns zero counts for a collection ID not in the aggregation response", async () => {
+    (apiPostRequest as jest.Mock).mockResolvedValueOnce({
+      aggregations: { collections: { buckets: [] } },
+    });
+    const result = await getCollectionWorkCounts(["missing-collection-id"]);
+    expect(result).toEqual({
+      "missing-collection-id": {
+        totalWorks: 0,
+        totalImage: 0,
+        totalAudio: 0,
+        totalVideo: 0,
+      },
+    });
   });
 });

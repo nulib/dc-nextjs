@@ -194,11 +194,18 @@ export async function getCollectionWorkCounts(
       collectionIds.length > 0
         ? {
             bool: {
-              should: collectionIds.map((id) => ({
-                match: {
-                  "collection.id": id,
+              must: [
+                {
+                  bool: {
+                    should: collectionIds.map((id) => ({
+                      match: {
+                        "collection.id": id,
+                      },
+                    })),
+                    minimum_should_match: 1,
+                  },
                 },
-              })),
+              ],
             },
           }
         : {
