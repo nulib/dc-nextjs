@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 
 interface SearchResultsStateWithContext extends SearchResultsState {
   context?: ChatContext;
+  hideResultCount?: boolean;
 }
 
 const SearchResults: React.FC<SearchResultsStateWithContext> = ({
@@ -25,13 +26,20 @@ const SearchResults: React.FC<SearchResultsStateWithContext> = ({
   context,
   error,
   loading,
+  hideResultCount,
 }) => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
   const router = useRouter();
 
   const iiifCollection = iiifSearchUri(router.query, SEARCH_RESULTS_PER_PAGE);
   const totalResults = data?.pagination?.total_hits;
-  const label = createResultsMessageFromContext(context, totalResults);
+  const rawLabel = createResultsMessageFromContext(
+    context,
+    hideResultCount ? undefined : totalResults,
+  );
+  const label = hideResultCount
+    ? rawLabel?.replace(/^Results\b/, "Searching")
+    : rawLabel;
 
   return (
     <ResultsWrapper>

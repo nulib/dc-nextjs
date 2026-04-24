@@ -6,7 +6,8 @@ import { GetServerSideProps, NextPage } from "next";
 import { apiGetStatus, getIIIFResource } from "@/lib/dc-api";
 import { buildWorkDescription, buildWorkOpenGraphData } from "@/lib/open-graph";
 import { getWork, getWorkSliders } from "@/lib/work-helpers";
-import { useContext, useEffect, useState } from "react";
+import { findCanvasIdByFileSetId } from "@/lib/iiif/manifest-helpers";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Container from "@/components/Shared/Container";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
@@ -43,6 +44,10 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const userAuthContext = useContext(UserContext);
   const [work, setWork] = useState<Work>();
   const [manifest, setManifest] = useState<Manifest>();
+  const [initialCanvasId, setInitialCanvasId] = useState<string | undefined>();
+  const [initialLabel, setInitialLabel] = useState<string | undefined>();
+  const [initialSnippet, setInitialSnippet] = useState<string | undefined>();
+  const canvasParamProcessed = useRef(false);
   const { userCanRead, isWorkReadingRoomOnly } = useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
@@ -50,6 +55,8 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const iiifContent = router?.query["iiif-content"]
     ? (router?.query["iiif-content"] as string)
     : work?.iiif_manifest;
+
+  const searchQuery = router?.query["q"] as string | undefined;
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
@@ -61,12 +68,34 @@ const WorkPage: NextPage<WorkPageProps> = ({
   useEffect(() => {
     if (!id) return;
 
+    const canvasParam = !canvasParamProcessed.current
+      ? (router?.query["canvas"] as string | undefined)
+      : undefined;
+    const labelParam = !canvasParamProcessed.current
+      ? (router?.query["label"] as string | undefined)
+      : undefined;
+    const snippetParam = !canvasParamProcessed.current
+      ? (router?.query["snippet"] as string | undefined)
+      : undefined;
+
     async function getData() {
       const work = await getWork(id);
       if (work) {
         setWork(work);
         const manifest = await getIIIFResource<Manifest>(work.iiif_manifest);
         setManifest(manifest);
+        if (canvasParam && manifest) {
+          canvasParamProcessed.current = true;
+          const canvasId = findCanvasIdByFileSetId(manifest, canvasParam);
+          if (canvasId) setInitialCanvasId(canvasId);
+          if (labelParam) setInitialLabel(labelParam);
+          if (snippetParam) setInitialSnippet(snippetParam);
+          const url = new URL(window.location.href);
+          url.searchParams.delete("canvas");
+          url.searchParams.delete("label");
+          url.searchParams.delete("snippet");
+          window.history.replaceState(null, "", url.pathname + url.search);
+        }
         setIsLoading(false);
       } else if (status === 403 && !work) {
         router.push("/403");
@@ -107,8 +136,12 @@ const WorkPage: NextPage<WorkPageProps> = ({
               {iiifContent && userCanRead && (
                 <WorkViewerWrapper
                   iiifContent={iiifContent}
+                  initialCanvasId={initialCanvasId}
+                  initialLabel={initialLabel}
+                  initialSnippet={initialSnippet}
                   isLoggingContentState={true}
                   isWorkReadingRoomOnly={isWorkReadingRoomOnly}
+                  searchQuery={searchQuery}
                 />
               )}
               {work && !userCanRead && (

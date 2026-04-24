@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import {
+  ContentSearchNote,
   StyledOptions,
   StyledOptionsBar,
   StyledOptionsExtras,
@@ -17,9 +18,13 @@ import { useSearchState } from "@/context/search-context";
 
 interface SearchOptionsProps {
   activeTab?: string;
+  contentView?: "works" | "content";
 }
 
-const SearchOptions: React.FC<SearchOptionsProps> = ({ activeTab }) => {
+const SearchOptions: React.FC<SearchOptionsProps> = ({
+  activeTab,
+  contentView,
+}) => {
   const {
     searchState: { panel },
   } = useSearchState();
@@ -30,16 +35,26 @@ const SearchOptions: React.FC<SearchOptionsProps> = ({ activeTab }) => {
   const optionsRef = useRef<HTMLDivElement>(null);
 
   const content = (
-    <StyledOptions data-filter-fixed={searchFixed}>
+    <StyledOptions data-filter-fixed={searchFixed && contentView !== "content"}>
       <Container
         className="facets-ui-container"
         maxWidth={searchFixed ? optionsRef.current?.clientWidth : undefined}
       >
         <StyledOptionsBar data-testid="facets-ui-wrapper" ref={optionsRef}>
           <StyledOptionsFacets isTabResults={activeTab === "results"}>
-            <Facets />
-            <StyledOptionsExtras>
-              <FacetsWorkType />
+            {contentView === "content" ? (
+              <ContentSearchNote>
+                Filters do not apply to content search
+              </ContentSearchNote>
+            ) : (
+              <Facets />
+            )}
+            <StyledOptionsExtras
+              css={
+                contentView === "content" ? { marginLeft: "auto" } : undefined
+              }
+            >
+              {contentView !== "content" && <FacetsWorkType />}
               <SearchPublicOnlyWorks />
             </StyledOptionsExtras>
           </StyledOptionsFacets>

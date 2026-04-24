@@ -3,6 +3,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { GetServerSideProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import {
+  ResultsWrapperHeader,
   StyledResponseWrapper,
   StyledTabsContent,
 } from "@/components/Search/Search.styled";
@@ -13,10 +14,13 @@ import {
 
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
-import { ApiSearchResponse } from "@/types/api/response";
+import { ApiSearchResponse, FileSetSearchResponse } from "@/types/api/response";
 import Chat from "@/components/Chat/Chat";
 import Container from "@/components/Shared/Container";
-import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
+import {
+  DC_API_FILESET_SEARCH_URL,
+  DC_API_SEARCH_URL,
+} from "@/lib/constants/endpoints";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
@@ -26,13 +30,21 @@ import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants/common";
 import SearchOptions from "@/components/Search/Options";
 import SearchPanel from "@/components/Search/Panel";
 import SearchResults from "@/components/Search/Results";
+import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
+import TranscriptionResults from "@/components/Search/TranscriptionResults";
+import {
+  ViewToggle,
+  ViewToggleOption,
+} from "@/components/Search/ViewToggle.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { buildQuery } from "@/lib/queries/builder";
+import { buildFileSetQuery } from "@/lib/queries/fileset-search";
+import { pluralize } from "@/lib/utils/count-helpers";
 import { getWork } from "@/lib/work-helpers";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
@@ -73,6 +85,11 @@ const SearchPage: NextPage = () => {
     },
   });
 
+  const [contentSearchResponse, setContentSearchResponse] =
+    useState<FileSetSearchResponse | null>(null);
+
+  const [contentView, setContentView] = useState<"works" | "content">("works");
+
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
   const urlFacets = parseUrlFacets(router.query);
 
@@ -99,6 +116,8 @@ const SearchPage: NextPage = () => {
    */
   useEffect(() => {
     if (!router.isReady) return;
+
+    setContentView("works");
 
     (async () => {
       try {
@@ -133,10 +152,20 @@ const SearchPage: NextPage = () => {
         if (!!body?.query?.hybrid && pipeline) {
           requestUrl.searchParams.append("search_pipeline", pipeline);
         }
-        const response = await apiPostRequest<ApiSearchResponse>({
-          body,
-          url: requestUrl.toString(),
-        });
+        const [response, fileSetResponse] = await Promise.all([
+          apiPostRequest<ApiSearchResponse>({
+            body,
+            url: requestUrl.toString(),
+          }),
+          q
+            ? apiPostRequest<FileSetSearchResponse>({
+                body: buildFileSetQuery(q as string, urlFacets?.visibility),
+                url: DC_API_FILESET_SEARCH_URL,
+              })
+            : Promise.resolve(undefined),
+        ]);
+
+        setContentSearchResponse(fileSetResponse || null);
 
         /**
          * Construct url for page request
@@ -192,6 +221,15 @@ const SearchPage: NextPage = () => {
     }));
   }
 
+  async function handleContentPageChange(url: string) {
+    try {
+      const response = await axios.get(url);
+      setContentSearchResponse(response.data as FileSetSearchResponse);
+    } catch (err) {
+      console.error("Error fetching content page", err);
+    }
+  }
+
   function handleCloseSimilar() {
     const newQuery = { ...router.query };
     delete newQuery.similar;
@@ -236,7 +274,9 @@ const SearchPage: NextPage = () => {
             className="tabs-wrapper"
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
           >
-            {activeTab === "results" && <SearchOptions activeTab={activeTab} />}
+            {activeTab === "results" && (
+              <SearchOptions activeTab={activeTab} contentView={contentView} />
+            )}
 
             <StyledTabsContent value="stream">
               <div
@@ -253,14 +293,64 @@ const SearchPage: NextPage = () => {
 
             <Tabs.Content value="results">
               <Container containerType="wide">
-                <SearchResults
-                  {...searchResults}
-                  context={{
-                    facets: convertUrlFacetsToContextFacets(urlFacets),
-                    query: q ? (q as string) : "",
-                    works: [],
-                  }}
-                />
+                {(contentSearchResponse?.pagination?.total_hits ?? 0) > 0 &&
+                  (() => {
+                    const totalHits =
+                      searchResults.data?.pagination?.total_hits;
+                    const contentHits =
+                      contentSearchResponse?.pagination?.total_hits ?? 0;
+                    return (
+                      <ViewToggle>
+                        <ViewToggleOption
+                          active={contentView === "works"}
+                          onClick={() => setContentView("works")}
+                        >
+                          {totalHits !== undefined
+                            ? pluralize("item result", totalHits)
+                            : "item results"}
+                        </ViewToggleOption>
+                        <ViewToggleOption
+                          active={contentView === "content"}
+                          onClick={() => setContentView("content")}
+                        >
+                          {pluralize("result", contentHits)} within content
+                        </ViewToggleOption>
+                      </ViewToggle>
+                    );
+                  })()}
+                {contentView === "works" ? (
+                  <SearchResults
+                    {...searchResults}
+                    hideResultCount={
+                      (contentSearchResponse?.pagination?.total_hits ?? 0) > 0
+                    }
+                    context={{
+                      facets: convertUrlFacetsToContextFacets(urlFacets),
+                      query: q ? (q as string) : "",
+                      works: [],
+                    }}
+                  />
+                ) : (
+                  <>
+                    <ResultsWrapperHeader>
+                      <SearchResultsMessage
+                        label={
+                          q
+                            ? `Searching for <strong>“${q}”</strong>`
+                            : "Searching"
+                        }
+                      />
+                    </ResultsWrapperHeader>
+                    {contentSearchResponse && (
+                      <TranscriptionResults
+                        results={contentSearchResponse.data}
+                        pagination={contentSearchResponse.pagination}
+                        searchTerm={q as string}
+                        onPageChange={handleContentPageChange}
+                      />
+                    )}
+                  </>
+                )}
               </Container>
             </Tabs.Content>
           </Tabs.Root>
