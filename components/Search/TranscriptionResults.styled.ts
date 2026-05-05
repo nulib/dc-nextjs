@@ -5,12 +5,20 @@ const FILESET_THUMBNAIL_SIZE = 60;
 
 const Wrapper = styled("div", {
   padding: "0 $gr4 $gr6",
+
+  "@xs": {
+    padding: "0 $gr2 $gr6",
+  },
 });
 
 const WorkGroup = styled("div", {
   marginBottom: "$gr3",
   gap: "$gr5",
   display: "flex",
+
+  "@sm": {
+    flexDirection: "column",
+  },
 });
 
 const WorkHeader = styled("div", {
@@ -22,6 +30,11 @@ const WorkHeader = styled("div", {
   a: {
     minWidth: "100%",
   },
+
+  "@sm": {
+    width: "100%",
+    flexShrink: 1,
+  },
 });
 
 const WorkFilesets = styled("div", {
@@ -30,6 +43,10 @@ const WorkFilesets = styled("div", {
   flexGrow: 1,
   gap: "$gr4",
   paddingRight: "$gr4",
+
+  "@sm": {
+    paddingRight: 0,
+  },
 });
 
 const FileSetRow = styled("div", {
@@ -116,6 +133,15 @@ const FileSetLabel = styled("div", {
     "&:hover": {
       textDecoration: "underline",
     },
+  },
+
+  "@sm": {
+    width: "150px",
+  },
+
+  "@xs": {
+    width: "auto",
+    flexShrink: 1,
   },
 });
 
