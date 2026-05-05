@@ -15,7 +15,7 @@ export function buildFileSetQuery(
 
   return {
     query: { bool: { must } },
-    size: 10,
+    size: 40,
     sort: [{ work_id: "asc" }, { _score: "desc" }],
   } as ApiSearchRequestBody;
 }
