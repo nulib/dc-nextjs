@@ -63,3 +63,29 @@ export interface Pagination {
  * Defined shapes for API response data property
  */
 export type SearchShape = ApiResponseDataShape;
+
+export interface FileSetAnnotation {
+  id: string;
+  type: string;
+  content: string;
+  language: string[];
+  model: string;
+}
+
+export interface FileSetSearchResult {
+  id: string;
+  label: string;
+  work_id: string;
+  work_title: string;
+  collection: { id: string; title: string };
+  rank: number;
+  annotations: FileSetAnnotation[];
+  representative_image_url: string;
+  accession_number: string;
+  visibility: string;
+}
+
+export interface FileSetSearchResponse {
+  data: FileSetSearchResult[];
+  pagination: Pagination;
+}

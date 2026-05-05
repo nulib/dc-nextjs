@@ -4,7 +4,8 @@ const next = require("next");
 const fs = require("fs");
 const port = 3000;
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "local.dev.rdc.library.northwestern.edu";
+const hostname = "localhost"; // use in AWS dev environment
+// const hostname = "local.dev.rdc.library.northwestern.edu"; // use for local development
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 

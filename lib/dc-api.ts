@@ -24,7 +24,7 @@ async function apiGetStatus(url: string) {
   return axios
     .head(url, { withCredentials: true })
     .then((response) => response.status)
-    .catch((error) => error.response.status);
+    .catch((error) => error?.response?.status ?? 503);
 }
 
 async function apiGetRawRequest<T>(

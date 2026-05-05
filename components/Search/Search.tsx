@@ -27,7 +27,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
-  const { urlFacets } = useQueryParams();
+  const { urlFacets, searchTerm } = useQueryParams();
 
   const { isChecked } = useGenerativeAISearchToggle();
   const { searchDispatch } = useSearchState();
@@ -147,6 +147,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   };
 
   useEffect(() => setIsLoaded(true), []);
+
+  useEffect(() => {
+    if (router.isReady) setSearchValue(searchTerm);
+  }, [router.isReady, searchTerm]);
 
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
