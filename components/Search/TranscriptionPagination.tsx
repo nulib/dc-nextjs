@@ -30,14 +30,15 @@ const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
     offset,
     prev_url,
     query_url,
-    total_hits,
     total_pages,
+    collapsed_by,
   } = pagination;
 
   const handleNavClick = (page: number, url?: string) => {
     onPageChange(url || getPageUrl(query_url, page));
   };
 
+  const total_hits = collapsed_by?.total_hits || pagination.total_hits;
   const startCount = total_hits ? offset + 1 : 0;
   const endCount = offset + limit > total_hits ? total_hits : offset + limit;
 
@@ -48,7 +49,7 @@ const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
     >
       <Results data-testid="results">
         Showing <span>{startCount}</span> to <span>{endCount}</span> of{" "}
-        {pluralize("file set match", total_hits, "es")}
+        {pluralize("matching item", total_hits)}
       </Results>
 
       <NavWrapper>
