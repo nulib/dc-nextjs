@@ -12,6 +12,10 @@ const pagination = {
   offset: 30,
   total_hits: 124,
   total_pages: 13,
+  collapsed_by: {
+    field: "work_id",
+    total_hits: 107,
+  },
   prev_url:
     "https://dcapi.rdc-staging.library.northwestern.edu/api/v2/search/file-sets?searchToken=N4IgRg9gJgniB&page=3",
   next_url:
@@ -29,7 +33,7 @@ describe("TranscriptionPagination component", () => {
 
     expect(screen.getByTestId("transcription-pagination"));
     expect(screen.getByTestId("results")).toHaveTextContent(
-      "Showing 31 to 40 of 124 file set matches",
+      "Showing 31 to 40 of 107 matching items",
     );
     expect(screen.getByText(/start/i)).toBeInTheDocument();
     expect(screen.getByText(/previous/i)).toBeInTheDocument();

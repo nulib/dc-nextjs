@@ -297,8 +297,13 @@ const SearchPage: NextPage = () => {
                   (() => {
                     const totalHits =
                       searchResults.data?.pagination?.total_hits;
-                    const contentHits =
-                      contentSearchResponse?.pagination?.total_hits ?? 0;
+                    const contentHits = {
+                      works:
+                        contentSearchResponse?.pagination?.collapsed_by
+                          ?.total_hits ?? 0,
+                      content:
+                        contentSearchResponse?.pagination?.total_hits ?? 0,
+                    };
                     return (
                       <ViewToggle>
                         <ViewToggleOption
@@ -313,7 +318,8 @@ const SearchPage: NextPage = () => {
                           active={contentView === "content"}
                           onClick={() => setContentView("content")}
                         >
-                          {pluralize("result", contentHits)} within content
+                          {pluralize("content result", contentHits.content)} in{" "}
+                          {pluralize("item", contentHits.works)}
                         </ViewToggleOption>
                       </ViewToggle>
                     );

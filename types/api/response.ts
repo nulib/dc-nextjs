@@ -55,6 +55,10 @@ export interface Pagination {
   offset: number;
   total_hits: number;
   total_pages: number;
+  collapsed_by?: {
+    field: string;
+    total_hits: number;
+  };
   prev_url?: string;
   next_url?: string;
 }

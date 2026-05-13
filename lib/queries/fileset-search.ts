@@ -16,6 +16,13 @@ export function buildFileSetQuery(
   return {
     query: { bool: { must } },
     size: 40,
-    sort: [{ work_id: "asc" }, { _score: "desc" }],
+    collapse: {
+      field: "work_id",
+      inner_hits: {
+        name: "matching_filesets",
+        size: 40,
+        sort: [{ _score: "desc" }],
+      },
+    },
   } as ApiSearchRequestBody;
 }
