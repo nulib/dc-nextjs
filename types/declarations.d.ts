@@ -10,3 +10,15 @@ declare global {
     dataLayer: any;
   }
 }
+
+declare module "@allmaps/leaflet" {
+  import * as L from "leaflet";
+
+  export class WarpedMapLayer extends L.Layer {
+    constructor(annotationOrUrl: unknown, options?: Record<string, unknown>);
+    setOpacity(opacity: number): void;
+    addGeoreferenceAnnotation(annotation: unknown): Promise<unknown>;
+    removeGeoreferenceAnnotation(annotation: unknown): Promise<unknown>;
+    clear(): void;
+  }
+}

@@ -31,6 +31,7 @@ describe("WorkTopInfo component", () => {
     expect(screen.getByText(/find this item/i));
     expect(screen.getByText(/cite this item/i));
     expect(screen.getByText(/download and share/i));
+    expect(screen.getByText(/help place this item/i));
   });
 
   it("renders metadata", async () => {

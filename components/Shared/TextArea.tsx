@@ -2,8 +2,7 @@ import React, { ChangeEvent, TextareaHTMLAttributes, useState } from "react";
 
 import { styled } from "@/stitches.config";
 
-interface SharedTextAreaProps
-  extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
+interface SharedTextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
 const SharedTextArea: React.FC<SharedTextAreaProps> = ({
   maxLength,

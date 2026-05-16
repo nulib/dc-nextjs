@@ -14,6 +14,7 @@ import {
 import React, { MouseEvent } from "react";
 
 import { Button } from "@nulib/design-system";
+import { DCAPI_PRODUCTION_ENDPOINT } from "@/lib/constants/endpoints";
 import Card from "@/components/Shared/Card";
 import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
@@ -65,6 +66,9 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
         break;
       case "download":
         setActionsDialog({ activeDialog: "DOWNLOAD" });
+        break;
+      case "geo-guess":
+        window.location.href = `/geo-guess?work=${work.id}`;
         break;
       default:
         break;
@@ -140,6 +144,14 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
           >
             Download and share
           </Button>
+          <Button
+            name="geo-guess"
+            onClick={handleActionsButtonClick}
+            isLowercase
+            isPrimary
+          >
+            Help place this item
+          </Button>
         </ActionButtons>
 
         <WorkActionsDialog
@@ -169,7 +181,10 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
             title={work.collection?.title || ""}
             description={work.collection?.description}
             href={`/collections/${work.collection?.id}`}
-            imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
+            imageUrl={`${
+              process.env.NEXT_PUBLIC_DCAPI_ENDPOINT ||
+              DCAPI_PRODUCTION_ENDPOINT
+            }/collections/${work.collection?.id}/thumbnail?aspect=square`}
             supplementalInfo={<WorkCount {...buildWorkCounts()} />}
           />
         </TopInfoCollection>

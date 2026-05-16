@@ -44,4 +44,10 @@ describe("HeaderPrimary", () => {
     const link = screen.getByText("Browse Collections");
     expect(link).toBeInTheDocument();
   });
+
+  it("renders geoguess link", () => {
+    render(<HeaderPrimary />);
+    const link = screen.getByText("GeoGuess DC");
+    expect(link).toBeInTheDocument();
+  });
 });

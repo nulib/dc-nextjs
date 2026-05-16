@@ -13,6 +13,8 @@ import { defaultAIState } from "@/hooks/useGenerativeAISearchToggle";
 import { defaultOpenGraphData } from "@/lib/open-graph";
 import { getUser } from "@/lib/user-helpers";
 import globalStyles from "@/styles/global";
+import "@annotorious/openseadragon/annotorious-openseadragon.css";
+import "leaflet/dist/leaflet.css";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 import useLocalStorage from "@/hooks/useLocalStorage";
 

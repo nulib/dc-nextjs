@@ -43,6 +43,7 @@ const HeaderPrimary: React.FC = () => {
         <PrimaryInner>
           <Search isSearchActive={handleIsSearchActive} />
           <Nav>
+            <Link href="/geo-guess">GeoGuess DC</Link>
             <Link href="/collections">Browse Collections</Link>
           </Nav>
         </PrimaryInner>

@@ -25,7 +25,7 @@ const readingRoomMessage =
 
 describe("WorkViewerWrapper", () => {
   it("renders a wrapping element for Clover", async () => {
-    render(<WorkViewerWrapper manifestId="http://testing.com" />);
+    render(<WorkViewerWrapper iiifContent="http://testing.com" />);
     await waitFor(() => {
       const el = screen.getByTestId("work-viewer-wrapper");
       expect(el).toBeInTheDocument();
@@ -40,7 +40,7 @@ describe("WorkViewerWrapper", () => {
       <UserContext.Provider value={readingUserContext}>
         <WorkViewerWrapper
           isWorkReadingRoomOnly={true}
-          manifestId="http://testing.com"
+          iiifContent="http://testing.com"
         />
       </UserContext.Provider>,
     );
@@ -56,7 +56,7 @@ describe("WorkViewerWrapper", () => {
       <UserContext.Provider value={readingUserContext}>
         <WorkViewerWrapper
           isWorkReadingRoomOnly={false}
-          manifestId="http://testing.com"
+          iiifContent="http://testing.com"
         />
       </UserContext.Provider>,
     );

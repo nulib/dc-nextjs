@@ -14,8 +14,10 @@ export interface LabeledExternalResource extends ExternalWebResource {
   label: InternationalString;
 }
 
-export interface NULWorkManifest
-  extends Omit<Manifest, "seeAlso" | "homepage" | "provider" | "rendering"> {
+export interface NULWorkManifest extends Omit<
+  Manifest,
+  "seeAlso" | "homepage" | "provider" | "rendering"
+> {
   homepage?: LabeledContentResource[];
   provider?: ProviderWithCustomHomepage[];
   rendering?: LabeledContentResource[];

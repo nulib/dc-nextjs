@@ -3,7 +3,7 @@ import {
   MetadataStyled,
 } from "@/components/Work/Metadata.styled";
 
-import { DC_URL } from "@/lib/constants/endpoints";
+import { DC_URL, PRODUCTION_URL } from "@/lib/constants/endpoints";
 import Link from "next/link";
 import { MetadataItem } from "@iiif/presentation-3";
 import { WORK_METADATA_LABELS } from "@/lib/constants/works";
@@ -26,7 +26,7 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
   if (!value) return <></>;
 
   const { isChecked } = useGenerativeAISearchToggle();
-  const searchUrl = new URL("/search", DC_URL);
+  const searchUrl = new URL("/search", DC_URL || PRODUCTION_URL);
 
   if (searchParam) {
     searchUrl.searchParams.append(searchParam, value);
