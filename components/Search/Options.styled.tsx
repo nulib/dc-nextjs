@@ -111,7 +111,14 @@ const StyledOptions = styled("div", {
   },
 });
 
+const ContentSearchNote = styled("span", {
+  fontSize: "$gr2",
+  color: "$black50",
+  alignSelf: "center",
+});
+
 export {
+  ContentSearchNote,
   StyledOptions,
   StyledOptionsBar,
   StyledOptionsExtras,

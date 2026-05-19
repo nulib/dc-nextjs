@@ -3,6 +3,7 @@ import {
   AnnotationBody,
   Canvas,
   ContentResource,
+  Manifest,
 } from "@iiif/presentation-3";
 
 interface MetadataInput {
@@ -38,6 +39,24 @@ export const getInfoResponse = (canvas: Canvas) => {
   }
 
   return infoResponse;
+};
+
+export const findCanvasIdByFileSetId = (
+  manifest: Manifest,
+  fileSetId: string,
+): string | undefined => {
+  for (const canvas of manifest.items ?? []) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const body = (canvas.items?.[0]?.items?.[0] as any)?.body;
+    const services = Array.isArray(body?.service)
+      ? body.service
+      : body?.service
+        ? [body.service]
+        : [];
+    const serviceId: string = services[0]?.id ?? services[0]?.["@id"] ?? "";
+    if (serviceId.includes(fileSetId)) return canvas.id;
+  }
+  return undefined;
 };
 
 export const getAnnotationBodyType = (canvas: Canvas) => {
