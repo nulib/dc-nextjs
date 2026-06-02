@@ -7,8 +7,14 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    timeout-minutes: 10
+    timeout-minutes: 20
     runs-on: ubuntu-latest
+    container:
+      # Image version must match @playwright/test in package.json.
+      # Mismatch produces: "Executable doesn't exist at /ms-playwright/chromium-XXXX/..."
+      # To upgrade: bump both this tag and the package.json version together.
+      image: mcr.microsoft.com/playwright:v1.46.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,9 +22,6 @@ jobs:
           node-version: lts/*
       - name: Install dependencies
         run: npm ci --force
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
 
       - name: Build app
         run: npm run build
