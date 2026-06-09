@@ -307,9 +307,8 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
           service: [
             // @ts-ignore
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0",
-              "@type": "ImageService2",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0",
+              type: "ImageService3",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
           ],
@@ -335,9 +334,8 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
                 width: 2400,
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0",
-                    "@type": "ImageService2",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/62adb94b-36d9-4f6f-bd18-ae4e7f3e7ba0",
+                    type: "ImageService3",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
                 ],
@@ -366,9 +364,8 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
           service: [
             // @ts-ignore
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/592022f6-3dc1-4f17-a412-42c025ceae93",
-              "@type": "ImageService2",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/592022f6-3dc1-4f17-a412-42c025ceae93",
+              type: "ImageService3",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
           ],
@@ -394,9 +391,8 @@ export const mockPrivateUnpublishedWorkManifest: Manifest = {
                 width: 1538,
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/592022f6-3dc1-4f17-a412-42c025ceae93",
-                    "@type": "ImageService2",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/592022f6-3dc1-4f17-a412-42c025ceae93",
+                    type: "ImageService3",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
                 ],
