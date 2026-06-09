@@ -34,8 +34,10 @@ export const getInfoResponse = (canvas: Canvas) => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const body = annotation.body as AnnotationBody as any;
-    if (body && body.service && body.service[0])
-      infoResponse = body.service[0]["@id"] as string;
+    if (body && body.service && body.service[0]) {
+      const service = body.service[0];
+      infoResponse = service?.id ?? service?.["@id"] ?? "";
+    }
   }
 
   return infoResponse;
