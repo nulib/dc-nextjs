@@ -163,9 +163,8 @@ export const samplePublicWorkManifest = {
                 id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0/full/600,/0/default.jpg",
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
-                    "@type": "ImageService2",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
+                    type: "ImageService3",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
                 ],
@@ -199,9 +198,8 @@ export const samplePublicWorkManifest = {
                   id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0/full/!640,689/0/default.jpg",
                   service: [
                     {
-                      "@id":
-                        "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
-                      "@type": "ImageService2",
+                      id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
+                      type: "ImageService3",
                       profile: "http://iiif.io/api/image/2/level2.json",
                     },
                   ],
@@ -228,9 +226,8 @@ export const samplePublicWorkManifest = {
           id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0/full/!300,300/0/default.jpg",
           service: [
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
-              "@type": "ImageService2",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/1d2c2e79-8a6a-4b55-b06a-627cbf82ddd0",
+              type: "ImageService3",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
           ],
@@ -255,9 +252,8 @@ export const samplePublicWorkManifest = {
                 id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745/full/600,/0/default.jpg",
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
-                    "@type": "ImageService2",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
+                    type: "ImageService3",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
                 ],
@@ -291,9 +287,8 @@ export const samplePublicWorkManifest = {
                   id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745/full/!640,683/0/default.jpg",
                   service: [
                     {
-                      "@id":
-                        "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
-                      "@type": "ImageService2",
+                      id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
+                      type: "ImageService3",
                       profile: "http://iiif.io/api/image/2/level2.json",
                     },
                   ],
@@ -320,9 +315,8 @@ export const samplePublicWorkManifest = {
           id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745/full/!300,300/0/default.jpg",
           service: [
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
-              "@type": "ImageService2",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/3a1562c9-e9d7-4311-a572-28e9ddf39745",
+              type: "ImageService3",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
           ],

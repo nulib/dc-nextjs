@@ -181,10 +181,9 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         ? item.label.none[0].replace(/\.[^/.]+$/, "")
         : "nul_fileset";
 
-    const response = await makeBlob(
-      `${getInfoResponse(item)}/full/3000,/0/default.jpg`,
-      { credentials: "include" },
-    );
+    const infoResponse = getInfoResponse(item);
+    const imageUrl = `${infoResponse}/full/3000,/0/default.jpg`;
+    const response = await makeBlob(imageUrl, { credentials: "include" });
 
     if (!response || response.error) {
       alert("Error fetching the image");

@@ -373,9 +373,8 @@ const manifest = {
           width: 300,
           service: [
             {
-              "@id":
-                "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d164b89c-10ca-42d3-b201-d584e7175604",
-              "@type": "ImageService2",
+              id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d164b89c-10ca-42d3-b201-d584e7175604",
+              type: "ImageService3",
               profile: "http://iiif.io/api/image/2/level2.json",
             },
           ],
@@ -400,9 +399,8 @@ const manifest = {
                 width: 4148,
                 service: [
                   {
-                    "@id":
-                      "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d164b89c-10ca-42d3-b201-d584e7175604",
-                    "@type": "ImageService2",
+                    id: "https://iiif.stack.rdc-staging.library.northwestern.edu/iiif/2/d164b89c-10ca-42d3-b201-d584e7175604",
+                    type: "ImageService3",
                     profile: "http://iiif.io/api/image/2/level2.json",
                   },
                 ],
