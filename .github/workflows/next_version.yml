@@ -1,0 +1,69 @@
+name: Tag Release & Open Next Production PR
+on:
+  push:
+    branches: [main]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: write # create/push tag + push bump commit to deploy/staging
+  pull-requests: write # open the next release PR
+jobs:
+  version:
+    # allow an escape hatch for non-release pushes to main
+    if: ${{ !contains(github.event.head_commit.message, '[skip-release]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history + tags, and ability to push deploy/staging
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Read release version
+        id: ver
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Tag the release
+        # idempotent: only tag when this version is new; emit tagged=false for
+        # non-release pushes to main so the bump/PR step is skipped entirely
+        id: tag
+        env:
+          V: v${{ steps.ver.outputs.version }}
+        run: |
+          if git rev-parse "$V" >/dev/null 2>&1; then
+            echo "Tag $V already exists — not a new release, skipping all release steps."
+            echo "tagged=false" >> "$GITHUB_OUTPUT"
+          else
+            git tag -a "$V" -m "Release $V"
+            git push origin "$V"
+            echo "tagged=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump patch on deploy/staging & open next PR
+        # only runs when a brand-new release tag was just created; any non-release
+        # push to main (version unchanged → tag already exists) is a complete no-op
+        if: ${{ steps.tag.outputs.tagged == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch origin deploy/staging
+          git checkout deploy/staging
+          # bumps package.json + package-lock.json without creating its own git tag
+          npm version patch --no-git-tag-version
+          NEXT=$(node -p "require('./package.json').version")
+          git commit -am "Bump version to v${NEXT}"
+          git push origin deploy/staging
+          # open the next release PR only if one isn't already open
+          if [ -z "$(gh pr list --base main --head deploy/staging --state open --json number -q '.[].number')" ]; then
+            gh pr create --base main --head deploy/staging --draft \
+              --title "Deploy vX.X.X to production" \
+              --body "Automated production release PR. Update the version in \`package.json\` (patch/minor/major) and the title before merging."
+          fi
