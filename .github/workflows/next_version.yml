@@ -8,6 +8,7 @@ concurrency:
 permissions:
   contents: write # create/push tag + push bump commit to deploy/staging
   pull-requests: write # open the next release PR
+  actions: write # dispatch release_notes.yml
 jobs:
   version:
     # allow an escape hatch for non-release pushes to main
@@ -46,6 +47,23 @@ jobs:
             git push origin "$V"
             echo "tagged=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Generate Release Notes
+        if: ${{ steps.tag.outputs.tagged == 'true' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'release_notes.yml',
+              ref: 'main',
+              inputs: {
+                current_tag: 'v${{ steps.ver.outputs.version }}',
+                previous_tag: '',
+                draft: 'false',
+              },
+            })
 
       - name: Bump patch on deploy/staging & open next PR
         # only runs when a brand-new release tag was just created; any non-release
