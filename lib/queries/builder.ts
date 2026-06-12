@@ -16,28 +16,12 @@ type BuildQueryProps = {
   urlFacets: UrlFacets;
 };
 
-const searchPipeline = {
-  phase_results_processors: [
-    {
-      "normalization-processor": {
-        combination: {
-          parameters: {
-            weights: [0.25, 0.75],
-          },
-          technique: "arithmetic_mean",
-        },
-        normalization: {
-          technique: "l2",
-        },
-      },
-    },
-  ],
-};
-
 export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
   const { aggs, aggsFilterValue, size, term, urlFacets } = obj;
   const must: QueryDslQueryContainer[] = [];
   let queryValue;
+
+  const facetFilters = buildFacetFilters(urlFacets);
 
   // Build the "must" part of the query
   if (term) must.push(buildSearchPart(term));
@@ -80,6 +64,7 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                   },
                 },
               ],
+              ...(!aggs && { filter: facetFilters }),
             },
           },
           {
@@ -88,12 +73,11 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
                 filter: {
                   bool: !aggs
                     ? {
-                        filter: buildFacetFilters(urlFacets),
+                        filter: facetFilters,
                       }
                     : {},
                 },
                 k: AI_K_VALUE,
-                model_id: process.env.NEXT_PUBLIC_OPENSEARCH_MODEL_ID,
                 query_text: term, // if term has no value, the API returns a 400 error
               },
             },
@@ -108,16 +92,15 @@ export function buildQuery(obj: BuildQueryProps, isAI: boolean) {
     ...(queryValue && {
       query: queryValue,
     }),
-    ...(isAI && {
-      search_pipeline: searchPipeline,
-    }),
     ...(aggs && { aggs: buildAggs(aggs, aggsFilterValue, urlFacets) }),
     ...(typeof size !== "undefined" && { size: size }),
-    post_filter: {
-      bool: {
-        must: buildFacetFilters(urlFacets),
+    ...(!isAI && {
+      post_filter: {
+        bool: {
+          must: facetFilters,
+        },
       },
-    },
+    }),
   } as ApiSearchRequestBody;
 
   return requestBody;
