@@ -112,6 +112,18 @@ export const FooterIcon = styled("li", {
   },
 });
 
+export const FooterVersion = styled("span", {
+  color: "$nuPurple10",
+  display: "block",
+  fontSize: "$1",
+  margin: "$2 0 0",
+  opacity: "0.5",
+
+  "&[href]:hover, &[href]:focus": {
+    opacity: "0.8",
+  },
+});
+
 export const FooterList = styled("ul", {
   listStyleType: "none",
   margin: "0",
