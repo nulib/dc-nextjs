@@ -5,12 +5,17 @@ import {
   FooterIcon,
   FooterList,
   FooterStyled,
+  FooterVersion,
   Social,
 } from "./Footer.styled";
+import { version } from "@/package.json";
 
 import React from "react";
 
 export const FooterContent: React.FC = () => {
+  const deployEnv = process.env.HONEYBADGER_ENV;
+  const revision = process.env.HONEYBADGER_REVISION;
+
   const currentYear = () => {
     const today = new Date();
     return today.getFullYear();
@@ -208,6 +213,33 @@ export const FooterContent: React.FC = () => {
           language, or opinions that are offensive and may not be appropriate
           for all audiences.
         </p>
+        <FooterVersion
+          as={deployEnv === "production" ? "a" : "span"}
+          {...(deployEnv === "production" && {
+            href: `https://github.com/nulib/dc-nextjs/releases/tag/v${version}`,
+          })}
+        >
+          v{version}
+          {deployEnv === "staging" && (
+            <>
+              {" (staging"}
+              {revision && (
+                <>
+                  {" "}
+                  <a
+                    href={`https://github.com/nulib/dc-nextjs/commit/${revision}`}
+                  >
+                    {revision.slice(0, 7)}
+                  </a>
+                </>
+              )}
+              {")"}
+            </>
+          )}
+          {deployEnv !== "production" &&
+            deployEnv !== "staging" &&
+            ` (DEV${revision ? ` ${revision.slice(0, 7)}` : ""})`}
+        </FooterVersion>
       </FooterCopyright>
     </FooterStyled>
   );
