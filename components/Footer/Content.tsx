@@ -8,13 +8,12 @@ import {
   FooterVersion,
   Social,
 } from "./Footer.styled";
-import { version } from "@/package.json";
+import { getBuildInfo } from "@/lib/build-info";
 
 import React from "react";
 
 export const FooterContent: React.FC = () => {
-  const deployEnv = process.env.HONEYBADGER_ENV;
-  const revision = process.env.HONEYBADGER_REVISION;
+  const { version, releaseUrl, commitUrl, shortSha, label } = getBuildInfo();
 
   const currentYear = () => {
     const today = new Date();
@@ -214,31 +213,24 @@ export const FooterContent: React.FC = () => {
           for all audiences.
         </p>
         <FooterVersion
-          as={deployEnv === "production" ? "a" : "span"}
-          {...(deployEnv === "production" && {
-            href: `https://github.com/nulib/dc-nextjs/releases/tag/v${version}`,
-          })}
+          as={releaseUrl ? "a" : "span"}
+          href={releaseUrl ?? undefined}
         >
           v{version}
-          {deployEnv === "staging" && (
+          {label && (
             <>
-              {" (staging"}
-              {revision && (
+              {` (${label}`}
+              {commitUrl && shortSha ? (
                 <>
                   {" "}
-                  <a
-                    href={`https://github.com/nulib/dc-nextjs/commit/${revision}`}
-                  >
-                    {revision.slice(0, 7)}
-                  </a>
+                  <a href={commitUrl}>{shortSha}</a>
                 </>
+              ) : (
+                shortSha && ` ${shortSha}`
               )}
               {")"}
             </>
           )}
-          {deployEnv !== "production" &&
-            deployEnv !== "staging" &&
-            ` (DEV${revision ? ` ${revision.slice(0, 7)}` : ""})`}
         </FooterVersion>
       </FooterCopyright>
     </FooterStyled>
