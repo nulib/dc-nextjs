@@ -81,7 +81,7 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
   const groups = groupByWork(results);
   const { user, isLoading } = useContext(UserContext);
   const isRestricted = (visibility: string) => {
-    if (isLoading) return false;
+    if (isLoading) return visibility !== "Public";
     return !(user?.scopes?.includes(`read:${visibility}`) ?? false);
   };
 
