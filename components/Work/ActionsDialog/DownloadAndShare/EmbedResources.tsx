@@ -46,7 +46,7 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
 }) => {
   const router = useRouter();
   const [imageCanvases, setImageCanvases] = React.useState<Canvas[]>([]);
-  const { userCanRead } = useWorkAuth(work);
+  const { userCanRead, isAuthLoading } = useWorkAuth(work);
   const isSharedLinkPage = router.pathname.includes("/shared");
 
   React.useEffect(() => {
@@ -62,7 +62,7 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
     <EmbedResourcesWrapper>
       <Heading as="h3">Download and Embed</Heading>
 
-      {!userCanRead && !isSharedLinkPage && (
+      {!userCanRead && !isAuthLoading && !isSharedLinkPage && (
         <Announcement>
           Download requires Northwestern University NetID authentication{" "}
         </Announcement>

@@ -14,6 +14,10 @@ const userContextValue = {
     isReadingRoom: false,
     isInstitution: false,
   },
+  isLoading: false,
+  isSignInModalOpen: false,
+  openSignInModal: jest.fn(),
+  closeSignInModal: jest.fn(),
 };
 
 const alternateFormatItems = manifest.rendering ? [...manifest.rendering] : [];

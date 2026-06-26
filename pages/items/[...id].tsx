@@ -48,7 +48,8 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const [initialLabel, setInitialLabel] = useState<string | undefined>();
   const [initialSnippet, setInitialSnippet] = useState<string | undefined>();
   const canvasParamProcessed = useRef(false);
-  const { userCanRead, isWorkReadingRoomOnly } = useWorkAuth(work);
+  const { userCanRead, isWorkReadingRoomOnly, isAuthLoading } =
+    useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
 
@@ -144,7 +145,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
                   searchQuery={searchQuery}
                 />
               )}
-              {work && !userCanRead && (
+              {work && !userCanRead && !isAuthLoading && (
                 <WorkRestrictedDisplay
                   thumbnail={work.thumbnail}
                   workId={work.id}

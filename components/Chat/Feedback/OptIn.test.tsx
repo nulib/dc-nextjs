@@ -9,9 +9,15 @@ const mockUserContextValue = {
     email: "foo@bar.com",
     isLoggedIn: true,
     isReadingRoom: false,
+    isInstitution: false,
     name: "foo",
+    scopes: [],
     sub: "123",
   },
+  isLoading: false,
+  isSignInModalOpen: false,
+  openSignInModal: jest.fn(),
+  closeSignInModal: jest.fn(),
 };
 
 describe("ChatFeedbackOptIn", () => {

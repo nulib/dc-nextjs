@@ -17,9 +17,12 @@ const defaultUserContext: UserContextType = {
     primaryAffiliation: "student",
     isLoggedIn: true,
     isReadingRoom: false,
+    isInstitution: false,
     name: "Ace Frehley",
+    scopes: [],
     sub: "xyz123",
   },
+  isLoading: false,
   isSignInModalOpen: false,
   openSignInModal: jest.fn(() => {
     defaultUserContext.isSignInModalOpen = true;

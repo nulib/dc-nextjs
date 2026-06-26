@@ -8,10 +8,12 @@ import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 const EmbeddedViewer = ({
   work,
   userCanRead,
+  isAuthLoading,
   searchParams,
 }: {
   work: Work;
   userCanRead?: boolean;
+  isAuthLoading?: boolean;
   searchParams: { [key: string]: string };
 }) => {
   const thumbnail = work?.thumbnail || "";
@@ -48,7 +50,7 @@ const EmbeddedViewer = ({
           viewerOptions={viewerOptions}
         />
       ) : (
-        <WorkRestrictedDisplay thumbnail={thumbnail} />
+        !isAuthLoading && <WorkRestrictedDisplay thumbnail={thumbnail} />
       )}
     </WorkProvider>
   );
