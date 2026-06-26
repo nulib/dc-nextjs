@@ -48,6 +48,9 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
   const [imageCanvases, setImageCanvases] = React.useState<Canvas[]>([]);
   const { userCanRead, isAuthLoading } = useWorkAuth(work);
   const isSharedLinkPage = router.pathname.includes("/shared");
+  const loginRequired =
+    (isAuthLoading && work?.visibility !== "Public") || // Work is not public and auth is loading
+    (work && !userCanRead && !isSharedLinkPage); // User cannot read and it's not a shared link page
 
   React.useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
@@ -62,7 +65,7 @@ const EmbedResources: React.FC<EmbedResourcesProps> = ({
     <EmbedResourcesWrapper>
       <Heading as="h3">Download and Embed</Heading>
 
-      {!userCanRead && !isAuthLoading && !isSharedLinkPage && (
+      {loginRequired && (
         <Announcement>
           Download requires Northwestern University NetID authentication{" "}
         </Announcement>

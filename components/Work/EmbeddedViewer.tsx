@@ -42,6 +42,10 @@ const EmbeddedViewer = ({
     showTitle: showTitle === "true" ? true : false,
   };
 
+  const loginRequired =
+    (isAuthLoading && work?.visibility !== "Public") || // Work is not public and auth is loading
+    (work && !userCanRead); // Work is loaded and user cannot read
+
   return (
     <WorkProvider>
       {userCanRead ? (
@@ -50,7 +54,7 @@ const EmbeddedViewer = ({
           viewerOptions={viewerOptions}
         />
       ) : (
-        !isAuthLoading && <WorkRestrictedDisplay thumbnail={thumbnail} />
+        loginRequired && <WorkRestrictedDisplay thumbnail={thumbnail} />
       )}
     </WorkProvider>
   );
