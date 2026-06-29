@@ -34,12 +34,20 @@ import {
 } from "@/lib/geo-guess";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import type { CloverMapProps, MapMarker } from "@samvera/clover-iiif/map";
 import Link from "next/link";
 import type OpenSeadragon from "openseadragon";
-import type { CircleMarker, Map as LeafletMap, Polygon } from "leaflet";
+import dynamic from "next/dynamic";
 import { styled } from "@/stitches.config";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/router";
+
+const CloverMap = dynamic<CloverMapProps>(
+  () => import("@samvera/clover-iiif/map"),
+  {
+    ssr: false,
+  },
+);
 
 const storageKey = "dc-nextjs:geo-guess-submissions";
 
@@ -478,7 +486,7 @@ const GeoGuess: React.FC = () => {
 
         <GuessPanel>
           <MapFrame>
-            <LeafletGuessMap
+            <CloverGuessMap
               footprint={footprint}
               gcpPairs={mode === "georeference" ? gcpPairs : []}
               isPendingPair={
@@ -492,7 +500,6 @@ const GeoGuess: React.FC = () => {
               onPairComplete={handlePairComplete}
               revealKnown={Boolean(lastSubmission)}
               warpAnnotation={previewActive ? liveAnnotation : null}
-              workId={work?.id}
             />
 
             {mode === "georeference" && gcpPairs.length >= 2 && (
@@ -642,7 +649,7 @@ const GeoGuess: React.FC = () => {
   );
 };
 
-type LeafletGuessMapProps = {
+type CloverGuessMapProps = {
   footprint: Array<[number, number]> | null;
   gcpPairs: GcpPair[];
   isPendingPair: boolean;
@@ -654,7 +661,6 @@ type LeafletGuessMapProps = {
   onPairComplete: (guess: GuessPoint) => void;
   revealKnown: boolean;
   warpAnnotation: GeoGuessGeoreferenceAnnotation | null;
-  workId?: string;
 };
 
 type GeoGuessImageAnnotatorProps = {
@@ -864,7 +870,7 @@ const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
   );
 };
 
-const LeafletGuessMap: React.FC<LeafletGuessMapProps> = ({
+const CloverGuessMap: React.FC<CloverGuessMapProps> = ({
   footprint,
   gcpPairs,
   isPendingPair,
@@ -876,251 +882,121 @@ const LeafletGuessMap: React.FC<LeafletGuessMapProps> = ({
   onPairComplete,
   revealKnown,
   warpAnnotation,
-  workId,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<LeafletMap | null>(null);
-  const pairMarkerRefs = useRef<CircleMarker[]>([]);
-  const knownMarkerRefs = useRef<CircleMarker[]>([]);
-  const footprintRef = useRef<Polygon | null>(null);
-  const locateMarkerRef = useRef<CircleMarker | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const warpLayerRef = useRef<any>(null);
-  const modeRef = useRef(mode);
-  const isPendingPairRef = useRef(isPendingPair);
-  const onLocateGuessRef = useRef(onLocateGuess);
-  const onPairCompleteRef = useRef(onPairComplete);
+  const firstKnownPlace = knownPlaces[0]?.coordinates;
+  const defaultCenter = useMemo(
+    () =>
+      firstKnownPlace
+        ? {
+            latitude: Number(firstKnownPlace[1]),
+            longitude: Number(firstKnownPlace[0]),
+            zoom: 6,
+          }
+        : { latitude: 20, longitude: 0, zoom: 2 },
+    [firstKnownPlace],
+  );
 
-  useEffect(() => {
-    isPendingPairRef.current = isPendingPair;
-  }, [isPendingPair]);
+  const center = mapFocus
+    ? {
+        latitude: mapFocus.latitude,
+        longitude: mapFocus.longitude,
+        zoom: mapFocus.zoom,
+      }
+    : defaultCenter;
 
-  useEffect(() => {
-    modeRef.current = mode;
-  }, [mode]);
+  const geoJson = useMemo<CloverMapProps["geoJson"]>(() => {
+    if (!footprint || footprint.length < 3) return null;
 
-  useEffect(() => {
-    onLocateGuessRef.current = onLocateGuess;
-  }, [onLocateGuess]);
+    const coordinates = [...footprint];
+    const [firstLon, firstLat] = coordinates[0];
+    const [lastLon, lastLat] = coordinates[coordinates.length - 1];
 
-  useEffect(() => {
-    onPairCompleteRef.current = onPairComplete;
-  }, [onPairComplete]);
+    if (firstLon !== lastLon || firstLat !== lastLat) {
+      coordinates.push([firstLon, firstLat]);
+    }
 
-  useEffect(() => {
-    if (!mapRef.current) return;
-    const wantsPin =
-      (mode === "georeference" && isPendingPair) || mode === "locate";
-    mapRef.current.getContainer().style.cursor = wantsPin ? "crosshair" : "";
-  }, [isPendingPair, mode]);
-
-  useEffect(() => {
-    let disposed = false;
-
-    (async () => {
-      if (!containerRef.current || mapRef.current) return;
-
-      const L = await import("leaflet");
-      if (disposed || !containerRef.current) return;
-
-      const firstKnownPlace = knownPlaces[0]?.coordinates;
-      const center: [number, number] = firstKnownPlace
-        ? [Number(firstKnownPlace[1]), Number(firstKnownPlace[0])]
-        : [20, 0];
-
-      const map = L.map(containerRef.current, {
-        center,
-        maxZoom: 18,
-        minZoom: 2,
-        worldCopyJump: true,
-        zoom: firstKnownPlace ? 6 : 2,
-        zoomAnimationThreshold: 1,
-      });
-
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-      }).addTo(map);
-
-      map.on("click", (event) => {
-        const guess = {
-          latitude: Number(event.latlng.lat.toFixed(5)),
-          longitude: Number(event.latlng.lng.toFixed(5)),
-        };
-
-        if (modeRef.current === "locate") {
-          onLocateGuessRef.current(guess);
-          return;
-        }
-
-        if (!isPendingPairRef.current) return;
-        onPairCompleteRef.current(guess);
-      });
-
-      mapRef.current = map;
-      setTimeout(() => map.invalidateSize(), 0);
-    })();
-
-    return () => {
-      disposed = true;
-      mapRef.current?.remove();
-      mapRef.current = null;
+    return {
+      type: "Feature",
+      properties: { label: "Projected image footprint" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [coordinates],
+      },
     };
-  }, [knownPlaces, workId]);
-
-  useEffect(() => {
-    (async () => {
-      if (!mapRef.current) return;
-      const L = await import("leaflet");
-
-      pairMarkerRefs.current.forEach((m) => m.remove());
-      pairMarkerRefs.current = [];
-
-      pairMarkerRefs.current = gcpPairs.map((pair, i) =>
-        L.circleMarker([pair.geoCoords[1], pair.geoCoords[0]], {
-          color: "#ffffff",
-          fillColor: "#4e2a84",
-          fillOpacity: 1,
-          radius: 8,
-          weight: 2,
-        })
-          .bindTooltip(`#${i + 1}`)
-          .addTo(mapRef.current as LeafletMap),
-      );
-    })();
-  }, [gcpPairs]);
-
-  useEffect(() => {
-    if (!mapRef.current || !mapFocus) return;
-
-    mapRef.current.flyTo(
-      [mapFocus.latitude, mapFocus.longitude],
-      mapFocus.zoom,
-      { duration: 0.8 },
-    );
-  }, [mapFocus]);
-
-  useEffect(() => {
-    (async () => {
-      if (!mapRef.current) return;
-      const L = await import("leaflet");
-
-      if (locateMarkerRef.current) {
-        locateMarkerRef.current.remove();
-        locateMarkerRef.current = null;
-      }
-
-      if (!locateGuess) return;
-
-      locateMarkerRef.current = L.circleMarker(
-        [locateGuess.latitude, locateGuess.longitude],
-        {
-          color: "#ffffff",
-          fillColor: "#4e2a84",
-          fillOpacity: 1,
-          radius: 10,
-          weight: 3,
-        },
-      )
-        .bindTooltip("Your guess")
-        .addTo(mapRef.current as LeafletMap);
-    })();
-  }, [locateGuess]);
-
-  useEffect(() => {
-    (async () => {
-      if (!mapRef.current) return;
-      const L = await import("leaflet");
-
-      if (footprintRef.current) {
-        footprintRef.current.remove();
-        footprintRef.current = null;
-      }
-
-      if (!footprint || footprint.length < 3) return;
-
-      const latLngs = footprint.map(
-        ([lon, lat]) => [lat, lon] as [number, number],
-      );
-
-      footprintRef.current = L.polygon(latLngs, {
-        color: "#4e2a84",
-        dashArray: "6 4",
-        fillColor: "#4e2a84",
-        fillOpacity: 0.15,
-        weight: 2,
-      })
-        .bindTooltip("Projected image footprint")
-        .addTo(mapRef.current as LeafletMap);
-    })();
   }, [footprint]);
 
-  useEffect(() => {
-    let disposed = false;
+  const markers = useMemo<MapMarker[]>(
+    () => [
+      ...gcpPairs.map((pair, i) => ({
+        latitude: pair.geoCoords[1],
+        longitude: pair.geoCoords[0],
+        label: `#${i + 1}`,
+        color: "#4e2a84",
+      })),
+      ...(locateGuess
+        ? [
+            {
+              latitude: locateGuess.latitude,
+              longitude: locateGuess.longitude,
+              label: "Your guess",
+              color: "#4e2a84",
+            },
+          ]
+        : []),
+      ...(revealKnown
+        ? knownPlaces
+            .map((place) => ({
+              latitude: Number(place.coordinates?.[1]),
+              longitude: Number(place.coordinates?.[0]),
+              label: place.label || "Known place",
+              color: "#008656",
+            }))
+            .filter(
+              (place) =>
+                !Number.isNaN(place.latitude) &&
+                !Number.isNaN(place.longitude),
+            )
+        : []),
+    ],
+    [gcpPairs, knownPlaces, locateGuess, revealKnown],
+  );
 
-    (async () => {
-      const map = mapRef.current;
-      if (!map) return;
+  const handleMapClick = useCallback(
+    ([longitude, latitude]: [number, number]) => {
+      const guess = {
+        latitude: Number(latitude.toFixed(5)),
+        longitude: Number(longitude.toFixed(5)),
+      };
 
-      if (warpLayerRef.current) {
-        try {
-          map.removeLayer(warpLayerRef.current);
-        } catch {
-          /* noop */
-        }
-        warpLayerRef.current = null;
+      if (mode === "locate") {
+        onLocateGuess(guess);
+        return;
       }
 
-      if (!warpAnnotation) return;
+      if (!isPendingPair) return;
+      onPairComplete(guess);
+    },
+    [isPendingPair, mode, onLocateGuess, onPairComplete],
+  );
 
-      const { WarpedMapLayer } = await import("@allmaps/leaflet");
-      if (disposed || !mapRef.current) return;
-
-      const layer = new WarpedMapLayer(warpAnnotation, {
-        interactive: false,
-      });
-      layer.setOpacity(0.85);
-      layer.addTo(mapRef.current);
-      warpLayerRef.current = layer;
-    })();
-
-    return () => {
-      disposed = true;
-    };
-  }, [warpAnnotation]);
-
-  useEffect(() => {
-    (async () => {
-      if (!mapRef.current) return;
-      const L = await import("leaflet");
-
-      knownMarkerRefs.current.forEach((marker) => marker.remove());
-      knownMarkerRefs.current = [];
-
-      if (!revealKnown) return;
-
-      knownMarkerRefs.current = knownPlaces.map((place) => {
-        const marker = L.circleMarker(
-          [Number(place.coordinates?.[1]), Number(place.coordinates?.[0])],
-          {
-            color: "#ffffff",
-            fillColor: "#008656",
-            fillOpacity: 1,
-            radius: 8,
-            weight: 2,
-          },
-        ).addTo(mapRef.current as LeafletMap);
-        marker.bindTooltip(place.label || "Known place");
-        return marker;
-      });
-    })();
-  }, [knownPlaces, revealKnown]);
+  const useCrosshairCursor =
+    (mode === "georeference" && isPendingPair) || mode === "locate";
 
   return (
-    <LeafletMapShell data-pending={isPendingPair}>
-      <div ref={containerRef} />
-    </LeafletMapShell>
+    <CloverMapShell data-pending={isPendingPair}>
+      <CloverMap
+        center={center}
+        fitToData={!mapFocus}
+        geoJson={geoJson}
+        georefAnnotation={warpAnnotation}
+        imageOverlayOpacity={0.85}
+        markers={markers}
+        onMapClick={handleMapClick}
+        showControlPoints={false}
+        showImageOverlay={Boolean(warpAnnotation)}
+        useCrosshairCursor={useCrosshairCursor}
+      />
+    </CloverMapShell>
   );
 };
 
@@ -1761,7 +1637,7 @@ const PlaceResults = styled("ol", {
   },
 });
 
-const LeafletMapShell = styled("div", {
+const CloverMapShell = styled("div", {
   background: "#d8eee9",
   border: "1px solid #97b9b3",
   boxSizing: "border-box",
