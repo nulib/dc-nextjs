@@ -48,10 +48,13 @@ const WorkPage: NextPage<WorkPageProps> = ({
   const [initialLabel, setInitialLabel] = useState<string | undefined>();
   const [initialSnippet, setInitialSnippet] = useState<string | undefined>();
   const canvasParamProcessed = useRef(false);
-  const { userCanRead, isWorkReadingRoomOnly } = useWorkAuth(work);
+  const { userCanRead, isWorkReadingRoomOnly, isAuthLoading } =
+    useWorkAuth(work);
   const router = useRouter();
   const { isChecked: isAI } = useGenerativeAISearchToggle();
-
+  const loginRequired =
+    (isAuthLoading && work?.visibility !== "Public") || // Work is not public and auth is loading
+    (work && !userCanRead); // Work is loaded and user cannot read
   const iiifContent = router?.query["iiif-content"]
     ? (router?.query["iiif-content"] as string)
     : work?.iiif_manifest;
@@ -144,7 +147,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
                   searchQuery={searchQuery}
                 />
               )}
-              {work && !userCanRead && (
+              {loginRequired && (
                 <WorkRestrictedDisplay
                   thumbnail={work.thumbnail}
                   workId={work.id}

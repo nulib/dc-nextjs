@@ -8,6 +8,7 @@ import { getUser } from "@/lib/user-helpers";
 
 const UserContext = createContext<UserContextType>({
   user: null,
+  isLoading: true,
   isSignInModalOpen: false,
   openSignInModal: () => {},
   closeSignInModal: () => {},
@@ -15,35 +16,38 @@ const UserContext = createContext<UserContextType>({
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     /* Determine if user is authenticated via cookie */
     getUser().then((result) => {
-      if (!result) return;
-      const {
-        email,
-        isInstitution = false,
-        isLoggedIn = false,
-        isReadingRoom = false,
-        name,
-        primaryAffiliation,
-        provider,
-        scopes,
-        sub,
-      } = result;
-      setUser({
-        email,
-        isInstitution,
-        isLoggedIn,
-        isReadingRoom,
-        name,
-        primaryAffiliation,
-        provider,
-        scopes,
-        sub,
-      });
+      if (result) {
+        const {
+          email,
+          isInstitution = false,
+          isLoggedIn = false,
+          isReadingRoom = false,
+          name,
+          primaryAffiliation,
+          provider,
+          scopes,
+          sub,
+        } = result;
+        setUser({
+          email,
+          isInstitution,
+          isLoggedIn,
+          isReadingRoom,
+          name,
+          primaryAffiliation,
+          provider,
+          scopes,
+          sub,
+        });
+      }
+      setIsLoading(false);
     });
   }, []);
 
@@ -86,6 +90,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     <UserContext.Provider
       value={{
         user,
+        isLoading,
         isSignInModalOpen,
         openSignInModal,
         closeSignInModal,

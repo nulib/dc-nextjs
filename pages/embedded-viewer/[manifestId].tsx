@@ -15,7 +15,7 @@ interface EmbeddedViewerPageProps {
 
 const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
   const router = useRouter();
-  const { userCanRead } = useWorkAuth(work);
+  const { userCanRead, isAuthLoading } = useWorkAuth(work);
 
   const searchParams = getUrlSearchParams(decodeURIComponent(router.asPath));
 
@@ -23,6 +23,7 @@ const EmbeddedViewerPage: NextPage<EmbeddedViewerPageProps> = ({ work }) => {
     <EmbeddedViewer
       work={work}
       userCanRead={userCanRead}
+      isAuthLoading={isAuthLoading}
       searchParams={searchParams}
     />
   );

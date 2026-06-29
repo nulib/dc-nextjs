@@ -4,6 +4,7 @@ import { useContext } from "react";
 
 const useWorkAuth = (work: Work | null | undefined) => {
   const userAuthContext = useContext(UserContext);
+  const isAuthLoading = userAuthContext?.isLoading ?? true;
   const isUserLoggedIn = userAuthContext?.user?.isLoggedIn;
   const isWorkInstitution = work?.visibility === "Institution";
   const isWorkPrivate = work?.visibility === "Private";
@@ -20,6 +21,7 @@ const useWorkAuth = (work: Work | null | undefined) => {
       (isWorkInstitution && !userAuthContext?.user?.isInstitution));
 
   return {
+    isAuthLoading,
     isUserLoggedIn,
     isWorkInstitution,
     isWorkPrivate,
