@@ -16,7 +16,9 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
   const userContext = useContext(UserContext);
 
   const isRestricted = (item: SearchShape): boolean => {
-    if (userContext?.isLoading) return item?.visibility !== "Public";
+    if (item?.visibility === "Public") return false;
+    if (userContext?.isLoading) return true;
+
     return !(
       userContext?.user?.scopes?.includes(`read:${item?.visibility}`) ?? false
     );
