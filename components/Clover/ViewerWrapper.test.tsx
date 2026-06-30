@@ -15,6 +15,10 @@ const userContextValue = {
     primaryAffiliation: "staff",
     provider: "nusso",
   },
+  isLoading: false,
+  isSignInModalOpen: false,
+  openSignInModal: jest.fn(),
+  closeSignInModal: jest.fn(),
 };
 const readingRoomMessage =
   /You have access to this Work because you are in the reading room/i;

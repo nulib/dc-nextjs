@@ -16,16 +16,25 @@ const SearchPublicOnlyWorks = () => {
   const { query: q } = router;
 
   const switchId = `public-works-toggle`;
-  const checked =
-    urlFacets?.visibility && urlFacets?.visibility[0] === "Public";
+  const checked = Boolean(
+    urlFacets?.visibility && urlFacets?.visibility[0] === "Public",
+  );
 
   const handleCheckedChange = (value: boolean) => {
+    const nextQuery = { ...(q && q) };
     const newObj = { ...urlFacets };
-    newObj["visibility"] = value ? ["Public"] : [];
+
+    delete nextQuery["visibility"];
+
+    if (value) {
+      newObj["visibility"] = ["Public"];
+    } else {
+      delete newObj["visibility"];
+    }
 
     router.push({
       pathname: "/search",
-      query: { ...(q && q), ...newObj },
+      query: { ...nextQuery, ...newObj },
     });
   };
 

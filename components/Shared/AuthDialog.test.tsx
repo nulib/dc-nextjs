@@ -15,6 +15,7 @@ jest.mock("@/lib/dc-api", () => ({
 
 const defaultUserContext: UserContextType = {
   user: null,
+  isLoading: false,
   isSignInModalOpen: true,
   openSignInModal: jest.fn(() => {
     defaultUserContext.isSignInModalOpen = true;

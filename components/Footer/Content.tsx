@@ -5,12 +5,16 @@ import {
   FooterIcon,
   FooterList,
   FooterStyled,
+  FooterVersion,
   Social,
 } from "./Footer.styled";
+import { getBuildInfo } from "@/lib/build-info";
 
 import React from "react";
 
 export const FooterContent: React.FC = () => {
+  const { version, releaseUrl, commitUrl, shortSha, label } = getBuildInfo();
+
   const currentYear = () => {
     const today = new Date();
     return today.getFullYear();
@@ -208,6 +212,26 @@ export const FooterContent: React.FC = () => {
           language, or opinions that are offensive and may not be appropriate
           for all audiences.
         </p>
+        <FooterVersion
+          as={releaseUrl ? "a" : "span"}
+          href={releaseUrl ?? undefined}
+        >
+          v{version}
+          {label && (
+            <>
+              {` (${label}`}
+              {commitUrl && shortSha ? (
+                <>
+                  {" "}
+                  <a href={commitUrl}>{shortSha}</a>
+                </>
+              ) : (
+                shortSha && ` ${shortSha}`
+              )}
+              {")"}
+            </>
+          )}
+        </FooterVersion>
       </FooterCopyright>
     </FooterStyled>
   );

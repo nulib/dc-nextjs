@@ -79,9 +79,13 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
   onPageChange,
 }) => {
   const groups = groupByWork(results);
-  const { user } = useContext(UserContext);
-  const isRestricted = (visibility: string) =>
-    !(user?.scopes?.includes(`read:${visibility}`) ?? false);
+  const { user, isLoading } = useContext(UserContext);
+  const isRestricted = (visibility: string) => {
+    if (visibility === "Public") return false;
+    if (isLoading) return true;
+
+    return !(user?.scopes?.includes(`read:${visibility}`) ?? false);
+  };
 
   return (
     <Wrapper>
