@@ -4,11 +4,13 @@ import { apiGetRequest, apiPostRequest } from "@/lib/dc-api";
 import { ApiSearchResponse } from "@/types/api/response";
 import type { Work } from "@nulib/dcapi-types";
 
+type NavPlaceLabel = string | Record<string, string[]>;
+
 export type NavPlace = {
   coordinates?: [number, number];
   id?: string;
-  label?: string;
-  summary?: string;
+  label?: NavPlaceLabel;
+  summary?: NavPlaceLabel;
 };
 
 export type GeoGuessWork = Work & {
@@ -136,30 +138,14 @@ function getDcApiEndpoint() {
   return process.env.NEXT_PUBLIC_DCAPI_ENDPOINT || DCAPI_PRODUCTION_ENDPOINT;
 }
 
-export function normalizeCoordinate(value: number, min: number, max: number) {
-  if (Number.isNaN(value)) return min;
-  return Math.min(Math.max(value, min), max);
-}
+function getDisplayLabel(value?: NavPlaceLabel) {
+  if (typeof value === "string") return value;
+  if (!value || typeof value !== "object") return "";
 
-export function getPointFromMapClick(
-  clientX: number,
-  clientY: number,
-  rect: Pick<DOMRect, "height" | "left" | "top" | "width">,
-) {
-  const x = normalizeCoordinate((clientX - rect.left) / rect.width, 0, 1);
-  const y = normalizeCoordinate((clientY - rect.top) / rect.height, 0, 1);
-
-  return {
-    latitude: Number((90 - y * 180).toFixed(5)),
-    longitude: Number((x * 360 - 180).toFixed(5)),
-  };
-}
-
-export function getMapPosition(longitude: number, latitude: number) {
-  return {
-    x: `${((normalizeCoordinate(longitude, -180, 180) + 180) / 360) * 100}%`,
-    y: `${((90 - normalizeCoordinate(latitude, -90, 90)) / 180) * 100}%`,
-  };
+  const values = Object.values(value).find(
+    (entry) => Array.isArray(entry) && entry.length,
+  );
+  return values?.[0] || "";
 }
 
 export function formatCoordinate(value: number, axis: "lat" | "lng") {
@@ -172,14 +158,20 @@ export function formatCoordinate(value: number, axis: "lat" | "lng") {
 export function getKnownPlaces(work?: GeoGuessWork | null) {
   if (!work?.nav_place || !Array.isArray(work.nav_place)) return [];
 
-  return work.nav_place.filter((place) => {
-    const coordinates = place.coordinates || [];
-    return (
-      coordinates.length >= 2 &&
-      typeof coordinates[0] === "number" &&
-      typeof coordinates[1] === "number"
-    );
-  });
+  return work.nav_place
+    .filter((place) => {
+      const coordinates = place.coordinates || [];
+      return (
+        coordinates.length >= 2 &&
+        typeof coordinates[0] === "number" &&
+        typeof coordinates[1] === "number"
+      );
+    })
+    .map((place) => ({
+      ...place,
+      label: getDisplayLabel(place.label),
+      summary: getDisplayLabel(place.summary),
+    }));
 }
 
 export function getDistanceKm(
@@ -463,8 +455,10 @@ function normalizeNavPlace(place: NavPlace): NavPlace | null {
 
   return {
     ...(place.id && { id: place.id }),
-    ...(place.label && { label: place.label }),
-    ...(place.summary && { summary: place.summary }),
+    ...(place.label && { label: getDisplayLabel(place.label) }),
+    ...(place.summary && {
+      summary: getDisplayLabel(place.summary),
+    }),
     coordinates: [coordinates[0], coordinates[1]],
   };
 }
@@ -721,133 +715,6 @@ export function buildGeoGuessSubmissionFromGcps(
     title: work.title || work.accession_number || "Untitled work",
     workId: work.id,
   };
-}
-
-export type AffineTransform = {
-  a: number;
-  b: number;
-  c: number;
-  d: number;
-  e: number;
-  f: number;
-};
-
-function det3(m: number[][]) {
-  return (
-    m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
-    m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
-    m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
-  );
-}
-
-function solve3x3(
-  matrix: number[][],
-  rhs: number[],
-): [number, number, number] | null {
-  const detM = det3(matrix);
-  if (Math.abs(detM) < 1e-12) return null;
-
-  const m0 = matrix.map((row, i) => [rhs[i], row[1], row[2]]);
-  const m1 = matrix.map((row, i) => [row[0], rhs[i], row[2]]);
-  const m2 = matrix.map((row, i) => [row[0], row[1], rhs[i]]);
-
-  return [det3(m0) / detM, det3(m1) / detM, det3(m2) / detM];
-}
-
-export function computeAffineFromGcps(
-  pairs: GcpPair[],
-): AffineTransform | null {
-  if (pairs.length < 2) return null;
-
-  if (pairs.length === 2) {
-    const [p1, p2] = pairs;
-    const dx = p2.resourceCoords[0] - p1.resourceCoords[0];
-    const dy = p2.resourceCoords[1] - p1.resourceCoords[1];
-    if (Math.abs(dx) < 1e-9 || Math.abs(dy) < 1e-9) return null;
-
-    const a = (p2.geoCoords[0] - p1.geoCoords[0]) / dx;
-    const e = (p2.geoCoords[1] - p1.geoCoords[1]) / dy;
-    const c = p1.geoCoords[0] - a * p1.resourceCoords[0];
-    const f = p1.geoCoords[1] - e * p1.resourceCoords[1];
-    return { a, b: 0, c, d: 0, e, f };
-  }
-
-  let sxx = 0;
-  let sxy = 0;
-  let syy = 0;
-  let sx = 0;
-  let sy = 0;
-  let sxlon = 0;
-  let sylon = 0;
-  let slon = 0;
-  let sxlat = 0;
-  let sylat = 0;
-  let slat = 0;
-  const n = pairs.length;
-
-  for (const pair of pairs) {
-    const [x, y] = pair.resourceCoords;
-    const [lon, lat] = pair.geoCoords;
-    sxx += x * x;
-    sxy += x * y;
-    syy += y * y;
-    sx += x;
-    sy += y;
-    sxlon += x * lon;
-    sylon += y * lon;
-    slon += lon;
-    sxlat += x * lat;
-    sylat += y * lat;
-    slat += lat;
-  }
-
-  const normalMatrix = [
-    [sxx, sxy, sx],
-    [sxy, syy, sy],
-    [sx, sy, n],
-  ];
-
-  const lonParams = solve3x3(normalMatrix, [sxlon, sylon, slon]);
-  const latParams = solve3x3(normalMatrix, [sxlat, sylat, slat]);
-
-  if (!lonParams || !latParams) return null;
-
-  return {
-    a: lonParams[0],
-    b: lonParams[1],
-    c: lonParams[2],
-    d: latParams[0],
-    e: latParams[1],
-    f: latParams[2],
-  };
-}
-
-export function projectImagePoint(
-  transform: AffineTransform,
-  x: number,
-  y: number,
-): [number, number] {
-  return [
-    transform.a * x + transform.b * y + transform.c,
-    transform.d * x + transform.e * y + transform.f,
-  ];
-}
-
-export function getImageFootprint(
-  pairs: GcpPair[],
-  dimensions: { height: number; width: number },
-): Array<[number, number]> | null {
-  const transform = computeAffineFromGcps(pairs);
-  if (!transform) return null;
-
-  const corners: Array<[number, number]> = [
-    [0, 0],
-    [dimensions.width, 0],
-    [dimensions.width, dimensions.height],
-    [0, dimensions.height],
-  ];
-
-  return corners.map(([x, y]) => projectImagePoint(transform, x, y));
 }
 
 const georeferenceGenres = [

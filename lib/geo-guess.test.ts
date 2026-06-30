@@ -5,29 +5,15 @@ import {
   buildGeoGuessSubmission,
   buildGeoGuessSubmissionFromGcps,
   buildGeoreferenceAnnotationFromGcps,
-  computeAffineFromGcps,
   getDistanceKm,
   getFileSetIdFromImageServiceUrl,
   getGeoGuessScore,
-  getImageFootprint,
-  getPointFromMapClick,
   searchPlaces,
 } from "@/lib/geo-guess";
 
 import { GcpPair, GeoGuessWork } from "@/lib/geo-guess";
 
 describe("geo guess helpers", () => {
-  it("converts a map click to longitude and latitude", () => {
-    const point = getPointFromMapClick(50, 25, {
-      height: 50,
-      left: 0,
-      top: 0,
-      width: 100,
-    });
-
-    expect(point).toEqual({ latitude: 0, longitude: 0 });
-  });
-
   it("calculates distance and score for a known nav place", () => {
     const work = {
       id: "abc123",
@@ -237,48 +223,6 @@ describe("geo guess helpers", () => {
     );
 
     expect(getGeoGuessScore(distance)).toBeGreaterThan(4990);
-  });
-
-  it("returns null when fewer than two control points are provided", () => {
-    expect(computeAffineFromGcps([])).toBeNull();
-    expect(
-      computeAffineFromGcps([
-        { id: "a", resourceCoords: [0, 0], geoCoords: [0, 0] },
-      ]),
-    ).toBeNull();
-  });
-
-  it("projects image corners through a least-squares affine fit", () => {
-    const pairs: GcpPair[] = [
-      { id: "a", resourceCoords: [0, 0], geoCoords: [-90, 45] },
-      { id: "b", resourceCoords: [100, 0], geoCoords: [-89, 45] },
-      { id: "c", resourceCoords: [100, 100], geoCoords: [-89, 44] },
-      { id: "d", resourceCoords: [0, 100], geoCoords: [-90, 44] },
-    ];
-
-    const footprint = getImageFootprint(pairs, { height: 100, width: 100 });
-
-    expect(footprint).not.toBeNull();
-    expect(footprint).toHaveLength(4);
-    const [topLeft, topRight, bottomRight, bottomLeft] = footprint!;
-    expect(topLeft[0]).toBeCloseTo(-90, 4);
-    expect(topLeft[1]).toBeCloseTo(45, 4);
-    expect(topRight[0]).toBeCloseTo(-89, 4);
-    expect(bottomRight[1]).toBeCloseTo(44, 4);
-    expect(bottomLeft[0]).toBeCloseTo(-90, 4);
-  });
-
-  it("handles two-point fits as axis-aligned scale and translation", () => {
-    const transform = computeAffineFromGcps([
-      { id: "a", resourceCoords: [0, 0], geoCoords: [-90, 45] },
-      { id: "b", resourceCoords: [200, 100], geoCoords: [-88, 43] },
-    ]);
-
-    expect(transform).not.toBeNull();
-    expect(transform!.b).toBe(0);
-    expect(transform!.d).toBe(0);
-    expect(transform!.a).toBeCloseTo(0.01, 6);
-    expect(transform!.e).toBeCloseTo(-0.02, 6);
   });
 
   it("extracts file set id from a IIIF image service URL", () => {

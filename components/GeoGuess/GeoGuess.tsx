@@ -28,19 +28,25 @@ import {
   formatCoordinate,
   getGeoGuessWork,
   getGeoGuessWorkCandidates,
-  getImageFootprint,
   getKnownPlaces,
   searchPlaces,
 } from "@/lib/geo-guess";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import type { CloverImageProps } from "@samvera/clover-iiif/image";
 import type { CloverMapProps, MapMarker } from "@samvera/clover-iiif/map";
 import Link from "next/link";
-import type OpenSeadragon from "openseadragon";
 import dynamic from "next/dynamic";
 import { styled } from "@/stitches.config";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/router";
+
+const CloverImage = dynamic<CloverImageProps>(
+  () => import("@samvera/clover-iiif/image"),
+  {
+    ssr: false,
+  },
+);
 
 const CloverMap = dynamic<CloverMapProps>(
   () => import("@samvera/clover-iiif/map"),
@@ -183,14 +189,6 @@ const GeoGuess: React.FC = () => {
 
   const canWarp = Boolean(liveAnnotation);
   const previewActive = mode === "georeference" && showPreview;
-
-  const footprint = useMemo(() => {
-    if (mode !== "georeference") return null;
-    if (!showPreview) return null;
-    if (canWarp) return null;
-    if (gcpPairs.length < 2 || !imageDimensions) return null;
-    return getImageFootprint(gcpPairs, imageDimensions);
-  }, [canWarp, gcpPairs, imageDimensions, mode, showPreview]);
 
   const loadRandomCandidates = useCallback(
     async (forMode: GeoGuessMode) => {
@@ -487,7 +485,6 @@ const GeoGuess: React.FC = () => {
         <GuessPanel>
           <MapFrame>
             <CloverGuessMap
-              footprint={footprint}
               gcpPairs={mode === "georeference" ? gcpPairs : []}
               isPendingPair={
                 mode === "georeference" && Boolean(pendingImageCoords)
@@ -508,14 +505,10 @@ const GeoGuess: React.FC = () => {
                   <input
                     type="checkbox"
                     checked={showPreview}
+                    disabled={!canWarp}
                     onChange={(event) => setShowPreview(event.target.checked)}
                   />
-                  <Half2Icon />{" "}
-                  {canWarp
-                    ? "Preview rectified image on map"
-                    : gcpPairs.length >= 3
-                      ? "Preview projected footprint on map"
-                      : "Preview footprint after one more point"}
+                  <Half2Icon /> Preview rectified image on map
                 </label>
               </FootprintToggle>
             )}
@@ -650,7 +643,6 @@ const GeoGuess: React.FC = () => {
 };
 
 type CloverGuessMapProps = {
-  footprint: Array<[number, number]> | null;
   gcpPairs: GcpPair[];
   isPendingPair: boolean;
   knownPlaces: ReturnType<typeof getKnownPlaces>;
@@ -674,21 +666,6 @@ type GeoGuessImageAnnotatorProps = {
   pendingImageCoords: [number, number] | null;
 };
 
-function getInfoJsonUrl(imageServiceUrl?: string) {
-  if (!imageServiceUrl) return "";
-  return `${imageServiceUrl.replace(/\/$/, "")}/info.json`;
-}
-
-function getTileSources(imageServiceUrl: string | undefined, imageUrl: string) {
-  const infoJsonUrl = getInfoJsonUrl(imageServiceUrl);
-  if (infoJsonUrl) return infoJsonUrl;
-
-  return {
-    type: "image",
-    url: imageUrl,
-  };
-}
-
 const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
   gcpPairs,
   imageServiceUrl,
@@ -699,139 +676,326 @@ const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
   onPointClick,
   pendingImageCoords,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<OpenSeadragon.Viewer | null>(null);
-  const osdRef = useRef<typeof OpenSeadragon | null>(null);
-  const overlayElemsRef = useRef<HTMLElement[]>([]);
+  const shellRef = useRef<HTMLDivElement>(null);
+  // CloverImage hands back OpenSeadragon's Viewer instance, but its callback is
+  // typed as `any` by Clover.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const viewerRef = useRef<any>(null);
+  const viewerCleanupRef = useRef<(() => void) | null>(null);
+  const markerFrameRef = useRef<number | null>(null);
+  const imagePointsRef = useRef<
+    Array<{
+      coords: [number, number];
+      isPending?: boolean;
+      label: number;
+    }>
+  >([]);
   const interactiveRef = useRef(interactive);
+  const onDimensionsRef = useRef(onDimensions);
+  const onPointClickRef = useRef(onPointClick);
+  const hasInitializedViewRef = useRef(false);
+  const hasRefreshedInitialTileRef = useRef(false);
   const [isReady, setIsReady] = useState(false);
+  const [isPanning, setIsPanning] = useState(false);
+  const [imagePointMarkers, setImagePointMarkers] = useState<
+    Array<{
+      key: string;
+      isPending: boolean;
+      label: number;
+      left: number;
+      top: number;
+    }>
+  >([]);
 
   useEffect(() => {
     interactiveRef.current = interactive;
   }, [interactive]);
 
   useEffect(() => {
-    let disposed = false;
-
-    (async () => {
-      if (!containerRef.current) return;
-
-      const { default: OSD } = await import("openseadragon");
-      if (disposed || !containerRef.current) return;
-
-      osdRef.current = OSD;
-
-      const viewer = OSD({
-        element: containerRef.current,
-        gestureSettingsMouse: { clickToZoom: false, dblClickToZoom: true },
-        gestureSettingsPen: { clickToZoom: false },
-        gestureSettingsTouch: { clickToZoom: false, dblClickToZoom: true },
-        maxZoomPixelRatio: 4,
-        showNavigationControl: false,
-        showNavigator: true,
-        tileSources: getTileSources(imageServiceUrl, imageUrl),
-      });
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      viewer.addHandler("canvas-click", (event: any) => {
-        if (!event.quick) return;
-        if (!interactiveRef.current) return;
-        event.preventDefaultAction = true;
-        const viewportPt = viewer.viewport.pointFromPixel(event.position);
-        const imagePt = viewer.viewport.viewportToImageCoordinates(viewportPt);
-        onPointClick([Math.round(imagePt.x), Math.round(imagePt.y)]);
-      });
-
-      viewer.addHandler("open", () => {
-        const tiledImage = viewer.world.getItemAt(0);
-        if (!tiledImage) return;
-        const size = tiledImage.getContentSize();
-        if (size.x > 0 && size.y > 0) {
-          onDimensions({ height: size.y, width: size.x });
-        }
-      });
-
-      viewerRef.current = viewer;
-      setIsReady(true);
-    })();
-
-    return () => {
-      disposed = true;
-      viewerRef.current?.destroy();
-      viewerRef.current = null;
-      osdRef.current = null;
-      setIsReady(false);
-    };
-  }, [imageServiceUrl, imageUrl, onDimensions, onPointClick]);
+    onDimensionsRef.current = onDimensions;
+  }, [onDimensions]);
 
   useEffect(() => {
-    const viewer = viewerRef.current;
-    const OSD = osdRef.current;
-    if (!viewer || !OSD || !isReady) return;
+    onPointClickRef.current = onPointClick;
+  }, [onPointClick]);
 
-    overlayElemsRef.current.forEach((el) => viewer.removeOverlay(el));
-    overlayElemsRef.current = [];
-
-    const markers: Array<{
-      coords: [number, number];
-      pending: boolean;
-      num: number;
-    }> = [
+  useEffect(() => {
+    imagePointsRef.current = [
       ...gcpPairs.map((p, i) => ({
         coords: p.resourceCoords,
-        pending: false,
-        num: i + 1,
+        label: i + 1,
       })),
       ...(pendingImageCoords
         ? [
             {
               coords: pendingImageCoords,
-              pending: true,
-              num: gcpPairs.length + 1,
+              isPending: true,
+              label: gcpPairs.length + 1,
             },
           ]
         : []),
     ];
+  }, [gcpPairs, pendingImageCoords]);
 
-    markers.forEach(({ coords, pending, num }) => {
-      const viewportPt = viewer.viewport.imageToViewportCoordinates(
-        coords[0],
-        coords[1],
-      );
-      const el = document.createElement("div");
-      el.textContent = String(num);
-      Object.assign(el.style, {
-        alignItems: "center",
-        background: pending ? "#f59e0b" : "#4e2a84",
-        border: "2px solid #ffffff",
-        borderRadius: "50%",
-        boxSizing: "border-box",
-        color: "#ffffff",
-        display: "flex",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        fontSize: "11px",
-        fontWeight: "bold",
-        height: "22px",
-        justifyContent: "center",
-        lineHeight: "1",
-        pointerEvents: "none",
-        textAlign: "center",
-        width: "22px",
-      });
-      viewer.addOverlay({
-        element: el,
-        location: viewportPt,
-        placement: OSD.Placement.CENTER,
-      });
-      overlayElemsRef.current.push(el);
+  const updateImagePointMarkers = useCallback(() => {
+    const viewer = viewerRef.current;
+    const viewerElement = viewer?.element as HTMLElement | undefined;
+    if (!viewer || !viewerElement || !viewer.viewport) return;
+
+    const item = viewer.world?.getItemAt?.(0);
+    if (!item) {
+      setImagePointMarkers([]);
+      return;
+    }
+
+    const viewerRect = viewerElement.getBoundingClientRect();
+    const shellRect = shellRef.current?.getBoundingClientRect();
+    const offsetLeft = shellRect ? viewerRect.left - shellRect.left : 0;
+    const offsetTop = shellRect ? viewerRect.top - shellRect.top : 0;
+
+    const nextMarkers = imagePointsRef.current
+      .map((point, index) => {
+        if (!point.coords?.length) return null;
+
+        const viewportPoint = item.imageToViewportCoordinates
+          ? item.imageToViewportCoordinates(
+              point.coords[0],
+              point.coords[1],
+              true,
+            )
+          : viewer.viewport.imageToViewportCoordinates(
+              point.coords[0],
+              point.coords[1],
+            );
+        const pixelPoint = viewer.viewport.pixelFromPoint(viewportPoint, true);
+
+        return {
+          key: `${point.label || index + 1}-${point.coords[0]}-${point.coords[1]}-${point.isPending ? "pending" : "saved"}`,
+          isPending: Boolean(point.isPending),
+          label: point.label || index + 1,
+          left: pixelPoint.x + offsetLeft,
+          top: pixelPoint.y + offsetTop,
+        };
+      })
+      .filter(Boolean) as typeof imagePointMarkers;
+
+    setImagePointMarkers((currentMarkers) => {
+      const hasChanged =
+        currentMarkers.length !== nextMarkers.length ||
+        currentMarkers.some((marker, index) => {
+          const nextMarker = nextMarkers[index];
+          return (
+            marker.key !== nextMarker.key ||
+            marker.label !== nextMarker.label ||
+            marker.isPending !== nextMarker.isPending ||
+            Math.abs(marker.left - nextMarker.left) > 0.5 ||
+            Math.abs(marker.top - nextMarker.top) > 0.5
+          );
+        });
+
+      return hasChanged ? nextMarkers : currentMarkers;
     });
-  }, [gcpPairs, pendingImageCoords, isReady]);
+  }, []);
+
+  const scheduleImagePointMarkerUpdate = useCallback(() => {
+    if (markerFrameRef.current) return;
+
+    markerFrameRef.current = window.requestAnimationFrame(() => {
+      markerFrameRef.current = null;
+      updateImagePointMarkers();
+    });
+  }, [updateImagePointMarkers]);
+
+  const refreshViewer = useCallback(() => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    viewer.forceResize?.();
+    viewer.viewport?.applyConstraints?.();
+    viewer.forceRedraw?.();
+  }, []);
+
+  const queueViewerRefresh = useCallback(() => {
+    window.requestAnimationFrame(() => {
+      refreshViewer();
+      window.requestAnimationFrame(refreshViewer);
+    });
+    window.setTimeout(refreshViewer, 0);
+    window.setTimeout(refreshViewer, 100);
+    window.setTimeout(refreshViewer, 300);
+  }, [refreshViewer]);
+
+  const handleViewerReady = useCallback(() => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    setIsReady(true);
+    scheduleImagePointMarkerUpdate();
+
+    if (hasInitializedViewRef.current) return;
+    if (!viewer.world?.getItemCount?.()) return;
+    hasInitializedViewRef.current = true;
+
+    viewer.viewport?.goHome?.(true);
+    queueViewerRefresh();
+
+    const item = viewer.world?.getItemAt?.(0);
+    const size = item?.getContentSize?.();
+    if (size?.x && size?.y) {
+      onDimensionsRef.current({
+        height: Math.round(size.y),
+        width: Math.round(size.x),
+      });
+    }
+  }, [queueViewerRefresh, scheduleImagePointMarkerUpdate]);
+
+  const handleOpenSeadragonCallback = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (viewer: any) => {
+      if (!viewer || viewerRef.current === viewer) return;
+
+      viewerCleanupRef.current?.();
+      viewerRef.current = viewer;
+      hasInitializedViewRef.current = false;
+      hasRefreshedInitialTileRef.current = false;
+      setIsReady(false);
+      setIsPanning(false);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handleCanvasClick = (event: any) => {
+        if (!interactiveRef.current) return;
+        if (event.quick === false) return;
+
+        event.preventDefaultAction = true;
+        const viewportPoint = viewer.viewport.pointFromPixel(event.position);
+        const imagePoint =
+          viewer.viewport.viewportToImageCoordinates(viewportPoint);
+
+        onPointClickRef.current([
+          Number(imagePoint.x.toFixed(2)),
+          Number(imagePoint.y.toFixed(2)),
+        ]);
+      };
+
+      const handlePanning = () => setIsPanning(true);
+      const handlePanningEnd = () => setIsPanning(false);
+      const handleInitialTileLoaded = () => {
+        handleViewerReady();
+        if (hasRefreshedInitialTileRef.current) return;
+        hasRefreshedInitialTileRef.current = true;
+        queueViewerRefresh();
+        scheduleImagePointMarkerUpdate();
+      };
+      const handleViewportUpdate = () => scheduleImagePointMarkerUpdate();
+
+      viewer.addHandler("canvas-click", handleCanvasClick);
+      viewer.addHandler("canvas-drag", handlePanning);
+      viewer.addHandler("canvas-drag-end", handlePanningEnd);
+      viewer.addHandler("canvas-release", handlePanningEnd);
+      viewer.addHandler("canvas-exit", handlePanningEnd);
+      viewer.addHandler("open", handleViewerReady);
+      viewer.addHandler("tile-loaded", handleInitialTileLoaded);
+      viewer.addHandler("animation", handleViewportUpdate);
+      viewer.addHandler("animation-finish", handleViewportUpdate);
+      viewer.addHandler("resize", handleViewportUpdate);
+      viewer.addHandler("update-viewport", handleViewportUpdate);
+      viewer.world?.addHandler("add-item", handleViewerReady);
+
+      viewerCleanupRef.current = () => {
+        viewer.removeHandler("canvas-click", handleCanvasClick);
+        viewer.removeHandler("canvas-drag", handlePanning);
+        viewer.removeHandler("canvas-drag-end", handlePanningEnd);
+        viewer.removeHandler("canvas-release", handlePanningEnd);
+        viewer.removeHandler("canvas-exit", handlePanningEnd);
+        viewer.removeHandler("open", handleViewerReady);
+        viewer.removeHandler("tile-loaded", handleInitialTileLoaded);
+        viewer.removeHandler("animation", handleViewportUpdate);
+        viewer.removeHandler("animation-finish", handleViewportUpdate);
+        viewer.removeHandler("resize", handleViewportUpdate);
+        viewer.removeHandler("update-viewport", handleViewportUpdate);
+        viewer.world?.removeHandler("add-item", handleViewerReady);
+      };
+
+      if (viewer.world?.getItemCount?.() > 0) handleViewerReady();
+      queueViewerRefresh();
+      scheduleImagePointMarkerUpdate();
+    },
+    [handleViewerReady, queueViewerRefresh, scheduleImagePointMarkerUpdate],
+  );
+
+  useEffect(() => {
+    setIsReady(false);
+    setIsPanning(false);
+    setImagePointMarkers([]);
+    hasInitializedViewRef.current = false;
+    hasRefreshedInitialTileRef.current = false;
+    viewerRef.current?.clearOverlays?.();
+  }, [imageServiceUrl, imageUrl]);
+
+  useEffect(() => {
+    scheduleImagePointMarkerUpdate();
+  }, [gcpPairs, pendingImageCoords, scheduleImagePointMarkerUpdate]);
+
+  useEffect(
+    () => () => {
+      viewerCleanupRef.current?.();
+      if (markerFrameRef.current) {
+        window.cancelAnimationFrame(markerFrameRef.current);
+      }
+      viewerCleanupRef.current = null;
+      markerFrameRef.current = null;
+      viewerRef.current = null;
+    },
+    [],
+  );
+
+  const cloverImageConfig = useMemo(
+    () => ({
+      gestureSettingsMouse: {
+        clickToZoom: false,
+        dblClickToZoom: true,
+        dragToPan: true,
+        scrollToZoom: true,
+      },
+      gestureSettingsPen: {
+        clickToZoom: false,
+        dragToPan: true,
+      },
+      gestureSettingsTouch: {
+        clickToZoom: false,
+        dblClickToZoom: true,
+        dragToPan: true,
+      },
+      immediateRender: true,
+      maxZoomPixelRatio: 4,
+      showNavigationControl: false,
+      showNavigator: true,
+      showRotationControl: false,
+    }),
+    [],
+  );
+
+  const zoomBy = (factor: number) => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    viewer.viewport?.zoomBy?.(factor);
+    viewer.viewport?.applyConstraints?.();
+    scheduleImagePointMarkerUpdate();
+  };
+
+  const goHome = () => {
+    viewerRef.current?.viewport?.goHome?.();
+    scheduleImagePointMarkerUpdate();
+  };
+
+  const src = imageServiceUrl?.replace(/\/$/, "") || imageUrl;
 
   return (
-    <ImageAnnotatorShell>
+    <ImageAnnotatorShell ref={shellRef}>
       <ImageAnnotatorStatus data-interactive={interactive}>
         <span>
-          {interactive ? <Crosshair2Icon /> : <CameraIcon />}
+          {interactive ? <Crosshair2Icon /> : <CameraIcon />}{" "}
           {isReady
             ? interactive
               ? "Click image to place a control point"
@@ -843,7 +1007,7 @@ const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
             type="button"
             aria-label="Zoom in"
             disabled={!isReady}
-            onClick={() => viewerRef.current?.viewport.zoomBy(1.4)}
+            onClick={() => zoomBy(1.4)}
           >
             <ZoomInIcon />
           </button>
@@ -851,7 +1015,7 @@ const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
             type="button"
             aria-label="Zoom out"
             disabled={!isReady}
-            onClick={() => viewerRef.current?.viewport.zoomBy(1 / 1.4)}
+            onClick={() => zoomBy(1 / 1.4)}
           >
             <ZoomOutIcon />
           </button>
@@ -859,19 +1023,45 @@ const GeoGuessImageAnnotator: React.FC<GeoGuessImageAnnotatorProps> = ({
             type="button"
             aria-label="Reset view"
             disabled={!isReady}
-            onClick={() => viewerRef.current?.viewport.goHome()}
+            onClick={goHome}
           >
             <EnterFullScreenIcon />
           </button>
         </ZoomControls>
       </ImageAnnotatorStatus>
-      <div ref={containerRef} aria-label={label} />
+      <ImageAnnotatorCanvas
+        data-panning={isPanning}
+        data-interactive={interactive}
+      >
+        <CloverImage
+          instanceId="geo-guess-image-coordinate-picker"
+          isTiledImage={Boolean(imageServiceUrl)}
+          label={label}
+          openSeadragonCallback={handleOpenSeadragonCallback}
+          openSeadragonConfig={cloverImageConfig}
+          src={src}
+        />
+        <ImagePointLayer aria-hidden="true">
+          {isReady &&
+            imagePointMarkers.map((marker) => (
+              <ImagePointMarker
+                key={marker.key}
+                data-pending={marker.isPending}
+                style={{
+                  left: `${marker.left}px`,
+                  top: `${marker.top}px`,
+                }}
+              >
+                {marker.label}
+              </ImagePointMarker>
+            ))}
+        </ImagePointLayer>
+      </ImageAnnotatorCanvas>
     </ImageAnnotatorShell>
   );
 };
 
 const CloverGuessMap: React.FC<CloverGuessMapProps> = ({
-  footprint,
   gcpPairs,
   isPendingPair,
   knownPlaces,
@@ -904,27 +1094,6 @@ const CloverGuessMap: React.FC<CloverGuessMapProps> = ({
       }
     : defaultCenter;
 
-  const geoJson = useMemo<CloverMapProps["geoJson"]>(() => {
-    if (!footprint || footprint.length < 3) return null;
-
-    const coordinates = [...footprint];
-    const [firstLon, firstLat] = coordinates[0];
-    const [lastLon, lastLat] = coordinates[coordinates.length - 1];
-
-    if (firstLon !== lastLon || firstLat !== lastLat) {
-      coordinates.push([firstLon, firstLat]);
-    }
-
-    return {
-      type: "Feature",
-      properties: { label: "Projected image footprint" },
-      geometry: {
-        type: "Polygon",
-        coordinates: [coordinates],
-      },
-    };
-  }, [footprint]);
-
   const markers = useMemo<MapMarker[]>(
     () => [
       ...gcpPairs.map((pair, i) => ({
@@ -953,8 +1122,7 @@ const CloverGuessMap: React.FC<CloverGuessMapProps> = ({
             }))
             .filter(
               (place) =>
-                !Number.isNaN(place.latitude) &&
-                !Number.isNaN(place.longitude),
+                !Number.isNaN(place.latitude) && !Number.isNaN(place.longitude),
             )
         : []),
     ],
@@ -987,13 +1155,12 @@ const CloverGuessMap: React.FC<CloverGuessMapProps> = ({
       <CloverMap
         center={center}
         fitToData={!mapFocus}
-        geoJson={geoJson}
         georefAnnotation={warpAnnotation}
         imageOverlayOpacity={0.85}
         markers={markers}
         onMapClick={handleMapClick}
         showControlPoints={false}
-        showImageOverlay={Boolean(warpAnnotation)}
+        showImageOverlay
         useCrosshairCursor={useCrosshairCursor}
       />
     </CloverMapShell>
@@ -1210,6 +1377,7 @@ const ImageAnnotatorShell = styled("div", {
   gridTemplateRows: "auto minmax(360px, 68vh)",
   height: "min(78vh, 860px)",
   minHeight: "460px",
+  position: "relative",
   width: "100%",
 
   "@sm": {
@@ -1220,11 +1388,71 @@ const ImageAnnotatorShell = styled("div", {
   "> div:last-child": {
     background: "$black",
     height: "100%",
+    position: "relative",
     width: "100%",
   },
 
   ".openseadragon-container": {
     background: "$black",
+  },
+});
+
+const ImageAnnotatorCanvas = styled("div", {
+  cursor: "grab",
+  overflow: "hidden",
+
+  '&[data-interactive="true"]': {
+    cursor: "crosshair",
+  },
+
+  '&[data-panning="true"]': {
+    cursor: "grabbing",
+  },
+
+  '&[data-interactive="true"] *': {
+    cursor: "crosshair !important",
+  },
+
+  '&[data-panning="true"] *': {
+    cursor: "grabbing !important",
+  },
+
+  "> div:first-child": {
+    height: "100%",
+    width: "100%",
+  },
+});
+
+const ImagePointLayer = styled("div", {
+  inset: "0",
+  pointerEvents: "none",
+  position: "absolute",
+  zIndex: "1",
+});
+
+const ImagePointMarker = styled("div", {
+  alignItems: "center",
+  background: "$purple",
+  border: "2px solid $white",
+  borderRadius: "50%",
+  boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.35)",
+  boxSizing: "border-box",
+  color: "$white",
+  display: "flex",
+  fontFamily: "$northwesternSansBold",
+  fontSize: "11px",
+  fontVariantNumeric: "tabular-nums",
+  height: "22px",
+  justifyContent: "center",
+  lineHeight: "1",
+  pointerEvents: "none",
+  position: "absolute",
+  textAlign: "center",
+  transform: "translate(-50%, -50%)",
+  width: "22px",
+
+  '&[data-pending="true"]': {
+    background: "#f59e0b",
   },
 });
 
