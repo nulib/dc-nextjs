@@ -120,7 +120,6 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
   const [embedHTMLOpen, setEmbedHTMLOpen] = React.useState(false);
   const [color, setColor] = React.useState("default");
-  const [width, setWidth] = React.useState(3000);
 
   const iiifImageInfo = `${getInfoResponse(item)}/info.json`;
 
@@ -139,24 +138,27 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
     },
   ];
 
-  const widths = [
-    {
-      label: "3000px - 100%",
-      value: 3000,
-    },
-    {
-      label: "1800px - 50%",
-      value: 1800,
-    },
-    {
-      label: "900px - 25%",
-      value: 900,
-    },
-    {
-      label: "450px - 12.5%",
-      value: 450,
-    },
-  ];
+  // Cap whichever dimension is longer, so a narrow-but-tall image doesn't
+  // download/embed at its full (potentially huge) height.
+  const isPortrait = !!(item.width && item.height && item.height > item.width);
+  const longestDimension = isPortrait ? item.height : item.width;
+
+  const toSizeParam = (value: number) => {
+    const upscalePrefix = longestDimension ? "" : "^";
+    return isPortrait
+      ? `${upscalePrefix},${value}`
+      : `${upscalePrefix}${value},`;
+  };
+
+  const widths = [3000, 1800, 900, 450]
+    .filter((value) => !longestDimension || value <= longestDimension)
+    .map((value) => ({ label: `${value}px`, value }));
+
+  if (widths.length === 0 && longestDimension) {
+    widths.push({ label: `${longestDimension}px`, value: longestDimension });
+  }
+
+  const [width, setWidth] = React.useState(widths[0]?.value ?? 3000);
 
   const thumbId = item.thumbnail ? item.thumbnail[0].id : "";
   const embedHTMLStringArray = thumbId?.split("/");
@@ -164,7 +166,7 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
     embedHTMLStringArray?.length && embedHTMLStringArray.length > 0;
 
   if (isValidStringArray) {
-    embedHTMLStringArray[7] = `${width},`;
+    embedHTMLStringArray[7] = toSizeParam(width);
     embedHTMLStringArray[9] = `${color}.jpg`;
   }
 
@@ -185,7 +187,10 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         : "nul_fileset";
 
     const infoResponse = getInfoResponse(item);
-    const imageUrl = `${infoResponse}/full/3000,/0/default.jpg`;
+    const downloadSize = longestDimension
+      ? Math.min(3000, longestDimension)
+      : 3000;
+    const imageUrl = `${infoResponse}/full/${toSizeParam(downloadSize)}/0/default.jpg`;
     const response = await makeBlob(imageUrl, { credentials: "include" });
 
     if (!response || response.error) {
