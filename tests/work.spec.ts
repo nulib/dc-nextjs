@@ -539,7 +539,7 @@ test.describe("Work page component", async () => {
     await expect(embedHtml).toBeVisible();
 
     await expect(
-      downloadEmbedItems.getByText("Copy 3000px - 100%1800px - 50"),
+      downloadEmbedItems.getByText("Copy 3000px1800px900"),
     ).toBeVisible();
 
     await downloadEmbedItems.getByRole("combobox").nth(0).selectOption("900");
