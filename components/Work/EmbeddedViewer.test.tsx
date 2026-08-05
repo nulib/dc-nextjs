@@ -34,11 +34,30 @@ describe("EmbeddedViewer", () => {
     expect(screen.getByText("WorkViewerWrapper")).toBeInTheDocument();
   });
 
-  it("renders WorkRestrictedDisplay when userCanRead is false", () => {
+  it("renders WorkRestrictedDisplay when userCanRead is false and loginRequired is true", () => {
     render(
-      <EmbeddedViewer work={mockWork} userCanRead={false} searchParams={{}} />,
+      <EmbeddedViewer
+        work={mockWork}
+        userCanRead={false}
+        loginRequired={true}
+        searchParams={{}}
+      />,
     );
 
     expect(screen.getByText("WorkRestrictedDisplay")).toBeInTheDocument();
+  });
+
+  it("renders neither the viewer nor WorkRestrictedDisplay while auth is still loading for a non-public work", () => {
+    render(
+      <EmbeddedViewer
+        work={mockWork}
+        userCanRead={false}
+        loginRequired={false}
+        searchParams={{}}
+      />,
+    );
+
+    expect(screen.queryByText("WorkViewerWrapper")).not.toBeInTheDocument();
+    expect(screen.queryByText("WorkRestrictedDisplay")).not.toBeInTheDocument();
   });
 });

@@ -8,12 +8,12 @@ import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 const EmbeddedViewer = ({
   work,
   userCanRead,
-  isAuthLoading,
+  loginRequired,
   searchParams,
 }: {
   work: Work;
   userCanRead?: boolean;
-  isAuthLoading?: boolean;
+  loginRequired?: boolean;
   searchParams: { [key: string]: string };
 }) => {
   const thumbnail = work?.thumbnail || "";
@@ -41,10 +41,6 @@ const EmbeddedViewer = ({
     showIIIFBadge: false,
     showTitle: showTitle === "true" ? true : false,
   };
-
-  const loginRequired =
-    (isAuthLoading && work?.visibility !== "Public") || // Work is not public and auth is loading
-    (work && !userCanRead); // Work is loaded and user cannot read
 
   return (
     <WorkProvider>
