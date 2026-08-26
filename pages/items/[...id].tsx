@@ -10,6 +10,7 @@ import { findCanvasIdByFileSetId } from "@/lib/iiif/manifest-helpers";
 import { useContext, useEffect, useRef, useState } from "react";
 
 import Container from "@/components/Shared/Container";
+import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
@@ -21,6 +22,7 @@ import { UserContext } from "@/context/user-context";
 import type { Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
+import { WorkPageWebMcpTools } from "@/components/WebMCP/Tools";
 import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { buildWorkDataLayer } from "@/lib/ga/data-layer";
@@ -56,7 +58,11 @@ const WorkPage: NextPage<WorkPageProps> = ({
     ? (router?.query["iiif-content"] as string)
     : work?.iiif_manifest;
 
-  const searchQuery = router?.query["q"] as string | undefined;
+  const searchQueryParam =
+    router?.query[CONTENT_SEARCH_PARAM] ?? router?.query["q"];
+  const searchQuery = Array.isArray(searchQueryParam)
+    ? searchQueryParam[0]
+    : searchQueryParam;
 
   const isReadingRoom = userAuthContext?.user?.isReadingRoom;
   const related = work ? getWorkSliders(work, isAI) : [];
@@ -132,6 +138,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
       >
         {!isLoading && work && manifest && (
           <WorkProvider initialState={{ manifest: manifest, work: work }}>
+            <WorkPageWebMcpTools enabled={userCanRead} />
             <ErrorBoundary FallbackComponent={ErrorFallback}>
               {iiifContent && userCanRead && (
                 <WorkViewerWrapper

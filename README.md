@@ -96,6 +96,32 @@ es-proxy
 
 The API supports both POST for searching and GET for Work and Collection items.
 
+## WebMCP site tools
+
+The public application registers page-aware tools through
+`document.modelContext.registerTool`. These tools reuse the same React state,
+navigation, authenticated API client, and reading-room authorization as the
+human interface. The remote MCP server remains in `dc-api-v2` for integrations
+that operate independently of an open webpage.
+
+Available tools change with the page:
+
+- Every page: open a works search.
+- Search results: read the current query, filters, pagination, and visible results.
+- All Collections: read or filter the visible collection list.
+- Collection details: read the current collection or search within it.
+- Authorized work details: read the current work and viewer selection, search
+  its textual content, or show similar works.
+
+WebMCP is progressive enhancement. The regular site continues to work when
+`document.modelContext` is unavailable. To test, use ChatGPT's in-app browser or
+Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled, then inspect
+the registered tools in Chrome DevTools under Application > WebMCP. See the
+[project WebMCP guide](docs/webmcp.md) for architecture and local testing, plus
+the [WebMCP specification](https://webmachinelearning.github.io/webmcp/) and
+[Chrome's WebMCP documentation](https://developer.chrome.com/docs/ai/webmcp)
+for the evolving platform APIs.
+
 ### Environment variables
 
 The API endpoint is an environment variable which is accessed in a local dev environment via the `miscellany` Git repo.

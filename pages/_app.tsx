@@ -7,6 +7,7 @@ import { LayoutProvider } from "@/context/layout-context";
 import { ObjectLiteral } from "@/types";
 import React from "react";
 import { SearchProvider } from "@/context/search-context";
+import { SiteWebMcpTools } from "@/components/WebMCP/Tools";
 import { User } from "@/types/context/user";
 import { UserProvider } from "@/context/user-context";
 import { defaultAIState } from "@/hooks/useGenerativeAISearchToggle";
@@ -77,6 +78,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
       <UserProvider>
         <SearchProvider>
           <LayoutProvider>
+            <SiteWebMcpTools />
             <style jsx global>{`
               :root {
               }

@@ -17,6 +17,7 @@ import {
   Wrapper,
 } from "@/components/Search/TranscriptionResults.styled";
 import { UserContext } from "@/context/user-context";
+import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import Figure from "../Figure/Figure";
 import TranscriptionPagination from "@/components/Search/TranscriptionPagination";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
@@ -93,7 +94,7 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
         <WorkGroup key={group.work_id}>
           <WorkHeader>
             <Link
-              href={`/items/${group.work_id}?q=${encodeURIComponent(searchTerm)}`}
+              href={`/items/${group.work_id}?${CONTENT_SEARCH_PARAM}=${encodeURIComponent(searchTerm)}`}
             >
               <Figure
                 data={{
@@ -115,7 +116,7 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
           <WorkFilesets>
             {group.fileSets.map((fs) => {
               const snippet = getSnippet(fs.annotation.content, searchTerm);
-              const href = `/items/${group.work_id}?q=${encodeURIComponent(searchTerm)}&canvas=${fs.id}&label=${encodeURIComponent(fs.label)}&snippet=${encodeURIComponent(snippet)}`;
+              const href = `/items/${group.work_id}?${CONTENT_SEARCH_PARAM}=${encodeURIComponent(searchTerm)}&canvas=${fs.id}&label=${encodeURIComponent(fs.label)}&snippet=${encodeURIComponent(snippet)}`;
               const restricted = isRestricted(fs.visibility);
               const thumbnailUrl = `${DCAPI_ENDPOINT}/file-sets/${fs.id}/thumbnail`;
 

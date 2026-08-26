@@ -9,6 +9,7 @@ import React, {
 import { StyledForm, StyledInput } from "@/components/Shared/Form.styled";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import CollectionItem from "@/components/Collection/Item/Item";
+import { CollectionListWebMcpTools } from "@/components/WebMCP/Tools";
 import Container from "@/components/Shared/Container";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
@@ -85,24 +86,36 @@ const CollectionList: NextPage<
     };
   }, [renderedCollectionsList, cacheCollectionsList, loadMoreCollections]);
 
+  const filterCollections = useCallback(
+    (query: string) => {
+      const normalizedQuery = query.trim().toLowerCase();
+      setSearch(query);
+
+      if (!normalizedQuery) {
+        setRenderedCollectionsList(entireCollectionsList);
+        return;
+      }
+
+      const filteredList = entireCollectionsList.filter((collection) =>
+        collection.title.toLowerCase().includes(normalizedQuery),
+      );
+      setRenderedCollectionsList(filteredList);
+    },
+    [entireCollectionsList],
+  );
+
   const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const search = event?.target?.value.toLowerCase();
-
-    if (!search) {
-      setRenderedCollectionsList(entireCollectionsList);
-      return;
-    }
-
-    const filteredList = entireCollectionsList.filter((collection) =>
-      collection.title.toLowerCase().includes(search),
-    );
-    setSearch(search);
-    setRenderedCollectionsList(filteredList);
+    filterCollections(event.target.value);
   };
 
   return (
     <>
+      <CollectionListWebMcpTools
+        collections={renderedCollectionsList}
+        filter={search}
+        onFilter={filterCollections}
+      />
       {/* Google Structured Data via JSON-LD */}
       <Head>
         <script
@@ -121,6 +134,7 @@ const CollectionList: NextPage<
           <StyledForm onSubmit={(e) => e.preventDefault()}>
             <StyledInput
               placeholder="Filter titles"
+              value={search}
               onChange={handleFilterChange}
             />
           </StyledForm>
