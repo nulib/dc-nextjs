@@ -1,11 +1,14 @@
 const { createServer } = require("https");
 const { parse } = require("url");
+const { loadEnvConfig } = require("@next/env");
 const next = require("next");
 const fs = require("fs");
 const port = 3000;
 const dev = process.env.NODE_ENV !== "production";
-// const hostname = "localhost"; // use in AWS dev environment
-const hostname = "local.dev.rdc.library.northwestern.edu"; // use for local development
+loadEnvConfig(__dirname, dev);
+// Set DEV_SERVER_HOSTNAME=localhost in .env.local for the AWS dev environment
+const hostname =
+  process.env.DEV_SERVER_HOSTNAME || "local.dev.rdc.library.northwestern.edu";
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 

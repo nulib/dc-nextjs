@@ -47,6 +47,14 @@ module.exports = withBundleAnalyzer({
     defaultLocale: "en",
     locales: ["en"],
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "Permissions-Policy", value: "tools=(self)" }],
+      },
+    ];
+  },
   images: {
     domains: [
       "dcapi.rdc.library.northwestern.edu",

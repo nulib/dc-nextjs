@@ -24,7 +24,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES6",
-    "types": ["jest"]
+    "types": ["jest", "webmcp-types"]
   },
   "exclude": ["node_modules"],
   "include": [
