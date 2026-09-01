@@ -29,6 +29,7 @@ import { ApiResponseBucket } from "@/types/api/response";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
+import { CollectionPageWebMcpTools } from "@/components/WebMCP/Tools";
 import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
 import Facts from "@/components/Shared/Facts";
@@ -177,6 +178,11 @@ const Collection: NextPage = () => {
       >
         {collection && (
           <>
+            <CollectionPageWebMcpTools
+              collection={collection}
+              subjects={metadata}
+              workTypeCounts={workTypeCounts}
+            />
             <HeroWrapper>
               <Hero collection={getHeroCollection(collection, isAI)} />
             </HeroWrapper>

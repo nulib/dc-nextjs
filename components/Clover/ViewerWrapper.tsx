@@ -7,9 +7,10 @@ import type {
   ViewerConfigOptions,
 } from "@samvera/clover-iiif";
 import Announcement from "@/components/Shared/Announcement";
+import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
@@ -47,6 +48,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   const { workDispatch, workState } = useWorkState();
   const { work } = workState;
   const router = useRouter();
+  const viewerWrapperRef = useRef<HTMLDivElement>(null);
 
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
@@ -71,7 +73,10 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
 
   const options: CloverViewerProps["options"] = useMemo(() => {
     const informationPanel = {
-      renderAbout: false,
+      open: Boolean(searchQuery),
+      // Clover only mounts the panel when About or annotations are available.
+      // About keeps the shell mounted for content searches with zero matches.
+      renderAbout: Boolean(searchQuery),
       renderToggle: false,
       renderContentSearch: true,
       defaultTab: searchQuery
@@ -95,11 +100,74 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     };
   }, [searchQuery, isAudioVideoWork, viewerOptions]);
 
-  const handleContentSearchCallback = (query: string) => {
-    const { canvas: _c, label: _l, snippet: _s, ...restQuery } = router.query;
-    router.replace({ query: { ...restQuery, q: query } }, undefined, {
-      shallow: true,
+  useEffect(() => {
+    const wrapper = viewerWrapperRef.current;
+    if (!searchQuery || !wrapper) return;
+
+    // Clover's InformationPanel resets its active tab to About in a mount
+    // effect (and whenever annotations are absent), which runs after the
+    // Search tab first appears in the DOM. Keep re-selecting Search until the
+    // user interacts with the viewer themselves, so manual tab changes stick.
+    const MAX_SELECTIONS = 10;
+    let selections = 0;
+    let isSelecting = false;
+
+    const selectContentSearchTab = () => {
+      if (isSelecting || selections >= MAX_SELECTIONS) return;
+      const tab = wrapper.querySelector<HTMLButtonElement>(
+        '[role="tab"][aria-controls$="-content-search"]',
+      );
+      if (!tab || tab.getAttribute("aria-selected") === "true") return;
+      selections += 1;
+      isSelecting = true;
+      try {
+        tab.click();
+      } finally {
+        isSelecting = false;
+      }
+    };
+
+    const observer = new MutationObserver(selectContentSearchTab);
+    const stop = () => {
+      observer.disconnect();
+      wrapper.removeEventListener("pointerdown", stop, true);
+      wrapper.removeEventListener("keydown", stop, true);
+    };
+
+    observer.observe(wrapper, {
+      attributeFilter: ["aria-selected"],
+      attributes: true,
+      childList: true,
+      subtree: true,
     });
+    wrapper.addEventListener("pointerdown", stop, true);
+    wrapper.addEventListener("keydown", stop, true);
+    selectContentSearchTab();
+
+    return stop;
+  }, [searchQuery]);
+
+  const handleContentSearchCallback = (query: string) => {
+    const {
+      canvas: _c,
+      label: _l,
+      q: _q,
+      snippet: _s,
+      [CONTENT_SEARCH_PARAM]: _contentSearch,
+      ...restQuery
+    } = router.query;
+    router.replace(
+      {
+        query: {
+          ...restQuery,
+          ...(query && { [CONTENT_SEARCH_PARAM]: query }),
+        },
+      },
+      undefined,
+      {
+        shallow: true,
+      },
+    );
   };
 
   const handleContentStateCallback = (contentState: string) => {
@@ -140,9 +208,15 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
 
   return (
     <Container containerType="wide">
-      <ViewerWrapperStyled data-testid="work-viewer-wrapper">
+      <ViewerWrapperStyled
+        data-testid="work-viewer-wrapper"
+        ref={viewerWrapperRef}
+      >
         {resolvedIiifContent && (
           <CloverViewer
+            // Clover treats its initial search and default tab as initialization
+            // state, so a new URL-driven query needs a fresh viewer instance.
+            key={`content-search:${searchQuery || ""}`}
             // @ts-ignore
             contentSearchCallback={handleContentSearchCallback}
             contentStateCallback={handleContentStateCallback}
