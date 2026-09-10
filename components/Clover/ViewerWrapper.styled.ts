@@ -5,7 +5,7 @@ import { styled } from "@/stitches.config";
 
 const ViewerWrapperStyled = styled("section", {
   ".clover-viewer-painting": {
-    background: "#f0f0f0",
+    background: "$gray6",
   },
 
   ".clover-viewer-header": {

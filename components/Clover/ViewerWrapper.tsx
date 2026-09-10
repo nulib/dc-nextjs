@@ -53,24 +53,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
 
-  const customTheme = {
-    colors: {
-      accent: "$purple",
-      accentAlt: "$purple120",
-      accentMuted: "$purple30",
-      primary: "$black",
-      primaryAlt: "$black80",
-      primaryMuted: "$black50",
-      secondary: "$white",
-      secondaryAlt: "$black10",
-      secondaryMuted: "$gray6",
-    },
-    fonts: {
-      display: "$northwesternDisplay",
-      sans: "$northwesternSans",
-    },
-  };
-
   const options: CloverViewerProps["options"] = useMemo(() => {
     const informationPanel = {
       open: Boolean(searchQuery),
@@ -85,7 +67,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       ...(isAudioVideoWork && { annotationTabLabel: "Chapters" }),
     };
     return {
-      canvasBackgroundColor: "$gray6",
       canvasHeight: "640px",
       informationPanel,
       openSeadragon: {
@@ -220,7 +201,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
             // @ts-ignore
             contentSearchCallback={handleContentSearchCallback}
             contentStateCallback={handleContentStateCallback}
-            customTheme={customTheme}
             iiifContent={resolvedIiifContent}
             iiifContentSearchQuery={
               searchQuery ? { q: searchQuery } : undefined
