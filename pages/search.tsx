@@ -33,6 +33,7 @@ import SearchResults from "@/components/Search/Results";
 import SearchResultsMessage from "@/components/Search/ResultsMessage";
 import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
+import { SearchPageWebMcpTools } from "@/components/WebMCP/Tools";
 import TranscriptionResults from "@/components/Search/TranscriptionResults";
 import {
   ViewToggle,
@@ -242,6 +243,11 @@ const SearchPage: NextPage = () => {
 
   return (
     <>
+      <SearchPageWebMcpTools
+        filters={urlFacets}
+        query={typeof q === "string" ? q : undefined}
+        results={searchResults}
+      />
       {/* Google Structured Data via JSON-LD */}
       <Head>
         <script

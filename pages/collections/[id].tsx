@@ -29,8 +29,10 @@ import { ApiResponseBucket } from "@/types/api/response";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
 import CollectionTabsOrganization from "@/components/Collection/Tabs/Organization";
+import { CollectionPageWebMcpTools } from "@/components/WebMCP/Tools";
 import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
+import { DC_URL } from "@/lib/constants/endpoints";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
@@ -152,6 +154,10 @@ const Collection: NextPage = () => {
     <>
       {collection && (
         <Head>
+          <link
+            rel="canonical"
+            href={`${DC_URL}/collections/${collection.id}`}
+          />
           <script
             id="app-ld-json"
             type="application/ld+json"
@@ -177,6 +183,11 @@ const Collection: NextPage = () => {
       >
         {collection && (
           <>
+            <CollectionPageWebMcpTools
+              collection={collection}
+              subjects={metadata}
+              workTypeCounts={workTypeCounts}
+            />
             <HeroWrapper>
               <Hero collection={getHeroCollection(collection, isAI)} />
             </HeroWrapper>

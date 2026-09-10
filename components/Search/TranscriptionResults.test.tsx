@@ -85,6 +85,19 @@ const renderTranscriptionResults = (
 };
 
 describe("TranscriptionResults component", () => {
+  it("links matches to Clover content search without populating global search", () => {
+    const { container } = renderTranscriptionResults([publicResult]);
+    const workLinks = Array.from(
+      container.querySelectorAll<HTMLAnchorElement>('a[href^="/items/"]'),
+    );
+
+    expect(workLinks).not.toHaveLength(0);
+    workLinks.forEach((link) => {
+      expect(link.href).toContain("content-search=match");
+      expect(link.href).not.toContain("?q=");
+    });
+  });
+
   it("does not render locks for public file sets when auth finishes without a user", () => {
     renderTranscriptionResults([publicResult], {
       ...defaultUserContext,
