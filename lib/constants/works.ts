@@ -1,5 +1,7 @@
 import { WorkMetadata } from "@/types/components/works";
 
+const CONTENT_SEARCH_PARAM = "content-search";
+
 const WORK_METADATA_LABELS: WorkMetadata[] = [
   {
     label: "Abstract",
@@ -104,4 +106,4 @@ const WORK_METADATA_LABELS: WorkMetadata[] = [
   },
 ];
 
-export { WORK_METADATA_LABELS };
+export { CONTENT_SEARCH_PARAM, WORK_METADATA_LABELS };
