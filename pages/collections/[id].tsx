@@ -32,6 +32,7 @@ import CollectionTabsOrganization from "@/components/Collection/Tabs/Organizatio
 import { CollectionPageWebMcpTools } from "@/components/WebMCP/Tools";
 import { Collection as CollectionType } from "@nulib/dcapi-types";
 import Container from "@/components/Shared/Container";
+import { DC_URL } from "@/lib/constants/endpoints";
 import Facts from "@/components/Shared/Facts";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
@@ -153,6 +154,10 @@ const Collection: NextPage = () => {
     <>
       {collection && (
         <Head>
+          <link
+            rel="canonical"
+            href={`${DC_URL}/collections/${collection.id}`}
+          />
           <script
             id="app-ld-json"
             type="application/ld+json"

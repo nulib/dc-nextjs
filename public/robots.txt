@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /search
+Sitemap: https://dc.library.northwestern.edu/sitemap.xml

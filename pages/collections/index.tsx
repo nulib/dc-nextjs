@@ -11,6 +11,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import CollectionItem from "@/components/Collection/Item/Item";
 import { CollectionListWebMcpTools } from "@/components/WebMCP/Tools";
 import Container from "@/components/Shared/Container";
+import { DC_URL } from "@/lib/constants/endpoints";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "@/components/Heading/Heading";
@@ -118,6 +119,7 @@ const CollectionList: NextPage<
       />
       {/* Google Structured Data via JSON-LD */}
       <Head>
+        <link rel="canonical" href={`${DC_URL}/collections`} />
         <script
           key="app-ld-json"
           id="app-ld-json"

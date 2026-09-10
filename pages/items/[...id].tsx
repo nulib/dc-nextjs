@@ -11,7 +11,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import Container from "@/components/Shared/Container";
 import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
-import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import { DCAPI_ENDPOINT, DC_URL } from "@/lib/constants/endpoints";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/Shared/ErrorFallback";
 import Head from "next/head";
@@ -117,6 +117,7 @@ const WorkPage: NextPage<WorkPageProps> = ({
       {/* Google Structured Data via JSON-LD */}
       {work && (
         <Head>
+          <link rel="canonical" href={`${DC_URL}/items/${work.id}`} />
           <script
             key="app-ld-json"
             id="app-ld-json"
