@@ -95,6 +95,23 @@ const ViewerWrapperStyled = styled("section", {
   },
 });
 
+const ContentSearchControls = styled("div", {
+  display: "flex",
+  justifyContent: "flex-end",
+  paddingBottom: "$gr2",
+
+  button: {
+    margin: "0",
+  },
+
+  svg: {
+    fill: "currentColor",
+    height: "$gr3",
+    marginRight: "$gr1",
+    width: "$gr3",
+  },
+});
+
 const AnnouncementContent = styled("div", {
   display: "flex",
   alignItems: "center",
@@ -107,4 +124,4 @@ const AnnouncementContent = styled("div", {
   },
 });
 
-export { AnnouncementContent, ViewerWrapperStyled };
+export { AnnouncementContent, ContentSearchControls, ViewerWrapperStyled };

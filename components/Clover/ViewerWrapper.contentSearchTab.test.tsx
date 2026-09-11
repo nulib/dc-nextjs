@@ -1,6 +1,9 @@
 import { act, fireEvent, render, screen, waitFor } from "@/test-utils";
 import React, { useEffect, useState } from "react";
 
+import type { Manifest } from "@iiif/presentation-3";
+import type { ViewerConfigOptions } from "@samvera/clover-iiif";
+import { WorkProvider } from "@/context/work-context";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 
 const ABOUT = "manifest-about";
@@ -11,15 +14,20 @@ const SEARCH = "manifest-content-search";
  * already selected, then a mount effect resets the active tab to About
  * (Clover does this while annotations have not loaded yet).
  */
-function mockFakeCloverViewer() {
-  const [active, setActive] = useState(SEARCH);
+function mockFakeCloverViewer({ options }: { options?: ViewerConfigOptions }) {
+  const [active, setActive] = useState(
+    options?.informationPanel?.defaultTab === SEARCH ? SEARCH : ABOUT,
+  );
+  const renderContentSearch =
+    options?.informationPanel?.renderContentSearch !== false;
+  const renderAbout = options?.informationPanel?.renderAbout;
   useEffect(() => {
-    setActive(ABOUT);
-  }, []);
+    if (renderAbout) setActive(ABOUT);
+  }, [renderAbout]);
 
   return (
     <div role="tablist">
-      {[ABOUT, SEARCH].map((value) => (
+      {[ABOUT, ...(renderContentSearch ? [SEARCH] : [])].map((value) => (
         <button
           key={value}
           role="tab"
@@ -49,6 +57,18 @@ jest.mock("next/dynamic", () => {
 
 const searchTab = () => screen.getByRole("tab", { name: "Search" });
 const aboutTab = () => screen.getByRole("tab", { name: "About" });
+const manifestWithContentSearch = {
+  id: "http://testing.com",
+  type: "Manifest",
+  label: { none: ["Test manifest"] },
+  items: [],
+  service: [
+    {
+      id: "http://testing.com/search",
+      type: "SearchService2",
+    },
+  ],
+} as unknown as Manifest;
 
 describe("WorkViewerWrapper content search tab", () => {
   it("keeps the Search tab selected after Clover resets it to About", async () => {
@@ -93,6 +113,40 @@ describe("WorkViewerWrapper content search tab", () => {
     await waitFor(() => {
       expect(aboutTab()).toHaveAttribute("aria-selected", "true");
     });
-    expect(searchTab()).toHaveAttribute("aria-selected", "false");
+    expect(
+      screen.queryByRole("tab", { name: "Search" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("offers content search only when the manifest advertises a service", async () => {
+    render(
+      <WorkProvider
+        initialState={{ manifest: manifestWithContentSearch, work: undefined }}
+      >
+        <WorkViewerWrapper iiifContent="http://testing.com" />
+      </WorkProvider>,
+    );
+
+    const button = screen.getByRole("button", {
+      name: "Search within document",
+    });
+    expect(
+      screen.queryByRole("tab", { name: "Search" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(searchTab()).toHaveAttribute("aria-selected", "true");
+    });
+    expect(button).not.toBeInTheDocument();
+  });
+
+  it("does not offer content search without a manifest service", () => {
+    render(<WorkViewerWrapper iiifContent="http://testing.com" />);
+
+    expect(
+      screen.queryByRole("button", { name: "Search within document" }),
+    ).not.toBeInTheDocument();
   });
 });

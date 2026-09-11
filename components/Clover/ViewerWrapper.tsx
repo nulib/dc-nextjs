@@ -1,5 +1,6 @@
 import {
   AnnouncementContent,
+  ContentSearchControls,
   ViewerWrapperStyled,
 } from "@/components/Clover/ViewerWrapper.styled";
 import type {
@@ -7,11 +8,13 @@ import type {
   ViewerConfigOptions,
 } from "@samvera/clover-iiif";
 import Announcement from "@/components/Shared/Announcement";
+import { Button } from "@nulib/design-system";
 import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import Container from "../Shared/Container";
-import { IconInfo } from "@/components/Shared/SVG/Icons";
-import React, { useEffect, useMemo, useRef } from "react";
+import { IconInfo, IconSearch } from "@/components/Shared/SVG/Icons";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
 
@@ -46,9 +49,18 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   viewerOptions = EMPTY_VIEWER_OPTIONS,
 }) => {
   const { workDispatch, workState } = useWorkState();
-  const { work } = workState;
+  const { manifest, work } = workState;
   const router = useRouter();
   const viewerWrapperRef = useRef<HTMLDivElement>(null);
+  const [renderContentSearch, setRenderContentSearch] = useState(
+    Boolean(searchQuery),
+  );
+
+  const hasContentSearch = Boolean(getContentSearchServiceUrl(manifest));
+
+  useEffect(() => {
+    if (searchQuery) setRenderContentSearch(true);
+  }, [searchQuery]);
 
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
@@ -60,8 +72,8 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       // About keeps the shell mounted for content searches with zero matches.
       renderAbout: Boolean(searchQuery),
       renderToggle: false,
-      renderContentSearch: true,
-      defaultTab: searchQuery
+      renderContentSearch,
+      defaultTab: renderContentSearch
         ? "manifest-content-search"
         : "manifest-annotations",
       ...(isAudioVideoWork && { annotationTabLabel: "Chapters" }),
@@ -79,7 +91,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       withCredentials: true,
       ...viewerOptions,
     };
-  }, [searchQuery, isAudioVideoWork, viewerOptions]);
+  }, [renderContentSearch, searchQuery, isAudioVideoWork, viewerOptions]);
 
   useEffect(() => {
     const wrapper = viewerWrapperRef.current;
@@ -193,11 +205,24 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
         data-testid="work-viewer-wrapper"
         ref={viewerWrapperRef}
       >
+        {hasContentSearch && !renderContentSearch && (
+          <ContentSearchControls>
+            <Button
+              aria-label="Search within document"
+              isLowercase
+              isPrimary
+              onClick={() => setRenderContentSearch(true)}
+            >
+              <IconSearch />
+              Search within document
+            </Button>
+          </ContentSearchControls>
+        )}
         {resolvedIiifContent && (
           <CloverViewer
             // Clover treats its initial search and default tab as initialization
             // state, so a new URL-driven query needs a fresh viewer instance.
-            key={`content-search:${searchQuery || ""}`}
+            key={`content-search:${renderContentSearch}:${searchQuery || ""}`}
             // @ts-ignore
             contentSearchCallback={handleContentSearchCallback}
             contentStateCallback={handleContentStateCallback}

@@ -10,6 +10,32 @@ interface MetadataInput {
   label: string;
   value: string[] | string;
 }
+
+interface ContentSearchService {
+  "@id"?: string;
+  "@type"?: string;
+  id?: string;
+  type?: string;
+}
+
+export const getContentSearchServiceUrl = (
+  manifest: Manifest | undefined,
+): string | undefined => {
+  const service = (
+    manifest as unknown as {
+      service?: ContentSearchService | ContentSearchService[];
+    }
+  )?.service;
+  const services = Array.isArray(service) ? service : service ? [service] : [];
+  const contentSearchService = services.find((candidate) =>
+    ["SearchService1", "SearchService2"].includes(
+      candidate.type ?? candidate["@type"] ?? "",
+    ),
+  );
+
+  return contentSearchService?.id ?? contentSearchService?.["@id"];
+};
+
 export const buildMetadataValues = (metadata: MetadataInput[]) => {
   return metadata.map(({ label, value = "" }) => ({
     label: {
