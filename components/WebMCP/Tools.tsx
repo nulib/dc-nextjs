@@ -8,6 +8,7 @@ import type { SearchResultsState } from "@/types/components/search";
 import type { ToolDefinition } from "@/hooks/useWebMcpTool";
 import type { UrlFacets } from "@/types/context/filter-context";
 import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
+import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import useWebMcpTool from "@/hooks/useWebMcpTool";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
@@ -168,27 +169,12 @@ const throwIfAborted = (signal: AbortSignal) => {
     throw new DOMException("Tool call canceled", "AbortError");
 };
 
-interface ContentSearchService {
-  id?: string;
-  type?: string;
-}
-
-const contentSearchServiceUrl = (manifest: Manifest | undefined) => {
-  const service = (
-    manifest as unknown as {
-      service?: ContentSearchService | ContentSearchService[];
-    }
-  )?.service;
-  const services = Array.isArray(service) ? service : service ? [service] : [];
-  return services.find(({ id, type }) => id && type === "SearchService2")?.id;
-};
-
 const contentSearchMatchCount = async (
   manifest: Manifest | undefined,
   query: string,
   signal: AbortSignal,
 ) => {
-  const serviceId = contentSearchServiceUrl(manifest);
+  const serviceId = getContentSearchServiceUrl(manifest);
   if (!serviceId) return undefined;
 
   const url = new URL(serviceId);
