@@ -33,7 +33,10 @@ function mockFakeCloverViewer({
   }, [renderAbout]);
 
   return (
-    <div role="tablist">
+    <div
+      role="tablist"
+      data-show-media-search={String(options?.showMediaSearch)}
+    >
       {[ABOUT, ...(renderContentSearch ? [SEARCH] : [])].map((value) => (
         <button
           key={value}
@@ -86,10 +89,14 @@ const manifestWithContentSearch = {
 describe("WorkViewerWrapper content search tab", () => {
   it("keeps the Search tab selected after Clover resets it to About", async () => {
     render(
-      <WorkViewerWrapper
-        iiifContent="http://testing.com"
-        searchQuery="excuse"
-      />,
+      <WorkProvider
+        initialState={{ manifest: manifestWithContentSearch, work: undefined }}
+      >
+        <WorkViewerWrapper
+          iiifContent="http://testing.com"
+          searchQuery="excuse"
+        />
+      </WorkProvider>,
     );
 
     await waitFor(() => {
@@ -100,10 +107,14 @@ describe("WorkViewerWrapper content search tab", () => {
 
   it("stops enforcing the Search tab once the user interacts", async () => {
     render(
-      <WorkViewerWrapper
-        iiifContent="http://testing.com"
-        searchQuery="excuse"
-      />,
+      <WorkProvider
+        initialState={{ manifest: manifestWithContentSearch, work: undefined }}
+      >
+        <WorkViewerWrapper
+          iiifContent="http://testing.com"
+          searchQuery="excuse"
+        />
+      </WorkProvider>,
     );
     await waitFor(() => {
       expect(searchTab()).toHaveAttribute("aria-selected", "true");
@@ -131,7 +142,7 @@ describe("WorkViewerWrapper content search tab", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("offers content search only when the manifest advertises a service", async () => {
+  it("renders Clover's Search tab when the manifest advertises a service", () => {
     render(
       <WorkProvider
         initialState={{ manifest: manifestWithContentSearch, work: undefined }}
@@ -140,27 +151,17 @@ describe("WorkViewerWrapper content search tab", () => {
       </WorkProvider>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Search within document",
-    });
-    expect(
-      screen.queryByRole("tab", { name: "Search" }),
-    ).not.toBeInTheDocument();
-
-    fireEvent.click(button);
-
-    await waitFor(() => {
-      expect(searchTab()).toHaveAttribute("aria-selected", "true");
-    });
-    expect(button).not.toBeInTheDocument();
+    expect(searchTab()).toBeInTheDocument();
+    expect(aboutTab()).toHaveAttribute("aria-selected", "true");
   });
 
-  it("does not offer content search without a manifest service", () => {
+  it("hides Clover's media-strip search control", () => {
     render(<WorkViewerWrapper iiifContent="http://testing.com" />);
 
-    expect(
-      screen.queryByRole("button", { name: "Search within document" }),
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole("tablist")).toHaveAttribute(
+      "data-show-media-search",
+      "false",
+    );
   });
 
   it("syncs typed searches to the URL without updating the Next router", () => {
@@ -175,7 +176,11 @@ describe("WorkViewerWrapper content search tab", () => {
     const routerReplace = jest.spyOn(mockRouter, "replace");
 
     render(
-      <WorkViewerWrapper iiifContent="http://testing.com" searchQuery="jes" />,
+      <WorkProvider
+        initialState={{ manifest: manifestWithContentSearch, work: undefined }}
+      >
+        <WorkViewerWrapper iiifContent="http://testing.com" searchQuery="jes" />
+      </WorkProvider>,
     );
     fireEvent.change(
       screen.getByRole("textbox", { name: "Search within work" }),
