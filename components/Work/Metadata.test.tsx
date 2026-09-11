@@ -9,7 +9,9 @@ describe("WorkMetadata component", () => {
   it("renders the metadata definition list", () => {
     render(<WorkMetadata metadata={manifest.metadata as MetadataItem[]} />);
 
-    const metadataGroups = screen.getAllByRole("group");
+    const metadataGroups = screen
+      .getByTestId("metadata")
+      .querySelectorAll(":scope > [data-label]");
     expect(metadataGroups.length).toBe(12);
 
     metadataGroups.forEach((group, index) => {
