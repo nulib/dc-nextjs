@@ -4,6 +4,7 @@ import ChatResponse from "./Response";
 import { sampleWork1 } from "@/mocks/sample-work1";
 import { sampleWork2 } from "@/mocks/sample-work2";
 import useChatSocket from "@/hooks/useChatSocket";
+import { useSearchState } from "@/context/search-context";
 import { useState } from "react";
 
 const mockSendMessage = jest.fn();
@@ -19,6 +20,15 @@ const tokens = [
   " and streaming continues and continues",
   " until streaming is completed.",
 ];
+
+const StoredWorks = () => {
+  const { searchState } = useSearchState();
+  return (
+    <output data-testid="stored-works">
+      {JSON.stringify(searchState.conversation.turns[0]?.works)}
+    </output>
+  );
+};
 
 // Mock the default export
 jest.mock("@/hooks/useChatSocket", () => ({
@@ -247,11 +257,14 @@ describe("ChatResponse component", () => {
     });
 
     render(
-      <ChatResponse
-        question={question}
-        conversationIndex={0}
-        conversationRef={conversationRef}
-      />,
+      <>
+        <ChatResponse
+          question={question}
+          conversationIndex={0}
+          conversationRef={conversationRef}
+        />
+        <StoredWorks />
+      </>,
     );
 
     const content = screen.getByTestId("response-content");
@@ -279,6 +292,17 @@ describe("ChatResponse component", () => {
       expect(result.querySelector("img")).toHaveAttribute("alt");
       expect(result).toHaveAttribute("href", `/items/${works[index].id}`);
     });
+
+    act(() => {
+      setMessageState({
+        type: "final_message",
+        ref: conversationRef,
+      });
+    });
+
+    expect(screen.getByTestId("stored-works")).toHaveTextContent(
+      JSON.stringify([works]),
+    );
   });
 
   it("renders an aggregation result message", async () => {

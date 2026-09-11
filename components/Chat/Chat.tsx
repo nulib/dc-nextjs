@@ -33,6 +33,7 @@ const Chat = () => {
               context: conversation.stagedContext,
               answer: "",
               aggregations: [],
+              works: [],
             },
           ],
         },
