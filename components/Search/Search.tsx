@@ -86,6 +86,7 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           answer: "",
           aggregations: [],
           context,
+          works: [],
         },
       ],
     };

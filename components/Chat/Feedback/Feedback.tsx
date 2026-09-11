@@ -77,8 +77,8 @@ const ChatFeedback = ({ conversationIndex }: { conversationIndex: number }) => {
       ref: conversation.ref,
       initialQuestion: conversation.initialQuestion,
       turns: conversation.turns.map((t) => {
-        const { renderedContent, ...rest } = t;
-        return rest;
+        const { renderedContent, works = [], ...rest } = t;
+        return { ...rest, works };
       }),
     },
   };

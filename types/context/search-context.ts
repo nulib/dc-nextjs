@@ -26,6 +26,7 @@ export interface Turn extends Article {
   aggregations: Omit<AggregationResultMessage, "type">["message"][];
   context?: ChatContext;
   renderedContent?: React.JSX.Element;
+  works: Work[][];
 }
 
 export interface SearchContextStore {

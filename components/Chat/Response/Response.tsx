@@ -1,4 +1,4 @@
-import type { ChatContext, Turn } from "@/types/context/search-context";
+import type { Turn } from "@/types/context/search-context";
 import React, { useEffect, useState } from "react";
 import {
   StyledQuestion,
@@ -41,7 +41,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   const [turnAggregations, setTurnAggregations] = useState<
     Turn["aggregations"]
   >([]);
-  const [turnWorks, setTurnWorks] = useState<ChatContext["works"]>([]);
+  const [turnWorks, setTurnWorks] = useState<Turn["works"]>([]);
 
   useEffect(() => {
     if (isConnected && authToken && question && conversationRef) {
@@ -129,12 +129,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseImages works={message.message} />
         </>
       ));
-      setTurnWorks([
-        ...turnWorks,
-        ...(Array.isArray(message.message)
-          ? message.message
-          : [message.message]),
-      ]);
+      setTurnWorks([...turnWorks, message.message]);
     }
 
     if (type === "aggregation_result") {
@@ -177,6 +172,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         answer: turnAnswer,
         aggregations: turnAggregations,
         renderedContent: renderedMessage,
+        works: turnWorks,
       };
 
       searchDispatch({
