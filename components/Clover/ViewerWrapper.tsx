@@ -12,7 +12,7 @@ import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
 import React, { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import { useWorkState } from "@/context/work-context";
 
 export const CloverViewer = dynamic(
@@ -46,9 +46,9 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   viewerOptions = EMPTY_VIEWER_OPTIONS,
 }) => {
   const { workDispatch, workState } = useWorkState();
-  const { work } = workState;
-  const router = useRouter();
+  const { manifest, work } = workState;
   const viewerWrapperRef = useRef<HTMLDivElement>(null);
+  const hasContentSearch = Boolean(getContentSearchServiceUrl(manifest));
 
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
@@ -60,7 +60,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       // About keeps the shell mounted for content searches with zero matches.
       renderAbout: Boolean(searchQuery),
       renderToggle: false,
-      renderContentSearch: true,
+      renderContentSearch: hasContentSearch,
       defaultTab: searchQuery
         ? "manifest-content-search"
         : "manifest-annotations",
@@ -75,11 +75,12 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
         },
       },
       showIIIFBadge: false,
+      showMediaSearch: false,
       showTitle: false,
       withCredentials: true,
       ...viewerOptions,
     };
-  }, [searchQuery, isAudioVideoWork, viewerOptions]);
+  }, [hasContentSearch, searchQuery, isAudioVideoWork, viewerOptions]);
 
   useEffect(() => {
     const wrapper = viewerWrapperRef.current;
@@ -129,25 +130,25 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   }, [searchQuery]);
 
   const handleContentSearchCallback = (query: string) => {
-    const {
-      canvas: _c,
-      label: _l,
-      q: _q,
-      snippet: _s,
-      [CONTENT_SEARCH_PARAM]: _contentSearch,
-      ...restQuery
-    } = router.query;
-    router.replace(
-      {
-        query: {
-          ...restQuery,
-          ...(query && { [CONTENT_SEARCH_PARAM]: query }),
-        },
-      },
-      undefined,
-      {
-        shallow: true,
-      },
+    const url = new URL(window.location.href);
+    ["canvas", "label", "q", "snippet"].forEach((param) =>
+      url.searchParams.delete(param),
+    );
+
+    if (query) {
+      url.searchParams.set(CONTENT_SEARCH_PARAM, query);
+    } else {
+      url.searchParams.delete(CONTENT_SEARCH_PARAM);
+    }
+
+    // Clover invokes this callback on every keystroke. Updating Next router
+    // state here changes searchQuery and therefore Clover's key, remounting the
+    // entire viewer. Keep the address bar in sync without triggering a render;
+    // URL-driven searches still use the router and intentionally remount below.
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
     );
   };
 
@@ -197,7 +198,7 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
           <CloverViewer
             // Clover treats its initial search and default tab as initialization
             // state, so a new URL-driven query needs a fresh viewer instance.
-            key={`content-search:${searchQuery || ""}`}
+            key={`content-search:${hasContentSearch}:${searchQuery || ""}`}
             // @ts-ignore
             contentSearchCallback={handleContentSearchCallback}
             contentStateCallback={handleContentStateCallback}
