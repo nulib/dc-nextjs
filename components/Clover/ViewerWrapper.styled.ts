@@ -1,4 +1,3 @@
-import { p } from "@iiif/helpers/dist/vault-actions-FZxiP2q-";
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
