@@ -15,7 +15,6 @@ import { IconInfo, IconSearch } from "@/components/Shared/SVG/Icons";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
-import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
 
 export const CloverViewer = dynamic(
@@ -50,7 +49,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
 }) => {
   const { workDispatch, workState } = useWorkState();
   const { manifest, work } = workState;
-  const router = useRouter();
   const viewerWrapperRef = useRef<HTMLDivElement>(null);
   const [renderContentSearch, setRenderContentSearch] = useState(
     Boolean(searchQuery),
@@ -141,25 +139,25 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   }, [searchQuery]);
 
   const handleContentSearchCallback = (query: string) => {
-    const {
-      canvas: _c,
-      label: _l,
-      q: _q,
-      snippet: _s,
-      [CONTENT_SEARCH_PARAM]: _contentSearch,
-      ...restQuery
-    } = router.query;
-    router.replace(
-      {
-        query: {
-          ...restQuery,
-          ...(query && { [CONTENT_SEARCH_PARAM]: query }),
-        },
-      },
-      undefined,
-      {
-        shallow: true,
-      },
+    const url = new URL(window.location.href);
+    ["canvas", "label", "q", "snippet"].forEach((param) =>
+      url.searchParams.delete(param),
+    );
+
+    if (query) {
+      url.searchParams.set(CONTENT_SEARCH_PARAM, query);
+    } else {
+      url.searchParams.delete(CONTENT_SEARCH_PARAM);
+    }
+
+    // Clover invokes this callback on every keystroke. Updating Next router
+    // state here changes searchQuery and therefore Clover's key, remounting the
+    // entire viewer. Keep the address bar in sync without triggering a render;
+    // URL-driven searches still use the router and intentionally remount below.
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
     );
   };
 

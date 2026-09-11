@@ -5,6 +5,7 @@ import type { Manifest } from "@iiif/presentation-3";
 import type { ViewerConfigOptions } from "@samvera/clover-iiif";
 import { WorkProvider } from "@/context/work-context";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
+import mockRouter from "next-router-mock";
 
 const ABOUT = "manifest-about";
 const SEARCH = "manifest-content-search";
@@ -14,7 +15,13 @@ const SEARCH = "manifest-content-search";
  * already selected, then a mount effect resets the active tab to About
  * (Clover does this while annotations have not loaded yet).
  */
-function mockFakeCloverViewer({ options }: { options?: ViewerConfigOptions }) {
+function mockFakeCloverViewer({
+  contentSearchCallback,
+  options,
+}: {
+  contentSearchCallback?: (query: string) => void;
+  options?: ViewerConfigOptions;
+}) {
   const [active, setActive] = useState(
     options?.informationPanel?.defaultTab === SEARCH ? SEARCH : ABOUT,
   );
@@ -39,6 +46,12 @@ function mockFakeCloverViewer({ options }: { options?: ViewerConfigOptions }) {
           {value === ABOUT ? "About" : "Search"}
         </button>
       ))}
+      {renderContentSearch && (
+        <input
+          aria-label="Search within work"
+          onChange={(event) => contentSearchCallback?.(event.target.value)}
+        />
+      )}
     </div>
   );
 }
@@ -148,5 +161,33 @@ describe("WorkViewerWrapper content search tab", () => {
     expect(
       screen.queryByRole("button", { name: "Search within document" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("syncs typed searches to the URL without updating the Next router", () => {
+    mockRouter.setCurrentUrl(
+      "/items/test?content-search=jes&canvas=canvas-id&q=legacy&snippet=text",
+    );
+    window.history.replaceState(
+      {},
+      "",
+      "/items/test?content-search=jes&canvas=canvas-id&q=legacy&snippet=text",
+    );
+    const routerReplace = jest.spyOn(mockRouter, "replace");
+
+    render(
+      <WorkViewerWrapper iiifContent="http://testing.com" searchQuery="jes" />,
+    );
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Search within work" }),
+      {
+        target: { value: "jess" },
+      },
+    );
+
+    expect(routerReplace).not.toHaveBeenCalled();
+    expect(window.location.pathname).toBe("/items/test");
+    expect(window.location.search).toBe("?content-search=jess");
+
+    routerReplace.mockRestore();
   });
 });
