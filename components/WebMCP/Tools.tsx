@@ -12,6 +12,8 @@ import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import useWebMcpTool from "@/hooks/useWebMcpTool";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import axios from "axios";
 
 const NO_INPUT_SCHEMA = {
   type: "object",
@@ -45,6 +47,15 @@ const FILTER_INPUT_SCHEMA = {
   },
   required: ["query"],
   additionalProperties: false,
+};
+
+const DESCRIBE_REMOTE_MCP_TOOL: ToolDefinition = {
+  name: "describe_remote_mcp",
+  title: "Describe remote MCP server",
+  description:
+    "Retrieve the server card for the Digital Collections API remote MCP server, including available tools and capabilities.",
+  inputSchema: NO_INPUT_SCHEMA,
+  annotations: { readOnlyHint: true, untrustedContentHint: false },
 };
 
 const SEARCH_WORKS_TOOL: ToolDefinition = {
@@ -219,6 +230,11 @@ export function SiteWebMcpTools() {
       page: "/search",
       status: "Search results are now visible.",
     };
+  });
+
+  useWebMcpTool(DESCRIBE_REMOTE_MCP_TOOL, async (_input, { signal }) => {
+    throwIfAborted(signal);
+    return await axios.get(`${DCAPI_ENDPOINT}/mcp/server-card`);
   });
 
   return null;
