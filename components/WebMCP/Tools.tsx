@@ -53,7 +53,7 @@ const DESCRIBE_REMOTE_MCP_TOOL: ToolDefinition = {
   name: "describe_remote_mcp",
   title: "Describe remote MCP server",
   description:
-    "Retrieve the server card for the Digital Collections API remote MCP server, including available tools and capabilities.",
+    "Retrieve the server card for the Digital Collections API remote MCP server, including server metadata and its connection URL.",
   inputSchema: NO_INPUT_SCHEMA,
   annotations: { readOnlyHint: true, untrustedContentHint: false },
 };
@@ -234,7 +234,21 @@ export function SiteWebMcpTools() {
 
   useWebMcpTool(DESCRIBE_REMOTE_MCP_TOOL, async (_input, { signal }) => {
     throwIfAborted(signal);
-    return await axios.get(`${DCAPI_ENDPOINT}/mcp/server-card`);
+    const url = `${DCAPI_ENDPOINT}/mcp/server-card`;
+    try {
+      const { data } = await axios.get(url, { signal });
+      return data;
+    } catch (error) {
+      if (axios.isCancel(error)) throw error;
+      const status = axios.isAxiosError(error)
+        ? error.response?.status
+        : undefined;
+      throw new Error(
+        status
+          ? `Remote MCP server card request failed with status ${status}: ${url}`
+          : `Unable to retrieve the remote MCP server card: ${url}`,
+      );
+    }
   });
 
   return null;

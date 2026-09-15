@@ -60,6 +60,12 @@ module.exports = withBundleAnalyzer({
   async headers() {
     return [
       {
+        source: "/.well-known/ai-catalog.json",
+        headers: [
+          { key: "Content-Type", value: "application/ai-catalog+json" },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [{ key: "Permissions-Policy", value: "tools=(self)" }],
       },
