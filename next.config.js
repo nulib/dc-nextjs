@@ -29,6 +29,16 @@ fs.writeFileSync(
   `module.exports = ${HoneybadgerConfig};`,
 );
 
+// Render /.well-known/ai-catalog.json into public/ so it ships as a static
+// asset with the environment's DC API endpoint baked in.
+const aiCatalog = require("./lib/well-known/ai-catalog");
+
+fs.mkdirSync("public/.well-known", { recursive: true });
+fs.writeFileSync(
+  "public/.well-known/ai-catalog.json",
+  JSON.stringify(aiCatalog(process.env.NEXT_PUBLIC_DCAPI_ENDPOINT), null, 2),
+);
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -49,6 +59,12 @@ module.exports = withBundleAnalyzer({
   },
   async headers() {
     return [
+      {
+        source: "/.well-known/ai-catalog.json",
+        headers: [
+          { key: "Content-Type", value: "application/ai-catalog+json" },
+        ],
+      },
       {
         source: "/:path*",
         headers: [{ key: "Permissions-Policy", value: "tools=(self)" }],
