@@ -168,12 +168,13 @@ with the `getTools({ fromOrigins: [...] })` option.
 
 ## Tools provided by Digital Collections
 
-The globally available tool is present alongside any tools supplied by the
+The globally available tools are present alongside any tools supplied by the
 current route.
 
 | Page                     | Tool                        | Behavior                                                                                                                              |
 | ------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Every page               | `search_works`              | Navigates to a works search for the supplied query.                                                                                   |
+| Every page               | `describe_remote_mcp`       | Retrieves the configured API's remote MCP server card.                                                                                |
 | `/search`                | `get_search_results`        | Returns the current query, compacted filters, loading/error state, pagination, total hits, and up to five visible results.            |
 | `/collections`           | `get_collections`           | Returns the active title filter and up to six matching collections.                                                                   |
 | `/collections`           | `filter_collections`        | Updates the controlled title filter and visible collection list; an empty query clears it.                                            |
@@ -187,6 +188,27 @@ Tool results are intentionally compact. String values are whitespace-normalized
 and clipped, and arrays and search results are bounded. This keeps agent context
 small and reduces exposure of page or catalog content that was not needed for
 the requested operation.
+
+## Remote MCP discovery
+
+`describe_remote_mcp` requests
+`${NEXT_PUBLIC_DCAPI_ENDPOINT}/mcp/server-card` and returns the server's JSON
+body. It must not return the Axios response wrapper, which includes request
+objects and configuration functions that WebMCP hosts cannot safely serialize.
+The tool forwards its execution signal to Axios so cancellation also stops the
+HTTP request. Request failures report the URL and HTTP status when available.
+
+`next.config.js` also generates `public/.well-known/ai-catalog.json` from
+`lib/well-known/ai-catalog.js`, pointing to the same server card. The catalog is
+served with the `application/ai-catalog+json` media type defined by the
+[AI Catalog specification](https://ai-catalog.io/spec/).
+
+Both discovery paths require an API deployment that serves `/mcp/server-card`.
+An API that supports `/mcp` does not necessarily serve a server card. If the
+tool reports HTTP 404, confirm that the card route is deployed to the API named
+by `NEXT_PUBLIC_DCAPI_ENDPOINT`. For local review, set that variable in
+`.env.local` to the intended API base URL (including `/api/v2`) and restart
+`bun run dev` so the client bundle and generated catalog use the same endpoint.
 
 ## Page integration
 

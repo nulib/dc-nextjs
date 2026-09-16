@@ -12,6 +12,8 @@ import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import useWebMcpTool from "@/hooks/useWebMcpTool";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
+import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
+import axios from "axios";
 
 const NO_INPUT_SCHEMA = {
   type: "object",
@@ -45,6 +47,15 @@ const FILTER_INPUT_SCHEMA = {
   },
   required: ["query"],
   additionalProperties: false,
+};
+
+const DESCRIBE_REMOTE_MCP_TOOL: ToolDefinition = {
+  name: "describe_remote_mcp",
+  title: "Describe remote MCP server",
+  description:
+    "Retrieve the server card for the Digital Collections API remote MCP server, including server metadata and its connection URL.",
+  inputSchema: NO_INPUT_SCHEMA,
+  annotations: { readOnlyHint: true, untrustedContentHint: false },
 };
 
 const SEARCH_WORKS_TOOL: ToolDefinition = {
@@ -219,6 +230,25 @@ export function SiteWebMcpTools() {
       page: "/search",
       status: "Search results are now visible.",
     };
+  });
+
+  useWebMcpTool(DESCRIBE_REMOTE_MCP_TOOL, async (_input, { signal }) => {
+    throwIfAborted(signal);
+    const url = `${DCAPI_ENDPOINT}/mcp/server-card`;
+    try {
+      const { data } = await axios.get(url, { signal });
+      return data;
+    } catch (error) {
+      if (axios.isCancel(error)) throw error;
+      const status = axios.isAxiosError(error)
+        ? error.response?.status
+        : undefined;
+      throw new Error(
+        status
+          ? `Remote MCP server card request failed with status ${status}: ${url}`
+          : `Unable to retrieve the remote MCP server card: ${url}`,
+      );
+    }
   });
 
   return null;

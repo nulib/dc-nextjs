@@ -43,6 +43,7 @@ yarn-error.log*
 
 # ephemeral build artifacts
 /lib/honeybadger/config.vars.js
+/public/.well-known/
 
 # vscode
 /.vscode/*
