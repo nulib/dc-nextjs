@@ -8,11 +8,12 @@ import {
   StyledStackFillerItem,
   StyledStackItem,
 } from "./Stack.styled";
-import { TooltipArrow, TooltipBody } from "../../Shared/Tooltip.styled";
 import {
+  TooltipArrow,
+  TooltipBody,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/Search/GenerativeAI.styled";
+} from "../../Shared/Tooltip.styled";
 
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ChatContext } from "@/types/context/search-context";

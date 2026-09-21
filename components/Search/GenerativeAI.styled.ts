@@ -1,5 +1,3 @@
-import * as Tooltip from "@radix-ui/react-tooltip";
-
 import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
@@ -32,13 +30,4 @@ const GenerativeAIToggleWrapper = styled("div", {
   },
 });
 
-const TooltipTrigger = styled(Tooltip.Trigger, {
-  background: "transparent",
-  border: "none",
-});
-
-const TooltipContent = styled(Tooltip.Content, {
-  zIndex: 2,
-});
-
-export { GenerativeAIToggleWrapper, TooltipContent, TooltipTrigger };
+export { GenerativeAIToggleWrapper };

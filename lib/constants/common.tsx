@@ -16,5 +16,39 @@ export const AI_SYS_PROMPT_MSG = () => (
     .
   </span>
 );
+/**
+ * AI provenance indicator on the work page, driven by a work's `ai_involved` /
+ * `ai_provenance` keys.
+ *
+ * Wording note: "AI-assisted" is a deliberate umbrella covering both
+ * `ai_generated` and `ai_assisted_human_modified` origins. None of this copy
+ * may claim staff review — review is reported per field, from the entry's own
+ * `human_oversight_level`, by `getAIStatusLabel` in `lib/ai-provenance.ts`.
+ */
+export const AI_PROVENANCE_LABEL_METADATA = "AI-assisted metadata";
+export const AI_PROVENANCE_LABEL_TRANSCRIPTIONS = "AI-assisted transcriptions";
+export const AI_PROVENANCE_LABEL_BOTH =
+  "AI-assisted metadata and transcriptions";
+
+export const AI_PROVENANCE_TOOLTIP_TRIGGER_LABEL =
+  "More information about AI involvement in this item";
+
+export const AI_PROVENANCE_TOOLTIP_INTRO = `Some information about this item was created or edited with the help of generative AI. This applies to the item's descriptive metadata and transcriptions, not to the digitized object itself.`;
+
+export const AI_PROVENANCE_TOOLTIP_FIELDS_INTRO =
+  "Descriptive Metadata fields with AI involvement:";
+
+export const AI_PROVENANCE_TOOLTIP_CAVEAT =
+  "AI-assisted content may contain errors or omissions.";
+
+/**
+ * `hasList` controls the final punctuation: the sentence introduces a list of
+ * file sets when one follows, and stands alone when the lookup returned none.
+ */
+export const aiProvenanceTranscriptionCopy = (count: number, hasList = false) =>
+  `This item includes ${count} AI-assisted ${
+    count === 1 ? "transcription" : "transcriptions"
+  }${hasList ? ":" : "."}`;
+
 export const AI_K_VALUE = 40;
 export const SEARCH_RESULTS_PER_PAGE = 40;
