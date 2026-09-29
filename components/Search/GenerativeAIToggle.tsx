@@ -9,12 +9,13 @@ import {
   CheckboxIndicator,
   CheckboxRoot as CheckboxRootStyled,
 } from "@/components/Shared/Checkbox.styled";
+import { GenerativeAIToggleWrapper } from "@/components/Search/GenerativeAI.styled";
 import {
-  GenerativeAIToggleWrapper,
+  TooltipArrow,
+  TooltipBody,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/Search/GenerativeAI.styled";
-import { TooltipArrow, TooltipBody } from "../Shared/Tooltip.styled";
+} from "../Shared/Tooltip.styled";
 
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";

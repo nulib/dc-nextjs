@@ -4,6 +4,15 @@ import { styled } from "@/stitches.config";
 
 /* eslint sort-keys: 0 */
 
+export const TooltipTrigger = styled(Tooltip.Trigger, {
+  background: "transparent",
+  border: "none",
+});
+
+export const TooltipContent = styled(Tooltip.Content, {
+  zIndex: 2,
+});
+
 export const TooltipArrow = styled(Tooltip.Arrow, {
   fill: "$white",
 });
