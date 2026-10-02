@@ -1,6 +1,6 @@
 {
   "name": "dc-nextjs",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
