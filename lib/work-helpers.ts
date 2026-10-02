@@ -9,6 +9,7 @@ import type { Work } from "@nulib/dcapi-types";
 import { apiGetRequest } from "@/lib/dc-api";
 import { appendHybridSearchParams } from "./chat-helpers";
 import { shuffle } from "@/lib/utils/array-helpers";
+import type { WorkWithAIProvenance } from "@/types/api/ai-provenance";
 
 export function isSanitizedWork(work: Partial<Work>): work is SanitizedWork {
   return work.title && work.thumbnail ? true : false;
@@ -16,7 +17,7 @@ export function isSanitizedWork(work: Partial<Work>): work is SanitizedWork {
 
 export async function getWork(id: string) {
   try {
-    const response = await apiGetRequest<Work>({
+    const response = await apiGetRequest<WorkWithAIProvenance>({
       url: `${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/works/${id}`,
     });
     return response;

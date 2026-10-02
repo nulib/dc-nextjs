@@ -3,6 +3,7 @@ import {
   TopInfoCollection,
   TopInfoContent,
   TopInfoHeaderContent,
+  TopInfoMetadata,
   TopInfoWrapper,
 } from "@/components//Work/TopInfo.styled";
 import IIIFShare, { StyledIIIFShare } from "../Shared/IIIF/Share";
@@ -20,17 +21,18 @@ import Expand from "@/components/Shared/Expand/Expand";
 import Icon from "../Shared/Icon";
 import { IconShare } from "../Shared/SVG/Icons";
 import { Manifest } from "@iiif/presentation-3";
-import type { Work } from "@nulib/dcapi-types";
+import WorkAIProvenance from "@/components/Work/AIProvenance";
 import WorkActionsDialog from "@/components/Work/ActionsDialog/ActionsDialog";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
 import WorkMetadata from "@/components/Work/Metadata";
 import type { WorkTypeCountMap } from "@/lib/collection-helpers";
+import type { WorkWithAIProvenance } from "@/types/api/ai-provenance";
 import { useWorkState } from "@/context/work-context";
 
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;
   manifest?: Manifest;
-  work: Work;
+  work: WorkWithAIProvenance;
 }
 
 export interface ActionsDialog {
@@ -148,21 +150,24 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
         />
       </header>
       <TopInfoContent>
-        <Expand initialHeight={900} buttonText="Show More">
-          <div data-testid="work-top-info-wrapper">
-            <DefinitionListWrapper>
-              {manifest?.metadata && (
-                <WorkMetadata metadata={manifest.metadata} />
-              )}
-              {manifest?.requiredStatement && (
-                <RequiredStatement
-                  customValueDelimiter="<br /><br />"
-                  requiredStatement={manifest.requiredStatement}
-                />
-              )}
-            </DefinitionListWrapper>
-          </div>
-        </Expand>
+        <TopInfoMetadata>
+          <WorkAIProvenance work={work} />
+          <Expand initialHeight={900} buttonText="Show More">
+            <div data-testid="work-top-info-wrapper">
+              <DefinitionListWrapper>
+                {manifest?.metadata && (
+                  <WorkMetadata metadata={manifest.metadata} />
+                )}
+                {manifest?.requiredStatement && (
+                  <RequiredStatement
+                    customValueDelimiter="<br /><br />"
+                    requiredStatement={manifest.requiredStatement}
+                  />
+                )}
+              </DefinitionListWrapper>
+            </div>
+          </Expand>
+        </TopInfoMetadata>
 
         <TopInfoCollection>
           <Card

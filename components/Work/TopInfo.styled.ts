@@ -43,6 +43,16 @@ const TopInfoContent = styled("div", {
   },
 });
 
+/**
+ * Left cell of the TopInfoContent grid. Groups the AI provenance indicator with
+ * the metadata Expand so the grid still sees two children.
+ */
+const TopInfoMetadata = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+  minWidth: "0",
+});
+
 const TopInfoWrapper = styled("section", {
   margin: "$gr5 0 $gr6",
 
@@ -107,5 +117,6 @@ export {
   TopInfoCollection,
   TopInfoContent,
   TopInfoHeaderContent,
+  TopInfoMetadata,
   TopInfoWrapper,
 };
