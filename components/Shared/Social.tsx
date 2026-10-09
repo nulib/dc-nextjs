@@ -1,3 +1,4 @@
+import styles from "@/components/Shared/Social.module.css";
 import {
   FacebookShareButton,
   PinterestShareButton,
@@ -10,14 +11,11 @@ import {
 } from "@/components/Shared/SVG/Icons";
 import Icon from "@/components/Shared/Icon";
 import React from "react";
-import { SocialStyled } from "@/components/Shared/Social.styled";
-
 interface SharedSocialProps {
   title: string;
   description?: string[];
   media: string;
 }
-
 const SharedSocial: React.FC<SharedSocialProps> = ({
   description,
   media,
@@ -25,7 +23,7 @@ const SharedSocial: React.FC<SharedSocialProps> = ({
 }) => {
   const currentLocation = String(window.location);
   return (
-    <SocialStyled>
+    <div className={styles.socialStyled}>
       <FacebookShareButton title={title} url={currentLocation}>
         <Icon>
           <IconSocialFacebook />
@@ -46,8 +44,7 @@ const SharedSocial: React.FC<SharedSocialProps> = ({
           <IconSocialPinterest />
         </Icon>
       </PinterestShareButton>
-    </SocialStyled>
+    </div>
   );
 };
-
 export default SharedSocial;

@@ -3,8 +3,7 @@ import singletonRouter, { useRouter } from "next/router";
 
 import { FilterProvider } from "@/context/filter-context";
 import React from "react";
-import { SearchContextStore } from "@/types/context/search-context";
-import { SearchProvider } from "@/context/search-context";
+import { defaultState, SearchProvider } from "@/context/search-context";
 import UserFacets from "./UserFacets";
 
 jest.mock("@/context/layout-context", () => ({
@@ -19,23 +18,8 @@ jest.mock("@/context/layout-context", () => ({
   }),
 }));
 
-const searchStateDefault: SearchContextStore = {
-  aggregations: {},
-  chat: {
-    answer: "",
-    documents: [],
-    question: "",
-  },
-};
-
-const searchState: SearchContextStore = {
-  aggregations: {},
-  chat: {
-    answer: "",
-    documents: [],
-    question: "",
-  },
-};
+const searchStateDefault = defaultState;
+const searchState = defaultState;
 
 const filterStateDefault = {
   userFacetsUnsubmitted: {},

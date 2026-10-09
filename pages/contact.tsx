@@ -1,4 +1,4 @@
-import { BlockStyled } from "@/components/Shared/BlockStyled";
+import styles from "@/components/Shared/Block.module.css";
 import Container from "@/components/Shared/Container";
 import CopyText from "@/components/Shared/CopyText";
 import { HEAD_META } from "@/lib/constants/head-meta";
@@ -9,7 +9,6 @@ import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
-
 const ContactPage: NextPage = () => {
   return (
     <>
@@ -30,7 +29,7 @@ const ContactPage: NextPage = () => {
       >
         <Container>
           <Heading as="h1">Contact</Heading>
-          <BlockStyled>
+          <div className={styles.blockStyled}>
             <p>
               Northwestern University Libraries&apos; Repository and Digital
               Curation department is located in the main library on our Evanston
@@ -61,26 +60,22 @@ const ContactPage: NextPage = () => {
               to find the contact information for the library department that
               can best offer research assistance.
             </p>
-          </BlockStyled>
+          </div>
         </Container>
       </Layout>
     </>
   );
 };
-
 export async function getStaticProps() {
   const dataLayer = buildDataLayer({
     pageTitle: "Contact page",
   });
-
   const openGraphData = {
     "og:title": HEAD_META["CONTACT"].title,
     "og:url": `${PRODUCTION_URL}/contact`,
   };
-
   return {
     props: { dataLayer, openGraphData },
   };
 }
-
 export default ContactPage;

@@ -1,64 +1,37 @@
-import { maxWidths } from "@/styles/containers";
-import { styled } from "@/stitches.config";
-
-interface ContainerProps {
-  children: React.ReactNode | React.ReactNode[];
-  className?: string;
+import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import styles from "./Container.module.css";
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   containerType?: "default" | "wide";
   isFlex?: boolean;
   maxWidth?: number;
-  [key: string]: unknown;
 }
-
-const Container: React.FC<ContainerProps> = ({
-  children,
-  className,
-  containerType = "default",
-  isFlex = false,
-  maxWidth,
-  ...restProps
-}) => {
-  const manualWidth = maxWidth ? { maxWidth: maxWidth } : {};
-
+const Container = forwardRef<HTMLDivElement, ContainerProps>(function Container(
+  {
+    children,
+    className,
+    containerType = "default",
+    isFlex = false,
+    maxWidth,
+    ...props
+  },
+  ref,
+) {
+  // A measured width keeps the fixed search controls aligned to their container.
+  const width = {
+    "--container-max-width": maxWidth ? maxWidth + "px" : undefined,
+  } as CSSProperties;
   return (
-    <ContainerStyled
-      className={className}
-      containerType={containerType}
-      css={{ ...manualWidth }}
-      isFlex={isFlex}
-      {...restProps}
+    <div
+      {...props}
+      ref={ref}
+      data-container-type={containerType}
+      data-is-flex={isFlex}
+      style={width}
+      data-dc-slot="container"
+      className={[styles.containerStyled, className].filter(Boolean).join(" ")}
     >
       {children}
-    </ContainerStyled>
+    </div>
   );
-};
-
-/* eslint sort-keys: 0 */
-
-export const ContainerStyled = styled("div", {
-  margin: "0 auto",
-  padding: "0 $gr3",
-  variants: {
-    containerType: {
-      default: {
-        maxWidth: maxWidths.default,
-      },
-      wide: {
-        maxWidth: maxWidths.wide,
-      },
-    },
-    isFlex: {
-      false: {},
-      true: {
-        display: "flex",
-      },
-    },
-  },
-  width: "100%",
-
-  "@md": {
-    padding: "0 $gr2",
-  },
 });
-
 export default Container;

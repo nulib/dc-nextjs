@@ -1,0 +1,63 @@
+.clear {
+  position: absolute;
+  display: flex;
+  right: 0;
+  height: var(--dc-size-gr5);
+  width: var(--dc-size-gr5);
+  margin-right: var(--dc-space-gr2);
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(90deg, #f0f0f000 0, transparent 38.2%);
+  z-index: 1;
+  fill: var(--dc-color-black50);
+}
+.clear:focus,
+.clear:hover {
+  fill: var(--dc-color-bright-red);
+}
+.clear svg {
+  fill: inherit;
+  padding: 5px;
+  margin-left: var(--dc-space-gr2);
+  transition: var(--dc-transition-dc-all);
+}
+
+.styledTextArea {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+}
+.styledTextArea:where([data-is-focused="true"]) {
+  color: var(--dc-color-black);
+}
+.styledTextArea:where([data-is-focused="false"]) textarea {
+  height: var(--dc-size-gr5) !important;
+  color: var(--dc-color-black50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.styledTextArea textarea {
+  background: transparent;
+  padding: 15px var(--dc-space-gr5) 10px;
+  border: none;
+  font-size: var(--dc-font-size-gr3);
+  line-height: 147%;
+  height: var(--dc-size-gr5);
+  z-index: 1;
+  font-family: var(--dc-font-northwestern-sans-regular);
+  resize: none;
+  overflow: hidden;
+  width: 100%;
+  outline: none;
+  transition: var(--dc-transition-dc-all);
+  box-sizing: border-box;
+}
+.styledTextArea textarea::placeholder {
+  overflow: hidden;
+  color: var(--dc-color-black50) !important;
+  text-overflow: ellipsis;
+}

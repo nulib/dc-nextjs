@@ -1,29 +1,16 @@
+import loaderStyles from "@/components/Shared/Loader.module.css";
+import authDialogStyles from "@/components/Shared/AuthDialog.module.css";
 import * as Dialog from "@radix-ui/react-dialog";
-
-import {
-  AuthDialogColumn,
-  AuthDialogContent,
-  AuthDialogDescription,
-  AuthDialogDivider,
-  AuthDialogOptions,
-  AuthDialogOverlay,
-  AuthDialogTitle,
-  IconButton,
-  MagicLinkInput,
-} from "@/components/Shared/AuthDialog.styled";
 import { useEffect, useState } from "react";
-
-import { Button } from "@nulib/design-system";
+import { Button } from "@/components/Shared/Button/Button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
 import { UserContext } from "@/context/user-context";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { apiGetRequest } from "@/lib/dc-api";
 import axios from "axios";
 import { useContext } from "react";
 import { useRouter } from "next/router";
-
 export default function AuthDialog() {
   const { closeSignInModal, isSignInModalOpen, user } = useContext(UserContext);
   const router = useRouter();
@@ -34,24 +21,20 @@ export default function AuthDialog() {
   const [disableMagicLinkButton, setDisableMagicLinkButton] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [shouldRenderMagicLink, setShouldRenderMagicLink] = useState(false);
-
   function handleClose() {
     closeSignInModal();
     setMagicLinkResponse("idle");
   }
-
   function getGotoLocation(window: Window) {
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     url.searchParams.delete("login_modal");
     return url.toString();
   }
-
   function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
     setDisableMagicLinkButton(!e.target.validity.valid);
     setUserEmail(e.target.value);
   }
-
   async function handleMagicLinkRequest() {
     setMagicLinkResponse("sending");
     setDisableMagicLinkButton(true);
@@ -70,13 +53,15 @@ export default function AuthDialog() {
       });
     setDisableMagicLinkButton(false);
   }
-
   useEffect(() => {
     axios
       .get(`${DCAPI_ENDPOINT}/capabilities/magic/login`)
       .then((response) => {
-        const resp: { enabled: boolean; provider: string; feature: string } =
-          response.data;
+        const resp: {
+          enabled: boolean;
+          provider: string;
+          feature: string;
+        } = response.data;
         setShouldRenderMagicLink(resp.enabled);
       })
       .catch((error) => {
@@ -84,7 +69,6 @@ export default function AuthDialog() {
         setShouldRenderMagicLink(false);
       });
   }, []);
-
   useEffect(() => {
     // If a user is logged in via magic link, we don't want to show the magic link option
     // Note: getUser() in UserContext and the axios call above are both async
@@ -93,75 +77,85 @@ export default function AuthDialog() {
       setShouldRenderMagicLink(false);
     }
   }, [shouldRenderMagicLink, user]);
-
   useEffect(() => {
     if (!window) return;
     setSsoUrl(
       `${DCAPI_ENDPOINT}/auth/login?goto=${encodeURIComponent(getGotoLocation(window))}`,
     );
   }, [router.isReady]);
-
   return (
     <Dialog.Root open={isSignInModalOpen} onOpenChange={handleClose}>
-      <AuthDialogOverlay />
+      <Dialog.Overlay className={authDialogStyles.authDialogOverlay} />
       <Dialog.Portal>
-        <AuthDialogContent
+        <Dialog.Content
           onEscapeKeyDown={closeSignInModal}
           data-testid="auth-dialog"
+          className={authDialogStyles.authDialogContent}
         >
-          <AuthDialogColumn data-testid="dialog-header">
-            <AuthDialogTitle>Sign in to Digital Collections</AuthDialogTitle>
+          <div
+            data-testid="dialog-header"
+            className={authDialogStyles.authDialogColumn}
+          >
+            <Dialog.Title className={authDialogStyles.authDialogTitle}>
+              Sign in to Digital Collections
+            </Dialog.Title>
             {!shouldRenderMagicLink ? (
               <VisuallyHidden asChild>
-                <AuthDialogDescription>
+                <Dialog.Description
+                  className={authDialogStyles.authDialogDescription}
+                >
                   Sign in with your Northwestern NetID
-                </AuthDialogDescription>
+                </Dialog.Description>
               </VisuallyHidden>
             ) : (
-              <AuthDialogDescription>
+              <Dialog.Description
+                className={authDialogStyles.authDialogDescription}
+              >
                 Choose your preferred method
-              </AuthDialogDescription>
+              </Dialog.Description>
             )}
-          </AuthDialogColumn>
+          </div>
 
-          <AuthDialogOptions>
-            <AuthDialogColumn data-testid="sso-login">
+          <div className={authDialogStyles.authDialogOptions}>
+            <div
+              data-testid="sso-login"
+              className={authDialogStyles.authDialogColumn}
+            >
               Sign in with your NetID{" "}
               {shouldRenderMagicLink && "for full access"}
-              <Button
-                as="a"
-                isPrimary
-                isLowercase
-                //@ts-ignore - by setting as="a" we lose the type but href is set
-                href={ssoUrl}
-                role="button"
-              >
+              <Button variant="primary" textCase="normal" href={ssoUrl}>
                 Northwestern NetID
               </Button>
-            </AuthDialogColumn>
+            </div>
 
             {shouldRenderMagicLink && (
               <>
-                <AuthDialogColumn>
-                  <AuthDialogDivider>OR</AuthDialogDivider>
-                </AuthDialogColumn>
-                <AuthDialogColumn data-testid="magic-link">
+                <div className={authDialogStyles.authDialogColumn}>
+                  <div className={authDialogStyles.authDialogDivider}>OR</div>
+                </div>
+                <div
+                  data-testid="magic-link"
+                  className={authDialogStyles.authDialogColumn}
+                >
                   <p>
                     Temporary access enables use of the{" "}
                     <strong>AI search tool only</strong>. It does not grant
                     access to restricted collection items.
                   </p>
-                  <MagicLinkInput
+                  <input
                     data-testid="magic-link-input"
                     type="email"
                     onChange={handleEmailChange}
                     aria-label="Enter your email address"
                     placeholder="name@email.com"
+                    className={authDialogStyles.magicLinkInput}
                   />
                   <Button
-                    isDanger={magicLinkResponse === "error"}
+                    variant={
+                      magicLinkResponse === "error" ? "danger" : "default"
+                    }
                     onClick={handleMagicLinkRequest}
-                    isLowercase
+                    textCase="normal"
                     disabled={disableMagicLinkButton}
                     data-testid="magic-link-button"
                   >
@@ -170,17 +164,21 @@ export default function AuthDialog() {
                         ? "Enter a valid email"
                         : "Get temporary access")}
                     {magicLinkResponse === "sending" && (
-                      <SpinLoader data-testid="spin-loader" size={"small"} />
+                      <span
+                        data-testid="spin-loader"
+                        data-size={"small"}
+                        className={loaderStyles.spinLoader}
+                      />
                     )}
                     {magicLinkResponse === "success" &&
                       "Sent! Check your email."}
                     {magicLinkResponse === "error" &&
                       "There was an error sending the link. Please try again."}
                   </Button>
-                </AuthDialogColumn>
+                </div>
               </>
             )}
-          </AuthDialogOptions>
+          </div>
 
           <a
             href="https://www.northwestern.edu/privacy/"
@@ -191,11 +189,11 @@ export default function AuthDialog() {
           </a>
 
           <Dialog.Close asChild>
-            <IconButton aria-label="Close">
+            <button aria-label="Close" className={authDialogStyles.iconButton}>
               <Cross2Icon />
-            </IconButton>
+            </button>
           </Dialog.Close>
-        </AuthDialogContent>
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );

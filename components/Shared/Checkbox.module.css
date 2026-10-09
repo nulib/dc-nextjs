@@ -1,0 +1,32 @@
+.checkboxRoot {
+  display: flex;
+  margin-right: var(--dc-space-gr1);
+  width: var(--dc-size-gr3);
+  height: var(--dc-size-gr3);
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: var(--dc-color-white);
+  border: 1px solid var(--dc-color-black10);
+  padding: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  color: var(--dc-color-white);
+}
+.checkboxRoot svg {
+  padding: 2px;
+}
+.checkboxRoot:hover,
+.checkboxRoot:focus {
+  border-color: var(--dc-color-black20);
+  box-shadow: 2px 2px 5px #0002;
+  color: var(--dc-color-white);
+}
+
+.checkboxIndicator {
+  display: flex;
+  width: var(--dc-size-gr3);
+  height: var(--dc-size-gr3);
+  background-color: var(--dc-color-purple);
+  margin: -1px 0 0 -1px;
+  border-radius: 3px;
+}

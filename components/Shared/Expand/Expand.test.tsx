@@ -12,9 +12,12 @@ describe("Expand component", () => {
     const expand = screen.getByTestId("expand");
     const button = screen.getByRole("button");
 
-    expect(expand).toBeInTheDocument;
+    expect(expand).toBeInTheDocument();
     expect(expand).toContainHTML("<div>Some content</div>");
-    expect(expand.getAttribute("style")).toBe("max-height: 350px;");
+    expect(expand.style.getPropertyValue("--expand-height")).toBe("350px");
+    Object.defineProperty(expand.firstElementChild, "offsetHeight", {
+      value: 900,
+    });
 
     expect(button).toHaveTextContent("Expand something");
 
@@ -22,7 +25,9 @@ describe("Expand component", () => {
      * expect the max-height to adjust on button click
      */
     fireEvent.click(button);
-    expect(expand.getAttribute("style")).toBe("max-height: 0px;");
+    expect(expand.style.getPropertyValue("--expand-height")).toBe("900px");
+    expect(expand).toHaveAttribute("data-is-expanded", "true");
+    expect(button).toBeDisabled();
   });
 
   it("renders a wrapping Expand component with default prop values", () => {
@@ -34,9 +39,9 @@ describe("Expand component", () => {
     const expand = screen.getByTestId("expand");
     const button = screen.getByRole("button");
 
-    expect(expand).toBeInTheDocument;
+    expect(expand).toBeInTheDocument();
     expect(expand).toContainHTML("<div>Other content</div>");
-    expect(expand.getAttribute("style")).toBe("max-height: 500px;");
+    expect(expand.style.getPropertyValue("--expand-height")).toBe("500px");
 
     expect(button).toHaveTextContent("Show More");
   });

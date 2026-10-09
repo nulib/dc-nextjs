@@ -1,0 +1,20 @@
+.sectionTopStyled {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  padding: 1 rem;
+}
+.sectionTopStyled :global([data-dc-slot~="heading-slash-title"]) {
+  color: var(--dc-color-purple);
+}
+.sectionTopStyled :global([data-dc-slot~="heading-subhead"]) {
+  color: var(--dc-color-purple);
+  max-width: 850px;
+  display: inline-block;
+  margin: var(--dc-space-gr1) 0 var(--dc-space-gr1);
+}
+@media (max-width: 767px) {
+  .sectionTopStyled :global([data-dc-slot~="heading-subhead"]) {
+    font-size: var(--dc-font-size-gr7);
+  }
+}

@@ -1,0 +1,94 @@
+.styledIIIFShare {
+  position: relative;
+  z-index: 1;
+  padding: 0 var(--dc-space-gr1);
+  white-space: nowrap;
+}
+.styledIIIFShare:last-child {
+  padding-right: 0;
+}
+.styledIIIFShare > button {
+  background-color: transparent;
+  color: var(--dc-color-black50);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr3);
+  border-radius: 38px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: var(--dc-space-gr1);
+  padding: 0 var(--dc-space-gr1);
+  margin: 0;
+}
+.styledIIIFShare > button > span svg {
+  padding: 7px;
+}
+.styledIIIFShare > button > span svg path {
+  fill: var(--dc-color-purple) !important;
+}
+.styledIIIFShare > button > span svg:global(.icon-chevron-down) path {
+  stroke: var(--dc-color-black50) !important;
+  fill: none !important;
+}
+.styledIIIFShare > button > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dc-space-gr1);
+}
+.styledIIIFShare > button em {
+  font-style: normal;
+  display: inline-flex;
+  margin-bottom: -3px;
+}
+.styledIIIFShare > button:hover,
+.styledIIIFShare > button:active {
+  color: var(--dc-color-purple);
+  fill: var(--dc-color-black);
+  background-color: var(--dc-color-purple10);
+}
+.styledIIIFShare > button:hover > span:last-child svg path,
+.styledIIIFShare > button:active > span:last-child svg path {
+  stroke: var(--dc-color-purple) !important;
+}
+
+.styledIIIFShareContent {
+  z-index: 1;
+  background-color: var(--dc-color-white);
+  padding: var(--dc-space-gr3);
+  border-radius: 3px;
+  box-shadow: 5px 5px 19px 0 #0002;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--dc-font-size-gr2);
+  min-width: 160px;
+  gap: var(--dc-space-gr2);
+}
+.styledIIIFShareContent a {
+  color: var(--dc-color-purple);
+  display: flex;
+}
+.styledIIIFShareContent a svg {
+  color: var(--dc-color-purple);
+  fill: var(--dc-color-purple);
+}
+.styledIIIFShareContent button {
+  font-size: var(--dc-font-size-gr2);
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: 400;
+  line-height: inherit !important;
+  text-decoration: none;
+  color: var(--dc-color-purple);
+}
+
+.styledDropdownLabel {
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+}
+
+.styledDropdownSeparator {
+  height: 1px;
+  background-color: var(--dc-color-gray6);
+}

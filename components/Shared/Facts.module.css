@@ -1,0 +1,36 @@
+.factsItemBig {
+  font-size: var(--dc-font-size-gr7);
+  font-family: var(--dc-font-northwestern-display-extra-bold);
+}
+@media (max-width: 767px) {
+  .factsItemBig {
+    font-size: var(--dc-font-size-gr7);
+  }
+}
+
+.factsItemSmall {
+  font-size: var(--dc-font-size-gr4);
+  font-family: var(--dc-font-northwestern-display-extra-light);
+  text-align: center;
+}
+
+.factsItemStyled {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-grow: 1;
+  padding: var(--dc-space-gr3);
+  color: var(--dc-color-purple);
+}
+@media (max-width: 767px) {
+  .factsItemStyled {
+    padding: var(--dc-space-gr2);
+  }
+}
+
+.factsStyled {
+  display: flex;
+  justify-content: space-between;
+}

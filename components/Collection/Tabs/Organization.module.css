@@ -1,0 +1,10 @@
+.organizationStyled.organizationStyled :global(.bloom-header-homepage),
+.organizationStyled.organizationStyled :global(.bloom-header-label) {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .override0.override0 {
+    text-align: center;
+  }
+}

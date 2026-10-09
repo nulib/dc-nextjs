@@ -1,7 +1,4 @@
-import {
-  ActionsDialogStyled,
-  Content,
-} from "@/components/Work/ActionsDialog/ActionsDialog.styled";
+import styles from "@/components/Work/ActionsDialog/ActionsDialog.module.css";
 import ExpandableList, {
   ExpandableListItem,
 } from "@/components/Shared/ExpandableList";
@@ -10,7 +7,6 @@ import {
   NULWorkManifest,
 } from "@/types/components/works";
 import React, { useEffect, useState } from "react";
-
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import { Canvas } from "@iiif/presentation-3";
 import ContentStateActiveCanvas from "../ContentState/ActiveCanvas";
@@ -22,10 +18,8 @@ import { getAnnotationBodyType } from "@/lib/iiif/manifest-helpers";
 import { useRouter } from "next/router";
 import useWorkAuth from "@/hooks/useWorkAuth";
 import { useWorkState } from "@/context/work-context";
-
 export const embedWarningMessage =
   "Embed is not available for works restricted to the Northwestern University community";
-
 const DownloadAndShare: React.FC = () => {
   const { workState } = useWorkState();
   const { manifest, work, contentState } = workState;
@@ -33,14 +27,10 @@ const DownloadAndShare: React.FC = () => {
   const [alternateFormatItems, setAlternateFormatItems] = useState<
     LabeledContentResource[]
   >([]);
-
   const router = useRouter();
   const isSharedLinkPage = router.pathname.includes("/shared");
-
   const { isWorkPrivate, isWorkInstitution } = useWorkAuth(work);
-
   const showEmbedWarning = Boolean(isWorkPrivate || isWorkInstitution);
-
   useEffect(() => {
     if (manifest?.items && Array.isArray(manifest?.items)) {
       const imageCanvases = manifest.items.filter(
@@ -53,15 +43,13 @@ const DownloadAndShare: React.FC = () => {
       setAlternateFormatItems(alternateFormatItems);
     }
   }, [manifest]);
-
   if (!manifest || !work) return <></>;
-
   return (
-    <ActionsDialogStyled>
+    <div className={styles.actionsDialogStyled}>
       <ActionsDialogAside>
         {contentState && <ContentStateActiveCanvas />}
       </ActionsDialogAside>
-      <Content>
+      <div className={styles.content}>
         <ExpandableList defaultValue="share-url">
           {!isSharedLinkPage && (
             <ExpandableListItem title="Share Url" value="share-url">
@@ -94,9 +82,8 @@ const DownloadAndShare: React.FC = () => {
             </ExpandableListItem>
           )}
         </ExpandableList>
-      </Content>
-    </ActionsDialogStyled>
+      </div>
+    </div>
   );
 };
-
 export default DownloadAndShare;

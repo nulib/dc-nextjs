@@ -1,0 +1,27 @@
+.styledSearchResultsMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--dc-space-gr2);
+  flex-grow: 1;
+  width: 100%;
+}
+
+/* Alignment is a finite component state. */
+.styledSearchResultsMessage > [data-text-align="left"] {
+  text-align: left;
+}
+.styledSearchResultsMessage > [data-text-align="center"] {
+  text-align: center;
+}
+.styledSearchResultsMessage > [data-text-align="right"] {
+  text-align: right;
+}
+.styledSearchResultsMessage > [data-text-align="start"] {
+  text-align: start;
+}
+.styledSearchResultsMessage > [data-text-align="end"] {
+  text-align: end;
+}
+.styledSearchResultsMessage > [data-text-align="justify"] {
+  text-align: justify;
+}

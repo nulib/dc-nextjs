@@ -1,22 +1,13 @@
+import styles from "@/components/Shared/ExpandableList.module.css";
 import * as Accordion from "@radix-ui/react-accordion";
-
-import {
-  ExpandableListItemHeading,
-  ExpandableListItemIndicator,
-  ExpandableListItemStyled,
-  ExpandableListItemTrigger,
-} from "@/components/Shared/ExpandableList.styled";
 import React, { ReactNode } from "react";
-
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
-
 interface ExpandableListItemProps {
   children: ReactNode | ReactNode[];
   indicator?: string;
   title: string;
   value: string;
 }
-
 export const ExpandableListItem: React.FC<ExpandableListItemProps> = ({
   children,
   indicator,
@@ -24,32 +15,34 @@ export const ExpandableListItem: React.FC<ExpandableListItemProps> = ({
   value,
 }) => {
   return (
-    <ExpandableListItemStyled value={value} key={value}>
+    <Accordion.Item
+      value={value}
+      key={value}
+      data-dc-slot="expandable-list-item"
+      className={styles.expandableListItemStyled}
+    >
       <Accordion.Header asChild>
-        <ExpandableListItemTrigger>
+        <Accordion.Trigger className={styles.expandableListItemTrigger}>
           <IconChevronDown />
-          <ExpandableListItemHeading>{title}</ExpandableListItemHeading>
+          <span className={styles.expandableListItemHeading}>{title}</span>
           {indicator && (
-            <ExpandableListItemIndicator>
+            <span className={styles.expandableListItemIndicator}>
               {indicator}
-            </ExpandableListItemIndicator>
+            </span>
           )}
-        </ExpandableListItemTrigger>
+        </Accordion.Trigger>
       </Accordion.Header>
       <Accordion.Content>{children}</Accordion.Content>
-    </ExpandableListItemStyled>
+    </Accordion.Item>
   );
 };
-
 interface ExpandableListComposition {
   Item: React.FC<ExpandableListItemProps>;
 }
-
 interface ExpandableListProps {
   children: ReactNode | ReactNode[];
   defaultValue?: string;
 }
-
 const ExpandableList: ExpandableListComposition &
   React.FC<ExpandableListProps> = ({ children, defaultValue }) => {
   return (
@@ -62,7 +55,5 @@ const ExpandableList: ExpandableListComposition &
     </Accordion.Root>
   );
 };
-
 ExpandableList.Item = ExpandableListItem;
-
 export default ExpandableList;

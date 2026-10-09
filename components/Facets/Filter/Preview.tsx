@@ -1,22 +1,24 @@
-import { PreviewItem, PreviewList, StyledPreview } from "./Preview.styled";
+import styles from "@/components/Facets/Filter/Preview.module.css";
 import Figure from "@/components/Figure/Figure";
 import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
 import React from "react";
 import { SearchShape } from "@/types/api/response";
-
 interface PreviewProps {
   items: SearchShape[];
 }
-
 const Preview: React.FC<PreviewProps> = ({ items }) => {
   return (
-    <StyledPreview>
+    <div className={styles.styledPreview}>
       <Heading as="h3">Preview Results</Heading>
-      <PreviewList>
+      <ul className={styles.previewList}>
         {items.map((item) => {
           return (
-            <PreviewItem key={item.id} data-testid="facets-filter-preview-item">
+            <li
+              key={item.id}
+              data-testid="facets-filter-preview-item"
+              className={styles.previewItem}
+            >
               <Link href={`/items/${item.id}`}>
                 <Figure
                   data={{
@@ -28,12 +30,11 @@ const Preview: React.FC<PreviewProps> = ({ items }) => {
                   orientation="horizontal"
                 />
               </Link>
-            </PreviewItem>
+            </li>
           );
         })}
-      </PreviewList>
-    </StyledPreview>
+      </ul>
+    </div>
   );
 };
-
 export default Preview;

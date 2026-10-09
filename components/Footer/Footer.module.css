@@ -1,0 +1,179 @@
+.footerStyled {
+  background: var(--dc-color-purple);
+  color: var(--dc-color-white);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  font-family: var(--dc-font-northwestern-sans-light);
+  font-size: var(--dc-font-size-legacy-3);
+  padding: var(--dc-space-legacy-6) 0;
+}
+.footerStyled a {
+  color: var(--dc-color-white);
+  font-family: var(--dc-font-northwestern-sans-light);
+}
+.footerStyled a:hover,
+.footerStyled a:focus {
+  text-decoration: none;
+  color: var(--dc-color-white);
+}
+.footerStyled :global(.hide-label) {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.footerStyled:where([data-is-grey="true"]) {
+  background: var(--dc-color-black80);
+}
+
+.footerContentColumn:global(.contact) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr3);
+}
+.footerContentColumn:global(.contact) span {
+  line-height: 145%;
+}
+.footerContentColumn:global(.contact) div {
+  margin-left: var(--dc-space-gr4);
+  position: relative;
+}
+@media (max-width: 575px) {
+  .footerContentColumn:global(.contact) div {
+    margin-left: 0;
+  }
+}
+@media (max-width: 767px) {
+  .footerContentColumn {
+    margin-bottom: var(--dc-space-legacy-2);
+  }
+}
+
+.footerContentWrapper {
+  width: 100%;
+  display: grid;
+  gap: var(--dc-space-gr4);
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 767px) {
+  .footerContentWrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575px) {
+  .footerContentWrapper {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .footerContentWrapper .footerContentColumn {
+    text-align: center;
+  }
+}
+
+.footerCopyright {
+  color: var(--dc-color-purple10);
+  margin: var(--dc-space-legacy-4) 0 0;
+}
+.footerCopyright > p {
+  line-height: var(--dc-line-height-legacy-6) !important;
+}
+.footerCopyright > p a {
+  border: none;
+  color: inherit;
+  text-decoration: underline;
+}
+
+.footerIcon {
+  background-size: 18px 24px;
+  position: absolute;
+  top: -2px;
+  left: calc(-1 * var(--dc-space-gr4));
+  height: 24px;
+  width: 18px;
+}
+@media (max-width: 575px) {
+  .footerIcon {
+    display: none;
+  }
+}
+
+.footerVersion {
+  color: var(--dc-color-purple10);
+  display: block;
+  font-size: var(--dc-font-size-legacy-1);
+  margin: var(--dc-space-legacy-2) 0 0;
+  opacity: 0.5;
+}
+.footerVersion[href]:hover,
+.footerVersion[href]:focus {
+  opacity: 0.8;
+}
+
+.footerList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.footerList li {
+  padding-bottom: var(--dc-space-legacy-3);
+}
+.footerList a {
+  border-bottom: 0;
+  text-decoration: underline;
+}
+
+.social {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  margin: var(--dc-space-gr1);
+  width: 39px;
+  height: 39px;
+  font-size: 0;
+  text-indent: -9999px;
+  background: url(https://common.northwestern.edu/v8/css/images/icons/social-media-icons.svg);
+  background-color: #fff;
+  transition: background 0.3s;
+  border: 1px solid #fff;
+}
+.social:hover,
+.social:focus {
+  background-color: #b6acd1;
+}
+.social:global(.facebook) {
+  background-position: 0 0;
+}
+.social:global(.facebook):hover,
+.social:global(.facebook):focus {
+  background-position: 0 -39px;
+}
+.social:global(.twitter) {
+  background-position: -39px 0;
+}
+.social:global(.twitter):hover,
+.social:global(.twitter):focus {
+  background-position: -39px -39px;
+}
+.social:global(.instagram) {
+  background-position: -78px 0;
+}
+.social:global(.instagram):hover,
+.social:global(.instagram):focus {
+  background-position: -78px -39px;
+}
+.social:global(.youtube) {
+  background-position: -156px 0;
+}
+.social:global(.youtube):hover,
+.social:global(.youtube):focus {
+  background-position: -156px -39px;
+}
+.social:global(.wordpress) {
+  background-position: -234px 0;
+}
+.social:global(.wordpress):hover,
+.social:global(.wordpress):focus {
+  background-position: -234px -39px;
+}

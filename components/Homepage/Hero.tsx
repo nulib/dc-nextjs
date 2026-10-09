@@ -1,13 +1,11 @@
+import styles from "@/components/Homepage/Hero.module.css";
 import Hero from "@/components/Hero/Hero";
-import { HomepageHeroStyled } from "./Hero.styled";
 import { defaultCollection } from "@/lib/constants/homepage";
-
 const HomepageHero = () => {
   return (
-    <HomepageHeroStyled>
+    <div className={styles.homepageHeroStyled}>
       <Hero collection={defaultCollection} />
-    </HomepageHeroStyled>
+    </div>
   );
 };
-
 export default HomepageHero;

@@ -1,0 +1,5 @@
+.simpleSelect {
+  border-color: var(--dc-color-black10);
+  border-radius: 6px;
+  padding: var(--dc-space-gr1);
+}

@@ -1,3 +1,4 @@
+import styles from "@/components/SharedLink/SharedLink.module.css";
 import Announcement from "@/components/Shared/Announcement";
 import Container from "@/components/Shared/Container";
 import { ErrorBoundary } from "react-error-boundary";
@@ -10,29 +11,19 @@ import WorkTopInfo from "@/components/Work/TopInfo";
 import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
 import { formatDateLong } from "@/lib/utils/date-helpers";
 import { getWorkSliders } from "@/lib/work-helpers";
-import { styled } from "@/stitches.config";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
-
-const BoldText = styled("strong", {
-  fontFamily: "$northwesternSansBold",
-  fontWeight: "400",
-});
-
 interface SharedLinkProps {
   linkExpiration?: string;
   manifest: Manifest | null;
   work: Work | null;
 }
-
 const SharedLink: React.FC<SharedLinkProps> = ({
   linkExpiration,
   manifest,
   work,
 }) => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
-
   const related = work ? getWorkSliders(work, isAI) : [];
-
   return (
     <div data-testid="shared-link-wrapper">
       {(!work || !manifest) && (
@@ -60,7 +51,10 @@ const SharedLink: React.FC<SharedLinkProps> = ({
               </p>
               <p>
                 This work was shared with you via a temporary link. It will
-                expire <BoldText>{formatDateLong(linkExpiration)}</BoldText>
+                expire{" "}
+                <strong className={styles.boldText}>
+                  {formatDateLong(linkExpiration)}
+                </strong>
               </p>
             </div>
           </Announcement>
@@ -76,5 +70,4 @@ const SharedLink: React.FC<SharedLinkProps> = ({
     </div>
   );
 };
-
 export default SharedLink;

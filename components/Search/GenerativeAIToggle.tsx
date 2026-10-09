@@ -1,68 +1,66 @@
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import checkboxStyles from "@/components/Shared/Checkbox.module.css";
+import generativeAIStyles from "@/components/Search/GenerativeAI.module.css";
+import tooltipStyles from "@/components/Shared/Tooltip.module.css";
 import * as Tooltip from "@radix-ui/react-tooltip";
-
 import {
   AI_DISCLAIMER,
   AI_TOGGLE_LABEL,
   AI_SYS_PROMPT_MSG,
 } from "@/lib/constants/common";
-import {
-  CheckboxIndicator,
-  CheckboxRoot as CheckboxRootStyled,
-} from "@/components/Shared/Checkbox.styled";
-import { GenerativeAIToggleWrapper } from "@/components/Search/GenerativeAI.styled";
-import {
-  TooltipArrow,
-  TooltipBody,
-  TooltipContent,
-  TooltipTrigger,
-} from "../Shared/Tooltip.styled";
-
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
-import React from "react";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
-
 function GenerativeAITooltip() {
   return (
     <Tooltip.Provider delayDuration={20}>
       <Tooltip.Root data-testid="tooltip">
-        <TooltipTrigger>
+        <Tooltip.Trigger className={tooltipStyles.tooltipTrigger}>
           <IconInfo />
-        </TooltipTrigger>
+        </Tooltip.Trigger>
         <Tooltip.Portal>
-          <TooltipContent side="bottom" sideOffset={3} collisionPadding={19}>
-            <TooltipArrow />
-            <TooltipBody>
+          <Tooltip.Content
+            side="bottom"
+            sideOffset={3}
+            collisionPadding={19}
+            className={tooltipStyles.tooltipContent}
+          >
+            <Tooltip.Arrow className={tooltipStyles.tooltipArrow} />
+            <div className={tooltipStyles.tooltipBody}>
               {AI_DISCLAIMER}
               <p>
                 <AI_SYS_PROMPT_MSG />
               </p>
-            </TooltipBody>
-          </TooltipContent>
+            </div>
+          </Tooltip.Content>
         </Tooltip.Portal>
       </Tooltip.Root>
     </Tooltip.Provider>
   );
 }
-
 export default function GenerativeAIToggle() {
   const { isChecked, handleCheckChange } = useGenerativeAISearchToggle();
-
   return (
     <>
-      <GenerativeAIToggleWrapper data-testid="generative-ai-toggle">
-        <CheckboxRootStyled
+      <div
+        data-testid="generative-ai-toggle"
+        className={generativeAIStyles.generativeAIToggleWrapper}
+      >
+        <CheckboxPrimitive.Root
           checked={isChecked}
           id="isGenerativeAI"
           onCheckedChange={handleCheckChange}
+          className={checkboxStyles.checkboxRoot}
         >
-          <CheckboxIndicator>
+          <CheckboxPrimitive.Indicator
+            className={checkboxStyles.checkboxIndicator}
+          >
             <IconCheck />
-          </CheckboxIndicator>
-        </CheckboxRootStyled>
+          </CheckboxPrimitive.Indicator>
+        </CheckboxPrimitive.Root>
         <label htmlFor="isGenerativeAI">{AI_TOGGLE_LABEL}</label>
         <GenerativeAITooltip />
-      </GenerativeAIToggleWrapper>
+      </div>
     </>
   );
 }

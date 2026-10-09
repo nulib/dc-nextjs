@@ -1,0 +1,4 @@
+.styledChat {
+  padding: var(--dc-space-gr5) 0;
+  position: relative;
+}

@@ -1,0 +1,10 @@
+.styledSharedTextArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr1);
+  margin-bottom: var(--dc-space-gr2);
+}
+.styledSharedTextArea span {
+  font-size: var(--dc-font-size-gr2) !important;
+  color: var(--dc-color-black50);
+}

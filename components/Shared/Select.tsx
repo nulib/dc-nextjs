@@ -1,25 +1,15 @@
+import styles from "@/components/Shared/Select.module.css";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
-import {
-  StyledContent,
-  StyledIcon,
-  StyledItem,
-  StyledItemIndicator,
-  StyledScrollDownButton,
-  StyledScrollUpButton,
-  StyledTrigger,
-} from "@/components/Shared/Select.styled";
 import React from "react";
-
 type SelectProps = {
   children: React.ReactNode;
   defaultValue: string;
 };
-
 /**
  * Example implementation
 
@@ -30,49 +20,60 @@ type SelectProps = {
     <SelectItem value="2">Genre</SelectItem>
   </Select>
  */
-
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   function Select({ children, ...props }, forwardedRef) {
     return (
       <SelectPrimitive.Root {...props}>
-        <StyledTrigger ref={forwardedRef}>
+        <SelectPrimitive.SelectTrigger
+          ref={forwardedRef}
+          className={styles.styledTrigger}
+        >
           <SelectPrimitive.Value />
 
-          <StyledIcon>
+          <SelectPrimitive.SelectIcon className={styles.styledIcon}>
             <ChevronDownIcon />
-          </StyledIcon>
-        </StyledTrigger>
+          </SelectPrimitive.SelectIcon>
+        </SelectPrimitive.SelectTrigger>
 
         <SelectPrimitive.Portal>
-          <StyledContent>
-            <StyledScrollUpButton>
+          <SelectPrimitive.Content className={styles.styledContent}>
+            <SelectPrimitive.ScrollUpButton
+              className={styles.styledScrollUpButton}
+            >
               <ChevronUpIcon />
-            </StyledScrollUpButton>
+            </SelectPrimitive.ScrollUpButton>
 
             <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
 
-            <StyledScrollDownButton>
+            <SelectPrimitive.ScrollDownButton
+              className={styles.styledScrollDownButton}
+            >
               <ChevronDownIcon />
-            </StyledScrollDownButton>
-          </StyledContent>
+            </SelectPrimitive.ScrollDownButton>
+          </SelectPrimitive.Content>
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
     );
   },
 );
-
-type SelectItemProps = { children: React.ReactNode; value: string };
-
+type SelectItemProps = {
+  children: React.ReactNode;
+  value: string;
+};
 export const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
   function SelectItem({ children, ...props }, forwardedRef) {
     return (
-      <StyledItem {...props} ref={forwardedRef}>
+      <SelectPrimitive.Item
+        {...props}
+        ref={forwardedRef}
+        className={styles.styledItem}
+      >
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
 
-        <StyledItemIndicator>
+        <SelectPrimitive.ItemIndicator className={styles.styledItemIndicator}>
           <CheckIcon />
-        </StyledItemIndicator>
-      </StyledItem>
+        </SelectPrimitive.ItemIndicator>
+      </SelectPrimitive.Item>
     );
   },
 );

@@ -1,20 +1,7 @@
+import tooltipStyles from "@/components/Shared/Tooltip.module.css";
+import stackStyles from "@/components/Chat/Stack/Stack.module.css";
 import * as Tooltip from "@radix-ui/react-tooltip";
-
 import React, { useEffect, useState } from "react";
-import {
-  StyledStack,
-  StyledStackContent,
-  StyledStackDismiss,
-  StyledStackFillerItem,
-  StyledStackItem,
-} from "./Stack.styled";
-import {
-  TooltipArrow,
-  TooltipBody,
-  TooltipContent,
-  TooltipTrigger,
-} from "../../Shared/Tooltip.styled";
-
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ChatContext } from "@/types/context/search-context";
 import Figure from "@/components/Figure/Figure";
@@ -24,15 +11,12 @@ import { buildQuery } from "@/lib/queries/builder";
 import { convertContextFacetsToUrlFacets } from "@/lib/utils/facet-helpers";
 import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { getQueryRepresentativeThumbnail } from "@/lib/dc-api";
-import { isSanitizedWork } from "@/lib/work-helpers";
-import { rem } from "@/styles/global";
-
+import { rem } from "@/styles/metrics";
 interface StackProps {
   context: ChatContext;
   dismissCallback?: () => void;
   isDismissable: boolean;
 }
-
 /**
  * Renders a stack of documents
  */
@@ -43,16 +27,13 @@ const Stack = ({
 }: StackProps) => {
   const [isDismissed, setIsDismissed] = useState(false);
   const [thumbnail, setThumbnail] = useState<string>("");
-
   const label = createResultsMessageFromContext(context);
-
   function handleDismiss() {
     setIsDismissed(true);
     if (dismissCallback) {
       dismissCallback();
     }
   }
-
   useEffect(() => {
     (async () => {
       const body: ApiSearchRequestBody = buildQuery(
@@ -63,29 +44,32 @@ const Stack = ({
         },
         false,
       );
-
       const thumb = await getQueryRepresentativeThumbnail(body, 4 * rem);
-
       setThumbnail(thumb || "");
     })();
   }, [context.query, context.facets]);
-
   /**
    * If there is no results message, we do not render the stack.
    */
   if (!label) return null;
-
   return (
-    <StyledStack
+    <div
       data-testid="stack"
       data-isdismissed={isDismissed}
       data-results-message={label}
+      data-dc-slot="stack"
+      className={stackStyles.styledStack}
     >
-      <StyledStackContent>
+      <div
+        data-dc-slot="stack"
+        className={[stackStyles.styledStack, stackStyles.styledStackContent]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <Tooltip.Provider delayDuration={20}>
           <Tooltip.Root data-testid="stack-tooltip">
-            <TooltipTrigger>
-              <StyledStackItem>
+            <Tooltip.Trigger className={tooltipStyles.tooltipTrigger}>
+              <div className={stackStyles.styledStackItem}>
                 <Figure
                   data={{
                     aspectRatio: 1,
@@ -94,36 +78,51 @@ const Stack = ({
                   }}
                   hideCaption={true}
                 />
-              </StyledStackItem>
-            </TooltipTrigger>
+              </div>
+            </Tooltip.Trigger>
             <Tooltip.Portal>
-              <TooltipContent
+              <Tooltip.Content
                 side="bottom"
                 sideOffset={3}
                 collisionPadding={19}
+                className={tooltipStyles.tooltipContent}
               >
-                <TooltipArrow />
-                <TooltipBody>
+                <Tooltip.Arrow className={tooltipStyles.tooltipArrow} />
+                <div className={tooltipStyles.tooltipBody}>
                   <SearchResultsMessage label={label} textAlign="center" />
-                </TooltipBody>
-              </TooltipContent>
+                </div>
+              </Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
         </Tooltip.Provider>
-        <StyledStackFillerItem></StyledStackFillerItem>
-        <StyledStackFillerItem></StyledStackFillerItem>
-      </StyledStackContent>
+        <div
+          className={[
+            stackStyles.styledStackItem,
+            stackStyles.styledStackFillerItem,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        ></div>
+        <div
+          className={[
+            stackStyles.styledStackItem,
+            stackStyles.styledStackFillerItem,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        ></div>
+      </div>
       {isDismissable && (
-        <StyledStackDismiss
+        <button
           onClick={() => handleDismiss()}
           aria-label="Remove results"
           data-testid="stack-dismiss"
+          className={stackStyles.styledStackDismiss}
         >
           <IconClear title="Remove results" />
-        </StyledStackDismiss>
+        </button>
       )}
-    </StyledStack>
+    </div>
   );
 };
-
 export default React.memo(Stack);

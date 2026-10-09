@@ -1,0 +1,47 @@
+.aIProvenanceStyled {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--dc-space-gr1);
+  margin-bottom: var(--dc-space-gr3);
+  padding: var(--dc-space-gr1) var(--dc-space-gr2);
+  border-radius: 50px;
+  background-color: var(--dc-color-purple10);
+  color: var(--dc-color-purple);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr2);
+  line-height: 1;
+}
+.aIProvenanceStyled > svg {
+  height: var(--dc-size-gr2);
+  width: var(--dc-size-gr2);
+  fill: var(--dc-color-purple);
+  flex-shrink: 0;
+}
+.aIProvenanceStyled button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+.aIProvenanceStyled button svg {
+  height: var(--dc-size-gr2);
+  width: var(--dc-size-gr2);
+  fill: var(--dc-color-purple60);
+  transition: fill 200ms ease-in-out;
+}
+.aIProvenanceStyled button:hover svg,
+.aIProvenanceStyled button:focus-visible svg {
+  fill: var(--dc-color-purple);
+}
+
+.aIProvenanceFieldList {
+  margin: 0 0 var(--dc-space-gr2);
+  padding-left: var(--dc-space-gr3);
+  list-style: disc;
+}
+
+.aIProvenanceStatus {
+  opacity: 0.8;
+}

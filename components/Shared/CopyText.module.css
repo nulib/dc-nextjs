@@ -1,0 +1,34 @@
+.styledCopyText {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--dc-color-purple);
+  font-weight: 700;
+  font-family: inherit;
+  font-size: var(--dc-font-size-gr3);
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.05em + 2px);
+  text-decoration-color: var(--dc-color-purple10);
+  position: relative;
+  z-index: 0;
+}
+.styledCopyText svg {
+  height: calc(var(--dc-size-gr3) - 3px);
+  margin-right: var(--dc-space-gr1);
+}
+
+.styledStatus {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  color: var(--dc-color-dark-blue-a);
+  border-radius: 3px;
+  font-size: var(--dc-font-size-gr1);
+  text-transform: uppercase;
+  position: absolute;
+  right: -1.25em;
+}

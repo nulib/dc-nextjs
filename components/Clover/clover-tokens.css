@@ -1,0 +1,11 @@
+:root {
+  --clover-color-primary: var(--dc-color-black);
+  --clover-color-primary-alt: var(--dc-color-black80);
+  --clover-color-primary-muted: var(--dc-color-black50);
+  --clover-color-accent: var(--dc-color-purple);
+  --clover-color-accent-alt: var(--dc-color-purple120);
+  --clover-color-accent-muted: var(--dc-color-purple30);
+  --clover-color-secondary: var(--dc-color-white);
+  --clover-color-secondary-alt: var(--dc-color-black10);
+  --clover-color-secondary-muted: var(--dc-color-gray6);
+}

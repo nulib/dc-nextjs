@@ -1,0 +1,122 @@
+.styledIIIFContentState form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr2);
+  padding-top: var(--dc-space-gr2);
+}
+.styledIIIFContentState form label {
+  display: flex;
+  gap: var(--dc-space-gr2);
+  font-size: var(--dc-font-size-gr3);
+}
+.styledIIIFContentState form label[aria-disabled="true"] {
+  color: var(--dc-color-black20);
+}
+.styledIIIFContentState form label[aria-disabled="true"] textarea {
+  opacity: 0.5;
+}
+.styledIIIFContentState form label[data-element="textarea"] {
+  display: flex;
+  flex-direction: column;
+  padding: var(--dc-space-gr1) 0 0;
+}
+.styledIIIFContentState form label[data-element="textarea"] textarea {
+  background: var(--dc-color-gray6);
+  border: none;
+  resize: none;
+  height: 85px;
+  border-radius: 3px;
+  padding: 1rem;
+  font-size: var(--dc-font-size-gr3) !important;
+  font-family: var(--dc-font-northwestern-sans-regular);
+}
+
+.styledIIIFContentStateButton {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  align-items: center;
+}
+.styledIIIFContentStateButton button {
+  background: var(--dc-color-purple);
+  color: var(--dc-color-white) !important;
+  font-weight: 400;
+  padding: var(--dc-space-gr2) var(--dc-space-gr2);
+  text-decoration: none;
+}
+.styledIIIFContentStateButton button:hover,
+.styledIIIFContentStateButton button:focus {
+  background: var(--dc-color-purple120);
+}
+.styledIIIFContentStateButton button span {
+  right: calc(-1 * var(--dc-space-gr3)) !important;
+  font-size: var(--dc-font-size-gr2);
+}
+
+.styledIIIFContentStateOptions {
+  font-size: var(--dc-font-size-gr3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr1);
+}
+.styledIIIFContentStateOptions label {
+  font-size: var(--dc-font-size-gr3);
+  gap: var(--dc-space-gr1);
+  align-items: center;
+  white-space: nowrap;
+}
+.styledIIIFContentStateOptions label em {
+  color: var(--dc-color-black50);
+  font-style: normal;
+  font-family: var(--dc-font-northwestern-sans-bold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.styledIIIFContentStateOptions input {
+  margin-right: var(--dc-space-gr1);
+}
+.styledIIIFContentStateOptions textarea {
+  height: var(--dc-size-gr6) !important;
+  border: 1px solid var(--dc-color-black20);
+  padding: var(--dc-space-gr2);
+  border-radius: 3px;
+}
+
+.styledIIIFContentStateActiveFile {
+  display: flex;
+  align-items: center;
+  font-family: var(--dc-font-northwestern-sans-bold);
+  gap: var(--dc-space-gr2);
+  font-size: var(--dc-font-size-gr3);
+  padding: 0 0 var(--dc-space-gr2);
+}
+.styledIIIFContentStateActiveFile div {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: var(--dc-space-gr1);
+}
+.styledIIIFContentStateActiveFile div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.styledIIIFContentStateActiveFile div span:last-child {
+  color: var(--dc-color-black50);
+  font-size: var(--dc-font-size-gr2);
+  font-family: var(--dc-font-northwestern-sans-regular);
+}
+.styledIIIFContentStateActiveFile img {
+  object-fit: cover;
+  border-radius: 2px;
+  margin-top: -2px;
+  color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.styledIIIFContentStateInner {
+  flex-grow: 1;
+}
+
+.override0.override0 {
+  margin-top: 0;
+}

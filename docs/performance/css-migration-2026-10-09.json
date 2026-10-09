@@ -1,0 +1,1382 @@
+{
+  "date": "2026-10-09",
+  "units": {
+    "size": "bytes, per-file gzip level 6",
+    "time": "milliseconds"
+  },
+  "conditions": {
+    "node": "24.11.1",
+    "next": "14.2.4",
+    "browser": "Chromium 141.0.7390.37",
+    "viewport": "1440 x 900",
+    "cache": "new browser context and disabled HTTP cache for every navigation",
+    "cpuSlowdown": 4,
+    "downloadMbps": 10,
+    "uploadMbps": 5,
+    "latencyMs": 40,
+    "warmupSamplesPerRouteVersion": 1,
+    "measuredSamplesPerRouteVersion": 9,
+    "versionOrder": "alternated each round",
+    "content": "identical fixture API, 12 mixed-aspect-ratio search results, public image Work and Collection",
+    "fonts": "same original font bytes served from local cache",
+    "remoteImages": "same local representative JPEG",
+    "analytics": "blocked",
+    "prefetch": "requests explicitly marked prefetch blocked; some Next script preloads can still occur",
+    "scope": "entire local migration including Clover 3.16.1 to 4.0.0-rc.2 and dependency changes",
+    "networkQualification": "CDP requested 10 Mbps down, 5 Mbps up, and 40 ms latency. Playwright interception bypasses parts of network emulation (local document TTFB was 6\u201311 ms). These are controlled local comparison measurements, not a calibrated WAN/device profile.",
+    "baselineArchiveSHA256": "ed1220dc92530afdf41aeacb653dd1dab7c9665cf09f88a389b1e0868e0644a1"
+  },
+  "routes": [
+    {
+      "name": "Home",
+      "path": "/",
+      "bundles": {
+        "before": {
+          "js": 253789,
+          "css": 3992,
+          "rawJs": 792954,
+          "rawCss": 13602,
+          "files": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/546-2707e30536b4be16.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/index-9f8ff8a63c98f2de.js"
+          ]
+        },
+        "after": {
+          "js": 216845,
+          "css": 13199,
+          "rawJs": 675299,
+          "rawCss": 58509,
+          "files": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/2714-69eed64e5e14a74d.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/85a57d499ec273e6.css",
+            "static/chunks/pages/index-a407ed27830bdd3a.js"
+          ]
+        }
+      },
+      "timings": {
+        "before": {
+          "count": 9,
+          "fcpMedian": 668,
+          "fcpQ1": 664,
+          "fcpQ3": 692,
+          "fcpMin": 656,
+          "fcpMax": 788,
+          "readyMedian": 664.6000000238419,
+          "ttfbMedian": 6.5,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 788,
+              "contentPresent": 798,
+              "ttfb": 16.200000047683716
+            },
+            {
+              "round": 1,
+              "fcp": 668,
+              "contentPresent": 657.2999999523163,
+              "ttfb": 7.399999976158142
+            },
+            {
+              "round": 2,
+              "fcp": 664,
+              "contentPresent": 658.1999999284744,
+              "ttfb": 8.299999952316284
+            },
+            {
+              "round": 3,
+              "fcp": 656,
+              "contentPresent": 647.6000000238419,
+              "ttfb": 5.300000071525574
+            },
+            {
+              "round": 4,
+              "fcp": 668,
+              "contentPresent": 664.6000000238419,
+              "ttfb": 5.5
+            },
+            {
+              "round": 5,
+              "fcp": 684,
+              "contentPresent": 679.3999999761581,
+              "ttfb": 6.5
+            },
+            {
+              "round": 6,
+              "fcp": 660,
+              "contentPresent": 661.8999999761581,
+              "ttfb": 6.299999952316284
+            },
+            {
+              "round": 7,
+              "fcp": 696,
+              "contentPresent": 694.5,
+              "ttfb": 17.700000047683716
+            },
+            {
+              "round": 8,
+              "fcp": 692,
+              "contentPresent": 694.2999999523163,
+              "ttfb": 5.799999952316284
+            }
+          ]
+        },
+        "after": {
+          "count": 9,
+          "fcpMedian": 608,
+          "fcpQ1": 600,
+          "fcpQ3": 612,
+          "fcpMin": 600,
+          "fcpMax": 620,
+          "readyMedian": 601.2000000476837,
+          "ttfbMedian": 6.600000023841858,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 608,
+              "contentPresent": 612.1000000238419,
+              "ttfb": 8.399999976158142
+            },
+            {
+              "round": 1,
+              "fcp": 612,
+              "contentPresent": 607,
+              "ttfb": 9.600000023841858
+            },
+            {
+              "round": 2,
+              "fcp": 600,
+              "contentPresent": 593.1999999284744,
+              "ttfb": 5.399999976158142
+            },
+            {
+              "round": 3,
+              "fcp": 600,
+              "contentPresent": 591.3999999761581,
+              "ttfb": 5.700000047683716
+            },
+            {
+              "round": 4,
+              "fcp": 600,
+              "contentPresent": 604.5,
+              "ttfb": 5.5
+            },
+            {
+              "round": 5,
+              "fcp": 620,
+              "contentPresent": 612,
+              "ttfb": 5.599999904632568
+            },
+            {
+              "round": 6,
+              "fcp": 608,
+              "contentPresent": 590.1000000238419,
+              "ttfb": 6.600000023841858
+            },
+            {
+              "round": 7,
+              "fcp": 612,
+              "contentPresent": 601.2000000476837,
+              "ttfb": 7
+            },
+            {
+              "round": 8,
+              "fcp": 616,
+              "contentPresent": 593.3999999761581,
+              "ttfb": 6.700000047683716
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search",
+      "path": "/search",
+      "bundles": {
+        "before": {
+          "js": 343570,
+          "css": 3992,
+          "rawJs": 1104035,
+          "rawCss": 13602,
+          "files": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/566-8433d000c121eb3b.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/chunks/478-b8cc96242ffba403.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/search-e7418ea1dab7a101.js"
+          ]
+        },
+        "after": {
+          "js": 308783,
+          "css": 20641,
+          "rawJs": 987088,
+          "rawCss": 107036,
+          "files": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/2289-edd1213e14c36a10.js",
+            "static/chunks/7812-ebe40c9378b7ef47.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/a9c2a4a2e15fe3dc.css",
+            "static/chunks/pages/search-e0929b4212f8d741.js"
+          ]
+        }
+      },
+      "timings": {
+        "before": {
+          "count": 9,
+          "fcpMedian": 692,
+          "fcpQ1": 684,
+          "fcpQ3": 696,
+          "fcpMin": 676,
+          "fcpMax": 712,
+          "readyMedian": 827.2999999523163,
+          "ttfbMedian": 8,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 712,
+              "contentPresent": 869.0999999046326,
+              "ttfb": 10
+            },
+            {
+              "round": 1,
+              "fcp": 708,
+              "contentPresent": 867.8999999761581,
+              "ttfb": 8.899999976158142
+            },
+            {
+              "round": 2,
+              "fcp": 692,
+              "contentPresent": 821.0999999046326,
+              "ttfb": 7.899999976158142
+            },
+            {
+              "round": 3,
+              "fcp": 684,
+              "contentPresent": 822.6999999284744,
+              "ttfb": 7.5
+            },
+            {
+              "round": 4,
+              "fcp": 696,
+              "contentPresent": 848.6000000238419,
+              "ttfb": 7.800000071525574
+            },
+            {
+              "round": 5,
+              "fcp": 688,
+              "contentPresent": 824.6999999284744,
+              "ttfb": 8.5
+            },
+            {
+              "round": 6,
+              "fcp": 676,
+              "contentPresent": 823.1999999284744,
+              "ttfb": 7.799999952316284
+            },
+            {
+              "round": 7,
+              "fcp": 684,
+              "contentPresent": 827.2999999523163,
+              "ttfb": 8.5
+            },
+            {
+              "round": 8,
+              "fcp": 692,
+              "contentPresent": 831,
+              "ttfb": 8
+            }
+          ]
+        },
+        "after": {
+          "count": 9,
+          "fcpMedian": 640,
+          "fcpQ1": 628,
+          "fcpQ3": 648,
+          "fcpMin": 628,
+          "fcpMax": 672,
+          "readyMedian": 759.7000000476837,
+          "ttfbMedian": 7.700000047683716,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 672,
+              "contentPresent": 801.5,
+              "ttfb": 9.100000023841858
+            },
+            {
+              "round": 1,
+              "fcp": 628,
+              "contentPresent": 746.2000000476837,
+              "ttfb": 7.399999976158142
+            },
+            {
+              "round": 2,
+              "fcp": 628,
+              "contentPresent": 749.6000000238419,
+              "ttfb": 9
+            },
+            {
+              "round": 3,
+              "fcp": 644,
+              "contentPresent": 758.5,
+              "ttfb": 6.399999976158142
+            },
+            {
+              "round": 4,
+              "fcp": 672,
+              "contentPresent": 783.8000000715256,
+              "ttfb": 8.200000047683716
+            },
+            {
+              "round": 5,
+              "fcp": 628,
+              "contentPresent": 759.7000000476837,
+              "ttfb": 7.700000047683716
+            },
+            {
+              "round": 6,
+              "fcp": 640,
+              "contentPresent": 752.6000000238419,
+              "ttfb": 7.300000071525574
+            },
+            {
+              "round": 7,
+              "fcp": 648,
+              "contentPresent": 768.3999999761581,
+              "ttfb": 7.399999976158142
+            },
+            {
+              "round": 8,
+              "fcp": 640,
+              "contentPresent": 765,
+              "ttfb": 8.600000023841858
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Collection",
+      "path": "/collections/[id]",
+      "bundles": {
+        "before": {
+          "js": 309007,
+          "css": 3992,
+          "rawJs": 976591,
+          "rawCss": 13602,
+          "files": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/546-2707e30536b4be16.js",
+            "static/chunks/293-2bd8ecfc8f1fe66f.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/479-f06647bd0db20351.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/collections/[id]-764ff156b6ca181e.js"
+          ]
+        },
+        "after": {
+          "js": 281117,
+          "css": 13798,
+          "rawJs": 886122,
+          "rawCss": 61875,
+          "files": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/2714-69eed64e5e14a74d.js",
+            "static/chunks/8829-7d6ca6a9b6b59267.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/4696-99fdf1646250a8e5.js",
+            "static/chunks/2289-edd1213e14c36a10.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/chunks/4659-cc98b2755d2113ff.js",
+            "static/css/4fce49ab4334e25e.css",
+            "static/chunks/pages/collections/[id]-e2c71d1f7220b1c7.js"
+          ]
+        }
+      },
+      "timings": {
+        "before": {
+          "count": 9,
+          "fcpMedian": 668,
+          "fcpQ1": 652,
+          "fcpQ3": 676,
+          "fcpMin": 652,
+          "fcpMax": 680,
+          "readyMedian": 782,
+          "ttfbMedian": 9.799999952316284,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 652,
+              "contentPresent": 785.5,
+              "ttfb": 10.399999976158142
+            },
+            {
+              "round": 1,
+              "fcp": 652,
+              "contentPresent": 782,
+              "ttfb": 9.399999976158142
+            },
+            {
+              "round": 2,
+              "fcp": 668,
+              "contentPresent": 758.1000000238419,
+              "ttfb": 9.899999976158142
+            },
+            {
+              "round": 3,
+              "fcp": 652,
+              "contentPresent": 777.8999999761581,
+              "ttfb": 9
+            },
+            {
+              "round": 4,
+              "fcp": 680,
+              "contentPresent": 764.3999999761581,
+              "ttfb": 11.399999976158142
+            },
+            {
+              "round": 5,
+              "fcp": 668,
+              "contentPresent": 765.5,
+              "ttfb": 9.199999928474426
+            },
+            {
+              "round": 6,
+              "fcp": 676,
+              "contentPresent": 791.6000000238419,
+              "ttfb": 8.700000047683716
+            },
+            {
+              "round": 7,
+              "fcp": 676,
+              "contentPresent": 800.8000000715256,
+              "ttfb": 9.899999976158142
+            },
+            {
+              "round": 8,
+              "fcp": 672,
+              "contentPresent": 812.1999999284744,
+              "ttfb": 9.799999952316284
+            }
+          ]
+        },
+        "after": {
+          "count": 9,
+          "fcpMedian": 604,
+          "fcpQ1": 596,
+          "fcpQ3": 608,
+          "fcpMin": 580,
+          "fcpMax": 632,
+          "readyMedian": 689.2999999523163,
+          "ttfbMedian": 8.800000071525574,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 616,
+              "contentPresent": 704.6000000238419,
+              "ttfb": 13.5
+            },
+            {
+              "round": 1,
+              "fcp": 604,
+              "contentPresent": 684.1000000238419,
+              "ttfb": 11
+            },
+            {
+              "round": 2,
+              "fcp": 604,
+              "contentPresent": 693.1000000238419,
+              "ttfb": 11
+            },
+            {
+              "round": 3,
+              "fcp": 580,
+              "contentPresent": 686.1999999284744,
+              "ttfb": 8.399999976158142
+            },
+            {
+              "round": 4,
+              "fcp": 632,
+              "contentPresent": 711.1000000238419,
+              "ttfb": 8.800000071525574
+            },
+            {
+              "round": 5,
+              "fcp": 596,
+              "contentPresent": 681,
+              "ttfb": 7.700000047683716
+            },
+            {
+              "round": 6,
+              "fcp": 592,
+              "contentPresent": 687.1999999284744,
+              "ttfb": 8.199999928474426
+            },
+            {
+              "round": 7,
+              "fcp": 600,
+              "contentPresent": 689.2999999523163,
+              "ttfb": 9.5
+            },
+            {
+              "round": 8,
+              "fcp": 608,
+              "contentPresent": 691.6000000238419,
+              "ttfb": 8.700000047683716
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Work",
+      "path": "/items/[...id]",
+      "bundles": {
+        "before": {
+          "js": 328160,
+          "css": 3992,
+          "rawJs": 1025368,
+          "rawCss": 13602,
+          "files": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/293-2bd8ecfc8f1fe66f.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/479-f06647bd0db20351.js",
+            "static/chunks/288-3f6b729225816e6d.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/chunks/478-b8cc96242ffba403.js",
+            "static/chunks/880-0b2fa045de3e35da.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/items/[...id]-adcd772333d07240.js"
+          ]
+        },
+        "after": {
+          "js": 293823,
+          "css": 17014,
+          "rawJs": 917740,
+          "rawCss": 81531,
+          "files": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/8829-7d6ca6a9b6b59267.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/4696-99fdf1646250a8e5.js",
+            "static/chunks/8048-ac47c85eb51039ef.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/chunks/4659-cc98b2755d2113ff.js",
+            "static/css/0158593dc3845d7f.css",
+            "static/chunks/4857-7c983bfb0d420e87.js",
+            "static/css/3bb8af82a0892a18.css",
+            "static/chunks/pages/items/[...id]-5657384fa290588c.js"
+          ]
+        }
+      },
+      "timings": {
+        "before": {
+          "count": 9,
+          "fcpMedian": 680,
+          "fcpQ1": 672,
+          "fcpQ3": 684,
+          "fcpMin": 664,
+          "fcpMax": 700,
+          "readyMedian": 845.4000000953674,
+          "ttfbMedian": 10.700000047683716,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 680,
+              "contentPresent": 861.3999999761581,
+              "ttfb": 11.199999928474426
+            },
+            {
+              "round": 1,
+              "fcp": 672,
+              "contentPresent": 836.7000000476837,
+              "ttfb": 10.700000047683716
+            },
+            {
+              "round": 2,
+              "fcp": 672,
+              "contentPresent": 845.4000000953674,
+              "ttfb": 9
+            },
+            {
+              "round": 3,
+              "fcp": 680,
+              "contentPresent": 845.5,
+              "ttfb": 9.700000047683716
+            },
+            {
+              "round": 4,
+              "fcp": 688,
+              "contentPresent": 869.2999999523163,
+              "ttfb": 15.799999952316284
+            },
+            {
+              "round": 5,
+              "fcp": 684,
+              "contentPresent": 855.8000000715256,
+              "ttfb": 10.300000071525574
+            },
+            {
+              "round": 6,
+              "fcp": 664,
+              "contentPresent": 832.7000000476837,
+              "ttfb": 10.700000047683716
+            },
+            {
+              "round": 7,
+              "fcp": 700,
+              "contentPresent": 829.8999999761581,
+              "ttfb": 13.399999976158142
+            },
+            {
+              "round": 8,
+              "fcp": 668,
+              "contentPresent": 802.7000000476837,
+              "ttfb": 10
+            }
+          ]
+        },
+        "after": {
+          "count": 9,
+          "fcpMedian": 608,
+          "fcpQ1": 604,
+          "fcpQ3": 612,
+          "fcpMin": 596,
+          "fcpMax": 616,
+          "readyMedian": 753.8000000715256,
+          "ttfbMedian": 10,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 596,
+              "contentPresent": 758.8999999761581,
+              "ttfb": 8.799999952316284
+            },
+            {
+              "round": 1,
+              "fcp": 612,
+              "contentPresent": 753.8000000715256,
+              "ttfb": 11.200000047683716
+            },
+            {
+              "round": 2,
+              "fcp": 600,
+              "contentPresent": 746,
+              "ttfb": 10.100000023841858
+            },
+            {
+              "round": 3,
+              "fcp": 616,
+              "contentPresent": 745.8999999761581,
+              "ttfb": 11.5
+            },
+            {
+              "round": 4,
+              "fcp": 604,
+              "contentPresent": 772.5,
+              "ttfb": 10.399999976158142
+            },
+            {
+              "round": 5,
+              "fcp": 608,
+              "contentPresent": 728.2999999523163,
+              "ttfb": 9.599999904632568
+            },
+            {
+              "round": 6,
+              "fcp": 604,
+              "contentPresent": 763.3000000715256,
+              "ttfb": 9.600000023841858
+            },
+            {
+              "round": 7,
+              "fcp": 616,
+              "contentPresent": 758.5999999046326,
+              "ttfb": 9.399999976158142
+            },
+            {
+              "round": 8,
+              "fcp": 608,
+              "contentPresent": 723.1000000238419,
+              "ttfb": 10
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "About",
+      "path": "/about",
+      "bundles": {
+        "before": {
+          "js": 210657,
+          "css": 3992,
+          "rawJs": 660279,
+          "rawCss": 13602,
+          "files": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/about-aebe0f372091d911.js"
+          ]
+        },
+        "after": {
+          "js": 174387,
+          "css": 12054,
+          "rawJs": 546585,
+          "rawCss": 51165,
+          "files": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/76e0c6dda9f05758.css",
+            "static/chunks/pages/about-063854bdee84b620.js"
+          ]
+        }
+      },
+      "timings": {
+        "before": {
+          "count": 9,
+          "fcpMedian": 568,
+          "fcpQ1": 560,
+          "fcpQ3": 572,
+          "fcpMin": 544,
+          "fcpMax": 576,
+          "readyMedian": 549.6999999284744,
+          "ttfbMedian": 6.100000023841858,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 560,
+              "contentPresent": 539.1000000238419,
+              "ttfb": 3.399999976158142
+            },
+            {
+              "round": 1,
+              "fcp": 568,
+              "contentPresent": 543,
+              "ttfb": 5.399999976158142
+            },
+            {
+              "round": 2,
+              "fcp": 576,
+              "contentPresent": 549.7000000476837,
+              "ttfb": 6.799999952316284
+            },
+            {
+              "round": 3,
+              "fcp": 572,
+              "contentPresent": 556.6000000238419,
+              "ttfb": 5.600000023841858
+            },
+            {
+              "round": 4,
+              "fcp": 544,
+              "contentPresent": 543.8999999761581,
+              "ttfb": 6.799999952316284
+            },
+            {
+              "round": 5,
+              "fcp": 572,
+              "contentPresent": 554.8999999761581,
+              "ttfb": 5.800000071525574
+            },
+            {
+              "round": 6,
+              "fcp": 560,
+              "contentPresent": 549.6999999284744,
+              "ttfb": 6.399999976158142
+            },
+            {
+              "round": 7,
+              "fcp": 560,
+              "contentPresent": 545.6000000238419,
+              "ttfb": 6.100000023841858
+            },
+            {
+              "round": 8,
+              "fcp": 568,
+              "contentPresent": 550.1000000238419,
+              "ttfb": 6.100000023841858
+            }
+          ]
+        },
+        "after": {
+          "count": 9,
+          "fcpMedian": 500,
+          "fcpQ1": 496,
+          "fcpQ3": 516,
+          "fcpMin": 484,
+          "fcpMax": 528,
+          "readyMedian": 482,
+          "ttfbMedian": 5.900000095367432,
+          "samples": [
+            {
+              "round": 0,
+              "fcp": 504,
+              "contentPresent": 482,
+              "ttfb": 6
+            },
+            {
+              "round": 1,
+              "fcp": 492,
+              "contentPresent": 481.5,
+              "ttfb": 6
+            },
+            {
+              "round": 2,
+              "fcp": 500,
+              "contentPresent": 481.7000000476837,
+              "ttfb": 5.899999976158142
+            },
+            {
+              "round": 3,
+              "fcp": 520,
+              "contentPresent": 499.2999999523163,
+              "ttfb": 5.799999952316284
+            },
+            {
+              "round": 4,
+              "fcp": 516,
+              "contentPresent": 494.2000000476837,
+              "ttfb": 5.399999976158142
+            },
+            {
+              "round": 5,
+              "fcp": 496,
+              "contentPresent": 487.89999997615814,
+              "ttfb": 6.299999952316284
+            },
+            {
+              "round": 6,
+              "fcp": 528,
+              "contentPresent": 504.60000002384186,
+              "ttfb": 3
+            },
+            {
+              "round": 7,
+              "fcp": 484,
+              "contentPresent": 480.60000002384186,
+              "ttfb": 5.900000095367432
+            },
+            {
+              "round": 8,
+              "fcp": 496,
+              "contentPresent": 480.39999997615814,
+              "ttfb": 6
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "viewer": {
+    "before": {
+      "viewer": 676208,
+      "initialAndViewer": 1008360,
+      "files": [
+        "static/chunks/883d7235.98c45381b233b4f3.js",
+        "static/chunks/8eb10ab0.516642f10f69af90.js",
+        "static/chunks/816.7709cc62e6be770c.js"
+      ]
+    },
+    "after": {
+      "viewer": 376252,
+      "initialAndViewer": 687089,
+      "files": [
+        "static/chunks/e9d7c5f8.2e6165504f0d352c.js",
+        "static/chunks/a6cc29a2.dbfb2cf7005395c7.js",
+        "static/chunks/2466.6c6a9c33fa4fb78e.js"
+      ]
+    }
+  },
+  "checks": {
+    "samples": 90,
+    "pageErrors": 0,
+    "nonBlocklistedRequestFailures": []
+  },
+  "cloverUpdateComparison": {
+    "conditions": "Current CSS and component source held constant in css-only-clover3 vs after. Control uses baseline locked dependencies and original Clover 3 viewer ESM alias; after uses migrated locked dependencies and public Clover 4 viewer export. Application source and CSS rules identical; Work CSS gzip differs by 3 bytes due to bundle ordering. Gzip level 6, bytes. Includes dependency update effects and changes in chunk partitioning; not raw package-file subtraction.",
+    "variants": {
+      "before": {
+        "Home": {
+          "initial": 257781,
+          "viewer": 0,
+          "total": 257781,
+          "css": 3992,
+          "initialFiles": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/546-2707e30536b4be16.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/index-9f8ff8a63c98f2de.js"
+          ],
+          "viewerFiles": []
+        },
+        "Search": {
+          "initial": 347562,
+          "viewer": 0,
+          "total": 347562,
+          "css": 3992,
+          "initialFiles": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/566-8433d000c121eb3b.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/chunks/478-b8cc96242ffba403.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/search-e7418ea1dab7a101.js"
+          ],
+          "viewerFiles": []
+        },
+        "Collection": {
+          "initial": 312999,
+          "viewer": 0,
+          "total": 312999,
+          "css": 3992,
+          "initialFiles": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/546-2707e30536b4be16.js",
+            "static/chunks/293-2bd8ecfc8f1fe66f.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/479-f06647bd0db20351.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/collections/[id]-764ff156b6ca181e.js"
+          ],
+          "viewerFiles": []
+        },
+        "Work": {
+          "initial": 332152,
+          "viewer": 676208,
+          "total": 1008360,
+          "css": 3992,
+          "initialFiles": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/188-98f8b7dbf275c60b.js",
+            "static/chunks/398-b60c9add75092606.js",
+            "static/chunks/293-2bd8ecfc8f1fe66f.js",
+            "static/chunks/781-41ee455760de50e4.js",
+            "static/chunks/479-f06647bd0db20351.js",
+            "static/chunks/288-3f6b729225816e6d.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/chunks/478-b8cc96242ffba403.js",
+            "static/chunks/880-0b2fa045de3e35da.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/items/[...id]-adcd772333d07240.js"
+          ],
+          "viewerFiles": [
+            "static/chunks/883d7235.98c45381b233b4f3.js",
+            "static/chunks/8eb10ab0.516642f10f69af90.js",
+            "static/chunks/816.7709cc62e6be770c.js"
+          ]
+        },
+        "About": {
+          "initial": 214649,
+          "viewer": 0,
+          "total": 214649,
+          "css": 3992,
+          "initialFiles": [
+            "static/chunks/webpack-e22563d04ea518f5.js",
+            "static/chunks/framework-ecc4130bc7a58a64.js",
+            "static/chunks/main-48484890c83093c6.js",
+            "static/chunks/pages/_app-e662a9b8b2e5f1b3.js",
+            "static/chunks/69-8ec468875d5d440f.js",
+            "static/chunks/871-855e605625c6bb63.js",
+            "static/css/929344633bfd302f.css",
+            "static/chunks/pages/about-aebe0f372091d911.js"
+          ],
+          "viewerFiles": []
+        }
+      },
+      "css-only-clover3": {
+        "Home": {
+          "initial": 229224,
+          "viewer": 0,
+          "total": 229224,
+          "css": 13199,
+          "initialFiles": [
+            "static/chunks/webpack-f283a71660e79bd1.js",
+            "static/chunks/framework-9ea02048c3f2f8fd.js",
+            "static/chunks/main-9333cbdf51ff7fc5.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-aa225ecdd5544161.js",
+            "static/chunks/233-bcfca07610cfb722.js",
+            "static/chunks/349-ca601f245cae476d.js",
+            "static/chunks/856-2d292a0333faadf5.js",
+            "static/chunks/42-3b7091a6591d6d4f.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/332-2074a157c52b766e.js",
+            "static/css/85a57d499ec273e6.css",
+            "static/chunks/pages/index-31a8932213aaf659.js"
+          ],
+          "viewerFiles": []
+        },
+        "Search": {
+          "initial": 328599,
+          "viewer": 0,
+          "total": 328599,
+          "css": 20641,
+          "initialFiles": [
+            "static/chunks/webpack-f283a71660e79bd1.js",
+            "static/chunks/framework-9ea02048c3f2f8fd.js",
+            "static/chunks/main-9333cbdf51ff7fc5.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-aa225ecdd5544161.js",
+            "static/chunks/233-bcfca07610cfb722.js",
+            "static/chunks/856-2d292a0333faadf5.js",
+            "static/chunks/855-277947357da1405f.js",
+            "static/chunks/589-7a4c83f80298cfc6.js",
+            "static/chunks/676-e04c7280b08d2ae9.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/332-2074a157c52b766e.js",
+            "static/css/a9c2a4a2e15fe3dc.css",
+            "static/chunks/pages/search-02a40177adf6e149.js"
+          ],
+          "viewerFiles": []
+        },
+        "Collection": {
+          "initial": 290392,
+          "viewer": 0,
+          "total": 290392,
+          "css": 13798,
+          "initialFiles": [
+            "static/chunks/webpack-f283a71660e79bd1.js",
+            "static/chunks/framework-9ea02048c3f2f8fd.js",
+            "static/chunks/main-9333cbdf51ff7fc5.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-aa225ecdd5544161.js",
+            "static/chunks/233-bcfca07610cfb722.js",
+            "static/chunks/349-ca601f245cae476d.js",
+            "static/chunks/42-3b7091a6591d6d4f.js",
+            "static/chunks/582-197a7e4e5d835857.js",
+            "static/chunks/855-277947357da1405f.js",
+            "static/chunks/892-038d382fb4667281.js",
+            "static/chunks/589-7a4c83f80298cfc6.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/332-2074a157c52b766e.js",
+            "static/chunks/504-13bf50681674a35c.js",
+            "static/css/4fce49ab4334e25e.css",
+            "static/chunks/pages/collections/[id]-e720b38dfc94b5cb.js"
+          ],
+          "viewerFiles": []
+        },
+        "Work": {
+          "initial": 306284,
+          "viewer": 676219,
+          "total": 982503,
+          "css": 17017,
+          "initialFiles": [
+            "static/chunks/webpack-f283a71660e79bd1.js",
+            "static/chunks/framework-9ea02048c3f2f8fd.js",
+            "static/chunks/main-9333cbdf51ff7fc5.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-aa225ecdd5544161.js",
+            "static/chunks/233-bcfca07610cfb722.js",
+            "static/chunks/349-ca601f245cae476d.js",
+            "static/chunks/856-2d292a0333faadf5.js",
+            "static/chunks/582-197a7e4e5d835857.js",
+            "static/chunks/855-277947357da1405f.js",
+            "static/chunks/892-038d382fb4667281.js",
+            "static/chunks/717-eaca287e3fb53b41.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/332-2074a157c52b766e.js",
+            "static/chunks/504-13bf50681674a35c.js",
+            "static/css/d8de3d75001365d3.css",
+            "static/chunks/69-a7aa2ff04038c69e.js",
+            "static/css/3bb8af82a0892a18.css",
+            "static/chunks/pages/items/[...id]-031435d1d2c67cfc.js"
+          ],
+          "viewerFiles": [
+            "static/chunks/f8902b15.5f5b4a17a1f29214.js",
+            "static/chunks/8e9107a9.884fe6b9d788d078.js",
+            "static/chunks/325.d078590beae3dcce.js"
+          ]
+        },
+        "About": {
+          "initial": 185623,
+          "viewer": 0,
+          "total": 185623,
+          "css": 12054,
+          "initialFiles": [
+            "static/chunks/webpack-f283a71660e79bd1.js",
+            "static/chunks/framework-9ea02048c3f2f8fd.js",
+            "static/chunks/main-9333cbdf51ff7fc5.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-aa225ecdd5544161.js",
+            "static/chunks/233-bcfca07610cfb722.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/332-2074a157c52b766e.js",
+            "static/css/76e0c6dda9f05758.css",
+            "static/chunks/pages/about-a54ad8543c9a0105.js"
+          ],
+          "viewerFiles": []
+        }
+      },
+      "after": {
+        "Home": {
+          "initial": 230044,
+          "viewer": 0,
+          "total": 230044,
+          "css": 13199,
+          "initialFiles": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/2714-69eed64e5e14a74d.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/85a57d499ec273e6.css",
+            "static/chunks/pages/index-a407ed27830bdd3a.js"
+          ],
+          "viewerFiles": []
+        },
+        "Search": {
+          "initial": 329424,
+          "viewer": 0,
+          "total": 329424,
+          "css": 20641,
+          "initialFiles": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/2289-edd1213e14c36a10.js",
+            "static/chunks/7812-ebe40c9378b7ef47.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/a9c2a4a2e15fe3dc.css",
+            "static/chunks/pages/search-e0929b4212f8d741.js"
+          ],
+          "viewerFiles": []
+        },
+        "Collection": {
+          "initial": 294915,
+          "viewer": 0,
+          "total": 294915,
+          "css": 13798,
+          "initialFiles": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/2714-69eed64e5e14a74d.js",
+            "static/chunks/8829-7d6ca6a9b6b59267.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/4696-99fdf1646250a8e5.js",
+            "static/chunks/2289-edd1213e14c36a10.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/chunks/4659-cc98b2755d2113ff.js",
+            "static/css/4fce49ab4334e25e.css",
+            "static/chunks/pages/collections/[id]-e2c71d1f7220b1c7.js"
+          ],
+          "viewerFiles": []
+        },
+        "Work": {
+          "initial": 310837,
+          "viewer": 376252,
+          "total": 687089,
+          "css": 17014,
+          "initialFiles": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/chunks/8749-7b380342e1b8c0ab.js",
+            "static/chunks/4866-a1ca0666276286c8.js",
+            "static/chunks/8829-7d6ca6a9b6b59267.js",
+            "static/chunks/6132-2bd327b331091585.js",
+            "static/chunks/4696-99fdf1646250a8e5.js",
+            "static/chunks/8048-ac47c85eb51039ef.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/chunks/4659-cc98b2755d2113ff.js",
+            "static/css/0158593dc3845d7f.css",
+            "static/chunks/4857-7c983bfb0d420e87.js",
+            "static/css/3bb8af82a0892a18.css",
+            "static/chunks/pages/items/[...id]-5657384fa290588c.js"
+          ],
+          "viewerFiles": [
+            "static/chunks/e9d7c5f8.2e6165504f0d352c.js",
+            "static/chunks/a6cc29a2.dbfb2cf7005395c7.js",
+            "static/chunks/2466.6c6a9c33fa4fb78e.js"
+          ]
+        },
+        "About": {
+          "initial": 186441,
+          "viewer": 0,
+          "total": 186441,
+          "css": 12054,
+          "initialFiles": [
+            "static/chunks/webpack-4fb828990ed660ab.js",
+            "static/chunks/framework-47795cc3ebe0deee.js",
+            "static/chunks/main-27b2650deef8ed51.js",
+            "static/css/576a9d8ed0ebbc05.css",
+            "static/chunks/pages/_app-72797d0e77290e9a.js",
+            "static/chunks/7001-1a36806299a1960c.js",
+            "static/css/1cec399fb6659ad8.css",
+            "static/chunks/5033-e46902f32eacb097.js",
+            "static/css/76e0c6dda9f05758.css",
+            "static/chunks/pages/about-063854bdee84b620.js"
+          ],
+          "viewerFiles": []
+        }
+      }
+    },
+    "rows": [
+      {
+        "name": "Home",
+        "initialReduction": -820,
+        "viewerReduction": 0,
+        "combinedReduction": -820,
+        "combinedReductionPercent": -0.3577286846054406
+      },
+      {
+        "name": "Search",
+        "initialReduction": -825,
+        "viewerReduction": 0,
+        "combinedReduction": -825,
+        "combinedReductionPercent": -0.251065888818891
+      },
+      {
+        "name": "Collection",
+        "initialReduction": -4523,
+        "viewerReduction": 0,
+        "combinedReduction": -4523,
+        "combinedReductionPercent": -1.5575497947601935
+      },
+      {
+        "name": "Work",
+        "initialReduction": -4553,
+        "viewerReduction": 299967,
+        "combinedReduction": 295414,
+        "combinedReductionPercent": 30.067490888068537
+      },
+      {
+        "name": "About",
+        "initialReduction": -818,
+        "viewerReduction": 0,
+        "combinedReduction": -818,
+        "combinedReductionPercent": -0.4406781487207967
+      }
+    ],
+    "controlSmokeChecks": [
+      {
+        "route": "Collection",
+        "sliderCards": 12,
+        "pageErrors": []
+      },
+      {
+        "route": "Work",
+        "sliderCards": 48,
+        "pageErrors": []
+      }
+    ]
+  }
+}

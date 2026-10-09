@@ -1,0 +1,11 @@
+.styledForm {
+  margin: 1rem 0;
+}
+
+.styledInput {
+  display: flex;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #0002;
+  border-radius: 3px;
+}

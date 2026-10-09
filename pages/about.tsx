@@ -1,27 +1,25 @@
-import { HeroTitle, Subhead } from "@/components/Hero/Basic.styled";
+import unorderedListStyles from "@/components/Shared/UnorderedList.module.css";
+import aboutStyles from "@/pages/about.module.css";
+import blockStyles from "@/components/Shared/Block.module.css";
+import linkStyles from "@/components/Shared/Link.module.css";
+import basicStyles from "@/components/Hero/Basic.module.css";
 import SectionTop, {
   SectionSubhead,
   SectionTitle,
 } from "@/components/Shared/SectionTop/SectionTop";
-
 import AboutCollectionGrid from "@/components/About/CollectionGrid";
-import { BlockStyled } from "@/components/Shared/BlockStyled";
 import Container from "@/components/Shared/Container";
 import { HEAD_META } from "@/lib/constants/head-meta";
 import Head from "next/head";
 import Heading from "components/Heading/Heading";
 import HeroBasic from "@/components/Hero/Basic";
 import Layout from "@/components/layout";
-import { LinkStyled } from "@/components/Shared/LinkStyled";
 import { NextPage } from "next";
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import { PhotoFeatureProps } from "@/components/Shared/PhotoFeature/PhotoFeature";
-import { UnorderedListStyled } from "@/components/Shared/UnorderedList";
 import { buildDataLayer } from "@/lib/ga/data-layer";
 import { loadDefaultStructuredData } from "@/lib/json-ld";
-
 const baseUrl = "https://iiif.dc.library.northwestern.edu/iiif/2";
-
 const featuredCollections: PhotoFeatureProps[] = [
   {
     callToAction: "View Collection",
@@ -73,7 +71,6 @@ const featuredCollections: PhotoFeatureProps[] = [
       "Photographs representing colonialism in East Africa over the span of 100 years.",
     title: "Vernon McKay Photographs",
   },
-
   {
     callToAction: "View Collection",
     href: "https://dc.library.northwestern.edu/collections/ba35820a-525a-4cfa-8f23-4891c9f798c4",
@@ -91,7 +88,6 @@ const featuredCollections: PhotoFeatureProps[] = [
     title: "Berkeley Folk Music Festival",
   },
 ];
-
 const AboutPage: NextPage = () => {
   return (
     <>
@@ -111,7 +107,9 @@ const AboutPage: NextPage = () => {
         description={HEAD_META["ABOUT"].description}
       >
         <HeroBasic bgImage="/images/liz__O8A9903_final.jpg">
-          <Subhead>Digitizing Our Distinctive Collections</Subhead>
+          <p className={basicStyles.subhead}>
+            Digitizing Our Distinctive Collections
+          </p>
         </HeroBasic>
 
         <SectionTop>
@@ -127,65 +125,77 @@ const AboutPage: NextPage = () => {
             Libraries&apos; collections are represented, the site is
             representative of the distinction and diversity of collections from
             the{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/government-collection/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               Northwestern Government and Geographic Information collection
-            </LinkStyled>
+            </a>
             ,{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/herskovits-library/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               Herskovits Library of African Studies
-            </LinkStyled>
+            </a>
             ,{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/music/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               Music Library
-            </LinkStyled>
+            </a>
             ,{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/special-collections/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               McCormick Library of Special Collections
-            </LinkStyled>
+            </a>
             ,{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/transportation/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               Transportation Library
-            </LinkStyled>
+            </a>
             , and{" "}
-            <LinkStyled
+            <a
               href="https://www.library.northwestern.edu/libraries-collections/university-archives/index.html"
               target="_blank"
               rel="noopener noreferrer"
+              data-dc-slot="link"
+              className={linkStyles.linkStyled}
             >
               University Archives
-            </LinkStyled>
+            </a>
             . Highlights include:
           </p>
         </SectionTop>
 
-        <BlockStyled as="section">
+        <section className={blockStyles.blockStyled}>
           <Container maxWidth={1440}>
             <AboutCollectionGrid items={featuredCollections} />
           </Container>
-        </BlockStyled>
+        </section>
 
         <Container>
-          <BlockStyled as="section">
+          <section className={blockStyles.blockStyled}>
             <Heading as="h2">Using the collections</Heading>
             <article data-testid="rights-statement-article">
               <Heading as="h3">Rights Statement</Heading>
@@ -199,13 +209,15 @@ const AboutPage: NextPage = () => {
               </p>
               <p>
                 For more information, visit{" "}
-                <LinkStyled
+                <a
                   href="https://www.library.northwestern.edu/visit/plan-your-visit/policies/rights-permissions-and-reproduction-policy.html"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Scholarly Research Services
-                </LinkStyled>
+                </a>
                 .
               </p>
             </article>
@@ -215,43 +227,52 @@ const AboutPage: NextPage = () => {
               </Heading>
               <p data-testid="IIIF-text">
                 We currently make all content metadata and images available as{" "}
-                <LinkStyled
+                <a
                   href="https://iiif.io/api/presentation/2.1/#manifest"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   IIIF manifests
-                </LinkStyled>{" "}
+                </a>{" "}
                 backed by LinkStyled IIIF compliant image server. This allows
                 researchers to see detailed, zoomable images on this site as
                 well as use the content in outside tools such as{" "}
-                <LinkStyled
+                <a
                   href="http://projectmirador.org/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Mirador
-                </LinkStyled>
+                </a>
                 , embed on third-party websites, and programmatically query the
                 data.
               </p>
               <p>
                 More information about IIIF and related projects is available on
                 on the{" "}
-                <LinkStyled
+                <a
                   href="https://iiif.io/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   IIIF website
-                </LinkStyled>
+                </a>
                 .
               </p>
             </article>
-          </BlockStyled>
+          </section>
 
-          <BlockStyled as="section" data-testid="api-section">
-            <Heading as="h2" css={{ marginBottom: "0 !important" }}>
+          <section
+            data-testid="api-section"
+            className={blockStyles.blockStyled}
+          >
+            <Heading as="h2" className={aboutStyles.sectionHeading}>
               Digital Collections API and Collections as Data
             </Heading>
             <p>
@@ -259,37 +280,43 @@ const AboutPage: NextPage = () => {
               collections as data to further research. We offer a full-featured
               API for accessing our collection data in your own applications and
               workflows. The{" "}
-              <LinkStyled
+              <a
                 href="https://api.dc.library.northwestern.edu/docs/v2/index.html"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 Digital Collections API
-              </LinkStyled>{" "}
+              </a>{" "}
               allows users to search, aggregate, and use data from Northwestern
               Collections in a simple RESTful inteface. All results can be
               returned as generic JSON data or IIIF-compliant manifests and
               collections. Code examples and more information are available on
               the{" "}
-              <LinkStyled
+              <a
                 href="https://api.dc.library.northwestern.edu/docs/v2/index.html"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 Digital Collections API page
-              </LinkStyled>
+              </a>
               .
             </p>
 
             <p>
               In addition to the full-featured API, we publish a{" "}
-              <LinkStyled
+              <a
                 href="https://github.com/nulib/nuldc"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 command-line interface (CLI) application
-              </LinkStyled>{" "}
+              </a>{" "}
               with built-in features for querying, aggregating, and accessing
               works. The nuldc cli application allows users to return any
               results available in Digital Collections via the terminal for
@@ -300,157 +327,178 @@ const AboutPage: NextPage = () => {
               For researchers looking to work with the full, public dataset, we
               offer static downloads in csv, json, and xml format. The dataset
               is{" "}
-              <LinkStyled
+              <a
                 href="https://github.com/nulib/nuldc-metadata"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 published on Github
-              </LinkStyled>
+              </a>
               . Using this dataset is a simple way to browse and analyze the
               data without having to collect the information yourself. The
               dataset is updated weekly.
             </p>
 
             <p>Let us know what you build!</p>
-          </BlockStyled>
+          </section>
 
-          <BlockStyled as="section" data-testid="platform-section">
-            <Heading as="h2" css={{ marginBottom: "0 !important" }}>
+          <section
+            data-testid="platform-section"
+            className={blockStyles.blockStyled}
+          >
+            <Heading as="h2" className={aboutStyles.sectionHeading}>
               Platform
             </Heading>
             <p>
               The Digital Collection platform is open source and standards
               based. Hosted on AWS infrastructure, it uses an array of
               serverless tooling and acts as a showcase of{" "}
-              <LinkStyled
+              <a
                 href="https://samvera.org/"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 Samvera
-              </LinkStyled>{" "}
+              </a>{" "}
               and{" "}
-              <LinkStyled
+              <a
                 href="https://iiif.io/"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-dc-slot="link"
+                className={linkStyles.linkStyled}
               >
                 IIIF
-              </LinkStyled>{" "}
+              </a>{" "}
               concepts and technologies. The preservation-first backend Meadow
               is built using Elixir and Node.js and makes extensive use of
               serverless tools for processing and preservation. The Digital
               Collections frontend and associated API are built using
-              Javascript, React, Next.JS, Radix UI, and Stitches. It leverages
-              the IIIF standard for display of metadata and digital assets and
-              Opensearch as the basis of its API. Core Samvera and IIIF
-              community components and experimental projects were envisioned as
-              part of and are used by Digital Collections, Meadow, and our
-              processing pipeline.
+              Javascript, React, Next.JS, Radix UI, and CSS Modules. It
+              leverages the IIIF standard for display of metadata and digital
+              assets and Opensearch as the basis of its API. Core Samvera and
+              IIIF community components and experimental projects were
+              envisioned as part of and are used by Digital Collections, Meadow,
+              and our processing pipeline.
             </p>
             <Heading as="h3">Components and Projects</Heading>
-            <UnorderedListStyled>
+            <ul className={unorderedListStyles.unorderedListStyled}>
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/nulib/dc-nextjs"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Digital Collections
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/nulib/meadow/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Meadow
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/nulib/authoritex"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Authoritex
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/nulib/dc-api-v2/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   DC API
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/samvera/serverless-iiif"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Serverless IIIF
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/samvera-labs/clover-iiif"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Clover IIIF
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/samvera-labs/bloom-iiif"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Bloom IIIF
-                </LinkStyled>
+                </a>
               </li>
 
               <li>
-                <LinkStyled
+                <a
                   href="https://github.com/samvera-labs/nectar-iiif"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-dc-slot="link"
+                  className={linkStyles.linkStyled}
                 >
                   Nectar IIIF
-                </LinkStyled>
+                </a>
               </li>
-            </UnorderedListStyled>
-          </BlockStyled>
+            </ul>
+          </section>
         </Container>
       </Layout>
     </>
   );
 };
-
 export async function getStaticProps() {
   const dataLayer = buildDataLayer({
     pageTitle: "About page",
   });
-
   const openGraphData = {
     "og:title": HEAD_META["ABOUT"].title,
     "og:url": `${PRODUCTION_URL}/about`,
   };
-
   return {
     props: { dataLayer, openGraphData },
   };
 }
-
 export default AboutPage;

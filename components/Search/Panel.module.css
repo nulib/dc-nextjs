@@ -1,0 +1,112 @@
+.searchResultsLabel {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-weight: 400;
+  font-size: var(--dc-font-size-gr3);
+  display: flex;
+  align-items: center;
+  color: var(--dc-color-purple60);
+  border-radius: 1em;
+  background-position: 61.8%;
+  flex-grow: 1;
+  margin: 0 0 var(--dc-space-gr4);
+  padding-right: 0;
+  text-align: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--dc-space-gr4);
+}
+@media (max-width: 767px) {
+  .searchResultsLabel {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.searchResultsLabel strong {
+  font-family: var(--dc-font-northwestern-sans-bold);
+  font-weight: 400;
+  color: var(--dc-color-purple);
+}
+.searchResultsLabel em {
+  font-style: italic;
+  color: var(--dc-color-purple);
+}
+
+.searchResultsLabelMessage {
+  line-height: 1.35em;
+  flex-grow: 1;
+}
+
+.styledBackButton {
+  display: inline-flex;
+  padding: 0;
+  height: 38px;
+  align-items: center;
+  gap: var(--dc-space-gr2);
+  color: var(--dc-color-purple);
+  background: transparent;
+  font-family: var(--dc-font-northwestern-sans-bold);
+  font-size: var(--dc-font-size-gr3);
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.styledBackButton svg {
+  height: 1rem;
+  width: 1rem;
+  stroke: var(--dc-color-purple30);
+  transition: var(--dc-transition-dc-all);
+  margin: -2px 0 0;
+}
+.styledBackButton svg path {
+  stroke: inherit;
+  stroke-width: 48px;
+}
+.styledBackButton:hover svg {
+  margin-left: -3px;
+  margin-right: 3px;
+  stroke: var(--dc-color-purple);
+}
+
+.styledSearchPanel {
+  width: 100%;
+  height: 100%;
+  transition: opacity 382ms ease-in-out;
+  opacity: 0;
+}
+.styledSearchPanel:where([data-is-open="true"]) {
+  opacity: 1;
+  height: 100%;
+  transform: translateX(0);
+}
+.styledSearchPanel:where([data-is-open="false"]) {
+  opacity: 0;
+  height: 0;
+  transform: translateX(100%);
+}
+.styledSearchPanel :global([data-dc-slot~="container"]):global(.search-panel) {
+  height: 100%;
+}
+
+.styledSearchPanelContent {
+  height: 100%;
+  background: white;
+}
+
+.styledIncludeResults {
+  display: flex;
+  align-items: center;
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+  cursor: pointer;
+  padding-inline-start: calc(1rem + var(--dc-space-gr1));
+}
+.styledIncludeResults input {
+  margin: 0;
+}
+
+.override0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}

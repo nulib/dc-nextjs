@@ -1,0 +1,23 @@
+.styledIIIFShareHelperLink svg {
+  width: 17px;
+  height: 17px;
+}
+.styledIIIFShareHelperLink svg path {
+  fill: var(--dc-color-purple) !important;
+}
+
+.styledIIIFShareHelperLinkContent {
+  display: flex;
+  gap: var(--dc-space-gr1);
+  font-size: var(--dc-font-size-gr2);
+  align-items: center;
+}
+
+.override0 {
+  display: inline-flex;
+  width: 12px;
+  height: 12px;
+  color: var(--dc-color-black50);
+  fill: var(--dc-color-black50);
+  margin-left: 0.25em;
+}

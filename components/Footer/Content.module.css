@@ -1,0 +1,25 @@
+.override0 {
+  max-width: 200px;
+  margin-bottom: 1rem;
+}
+
+.override1.override1 {
+  background: url("https://common.northwestern.edu/v8/css/images/icons/pin-drop.svg")
+    no-repeat;
+}
+
+.override2.override2 {
+  background: url("https://common.northwestern.edu/v8/css/images/icons/mobile-phone.svg")
+    no-repeat;
+}
+
+.override3.override3 {
+  background: url("https://common.northwestern.edu/v8/css/images/icons/email.svg")
+    no-repeat;
+  top: 2px;
+}
+
+.override4 {
+  line-height: 1;
+  margin: 0 0 1rem;
+}

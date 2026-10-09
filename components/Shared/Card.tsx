@@ -1,10 +1,9 @@
+import linkStyles from "@/components/Shared/Link.module.css";
+import cardStyles from "@/components/Shared/Card.module.css";
 import React, { ReactNode } from "react";
-import { CardStyled } from "@/components/Shared/Card.styled";
 import Figure from "@/components/Figure/Figure";
 import Link from "next/link";
-import { LinkStyled } from "@/components/Shared/LinkStyled";
 import ReadMore from "./ReadMore";
-
 export interface CardProps {
   description?: string | null;
   href?: string;
@@ -12,7 +11,6 @@ export interface CardProps {
   supplementalInfo?: ReactNode;
   title: string;
 }
-
 const Card: React.FC<CardProps> = ({
   description,
   href,
@@ -26,14 +24,13 @@ const Card: React.FC<CardProps> = ({
     supplementalInfo,
     title,
   };
-
   return (
-    <CardStyled data-testid="card-wrapper">
+    <div data-testid="card-wrapper" className={cardStyles.cardStyled}>
       {href ? (
         <Link href={href} legacyBehavior>
-          <LinkStyled>
+          <a data-dc-slot="link" className={linkStyles.linkStyled}>
             <Figure data={data} isPromoted />
-          </LinkStyled>
+          </a>
         </Link>
       ) : (
         <Figure data={data} isPromoted />
@@ -44,8 +41,7 @@ const Card: React.FC<CardProps> = ({
           <ReadMore text={description} words={30} />
         </p>
       )}
-    </CardStyled>
+    </div>
   );
 };
-
 export default Card;

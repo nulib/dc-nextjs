@@ -1,33 +1,35 @@
-import {
-  StyledInterstitial,
-  StyledInterstitialIcon,
-} from "@/components/Chat/Response/Interstitial.styled";
-
+import aggregationsStyles from "@/components/Chat/Response/Aggregations.module.css";
+import responseStyles from "@/components/Chat/Response/Response.module.css";
+import interstitialStyles from "@/components/Chat/Response/Interstitial.module.css";
 import { AggregationResultMessage } from "@/types/components/chat";
 import { IconSparkles } from "@/components/Shared/SVG/Icons";
 import React from "react";
-import { StyledResponseMarkdown } from "./Response.styled";
-import { secondary } from "@/styles/colors";
-import { styled } from "@/stitches.config";
-
 interface ResponseInterstitialProps {
   message: AggregationResultMessage["message"];
 }
-
 const ResponseAggregations: React.FC<ResponseInterstitialProps> = ({
   message,
 }) => {
   const { buckets } = message;
-
   return (
     <div>
-      <StyledInterstitial data-testid="response-aggregations">
-        <StyledInterstitialIcon>
+      <div
+        data-testid="response-aggregations"
+        className={interstitialStyles.styledInterstitial}
+      >
+        <div className={interstitialStyles.styledInterstitialIcon}>
           <IconSparkles />
-        </StyledInterstitialIcon>
+        </div>
         Aggregation Results
-      </StyledInterstitial>
-      <StyledAggregations>
+      </div>
+      <div
+        className={[
+          responseStyles.styledResponseMarkdown,
+          aggregationsStyles.styledAggregations,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <table>
           <tbody>
             {buckets.map((bucket) => (
@@ -42,37 +44,8 @@ const ResponseAggregations: React.FC<ResponseInterstitialProps> = ({
             ))}
           </tbody>
         </table>
-      </StyledAggregations>
+      </div>
     </div>
   );
 };
-
-const StyledAggregations = styled(StyledResponseMarkdown, {
-  marginTop: "$gr2",
-  justifyContent: "flex-start",
-  gap: "$gr2",
-  flexWrap: "wrap",
-
-  table: {
-    width: "fit-content",
-    background: `${secondary.brightBlueB}11`,
-    borderColor: `${secondary.brightBlueB}55`,
-    minWidth: "38.2%",
-
-    "tr:last-child td": {},
-
-    td: {
-      borderColor: `${secondary.brightBlueB}55`,
-
-      "&:first-child": {
-        fontFamily: "$northwesternSansBold",
-      },
-
-      "&:last-child": {
-        width: "100%",
-      },
-    },
-  },
-});
-
 export default ResponseAggregations;

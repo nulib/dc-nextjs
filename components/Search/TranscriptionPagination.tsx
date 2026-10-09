@@ -1,24 +1,17 @@
-import {
-  NavWrapper,
-  PaginationStyled,
-  Results,
-} from "@/components/Search/Pagination.styled";
-
-import { Button } from "@nulib/design-system";
+import transcriptionPaginationStyles from "@/components/Search/TranscriptionPagination.module.css";
+import paginationStyles from "@/components/Search/Pagination.module.css";
+import { Button } from "@/components/Shared/Button/Button";
 import { Pagination as PaginationShape } from "@/types/api/response";
 import { pluralize } from "@/lib/utils/count-helpers";
-
 interface TranscriptionPaginationProps {
   pagination: PaginationShape;
   onPageChange: (url: string) => void;
 }
-
 const getPageUrl = (queryUrl: string, page: number) => {
   const url = new URL(queryUrl);
   url.searchParams.set("page", page.toString());
   return url.toString();
 };
-
 const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
   pagination,
   onPageChange,
@@ -33,32 +26,34 @@ const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
     total_pages,
     collapsed_by,
   } = pagination;
-
   const handleNavClick = (page: number, url?: string) => {
     onPageChange(url || getPageUrl(query_url, page));
   };
-
   const total_hits = collapsed_by?.total_hits || pagination.total_hits;
   const startCount = total_hits ? offset + 1 : 0;
   const endCount = offset + limit > total_hits ? total_hits : offset + limit;
-
   return (
-    <PaginationStyled
-      css={{ borderTopWidth: "1px", paddingTop: "$gr2" }}
+    <nav
       data-testid="transcription-pagination"
+      className={[
+        paginationStyles.paginationStyled,
+        transcriptionPaginationStyles.override0,
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
-      <Results data-testid="results">
+      <div data-testid="results" className={paginationStyles.results}>
         Showing <span>{startCount}</span> to <span>{endCount}</span> of{" "}
         {pluralize("matching item", total_hits)}
-      </Results>
+      </div>
 
-      <NavWrapper>
+      <div className={paginationStyles.navWrapper}>
         {current_page > 2 && (
           <Button
-            isText
-            isLowercase
+            variant="text"
+            textCase="normal"
             onClick={() => handleNavClick(1)}
-            css={{ marginRight: "$3" }}
+            className={transcriptionPaginationStyles.override1}
           >
             Start
           </Button>
@@ -66,7 +61,7 @@ const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
 
         {current_page !== 1 && (
           <Button
-            isLowercase
+            textCase="normal"
             onClick={() => handleNavClick(current_page - 1, prev_url)}
           >
             Previous
@@ -75,15 +70,14 @@ const TranscriptionPagination: React.FC<TranscriptionPaginationProps> = ({
 
         {current_page !== total_pages && (
           <Button
-            isLowercase
+            textCase="normal"
             onClick={() => handleNavClick(current_page + 1, next_url)}
           >
             Next
           </Button>
         )}
-      </NavWrapper>
-    </PaginationStyled>
+      </div>
+    </nav>
   );
 };
-
 export default TranscriptionPagination;

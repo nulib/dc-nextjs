@@ -1,0 +1,61 @@
+.styledSliderIIIFWrapper {
+  position: relative;
+  z-index: 0;
+  --slider-columns: 1;
+  --slider-gap: 19px;
+  --clover-thumbnail-width: 100%;
+}
+/* RC.2 sizes cards with CSS. Match the previous Swiper viewport breakpoints
+   and the numeric gaps/group sizes in SliderWrapper.tsx. */
+.styledSliderIIIFWrapper :global(.clover-slider-slide) {
+  width: calc(
+    (100% - (var(--slider-columns) - 1) * var(--slider-gap)) /
+      var(--slider-columns)
+  );
+}
+.styledSliderIIIFWrapper :global(.clover-slider-item) {
+  width: 100%;
+  min-width: 0;
+}
+@media (min-width: 334px) {
+  .styledSliderIIIFWrapper {
+    --slider-columns: 2;
+  }
+}
+@media (min-width: 767px) {
+  .styledSliderIIIFWrapper {
+    --slider-columns: 3;
+  }
+}
+@media (min-width: 991px) {
+  .styledSliderIIIFWrapper {
+    --slider-columns: 4;
+    --slider-gap: 30.742px;
+  }
+}
+@media (min-width: 1199px) {
+  .styledSliderIIIFWrapper {
+    --slider-columns: 5;
+  }
+}
+@media (min-width: 1439px) {
+  .styledSliderIIIFWrapper {
+    --slider-columns: 6;
+    --slider-gap: 49.740556px;
+  }
+}
+.styledSliderIIIFWrapper :global(.clover-slider-header-view-all) {
+  color: var(--dc-color-white);
+}
+.styledSliderIIIFWrapper :global(.clover-slider-slide)[data-type="collection"] {
+  display: none;
+}
+@media (max-width: 575px) {
+  .styledSliderIIIFWrapper > div > div {
+    align-items: center;
+    text-align: center;
+  }
+  .styledSliderIIIFWrapper > div > div > div:last-child {
+    padding-top: var(--dc-space-gr2);
+  }
+}
