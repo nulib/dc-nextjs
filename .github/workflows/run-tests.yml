@@ -20,6 +20,11 @@ jobs:
       - name: Get files
         uses: actions/checkout@v4
 
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".tool-versions"
+
       - name: Get npm cache directory
         id: npm-cache-dir
         shell: bash
@@ -33,23 +38,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-
       - name: Install dependencies
-        run: npm ci --force
+        run: npm ci
 
       - name: Check code formatting with Prettier
+        id: prettier
         run: |
           echo "Running Prettier check..."
           npx prettier --check "**/*.{js,jsx,ts,tsx,json,md,css,scss}"
 
       - name: Report Prettier results
-        if: failure()
+        if: failure() && steps.prettier.outcome == 'failure'
         run: |
-          echo "Prettier check failed. Please run 'npm run format' locally and commit the changes."
+          echo "Prettier check failed. Run 'npm run prettier:fix' locally, then recheck formatting."
           exit 1
 
       - name: Run tests

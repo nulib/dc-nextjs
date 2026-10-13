@@ -1,20 +1,9 @@
-import {
-  FigureCaption,
-  FigureImage,
-  FigureImageWrapper,
-  FigureLQIP,
-  FigurePlaceholder,
-  FigureStyled,
-  FigureSupplementalInfo,
-  FigureText,
-  FigureTitle,
-  FigureVariants,
-} from "@/components/Figure/Figure.styled";
+import NextImage from "next/image";
+import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio";
+import styles from "@/components/Figure/Figure.module.css";
 import React, { ReactNode } from "react";
-
 import { IconLock } from "@/components/Shared/SVG/Icons";
 import { width } from "@/styles/media";
-
 interface Figure {
   aspectRatio?: number;
   isRestricted?: boolean;
@@ -23,72 +12,81 @@ interface Figure {
   title: string;
   priority?: boolean;
 }
-
 interface FigureProps {
+  isPromoted?: boolean;
   data: Figure;
   orientation?: "horizontal" | "vertical";
   hideCaption?: boolean;
 }
-
-const Figure: React.FC<FigureProps & FigureVariants> = (props) => {
+const Figure: React.FC<FigureProps> = (props) => {
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
-
   const { data, orientation, hideCaption } = props;
   const { aspectRatio, isRestricted, title, supplementalInfo, src } = data;
-
   if (!src) return null;
-
   const handleOnLoad = () => setIsLoaded(true);
   const handleOnError = () => console.error("image loading error");
-
   const lqip = new URL(src);
   lqip.searchParams.set("size", "3");
-
   const srcSetSizes = `(max-width: ${width.xxs}px) 100vw`;
-
   return (
-    <FigureStyled data-orientation={orientation}>
-      <FigureImageWrapper>
-        <FigurePlaceholder ratio={aspectRatio ? aspectRatio : 1}>
+    <figure
+      data-orientation={orientation}
+      data-dc-slot="figure"
+      className={styles.figureStyled}
+    >
+      <div
+        data-dc-slot="figure-image-wrapper"
+        className={styles.figureImageWrapper}
+      >
+        <AspectRatioPrimitive.Root
+          ratio={aspectRatio ? aspectRatio : 1}
+          className={styles.figurePlaceholder}
+        >
           {!data.priority && (
-            <FigureLQIP
+            <NextImage
               alt=""
               fill={true}
               sizes={srcSetSizes}
               src={lqip.toString()}
               priority={true}
               unoptimized={true}
+              className={styles.figureLQIP}
             />
           )}
 
-          <FigureImage
+          <NextImage
             alt={title}
             fill={true}
-            isLoaded={isLoaded}
+            data-is-loaded={isLoaded}
             onLoad={handleOnLoad}
             onError={handleOnError}
             sizes={srcSetSizes}
             src={src}
             unoptimized={true}
             priority={data.priority ?? false}
+            className={styles.figureImage}
           />
-        </FigurePlaceholder>
-      </FigureImageWrapper>
+        </AspectRatioPrimitive.Root>
+      </div>
       {!hideCaption && (
-        <FigureCaption>
-          <FigureText>
-            <FigureTitle>{title}</FigureTitle>
+        <figcaption
+          data-dc-slot="figure-caption"
+          className={styles.figureCaption}
+        >
+          <div className={styles.figureText}>
+            <span data-dc-slot="figure-title" className={styles.figureTitle}>
+              {title}
+            </span>
             {supplementalInfo && (
-              <FigureSupplementalInfo>
+              <span className={styles.figureSupplementalInfo}>
                 {supplementalInfo}
-              </FigureSupplementalInfo>
+              </span>
             )}
-          </FigureText>
+          </div>
           {isRestricted && <IconLock aria-hidden="true" />}
-        </FigureCaption>
+        </figcaption>
       )}
-    </FigureStyled>
+    </figure>
   );
 };
-
 export default Figure;

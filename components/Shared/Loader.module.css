@@ -1,0 +1,30 @@
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spinLoader {
+  border: 3px solid var(--dc-color-black10);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.spinLoader:where([data-size="small"]) {
+  width: 24px;
+  height: 24px;
+}
+.spinLoader:where([data-size="default"]) {
+  width: 48px;
+  height: 48px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinLoader {
+    animation: none;
+  }
+}

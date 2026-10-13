@@ -1,0 +1,107 @@
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flext-start;
+  padding: var(--dc-space-gr2) 0;
+}
+.actionButtons button {
+  margin-right: var(--dc-space-gr3);
+  padding-top: var(--dc-space-gr3);
+}
+.actionButtons button:last-child {
+  margin-right: 0;
+}
+@media (max-width: 767px) {
+  .actionButtons button {
+    margin-right: 0px;
+  }
+}
+@media (max-width: 767px) {
+  .actionButtons {
+    flex-direction: column;
+  }
+}
+
+.topInfoContent {
+  display: grid;
+  gap: var(--dc-space-gr7);
+  grid-template-columns: 618fr 382fr;
+  margin: var(--dc-space-gr3) 0;
+}
+@media (max-width: 991px) {
+  .topInfoContent {
+    gap: var(--dc-space-gr5);
+  }
+}
+@media (max-width: 767px) {
+  .topInfoContent {
+    grid-template-columns: 1fr;
+    gap: var(--dc-space-gr4);
+  }
+}
+
+.topInfoMetadata {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topInfoWrapper {
+  margin: var(--dc-space-gr5) 0 var(--dc-space-gr6);
+}
+.topInfoWrapper > header {
+  display: flex;
+  flex-direction: column;
+}
+.topInfoWrapper > header h1 {
+  line-height: 1em;
+  font-weight: 400;
+  font-family: var(--dc-font-northwestern-display-bold);
+  font-size: var(--dc-font-size-gr7);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.topInfoWrapper > header p {
+  font-size: var(--dc-font-size-gr4);
+  color: var(--dc-color-black50);
+  line-height: 1.47em;
+}
+
+.topInfoHeaderContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 var(--dc-space-gr3);
+  gap: var(--dc-space-gr2);
+}
+@media (max-width: 767px) {
+  .topInfoHeaderContent {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+.topInfoHeaderContent > div:last-child {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 38.2%;
+}
+@media (max-width: 767px) {
+  .topInfoHeaderContent > div:last-child {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.topInfoCollection {
+  padding: var(--dc-space-gr4) 0;
+}
+.topInfoCollection :global([data-dc-slot~="heading"]) {
+  color: var(--dc-color-black80);
+  font-size: var(--dc-font-size-gr5);
+  margin-bottom: var(--dc-space-gr2);
+}
+
+.override0 {
+  padding-right: 1em;
+}

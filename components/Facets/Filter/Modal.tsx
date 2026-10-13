@@ -1,14 +1,7 @@
+import modalStyles from "@/components/Facets/Filter/Modal.module.css";
+import filterStyles from "@/components/Facets/Filter/Filter.module.css";
 import * as Dialog from "@radix-ui/react-dialog";
-
-import {
-  FilterBody,
-  FilterBodyInner,
-  FilterClose,
-  FilterFooter,
-  FilterHeader,
-} from "@/components/Facets/Filter/Filter.styled";
 import React, { useEffect, useState } from "react";
-
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
@@ -22,22 +15,17 @@ import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 import { useFilterState } from "@/context/filter-context";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
-
 export type SetIsModalOpenType = React.Dispatch<React.SetStateAction<boolean>>;
-
 type FilterModalProps = {
   q: string;
   setIsModalOpen: SetIsModalOpenType;
 };
-
 const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
   const [apiData, setApiData] = useState<ApiSearchResponse>();
   const {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
-
   const { isChecked } = useGenerativeAISearchToggle();
-
   useEffect(() => {
     async function getData() {
       const body: ApiSearchRequestBody = buildQuery(
@@ -48,57 +36,57 @@ const FilterModal: React.FC<FilterModalProps> = ({ q, setIsModalOpen }) => {
         },
         !!isChecked,
       );
-
       const response = await apiPostRequest<ApiSearchResponse>({
         body: body,
         url: DC_API_SEARCH_URL,
       });
-
       setApiData(response);
     }
     getData();
   }, [userFacetsUnsubmitted, q]);
-
   return (
     <>
-      <FilterHeader>
+      <header className={filterStyles.filterHeader}>
         <Dialog.Title>Filter</Dialog.Title>
         {q && (
           <em>
             Results for &ldquo;<strong>{q}</strong>&rdquo;
           </em>
         )}
-        <FilterClose
+        <Dialog.Close
           data-testid="facets-filter-close"
           aria-label="Cancel"
-          style={{
-            marginRight: "0",
-          }}
+          className={[filterStyles.filterClose, modalStyles.override0]
+            .filter(Boolean)
+            .join(" ")}
         >
           <IconClear />
-        </FilterClose>
-      </FilterHeader>
-      <FilterBody>
+        </Dialog.Close>
+      </header>
+      <div className={filterStyles.filterBody}>
         <FacetsCurrentUser screen="modal" />
-        <FilterBodyInner>
+        <div className={filterStyles.filterBodyInner}>
           <FacetsGroupList />
           {apiData && <Preview items={apiData?.data} />}
-        </FilterBodyInner>
-      </FilterBody>
-      <FilterFooter role="menubar">
+        </div>
+      </div>
+      <footer role="menubar" className={filterStyles.filterFooter}>
         <FilterClear isModal={true} />
-        <div style={{ display: "flex" }}>
-          <FilterClose data-testid="facets-filter-close" aria-label="Cancel">
+        <div className={modalStyles.override1}>
+          <Dialog.Close
+            data-testid="facets-filter-close"
+            aria-label="Cancel"
+            className={filterStyles.filterClose}
+          >
             Cancel
-          </FilterClose>
+          </Dialog.Close>
           <FacetsSubmit
             setIsModalOpen={setIsModalOpen}
             total={apiData?.pagination.total_hits}
           />
         </div>
-      </FilterFooter>
+      </footer>
     </>
   );
 };
-
 export default FilterModal;

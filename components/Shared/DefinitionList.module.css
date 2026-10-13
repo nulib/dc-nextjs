@@ -1,0 +1,12 @@
+.definitionListWrapper {
+  line-height: 1.47em;
+  font-size: var(--dc-font-size-gr3);
+}
+.definitionListWrapper dt {
+  color: var(--dc-color-black);
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.definitionListWrapper dd {
+  margin-inline-start: 0;
+  padding-bottom: var(--dc-space-gr3);
+}

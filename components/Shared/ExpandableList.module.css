@@ -1,0 +1,58 @@
+.expandableListItemIndicator {
+  display: flex;
+  background-color: transparent;
+  color: var(--dc-color-black50);
+  font-size: var(--dc-font-size-gr1);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  border-radius: 3px;
+  height: var(--dc-size-gr3);
+  padding: 3px;
+  margin-left: var(--dc-space-gr2);
+  margin-top: 3px;
+  white-space: nowrap;
+  border: 1px solid var(--dc-color-black10);
+}
+
+.expandableListItemHeading {
+  color: var(--dc-color-purple);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr4);
+  line-height: 1.55em;
+}
+
+.expandableListItemTrigger {
+  display: flex;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: var(--dc-space-gr2) 0;
+  cursor: pointer;
+}
+.expandableListItemTrigger svg {
+  display: flex;
+  fill: var(--dc-color-purple);
+  color: var(--dc-color-purple);
+  height: var(--dc-size-gr3);
+  width: var(--dc-size-gr3);
+  margin-right: var(--dc-space-gr1);
+  margin-top: 2px;
+  transform: rotate(-90deg);
+  transition: var(--dc-transition-dc-all);
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+.expandableListItemTrigger:hover .expandableListItemHeading,
+.expandableListItemTrigger:focus .expandableListItemHeading {
+  text-decoration: underline;
+}
+.expandableListItemTrigger[data-state="open"] svg {
+  transform: rotate(0);
+}
+
+.expandableListItemStyled {
+  background: transparent;
+  border-top: 1px solid #f0f0f0;
+}
+.expandableListItemStyled:last-child {
+  border-bottom: 1px solid #f0f0f0;
+}

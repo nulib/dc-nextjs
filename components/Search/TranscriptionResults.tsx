@@ -1,34 +1,20 @@
+import styles from "@/components/Search/TranscriptionResults.module.css";
 import { useContext, useState } from "react";
 import Link from "next/link";
 import { FileSetSearchResult, Pagination } from "@/types/api/response";
 import { groupByWork } from "@/lib/utils/fileset-helpers";
 import { IconLock } from "@/components/Shared/SVG/Icons";
-import {
-  FileSetLabel,
-  FileSetRow,
-  SnippetText,
-  ThumbnailImage,
-  ThumbnailLink,
-  ThumbnailLQIP,
-  ThumbnailWrapper,
-  WorkFilesets,
-  WorkGroup,
-  WorkHeader,
-  Wrapper,
-} from "@/components/Search/TranscriptionResults.styled";
 import { UserContext } from "@/context/user-context";
 import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import Figure from "../Figure/Figure";
 import TranscriptionPagination from "@/components/Search/TranscriptionPagination";
 import { DCAPI_ENDPOINT } from "@/lib/constants/endpoints";
-
 interface TranscriptionResultsProps {
   results: FileSetSearchResult[];
   pagination: Pagination;
   searchTerm: string;
   onPageChange: (url: string) => void;
 }
-
 function getSnippet(text: string, term: string, maxLength = 200): string {
   const idx = text.toLowerCase().indexOf(term.toLowerCase());
   if (idx === -1)
@@ -41,7 +27,6 @@ function getSnippet(text: string, term: string, maxLength = 200): string {
     (end < text.length ? "…" : "")
   );
 }
-
 function highlightTerm(text: string, term: string): React.ReactNode {
   const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const parts = text.split(new RegExp(`(${escaped})`, "gi"));
@@ -53,26 +38,25 @@ function highlightTerm(text: string, term: string): React.ReactNode {
     ),
   );
 }
-
-const FileSetThumbnail: React.FC<{ src: string; restricted: boolean }> = ({
-  src,
-  restricted,
-}) => {
+const FileSetThumbnail: React.FC<{
+  src: string;
+  restricted: boolean;
+}> = ({ src, restricted }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
-    <ThumbnailWrapper>
-      <ThumbnailLQIP src={`${src}?size=3`} alt="" />
-      <ThumbnailImage
+    <div className={styles.thumbnailWrapper}>
+      <img src={`${src}?size=3`} alt="" className={styles.thumbnailLQIP} />
+      <img
         src={src}
         alt=""
-        isLoaded={isLoaded}
+        data-is-loaded={isLoaded}
         onLoad={() => setIsLoaded(true)}
+        className={styles.thumbnailImage}
       />
       {restricted && <IconLock aria-hidden="true" />}
-    </ThumbnailWrapper>
+    </div>
   );
 };
-
 const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
   results,
   pagination,
@@ -84,15 +68,13 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
   const isRestricted = (visibility: string) => {
     if (visibility === "Public") return false;
     if (isLoading) return true;
-
     return !(user?.scopes?.includes(`read:${visibility}`) ?? false);
   };
-
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       {groups.map((group) => (
-        <WorkGroup key={group.work_id}>
-          <WorkHeader>
+        <div key={group.work_id} className={styles.workGroup}>
+          <div className={styles.workHeader}>
             <Link
               href={`/items/${group.work_id}?${CONTENT_SEARCH_PARAM}=${encodeURIComponent(searchTerm)}`}
             >
@@ -111,42 +93,45 @@ const TranscriptionResults: React.FC<TranscriptionResultsProps> = ({
                 }}
               />
             </Link>
-          </WorkHeader>
+          </div>
 
-          <WorkFilesets>
+          <div className={styles.workFilesets}>
             {group.fileSets.map((fs) => {
               const snippet = getSnippet(fs.annotation.content, searchTerm);
               const href = `/items/${group.work_id}?${CONTENT_SEARCH_PARAM}=${encodeURIComponent(searchTerm)}&canvas=${fs.id}&label=${encodeURIComponent(fs.label)}&snippet=${encodeURIComponent(snippet)}`;
               const restricted = isRestricted(fs.visibility);
               const thumbnailUrl = `${DCAPI_ENDPOINT}/file-sets/${fs.id}/thumbnail`;
-
               return (
-                <FileSetRow key={fs.id}>
-                  <ThumbnailLink href={href} tabIndex={-1} aria-hidden="true">
+                <div key={fs.id} className={styles.fileSetRow}>
+                  <Link
+                    href={href}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className={styles.thumbnailLink}
+                  >
                     <FileSetThumbnail
                       src={thumbnailUrl}
                       restricted={restricted}
                     />
-                  </ThumbnailLink>
-                  <FileSetLabel>
+                  </Link>
+                  <div className={styles.fileSetLabel}>
                     <Link href={href}>{fs.label}</Link>
-                  </FileSetLabel>
-                  <SnippetText>
+                  </div>
+                  <p className={styles.snippetText}>
                     {highlightTerm(snippet, searchTerm)}
-                  </SnippetText>
-                </FileSetRow>
+                  </p>
+                </div>
               );
             })}
-          </WorkFilesets>
-        </WorkGroup>
+          </div>
+        </div>
       ))}
 
       <TranscriptionPagination
         pagination={pagination}
         onPageChange={onPageChange}
       />
-    </Wrapper>
+    </div>
   );
 };
-
 export default TranscriptionResults;

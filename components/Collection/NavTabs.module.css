@@ -1,0 +1,64 @@
+.styledTabs {
+}
+
+.styledList {
+  display: flex;
+  margin: var(--dc-space-gr4) 0;
+  border-bottom: 4px solid var(--dc-color-gray6);
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+
+.styledTrigger {
+  background: var(--dc-color-white);
+  border: none;
+  color: var(--dc-color-black80);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--dc-font-size-gr4);
+  font-family: inherit;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  height: var(--dc-size-gr5);
+  padding: 0 1rem;
+  flex-grow: 0;
+  flex-shrink: 1;
+  position: relative;
+}
+.styledTrigger::before {
+  content: "";
+  height: 4px;
+  width: 0;
+  background-color: var(--dc-color-gray6);
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  transition: var(--dc-transition-dc-all);
+}
+.styledTrigger[data-state="active"] {
+  font-family: var(--dc-font-northwestern-display-bold);
+  color: var(--dc-color-purple);
+}
+.styledTrigger[data-state="active"]::before {
+  width: 100%;
+  background-color: var(--dc-color-purple);
+}
+@media (max-width: 767px) {
+  .styledTrigger {
+    font-size: var(--dc-font-size-gr3);
+  }
+}
+
+.styledContent {
+  flex-grow: 1;
+  padding: var(--dc-space-legacy-2) var(--dc-space-legacy-1);
+  background-color: white;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  outline: none;
+}
+.styledContent a {
+  color: var(--dc-color-purple);
+  cursor: pointer;
+}

@@ -1,0 +1,113 @@
+.styledOptionsBar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--dc-space-gr3);
+  flex-wrap: wrap;
+  align-items: center;
+}
+@media (max-width: 991px) {
+  .styledOptionsBar {
+    gap: var(--dc-space-gr2);
+  }
+}
+.styledOptionsBar :global([data-dc-slot~="work-type"]) {
+  border-right: 1px solid var(--dc-color-black10);
+  padding-right: var(--dc-space-gr2);
+  transition: var(--dc-transition-dc-width);
+}
+@media (max-width: 767px) {
+  .styledOptionsBar :global([data-dc-slot~="work-type"]) {
+    margin-top: var(--dc-space-gr3);
+    border-right: none;
+    padding-right: 0;
+  }
+}
+@media (max-width: 767px) {
+  .styledOptionsBar {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.styledOptionsWidth {
+  position: absolute;
+  width: 100%;
+}
+
+.styledOptionsFacets:where([data-is-tab-results="false"]) {
+  display: none;
+}
+.styledOptionsFacets:where([data-is-tab-results="true"]) {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.styledOptionsExtras {
+  display: flex;
+}
+@media (max-width: 767px) {
+  .styledOptionsExtras {
+    display: none;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100vw);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+.styledOptions {
+  transition: var(--dc-transition-dc-scroll-height);
+  margin: 0 0 var(--dc-space-gr5);
+}
+.styledOptions :global(.facets-ui-container) {
+  transition: var(--dc-transition-dc-all);
+  height: unset;
+}
+.styledOptions[data-filter-fixed="true"] {
+  flex-grow: 0;
+  flex-shrink: 1;
+  height: unset;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .styledOptions[data-filter-fixed="true"] {
+    background-color: transparent;
+    margin: 0;
+  }
+}
+.styledOptions[data-filter-fixed="true"] .styledOptionsExtras {
+  width: 0;
+  opacity: 0;
+}
+.styledOptions[data-filter-fixed="true"] .styledOptionsBar {
+  position: fixed;
+  margin: 0;
+  top: var(--dc-space-gr6);
+  z-index: 1;
+  transform: translateX(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  animation: slideInFromLeft 1s cubic-bezier(0.3, 1, 0.3, 1);
+}
+@media (max-width: 767px) {
+  .styledOptions[data-filter-fixed="true"] .styledOptionsBar {
+    top: var(--dc-space-gr5);
+    margin-top: var(--dc-space-gr4);
+  }
+}
+
+.contentSearchNote {
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+  align-self: center;
+}
+
+.styledOptionsExtras[data-content-only="true"] {
+  margin-left: auto;
+}

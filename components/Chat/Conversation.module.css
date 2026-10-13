@@ -1,0 +1,182 @@
+@keyframes gradientAnimation {
+  to {
+    background-size: 500%;
+    background-position: 38.2%;
+  }
+}
+@keyframes formBreathe {
+  0% {
+    outline: 2px solid transparent;
+  }
+
+  50% {
+    outline: 2px solid var(--dc-color-purple30);
+    background: var(--dc-color-purple10);
+  }
+
+  100% {
+    outline: 2px solid transparent;
+  }
+}
+.styledResetButton {
+  border: none;
+  background-color: var(--dc-color-white);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--dc-space-gr1);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr3);
+  color: var(--dc-color-purple);
+  padding: var(--dc-space-gr3);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: var(--dc-transition-dc-all);
+  text-decoration: underline;
+  text-decoration-thickness: min(2px, max(1px, 0.05em));
+  text-underline-offset: calc(0.05em + 2px);
+  text-decoration-color: var(--dc-color-purple10);
+  margin: 0 auto;
+}
+.styledResetButton svg {
+  fill: transparent;
+  stroke: var(--dc-color-purple);
+  stroke-width: 48px;
+  height: 1.25em;
+  width: 1.25em;
+  transform: rotate(45deg) scaleX(-1);
+}
+
+.styledChatConversation {
+  display: flex;
+  flex-direction: column;
+  padding: var(--dc-space-gr5) 0 var(--dc-space-gr4);
+  gap: var(--dc-space-gr3);
+}
+.styledChatConversation form {
+  position: relative;
+  transition: var(--dc-transition-dc-all);
+  border-radius: 3px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  z-index: 0;
+  height: 62px;
+  background: var(--dc-color-gray6);
+}
+.styledChatConversation form[data-is-focused="true"] {
+  box-shadow: 3px 3px 11px #0001;
+  outline: 2px solid var(--dc-color-purple60);
+  animation: none !important;
+  background: var(--dc-color-purple10);
+}
+.styledChatConversation form[data-is-focused="true"] textarea::placeholder {
+  color: var(--dc-color-purple60);
+}
+.styledChatConversation form[data-is-focused="true"] button[type="submit"] {
+  background-color: var(--dc-color-purple);
+  color: var(--dc-color-white);
+}
+.styledChatConversation form[data-is-focused="false"] {
+  box-shadow: none;
+  outline: 2px solid transparent;
+}
+.styledChatConversation form[data-is-focused="false"] textarea {
+  color: var(--dc-color-black50);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.styledChatConversation form textarea {
+  width: 100%;
+  height: 100%;
+  padding: var(--dc-space-gr3);
+  border: none;
+  resize: none;
+  font-size: var(--dc-font-size-gr3);
+  line-height: 147%;
+  z-index: 1;
+  font-family: var(--dc-font-northwestern-sans-regular);
+  overflow: hidden;
+  outline: none;
+  transition: var(--dc-transition-dc-all);
+  box-sizing: border-box;
+  background: transparent;
+  position: relative;
+}
+.styledChatConversation form textarea::placeholder {
+  overflow: hidden;
+  color: var(--dc-color-black50);
+  text-overflow: ellipsis;
+}
+.styledChatConversation form > :global([data-dc-slot~="stack"]) {
+  position: absolute;
+  top: calc(var(--dc-space-gr2));
+  left: calc(var(--dc-space-gr2));
+  z-index: 1;
+}
+.styledChatConversation
+  form:has(:global([data-dc-slot~="stack"])[data-isdismissed="false"])
+  textarea {
+  text-indent: 50px;
+}
+.styledChatConversation form button[type="submit"] {
+  position: absolute;
+  bottom: var(--dc-space-gr2);
+  right: var(--dc-space-gr2);
+  height: 38px;
+  border-radius: 3px;
+  background: var(--dc-color-purple);
+  border: none;
+  color: var(--dc-color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--dc-transition-dc-all);
+  cursor: pointer;
+  font-size: var(--dc-font-size-gr3);
+  padding: 0 var(--dc-space-gr2);
+  gap: var(--dc-space-gr2);
+  z-index: 1;
+  font-family: var(--dc-font-northwestern-sans-regular);
+}
+.styledChatConversation form button[type="submit"]:hover svg,
+.styledChatConversation form button[type="submit"]:focus svg {
+  stroke: var(--dc-color-white);
+}
+.styledChatConversation form button[type="submit"] svg {
+  width: 1rem;
+  height: 1rem;
+  fill: transparent;
+  stroke: var(--dc-color-purple60) !important;
+  transition: var(--dc-transition-dc-all);
+}
+.styledChatConversation form button[type="submit"] svg path {
+  stroke-width: 32px;
+}
+.styledChatConversation form button[type="submit"]:disabled {
+  background: linear-gradient(
+    73deg,
+    var(--dc-color-purple120) 0%,
+    var(--dc-color-purple) 50%,
+    var(--dc-color-bright-blue-b) 80%
+  );
+  background-size: 250%;
+  background-position: 61.8%;
+  animation: gradientAnimation 3s infinite alternate;
+  color: var(--dc-color-purple10);
+}
+.styledChatConversation form button[type="submit"]:disabled svg {
+  stroke: none !important;
+  opacity: 0.382;
+  fill: var(--dc-color-white);
+}
+
+.styledSystemPrompt {
+  margin: var(--dc-space-gr2);
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+  text-align: right;
+}
+.styledSystemPrompt a {
+  cursor: pointer;
+}

@@ -1,0 +1,11 @@
+.headingSlashTitleStyled {
+  font-family: var(--dc-font-northwestern-display-bold);
+  font-size: var(--dc-font-size-gr6);
+  margin-bottom: var(--dc-space-gr4);
+}
+.headingSlashTitleStyled:before,
+.headingSlashTitleStyled:after {
+  background: url(/images/icons/ltpurple-slash.svg) no-repeat 50%/17px 21px;
+  padding: 0 20px;
+  content: " ";
+}

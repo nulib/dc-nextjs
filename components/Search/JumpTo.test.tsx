@@ -16,7 +16,7 @@ describe("SearchJumpTo component", () => {
 
     const listbox = screen.getByRole("listbox");
     expect(listbox).toBeInTheDocument();
-    expect(listbox).toHaveStyle({ top: "45px" });
+    expect(listbox.style.getPropertyValue("--jump-to-top")).toBe("45px");
 
     for (let i = 0; i < listbox.children.length; i++) {
       const item = listbox.children[i];

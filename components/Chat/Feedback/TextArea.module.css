@@ -1,0 +1,12 @@
+.styledChatFeedbackTextArea {
+  display: flex;
+  flex-direction: column;
+  margin: var(--dc-space-gr3) 0;
+}
+.styledChatFeedbackTextArea span {
+  font-size: var(--dc-font-size-gr2);
+  margin-bottom: var(--dc-space-gr1);
+}
+.styledChatFeedbackTextArea textarea {
+  resize: none;
+}

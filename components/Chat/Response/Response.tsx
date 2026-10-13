@@ -1,10 +1,6 @@
+import styles from "@/components/Chat/Response/Response.module.css";
 import type { Turn } from "@/types/context/search-context";
 import React, { useEffect, useState } from "react";
-import {
-  StyledQuestion,
-  StyledResponse,
-} from "@/components/Chat/Response/Response.styled";
-
 import BouncingLoader from "@/components/Shared/BouncingLoader";
 import ResponseAggregations from "@/components/Chat/Response/Aggregations";
 import ResponseImages from "@/components/Chat/Response/Images";
@@ -16,8 +12,7 @@ import { prepareQuestion } from "@/lib/chat-helpers";
 import useChatSocket from "@/hooks/useChatSocket";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
-import { Notification } from "@nulib/design-system";
-
+import { Notification } from "@/components/Shared/Notification/Notification";
 interface ChatResponseProps {
   conversationIndex: number;
   conversationRef?: string;
@@ -26,7 +21,6 @@ interface ChatResponseProps {
   content?: React.JSX.Element;
   responseCallback?: (response?: any) => void;
 }
-
 const ChatResponse: React.FC<ChatResponseProps> = ({
   conversationIndex,
   conversationRef,
@@ -42,7 +36,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
     Turn["aggregations"]
   >([]);
   const [turnWorks, setTurnWorks] = useState<Turn["works"]>([]);
-
   useEffect(() => {
     if (isConnected && authToken && question && conversationRef) {
       const preparedQuestion = prepareQuestion(
@@ -54,24 +47,18 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       sendMessage(preparedQuestion);
     }
   }, [isConnected, authToken, question, conversationRef]);
-
   const [renderedMessage, setRenderedMessage] = useState<React.JSX.Element>();
   const [streamedMessage, setStreamedMessage] = useState<string>("");
   const [isStreamingComplete, setIsStreamingComplete] = useState(false);
-
   useEffect(() => {
     setIsStreamingComplete(false);
   }, [conversationRef, question]);
-
   useEffect(() => {
     if (!message || message.ref !== conversationRef) return;
-
     const { type } = message;
-
     if (type === "token") {
       setStreamedMessage((prev) => prev + message.message);
     }
-
     if (type === "answer") {
       resetStreamedMessage();
       setRenderedMessage((prev) => (
@@ -82,10 +69,8 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       ));
       setTurnAnswer(turnAnswer + message.message);
     }
-
     if (type === "rate_limit") {
       const { remaining, until } = message;
-
       if (remaining <= 5) {
         const formattedDate = new Date(until).toLocaleString(undefined, {
           dateStyle: "medium",
@@ -94,7 +79,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         setRenderedMessage((prev) => (
           <>
             {prev}
-            <Notification isWarning>
+            <Notification tone="warning">
               <p>
                 <strong>Rate Limit Warning</strong>
               </p>
@@ -108,7 +93,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         ));
       }
     }
-
     if (type === "tool_start") {
       setRenderedMessage((prev) => (
         <>
@@ -121,7 +105,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         </>
       ));
     }
-
     if (type === "search_result") {
       setRenderedMessage((prev) => (
         <>
@@ -131,7 +114,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
       ));
       setTurnWorks([...turnWorks, message.message]);
     }
-
     if (type === "aggregation_result") {
       setRenderedMessage((prev) => (
         <>
@@ -139,15 +121,13 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <ResponseAggregations message={message.message} />
         </>
       ));
-
       setTurnAggregations([...turnAggregations, message.message]);
     }
-
     if (type === "error") {
       setRenderedMessage((prev) => (
         <>
           {prev}
-          <Notification isDanger>
+          <Notification tone="danger">
             <p>
               <strong>Error</strong>
             </p>
@@ -156,7 +136,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         </>
       ));
     }
-
     /**
      * Final message is the last message in the response
      * and is used to trigger the responseCallback
@@ -164,7 +143,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
      */
     if (type === "final_message" || type === "error") {
       setIsStreamingComplete(true);
-
       // update the corresponding turn with the response
       const turns = searchState.conversation.turns;
       turns[conversationIndex] = {
@@ -174,7 +152,6 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
         renderedContent: renderedMessage,
         works: turnWorks,
       };
-
       searchDispatch({
         type: "updateConversation",
         conversation: {
@@ -182,24 +159,19 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           turns,
         },
       });
-
       if (responseCallback) responseCallback();
     }
   }, [message]);
-
   useEffect(() => {
     resetRenderedMessage();
     resetStreamedMessage();
   }, [conversationRef]);
-
   function resetStreamedMessage() {
     setStreamedMessage("");
   }
-
   function resetRenderedMessage() {
     setRenderedMessage(undefined);
   }
-
   /**
    * Check if the context has works or facets.
    * This is used to determine if we should render the Stack component.
@@ -207,17 +179,17 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
   const hasContext =
     (context?.works && context.works.length > 0) ||
     (context?.facets && context.facets.length > 0);
-
   return (
-    <StyledResponse
+    <article
       data-index={conversationIndex}
       data-ref={conversationRef}
       data-question={question}
+      className={styles.styledResponse}
     >
-      <StyledQuestion>
+      <header className={styles.styledQuestion}>
         {hasContext && <Stack context={context} isDismissable={false} />}
         {question}
-      </StyledQuestion>
+      </header>
       <div data-testid="response-content">
         {content ? (
           content
@@ -235,8 +207,7 @@ const ChatResponse: React.FC<ChatResponseProps> = ({
           <BouncingLoader />
         )}
       </div>
-    </StyledResponse>
+    </article>
   );
 };
-
 export default ChatResponse;

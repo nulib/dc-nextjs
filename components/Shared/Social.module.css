@@ -1,0 +1,13 @@
+.socialStyled {
+  display: flex;
+}
+.socialStyled :global([data-dc-slot~="icon"]) {
+  width: var(--dc-size-gr5);
+  height: var(--dc-size-gr5);
+  background-color: var(--dc-color-white);
+  fill: var(--dc-color-purple);
+  color: var(--dc-color-white);
+  stroke: var(--dc-color-white);
+  cursor: pointer;
+  border-radius: 3px;
+}

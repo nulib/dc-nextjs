@@ -1,0 +1,47 @@
+.expandButton {
+  opacity: 1;
+  transition: var(--dc-transition-dc-all);
+}
+
+.expandEdge {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  background-color: var(--dc-color-white);
+  justify-content: flex-start;
+  padding-top: var(--dc-space-gr7);
+  background: linear-gradient(to bottom, #fff0 0%, #fff 61.8%);
+  transition: var(--dc-transition-dc-all);
+  overflow: hidden;
+}
+
+.expandContent {
+  background-color: transparent;
+}
+
+.expandStyled {
+  position: relative;
+  overflow: hidden;
+  transition: var(--dc-transition-dc-all);
+  background-color: transparent;
+}
+.expandStyled:where([data-is-expanded="true"]) .expandEdge {
+  background: transparent;
+  height: 0;
+  padding: 0;
+}
+.expandStyled:where([data-is-expanded="true"]) .expandButton {
+  opacity: 0;
+}
+
+.expandStyled {
+  max-height: var(--expand-height);
+}
+@media (prefers-reduced-motion: reduce) {
+  .expandStyled,
+  .expandEdge,
+  .expandButton {
+    transition: none;
+  }
+}

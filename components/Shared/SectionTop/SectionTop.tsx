@@ -1,46 +1,42 @@
+import titleStyles from "@/components/Heading/SlashTitle.module.css";
+import subheadStyles from "@/components/Heading/Subhead.module.css";
+import type { HTMLAttributes } from "react";
+import styles from "@/components/Shared/SectionTop/SectionTop.module.css";
 import Container from "@/components/Shared/Container";
-import { HeadingSlashTitleStyled } from "@/components/Heading/SlashTitle.styled";
-import { HeadingSubheadStyled } from "@/components/Heading/Subhead";
-import { styled } from "@/stitches.config";
-
 /* eslint sort-keys: 0 */
-
 interface SectionTopProps {
   children: React.ReactNode;
 }
-
 const SectionTop: React.FC<SectionTopProps> = ({ children }) => {
   return (
-    <SectionTopStyled>
+    <section className={styles.sectionTopStyled}>
       <Container maxWidth={1120}>{children}</Container>
-    </SectionTopStyled>
+    </section>
   );
 };
-
-const SectionTitle = HeadingSlashTitleStyled;
-const SectionSubhead = HeadingSubheadStyled;
-
-const SectionTopStyled = styled("section", {
-  marginTop: "3rem",
-  marginBottom: "3rem",
-  textAlign: "center",
-  padding: "1 rem",
-
-  [`& ${SectionTitle}`]: {
-    color: "$purple",
-  },
-
-  [`& ${SectionSubhead}`]: {
-    color: "$purple",
-    maxWidth: "850px",
-    display: "inline-block",
-    margin: "$gr1 0 $gr1",
-
-    "@sm": {
-      fontSize: "$gr7",
-    },
-  },
-});
-
-export { SectionSubhead, SectionTopStyled, SectionTitle };
+const SectionTitle = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLHeadingElement>) => (
+  <h1
+    {...props}
+    data-dc-slot="heading-slash-title"
+    className={[titleStyles.headingSlashTitleStyled, className]
+      .filter(Boolean)
+      .join(" ")}
+  />
+);
+const SectionSubhead = ({
+  className,
+  ...props
+}: HTMLAttributes<HTMLParagraphElement>) => (
+  <p
+    {...props}
+    data-dc-slot="heading-subhead"
+    className={[subheadStyles.headingSubheadStyled, className]
+      .filter(Boolean)
+      .join(" ")}
+  />
+);
+export { SectionSubhead, SectionTitle };
 export default SectionTop;

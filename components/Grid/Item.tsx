@@ -1,31 +1,24 @@
+import styles from "@/components/Grid/Grid.module.css";
 import { useContext, useEffect, useState } from "react";
-
 import Figure from "@/components/Figure/Figure";
-import { GridItem as ItemStyled } from "@/components/Grid/Grid.styled";
 import Link from "next/link";
 import { SearchShape } from "@/types/api/response";
 import { UserContext } from "@/context/user-context";
-
 interface GridItemProps {
   item: SearchShape;
   isFeatured?: boolean;
 }
-
 const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
   const [urlPath, setUrlPath] = useState<string>();
   const userContext = useContext(UserContext);
-
   const isRestricted = (item: SearchShape): boolean => {
     if (item?.visibility === "Public") return false;
     if (userContext?.isLoading) return true;
-
     return !(
       userContext?.user?.scopes?.includes(`read:${item?.visibility}`) ?? false
     );
   };
-
   const noTitleString = "No title";
-
   useEffect(() => {
     switch (item.api_model) {
       case "Work":
@@ -39,9 +32,13 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
         return;
     }
   }, [item]);
-
   return (
-    <ItemStyled key={item.id} data-item-id={item.id} data-testid="grid-item">
+    <div
+      key={item.id}
+      data-item-id={item.id}
+      data-testid="grid-item"
+      className={styles.gridItem}
+    >
       <Link href={`${urlPath}/${item.id}`} data-testid="grid-item-link">
         <Figure
           data={{
@@ -56,8 +53,7 @@ const GridItem: React.FC<GridItemProps> = ({ item, isFeatured }) => {
           }}
         />
       </Link>
-    </ItemStyled>
+    </div>
   );
 };
-
 export default GridItem;

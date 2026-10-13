@@ -1,43 +1,29 @@
-import {
-  FooterContentColumn,
-  FooterContentWrapper,
-  FooterCopyright,
-  FooterIcon,
-  FooterList,
-  FooterStyled,
-  FooterVersion,
-  Social,
-} from "./Footer.styled";
+import contentStyles from "@/components/Footer/Content.module.css";
+import footerStyles from "@/components/Footer/Footer.module.css";
 import { getBuildInfo } from "@/lib/build-info";
-
 import React from "react";
-
 export const FooterContent: React.FC = () => {
   const { version, releaseUrl, commitUrl, shortSha, label } = getBuildInfo();
-
   const currentYear = () => {
     const today = new Date();
     return today.getFullYear();
   };
-
+  const VersionTag = releaseUrl ? "a" : "span";
   return (
-    <FooterStyled>
-      <FooterContentWrapper>
+    <footer className={footerStyles.footerStyled}>
+      <div className={footerStyles.footerContentWrapper}>
         {/* Column 1 */}
-        <FooterContentColumn>
+        <div className={footerStyles.footerContentColumn}>
           <a href="https://www.northwestern.edu">
-            <div className="footer-logo">
+            <div className={"footer-logo"}>
               <img
                 alt="Northwestern University logo"
                 src="https://common.northwestern.edu/v8/css/images/northwestern-university.svg"
-                style={{
-                  maxWidth: "200px",
-                  marginBottom: "1rem",
-                }}
+                className={contentStyles.override0}
               />
             </div>
           </a>
-          <FooterList>
+          <ul className={footerStyles.footerList}>
             <li>&copy; {currentYear()} Northwestern University</li>
             <li>
               <a href="https://www.northwestern.edu/emergency/index.html">
@@ -71,99 +57,112 @@ export const FooterContent: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="#" className="cky-banner-element">
+              <a href="#" className={"cky-banner-element"}>
                 Cookie Settings
               </a>
             </li>
-          </FooterList>
-        </FooterContentColumn>
+          </ul>
+        </div>
 
         {/* Column 2 */}
-        <FooterContentColumn className="contact">
-          <FooterList as="div">
-            <FooterIcon
-              css={{
-                background:
-                  "url('https://common.northwestern.edu/v8/css/images/icons/pin-drop.svg') no-repeat",
-              }}
+        <div
+          className={[footerStyles.footerContentColumn, "contact"]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          <div className={footerStyles.footerList}>
+            <li
+              className={[footerStyles.footerIcon, contentStyles.override1]
+                .filter(Boolean)
+                .join(" ")}
             >
-              <span className="hide-label">Address</span>
-            </FooterIcon>
+              <span className={"hide-label"}>Address</span>
+            </li>
             <span>
               1970 Campus Drive
               <br /> Evanston, IL 60208
             </span>
-          </FooterList>
-          <FooterList as="div">
-            <FooterIcon
-              css={{
-                background:
-                  "url('https://common.northwestern.edu/v8/css/images/icons/mobile-phone.svg') no-repeat",
-              }}
+          </div>
+          <div className={footerStyles.footerList}>
+            <li
+              className={[footerStyles.footerIcon, contentStyles.override2]
+                .filter(Boolean)
+                .join(" ")}
             >
-              <span className="hide-label">Phone number</span>
-            </FooterIcon>
+              <span className={"hide-label"}>Phone number</span>
+            </li>
             <span>(847) 491-7658</span>
-          </FooterList>
-          <FooterList as="div">
-            <FooterIcon
-              css={{
-                background:
-                  "url('https://common.northwestern.edu/v8/css/images/icons/email.svg') no-repeat",
-                top: "2px",
-              }}
+          </div>
+          <div className={footerStyles.footerList}>
+            <li
+              className={[footerStyles.footerIcon, contentStyles.override3]
+                .filter(Boolean)
+                .join(" ")}
             >
-              <span className="hide-label">Email Address</span>
-            </FooterIcon>
+              <span className={"hide-label"}>Email Address</span>
+            </li>
 
             <span>
               <a href="mailto:library@northwestern.edu">
                 library@northwestern.edu
               </a>
             </span>
-          </FooterList>
-        </FooterContentColumn>
+          </div>
+        </div>
 
         {/* Column 3 */}
-        <FooterContentColumn>
-          <p style={{ lineHeight: "1", margin: "0 0 1rem" }}>
+        <div className={footerStyles.footerContentColumn}>
+          <p className={contentStyles.override4}>
             <strong>Social Media</strong>
           </p>
-          <Social
-            className="facebook"
+          <a
             href="https://www.facebook.com/NorthwesternLibrary"
+            className={[footerStyles.social, "facebook"]
+              .filter(Boolean)
+              .join(" ")}
           >
             Facebook
-          </Social>
+          </a>
 
-          <Social className="twitter" href="https://twitter.com/nu_library">
+          <a
+            href="https://twitter.com/nu_library"
+            className={[footerStyles.social, "twitter"]
+              .filter(Boolean)
+              .join(" ")}
+          >
             Twitter
-          </Social>
-          <Social
-            className="instagram"
+          </a>
+          <a
             href="https://www.instagram.com/nu_library/"
+            className={[footerStyles.social, "instagram"]
+              .filter(Boolean)
+              .join(" ")}
           >
             Instagram
-          </Social>
+          </a>
           <br />
-          <Social
-            className="youtube"
+          <a
             href="https://www.youtube.com/user/NorthwesternLib"
+            className={[footerStyles.social, "youtube"]
+              .filter(Boolean)
+              .join(" ")}
           >
             YouTube
-          </Social>
-          <Social
-            className="wordpress"
+          </a>
+          <a
             href="http://sites.northwestern.edu/northwesternlibrary/"
+            className={[footerStyles.social, "wordpress"]
+              .filter(Boolean)
+              .join(" ")}
           >
             WordPress
-          </Social>
-        </FooterContentColumn>
+          </a>
+        </div>
 
         {/* Column 4 */}
-        <FooterContentColumn>
+        <div className={footerStyles.footerContentColumn}>
           <div>
-            <FooterList>
+            <ul className={footerStyles.footerList}>
               <li>
                 <a href="http://northwestern.libanswers.com/">FAQs</a>
               </li>
@@ -187,12 +186,12 @@ export const FooterContent: React.FC = () => {
                   Provide Feedback
                 </a>
               </li>
-            </FooterList>
+            </ul>
           </div>
-        </FooterContentColumn>
-      </FooterContentWrapper>
+        </div>
+      </div>
 
-      <FooterCopyright>
+      <div className={footerStyles.footerCopyright}>
         <p>
           Northwestern University Libraries is dedicated to the fair and ethical
           preservation, digitization, curation, and use of its collections. The
@@ -212,9 +211,9 @@ export const FooterContent: React.FC = () => {
           language, or opinions that are offensive and may not be appropriate
           for all audiences.
         </p>
-        <FooterVersion
-          as={releaseUrl ? "a" : "span"}
+        <VersionTag
           href={releaseUrl ?? undefined}
+          className={footerStyles.footerVersion}
         >
           v{version}
           {label && (
@@ -231,8 +230,8 @@ export const FooterContent: React.FC = () => {
               {")"}
             </>
           )}
-        </FooterVersion>
-      </FooterCopyright>
-    </FooterStyled>
+        </VersionTag>
+      </div>
+    </footer>
   );
 };

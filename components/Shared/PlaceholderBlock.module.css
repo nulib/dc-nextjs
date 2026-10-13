@@ -1,0 +1,6 @@
+.placeholderBlock {
+  background: var(--dc-color-black10);
+  margin: 0;
+  padding: var(--dc-space-gr2) 0;
+  text-align: center;
+}

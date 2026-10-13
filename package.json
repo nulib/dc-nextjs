@@ -27,7 +27,6 @@
     "@next/font": "^14.0.3",
     "@next/third-parties": "^14.2.3",
     "@nulib/dcapi-types": "^2.9.1",
-    "@nulib/design-system": "^1.6.2",
     "@nulib/use-markdown": "^0.2.1",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.0.1",
@@ -42,12 +41,10 @@
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tabs": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@samvera/clover-iiif": "^3.16.1",
+    "@samvera/clover-iiif": "4.0.0-rc.2",
     "@samvera/image-downloader": "^1.1.6",
-    "@stitches/react": "^1.2.6",
     "axios": "^1.2.2",
     "cookies-next": "^4.2.1",
-    "framer-motion": "^11.2.3",
     "jsonwebtoken": "^9.0.0",
     "next": "^14.2.3",
     "react": "^18.3.1",
@@ -100,9 +97,7 @@
     "fsevents": "^2.3.2"
   },
   "next-unused": {
-    "entrypoints": [
-      "stitches.config.ts"
-    ],
+    "entrypoints": [],
     "include": [
       "components",
       "context",

@@ -17,6 +17,6 @@ describe("BlurredBgImage component", () => {
       />,
     );
     const el = screen.getByTestId("blurred-bg-image");
-    expect(el).toHaveStyle("background-color: red");
+    expect(el.style.getPropertyValue("--blur-background-color")).toBe("red");
   });
 });

@@ -1,13 +1,8 @@
+import type { CSSProperties } from "react";
+import styles from "@/components/Search/JumpTo.module.css";
 import { Dispatch, KeyboardEvent, useEffect, useState } from "react";
-import {
-  HelperStyled,
-  JumpItem,
-  JumpToListStyled,
-} from "@/components/Search/JumpTo.styled";
-
 import { IconReturnDownBack } from "@/components/Shared/SVG/Icons";
 import useEventListener from "@/hooks/useEventListener";
-
 interface SearchJumpToListProps {
   handleOnClick: () => void;
   searchValue: string;
@@ -15,7 +10,6 @@ interface SearchJumpToListProps {
   setScopeValue: (value: string) => void;
   top: number;
 }
-
 const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   handleOnClick,
   searchValue,
@@ -24,7 +18,6 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
   top,
 }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-
   const jumpToItems = [
     {
       dataTestId: "helper-anchor-collection",
@@ -37,9 +30,7 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
       value: "all",
     },
   ];
-
   const defaultScopeValue = jumpToItems[0].value;
-
   const handleKeyEvent = (e: KeyboardEvent) => {
     switch (e.key) {
       case "ArrowUp":
@@ -67,35 +58,34 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
         break;
     }
   };
-
   // @ts-ignore
   useEventListener("keydown", handleKeyEvent);
-
   useEffect(() => setScopeValue(defaultScopeValue), []);
-
   const handleValue = (value: string) => {
     setActiveIndex(jumpToItems.findIndex((item) => item.value === value));
     setScopeValue(value);
   };
-
   const handleItemHover = (e: React.MouseEvent<HTMLLIElement>) => {
     const value = e.currentTarget.getAttribute("data-value");
     if (value) handleValue(value);
   };
-
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value) if (value) handleValue(value);
   };
-
   return (
-    <JumpToListStyled
+    <ul
       data-testid="jump-to-wrapper"
       role="listbox"
-      style={{ top }}
+      style={
+        {
+          "--jump-to-top": typeof top === "number" ? `${top}px` : top,
+        } as CSSProperties
+      }
+      className={styles.jumpToListStyled}
     >
       {jumpToItems.map((item, index) => (
-        <JumpItem
+        <li
           key={item.dataTestId}
           role="option"
           aria-selected={index === activeIndex}
@@ -103,6 +93,7 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
           onClick={handleOnClick}
           onMouseEnter={handleItemHover}
           data-testid={item.dataTestId}
+          className={styles.jumpItem}
         >
           <label htmlFor={`dc-search-scope-${item.value}`}>
             <input
@@ -115,18 +106,18 @@ const SearchJumpToList: React.FC<SearchJumpToListProps> = ({
             />
             {searchValue} <Helper label={item.helperLabel} />
           </label>
-        </JumpItem>
+        </li>
       ))}
-    </JumpToListStyled>
+    </ul>
   );
 };
-
-const Helper: React.FC<{ label: string }> = ({ label }) => {
+const Helper: React.FC<{
+  label: string;
+}> = ({ label }) => {
   return (
-    <HelperStyled data-testid="helper">
+    <div data-testid="helper" className={styles.helperStyled}>
       <span>{label}</span> <IconReturnDownBack />
-    </HelperStyled>
+    </div>
   );
 };
-
 export default SearchJumpToList;

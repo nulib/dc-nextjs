@@ -1,0 +1,83 @@
+.helperStyled {
+  position: absolute;
+  top: 11px;
+  right: var(--dc-space-gr2);
+  padding: var(--dc-space-gr1) var(--dc-space-gr2);
+  background: transparent;
+  border-radius: 1rem;
+  color: var(--dc-color-black50);
+  display: flex;
+  align-items: center;
+  transition: var(--dc-transition-dc-all);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr2);
+}
+.helperStyled > svg {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  margin-left: var(--dc-space-gr1);
+  height: var(--dc-size-gr3);
+  width: 0;
+  color: inherit;
+  transition: var(--dc-transition-dc-all);
+}
+
+.jumpToListStyled {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  margin: 0;
+  padding: 0;
+  background: var(--dc-color-white);
+  width: 100%;
+  font-size: var(--dc-font-size-gr2);
+  list-style: none;
+  top: 50px;
+  border-radius: 3px;
+  box-shadow: 3px 3px 11px #0001;
+  overflow: hidden;
+}
+
+.jumpItem {
+  position: relative;
+  transition: var(--dc-transition-dc-all);
+}
+.jumpItem label {
+  display: block;
+  width: 100%;
+  padding: var(--dc-space-gr3);
+  cursor: pointer;
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr3);
+  color: var(--dc-color-purple120);
+  background: transparent;
+  border-top: 1px solid var(--dc-color-purple30);
+}
+.jumpItem input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.jumpItem[aria-selected="true"] {
+  background: var(--dc-color-purple10);
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.jumpItem[aria-selected="true"] label {
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.jumpItem[aria-selected="true"] .helperStyled {
+  color: var(--dc-color-purple10);
+  background: var(--dc-color-purple);
+  font-family: var(--dc-font-northwestern-sans-regular);
+}
+.jumpItem[aria-selected="true"] .helperStyled svg {
+  width: var(--dc-size-gr3);
+  color: var(--dc-color-purple30);
+}
+
+.jumpToListStyled {
+  top: var(--jump-to-top);
+}

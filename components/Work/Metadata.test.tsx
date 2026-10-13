@@ -11,7 +11,7 @@ describe("WorkMetadata component", () => {
 
     const metadataGroups = screen
       .getByTestId("metadata")
-      .querySelectorAll(":scope > [data-label]");
+      .querySelectorAll<HTMLElement>(":scope > [data-label]");
     expect(metadataGroups.length).toBe(12);
 
     metadataGroups.forEach((group, index) => {

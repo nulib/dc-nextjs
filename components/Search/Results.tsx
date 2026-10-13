@@ -1,9 +1,4 @@
-import {
-  NoResultsMessage,
-  ResultsWrapper,
-  ResultsWrapperHeader,
-} from "@/components/Search/Search.styled";
-
+import styles from "@/components/Search/Search.module.css";
 import { ChatContext } from "@/types/context/search-context";
 import Grid from "@/components/Grid/Grid";
 import IIIFShare from "../Shared/IIIF/Share";
@@ -15,12 +10,10 @@ import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { iiifSearchUri } from "@/lib/dc-api";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
-
 interface SearchResultsStateWithContext extends SearchResultsState {
   context?: ChatContext;
   hideResultCount?: boolean;
 }
-
 const SearchResults: React.FC<SearchResultsStateWithContext> = ({
   data,
   context,
@@ -30,7 +23,6 @@ const SearchResults: React.FC<SearchResultsStateWithContext> = ({
 }) => {
   const { isChecked: isAI } = useGenerativeAISearchToggle();
   const router = useRouter();
-
   const iiifCollection = iiifSearchUri(router.query, SEARCH_RESULTS_PER_PAGE);
   const totalResults = data?.pagination?.total_hits;
   const rawLabel = createResultsMessageFromContext(
@@ -40,24 +32,23 @@ const SearchResults: React.FC<SearchResultsStateWithContext> = ({
   const label = hideResultCount
     ? rawLabel?.replace(/^Results\b/, "Searching")
     : rawLabel;
-
   return (
-    <ResultsWrapper>
+    <div className={styles.resultsWrapper}>
       {loading && <></>}
       {error && <p>{error}</p>}
       {data && (
         <>
           {!isAI &&
             (totalResults ? (
-              <ResultsWrapperHeader>
+              <header className={styles.resultsWrapperHeader}>
                 {label && <SearchResultsMessage label={label} />}
                 <IIIFShare uri={iiifCollection} />
-              </ResultsWrapperHeader>
+              </header>
             ) : (
-              <NoResultsMessage>
+              <span className={styles.noResultsMessage}>
                 <strong>Your search did not match any results.</strong> Please
                 try broadening your search terms or adjusting your filters.
-              </NoResultsMessage>
+              </span>
             ))}
           <Grid data={data.data} info={data.info} />
           {totalResults ? (
@@ -70,8 +61,7 @@ const SearchResults: React.FC<SearchResultsStateWithContext> = ({
           )}
         </>
       )}
-    </ResultsWrapper>
+    </div>
   );
 };
-
 export default SearchResults;

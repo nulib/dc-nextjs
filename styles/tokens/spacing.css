@@ -1,0 +1,26 @@
+:root {
+  --dc-space-gr1: calc(1rem / 2.6179240000000004);
+  --dc-space-gr2: calc(1rem / 1.618);
+  --dc-space-gr3: 1rem;
+  --dc-space-gr4: calc(1rem * 1.618);
+  --dc-space-gr5: calc(1rem * 2.6179240000000004);
+  --dc-space-gr6: calc(1rem * 4.235801032000001);
+  --dc-space-gr7: calc(1rem * 6.853526069776001);
+  --dc-space-gr8: calc(1rem * 11.089005180897571);
+  --dc-space-gr9: calc(1rem * 17.94201038269227);
+  --dc-space-gr10: calc(1rem * 29.030172799196098);
+  --dc-space-gr11: calc(1rem * 46.97081958909929);
+  --dc-space-gr12: calc(1rem * 75.99878609516266);
+  --dc-size-gr1: calc(1rem / 2.6179240000000004);
+  --dc-size-gr2: calc(1rem / 1.618);
+  --dc-size-gr3: 1rem;
+  --dc-size-gr4: calc(1rem * 1.618);
+  --dc-size-gr5: calc(1rem * 2.6179240000000004);
+  --dc-size-gr6: calc(1rem * 4.235801032000001);
+  --dc-size-gr7: calc(1rem * 6.853526069776001);
+  --dc-size-gr8: calc(1rem * 11.089005180897571);
+  --dc-size-gr9: calc(1rem * 17.94201038269227);
+  --dc-size-gr10: calc(1rem * 29.030172799196098);
+  --dc-size-gr11: calc(1rem * 46.97081958909929);
+  --dc-size-gr12: calc(1rem * 75.99878609516266);
+}

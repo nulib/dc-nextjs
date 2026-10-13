@@ -1,27 +1,23 @@
+import loaderStyles from "@/components/Shared/Loader.module.css";
+import genericFacetStyles from "@/components/Facets/Facet/GenericFacet.module.css";
 import {
-  ApiResponseAggregation,
   ApiResponseFilteredAggregation,
   ApiSearchResponse,
 } from "@/types/api/response";
-import { Options, SpinWrapper } from "./GenericFacet.styled";
 import { useEffect, useState } from "react";
-
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { DC_API_SEARCH_URL } from "@/lib/constants/endpoints";
 import { FacetsInstance } from "@/types/components/facets";
 import Option from "./Option";
-import { SpinLoader } from "@/components/Shared/Loader.styled";
 import { apiPostRequest } from "@/lib/dc-api";
 import { buildQuery } from "@/lib/queries/builder";
 import { useFilterState } from "@/context/filter-context";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import useQueryParams from "@/hooks/useQueryParams";
-
 interface FacetOptionsProps {
   aggsFilterValue: string;
   facet: FacetsInstance;
 }
-
 const FacetOptions: React.FC<FacetOptionsProps> = ({
   aggsFilterValue,
   facet,
@@ -30,13 +26,10 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
   const [aggregations, setAggregations] =
     useState<ApiResponseFilteredAggregation>();
   const [loading, setLoading] = useState(true);
-
   const { isChecked } = useGenerativeAISearchToggle();
-
   const {
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
-
   useEffect(() => {
     if (typeof searchTerm === "undefined") return;
     (async () => {
@@ -51,12 +44,10 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
           },
           !!isChecked,
         );
-
         const response = await apiPostRequest<ApiSearchResponse>({
           body: body,
           url: DC_API_SEARCH_URL,
         });
-
         setAggregations(
           response?.aggregations as ApiResponseFilteredAggregation,
         );
@@ -66,29 +57,22 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       }
     })();
   }, [aggsFilterValue, facet, searchTerm, userFacetsUnsubmitted]);
-
   if (loading)
     return (
-      <SpinWrapper>
-        <SpinLoader />
-      </SpinWrapper>
+      <div className={genericFacetStyles.spinWrapper}>
+        <span className={loaderStyles.spinLoader} />
+      </div>
     );
-
   const facetAggregation = aggregations?.[facet.id]?.[facet.id];
   const buckets = facetAggregation?.buckets ?? [];
-
   function getBucketOrder(bucketKey: string) {
     const urlFacet = userFacetsUnsubmitted[facet.id];
-
     if (!urlFacet) {
       return Infinity;
     }
-
     const index = urlFacet.findIndex((facet) => facet.includes(bucketKey));
-
     return index === -1 ? Infinity : index;
   }
-
   if (buckets.length === 0) {
     return (
       <p>
@@ -96,25 +80,22 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
       </p>
     );
   }
-
   buckets.sort((a, b) => getBucketOrder(a.key) - getBucketOrder(b.key));
-
   const userBuckets = Array.isArray(aggregations?.userFacets?.buckets)
     ? aggregations.userFacets.buckets
     : [];
-
   const filteredAggBuckets = buckets.filter(
     (bucket) =>
       !userBuckets.some((userBucket) => userBucket.key === bucket.key),
   );
-
   const renderBuckets = [...filteredAggBuckets, ...userBuckets];
-
   return (
-    <Options
+    <ul
       key={facet.id}
-      className="facet-options skeleton-loader"
       data-testid="facet-options"
+      className={[genericFacetStyles.options, "facet-options skeleton-loader"]
+        .filter(Boolean)
+        .join(" ")}
     >
       {renderBuckets.map((bucket, index) => (
         <Option
@@ -124,8 +105,7 @@ const FacetOptions: React.FC<FacetOptionsProps> = ({
           key={bucket.key}
         />
       ))}
-    </Options>
+    </ul>
   );
 };
-
 export default FacetOptions;

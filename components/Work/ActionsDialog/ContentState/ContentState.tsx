@@ -1,43 +1,33 @@
+import downloadAndShareStyles from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.module.css";
+import contentStateStyles from "@/components/Work/ActionsDialog/ContentState/ContentState.module.css";
 import React, { useEffect, useState } from "react";
-import {
-  StyledIIIFContentState,
-  StyledIIIFContentStateButton,
-} from "./ContentState.styled";
-
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import SharedSocial from "@/components/Shared/Social";
 import SharedTextArea from "@/components/Shared/TextArea";
-import { StyledShareURL } from "../DownloadAndShare/DownloadAndShare.styled";
 import { convertTime } from "@/lib/utils/time-helpers";
 import { encodeContentState } from "@iiif/helpers";
 import { getContentStateMetadata } from "@/lib/iiif/content-state-helpers";
 import { useWorkState } from "@/context/work-context";
-
 const WorkDialogContentState = () => {
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [isCanvasChecked, setIsCanvasChecked] = useState(false);
-
   const {
     workState: { work, manifest, contentState },
   } = useWorkState();
   const formRef = React.useRef<HTMLFormElement>(null);
-
   const metadata = getContentStateMetadata({
     manifest,
     contentState,
   });
-
   const appendNote =
     "Note: This annotation was included as part of a user-authored shared link.";
   const currentFileLabel = `${metadata?.activeCanvasIndex} of ${metadata?.canvasCount}`;
-
   useEffect(() => {
     const url = new URL(window.location.href);
     url.pathname = `/items/${work?.id}`;
     setShareUrl(url.toString());
   }, [work, contentState]);
-
   const handleFormChange = () => {
     const canvas = formRef.current?.querySelector(
       '[name="canvas"]',
@@ -48,15 +38,12 @@ const WorkDialogContentState = () => {
     const body = formRef.current?.querySelector(
       '[name="body"]',
     ) as HTMLTextAreaElement;
-
     // @ts-ignore
     const newContentState = { ...contentState?.json };
-
     if (!canvas?.checked) {
       if (selector) selector.checked = false;
       if (body) body.value = "";
     }
-
     if (!selector?.checked) {
       newContentState.target = {
         // @ts-ignore
@@ -64,7 +51,6 @@ const WorkDialogContentState = () => {
         selector: undefined,
       };
     }
-
     newContentState.body = body?.value
       ? [
           {
@@ -74,10 +60,8 @@ const WorkDialogContentState = () => {
           },
         ]
       : [];
-
     const url = new URL(window.location.href);
     url.pathname = `/items/${work?.id}/share`;
-
     const newShareUrl = new URL(url.toString());
     if (canvas?.checked) {
       newShareUrl.searchParams.set(
@@ -87,21 +71,18 @@ const WorkDialogContentState = () => {
     } else {
       newShareUrl.searchParams.delete("iiif-content");
     }
-
     setIsCanvasChecked(canvas?.checked);
     setShareUrl(newShareUrl.toString());
   };
-
   // @ts-ignore
   const targetSelector = contentState?.json?.target?.selector;
   const selectorValue = targetSelector?.t || targetSelector?.value;
-
   return (
     <section>
-      <Heading as="h3" css={{ marginTop: "0" }}>
+      <Heading as="h3" className={contentStateStyles.override0}>
         Share URL
       </Heading>
-      <StyledIIIFContentState>
+      <div className={contentStateStyles.styledIIIFContentState}>
         {work && work.title && work.thumbnail && (
           <SharedSocial
             title={work.title}
@@ -111,10 +92,10 @@ const WorkDialogContentState = () => {
         )}
         <form ref={formRef} onChange={handleFormChange}>
           <div>
-            <StyledShareURL>
+            <div className={downloadAndShareStyles.styledShareURL}>
               <input type="text" value={String(shareUrl)} readOnly />
               {shareUrl && <CopyText textPrompt="Copy" textToCopy={shareUrl} />}
-            </StyledShareURL>
+            </div>
           </div>
           {contentState && (
             <>
@@ -159,16 +140,17 @@ const WorkDialogContentState = () => {
               </label>
 
               {shareUrl && (
-                <StyledIIIFContentStateButton>
+                <div
+                  className={contentStateStyles.styledIIIFContentStateButton}
+                >
                   <CopyText textPrompt="Copy Share URL" textToCopy={shareUrl} />
-                </StyledIIIFContentStateButton>
+                </div>
               )}
             </>
           )}
         </form>
-      </StyledIIIFContentState>
+      </div>
     </section>
   );
 };
-
 export default WorkDialogContentState;

@@ -13,7 +13,15 @@ import { UserProvider } from "@/context/user-context";
 import { defaultAIState } from "@/hooks/useGenerativeAISearchToggle";
 import { defaultOpenGraphData } from "@/lib/open-graph";
 import { getUser } from "@/lib/user-helpers";
-import globalStyles from "@/styles/global";
+import "@/styles/tokens/colors.css";
+import "@/styles/tokens/controls.css";
+import "@/styles/tokens/spacing.css";
+import "@/styles/tokens/typography.css";
+import "@/styles/tokens/motion.css";
+import "@/styles/tokens/layout.css";
+import "@/styles/fonts.css";
+import "@/styles/global.css";
+import "@/components/Clover/clover-tokens.css";
 import setupHoneyBadger from "@/lib/honeybadger/config";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
@@ -25,8 +33,6 @@ interface MyAppProps extends AppProps {
 }
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-  globalStyles();
-
   const { openGraphData = {} } = pageProps;
   const ogData = { ...defaultOpenGraphData, ...openGraphData };
   const [mounted, setMounted] = React.useState(false);
@@ -79,10 +85,6 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         <SearchProvider>
           <LayoutProvider>
             <SiteWebMcpTools />
-            <style jsx global>{`
-              :root {
-              }
-            `}</style>
             {mounted && <Component {...pageProps} />}
             <AuthDialog />
             <GoogleTagManager gtmId="GTM-NDJXLQW" />

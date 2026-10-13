@@ -1,0 +1,134 @@
+.styledGenericFacet {
+  margin-bottom: 2rem;
+}
+.styledGenericFacet :global([data-dc-slot~="heading"]) {
+  margin: 0 0 1rem;
+  font-family: var(--dc-font-northwestern-display-bold);
+  font-size: var(--dc-font-size-gr5);
+  font-weight: 400;
+}
+
+.findInput {
+  display: flex;
+  width: 100%;
+  padding: 0 2.382rem;
+  font-size: 1rem;
+}
+
+.find {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 1;
+  background-color: var(--dc-color-gray6);
+  height: 40px;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  z-index: 1;
+}
+.find .findInput {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  font-size: var(--dc-font-size-gr3);
+  z-index: 1;
+}
+.find svg {
+  position: absolute;
+  display: flex;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  z-index: 0;
+  fill: var(--dc-color-slate9);
+  padding: 11px;
+}
+
+.indicator {
+  display: flex;
+  width: var(--dc-size-gr3);
+  height: var(--dc-size-gr3);
+  background-color: var(--dc-color-purple);
+  margin: -1px 0 0 -1px;
+  border-radius: 3px;
+}
+
+.optionCount {
+  color: var(--dc-color-black50);
+  margin-left: 4px;
+  font-family: var(--dc-font-northwestern-sans-light);
+  position: relative;
+}
+
+.optionText {
+  color: var(--dc-color-black80);
+  font-family: var(--dc-font-northwestern-sans-regular);
+}
+
+.options {
+  margin: 0;
+  padding: 0;
+}
+.options li {
+  margin: var(--dc-space-gr1) 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  font-size: var(--dc-font-size-gr3);
+}
+.options li label {
+  cursor: pointer;
+  line-height: 1.382em;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+.options li label:hover,
+.options li label:focus {
+  color: var(--dc-color-black);
+}
+.options li label[data-selected="true"] {
+  color: var(--dc-color-black);
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.options li label[data-selected="true"] .optionCount {
+  font-weight: 400;
+}
+.options li label[data-selected="true"] .optionText {
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.options li button {
+  display: flex;
+  margin-right: var(--dc-space-gr1);
+  width: calc(1rem);
+  height: calc(1rem);
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: var(--dc-color-white);
+  border: 1px solid var(--dc-color-black10);
+  padding: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  color: var(--dc-color-purple30);
+}
+.options li button svg {
+  padding: 1px;
+}
+.options li button:hover,
+.options li button:focus {
+  border-color: var(--dc-color-black20);
+  box-shadow: 2px 2px 5px #0002;
+  color: var(--dc-color-white);
+}
+
+.spinWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: var(--dc-space-gr2);
+  padding-left: var(--dc-space-gr3);
+}

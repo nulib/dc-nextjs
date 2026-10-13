@@ -1,12 +1,11 @@
-import { Clear, StyledTextArea } from "@/components/Search/TextArea.styled";
-import React, {
+import styles from "@/components/Search/TextArea.module.css";
+import {
   ChangeEvent,
   FocusEvent,
   KeyboardEvent,
   forwardRef,
   useEffect,
 } from "react";
-
 interface SearchTextAreaProps {
   isAi: boolean;
   isFocused: boolean;
@@ -16,7 +15,6 @@ interface SearchTextAreaProps {
   clearSearchResults: () => void;
   searchValue: string;
 }
-
 const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
   (
     {
@@ -39,23 +37,19 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
         textarea.style.height = `${textarea.scrollHeight}px`;
       }
     }, [isFocused]);
-
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       handleSearchChange(e);
-
       // @ts-ignore
       const textarea = textareaRef?.current;
       if (textarea) {
         textarea.style.height = `${textarea.scrollHeight}px`;
       }
     };
-
     const placeholderText = isAi
       ? "What can we show you from our collections?"
       : "Search by keyword or phrase, ex: Berkeley Music Festival";
-
     return (
-      <StyledTextArea isFocused={isFocused}>
+      <div data-is-focused={isFocused} className={styles.styledTextArea}>
         <textarea
           autoComplete="on"
           id="dc-search"
@@ -74,11 +68,9 @@ const SearchTextArea = forwardRef<HTMLTextAreaElement, SearchTextAreaProps>(
           role="search"
           value={searchValue}
         />
-      </StyledTextArea>
+      </div>
     );
   },
 );
-
 SearchTextArea.displayName = "SearchTextArea";
-
 export default SearchTextArea;

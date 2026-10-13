@@ -193,7 +193,7 @@ describe("AuthDialog", () => {
       await userEvent.click(magicLinkButton);
 
       await waitFor(() => {
-        expect(magicLinkButton).toHaveClass(/isDanger/);
+        expect(magicLinkButton).toHaveAttribute("data-variant", "danger");
       });
     });
 

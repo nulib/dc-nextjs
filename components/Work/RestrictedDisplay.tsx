@@ -2,7 +2,7 @@ import Announcement from "@/components/Shared/Announcement";
 import BlurredBgImage from "@/components/Shared/BlurredBgImage";
 import { UserContext } from "@/context/user-context";
 import React, { useContext } from "react";
-import { Button } from "@nulib/design-system";
+import { Button } from "@/components/Shared/Button/Button";
 
 interface Props {
   thumbnail: string | null;
@@ -31,7 +31,7 @@ const WorkRestrictedDisplay: React.FC<Props> = ({
         <p>
           This Work requires Northwestern University NetID authentication.
           Please{" "}
-          <Button onClick={openSignInModal} isText isLowercase as="a">
+          <Button onClick={openSignInModal} variant="text" textCase="normal">
             sign in
           </Button>
         </p>

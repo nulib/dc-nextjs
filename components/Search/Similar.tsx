@@ -1,9 +1,8 @@
+import styles from "@/components/Search/Similar.module.css";
 import Announcement from "@/components/Shared/Announcement";
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import Link from "next/link";
 import React from "react";
-import { styled } from "@/stitches.config";
-
 interface Props {
   handleClose: () => void;
   work: {
@@ -11,44 +10,10 @@ interface Props {
     title: string;
   };
 }
-
-/* eslint sort-keys: 0 */
-
-const SimilarWrapper = styled(Announcement, {
-  marginBottom: "$gr4",
-  paddingTop: "$gr1",
-  paddingBottom: "$gr1",
-});
-
-const SimilarStyled = styled("div", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: "$purple",
-  position: "relative",
-
-  "& button": {
-    position: "absolute",
-    right: 0,
-    background: "transparent",
-    border: "none",
-    cursor: "pointer",
-
-    "& span": {
-      display: "none",
-    },
-
-    "& svg": {
-      width: "$gr3",
-      height: "$gr3",
-    },
-  },
-});
-
 const SearchSimilar: React.FC<Props> = ({ handleClose, work }) => {
   return (
-    <SimilarWrapper>
-      <SimilarStyled>
+    <Announcement className={styles.similarWrapper}>
+      <div className={styles.similarStyled}>
         <p>
           You are viewing works similar to{" "}
           <Link href={`/items/${work?.id}`}>{work?.title}</Link>
@@ -57,9 +22,8 @@ const SearchSimilar: React.FC<Props> = ({ handleClose, work }) => {
           <span>Close</span>
           <IconClear />
         </button>
-      </SimilarStyled>
-    </SimilarWrapper>
+      </div>
+    </Announcement>
   );
 };
-
 export default SearchSimilar;

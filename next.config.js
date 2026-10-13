@@ -115,13 +115,6 @@ module.exports = withBundleAnalyzer({
       );
     }
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@samvera/clover-iiif/viewer": require.resolve(
-        "./node_modules/@samvera/clover-iiif/dist/viewer/index.mjs",
-      ),
-    };
-
     return config;
   },
 });

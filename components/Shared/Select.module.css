@@ -1,0 +1,105 @@
+.styledTrigger {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 13px;
+  line-height: 1;
+  height: 35px;
+  gap: 5px;
+  background-color: white;
+  color: var(--dc-color-black80);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.styledTrigger:hover {
+  background-color: var(--dc-color-black10);
+}
+.styledTrigger:focus {
+  box-shadow: 0 0 0 2px black;
+}
+.styledTrigger[data-placeholder] {
+  color: var(--dc-color-black80);
+}
+
+.styledIcon {
+  color: var(--dc-color-black80);
+}
+
+.styledContent {
+  overflow: hidden;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow:
+    0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+}
+
+.styledViewport {
+  padding: 5px;
+}
+
+.styledItem {
+  all: unset;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--dc-color-black80);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding: 0 35px 0 25px;
+  position: relative;
+  user-select: none;
+}
+.styledItem[data-disabled] {
+  color: #bcbac7;
+  pointer-events: none;
+}
+.styledItem[data-highlighted] {
+  background-color: var(--dc-color-black20);
+  color: var(--dc-color-black80);
+}
+
+.styledLabel {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: #65636d;
+}
+
+.styledSeparator {
+  height: 1px;
+  background-color: #d4cafe;
+  margin: 5px;
+}
+
+.styledItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styledScrollUpButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: #6550b9;
+  cursor: default;
+}
+
+.styledScrollDownButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: #6550b9;
+  cursor: default;
+}

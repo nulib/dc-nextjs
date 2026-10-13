@@ -1,16 +1,7 @@
+import styles from "@/components/Shared/Dialog.module.css";
 import * as Dialog from "@radix-ui/react-dialog";
-
-import {
-  DialogBody,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogOverlay,
-} from "@/components/Shared/Dialog.styled";
-
 import { IconClear } from "@/components/Shared/SVG/Icons";
 import { ReactNode } from "react";
-
 interface SharedDialogProps {
   children: ReactNode;
   handleCloseClick: () => void;
@@ -18,7 +9,6 @@ interface SharedDialogProps {
   size?: "small" | "large";
   title: string;
 }
-
 const SharedDialog: React.FC<SharedDialogProps> = ({
   children,
   handleCloseClick,
@@ -29,26 +19,27 @@ const SharedDialog: React.FC<SharedDialogProps> = ({
   return (
     <Dialog.Root open={isOpen}>
       <Dialog.Portal>
-        <DialogOverlay />
-        <DialogContent
+        <Dialog.Overlay className={styles.dialogOverlay} />
+        <Dialog.Content
           onInteractOutside={handleCloseClick}
-          {...(size ? { size } : {})}
+          data-size={size}
+          className={styles.dialogContent}
         >
-          <DialogHeader>
+          <header className={styles.dialogHeader}>
             <Dialog.Title>{title}</Dialog.Title>
-            <DialogClose
+            <Dialog.Close
               data-testid="facets-filter-close"
               aria-label="Cancel"
               onClick={handleCloseClick}
+              className={styles.dialogClose}
             >
               <IconClear />
-            </DialogClose>
-          </DialogHeader>
-          <DialogBody>{children}</DialogBody>
-        </DialogContent>
+            </Dialog.Close>
+          </header>
+          <div className={styles.dialogBody}>{children}</div>
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
 };
-
 export default SharedDialog;

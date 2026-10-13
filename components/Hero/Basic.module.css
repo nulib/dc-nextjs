@@ -1,0 +1,48 @@
+.heroBasicStyled {
+  position: relative;
+  width: 100vw;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url(/images/liz__O8A9903_final.jpg);
+}
+.heroBasicStyled:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center, center;
+  filter: brightness(60%);
+}
+.heroBasicStyled :global([data-dc-slot~="heading-slash-title"]) {
+  color: var(--dc-color-white);
+}
+
+.content {
+  position: relative;
+  color: var(--dc-color-white);
+  max-width: 1120px;
+  text-align: center;
+}
+
+.subhead {
+  font-family: var(--dc-font-northwestern-display-bold);
+  font-size: 72px;
+  line-height: 5rem;
+  margin: 0 0 var(--dc-space-gr3) 0;
+}
+@media (max-width: 991px) {
+  .subhead {
+    font-size: var(--dc-font-size-gr8);
+    line-height: 60px;
+  }
+}
+
+.heroBasicStyled {
+  background: var(--hero-background);
+}

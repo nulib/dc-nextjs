@@ -1,5 +1,6 @@
+import tooltipStyles from "@/components/Shared/Tooltip.module.css";
+import aIProvenanceStyles from "@/components/Work/AIProvenance.module.css";
 import * as Tooltip from "@radix-ui/react-tooltip";
-
 import {
   AI_PROVENANCE_LABEL_BOTH,
   AI_PROVENANCE_LABEL_METADATA,
@@ -10,30 +11,16 @@ import {
   AI_PROVENANCE_TOOLTIP_TRIGGER_LABEL,
   aiProvenanceTranscriptionCopy,
 } from "@/lib/constants/common";
-import {
-  AIProvenanceFieldList,
-  AIProvenanceStatus,
-  AIProvenanceStyled,
-} from "@/components/Work/AIProvenance.styled";
 import { IconInfo, IconSparkles } from "@/components/Shared/SVG/Icons";
-import {
-  TooltipArrow,
-  TooltipBody,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/Shared/Tooltip.styled";
 import {
   getAIInvolvement,
   getTranscriptionFileSetLabels,
 } from "@/lib/ai-provenance";
-
 import React from "react";
 import type { WorkWithAIProvenance } from "@/types/api/ai-provenance";
-
 interface AIProvenanceProps {
   work?: WorkWithAIProvenance;
 }
-
 /**
  * High level disclosure that generative AI was involved in this work's
  * descriptive metadata and/or its file set transcriptions.
@@ -52,12 +39,10 @@ const WorkAIProvenance: React.FC<AIProvenanceProps> = ({ work }) => {
     metadataFields,
     transcriptions,
   } = getAIInvolvement(work);
-
   const [fileSetLabels, setFileSetLabels] = React.useState<
     Record<string, string>
   >({});
   const labelsRequested = React.useRef(false);
-
   /**
    * The file set a transcription belongs to is not on the work payload, so it
    * costs a request. Defer it until the tooltip is actually opened — most
@@ -68,13 +53,10 @@ const WorkAIProvenance: React.FC<AIProvenanceProps> = ({ work }) => {
     labelsRequested.current = true;
     getTranscriptionFileSetLabels(work?.id).then(setFileSetLabels);
   };
-
   if (!hasAI) return null;
-
   let label = AI_PROVENANCE_LABEL_TRANSCRIPTIONS;
   if (hasMetadata && hasTranscription) label = AI_PROVENANCE_LABEL_BOTH;
   else if (hasMetadata) label = AI_PROVENANCE_LABEL_METADATA;
-
   // A transcription whose file set did not come back (not yet loaded, request
   // failed, or the file set is not visible to this viewer) is left out of the
   // list rather than shown unlabeled. The count sentence above still reports
@@ -85,38 +67,53 @@ const WorkAIProvenance: React.FC<AIProvenanceProps> = ({ work }) => {
       label: fileSetLabels[transcription.annotationId],
     }))
     .filter(({ label }) => Boolean(label));
-
   return (
-    <AIProvenanceStyled data-testid="ai-provenance">
+    <div
+      data-testid="ai-provenance"
+      className={aIProvenanceStyles.aIProvenanceStyled}
+    >
       <IconSparkles />
       <span>{label}</span>
       <Tooltip.Provider delayDuration={20}>
         <Tooltip.Root onOpenChange={handleOpenChange}>
-          <TooltipTrigger
+          <Tooltip.Trigger
             type="button"
             aria-label={AI_PROVENANCE_TOOLTIP_TRIGGER_LABEL}
             data-testid="ai-provenance-tooltip-trigger"
+            className={tooltipStyles.tooltipTrigger}
           >
             <IconInfo />
-          </TooltipTrigger>
+          </Tooltip.Trigger>
           <Tooltip.Portal>
-            <TooltipContent side="bottom" sideOffset={3} collisionPadding={19}>
-              <TooltipArrow />
-              <TooltipBody data-testid="ai-provenance-tooltip">
+            <Tooltip.Content
+              side="bottom"
+              sideOffset={3}
+              collisionPadding={19}
+              className={tooltipStyles.tooltipContent}
+            >
+              <Tooltip.Arrow className={tooltipStyles.tooltipArrow} />
+              <div
+                data-testid="ai-provenance-tooltip"
+                className={tooltipStyles.tooltipBody}
+              >
                 <p>{AI_PROVENANCE_TOOLTIP_INTRO}</p>
                 {metadataFields.length > 0 && (
                   <>
                     <p>
                       <strong>{AI_PROVENANCE_TOOLTIP_FIELDS_INTRO}</strong>
                     </p>
-                    <AIProvenanceFieldList>
+                    <ul className={aIProvenanceStyles.aIProvenanceFieldList}>
                       {metadataFields.map(({ key, label, status }) => (
                         <li key={key}>
                           {label}:{" "}
-                          <AIProvenanceStatus>{status}</AIProvenanceStatus>
+                          <span
+                            className={aIProvenanceStyles.aIProvenanceStatus}
+                          >
+                            {status}
+                          </span>
                         </li>
                       ))}
-                    </AIProvenanceFieldList>
+                    </ul>
                   </>
                 )}
                 {transcriptions.length > 0 && (
@@ -130,25 +127,28 @@ const WorkAIProvenance: React.FC<AIProvenanceProps> = ({ work }) => {
                       </strong>
                     </p>
                     {labeledTranscriptions.length > 0 && (
-                      <AIProvenanceFieldList>
+                      <ul className={aIProvenanceStyles.aIProvenanceFieldList}>
                         {labeledTranscriptions.map(({ key, label, status }) => (
                           <li key={key}>
                             {label}:{" "}
-                            <AIProvenanceStatus>{status}</AIProvenanceStatus>
+                            <span
+                              className={aIProvenanceStyles.aIProvenanceStatus}
+                            >
+                              {status}
+                            </span>
                           </li>
                         ))}
-                      </AIProvenanceFieldList>
+                      </ul>
                     )}
                   </>
                 )}
                 <p>{AI_PROVENANCE_TOOLTIP_CAVEAT}</p>
-              </TooltipBody>
-            </TooltipContent>
+              </div>
+            </Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip.Root>
       </Tooltip.Provider>
-    </AIProvenanceStyled>
+    </div>
   );
 };
-
 export default WorkAIProvenance;

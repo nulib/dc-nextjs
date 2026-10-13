@@ -1,0 +1,30 @@
+.filterClearStyled {
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  color: var(--dc-color-black50);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr3);
+  height: calc(var(--dc-size-gr3) * 2);
+  justify-content: center;
+  margin-left: var(--dc-space-gr2);
+  padding: 0 var(--dc-space-gr3);
+  transition: var(--dc-transition-dc-all);
+  white-space: nowrap;
+}
+.filterClearStyled:focus,
+.filterClearStyled:hover {
+  color: var(--dc-color-purple);
+}
+.filterClearStyled:where([data-is-fixed="true"]) {
+  background-color: var(--dc-color-white);
+  box-shadow: 2px 2px 5px #0002;
+}
+.filterClearStyled:where([data-is-modal="true"]) {
+  box-shadow: none;
+  background-color: transparent;
+  text-decoration: underline;
+}

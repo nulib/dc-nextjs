@@ -5,6 +5,12 @@ import Stack from "./Stack";
 import { sampleWork1 } from "@/mocks/sample-work1";
 import { sampleWork2 } from "@/mocks/sample-work2";
 
+// Keep interaction tests independent of staging thumbnail requests.
+jest.mock("@/lib/dc-api", () => ({
+  ...jest.requireActual("@/lib/dc-api"),
+  getQueryRepresentativeThumbnail: jest.fn().mockResolvedValue(undefined),
+}));
+
 describe("Stack", () => {
   it("renders stack with no dismiss button", () => {
     const mockContext = {
