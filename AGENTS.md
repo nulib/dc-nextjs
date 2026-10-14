@@ -36,12 +36,14 @@ component contracts, verification gates, and current implementation status.
   algorithm, or change its breakpoints, column counts, item distribution/order,
   gutters, or loading behavior. Grid work is limited to equivalent presentation
   migration, preserving the contract in DESIGN.md.
-- Clover was upgraded to exact `4.0.0-rc.2` before slider edits. For subsequent
-  upgrades, query published versions/tags; do not assume `latest` or `next`
-  selects a 4.x RC. Use Node 24.11.1 as recorded in `.tool-versions`.
+- Clover was upgraded to exact `4.0.0-rc.2` before slider edits, then pinned to
+  exact stable `3.17.0` (October 14, 2026) for an upstream viewer fix. For
+  subsequent upgrades, query published versions/tags; do not assume `latest`,
+  `next`, or `rc` selects the intended line. Use Node 24.11.1 as recorded in
+  `.tool-versions`.
 - Inspect the installed Clover API/DOM, not old Swiper assumptions. Keep slider
-  CSS card counts/gaps synchronized with group-size breakpoints. RC.2 ignores
-  its fetch credentials option, so retain SliderWrapper's credentialed fetch
+  CSS card counts/gaps synchronized with group-size breakpoints. Clover 3.17.0
+  (like RC.2) ignores its fetch credentials option, so retain SliderWrapper's credentialed fetch
   and abort handling until that upstream issue is verified fixed.
 - Use Clover's public exports and types. Verify viewer, primitives, content
   search, media, embeds, and sliders after upgrades. The homepage still uses

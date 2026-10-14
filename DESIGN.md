@@ -182,7 +182,21 @@ aspect ratios. The overlapping original media rules yield a 19px gutter through
 migration. Do not replace this with CSS columns, native CSS masonry, a new
 library, or another distribution algorithm.
 
-## Clover 4 compatibility
+## Clover compatibility
+
+**Current pin: exact `3.17.0`.** On October 14, 2026, Clover was moved from
+`4.0.0-rc.2` to stable `3.17.0` (published that day, the `latest` tag) to pick
+up an upstream viewer fix. 3.17.0 ships the same Embla slider, slider DOM
+hooks, public exports, and `.d.ts` set as RC.2; its type changes are additive
+optional map/viewer fields (`maxZoom`, `referenceUrl`, `referenceMaxZoom`,
+`styleUrl`, `workerUrl`). Unlike RC.2 it does not depend on `@vidstack/react`
+or `wavesurfer.js`, so its audio/video player differs from the RC; the
+application imports neither directly. The slider fetch still ignores
+`options.credentials`, so the SliderWrapper workaround below remains. Type
+checking, Jest, and a production build passed after the change; live
+media/viewer behavior still needs the human smoke testing described below.
+
+The history below records the original RC upgrade.
 
 npm was queried on October 8, 2026. The highest published 4.x RC was
 `4.0.0-rc.2`; `latest` still selected 3.16.2, and `next` selected an older 2.x
@@ -199,7 +213,8 @@ The RC uses Embla for sliders. Compatibility work:
 - Use `.clover-slider-track` and `.clover-slider-slide` hooks from the installed
   RC, including the hidden collection-slide rule. Align collection rails at
   their start and retain View All links and palette mapping.
-- RC.2 declares `options.credentials` but its collection fetch does not use it.
+- RC.2 and 3.17.0 declare `options.credentials` but the collection fetch does
+  not use it.
   SliderWrapper therefore fetches with `credentials: "include"`, aborts stale
   requests, and supplies resolved items, label, and summary through the public
   API. Errors propagate to the existing feature ErrorBoundary. Revisit this
@@ -210,7 +225,7 @@ The RC uses Embla for sliders. Compatibility work:
   actual object payload and check the encoded state before dispatching.
 - Swiper remains in the homepage Hero, so it must not be removed.
 
-The RC intentionally owns its internal viewer UI. Full authenticated staging,
+Clover intentionally owns its internal viewer UI. Full authenticated staging,
 reading-room, audio/video playback, and live content-search behavior require
 human smoke testing with working data/access before release. Local mocks verify
 wrapper options and content-search lifecycle; they are not proof of live media
