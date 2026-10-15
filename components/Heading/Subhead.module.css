@@ -1,0 +1,6 @@
+.headingSubheadStyled {
+  font-size: var(--dc-font-size-gr8);
+  font-family: var(--dc-font-northwestern-display-extra-light);
+  line-height: 1.2em;
+  margin-bottom: var(--dc-space-gr3);
+}

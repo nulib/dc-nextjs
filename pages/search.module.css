@@ -1,0 +1,10 @@
+.conversation {
+  opacity: 1;
+  filter: none;
+  height: auto;
+}
+.conversation[data-panel-open="true"] {
+  opacity: 0;
+  filter: grayscale(1);
+  height: 0;
+}

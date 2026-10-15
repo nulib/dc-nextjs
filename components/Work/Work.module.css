@@ -1,0 +1,13 @@
+.collectionWrapper {
+}
+
+.loadingWrapper {
+  align-items: center;
+  display: flex;
+  height: 640px;
+  justify-content: center;
+  width: 100%;
+}
+
+.workStyled {
+}

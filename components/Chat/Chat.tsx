@@ -1,23 +1,19 @@
-import React, { useState } from "react";
-
+import chatStyles from "@/components/Chat/Chat.module.css";
+import responseStyles from "@/components/Chat/Response/Response.module.css";
+import { useState } from "react";
 import { AI_SEARCH_UNSUBMITTED } from "@/lib/constants/common";
 import ChatConversation from "./Conversation";
 import ChatResponse from "@/components/Chat/Response/Response";
 import Container from "@/components/Shared/Container";
-import { StyledUnsubmitted } from "./Response/Response.styled";
-import { styled } from "@/stitches.config";
 import { useSearchState } from "@/context/search-context";
-
 const Chat = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const {
     searchState: { conversation },
     searchDispatch,
   } = useSearchState();
-
   const handleConversationCallback = (value: string) => {
     setIsStreaming(true);
-
     if (conversation.ref && value) {
       searchDispatch({
         type: "updateConversation",
@@ -40,24 +36,24 @@ const Chat = () => {
       });
     }
   };
-
   const handleResponseCallback = () => {
     setIsStreaming(false);
   };
-
   if (!conversation?.initialQuestion)
     return (
       <Container>
-        <StyledUnsubmitted>{AI_SEARCH_UNSUBMITTED}</StyledUnsubmitted>
+        <p className={responseStyles.styledUnsubmitted}>
+          {AI_SEARCH_UNSUBMITTED}
+        </p>
       </Container>
     );
-
   return (
     <Container>
-      <StyledChat
+      <section
         data-conversation-initial={conversation.initialQuestion}
         data-conversation-length={conversation.turns.length}
         data-conversation-ref={conversation.ref}
+        className={chatStyles.styledChat}
       >
         {conversation.turns
           .filter((turn) => turn.question)
@@ -78,14 +74,8 @@ const Chat = () => {
           conversationCallback={handleConversationCallback}
           isStreaming={isStreaming}
         />
-      </StyledChat>
+      </section>
     </Container>
   );
 };
-
-const StyledChat = styled("section", {
-  padding: "$gr5 0",
-  position: "relative",
-});
-
 export default Chat;

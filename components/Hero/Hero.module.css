@@ -1,0 +1,164 @@
+.heroActions {
+  margin-top: var(--dc-space-gr4);
+}
+.heroActions a {
+  text-transform: uppercase;
+  padding: calc(var(--dc-space-gr2) + 3px) var(--dc-space-gr3)
+    var(--dc-space-gr2);
+  margin-right: var(--dc-space-gr3);
+  font-size: var(--dc-font-size-gr3);
+  text-shadow: none;
+  background-color: var(--dc-color-purple);
+}
+@media (max-width: 767px) {
+  .heroActions {
+    display: flex;
+    flex-direction: column;
+  }
+  .heroActions a:first-child {
+    margin-bottom: var(--dc-space-gr2);
+  }
+}
+
+.heroStyled {
+  position: absolute;
+  width: 100%;
+  height: calc(100% + 161px);
+  margin-top: -161px;
+  z-index: 0;
+  background-color: var(--dc-color-black);
+}
+.heroStyled :global(.swiper) {
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+.heroStyled :global(.swiper) :global(.swiper-wrapper)::before {
+  content: "";
+  display: flex;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(
+    180deg,
+    var(--dc-color-purple) 0%,
+    #4e2a84cc 19%,
+    #0000 61.8%
+  );
+  position: absolute;
+  z-index: 1;
+}
+.heroStyled :global(.swiper) :global(.swiper-button-prev),
+.heroStyled :global(.swiper) :global(.swiper-button-next) {
+  color: var(--dc-color-white);
+}
+.heroStyled :global(.swiper) :global(.swiper-pagination-bullet) {
+  background-color: var(--dc-color-white);
+}
+.heroStyled :global(.swiper) :global(.swiper-pagination-bullet-active) {
+  background-color: var(--dc-color-white);
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) {
+  display: flex;
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: var(--dc-color-black);
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure::after {
+  content: "";
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(300deg, #000e 0%, #0006 38.2%, #0000 100%);
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure::before {
+  content: "";
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #000a 0%, #000a 19%, #0000 50%);
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure img,
+.heroStyled :global(.swiper) :global(.swiper-slide) figure video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  opacity: 0.618;
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: var(--dc-space-gr6);
+  color: var(--dc-color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-shadow: 3px 3px 8px #0006;
+  max-width: var(--dc-size-gr11);
+  text-align: left;
+}
+@media (max-width: 767px) {
+  .heroStyled :global(.swiper) :global(.swiper-slide) figure figcaption {
+    text-align: center !important;
+    max-width: 100%;
+    width: 100%;
+    left: 0;
+    margin-right: 0 !important;
+    align-items: center !important;
+  }
+}
+.heroStyled :global(.swiper) :global(.swiper-slide) figure figcaption a {
+  color: var(--dc-color-white) !important;
+  text-decoration: none;
+}
+.heroStyled
+  :global(.swiper)
+  :global(.swiper-slide)
+  figure
+  figcaption
+  :global(.slide-label) {
+  font-family: var(--dc-font-northwestern-display-bold);
+  font-weight: 400;
+  font-size: var(--dc-font-size-gr7);
+  display: block;
+  margin: 0 0 var(--dc-space-gr2);
+  line-height: 1em;
+  letter-spacing: -0.015em;
+}
+@media (max-width: 767px) {
+  .heroStyled
+    :global(.swiper)
+    :global(.swiper-slide)
+    figure
+    figcaption
+    :global(.slide-label) {
+    font-size: var(--dc-font-size-gr7);
+  }
+}
+.heroStyled
+  :global(.swiper)
+  :global(.swiper-slide)
+  figure
+  figcaption
+  :global(.slide-summary) {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr4);
+  display: block;
+  color: var(--dc-color-black20);
+  line-height: 1.15em;
+}

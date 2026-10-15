@@ -1,16 +1,13 @@
+import styles from "@/components/About/CollectionGrid.module.css";
 import PhotoFeature, {
   PhotoFeatureProps,
 } from "@/components/Shared/PhotoFeature/PhotoFeature";
-
-import { CollectionGridStyled } from "components/About/CollectionGridStyled";
-
 interface Props {
   items: PhotoFeatureProps[];
 }
-
 const AboutCollectionGrid: React.FC<Props> = ({ items = [] }) => {
   return (
-    <CollectionGridStyled>
+    <div className={styles.collectionGridStyled}>
       {items.map(({ callToAction, href, imgAlt, imgSrc, title }) => (
         <PhotoFeature
           key={imgSrc}
@@ -21,8 +18,7 @@ const AboutCollectionGrid: React.FC<Props> = ({ items = [] }) => {
           title={title}
         />
       ))}
-    </CollectionGridStyled>
+    </div>
   );
 };
-
 export default AboutCollectionGrid;

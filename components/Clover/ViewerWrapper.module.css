@@ -1,0 +1,97 @@
+.viewerWrapperStyled :global(.clover-viewer-painting) {
+  background: var(--dc-color-gray6);
+}
+.viewerWrapperStyled :global(.clover-viewer-header) {
+  display: none;
+}
+.viewerWrapperStyled
+  :global(.clover-viewer-media-wrapper)
+  div[role="radiogroup"] {
+  padding-bottom: 0;
+}
+.viewerWrapperStyled :global(.clover-iiif-annotation-item) button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: var(--dc-font-size-gr3);
+  padding-bottom: var(--dc-space-gr1);
+}
+.viewerWrapperStyled :global(.clover-iiif-annotation-item) button > div {
+  font-size: inherit;
+}
+.viewerWrapperStyled :global(.clover-iiif-annotation-item) button strong {
+  font-family: var(--dc-font-northwestern-sans-bold);
+  font-weight: 400;
+}
+.viewerWrapperStyled
+  :global(.clover-iiif-annotation-item)[data-format="text/plain"]
+  button
+  > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr1);
+  line-height: 1.35em;
+}
+.viewerWrapperStyled
+  :global(.clover-iiif-annotation-item)[data-format="text/plain"]
+  button
+  > div
+  em {
+  display: flex;
+  font-size: var(--dc-font-size-gr2);
+  line-height: 1rem;
+  color: var(--dc-color-black50);
+}
+.viewerWrapperStyled
+  :global(.clover-viewer-information-panel)
+  button[role="tab"] {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-weight: 400;
+  font-size: var(--dc-font-size-gr3);
+}
+.viewerWrapperStyled
+  :global(.clover-viewer-information-panel)
+  button[role="tab"][aria-selected="true"] {
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.viewerWrapperStyled :global(.clover-viewer-information-panel) header {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-weight: 400;
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+  margin-bottom: var(--dc-space-gr3);
+}
+.viewerWrapperStyled :global(.clover-iiif-image-openseadragon-annotation) {
+  font-size: var(--dc-font-size-gr3);
+}
+.viewerWrapperStyled
+  :global(.clover-iiif-image-openseadragon-annotation)
+  label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dc-space-gr1);
+  line-height: 1.35em !important;
+}
+.viewerWrapperStyled
+  :global(.clover-iiif-image-openseadragon-annotation)
+  label
+  em {
+  font-size: var(--dc-font-size-gr2);
+  font-weight: 500;
+  color: var(--dc-color-black20);
+  line-height: 1rem;
+}
+.viewerWrapperStyled label[for="information-toggle"] {
+  box-shadow: none;
+}
+
+.announcementContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.announcementContent svg {
+  height: var(--dc-size-gr4);
+  fill: var(--dc-color-black80);
+  margin-right: var(--dc-space-gr1);
+}

@@ -1,13 +1,7 @@
+import styles from "@/components/Facets/UserFacets/UserFacets.module.css";
 import * as Dropdown from "@radix-ui/react-dropdown-menu";
-
-import {
-  DropdownContent,
-  DropdownToggle,
-  ValueWrapper,
-} from "./UserFacets.styled";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-
 import FacetsCurrentUserValue from "@/components/Facets/UserFacets/Value";
 import { IconChevronDown } from "@/components/Shared/SVG/Icons";
 import { UrlFacets } from "@/types/context/filter-context";
@@ -15,37 +9,29 @@ import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
 import { useLayoutState } from "@/context/layout-context";
 import { useRouter } from "next/router";
-
 interface FacetsCurrentUserProps {
   screen: "modal" | "search";
   urlFacets?: UrlFacets;
 }
-
 export interface CurrentFacet {
   id: string;
   label: string;
   value: string;
 }
-
 const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
   screen,
   urlFacets,
 }) => {
   const router = useRouter();
-
   const { filterDispatch, filterState } = useFilterState();
   const {
     layoutState: { searchFixed },
   } = useLayoutState();
-
   const [currentOptions, setCurrentOptions] = useState<CurrentFacet[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const handleOpenChange = (status: boolean) => setIsOpen(status);
-
   let facets: UrlFacets | undefined;
-
   switch (screen) {
     case "search":
       facets = urlFacets;
@@ -59,17 +45,14 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       );
       break;
   }
-
   useEffect(() => {
     if (!searchFixed) {
       dropdownRef?.current?.blur();
       handleOpenChange(searchFixed);
     }
   }, [searchFixed]);
-
   useEffect(() => {
     if (!facets) return;
-
     const current: CurrentFacet[] = [];
     for (const [facetId, facetKeys] of Object.entries(facets)) {
       const facet = getFacetById(facetId);
@@ -83,7 +66,6 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
     }
     setCurrentOptions(current);
   }, [facets]);
-
   function handleRemoval(instance: CurrentFacet) {
     if (instance && facets) {
       const { id, value } = instance;
@@ -91,9 +73,7 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
         query: { q, ai },
       } = router;
       const newObj: UrlFacets = { ...facets };
-
       newObj[id] = newObj[id].filter((key) => key !== value);
-
       if (screen === "search")
         router.push({
           pathname: "/search",
@@ -103,7 +83,6 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
             ...(ai && { ai }),
           },
         });
-
       if (screen === "modal")
         filterDispatch({
           type: "updateUserFacets",
@@ -112,13 +91,10 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
     }
     return;
   }
-
   /**
    * If user has no selected facet options, return an empty fragment.
    */
-
   if (currentOptions.length === 0) return <></>;
-
   const currentFacets = currentOptions.map((instance, index) => {
     return (
       <FacetsCurrentUserValue
@@ -128,16 +104,16 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
       />
     );
   });
-
   /**
    * Render currentFacets...
    * If search screen, return popover element adjacent to filter button.
    */
-
   return (
-    <ValueWrapper
+    <div
       data-testid="facet-user-component"
-      isModal={screen === "modal"}
+      data-is-modal={screen === "modal"}
+      data-dc-slot="facet-value"
+      className={styles.valueWrapper}
     >
       {screen === "search" && (
         <Dropdown.Root
@@ -145,25 +121,26 @@ const FacetsCurrentUser: React.FC<FacetsCurrentUserProps> = ({
           open={isOpen}
           onOpenChange={handleOpenChange}
         >
-          <DropdownToggle
+          <Dropdown.Trigger
             data-testid="facet-user-component-popover-toggle"
             ref={dropdownRef}
+            className={styles.dropdownToggle}
           >
             <IconChevronDown />
             <span>{currentOptions.length}</span>
-          </DropdownToggle>
-          <DropdownContent
+          </Dropdown.Trigger>
+          <Dropdown.Content
             align="start"
             alignOffset={-97}
             data-testid="facet-user-component-popover-content"
+            className={styles.dropdownContent}
           >
             {currentFacets}
-          </DropdownContent>
+          </Dropdown.Content>
         </Dropdown.Root>
       )}
       {screen === "modal" && currentFacets}
-    </ValueWrapper>
+    </div>
   );
 };
-
 export default FacetsCurrentUser;

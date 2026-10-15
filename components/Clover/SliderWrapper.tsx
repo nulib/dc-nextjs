@@ -1,73 +1,36 @@
+import styles from "@/components/Clover/SliderWrapper.module.css";
 import Slider from "@samvera/clover-iiif/slider";
-import { SwiperProps } from "swiper/react";
-import { gr } from "@/styles/sizes";
-import { rem } from "@/styles/global";
-import { styled } from "@/stitches.config";
+import type { SliderBreakpoints } from "@samvera/clover-iiif/slider";
+import type { Collection } from "@iiif/presentation-3";
+import { useEffect, useState } from "react";
+import { gr, rem } from "@/styles/metrics";
 import { width } from "@/styles/media";
-
-/* eslint sort-keys: 0 */
-
-const StyledSliderIIIFWrapper = styled("div", {
-  position: "relative",
-  zIndex: "0",
-
-  ".clover-slider-header-view-all": {
-    color: "$white",
-  },
-
-  ".swiper-slide[data-type='collection']": {
-    display: "none",
-  },
-
-  "@xs": {
-    "& > div > div": {
-      alignItems: "center",
-      textAlign: "center",
-
-      "& > div": {
-        "&:last-child": {
-          paddingTop: "$gr2",
-        },
-      },
-    },
-  },
-});
-
-type SwiperBreakpoints = SwiperProps["breakpoints"];
-
-const breakpoints: SwiperBreakpoints = {
+const breakpoints: SliderBreakpoints = {
   [width.xxs]: {
-    slidesPerView: 2,
     slidesPerGroup: 2,
     spaceBetween: rem,
   },
   [width.xs]: {
-    slidesPerView: 2,
     slidesPerGroup: 2,
     spaceBetween: rem,
   },
   [width.sm]: {
-    slidesPerView: 3,
     slidesPerGroup: 3,
     spaceBetween: rem,
   },
   [width.md]: {
-    slidesPerView: 4,
     slidesPerGroup: 4,
     spaceBetween: rem * gr(1),
   },
   [width.lg]: {
-    slidesPerView: 5,
     slidesPerGroup: 5,
     spaceBetween: rem * gr(1),
   },
   [width.xl]: {
-    slidesPerView: 6,
     slidesPerGroup: 6,
     spaceBetween: rem * gr(2),
   },
 };
-
 const SliderIIIFWrapper = ({
   collectionId,
   customViewAll,
@@ -75,18 +38,46 @@ const SliderIIIFWrapper = ({
   collectionId: URL;
   customViewAll: string;
 }) => {
+  const url = collectionId.toString();
+  const [resource, setResource] = useState<{
+    url: string;
+    collection?: Collection;
+    error?: Error;
+  }>();
+  useEffect(() => {
+    const controller = new AbortController();
+    // RC.2 declares options.credentials but does not pass it to fetch.
+    // Resolve the collection here to preserve authenticated cross-origin access.
+    fetch(url, { credentials: "include", signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok)
+          throw new Error(`Unable to load slider (${response.status})`);
+        const collection: Collection = await response.json();
+        if (!controller.signal.aborted) setResource({ url, collection });
+      })
+      .catch((error: Error) => {
+        if (!controller.signal.aborted) setResource({ url, error });
+      });
+    return () => controller.abort();
+  }, [url]);
+  if (resource?.url !== url) return null;
+  if (resource.error) throw resource.error;
+  if (!resource.collection) return null;
+  const collection = resource.collection;
   return (
-    <StyledSliderIIIFWrapper>
+    <div className={styles.styledSliderIIIFWrapper}>
       <Slider
-        iiifContent={collectionId.toString()}
+        items={collection.items}
+        label={collection.label}
+        summary={collection.summary}
+        align="start"
         options={{
           breakpoints: breakpoints,
           credentials: "include",
           customViewAll,
         }}
       />
-    </StyledSliderIIIFWrapper>
+    </div>
   );
 };
-
 export default SliderIIIFWrapper;

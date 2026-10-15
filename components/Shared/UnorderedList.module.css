@@ -1,0 +1,4 @@
+.unorderedListStyled li {
+  line-height: 1.5rem;
+  padding-bottom: var(--dc-space-gr2);
+}

@@ -1,0 +1,11 @@
+.blockStyled {
+  margin-bottom: var(--dc-space-gr6);
+}
+.blockStyled :global([data-dc-slot~="copy-text"]) {
+  font-size: inherit;
+}
+@media (max-width: 991px) {
+  .blockStyled {
+    margin-bottom: var(--dc-space-gr5);
+  }
+}

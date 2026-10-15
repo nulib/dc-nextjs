@@ -1,0 +1,19 @@
+:root {
+  --dc-transition-dc-all: all 0.2s cubic-bezier(0.3, 1, 0.3, 1);
+  --dc-transition-dc-opacity: opacity 0.2s cubic-bezier(0.3, 1, 0.3, 1);
+  --dc-transition-dc-image-load: all 1s cubic-bezier(0.3, 1, 0.3, 1);
+  --dc-transition-dc-scroll-left: left 1s cubic-bezier(0.3, 1, 0.3, 1);
+  --dc-transition-dc-scroll-height: height 1s cubic-bezier(0.3, 1, 0.3, 1);
+  --dc-transition-dc-width: width 0.2s cubic-bezier(0.3, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dc-transition-dc-all: none;
+    --dc-transition-dc-opacity: none;
+    --dc-transition-dc-image-load: none;
+    --dc-transition-dc-scroll-left: none;
+    --dc-transition-dc-scroll-height: none;
+    --dc-transition-dc-width: none;
+  }
+}

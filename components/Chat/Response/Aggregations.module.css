@@ -1,0 +1,21 @@
+.styledAggregations.styledAggregations {
+  margin-top: var(--dc-space-gr2);
+  justify-content: flex-start;
+  gap: var(--dc-space-gr2);
+  flex-wrap: wrap;
+}
+.styledAggregations.styledAggregations table {
+  width: fit-content;
+  background: #5091cd11;
+  border-color: #5091cd55;
+  min-width: 38.2%;
+}
+.styledAggregations.styledAggregations table td {
+  border-color: #5091cd55;
+}
+.styledAggregations.styledAggregations table td:first-child {
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+.styledAggregations.styledAggregations table td:last-child {
+  width: 100%;
+}

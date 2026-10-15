@@ -1,0 +1,42 @@
+.notification {
+  box-sizing: border-box;
+  padding: 25px;
+  margin-bottom: 10px;
+  background-color: var(--dc-color-purple10);
+  color: var(--dc-color-purple);
+  fill: var(--dc-color-purple);
+  position: relative;
+}
+.notification svg {
+  fill: inherit;
+}
+.notification span {
+  color: inherit;
+}
+.notification[data-tone="danger"] {
+  color: var(--dc-color-white);
+  background-color: var(--dc-color-bright-red);
+  fill: var(--dc-color-white);
+}
+.notification[data-tone="warning"] {
+  color: var(--dc-color-black80);
+  background-color: var(--dc-color-bright-yellow-b);
+  fill: var(--dc-color-black80);
+}
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+.close svg {
+  width: 15px;
+  height: 15px;
+}
+.close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

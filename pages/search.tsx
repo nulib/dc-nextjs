@@ -1,17 +1,14 @@
+import pageStyles from "./search.module.css";
+import viewToggleStyles from "@/components/Search/ViewToggle.module.css";
+import { TabsContent } from "@radix-ui/react-tabs";
+import searchStyles from "@/components/Search/Search.module.css";
 import * as Tabs from "@radix-ui/react-tabs";
-
 import { GetServerSideProps, NextPage } from "next";
 import React, { useEffect, useState } from "react";
-import {
-  ResultsWrapperHeader,
-  StyledResponseWrapper,
-  StyledTabsContent,
-} from "@/components/Search/Search.styled";
 import {
   convertUrlFacetsToContextFacets,
   parseUrlFacets,
 } from "@/lib/utils/facet-helpers";
-
 import { ActiveTab } from "@/types/context/search-context";
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse, FileSetSearchResponse } from "@/types/api/response";
@@ -35,10 +32,6 @@ import { SearchResultsState } from "@/types/components/search";
 import SearchSimilar from "@/components/Search/Similar";
 import { SearchPageWebMcpTools } from "@/components/WebMCP/Tools";
 import TranscriptionResults from "@/components/Search/TranscriptionResults";
-import {
-  ViewToggle,
-  ViewToggleOption,
-} from "@/components/Search/ViewToggle.styled";
 import { UserContext } from "@/context/user-context";
 import { apiPostRequest } from "@/lib/dc-api";
 import axios from "axios";
@@ -51,33 +44,29 @@ import { loadDefaultStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
-
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
   error: "",
   loading: true,
 };
-
 const SearchPage: NextPage = () => {
   const router = useRouter();
   const { page, q, tab } = router.query;
-
   const { user } = React.useContext(UserContext);
   const { isChecked: isAI } = useGenerativeAISearchToggle();
   const { searchState } = useSearchState();
   const { conversation, panel } = searchState;
-
   const [activeTab, setActiveTab] = useState<ActiveTab>("results");
-
   const [searchResults, setSearchResults] = useState<SearchResultsState>(
     defaultSearchResultsState,
   );
-
   const [pageQueryUrl, setPageQueryUrl] = useState<string>();
-
   const [similarTo, setSimilarTo] = useState<{
     visible: boolean;
-    work: { id: string; title: string };
+    work: {
+      id: string;
+      title: string;
+    };
   }>({
     visible: false,
     work: {
@@ -85,15 +74,11 @@ const SearchPage: NextPage = () => {
       title: "",
     },
   });
-
   const [contentSearchResponse, setContentSearchResponse] =
     useState<FileSetSearchResponse | null>(null);
-
   const [contentView, setContentView] = useState<"works" | "content">("works");
-
   const showStreamedResponse = Boolean(user?.isLoggedIn && isAI);
   const urlFacets = parseUrlFacets(router.query);
-
   /**
    * on a query change, we check to see if the user is using the AI and then
    * set the active tab to "stream" if they are, otherwise set it to "results"
@@ -104,32 +89,25 @@ const SearchPage: NextPage = () => {
     if (tab) {
       return setActiveTab(tab as ActiveTab);
     }
-
     if (showStreamedResponse) {
       return setActiveTab("stream");
     }
-
     setActiveTab("results");
   }, [q, showStreamedResponse, tab]);
-
   /**
    * Make requests to the search API endpoint
    */
   useEffect(() => {
     if (!router.isReady) return;
-
     setContentView("works");
-
     (async () => {
       try {
         const requestUrl = new URL(DC_API_SEARCH_URL);
         const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
-
         // If there is a "similar" facet, get the work and set the state
         if (urlFacets?.similar) {
           const workId = urlFacets.similar[0];
           const work = await getWork(workId);
-
           setSimilarTo({
             visible: true,
             work: {
@@ -138,7 +116,6 @@ const SearchPage: NextPage = () => {
             },
           });
         }
-
         const body: ApiSearchRequestBody = buildQuery(
           {
             size: SEARCH_RESULTS_PER_PAGE,
@@ -147,7 +124,6 @@ const SearchPage: NextPage = () => {
           },
           !!isAI,
         );
-
         // Request as a "hybrid" OpensSearch query
         // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
         if (!!body?.query?.hybrid && pipeline) {
@@ -165,9 +141,7 @@ const SearchPage: NextPage = () => {
               })
             : Promise.resolve(undefined),
         ]);
-
         setContentSearchResponse(fileSetResponse || null);
-
         /**
          * Construct url for page request
          */
@@ -181,16 +155,13 @@ const SearchPage: NextPage = () => {
       }
     })();
   }, [router.isReady, router.query, isAI]);
-
   /**
    * Get request for page results
    */
   useEffect(() => {
     if (!pageQueryUrl) return;
-
     // Reset search results state
     setSearchResults(defaultSearchResultsState);
-
     (async () => {
       try {
         const response = await axios.get(pageQueryUrl);
@@ -204,24 +175,20 @@ const SearchPage: NextPage = () => {
       }
     })();
   }, [pageQueryUrl]);
-
   /**
    * Handle any network errors
    */
   function handleErrors(err: Error | unknown) {
     let message: string;
-
     if (err instanceof Error) message = err.message;
     else message = String(err);
     console.error("Error getting data", message);
-
     setSearchResults((prevState) => ({
       ...prevState,
       error: message,
       loading: false,
     }));
   }
-
   async function handleContentPageChange(url: string) {
     try {
       const response = await axios.get(url);
@@ -230,17 +197,14 @@ const SearchPage: NextPage = () => {
       console.error("Error fetching content page", err);
     }
   }
-
   function handleCloseSimilar() {
     const newQuery = { ...router.query };
     delete newQuery.similar;
-
     router.push({
       pathname: "/search",
       query: { ...newQuery },
     });
   }
-
   return (
     <>
       <SearchPageWebMcpTools
@@ -264,7 +228,7 @@ const SearchPage: NextPage = () => {
         data-testid="search-page-wrapper"
         title={HEAD_META["SEARCH"].title}
       >
-        <StyledResponseWrapper id="search-wrapper">
+        <div id="search-wrapper" className={searchStyles.styledResponseWrapper}>
           <Heading as="h1" isHidden>
             Northwestern
           </Heading>
@@ -277,25 +241,25 @@ const SearchPage: NextPage = () => {
 
           <Tabs.Root
             value={activeTab}
-            className="tabs-wrapper"
             onValueChange={(value) => setActiveTab(value as ActiveTab)}
+            className={"tabs-wrapper"}
           >
             {activeTab === "results" && (
               <SearchOptions activeTab={activeTab} contentView={contentView} />
             )}
 
-            <StyledTabsContent value="stream">
+            <TabsContent
+              value="stream"
+              className={searchStyles.styledTabsContent}
+            >
               <div
-                style={{
-                  opacity: panel.open ? 0 : 1,
-                  filter: panel.open ? "grayscale(1)" : "none",
-                  height: panel.open ? 0 : "auto",
-                }}
+                data-panel-open={panel.open}
+                className={pageStyles.conversation}
               >
                 <Chat key={conversation.ref} />
               </div>
               {panel.open && <SearchPanel />}
-            </StyledTabsContent>
+            </TabsContent>
 
             <Tabs.Content value="results">
               <Container containerType="wide">
@@ -311,23 +275,25 @@ const SearchPage: NextPage = () => {
                         contentSearchResponse?.pagination?.total_hits ?? 0,
                     };
                     return (
-                      <ViewToggle>
-                        <ViewToggleOption
-                          active={contentView === "works"}
+                      <div className={viewToggleStyles.viewToggle}>
+                        <button
+                          data-active={contentView === "works"}
                           onClick={() => setContentView("works")}
+                          className={viewToggleStyles.viewToggleOption}
                         >
                           {totalHits !== undefined
                             ? pluralize("item result", totalHits)
                             : "item results"}
-                        </ViewToggleOption>
-                        <ViewToggleOption
-                          active={contentView === "content"}
+                        </button>
+                        <button
+                          data-active={contentView === "content"}
                           onClick={() => setContentView("content")}
+                          className={viewToggleStyles.viewToggleOption}
                         >
                           {pluralize("content result", contentHits.content)} in{" "}
                           {pluralize("item", contentHits.works)}
-                        </ViewToggleOption>
-                      </ViewToggle>
+                        </button>
+                      </div>
                     );
                   })()}
                 {contentView === "works" ? (
@@ -344,7 +310,7 @@ const SearchPage: NextPage = () => {
                   />
                 ) : (
                   <>
-                    <ResultsWrapperHeader>
+                    <header className={searchStyles.resultsWrapperHeader}>
                       <SearchResultsMessage
                         label={
                           q
@@ -352,7 +318,7 @@ const SearchPage: NextPage = () => {
                             : "Searching"
                         }
                       />
-                    </ResultsWrapperHeader>
+                    </header>
                     {contentSearchResponse && (
                       <TranscriptionResults
                         results={contentSearchResponse.data}
@@ -366,25 +332,21 @@ const SearchPage: NextPage = () => {
               </Container>
             </Tabs.Content>
           </Tabs.Root>
-        </StyledResponseWrapper>
+        </div>
       </Layout>
     </>
   );
 };
-
 export const getServerSideProps: GetServerSideProps = async () => {
   const dataLayer = buildDataLayer({
     pageTitle: "Search page",
   });
-
   const openGraphData = {
     "og:title": HEAD_META["SEARCH"].title,
     "og:url": `${PRODUCTION_URL}/search`,
   };
-
   return {
     props: { dataLayer, openGraphData },
   };
 };
-
 export default SearchPage;

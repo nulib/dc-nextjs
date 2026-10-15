@@ -1,4 +1,4 @@
-import { Button, SearchStyled } from "@/components/Search/Search.styled";
+import styles from "@/components/Search/Search.module.css";
 import React, {
   ChangeEvent,
   FocusEvent,
@@ -7,7 +7,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-
 import GenerativeAIToggle from "@/components/Search/GenerativeAIToggle";
 import { IconSearch } from "@/components/Shared/SVG/Icons";
 import SearchJumpTo from "@/components/Search/JumpTo";
@@ -20,26 +19,20 @@ import useQueryParams from "@/hooks/useQueryParams";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
 import { v4 as uuidv4 } from "uuid";
-
 interface SearchProps {
   isSearchActive: (value: boolean) => void;
 }
-
 const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
   const router = useRouter();
   const { urlFacets, searchTerm } = useQueryParams();
-
   const { isChecked } = useGenerativeAISearchToggle();
   const { searchDispatch } = useSearchState();
-
   const searchRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [searchFocus, setSearchFocus] = useState<boolean>(false);
   const [searchScope, setSearchScope] = useState<string>("all");
   const [searchValue, setSearchValue] = useState<string>("");
-
   /**
    * Determine if the current page is a collection page
    * This is used to set the collection label for search queries.
@@ -50,20 +43,16 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
           .querySelector("meta[property='og:title']")
           ?.getAttribute("content") || undefined
       : undefined;
-
   const handleSubmit = (
     e?:
       | SyntheticEvent<HTMLFormElement>
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     if (e) e.preventDefault();
-
     setSearchFocus(false);
     const updatedFacets: UrlFacets = {};
     const allFacetsIds = getAllFacetIds();
-
     const isScopedCollection = searchScope === "collection" && collectionLabel;
-
     const context = {
       query: searchValue,
       facets: isScopedCollection
@@ -75,7 +64,6 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         : [],
       works: [],
     };
-
     const conversation = {
       ref: uuidv4(),
       initialQuestion: searchValue,
@@ -90,17 +78,14 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         },
       ],
     };
-
     // Account for the "similar" facet (comes from "View All" in sliders)
     allFacetsIds.push("similar");
-
     // Guard against searching from a page with dynamic route params
     Object.keys(urlFacets).forEach((facetKey) => {
       if (allFacetsIds.includes(facetKey)) {
         updatedFacets[facetKey] = urlFacets[facetKey];
       }
     });
-
     searchDispatch({
       type: "updatePanel",
       panel: {
@@ -109,12 +94,10 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         interstitial: undefined,
       },
     });
-
     searchDispatch({
       type: "updateConversation",
       conversation,
     });
-
     router.push({
       pathname: "/search",
       query: {
@@ -124,20 +107,16 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         ...updatedFacets,
       },
     });
-
     setSearchValue("");
     if (searchRef.current) searchRef.current.blur();
   };
-
   const handleSearchFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
     setSearchFocus(e.type === "focus");
   };
-
   const handleSearchChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setSearchValue(value);
   };
-
   const clearSearchResults = () => {
     setSearchValue("");
     if (searchRef.current) searchRef.current.value = "";
@@ -146,17 +125,13 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
       query: { ...urlFacets },
     });
   };
-
   useEffect(() => setIsLoaded(true), []);
-
   useEffect(() => {
     if (router.isReady) setSearchValue(searchTerm);
   }, [router.isReady, searchTerm]);
-
   useEffect(() => {
     !searchFocus && !searchValue ? isSearchActive(false) : isSearchActive(true);
   }, [searchFocus, searchValue, isSearchActive]);
-
   const handleScopeValue = (value: string) => {
     switch (value) {
       case "all":
@@ -182,16 +157,17 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         break;
     }
   };
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
-      <SearchStyled
+    <div className={styles.override0}>
+      <form
         data-search-collection={collectionLabel}
         data-search-scope={searchScope}
         data-testid="search-ui-component"
-        isFocused={searchFocus}
+        data-is-focused={searchFocus}
         onSubmit={handleSubmit}
         ref={formRef}
+        data-dc-slot="search"
+        className={styles.searchStyled}
       >
         <SearchTextArea
           isAi={!!isChecked}
@@ -205,12 +181,16 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
         />
         <div>
           <GenerativeAIToggle />
-          <Button type="submit" data-testid="submit-button">
+          <button
+            type="submit"
+            data-testid="submit-button"
+            className={styles.button}
+          >
             Search
-          </Button>
+          </button>
         </div>
         {isLoaded && <IconSearch />}
-      </SearchStyled>
+      </form>
       {isCollectionPage(router?.pathname) && (
         <div data-testid="search-jump-to">
           <SearchJumpTo
@@ -225,5 +205,4 @@ const Search: React.FC<SearchProps> = ({ isSearchActive }) => {
     </div>
   );
 };
-
 export default Search;

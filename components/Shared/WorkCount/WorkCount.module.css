@@ -1,0 +1,39 @@
+.workCountStyled {
+  display: inline-flex;
+  color: var(--dc-color-white);
+  font-size: var(--dc-font-size-gr1);
+  border-radius: 1rem;
+  margin: 0 0 var(--dc-space-gr3);
+  font-family: var(--dc-font-northwestern-sans-bold);
+}
+
+.workCountTotal {
+  background-color: var(--dc-color-purple120);
+  border-radius: 1rem;
+  padding: var(--dc-space-gr1) var(--dc-space-gr2);
+}
+
+.workCountType {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: var(--dc-space-gr2);
+  background-color: transparent;
+}
+.workCountType svg {
+  height: var(--dc-size-gr3);
+  width: var(--dc-size-gr3);
+  fill: var(--dc-color-purple120);
+  margin-left: 3px;
+}
+.workCountType:first-child {
+  padding-left: var(--dc-space-gr2);
+}
+.workCountType:last-child {
+  padding-right: var(--dc-space-gr2);
+}
+
+.workCountTypes {
+  color: var(--dc-color-purple120);
+  display: flex;
+}

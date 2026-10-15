@@ -1,23 +1,24 @@
-import React, { ReactNode } from "react";
-import { CSS } from "@stitches/react/types/css-util";
-import { StyledHeading } from "./Heading.styled";
-
-interface HeadingProps {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span";
-  css?: CSS;
+import React, { forwardRef, HTMLAttributes } from "react";
+import styles from "./Heading.module.css";
+interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span";
   isHidden?: boolean;
-  children: ReactNode | ReactNode[];
 }
-
-const Heading: React.FC<HeadingProps> = ({
-  as = "h2",
-  css = {},
-  isHidden = false,
-  children,
-}) => (
-  <StyledHeading as={as} isHidden={isHidden} data-level={as} css={css}>
-    <>{children}</>
-  </StyledHeading>
-);
-
+const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
+  { as: Tag = "h2", isHidden = false, className, children, ...props },
+  ref,
+) {
+  return (
+    <Tag
+      {...props}
+      ref={ref}
+      data-is-hidden={isHidden}
+      data-level={Tag}
+      data-dc-slot="heading"
+      className={[styles.styledHeading, className].filter(Boolean).join(" ")}
+    >
+      {children}
+    </Tag>
+  );
+});
 export default Heading;

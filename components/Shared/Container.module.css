@@ -1,0 +1,21 @@
+.containerStyled {
+  margin: 0 auto;
+  padding: 0 var(--dc-space-gr3);
+}
+.containerStyled:where([data-container-type="default"]) {
+  max-width: var(--container-max-width, var(--dc-container-default));
+}
+.containerStyled:where([data-container-type="wide"]) {
+  max-width: var(--container-max-width, var(--dc-container-wide));
+}
+.containerStyled:where([data-is-flex="true"]) {
+  display: flex;
+}
+.containerStyled {
+  width: 100%;
+}
+@media (max-width: 991px) {
+  .containerStyled {
+    padding: 0 var(--dc-space-gr2);
+  }
+}

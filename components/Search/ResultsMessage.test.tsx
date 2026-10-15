@@ -27,6 +27,6 @@ describe("SearchResultsMessage", () => {
     render(<SearchResultsMessage label={label} textAlign="center" />);
     const message = screen.getByTestId("search-results-message");
     const childElement = message.firstChild as HTMLDivElement;
-    expect(childElement).toHaveStyle("text-align: center");
+    expect(childElement).toHaveAttribute("data-text-align", "center");
   });
 });

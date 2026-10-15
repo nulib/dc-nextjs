@@ -1,19 +1,16 @@
-import {
-  Description,
-  ItemContent,
-  ItemImageWrapper,
-  ItemStyled,
-} from "@/components/Collection/Item/Item.styled";
-
+import linkStyles from "@/components/Shared/Link.module.css";
+import itemStyles from "@/components/Collection/Item/Item.module.css";
 import type { CollectionListShape } from "@/lib/collection-helpers";
 import Figure from "@/components/Figure/Figure";
 import Heading from "@/components/Heading/Heading";
 import Link from "next/link";
-import { LinkStyled } from "@/components/Shared/LinkStyled";
 import ReadMore from "@/components/Shared/ReadMore";
 import WorkCount from "@/components/Shared/WorkCount/WorkCount";
-
-const CollectionItem: React.FC<CollectionListShape & { priority: boolean }> = ({
+const CollectionItem: React.FC<
+  CollectionListShape & {
+    priority: boolean;
+  }
+> = ({
   title,
   description,
   id,
@@ -24,8 +21,8 @@ const CollectionItem: React.FC<CollectionListShape & { priority: boolean }> = ({
   priority,
 }) => {
   return (
-    <ItemStyled data-collection={id}>
-      <ItemImageWrapper>
+    <article data-collection={id} className={itemStyles.itemStyled}>
+      <div className={itemStyles.itemImageWrapper}>
         <Link href={`/collections/${id}`}>
           <Figure
             data={{
@@ -35,22 +32,23 @@ const CollectionItem: React.FC<CollectionListShape & { priority: boolean }> = ({
             }}
           />
         </Link>
-      </ItemImageWrapper>
-      <ItemContent>
+      </div>
+      <div className={itemStyles.itemContent}>
         <Heading as="h4">
           <Link href={`/collections/${id}`} legacyBehavior>
-            <LinkStyled>{title}</LinkStyled>
+            <a data-dc-slot="link" className={linkStyles.linkStyled}>
+              {title}
+            </a>
           </Link>
         </Heading>
         <WorkCount image={totalImage} audio={totalAudio} video={totalVideo} />
         {description && (
-          <Description>
+          <p className={itemStyles.description}>
             <ReadMore text={description} words={55} />
-          </Description>
+          </p>
         )}
-      </ItemContent>
-    </ItemStyled>
+      </div>
+    </article>
   );
 };
-
 export default CollectionItem;

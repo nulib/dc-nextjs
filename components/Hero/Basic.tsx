@@ -1,21 +1,21 @@
-import { Content, HeroBasicStyled } from "components/Hero/Basic.styled";
-import React from "react";
-
+import styles from "@/components/Hero/Basic.module.css";
+import React, { CSSProperties } from "react";
 interface Props {
   bgImage: string;
   children: React.ReactNode;
 }
-
 const HeroBasic: React.FC<Props> = ({ bgImage, children }) => {
   return (
-    <HeroBasicStyled
-      css={{
-        background: `url(${bgImage})`,
-      }}
+    <section
+      style={
+        {
+          "--hero-background": `url(${JSON.stringify(bgImage)})`,
+        } as CSSProperties
+      }
+      className={styles.heroBasicStyled}
     >
-      <Content>{children}</Content>
-    </HeroBasicStyled>
+      <div className={styles.content}>{children}</div>
+    </section>
   );
 };
-
 export default HeroBasic;

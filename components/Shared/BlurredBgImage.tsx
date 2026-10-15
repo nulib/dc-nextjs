@@ -1,38 +1,36 @@
-import { BlurredBgImageStyled } from "./BlurredBgImage.styled";
-import React from "react";
-
-interface Props {
+import type { CSSProperties, HTMLAttributes } from "react";
+import styles from "./BlurredBgImage.module.css";
+interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "style"> {
   bgColor?: string;
   bgImageUrl: string;
   height?: string;
   width?: string;
 }
-
-const BlurredBgImage: React.FC<Props> = ({
+const BlurredBgImage = ({
   bgColor = "transparent",
   bgImageUrl,
   height,
   width,
-  ...restProps
-}) => {
-  return (
+  className,
+  ...props
+}: Props) => (
+  <div
+    data-testid="blurred-bg-image"
+    {...props}
+    className={[styles.wrapper, className].filter(Boolean).join(" ")}
+    style={{ "--blur-background-color": bgColor } as CSSProperties}
+  >
     <div
-      style={{
-        backgroundColor: bgColor,
-        overflow: "hidden",
-      }}
-      data-testid="blurred-bg-image"
-      {...restProps}
-    >
-      <BlurredBgImageStyled
-        css={{
-          backgroundImage: `url(${bgImageUrl}?size=20)`,
-          height,
-          width,
-        }}
-      />
-    </div>
-  );
-};
-
+      className={styles.blurredBgImageStyled}
+      style={
+        {
+          "--blur-background-image":
+            "url(" + JSON.stringify(bgImageUrl + "?size=20") + ")",
+          "--blur-height": height,
+          "--blur-width": width,
+        } as CSSProperties
+      }
+    />
+  </div>
+);
 export default BlurredBgImage;

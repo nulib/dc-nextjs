@@ -1,0 +1,9 @@
+.homepageCollectionsStyled :global([data-dc-slot~="figure-title"]) {
+  line-height: 1.25em;
+  font-size: var(--dc-font-size-gr4);
+}
+@media (max-width: 991px) {
+  .homepageCollectionsStyled :global([data-dc-slot~="figure-title"]) {
+    font-size: var(--dc-font-size-gr3);
+  }
+}

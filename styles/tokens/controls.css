@@ -1,0 +1,30 @@
+/* Values used by the former NUL controls and layout rules. Keep separate from gr scales. */
+:root {
+  --dc-space-legacy-1: 5px;
+  --dc-space-legacy-2: 10px;
+  --dc-space-legacy-3: 15px;
+  --dc-space-legacy-4: 20px;
+  --dc-space-legacy-5: 25px;
+  --dc-space-legacy-6: 35px;
+  --dc-space-legacy-7: 45px;
+  --dc-space-legacy-8: 65px;
+  --dc-space-legacy-9: 80px;
+  --dc-font-size-legacy-1: 12px;
+  --dc-line-height-legacy-1: 12px;
+  --dc-font-size-legacy-2: 13px;
+  --dc-line-height-legacy-2: 13px;
+  --dc-font-size-legacy-3: 15px;
+  --dc-line-height-legacy-3: 15px;
+  --dc-font-size-legacy-4: 17px;
+  --dc-line-height-legacy-4: 17px;
+  --dc-font-size-legacy-5: 19px;
+  --dc-line-height-legacy-5: 19px;
+  --dc-font-size-legacy-6: 21px;
+  --dc-line-height-legacy-6: 21px;
+  --dc-font-size-legacy-7: 27px;
+  --dc-line-height-legacy-7: 27px;
+  --dc-font-size-legacy-8: 35px;
+  --dc-line-height-legacy-8: 35px;
+  --dc-font-size-legacy-9: 59px;
+  --dc-line-height-legacy-9: 59px;
+}

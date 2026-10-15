@@ -1,21 +1,13 @@
-import {
-  CollectionHeader,
-  Description,
-  HeroWrapper,
-  Interstitial,
-} from "@/components/Collection/Collection.styled";
+import collectionPageStyles from "@/pages/collections/[id].module.css";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
+import navTabsStyles from "@/components/Collection/NavTabs.module.css";
+import collectionStyles from "@/components/Collection/Collection.module.css";
 import type {
   GenericAggsReturn,
   GetTopMetadataAggsReturn,
   WorkTypeCountMap,
 } from "@/lib/collection-helpers";
 import { GetServerSideProps, NextPage } from "next";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/Collection/NavTabs.styled";
 import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import {
   getCollection,
@@ -24,7 +16,6 @@ import {
   getTopMetadataAggs,
 } from "@/lib/collection-helpers";
 import { useEffect, useState } from "react";
-
 import { ApiResponseBucket } from "@/types/api/response";
 import CollectionTabsExplore from "@/components/Collection/Tabs/Explore";
 import CollectionTabsMetadata from "@/components/Collection/Tabs/Metadata";
@@ -45,7 +36,6 @@ import { getHeroCollection } from "@/lib/iiif/collection-helpers";
 import { loadCollectionStructuredData } from "@/lib/json-ld";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
 import { useRouter } from "next/router";
-
 const Collection: NextPage = () => {
   const router = useRouter();
   const [collection, setCollection] = useState<CollectionType>();
@@ -57,76 +47,60 @@ const Collection: NextPage = () => {
   const [workTypeCounts, setWorkTypeCounts] = useState<WorkTypeCountMap | null>(
     null,
   );
-
   const { isChecked: isAI } = useGenerativeAISearchToggle();
-
   const description = collection?.description;
-
   /** Get the Collection */
   useEffect(() => {
     if (!router.isReady || !router.query.id) {
       return;
     }
-
     const collectionId = router.query.id;
     if (!collectionId || Array.isArray(collectionId)) {
       return;
     }
-
     async function getCollectionData(collectionId: string) {
       const data = await getCollection(collectionId);
-
       // This is not preferred, but auth is only respected client side
       // so need this for items to display in Reading Room
       if (!data) return router.push("/404");
-
       setCollection(data);
     }
-
     async function getMetadataData(collectionId: string) {
       /** Get metadata */
       const metadataAggsPromise = getMetadataAggs(
         collectionId,
         "subject.label",
       );
-
       /** Get some data to build out "About" slider content for the Explore tab */
       const topMetadataPromise = getTopMetadataAggs({
         collectionId,
         metadataFields: ["subject.label", "genre.label"],
       });
-
       const collectionWorkCountsPromise = getCollectionWorkCounts([
         collectionId,
       ]);
-
       const seriesPromise = getMetadataAggs(collectionId, "series");
-
       const responses = await Promise.allSettled([
         metadataAggsPromise,
         topMetadataPromise,
         collectionWorkCountsPromise,
         seriesPromise,
       ]);
-
       const [
         metadataAggs,
         topMetadataResponse,
         collectionWorkCounts,
         seriesResponse,
       ] = responses;
-
       if (metadataAggs.status === "fulfilled" && metadataAggs.value) {
         setMetadata(metadataAggs.value);
       }
-
       if (
         topMetadataResponse.status === "fulfilled" &&
         topMetadataResponse.value
       ) {
         setTopMetadata(topMetadataResponse.value);
       }
-
       const workTypeCountsValue =
         collectionWorkCounts.status === "fulfilled" &&
         collectionWorkCounts.value
@@ -135,21 +109,17 @@ const Collection: NextPage = () => {
       if (workTypeCountsValue) {
         setWorkTypeCounts(workTypeCountsValue);
       }
-
       if (seriesResponse.status === "fulfilled" && seriesResponse.value) {
         setSeries(seriesResponse.value);
       }
     }
-
     getCollectionData(collectionId);
     getMetadataData(collectionId);
   }, [router, router.isReady, router.query.id]);
-
   const totalAudio = workTypeCounts?.totalAudio || 0;
   const totalImage = workTypeCounts?.totalImage || 0;
   const totalVideo = workTypeCounts?.totalVideo || 0;
   const totalWorks = workTypeCounts?.totalWorks || 0;
-
   return (
     <>
       {collection && (
@@ -188,10 +158,10 @@ const Collection: NextPage = () => {
               subjects={metadata}
               workTypeCounts={workTypeCounts}
             />
-            <HeroWrapper>
+            <div className={collectionStyles.heroWrapper}>
               <Hero collection={getHeroCollection(collection, isAI)} />
-            </HeroWrapper>
-            <Interstitial>
+            </div>
+            <div className={collectionStyles.interstitial}>
               <Container>
                 <Facts>
                   <Facts.Item
@@ -212,32 +182,52 @@ const Collection: NextPage = () => {
                   />
                 </Facts>
               </Container>
-            </Interstitial>
+            </div>
             <Container>
-              <Tabs defaultValue="explore">
-                <TabsList aria-label="Explore">
-                  <TabsTrigger value="explore">About</TabsTrigger>
-                  <TabsTrigger value="organization">
+              <TabsPrimitive.Root
+                defaultValue="explore"
+                className={navTabsStyles.styledTabs}
+              >
+                <TabsPrimitive.List
+                  aria-label="Explore"
+                  className={navTabsStyles.styledList}
+                >
+                  <TabsPrimitive.Trigger
+                    value="explore"
+                    className={navTabsStyles.styledTrigger}
+                  >
+                    About
+                  </TabsPrimitive.Trigger>
+                  <TabsPrimitive.Trigger
+                    value="organization"
+                    className={navTabsStyles.styledTrigger}
+                  >
                     Collection Organization
-                  </TabsTrigger>
-                  <TabsTrigger value="metadata">All Subjects</TabsTrigger>
-                </TabsList>
-                <TabsContent value="explore">
-                  <CollectionHeader>
-                    <Heading
-                      as="h2"
-                      css={{
-                        margin: "0 0 $gr2 !important",
-                      }}
-                    >
+                  </TabsPrimitive.Trigger>
+                  <TabsPrimitive.Trigger
+                    value="metadata"
+                    className={navTabsStyles.styledTrigger}
+                  >
+                    All Subjects
+                  </TabsPrimitive.Trigger>
+                </TabsPrimitive.List>
+                <TabsPrimitive.Content
+                  value="explore"
+                  className={navTabsStyles.styledContent}
+                >
+                  <div className={collectionStyles.collectionHeader}>
+                    <Heading as="h2" className={collectionPageStyles.override0}>
                       {collection?.title}
                     </Heading>{" "}
                     <IIIFShare uri={String(collection.iiif_collection)} />
-                  </CollectionHeader>
+                  </div>
                   {description && (
-                    <Description data-testid="description">
+                    <p
+                      data-testid="description"
+                      className={collectionStyles.description}
+                    >
                       {<ReadMore text={description} words={55} />}
-                    </Description>
+                    </p>
                   )}
                   {topMetadata.length > 0 && (
                     <CollectionTabsExplore
@@ -245,24 +235,30 @@ const Collection: NextPage = () => {
                       topMetadata={topMetadata}
                     />
                   )}
-                </TabsContent>
-                <TabsContent value="organization">
+                </TabsPrimitive.Content>
+                <TabsPrimitive.Content
+                  value="organization"
+                  className={navTabsStyles.styledContent}
+                >
                   {series.length > 0 && (
                     <CollectionTabsOrganization
                       collection={collection}
                       series={series}
                     />
                   )}
-                </TabsContent>
-                <TabsContent value="metadata">
+                </TabsPrimitive.Content>
+                <TabsPrimitive.Content
+                  value="metadata"
+                  className={navTabsStyles.styledContent}
+                >
                   {metadata.length > 0 && (
                     <CollectionTabsMetadata
                       collection={collection}
                       metadata={metadata}
                     />
                   )}
-                </TabsContent>
-              </Tabs>
+                </TabsPrimitive.Content>
+              </TabsPrimitive.Root>
             </Container>
           </>
         )}
@@ -270,11 +266,9 @@ const Collection: NextPage = () => {
     </>
   );
 };
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context?.params?.id;
   const collection = await getCollection(id as string);
-
   /** Add values to GTM's dataLayer object */
   const dataLayer = buildDataLayer({
     adminset: "",
@@ -286,7 +280,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     subjects: "",
     visibility: collection?.visibility || "",
   });
-
   /** Populate OpenGraph data */
   const imageUrl = collection?.representative_image?.url
     ? `${collection?.representative_image.url}/full/600,600/0/default.jpg`
@@ -301,7 +294,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         "og:type": "website",
         "og:url": `${process.env.NEXT_PUBLIC_DC_URL}/collections/${collection.id}`,
       };
-
   return {
     props: {
       dataLayer,
@@ -310,5 +302,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
-
 export default Collection;

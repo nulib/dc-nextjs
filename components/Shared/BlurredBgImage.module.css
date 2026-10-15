@@ -1,0 +1,21 @@
+.blurredBgImageStyled {
+  height: var(--blur-height, var(--dc-size-gr10));
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(10px);
+  width: var(--blur-width, auto);
+}
+@media (max-width: 767px) {
+  .blurredBgImageStyled {
+    height: var(--blur-height, var(--dc-size-gr9));
+  }
+}
+
+.wrapper {
+  background-color: var(--blur-background-color, transparent);
+  overflow: hidden;
+}
+.blurredBgImageStyled {
+  background-image: var(--blur-background-image);
+}

@@ -1,0 +1,11 @@
+.linkStyled {
+  color: var(--dc-color-purple);
+  cursor: pointer;
+  font-family: var(--dc-font-northwestern-sans-bold);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--dc-color-purple30);
+  padding-bottom: 0.08rem;
+}
+.linkStyled:hover {
+  border-bottom: 1px solid var(--dc-color-purple);
+}

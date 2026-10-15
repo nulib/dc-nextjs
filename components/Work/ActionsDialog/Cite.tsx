@@ -1,22 +1,15 @@
-import {
-  ActionsDialogStyled,
-  Content,
-} from "@/components/Work/ActionsDialog/ActionsDialog.styled";
-
+import citeStyles from "@/components/Work/ActionsDialog/Cite.module.css";
+import definitionListStyles from "@/components/Shared/DefinitionList.module.css";
+import actionsDialogStyles from "@/components/Work/ActionsDialog/ActionsDialog.module.css";
 import ActionsDialogAside from "@/components/Work/ActionsDialog/Aside";
 import CopyText from "@/components/Shared/CopyText";
-import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import React from "react";
 import { useWorkState } from "@/context/work-context";
-
 const nul = "Northwestern University Libraries";
 const today = new Date().toDateString();
-
 const WorkDialogCite: React.FC = () => {
   const { workState } = useWorkState();
-
   if (!workState?.work) return <></>;
-
   const {
     ark,
     collection,
@@ -27,7 +20,6 @@ const WorkDialogCite: React.FC = () => {
     title,
   } = workState.work;
   const collection_title = collection?.title;
-
   const dateObj: Date = new Date(create_date);
   const formattedDate = dateObj.toDateString();
   const itemLink = `${window.location.origin}/items/${id}`;
@@ -35,7 +27,6 @@ const WorkDialogCite: React.FC = () => {
   const chicagoTurabianFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} Accessed ${today}. ${itemLink}`;
   const mlaFormat = `${library_unit}, ${nul}. "${title}", ${collection_title} ${today}. ${window.location.origin}/items/${id}`;
   const wikiCitation = `<ref name=NUL>{{cite web | url=${itemLink} | title= ${title} (${formattedDate}) }} |author=Digital Collections, ${nul} |accessdate=${today} |publisher=${nul}, ${library_unit}}}</ref>`;
-
   const metadata = [
     ["Title", title],
     ["Use Statement", terms_of_use],
@@ -45,11 +36,11 @@ const WorkDialogCite: React.FC = () => {
     ["MLA Format", mlaFormat],
   ];
   return (
-    <ActionsDialogStyled>
+    <div className={actionsDialogStyles.actionsDialogStyled}>
       <ActionsDialogAside />
-      <Content>
-        <DefinitionListWrapper>
-          <dl data-testid="metadata" style={{ marginTop: "0" }}>
+      <div className={actionsDialogStyles.content}>
+        <div className={definitionListStyles.definitionListWrapper}>
+          <dl data-testid="metadata" className={citeStyles.override0}>
             {metadata.map((item) => (
               <React.Fragment key={item[0]}>
                 <dt>{item[0]}</dt>
@@ -73,10 +64,9 @@ const WorkDialogCite: React.FC = () => {
               </>
             </dd>
           </dl>
-        </DefinitionListWrapper>
-      </Content>
-    </ActionsDialogStyled>
+        </div>
+      </div>
+    </div>
   );
 };
-
 export default WorkDialogCite;

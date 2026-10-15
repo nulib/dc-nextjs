@@ -1,64 +1,22 @@
-import { CSS } from "@stitches/react";
-import { ReactNode } from "react";
-import { styled } from "@/stitches.config";
-
-interface IconProps {
-  children: ReactNode;
-  style?: CSS;
+import { forwardRef, HTMLAttributes } from "react";
+import styles from "./Icon.module.css";
+interface IconProps extends HTMLAttributes<HTMLSpanElement> {
   hasSVGPadding?: boolean;
 }
-
-const Icon: React.FC<IconProps> = ({
-  children,
-  style,
-  hasSVGPadding = true,
-}) => {
+const Icon = forwardRef<HTMLSpanElement, IconProps>(function Icon(
+  { children, className, hasSVGPadding = true, ...props },
+  ref,
+) {
   return (
-    <IconStyled css={{ ...style }} hasSVGPadding={hasSVGPadding}>
+    <span
+      {...props}
+      ref={ref}
+      data-has-svg-padding={hasSVGPadding}
+      data-dc-slot="icon"
+      className={[styles.iconStyled, className].filter(Boolean).join(" ")}
+    >
       {children}
-    </IconStyled>
+    </span>
   );
-};
-
-/* eslint sort-keys: 0 */
-
-export const IconStyled = styled("span", {
-  display: "flex",
-  height: "31px",
-  width: "31px",
-  objectFit: "contain",
-  justifyContent: "center",
-  textAlign: "center",
-  alignItems: "center",
-  backgroundColor: "transparent",
-  color: "$purple60",
-  fill: "$purple60",
-  stroke: "$purple60",
-  transition: "all 200ms ease-in-out",
-
-  svg: {
-    height: "100%",
-    width: "100%",
-    transition: "all 200ms ease-in-out",
-    color: "inherit",
-    fill: "inherit",
-    stroke: "inherit",
-  },
-
-  variants: {
-    hasSVGPadding: {
-      true: {
-        svg: {
-          padding: "0.5em",
-        },
-      },
-      false: {
-        svg: {
-          padding: "0",
-        },
-      },
-    },
-  },
 });
-
 export default Icon;

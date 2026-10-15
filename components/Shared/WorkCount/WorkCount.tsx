@@ -1,66 +1,62 @@
+import styles from "@/components/Shared/WorkCount/WorkCount.module.css";
 import { IconAudio, IconImage, IconVideo } from "@/components/Shared/SVG/Icons";
-import {
-  WorkCountTotal as Total,
-  WorkCountType as Type,
-  WorkCountTypes as Types,
-  WorkCountStyled,
-} from "@/components/Shared/WorkCount/WorkCount.styled";
 import { formatNumber, pluralize } from "@/lib/utils/count-helpers";
 import React from "react";
-
 export interface WorkCountProps {
   audio?: number;
   image?: number;
   video?: number;
 }
-
 const WorkCount: React.FC<WorkCountProps> = ({
   audio = 0,
   image = 0,
   video = 0,
 }) => {
   const total = audio + image + video;
-
   return (
-    <WorkCountStyled>
-      <Total data-testid="work-count-total">{pluralize("Work", total)}</Total>
-      <Types>
+    <div className={styles.workCountStyled}>
+      <span data-testid="work-count-total" className={styles.workCountTotal}>
+        {pluralize("Work", total)}
+      </span>
+      <div className={styles.workCountTypes}>
         {image ? (
-          <Type
+          <span
             aria-label={`${image} image works`}
             data-testid="work-count-type"
             data-type="image"
+            className={styles.workCountType}
           >
             {formatNumber(image)} <IconImage />
-          </Type>
+          </span>
         ) : (
           <></>
         )}
         {audio ? (
-          <Type
+          <span
             aria-label={`${audio} audio works`}
             data-testid="work-count-type"
             data-type="audio"
+            className={styles.workCountType}
           >
             {formatNumber(audio)} <IconAudio />
-          </Type>
+          </span>
         ) : (
           <></>
         )}
         {video ? (
-          <Type
+          <span
             aria-label={`${video} video works`}
             data-testid="work-count-type"
             data-type="video"
+            className={styles.workCountType}
           >
             {formatNumber(video)} <IconVideo />
-          </Type>
+          </span>
         ) : (
           <></>
         )}
-      </Types>
-    </WorkCountStyled>
+      </div>
+    </div>
   );
 };
-
 export default WorkCount;

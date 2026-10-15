@@ -1,0 +1,27 @@
+.similarWrapper {
+  margin-bottom: var(--dc-space-gr4);
+  padding-top: var(--dc-space-gr1);
+  padding-bottom: var(--dc-space-gr1);
+}
+
+.similarStyled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--dc-color-purple);
+  position: relative;
+}
+.similarStyled button {
+  position: absolute;
+  right: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.similarStyled button span {
+  display: none;
+}
+.similarStyled button svg {
+  width: var(--dc-size-gr3);
+  height: var(--dc-size-gr3);
+}

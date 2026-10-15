@@ -1,0 +1,61 @@
+.styledChatFeedbackActivate {
+  margin: 0 0 var(--dc-space-gr2);
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--dc-color-gray6);
+  padding: var(--dc-space-gr3) 0;
+}
+.styledChatFeedbackActivate > span {
+  margin-right: var(--dc-space-gr2);
+}
+
+.styledChatFeedbackConfirmation {
+}
+
+.styledChatFeedbackForm {
+  margin: var(--dc-space-gr3) 0;
+  transition: 200ms all ease-in-out;
+  width: 61.8%;
+}
+.styledChatFeedbackForm:where([data-is-expanded="true"]) {
+  visibility: visible;
+  height: auto;
+}
+.styledChatFeedbackForm:where([data-is-expanded="false"]) {
+  visibility: hidden;
+  height: 0;
+}
+
+.styledChatFeedback {
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+}
+.styledChatFeedback:where([data-is-submitted="true"])
+  .styledChatFeedbackActivate {
+  display: none;
+}
+
+.styledSentimentButton {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+}
+.styledSentimentButton > span {
+  height: 32px;
+  width: 32px;
+  fill: var(--dc-color-black20);
+}
+.styledSentimentButton:not([disabled]) {
+  cursor: pointer;
+}
+.styledSentimentButton[data-is-selected="true"] > span {
+  fill: var(--dc-color-purple);
+}

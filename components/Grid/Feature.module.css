@@ -1,0 +1,57 @@
+.gridFeatureItems {
+  display: flex;
+  width: 100%;
+}
+.gridFeatureItems figure {
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 991px) {
+  .gridFeatureItems {
+    flex-direction: column;
+  }
+}
+
+.gridFeaturePrimary {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  flex-shrink: 0;
+}
+@media (max-width: 991px) {
+  .gridFeaturePrimary {
+    width: 100%;
+  }
+}
+
+.gridFeatureSecondary {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  flex-shrink: 1;
+}
+@media (max-width: 991px) {
+  .gridFeatureSecondary {
+    width: 100%;
+  }
+}
+.gridFeatureSecondary > * {
+  width: 50%;
+  padding: 0 0 var(--dc-space-gr4) var(--dc-space-gr5);
+}
+@media (max-width: 991px) {
+  .gridFeatureSecondary > * {
+    padding: var(--dc-space-gr4) 0 0 0;
+  }
+  .gridFeatureSecondary > *:nth-child(2n + 1) {
+    padding-right: calc(var(--dc-space-gr4) / 2);
+  }
+  .gridFeatureSecondary > *:nth-child(2n + 2) {
+    padding-left: calc(var(--dc-space-gr4) / 2);
+  }
+}
+
+.gridFeatureStyled {
+  position: relative;
+  z-index: 0;
+}

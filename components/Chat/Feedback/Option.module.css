@@ -1,0 +1,27 @@
+.styledChatFeedbackOption {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--dc-font-size-gr2);
+  margin: 0 var(--dc-space-gr1) var(--dc-space-gr1) 0;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: var(--dc-transition-dc-all);
+  padding: var(--dc-space-gr1) var(--dc-space-gr2);
+  gap: 3px;
+}
+.styledChatFeedbackOption:hover {
+  box-shadow: 3px 3px 8px #0002;
+}
+.styledChatFeedbackOption input {
+  display: none;
+}
+.styledChatFeedbackOption:where([data-is-checked="true"]) {
+  color: var(--dc-color-white);
+  border: 1px solid var(--dc-color-black80);
+  background-color: var(--dc-color-black80);
+}
+.styledChatFeedbackOption:where([data-is-checked="false"]) {
+  color: var(--dc-color-black50);
+  border: 1px solid var(--dc-color-black20);
+  background-color: var(--dc-color-white);
+}

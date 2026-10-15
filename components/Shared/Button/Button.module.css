@@ -1,0 +1,98 @@
+.button {
+  all: unset;
+  align-items: center;
+  box-sizing: content-box;
+  user-select: none;
+  flex-shrink: 0;
+  justify-content: center;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid var(--dc-color-black10);
+  background-color: var(--dc-color-white);
+  color: var(--dc-color-black50);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 17px;
+  margin: 0 0.5em 0.5em 0;
+  padding: calc(0.75em - 1px) calc(1em - 1px);
+  position: relative;
+  text-transform: uppercase;
+  transition:
+    opacity 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+.button::before,
+.button::after {
+  box-sizing: border-box;
+}
+.button::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+}
+.button:hover,
+.button:active {
+  border-color: var(--dc-color-black20);
+}
+.button:focus-visible {
+  outline: 2px dashed currentColor;
+  outline-offset: 2px;
+}
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.button:disabled:hover,
+.button[aria-disabled="true"]:hover {
+  opacity: 0.5;
+}
+.button span {
+  padding-left: 5px;
+}
+.button[data-text-case="normal"] {
+  padding: 0.75em 1em;
+  text-transform: none;
+}
+.button[data-variant="primary"],
+.button[data-variant="danger"] {
+  padding: 0.75em 1em;
+  border: none;
+  color: var(--dc-color-white);
+  fill: var(--dc-color-white);
+}
+.button[data-variant="primary"] {
+  background-color: var(--dc-color-purple);
+}
+.button[data-variant="danger"] {
+  background-color: var(--dc-color-bright-red);
+}
+.button[data-variant="primary"]:hover,
+.button[data-variant="danger"]:hover {
+  opacity: 0.75;
+}
+.button[data-variant="text"] {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+.button[data-variant="text"]:hover {
+  text-decoration: underline;
+}
+/* Global visited-link rules must not change the color of a button-shaped link. */
+.button:visited {
+  color: var(--dc-color-black50);
+}
+.button[data-variant="primary"]:visited,
+.button[data-variant="danger"]:visited {
+  color: var(--dc-color-white);
+}
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

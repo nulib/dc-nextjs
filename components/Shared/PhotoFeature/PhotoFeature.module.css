@@ -1,0 +1,72 @@
+.photoFeatureStyled {
+  display: block;
+  width: 720px;
+  max-width: 50vw;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media (max-width: 767px) {
+  .photoFeatureStyled {
+    max-width: 100vw;
+  }
+}
+.photoFeatureStyled::after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: inherit;
+  background-size: cover;
+  transform-origin: center;
+  transition: transform 0.5s ease-in-out;
+}
+.photoFeatureStyled:hover::after {
+  transform: scale(1.025);
+}
+.photoFeatureStyled::before {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  z-index: 1;
+}
+
+.textOverImage {
+  width: 100%;
+  color: var(--dc-color-white);
+  padding: 0 var(--dc-space-gr3) var(--dc-space-gr3) var(--dc-space-gr4);
+  position: absolute;
+  bottom: var(--dc-space-gr1);
+  z-index: 31;
+}
+.textOverImage h3 {
+  color: var(--dc-color-white);
+  font-size: var(--dc-font-size-gr6);
+  margin-bottom: var(--dc-space-gr2);
+  line-height: 1;
+  text-shadow: 2px 2px 0x #000;
+}
+.textOverImage :global(.description) {
+  margin-bottom: var(--dc-space-gr3);
+}
+.textOverImage :global(.cta) {
+  font-size: var(--dc-font-size-gr3);
+  text-transform: uppercase;
+}
+
+.photoFeatureStyled {
+  background-image: var(--photo-background);
+}

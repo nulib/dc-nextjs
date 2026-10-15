@@ -1,22 +1,15 @@
-import {
-  ActionButtons,
-  TopInfoCollection,
-  TopInfoContent,
-  TopInfoHeaderContent,
-  TopInfoMetadata,
-  TopInfoWrapper,
-} from "@/components//Work/TopInfo.styled";
-import IIIFShare, { StyledIIIFShare } from "../Shared/IIIF/Share";
+import definitionListStyles from "@/components/Shared/DefinitionList.module.css";
+import shareStyles from "@/components/Shared/IIIF/Share.module.css";
+import topInfoStyles from "@/components/Work/TopInfo.module.css";
+import IIIFShare from "../Shared/IIIF/Share";
 import {
   Label,
   RequiredStatement,
   Summary,
 } from "@samvera/clover-iiif/primitives";
 import React, { MouseEvent } from "react";
-
-import { Button } from "@nulib/design-system";
+import { Button } from "@/components/Shared/Button/Button";
 import Card from "@/components/Shared/Card";
-import { DefinitionListWrapper } from "@/components/Shared/DefinitionList.styled";
 import Expand from "@/components/Shared/Expand/Expand";
 import Icon from "../Shared/Icon";
 import { IconShare } from "../Shared/SVG/Icons";
@@ -28,17 +21,14 @@ import WorkMetadata from "@/components/Work/Metadata";
 import type { WorkTypeCountMap } from "@/lib/collection-helpers";
 import type { WorkWithAIProvenance } from "@/types/api/ai-provenance";
 import { useWorkState } from "@/context/work-context";
-
 interface TopInfoProps {
   collectionWorkTypeCounts?: WorkTypeCountMap | null;
   manifest?: Manifest;
   work: WorkWithAIProvenance;
 }
-
 export interface ActionsDialog {
   activeDialog: "CITE" | "DOWNLOAD" | "FIND" | undefined;
 }
-
 const WorkTopInfo: React.FC<TopInfoProps> = ({
   collectionWorkTypeCounts,
   manifest,
@@ -47,17 +37,13 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
   const {
     workState: { contentState },
   } = useWorkState();
-
   const [actionsDialog, setActionsDialog] = React.useState<ActionsDialog>({
     activeDialog: undefined,
   });
-
   if (!work) return null;
   if (!manifest) return <p>Error grabbing manifest</p>;
-
   const handleActionsButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     const button = e.target as HTMLButtonElement;
-
     switch (button.name) {
       case "cite":
         setActionsDialog({ activeDialog: "CITE" });
@@ -72,22 +58,19 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
         break;
     }
   };
-
   function buildWorkCounts() {
     if (!collectionWorkTypeCounts) return "";
     const { totalAudio, totalImage, totalVideo } = collectionWorkTypeCounts;
     return { audio: totalAudio, image: totalImage, video: totalVideo };
   }
-
   const contentStateUrl = new URL(window.location.href);
   contentStateUrl.pathname = `/items/${work.id}`;
   if (contentState)
     contentStateUrl.searchParams.set("iiif-content", contentState.encoded);
-
   return (
-    <TopInfoWrapper>
+    <section className={topInfoStyles.topInfoWrapper}>
       <header>
-        <TopInfoHeaderContent>
+        <div className={topInfoStyles.topInfoHeaderContent}>
           <div>
             <Label label={manifest.label} as="h1" data-testid="title" />
             {manifest?.summary && (
@@ -99,62 +82,60 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
             )}
           </div>
           <div>
-            <StyledIIIFShare>
+            <div className={shareStyles.styledIIIFShare}>
               <button
                 name="download"
                 onClick={handleActionsButtonClick}
-                style={{
-                  paddingRight: "1em",
-                }}
+                className={topInfoStyles.override0}
               >
                 <Icon>
                   <IconShare />
                 </Icon>
                 Share
               </button>
-            </StyledIIIFShare>
+            </div>
             <IIIFShare uri={manifest.id} />
           </div>
-        </TopInfoHeaderContent>
+        </div>
 
-        <ActionButtons>
+        <div className={topInfoStyles.actionButtons}>
           <Button
             name="find"
             onClick={handleActionsButtonClick}
-            isLowercase
-            isPrimary
+            textCase="normal"
+            variant="primary"
           >
             Find this item
           </Button>
           <Button
             name="cite"
             onClick={handleActionsButtonClick}
-            isLowercase
-            isPrimary
+            textCase="normal"
+            variant="primary"
           >
             Cite this item
           </Button>
           <Button
             name="download"
             onClick={handleActionsButtonClick}
-            isLowercase
-            isPrimary
+            textCase="normal"
+            variant="primary"
           >
             Download and share
           </Button>
-        </ActionButtons>
+        </div>
 
         <WorkActionsDialog
           actionsDialog={actionsDialog}
           close={() => setActionsDialog({ activeDialog: undefined })}
         />
       </header>
-      <TopInfoContent>
-        <TopInfoMetadata>
+      <div className={topInfoStyles.topInfoContent}>
+        <div className={topInfoStyles.topInfoMetadata}>
           <WorkAIProvenance work={work} />
           <Expand initialHeight={900} buttonText="Show More">
             <div data-testid="work-top-info-wrapper">
-              <DefinitionListWrapper>
+              <div className={definitionListStyles.definitionListWrapper}>
                 {manifest?.metadata && (
                   <WorkMetadata metadata={manifest.metadata} />
                 )}
@@ -164,12 +145,12 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
                     requiredStatement={manifest.requiredStatement}
                   />
                 )}
-              </DefinitionListWrapper>
+              </div>
             </div>
           </Expand>
-        </TopInfoMetadata>
+        </div>
 
-        <TopInfoCollection>
+        <div className={topInfoStyles.topInfoCollection}>
           <Card
             title={work.collection?.title || ""}
             description={work.collection?.description}
@@ -177,10 +158,9 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
             imageUrl={`${process.env.NEXT_PUBLIC_DCAPI_ENDPOINT}/collections/${work.collection?.id}/thumbnail?aspect=square `}
             supplementalInfo={<WorkCount {...buildWorkCounts()} />}
           />
-        </TopInfoCollection>
-      </TopInfoContent>
-    </TopInfoWrapper>
+        </div>
+      </div>
+    </section>
   );
 };
-
 export default WorkTopInfo;

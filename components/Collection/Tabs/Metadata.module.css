@@ -1,0 +1,20 @@
+.actionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.groupedList {
+  list-style: none;
+  padding: 0;
+}
+.groupedList li {
+  padding-bottom: var(--dc-space-gr2);
+  font-size: var(--dc-font-size-gr4);
+}
+
+@media (max-width: 767px) {
+  .override0.override0 {
+    text-align: center;
+  }
+}

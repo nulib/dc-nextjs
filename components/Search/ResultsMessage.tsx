@@ -1,9 +1,8 @@
+import panelStyles from "@/components/Search/Panel.module.css";
+import interstitialStyles from "@/components/Chat/Response/Interstitial.module.css";
+import resultsMessageStyles from "@/components/Search/ResultsMessage.module.css";
 import Balancer from "react-wrap-balancer";
 import { CSSProperties } from "react";
-import { StyledInterstitialIcon } from "../Chat/Response/Interstitial.styled";
-import { SearchResultsLabelMessage as StyledLabel } from "./Panel.styled";
-import { styled } from "@/stitches.config";
-
 const SearchResultsMessage = ({
   label,
   icon,
@@ -14,9 +13,18 @@ const SearchResultsMessage = ({
   textAlign?: CSSProperties["textAlign"];
 }) => {
   return (
-    <StyledSearchResultsMessage data-testid="search-results-message">
-      {icon && <StyledInterstitialIcon>{icon}</StyledInterstitialIcon>}
-      <StyledLabel style={{ textAlign }}>
+    <div
+      data-testid="search-results-message"
+      data-dc-slot="search-results-message"
+      className={resultsMessageStyles.styledSearchResultsMessage}
+    >
+      {icon && (
+        <div className={interstitialStyles.styledInterstitialIcon}>{icon}</div>
+      )}
+      <div
+        data-text-align={textAlign}
+        className={panelStyles.searchResultsLabelMessage}
+      >
         {label && (
           <Balancer
             as="label"
@@ -26,17 +34,8 @@ const SearchResultsMessage = ({
             data-testid="search-results-message-label"
           />
         )}
-      </StyledLabel>
-    </StyledSearchResultsMessage>
+      </div>
+    </div>
   );
 };
-
-export const StyledSearchResultsMessage = styled("div", {
-  display: "flex",
-  alignItems: "center",
-  gap: "$gr2",
-  flexGrow: "1",
-  width: "100%",
-});
-
 export default SearchResultsMessage;

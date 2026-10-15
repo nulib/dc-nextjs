@@ -1,15 +1,9 @@
-import {
-  SearchResultsLabel,
-  StyledBackButton,
-  StyledSearchPanel,
-  StyledSearchPanelContent,
-} from "./Panel.styled";
+import styles from "@/components/Search/Panel.module.css";
 import {
   convertUrlFacetsToContextFacets,
   parseUrlFacets,
 } from "@/lib/utils/facet-helpers";
 import { useEffect, useRef, useState } from "react";
-
 import { ApiSearchRequestBody } from "@/types/api/request";
 import { ApiSearchResponse } from "@/types/api/response";
 import BouncingLoader from "@/components/Shared/BouncingLoader";
@@ -27,27 +21,22 @@ import { buildQuery } from "@/lib/queries/builder";
 import { createResultsMessageFromContext } from "@/lib/chat-helpers";
 import { useRouter } from "next/router";
 import { useSearchState } from "@/context/search-context";
-
 const defaultSearchResultsState: SearchResultsState = {
   data: null,
   error: "",
   loading: true,
 };
-
 const SearchPanel = () => {
   const [searchResultsLabel, setSearchResultsLabel] = useState<string>("");
   const [searchResults, setSearchResults] = useState<SearchResultsState>(
     defaultSearchResultsState,
   );
-
   const router = useRouter();
   const { searchState, searchDispatch } = useSearchState();
-
   const {
     panel: { open },
     conversation,
   } = searchState;
-
   /**
    * Build the request URL and body for the search API
    * based on the current query and facets.
@@ -55,7 +44,6 @@ const SearchPanel = () => {
   const query = router.query.q as string;
   const page = (router.query.page as string) || "1";
   const urlFacets = parseUrlFacets(router.query);
-
   const requestUrl = new URL(DC_API_SEARCH_URL);
   const body: ApiSearchRequestBody = buildQuery(
     {
@@ -65,33 +53,26 @@ const SearchPanel = () => {
     },
     true,
   );
-
   requestUrl.searchParams.append("page", page);
-
   const apiPostRequestObject = {
     body,
     url: requestUrl.toString(),
   };
-
   useEffect(() => {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [open]);
-
   useEffect(() => {
     if (!query || isNavigatingBack.current) return;
-
     (async () => {
       setSearchResults({
         data: null,
         error: "",
         loading: true,
       });
-
       try {
         const response =
           await apiPostRequest<ApiSearchResponse>(apiPostRequestObject);
-
         setSearchResults({
           data: response || null,
           error: "",
@@ -102,14 +83,12 @@ const SearchPanel = () => {
       }
     })();
   }, [JSON.stringify(apiPostRequestObject)]);
-
   useEffect(() => {
     const context = {
       facets: convertUrlFacetsToContextFacets(urlFacets),
       query: query || "",
       works: [],
     };
-
     searchDispatch({
       type: "updateConversation",
       conversation: {
@@ -117,15 +96,12 @@ const SearchPanel = () => {
         stagedContext: context,
       },
     });
-
     const label = createResultsMessageFromContext(context);
     if (label) setSearchResultsLabel(label);
   }, [searchResults]);
-
   const handleEscape = (e: KeyboardEvent) => {
     if (e.key === "Escape") handleBack();
   };
-
   const isNavigatingBack = useRef(false);
   const handleBack = async () => {
     isNavigatingBack.current = true;
@@ -135,7 +111,6 @@ const SearchPanel = () => {
         query: {},
       })
       .then(() => (isNavigatingBack.current = false));
-
     searchDispatch({
       type: "updatePanel",
       panel: {
@@ -144,20 +119,26 @@ const SearchPanel = () => {
       },
     });
   };
-
   return (
-    <StyledSearchPanel
-      isOpen={open}
+    <aside
+      data-is-open={open}
       data-open={open}
       data-testid="search-panel"
+      className={styles.styledSearchPanel}
     >
-      <Container containerType="wide" className="search-panel">
-        <StyledSearchPanelContent id="search-panel-content">
+      <Container containerType="wide" className={"search-panel"}>
+        <div
+          id="search-panel-content"
+          className={styles.styledSearchPanelContent}
+        >
           <Container>
             <SearchOptions activeTab="results" />
             {query && (
-              <SearchResultsLabel>
-                <StyledBackButton onClick={handleBack}>
+              <div className={styles.searchResultsLabel}>
+                <button
+                  onClick={handleBack}
+                  className={styles.styledBackButton}
+                >
                   <IconArrowBack /> Back to conversation
                   <Stack
                     context={{
@@ -167,34 +148,26 @@ const SearchPanel = () => {
                     }}
                     isDismissable={false}
                   />
-                </StyledBackButton>
+                </button>
                 {searchResultsLabel && (
                   <SearchResultsMessage
                     label={searchResultsLabel}
                     textAlign="right"
                   />
                 )}
-              </SearchResultsLabel>
+              </div>
             )}
           </Container>
           {searchResults?.data ? (
             <SearchResults {...searchResults} />
           ) : (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "400px",
-              }}
-            >
+            <div className={styles.override0}>
               <BouncingLoader />
             </div>
           )}
-        </StyledSearchPanelContent>
+        </div>
       </Container>
-    </StyledSearchPanel>
+    </aside>
   );
 };
-
 export default SearchPanel;

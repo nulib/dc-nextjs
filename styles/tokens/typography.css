@@ -1,0 +1,29 @@
+:root {
+  --dc-font-northwestern-display-light: Poppins Light, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-display-bold: Poppins Bold, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-display-extra-bold: Poppins Extra Bold, Arial,
+    Helvetica, sans-serif;
+  --dc-font-northwestern-display-extra-light: Poppins Extra Light, Arial,
+    Helvetica, sans-serif;
+  --dc-font-northwestern-sans-light: Akkurat Pro Light, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-sans-regular: Akkurat Pro Regular, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-sans-bold: Akkurat Pro Bold, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-serif-regular: Noto Serif Regular, Arial, Helvetica,
+    sans-serif;
+  --dc-font-northwestern-serif-bold: Noto Serif Bold, Arial, Helvetica,
+    sans-serif;
+  --dc-font-size-gr1: 0.611rem;
+  --dc-font-size-gr2: 0.722rem;
+  --dc-font-size-gr3: 0.833rem;
+  --dc-font-size-gr4: 1rem;
+  --dc-font-size-gr5: 1.177rem;
+  --dc-font-size-gr6: 1.318rem;
+  --dc-font-size-gr7: calc(1rem * 1.618);
+  --dc-font-size-gr8: calc(1rem * 2.6179240000000004);
+  --dc-font-size-gr9: calc(1rem * 4.235801032000001);
+}

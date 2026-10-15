@@ -1,20 +1,17 @@
+import styles from "@/components/Hero/Hero.module.css";
 import { Autoplay, EffectFade, Keyboard, Navigation, Pagination } from "swiper";
-import { HeroActions, HeroStyled } from "@/components/Hero/Hero.styled";
 import { Label, Summary, Thumbnail } from "@samvera/clover-iiif/primitives";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import Container from "@/components/Shared/Container";
 import { HeroCollection } from "@/lib/constants/homepage";
 import Link from "next/link";
 import React from "react";
-
 interface HeroProps {
   collection: HeroCollection;
 }
-
 const Hero: React.FC<HeroProps> = ({ collection }) => {
   return (
-    <HeroStyled>
+    <div data-dc-slot="hero" className={styles.heroStyled}>
       <Swiper
         autoplay={{
           delay: 10000,
@@ -39,25 +36,25 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
                 thumbnail={item.thumbnail}
                 region={item?.nul_hero_region}
               />
-              <Container className="slide-inner" isFlex>
+              <Container isFlex className={"slide-inner"}>
                 <figcaption>
                   <Link href={item.homepage[0].id}>
                     <Label
                       label={item.label}
                       as="span"
-                      className="slide-label"
+                      className={"slide-label"}
                     />
                   </Link>
                   {item.summary && (
                     <Summary
                       summary={item.summary}
                       as="span"
-                      className="slide-summary"
+                      className={"slide-summary"}
                     />
                   )}
 
                   {item.seeAlso && (
-                    <HeroActions>
+                    <div className={styles.heroActions}>
                       {item.seeAlso.map((entry) => {
                         return (
                           <Link href={entry.id} key={entry.id}>
@@ -69,7 +66,7 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
                           </Link>
                         );
                       })}
-                    </HeroActions>
+                    </div>
                   )}
                 </figcaption>
               </Container>
@@ -77,8 +74,7 @@ const Hero: React.FC<HeroProps> = ({ collection }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </HeroStyled>
+    </div>
   );
 };
-
 export default Hero;

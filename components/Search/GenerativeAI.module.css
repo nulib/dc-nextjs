@@ -1,0 +1,25 @@
+.generativeAIToggleWrapper {
+  color: var(--dc-color-black50);
+  font-size: var(--dc-font-size-gr2);
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  height: var(--dc-size-gr5);
+  align-items: center;
+  margin-right: var(--dc-space-gr1);
+}
+.generativeAIToggleWrapper label {
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 3px;
+  margin-right: 4px;
+}
+.generativeAIToggleWrapper svg {
+  position: relative;
+  padding: 1px 0;
+  height: var(--dc-size-gr3);
+  width: var(--dc-size-gr3);
+  fill: var(--dc-color-black50);
+}

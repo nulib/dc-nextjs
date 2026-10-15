@@ -9,6 +9,12 @@ jobs:
   test:
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    # NEXT_PUBLIC_* values are compiled into the browser bundle during build.
+    # Build, server, and browser tests must use the same local origin and API.
+    env:
+      BASE_URL: http://localhost:3000
+      NEXT_PUBLIC_DC_URL: http://localhost:3000
+      NEXT_PUBLIC_DCAPI_ENDPOINT: https://dc-test-api.rdc-staging.library.northwestern.edu/api/v2
     container:
       # Image version must match @playwright/test in package.json.
       # Mismatch produces: "Executable doesn't exist at /ms-playwright/chromium-XXXX/..."
@@ -19,25 +25,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version-file: ".tool-versions"
       - name: Install dependencies
-        run: npm ci --force
+        run: npm ci
 
       - name: Build app
         run: npm run build
-        env:
-          NEXT_PUBLIC_DCAPI_ENDPOINT: ${{ secrets.NEXT_PUBLIC_DCAPI_ENDPOINT }}
 
       - name: Start app
-        run: npm run start:playwright &
+        run: npm run start &
 
       - name: Wait for server
         run: npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
         run: npx playwright test
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
 
       - uses: actions/upload-artifact@v4
         if: always()

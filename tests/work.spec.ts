@@ -228,7 +228,7 @@ test.describe("Work page component", async () => {
 
     // Test the Collection carousel
     const collectionsSliderItems = relatedItems
-      .locator(".swiper-wrapper")
+      .locator(".clover-slider-track")
       .nth(0);
     await expect(
       collectionsSliderItems.filter({ hasText: "Canary Record TEST 3" }),
@@ -264,11 +264,11 @@ test.describe("Work page component", async () => {
 
     // // Test the More Like This carousel
     // const moreLikeThisSliderItems = relatedItems
-    //   .locator(".swiper-wrapper")
+    //   .locator(".clover-slider-track")
     //   .nth(1);
 
     // // Test the More Like This carousel has 10 items
-    // await expect(moreLikeThisSliderItems.locator(".swiper-slide")).toHaveCount(
+    // await expect(moreLikeThisSliderItems.locator(".clover-slider-slide")).toHaveCount(
     //   11
     // );
 
@@ -288,8 +288,12 @@ test.describe("Work page component", async () => {
     // ).toBeDisabled();
 
     // Test the Subject carousels exist.  But they'll be random so can't really test the content
-    const subject1SliderItems = relatedItems.locator(".swiper-wrapper").nth(2);
-    const subject2SliderItems = relatedItems.locator(".swiper-wrapper").nth(3);
+    const subject1SliderItems = relatedItems
+      .locator(".clover-slider-track")
+      .nth(2);
+    const subject2SliderItems = relatedItems
+      .locator(".clover-slider-track")
+      .nth(3);
 
     await expect(subject1SliderItems).toBeVisible();
     await expect(subject2SliderItems).toBeVisible();

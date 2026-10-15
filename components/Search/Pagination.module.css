@@ -1,0 +1,104 @@
+.paginationStyled {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--dc-font-size-gr3);
+  color: var(--dc-color-black80);
+  margin: 0 var(--dc-space-gr3) var(--dc-space-gr4);
+  border-top: 2px solid var(--dc-color-black10);
+}
+.paginationStyled svg {
+  width: var(--dc-size-gr3);
+}
+
+.leftNav {
+  display: flex;
+  flex-grow: 1;
+  margin-top: -1px;
+}
+.leftNav a {
+  display: inline-flex;
+  align-items: center;
+  padding-top: var(--dc-space-gr3);
+  border-top: 2px solid transparent;
+}
+.leftNav a:hover {
+  border-top: 2px solid var(--dc-color-black20);
+}
+.leftNav svg {
+  margin-right: var(--dc-space-gr2);
+}
+.leftNav:where([data-active="false"]) {
+  visibility: hidden;
+}
+
+.navWrapper {
+  display: flex;
+  align-self: flex-end;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+.navWrapper button {
+  font-size: var(--dc-font-size-gr3);
+}
+.navWrapper button:last-of-type {
+  margin-right: 0;
+}
+
+.rightNav {
+  display: flex;
+  flex-grow: 1;
+  margin-top: -1px;
+}
+.rightNav a {
+  display: inline-flex;
+  align-items: center;
+  padding-top: var(--dc-space-gr3);
+  border-top: 2px solid transparent;
+}
+.rightNav a:hover {
+  border-top: 2px solid var(--dc-color-black20);
+}
+.rightNav {
+  justify-content: end;
+}
+.rightNav svg {
+  margin-left: var(--dc-space-gr2);
+}
+.rightNav:where([data-active="false"]) {
+  visibility: hidden;
+}
+
+.paginationLinks {
+  display: flex;
+  margin-top: -1px;
+}
+@media (max-width: 767px) {
+  .paginationLinks {
+    display: none;
+  }
+}
+
+.pageNumber {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--dc-space-gr3) var(--dc-space-gr3) 0 var(--dc-space-gr3);
+  border-top: 2px solid transparent;
+  color: var(--dc-color-black50);
+}
+.pageNumber:hover {
+  color: var(--dc-color-black80);
+  border-top: 2px solid var(--dc-color-black20);
+}
+.pageNumber:where([data-is-current="true"]) {
+  color: var(--dc-color-purple);
+  border-top: 2px solid var(--dc-color-purple);
+}
+
+.results {
+  color: var(--dc-color-black50);
+}
+.results span {
+  font-family: var(--dc-font-northwestern-sans-bold);
+}

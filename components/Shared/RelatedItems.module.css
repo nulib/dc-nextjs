@@ -1,0 +1,49 @@
+.relatedItemsStyled {
+  margin-bottom: var(--dc-space-gr5);
+}
+.relatedItemsStyled :global([data-dc-slot~="heading"]) {
+  color: var(--dc-color-black80);
+}
+.relatedItemsStyled > div {
+  padding: 0 0 var(--dc-space-gr4);
+}
+.relatedItemsStyled :global(.bloom-header-label) {
+  display: block;
+  color: var(--dc-color-purple);
+  font-family: var(--dc-font-northwestern-sans-regular) !important;
+  font-size: var(--dc-font-size-gr5) !important;
+}
+.relatedItemsStyled :global(.bloom-header-summary) {
+  display: block;
+  font-size: var(--dc-font-size-gr3) !important;
+}
+.relatedItemsStyled figcaption {
+  font-family: var(--dc-font-northwestern-sans-regular) !important;
+  font-weight: 400;
+}
+.relatedItemsStyled figcaption > span {
+  font-size: var(--dc-font-size-gr2);
+  color: var(--dc-color-black50);
+  margin-top: 6px;
+}
+.relatedItemsStyled figcaption > span:first-child {
+  font-size: var(--dc-font-size-gr3);
+  color: var(--dc-color-purple);
+  font-weight: 400;
+  line-height: 1.15em;
+}
+.relatedItemsStyled a:hover figcaption,
+.relatedItemsStyled a:focus figcaption {
+  color: var(--dc-color-purple) !important;
+}
+.relatedItemsStyled :global([data-dc-slot~="heading-slash-title"]) {
+  color: var(--dc-color-purple);
+  text-align: center;
+  margin-top: var(--dc-space-gr6);
+}
+
+@media (max-width: 767px) {
+  .override0.override0 {
+    text-align: center;
+  }
+}

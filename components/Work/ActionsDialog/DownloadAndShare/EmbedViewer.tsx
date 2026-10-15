@@ -1,28 +1,18 @@
-import {
-  EmbedHTMLActionRow,
-  EmbedLayoutPreview,
-  EmbedLayoutPreviewContent,
-  EmbedLayoutPreviewInfoPanel,
-  EmbedLayoutPreviewTitle,
-  EmbedViewer as EmbedViewerStyled,
-} from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.styled";
-
+import type { CSSProperties } from "react";
+import simpleSelectStyles from "@/components/Shared/SimpleSelect.module.css";
+import downloadAndShareStyles from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.module.css";
 import Announcement from "@/components/Shared/Announcement";
 import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
-import SimpleSelect from "@/components/Shared/SimpleSelect.styled";
 import { Work } from "@nulib/dcapi-types";
 import { embedWarningMessage } from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare";
 import { useState } from "react";
-
 interface EmbedViewerProps {
   manifestId: Work["iiif_manifest"];
   showEmbedWarning: boolean;
   work: Work;
 }
-
 type SelectOptionState = boolean;
-
 const showInfoPanelOptions = [
   {
     label: "Show Info Panel: Closed",
@@ -43,7 +33,6 @@ const showTitleOptions = [
     value: "false",
   },
 ];
-
 const EmbedViewer: React.FC<EmbedViewerProps> = ({
   manifestId,
   showEmbedWarning,
@@ -52,16 +41,13 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
   const [infoPanelDefaultOpen, setInfoPanelDefaultOpen] =
     useState<SelectOptionState>(false);
   const [showTitle, setShowTitle] = useState<SelectOptionState>(true);
-
   function encodeSearchParams() {
     const params = [manifestId];
     if (infoPanelDefaultOpen)
       params.push(`informationPanelOpen=${infoPanelDefaultOpen.toString()}`);
     if (!showTitle) params.push(`showTitle=${showTitle.toString()}`);
-
     return params.join("&");
   }
-
   function handleShowInfoPanelChange(e: React.ChangeEvent<HTMLSelectElement>) {
     switch (e.target.value) {
       case "show initially open":
@@ -74,77 +60,80 @@ const EmbedViewer: React.FC<EmbedViewerProps> = ({
         break;
     }
   }
-
   const embedViewerHTML = manifestId
-    ? `<iframe src="${
-        window.location.origin
-      }/embedded-viewer/${encodeURIComponent(encodeSearchParams())}" title="${
-        work?.title?.replaceAll(`"`, `&quot;`) || work.accession_number
-      }" width="100%" height="800"></iframe>`
+    ? `<iframe src="${window.location.origin}/embedded-viewer/${encodeURIComponent(encodeSearchParams())}" title="${work?.title?.replaceAll(`"`, `&quot;`) || work.accession_number}" width="100%" height="800"></iframe>`
     : "";
-
   return (
     <section>
       <Heading as="h3">Embed Viewer</Heading>
       {showEmbedWarning && <Announcement>{embedWarningMessage}</Announcement>}
       {!showEmbedWarning && (
-        <EmbedViewerStyled>
+        <div className={downloadAndShareStyles.embedViewer}>
           <pre data-testid="embed-html">
             {embedViewerHTML || "Error creating embed viewer HTML"}
           </pre>
 
           <p>Preview:</p>
-          <EmbedLayoutPreview data-testid="preview-embed-viewer">
-            <EmbedLayoutPreviewTitle>
+          <div
+            data-testid="preview-embed-viewer"
+            className={downloadAndShareStyles.embedLayoutPreview}
+          >
+            <div className={downloadAndShareStyles.embedLayoutPreviewTitle}>
               <div data-testid="preview-title">
                 {showTitle ? work.title || work.accession_number : ""}
               </div>
               <span></span>
-            </EmbedLayoutPreviewTitle>
+            </div>
 
-            <EmbedLayoutPreviewContent>
+            <div className={downloadAndShareStyles.embedLayoutPreviewContent}>
               <span
-                style={{
-                  backgroundImage: `url(${work.thumbnail})`,
-                }}
+                style={
+                  {
+                    "--embed-thumbnail": `url(${JSON.stringify(work.thumbnail)})`,
+                  } as CSSProperties
+                }
               ></span>
               {infoPanelDefaultOpen && (
-                <EmbedLayoutPreviewInfoPanel data-testid="preview-info-panel">
+                <div
+                  data-testid="preview-info-panel"
+                  className={downloadAndShareStyles.embedLayoutPreviewInfoPanel}
+                >
                   Information Panel
-                </EmbedLayoutPreviewInfoPanel>
+                </div>
               )}
-            </EmbedLayoutPreviewContent>
-          </EmbedLayoutPreview>
+            </div>
+          </div>
 
-          <EmbedHTMLActionRow>
+          <div className={downloadAndShareStyles.embedHTMLActionRow}>
             <CopyText textPrompt="Copy" textToCopy={embedViewerHTML} />
-            <SimpleSelect
+            <select
               name="show-title"
               onChange={(e) =>
                 setShowTitle(e.target.value === "true" ? true : false)
               }
+              className={simpleSelectStyles.simpleSelect}
             >
               {showTitleOptions.map((option) => (
                 <option key={option.label} value={option.value}>
                   {option.label}
                 </option>
               ))}
-            </SimpleSelect>
-            <SimpleSelect
+            </select>
+            <select
               name="show-info-panel"
               onChange={handleShowInfoPanelChange}
+              className={simpleSelectStyles.simpleSelect}
             >
               {showInfoPanelOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
-            </SimpleSelect>
-          </EmbedHTMLActionRow>
-        </EmbedViewerStyled>
+            </select>
+          </div>
+        </div>
       )}
     </section>
   );
 };
-
 export default EmbedViewer;

@@ -1,0 +1,16 @@
+.collectionGridStyled {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--dc-space-gr3);
+  justify-items: center;
+  justify-content: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+}
+@media (max-width: 767px) {
+  .collectionGridStyled {
+    grid-template-columns: 1fr;
+  }
+}

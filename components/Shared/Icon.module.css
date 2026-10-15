@@ -1,0 +1,28 @@
+.iconStyled {
+  display: flex;
+  height: 31px;
+  width: 31px;
+  object-fit: contain;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--dc-color-purple60);
+  fill: var(--dc-color-purple60);
+  stroke: var(--dc-color-purple60);
+  transition: all 200ms ease-in-out;
+}
+.iconStyled svg {
+  height: 100%;
+  width: 100%;
+  transition: all 200ms ease-in-out;
+  color: inherit;
+  fill: inherit;
+  stroke: inherit;
+}
+.iconStyled[data-has-svg-padding="true"] svg {
+  padding: 0.5em;
+}
+.iconStyled[data-has-svg-padding="false"] svg {
+  padding: 0;
+}

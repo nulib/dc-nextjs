@@ -1,7 +1,4 @@
-import {
-  AnnouncementContent,
-  ViewerWrapperStyled,
-} from "@/components/Clover/ViewerWrapper.styled";
+import styles from "@/components/Clover/ViewerWrapper.module.css";
 import type {
   CloverViewerProps,
   ViewerConfigOptions,
@@ -14,14 +11,12 @@ import React, { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import { useWorkState } from "@/context/work-context";
-
 export const CloverViewer = dynamic(
   () => import("@samvera/clover-iiif/viewer"),
   {
     ssr: false,
   },
 );
-
 interface WrapperProps {
   isWorkReadingRoomOnly?: boolean;
   isLoggingContentState?: boolean;
@@ -32,9 +27,7 @@ interface WrapperProps {
   searchQuery?: string;
   viewerOptions?: ViewerConfigOptions;
 }
-
 const EMPTY_VIEWER_OPTIONS: ViewerConfigOptions = {};
-
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
   isWorkReadingRoomOnly,
   isLoggingContentState = false,
@@ -49,10 +42,8 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
   const { manifest, work } = workState;
   const viewerWrapperRef = useRef<HTMLDivElement>(null);
   const hasContentSearch = Boolean(getContentSearchServiceUrl(manifest));
-
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
-
   const options: CloverViewerProps["options"] = useMemo(() => {
     const informationPanel = {
       open: Boolean(searchQuery),
@@ -81,11 +72,9 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       ...viewerOptions,
     };
   }, [hasContentSearch, searchQuery, isAudioVideoWork, viewerOptions]);
-
   useEffect(() => {
     const wrapper = viewerWrapperRef.current;
     if (!searchQuery || !wrapper) return;
-
     // Clover's InformationPanel resets its active tab to About in a mount
     // effect (and whenever annotations are absent), which runs after the
     // Search tab first appears in the DOM. Keep re-selecting Search until the
@@ -93,7 +82,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     const MAX_SELECTIONS = 10;
     let selections = 0;
     let isSelecting = false;
-
     const selectContentSearchTab = () => {
       if (isSelecting || selections >= MAX_SELECTIONS) return;
       const tab = wrapper.querySelector<HTMLButtonElement>(
@@ -108,14 +96,12 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
         isSelecting = false;
       }
     };
-
     const observer = new MutationObserver(selectContentSearchTab);
     const stop = () => {
       observer.disconnect();
       wrapper.removeEventListener("pointerdown", stop, true);
       wrapper.removeEventListener("keydown", stop, true);
     };
-
     observer.observe(wrapper, {
       attributeFilter: ["aria-selected"],
       attributes: true,
@@ -125,22 +111,18 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     wrapper.addEventListener("pointerdown", stop, true);
     wrapper.addEventListener("keydown", stop, true);
     selectContentSearchTab();
-
     return stop;
   }, [searchQuery]);
-
   const handleContentSearchCallback = (query: string) => {
     const url = new URL(window.location.href);
     ["canvas", "label", "q", "snippet"].forEach((param) =>
       url.searchParams.delete(param),
     );
-
     if (query) {
       url.searchParams.set(CONTENT_SEARCH_PARAM, query);
     } else {
       url.searchParams.delete(CONTENT_SEARCH_PARAM);
     }
-
     // Clover invokes this callback on every keystroke. Updating Next router
     // state here changes searchQuery and therefore Clover's key, remounting the
     // entire viewer. Keep the address bar in sync without triggering a render;
@@ -151,13 +133,15 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       `${url.pathname}${url.search}${url.hash}`,
     );
   };
-
-  const handleContentStateCallback = (contentState: string) => {
+  const handleContentStateCallback: NonNullable<
+    CloverViewerProps["contentStateCallback"]
+  > = (contentState) => {
     if (
       isLoggingContentState &&
       contentState &&
-      // @ts-ignore
-      workState?.contentState?.encoded !== contentState?.encoded
+      "encoded" in contentState &&
+      typeof contentState.encoded === "string" &&
+      workState?.contentState?.encoded !== contentState.encoded
     ) {
       workDispatch({
         type: "updateContentState",
@@ -165,7 +149,6 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       });
     }
   };
-
   const resolvedIiifContent = useMemo(() => {
     if (!initialCanvasId || !iiifContent) return iiifContent;
     const bodyText = [initialLabel, initialSnippet].filter(Boolean).join(": ");
@@ -187,12 +170,12 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
       }),
     };
   }, [initialCanvasId, iiifContent, initialLabel, initialSnippet]);
-
   return (
     <Container containerType="wide">
-      <ViewerWrapperStyled
+      <section
         data-testid="work-viewer-wrapper"
         ref={viewerWrapperRef}
+        className={styles.viewerWrapperStyled}
       >
         {resolvedIiifContent && (
           <CloverViewer
@@ -211,17 +194,16 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
         )}
         {isWorkReadingRoomOnly && (
           <Announcement>
-            <AnnouncementContent>
+            <div className={styles.announcementContent}>
               <IconInfo />
               <p>
                 You have access to this Work because you are in the reading room
               </p>
-            </AnnouncementContent>
+            </div>
           </Announcement>
         )}
-      </ViewerWrapperStyled>
+      </section>
     </Container>
   );
 };
-
 export default React.memo(WorkViewerWrapper);

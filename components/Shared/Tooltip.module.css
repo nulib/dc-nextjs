@@ -1,0 +1,33 @@
+.tooltipTrigger {
+  background: transparent;
+  border: none;
+}
+
+.tooltipContent {
+  z-index: 2;
+}
+
+.tooltipArrow {
+  fill: var(--dc-color-white);
+}
+
+.tooltipBody {
+  background: var(--dc-color-white);
+  box-shadow: 5px 5px 19px #0002;
+  max-width: 350px;
+  line-height: 1.47em;
+  font-size: var(--dc-font-size-gr2) !important;
+  font-family: var(--dc-font-northwestern-sans-regular);
+  padding: var(--dc-space-gr3);
+  border-radius: 3px;
+  color: var(--dc-color-black50);
+}
+.tooltipBody strong {
+  font-family: var(--dc-font-northwestern-sans-bold);
+  font-weight: 400;
+  color: var(--dc-color-black80);
+}
+.tooltipBody em {
+  font-style: italic;
+  color: var(--dc-color-black80);
+}

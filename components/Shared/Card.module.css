@@ -1,0 +1,19 @@
+.imagePlaceholder {
+  background: var(--dc-color-black10);
+  height: 200px;
+}
+
+.linkedAnchor {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.cardStyled p {
+  margin: 0 0 var(--dc-space-gr3);
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-size: var(--dc-font-size-gr3);
+  line-height: 1.47em;
+}
+.cardStyled p a {
+  cursor: pointer;
+}

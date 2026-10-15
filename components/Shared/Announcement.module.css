@@ -1,0 +1,29 @@
+.announcementStyled {
+  background: var(--dc-color-purple10);
+  color: var(--dc-color-black80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--dc-font-size-gr4);
+  padding: var(--dc-space-gr3);
+}
+.announcementStyled h2 {
+  color: var(--dc-color-purple);
+  font-family: var(--dc-font-northwestern-display-bold);
+}
+.announcementStyled a {
+  color: var(--dc-color-purple);
+  text-decoration: underline;
+}
+.announcementStyled a:hover {
+  text-decoration: none;
+}
+
+.contentWrapper {
+  font-size: var(--dc-font-size-gr4);
+  max-width: 1120px;
+  width: 100%;
+}
+.contentWrapper p {
+  line-height: 1.55em;
+}

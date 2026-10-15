@@ -1,30 +1,23 @@
+import styles from "@/components/Facets/Facet/GenericFacet.module.css";
 import * as Checkbox from "@radix-ui/react-checkbox";
-
-import { Indicator, OptionCount, OptionText } from "./GenericFacet.styled";
-
 import { FacetOption } from "@/types/components/facets";
 import { IconCheck } from "@/components/Shared/SVG/Icons";
 import React from "react";
 import { UserFacets } from "@/types";
 import { getFacetById } from "@/lib/utils/facet-helpers";
 import { useFilterState } from "@/context/filter-context";
-
 const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
   const { doc_count, key } = bucket;
   const id = `${facet}-${index}`;
-
   const {
     filterDispatch,
     filterState: { userFacetsUnsubmitted },
   } = useFilterState();
-
   const isChecked = !!(
     userFacetsUnsubmitted[facet] && userFacetsUnsubmitted[facet].includes(key)
   );
-
   const handleCheckedChange = (checkedStatus: boolean) => {
     const newObj: UserFacets = { ...userFacetsUnsubmitted };
-
     /**
      * Checkbox is checked
      */
@@ -34,7 +27,6 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
       } else {
         newObj[facet].push(key);
       }
-
       /**
        * Update most recently selected Facet
        */
@@ -51,13 +43,11 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
        */
       newObj[facet] = [...newObj[facet]].filter((arrValue) => arrValue !== key);
     }
-
     filterDispatch({
       type: "updateUserFacets",
       userFacetsUnsubmitted: newObj,
     });
   };
-
   return (
     <li>
       <Checkbox.Root
@@ -66,16 +56,15 @@ const Option: React.FC<FacetOption> = ({ bucket, facet, index }) => {
         name={`facet--${facet}`}
         onCheckedChange={handleCheckedChange}
       >
-        <Indicator>
+        <Checkbox.Indicator className={styles.indicator}>
           <IconCheck />
-        </Indicator>
+        </Checkbox.Indicator>
       </Checkbox.Root>
       <label htmlFor={id} data-selected={isChecked}>
-        <OptionText>{key}</OptionText>
-        <OptionCount>({doc_count})</OptionCount>
+        <span className={styles.optionText}>{key}</span>
+        <span className={styles.optionCount}>({doc_count})</span>
       </label>
     </li>
   );
 };
-
 export default Option;
