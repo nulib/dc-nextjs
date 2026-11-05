@@ -3,19 +3,52 @@
   z-index: 0;
   --slider-columns: 1;
   --slider-gap: 19px;
-  --clover-thumbnail-width: 100%;
 }
-/* RC.2 sizes cards with CSS. Match the previous Swiper viewport breakpoints
-   and the numeric gaps/group sizes in SliderWrapper.tsx. */
-.styledSliderIIIFWrapper :global(.clover-slider-slide) {
+/* Clover 4's slider is a fixed-height strip of natural-width pictures. Keep
+   DC's column counts and gaps per breakpoint (formerly also mirrored by the
+   Clover 3 breakpoints in SliderWrapper.tsx; CSS is now the only source). */
+.styledSliderIIIFWrapper :global(.clover-items) {
+  --clover-items-gap: var(--slider-gap);
+}
+/* Clover sets an inline `flex: 0 0 auto` on each item, so size it by width. */
+.styledSliderIIIFWrapper :global(.clover-items-item) {
   width: calc(
     (100% - (var(--slider-columns) - 1) * var(--slider-gap)) /
       var(--slider-columns)
   );
-}
-.styledSliderIIIFWrapper :global(.clover-slider-item) {
-  width: 100%;
   min-width: 0;
+}
+.styledSliderIIIFWrapper :global(.clover-items-figure) {
+  grid-template-columns: 1fr;
+}
+/* Clover 3.x cropped every thumbnail to a square; Clover 4 keeps each
+   picture's own proportions. */
+.styledSliderIIIFWrapper :global(.clover-items-picture) img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+/* Header: match Clover 3.x's purple title and pill-shaped "View all". */
+.styledSliderIIIFWrapper :global(.clover-items-header) {
+  align-items: flex-end;
+  margin-bottom: var(--dc-space-legacy-4);
+}
+.styledSliderIIIFWrapper :global(.clover-items-title) {
+  font-family: var(--dc-font-northwestern-sans-regular);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.12;
+  color: var(--dc-color-purple);
+}
+.styledSliderIIIFWrapper :global(.clover-items-homepage) {
+  padding: 0 var(--dc-space-legacy-3);
+  border-radius: 38px;
+  background-color: var(--dc-color-purple);
+  color: var(--dc-color-white);
+  font-size: var(--dc-font-size-gr3);
+  line-height: 1.4rem;
+  text-decoration: none;
 }
 @media (min-width: 334px) {
   .styledSliderIIIFWrapper {
@@ -44,18 +77,17 @@
     --slider-gap: 49.740556px;
   }
 }
-.styledSliderIIIFWrapper :global(.clover-slider-header-view-all) {
-  color: var(--dc-color-white);
-}
-.styledSliderIIIFWrapper :global(.clover-slider-slide)[data-type="collection"] {
-  display: none;
-}
 @media (max-width: 575px) {
-  .styledSliderIIIFWrapper > div > div {
+  .styledSliderIIIFWrapper :global(.clover-items-header) {
+    flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  .styledSliderIIIFWrapper > div > div > div:last-child {
-    padding-top: var(--dc-space-gr2);
+  .styledSliderIIIFWrapper :global(.clover-items-homepage) {
+    margin-inline-start: 0;
+    margin-top: var(--dc-space-gr2);
+  }
+  .styledSliderIIIFWrapper :global(.clover-items-caption) {
+    text-align: center;
   }
 }

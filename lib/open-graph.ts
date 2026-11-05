@@ -3,9 +3,11 @@ import { isImageType, isPublicWork } from "@/lib/work-helpers";
 
 import { PRODUCTION_URL } from "@/lib/constants/endpoints";
 import type { Work } from "@nulib/dcapi-types";
-import { overviewThumbnails } from "@/lib/constants/homepage";
 
-export const defaultOpenGraphImage = overviewThumbnails[0][0].id;
+// The site's default share image (landscape, as link previews prefer). Kept
+// separate from the homepage overview tiles, whose first tile it used to read.
+export const defaultOpenGraphImage =
+  "https://iiif.dc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/461,/0/default.jpg";
 
 export const defaultOpenGraphData: OpenGraphData = {
   "og:description":
