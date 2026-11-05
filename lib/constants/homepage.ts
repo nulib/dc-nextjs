@@ -251,7 +251,9 @@ export const defaultCollection: HeroCollection = {
 export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   [
     {
-      id: "https://iiif.dc.library.northwestern.edu/iiif/2/999a8522-aa7a-4c49-a4a1-25165be91b05/full/461,/0/default.jpg",
+      // Clover 3 built this URL from the service; Clover 4 uses `id` as given,
+      // so it must name the same image as the service (and the 461x641 size).
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/092b31cb-810a-4ab8-8d65-7cf9a61ca2fe/full/461,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
@@ -267,7 +269,7 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      id: "https://iiif.dc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150//full/384,/0/default.jpg",
+      id: "https://iiif.dc.library.northwestern.edu/iiif/2/acdaef88-f938-4b9c-b388-4748b85d8150/full/384,/0/default.jpg",
       type: "Image",
       format: "image/jpeg",
       service: [
@@ -315,12 +317,22 @@ export const overviewThumbnails: Array<IIIFExternalWebResource[]> = [
   ],
   [
     {
-      duration: 15,
-      format: "video/mp4",
-      id: "https://meadow-streaming.rdc.library.northwestern.edu/3e/e5/e3/bb/-a/c7/b-/46/0f/-9/d1/3-/af/a4/bc/c6/54/1f/74-110-1.m3u8#t=152,167",
-      type: "Video",
-      width: 382,
-      height: 382,
+      // The poster still of work c0886607-e697-4f1c-a143-4de884319b84 (file
+      // set 3ee5e3bb-…). Clover 3 played a looping HLS clip here; Clover 4's
+      // Thumbnail renders images only, and a looping clip without a pause
+      // control would fail WCAG 2.2.2 (Pause, Stop, Hide).
+      id: "https://iiif.dc.library.northwestern.edu/iiif/3/posters/3ee5e3bb-ac7b-460f-9d13-afa4bcc6541f/full/720,/0/default.jpg",
+      type: "Image",
+      format: "image/jpeg",
+      service: [
+        {
+          id: "https://iiif.dc.library.northwestern.edu/iiif/3/posters/3ee5e3bb-ac7b-460f-9d13-afa4bcc6541f",
+          profile: "level2",
+          type: "ImageService3",
+        },
+      ],
+      width: 720,
+      height: 404,
     },
   ],
   [

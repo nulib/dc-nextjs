@@ -212,13 +212,18 @@ test("Clover's public exports render the viewer and responsive, navigable slider
   await expect(page.getByTestId("title")).toBeVisible();
   const viewer = page.getByTestId("work-viewer-wrapper");
   await expect(viewer).toBeVisible();
-  await viewer.getByTestId("placeholder-toggle").click();
-  await expect(
-    viewer.locator('.openseadragon-canvas[tabindex="0"]'),
-  ).toBeVisible();
+  // The fixture's canvas has a placeholderCanvas, shown until the reader opens
+  // the viewer. The toggle's name depends on whether Clover has collapsed its
+  // controls ("Open image viewer" / "Expand viewer controls"), so target its
+  // public class. Clover 4 draws the image itself (no OpenSeadragon); its
+  // viewport takes focus.
+  await viewer.locator(".clover-canvas-placeholder-toggle").first().click();
+  const canvasViewport = viewer.getByTestId("clover-canvas-viewport").first();
+  await expect(canvasViewport).toBeVisible();
+  await expect(canvasViewport).toHaveAttribute("tabindex", "0");
   const slider = page
     .getByTestId("related-items")
-    .getByTestId("clover-slider")
+    .locator('.clover-items[data-layout="slider"]')
     .first();
   await expect(slider).toBeVisible();
   for (const width of [390, 767, 991, 1199, 1439]) {
@@ -237,27 +242,27 @@ test("Clover's public exports render the viewer and responsive, navigable slider
       .poll(async () =>
         slider.evaluate((element, count) => {
           const track = element.querySelector<HTMLElement>(
-            ".clover-slider-track",
+            ".clover-items-track",
           )!;
-          const slide = element.querySelector<HTMLElement>(
-            ".clover-slider-slide",
-          )!;
+          const slide =
+            element.querySelector<HTMLElement>(".clover-items-item")!;
           return Math.abs(
             slide.getBoundingClientRect().width * count +
-              parseFloat(getComputedStyle(track).gap) * (count - 1) -
+              parseFloat(getComputedStyle(track).columnGap) * (count - 1) -
               track.getBoundingClientRect().width,
           );
         }, columns),
       )
       .toBeLessThan(1);
   }
-  const previous = slider.getByRole("button", { name: "Previous item" });
+  // Clover 4's scroll buttons mark the unavailable direction with aria-disabled.
+  const previous = slider.getByRole("button", { name: "Show previous items" });
   await expect(previous).toBeDisabled();
-  await slider.getByRole("button", { name: "Next item" }).click();
+  await slider.getByRole("button", { name: "Show more items" }).click();
   await expect(previous).toBeEnabled();
   await previous.click();
   await expect(previous).toBeDisabled();
-  const viewAll = slider.getByRole("link", { name: "View All" });
+  const viewAll = slider.getByRole("link", { name: "View all" });
   await expect(viewAll).toHaveAttribute("href", /\/search\?/);
   await expect(viewAll).toHaveCSS("color", "rgb(255, 255, 255)");
   await page.getByRole("button", { name: "Cite this item" }).click();

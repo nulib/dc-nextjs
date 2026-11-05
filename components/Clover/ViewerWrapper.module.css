@@ -1,88 +1,44 @@
-.viewerWrapperStyled :global(.clover-viewer-painting) {
-  background: var(--dc-color-gray6);
+/* Clover 4 declares these custom properties on its own elements, so set them
+   there rather than on the wrapper. Clover 3.x styles targeted class names
+   (.clover-viewer-*, .clover-iiif-*) that no longer exist. */
+.viewerWrapperStyled :global(.clover-template-default) {
+  /* Clover 3.x options.canvasHeight */
+  --clover-body-height: 640px;
 }
-.viewerWrapperStyled :global(.clover-viewer-header) {
-  display: none;
+.viewerWrapperStyled :global(.clover-canvas):not([data-media="video"]) {
+  --clover-canvas-background: var(--dc-color-gray6);
 }
-.viewerWrapperStyled
-  :global(.clover-viewer-media-wrapper)
-  div[role="radiogroup"] {
-  padding-bottom: 0;
-}
-.viewerWrapperStyled :global(.clover-iiif-annotation-item) button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: var(--dc-font-size-gr3);
-  padding-bottom: var(--dc-space-gr1);
-}
-.viewerWrapperStyled :global(.clover-iiif-annotation-item) button > div {
-  font-size: inherit;
-}
-.viewerWrapperStyled :global(.clover-iiif-annotation-item) button strong {
-  font-family: var(--dc-font-northwestern-sans-bold);
-  font-weight: 400;
-}
-.viewerWrapperStyled
-  :global(.clover-iiif-annotation-item)[data-format="text/plain"]
-  button
-  > div {
-  display: flex;
-  flex-direction: column;
-  gap: var(--dc-space-gr1);
-  line-height: 1.35em;
-}
-.viewerWrapperStyled
-  :global(.clover-iiif-annotation-item)[data-format="text/plain"]
-  button
-  > div
-  em {
-  display: flex;
-  font-size: var(--dc-font-size-gr2);
-  line-height: 1rem;
-  color: var(--dc-color-black50);
-}
-.viewerWrapperStyled
-  :global(.clover-viewer-information-panel)
-  button[role="tab"] {
+.viewerWrapperStyled :global(.clover-sections-button) {
   font-family: var(--dc-font-northwestern-sans-regular);
   font-weight: 400;
   font-size: var(--dc-font-size-gr3);
 }
-.viewerWrapperStyled
-  :global(.clover-viewer-information-panel)
-  button[role="tab"][aria-selected="true"] {
+.viewerWrapperStyled :global(.clover-sections-button)[aria-selected="true"] {
   font-family: var(--dc-font-northwestern-sans-bold);
 }
-.viewerWrapperStyled :global(.clover-viewer-information-panel) header {
+/* Clover 4 sizes text from the root, and DC's root is 19px: panel entries
+   inherit 19px and Clover's rem-based text tokens (declared on :root) scale
+   up with it. Match Clover 3.x by basing the panel on gr3 and rescaling
+   Clover's tokens (their default rem multipliers) from that base. */
+.viewerWrapperStyled :global(.clover-panel) {
+  font-size: var(--dc-font-size-gr3);
+  --clover-text-xs: calc(0.764 * var(--dc-font-size-gr3));
+  --clover-text-s: calc(0.854 * var(--dc-font-size-gr3));
+  --clover-text-m: calc(1.146 * var(--dc-font-size-gr3));
+  --clover-text-l: calc(1.236 * var(--dc-font-size-gr3));
+}
+.viewerWrapperStyled :global(.clover-content-search-hit),
+.viewerWrapperStyled :global(.clover-annotations-text) {
+  line-height: 1.35;
+}
+/* Per-canvas group headings in Search and Annotations: Clover 3.x showed
+   these as small muted labels rather than bold headings. */
+.viewerWrapperStyled :global(.clover-content-search-canvas),
+.viewerWrapperStyled :global(.clover-annotations-canvas-label) {
   font-family: var(--dc-font-northwestern-sans-regular);
   font-weight: 400;
   font-size: var(--dc-font-size-gr2);
   color: var(--dc-color-black50);
-  margin-bottom: var(--dc-space-gr3);
-}
-.viewerWrapperStyled :global(.clover-iiif-image-openseadragon-annotation) {
-  font-size: var(--dc-font-size-gr3);
-}
-.viewerWrapperStyled
-  :global(.clover-iiif-image-openseadragon-annotation)
-  label {
-  display: flex;
-  flex-direction: column;
-  gap: var(--dc-space-gr1);
-  line-height: 1.35em !important;
-}
-.viewerWrapperStyled
-  :global(.clover-iiif-image-openseadragon-annotation)
-  label
-  em {
-  font-size: var(--dc-font-size-gr2);
-  font-weight: 500;
-  color: var(--dc-color-black20);
-  line-height: 1rem;
-}
-.viewerWrapperStyled label[for="information-toggle"] {
-  box-shadow: none;
 }
 
 .announcementContent {

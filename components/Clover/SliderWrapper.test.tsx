@@ -1,10 +1,10 @@
 import { render, waitFor } from "@testing-library/react";
-import Slider from "@samvera/clover-iiif/slider";
+import { Items } from "@nulib/clover";
 import SliderWrapper from "./SliderWrapper";
 
-jest.mock("@samvera/clover-iiif/slider", () => ({
+jest.mock("@nulib/clover", () => ({
   __esModule: true,
-  default: jest.fn(() => null),
+  Items: jest.fn(() => null),
 }));
 
 const originalFetch = global.fetch;
@@ -18,7 +18,10 @@ it("loads a collection with credentials and supplies the resolved items to Clove
     type: "Collection",
     label: { en: ["Collection"] },
     summary: { en: ["Summary"] },
-    items: [{ id: "https://example.org/manifest", type: "Manifest" }],
+    items: [
+      { id: "https://example.org/manifest", type: "Manifest" },
+      { id: "https://example.org/nested", type: "Collection" },
+    ],
   };
   const fetchMock = jest
     .fn()
@@ -30,16 +33,20 @@ it("loads a collection with credentials and supplies the resolved items to Clove
       customViewAll="/search?collection=test"
     />,
   );
-  await waitFor(() => expect(Slider).toHaveBeenCalled());
+  await waitFor(() => expect(Items).toHaveBeenCalled());
   expect(fetchMock).toHaveBeenCalledWith("https://example.org/collection", {
     credentials: "include",
     signal: expect.any(AbortSignal),
   });
-  expect(jest.mocked(Slider).mock.calls[0][0]).toMatchObject({
-    items: collection.items,
-    label: collection.label,
-    summary: collection.summary,
-    options: { customViewAll: "/search?collection=test" },
+  expect(jest.mocked(Items).mock.calls[0][0]).toMatchObject({
+    layout: "slider",
+    request: { credentials: "include" },
+    iiifContent: {
+      items: [collection.items[0]],
+      label: collection.label,
+      summary: collection.summary,
+      homepage: [{ id: "/search?collection=test" }],
+    },
   });
 });
 
