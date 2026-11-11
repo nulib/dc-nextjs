@@ -2,13 +2,25 @@
   position: relative;
   z-index: 0;
   --slider-columns: 1;
-  --slider-gap: 19px;
+  /* One space between cards and under the subheading, at every width. */
+  --slider-gap: var(--dc-space-legacy-4);
 }
 /* Clover 4's slider is a fixed-height strip of natural-width pictures. Keep
-   DC's column counts and gaps per breakpoint (formerly also mirrored by the
-   Clover 3 breakpoints in SliderWrapper.tsx; CSS is now the only source). */
+   DC's column counts per breakpoint, up to 5 across (formerly also mirrored by
+   the Clover 3 breakpoints in SliderWrapper.tsx; CSS is now the only source). */
 .styledSliderIIIFWrapper :global(.clover-items) {
   --clover-items-gap: var(--slider-gap);
+  /* Clover centres its arrows and sizes its edge shades by the picture
+     height (`--clover-items-height`, default 8rem). DC sizes cards by width
+     and squares them, so the height is the card width. Container units keep
+     it a length; a percentage would resolve against each element using it. */
+  --clover-items-height: calc(
+    (100cqw - (var(--slider-columns) - 1) * var(--slider-gap)) /
+      var(--slider-columns)
+  );
+}
+.styledSliderIIIFWrapper :global(.clover-items-frame) {
+  container-type: inline-size;
 }
 /* Clover sets an inline `flex: 0 0 auto` on each item, so size it by width. */
 .styledSliderIIIFWrapper :global(.clover-items-item) {
@@ -29,10 +41,20 @@
   aspect-ratio: 1;
   object-fit: cover;
 }
-/* Header: match Clover 3.x's purple title and pill-shaped "View all". */
+/* A clamped title's full text, shown on hover and focus, as a popover like
+   "View as IIIF" (components/Shared/IIIF/Share.module.css). */
+.styledSliderIIIFWrapper :global(.clover-items-label-full) {
+  padding: var(--dc-space-gr2);
+  border-radius: 3px;
+  background-color: var(--dc-color-white);
+  box-shadow: 5px 5px 19px 0 #0002;
+}
+/* Header: a purple title, with "View all" as a text link and arrow like
+   SectionHeading's "View Collections" (Clover renders it as bare text, so
+   the arrow is drawn by ::after). */
 .styledSliderIIIFWrapper :global(.clover-items-header) {
-  align-items: flex-end;
-  margin-bottom: var(--dc-space-legacy-4);
+  align-items: center;
+  margin-bottom: var(--slider-gap);
 }
 .styledSliderIIIFWrapper :global(.clover-items-title) {
   font-family: var(--dc-font-northwestern-sans-regular);
@@ -42,13 +64,37 @@
   color: var(--dc-color-purple);
 }
 .styledSliderIIIFWrapper :global(.clover-items-homepage) {
-  padding: 0 var(--dc-space-legacy-3);
-  border-radius: 38px;
-  background-color: var(--dc-color-purple);
-  color: var(--dc-color-white);
-  font-size: var(--dc-font-size-gr3);
-  line-height: 1.4rem;
+  display: flex;
+  align-items: center;
+  height: var(--dc-size-gr4);
+  color: var(--dc-color-purple);
+  font-size: var(--dc-font-size-gr4);
   text-decoration: none;
+}
+.styledSliderIIIFWrapper :global(.clover-items-homepage):hover {
+  color: var(--dc-color-purple120);
+}
+/* IconArrowForward in Icon's 31px box with its 0.5em padding. */
+.styledSliderIIIFWrapper :global(.clover-items-homepage)::after {
+  content: "";
+  flex-shrink: 0;
+  width: 31px;
+  height: 31px;
+  background-color: var(--dc-color-purple60);
+  -webkit-mask: var(--slider-arrow) center / calc(100% - 1em) no-repeat;
+  mask: var(--slider-arrow) center / calc(100% - 1em) no-repeat;
+  --slider-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M268 112l144 144-144 144M392 256H100'/%3E%3C/svg%3E");
+}
+/* Arrows hang half off the slider's edges while the page has room beside
+   the 1120px Container: half of Clover's 42.5px control past its 19px gutter,
+   allowing for a classic 17px scrollbar. Narrower, they stay inset. */
+@media (min-width: 1160px) {
+  .styledSliderIIIFWrapper :global(.clover-items-scroll-prev) {
+    inset-inline-start: calc(var(--clover-control) / -2);
+  }
+  .styledSliderIIIFWrapper :global(.clover-items-scroll-next) {
+    inset-inline-end: calc(var(--clover-control) / -2);
+  }
 }
 @media (min-width: 334px) {
   .styledSliderIIIFWrapper {
@@ -63,18 +109,11 @@
 @media (min-width: 991px) {
   .styledSliderIIIFWrapper {
     --slider-columns: 4;
-    --slider-gap: 30.742px;
   }
 }
 @media (min-width: 1199px) {
   .styledSliderIIIFWrapper {
     --slider-columns: 5;
-  }
-}
-@media (min-width: 1439px) {
-  .styledSliderIIIFWrapper {
-    --slider-columns: 6;
-    --slider-gap: 49.740556px;
   }
 }
 @media (max-width: 575px) {

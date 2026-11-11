@@ -11,7 +11,7 @@ function getContentStateMetadata({
 }) {
   if (!manifest || !contentState) return {};
 
-  const activeCanvasId = contentState?.json?.target?.source?.id;
+  const activeCanvasId = getContentStateCanvasId(contentState);
   const activeCanvas = manifest?.items?.find(
     (item) => item.id === activeCanvasId,
   );
@@ -26,7 +26,7 @@ function getContentStateMetadata({
   const activeCanvasResourceType =
     annotationBody?.type && annotationBody?.type !== "Choice"
       ? annotationBody?.type
-      : annotationBody.items?.[0]?.type;
+      : annotationBody?.items?.[0]?.type;
 
   const activeCanvasResourceLabel = String(
     activeCanvasResourceType === "Sound" ? "audio" : activeCanvasResourceType,
@@ -43,4 +43,17 @@ function getContentStateMetadata({
   };
 }
 
-export { getContentStateMetadata };
+/**
+ * The Canvas a content state points to. Clover 4 targets the Canvas itself
+ * (`{ id, type: "Canvas" }`) when there is no time or region to keep, and a
+ * `SpecificResource` (`{ source, selector }`) when there is; a target may
+ * also be a URI string, with a fragment, or an array of targets.
+ */
+function getContentStateCanvasId(contentState: any): string | undefined {
+  const target = [contentState?.json?.target].flat()[0];
+  const resource = target?.source ?? target;
+  const id = typeof resource === "string" ? resource : resource?.id;
+  return typeof id === "string" ? id.split("#")[0] : undefined;
+}
+
+export { getContentStateCanvasId, getContentStateMetadata };

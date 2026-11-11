@@ -8,6 +8,23 @@
 .viewerWrapperStyled :global(.clover-canvas):not([data-media="video"]) {
   --clover-canvas-background: var(--dc-color-gray6);
 }
+/* The thumbnail rail. Clover's default 8rem is 152px against DC's 19px
+   root; pin the 128px it assumes. Clover sizes slider pictures by height
+   alone (`width: auto`), so a panorama spans the rail and a tall page
+   shrinks to a sliver: keep each picture's own width between a square and
+   twice its height, cropped to fill, as Clover 3.x cropped. Sizing the
+   picture rather than the item lets a multi-part canvas keep its parts side
+   by side. */
+.viewerWrapperStyled :global(.clover-items[data-layout="slider"]) {
+  --clover-items-height: 128px;
+}
+.viewerWrapperStyled
+  :global(.clover-items[data-layout="slider"] .clover-items-picture)
+  img {
+  min-width: var(--clover-items-picture-height);
+  max-width: calc(2 * var(--clover-items-picture-height));
+  object-fit: cover;
+}
 .viewerWrapperStyled :global(.clover-sections-button) {
   font-family: var(--dc-font-northwestern-sans-regular);
   font-weight: 400;
