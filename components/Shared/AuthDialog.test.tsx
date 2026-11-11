@@ -161,9 +161,15 @@ describe("AuthDialog", () => {
       await userEvent.type(emailInput, "valid@example.com");
       await userEvent.click(magicLinkButton);
 
-      await waitFor(() => {
-        expect(magicLinkButton).toHaveTextContent("Sent! Check your email.");
-      });
+      // The mocked request resolves after 1000ms, which is also waitFor's
+      // default timeout, so slower CI runners can time out first. "Sent!"
+      // stays up for 2000ms before resetting, so wait within that window.
+      await waitFor(
+        () => {
+          expect(magicLinkButton).toHaveTextContent("Sent! Check your email.");
+        },
+        { timeout: 2500 },
+      );
     });
 
     it("should show error message when magic link request fails", async () => {

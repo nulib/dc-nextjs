@@ -3,7 +3,7 @@ import embedResourcesStyles from "@/components/Work/ActionsDialog/DownloadAndSha
 import copyTextStyles from "@/components/Shared/CopyText.module.css";
 import downloadAndShareStyles from "@/components/Work/ActionsDialog/DownloadAndShare/DownloadAndShare.module.css";
 import type { Canvas, IIIFExternalWebResource } from "@iiif/presentation-3";
-import { Label, Thumbnail } from "@samvera/clover-iiif/primitives";
+import { Label, Thumbnail } from "@nulib/clover";
 import {
   getAnnotationBodyType,
   getInfoResponse,
@@ -169,8 +169,10 @@ const Item: React.FC<ItemProps> = ({ item, showEmbedWarning }) => {
         <div className={downloadAndShareStyles.itemThumbnail}>
           {item.thumbnail && (
             <Thumbnail
-              altAsLabel={item.label ? item.label : { none: [item.id] }}
-              thumbnail={item.thumbnail as IIIFExternalWebResource[]}
+              value={{
+                thumbnail: item.thumbnail as IIIFExternalWebResource[],
+                label: item.label ? item.label : { none: [item.id] },
+              }}
             />
           )}
         </div>

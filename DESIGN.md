@@ -14,7 +14,8 @@ application callers. Radix still owns accessible interaction behavior.
 
 The migration preserves the existing design and Pages Router. It does not
 redesign Masonry or change React/Next.js versions. Clover was upgraded to the
-latest published 4.x release candidate before slider code or styles changed.
+latest published 4.x release candidate before slider code or styles changed,
+and is now the stable 4.x line, `@nulib/clover` (see Clover compatibility).
 The homepage still uses Swiper; that dependency remains necessary.
 
 The initial audit found 101 Stitches-importing files, 330 styled definitions,
@@ -150,8 +151,9 @@ Keep these properties narrowly typed and owned by their component. Do not
 introduce arbitrary style-object props or generate CSS rules in JavaScript.
 SVG `fill` remains an ordinary SVG presentation attribute.
 
-Clover's distribution injects its own bundled CSS. Radix, Next Image, Swiper,
-OpenSeadragon, and other rendering/positioning libraries still manage inline
+Clover 4's stylesheet (`@nulib/clover/styles.css`, imported in `_app.tsx`) is
+in `@layer clover`, so DC's unlayered module overrides win. Radix, Next Image,
+Swiper, Clover, and other rendering/positioning libraries still manage inline
 geometry where necessary. These are vendor boundaries, not application
 CSS-in-JS. Vendor overrides stay scoped in the relevant module, and Clover's
 palette is mapped to `--dc-*` in `components/Clover/clover-tokens.css`.
@@ -184,7 +186,41 @@ library, or another distribution algorithm.
 
 ## Clover compatibility
 
-**Current pin: exact `3.17.0`.** On October 14, 2026, Clover was moved from
+**Current pin: exact `@nulib/clover` `4.9.2`** (November 11, 2026, the
+`latest` tag). Clover 4 moved to the nulib-ds organization under a new package
+name; `@samvera/clover-iiif` is removed. Integration notes:
+
+- Its `exports` are ESM-only (`import` condition), which `next/dynamic`'s
+  `require.resolveWeak` cannot resolve, so the viewer loads through
+  `components/Clover/CloverViewer.tsx`. Jest maps the package to
+  `dist/index.mjs` and transforms it. Upstream has an unreleased fix (nulib-ds
+  clover #415) adding a `default` condition; the wrapper can go once released.
+- Viewer props replace `options`: `header`, `panelLayout: "tabs"`,
+  `panelSections` (About added during a content search), `panelLabels`
+  ("Chapters" for A/V), `defaultPanelOpen`, `searchQuery`, `request` and
+  `onContentStateChange`. There is no `contentSearchCallback`, so a search in
+  the viewer is not written to the URL. Since 4.5.0 a search opened with
+  `searchQuery` stays on the content state's Canvas.
+- `CLOVER_REQUEST` (`components/Clover/clover-request.ts`) sends credentials
+  for JSON and none for VTT, which `/public/` serves with `ACAO: *`.
+  SliderWrapper still fetches collections itself (credentialed, abortable) to
+  drop nested collections and add the View all `homepage`.
+- Content states are `FragmentSelector`s (`t=…` or `xywh=…`), not Clover 3's
+  `PointSelector.t`; `selectorStartTime` reads both for Download and Share.
+- A IIIF value is HTML only when wrapped in a tag, so the error pages'
+  summaries are wrapped in `<span>`.
+- Clover's rem tokens scale with DC's 19px root. ViewerWrapper rescales the
+  panel's text tokens and pins the thumbnail rail's `--clover-items-height` to
+  128px, each picture cropped to fill a box from square to twice as wide. SliderWrapper sizes
+  cards by width (Clover sets an inline `flex: 0 0 auto`), squares and crops
+  them, and sets `--clover-items-height` to the card width through container
+  units on `.clover-items-frame`, so Clover centres its arrows and edge shades
+  on the pictures. Its arrows hang half off the slider at 1160px and wider.
+  Cards run 2/3/4/5 across from 334/767/991/1199px (the 6 across from 1439px
+  was dropped), 20px apart (`--dc-space-legacy-4`) at every width, the same
+  space as under the subheading.
+
+**Previous pin: exact `3.17.0`.** On October 14, 2026, Clover was moved from
 `4.0.0-rc.2` to stable `3.17.0` (published that day, the `latest` tag) to pick
 up an upstream viewer fix. 3.17.0 ships the same Embla slider, slider DOM
 hooks, public exports, and `.d.ts` set as RC.2; its type changes are additive
