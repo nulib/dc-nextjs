@@ -2,11 +2,7 @@ import definitionListStyles from "@/components/Shared/DefinitionList.module.css"
 import shareStyles from "@/components/Shared/IIIF/Share.module.css";
 import topInfoStyles from "@/components/Work/TopInfo.module.css";
 import IIIFShare from "../Shared/IIIF/Share";
-import {
-  Label,
-  RequiredStatement,
-  Summary,
-} from "@samvera/clover-iiif/primitives";
+import { Label, RequiredStatement, Summary } from "@nulib/clover";
 import React, { MouseEvent } from "react";
 import { Button } from "@/components/Shared/Button/Button";
 import Card from "@/components/Shared/Card";
@@ -74,11 +70,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
           <div>
             <Label label={manifest.label} as="h1" data-testid="title" />
             {manifest?.summary && (
-              <Summary
-                summary={manifest.summary}
-                as="p"
-                data-testid="summary"
-              />
+              <Summary value={manifest.summary} as="p" data-testid="summary" />
             )}
           </div>
           <div>
@@ -140,10 +132,7 @@ const WorkTopInfo: React.FC<TopInfoProps> = ({
                   <WorkMetadata metadata={manifest.metadata} />
                 )}
                 {manifest?.requiredStatement && (
-                  <RequiredStatement
-                    customValueDelimiter="<br /><br />"
-                    requiredStatement={manifest.requiredStatement}
-                  />
+                  <RequiredStatement value={manifest.requiredStatement} />
                 )}
               </div>
             </div>

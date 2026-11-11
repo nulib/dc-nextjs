@@ -1,6 +1,6 @@
 {
   "name": "dc-nextjs",
-  "version": "3.2.6",
+  "version": "3.2.7",
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
@@ -26,6 +26,7 @@
     "@next/bundle-analyzer": "^14.0.3",
     "@next/font": "^14.0.3",
     "@next/third-parties": "^14.2.3",
+    "@nulib/clover": "4.9.2",
     "@nulib/dcapi-types": "^2.9.1",
     "@nulib/use-markdown": "^0.2.1",
     "@radix-ui/colors": "^3.0.0",
@@ -41,7 +42,6 @@
     "@radix-ui/react-switch": "^1.0.1",
     "@radix-ui/react-tabs": "^1.0.1",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@samvera/clover-iiif": "3.17.0",
     "@samvera/image-downloader": "^1.1.6",
     "axios": "^1.2.2",
     "cookies-next": "^4.2.1",

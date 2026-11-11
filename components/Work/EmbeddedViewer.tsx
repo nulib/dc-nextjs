@@ -1,9 +1,10 @@
 import React from "react";
-import { ViewerConfigOptions } from "@samvera/clover-iiif";
 import { Work } from "@nulib/dcapi-types";
 import { WorkProvider } from "@/context/work-context";
 import WorkRestrictedDisplay from "@/components/Work/RestrictedDisplay";
-import WorkViewerWrapper from "@/components/Clover/ViewerWrapper";
+import WorkViewerWrapper, {
+  type ViewerOptions,
+} from "@/components/Clover/ViewerWrapper";
 
 const EmbeddedViewer = ({
   work,
@@ -33,13 +34,12 @@ const EmbeddedViewer = ({
     filteredSearchParams;
 
   // Set up some default Clover Viewer UI configuration for the embed viewer use-case
-  const viewerOptions: ViewerConfigOptions = {
-    informationPanel: {
-      open: informationPanelOpen === "true" ? true : false,
-      renderToggle: true,
-    },
-    showIIIFBadge: false,
-    showTitle: showTitle === "true" ? true : false,
+  const viewerOptions: ViewerOptions = {
+    defaultPanelOpen: informationPanelOpen === "true",
+    header: showTitle === "true",
+    // Embeds have no surrounding work page, so restore Clover's full panel
+    // (including About) instead of the work page's trimmed sections.
+    panelSections: undefined,
   };
 
   return (
