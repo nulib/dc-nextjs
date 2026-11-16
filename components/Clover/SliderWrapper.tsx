@@ -1,36 +1,9 @@
 import styles from "@/components/Clover/SliderWrapper.module.css";
-import Slider from "@samvera/clover-iiif/slider";
-import type { SliderBreakpoints } from "@samvera/clover-iiif/slider";
+import { CLOVER_REQUEST } from "@/components/Clover/clover-request";
+import { Items } from "@nulib/clover";
 import type { Collection } from "@iiif/presentation-3";
-import { useEffect, useState } from "react";
-import { gr, rem } from "@/styles/metrics";
-import { width } from "@/styles/media";
-const breakpoints: SliderBreakpoints = {
-  [width.xxs]: {
-    slidesPerGroup: 2,
-    spaceBetween: rem,
-  },
-  [width.xs]: {
-    slidesPerGroup: 2,
-    spaceBetween: rem,
-  },
-  [width.sm]: {
-    slidesPerGroup: 3,
-    spaceBetween: rem,
-  },
-  [width.md]: {
-    slidesPerGroup: 4,
-    spaceBetween: rem * gr(1),
-  },
-  [width.lg]: {
-    slidesPerGroup: 5,
-    spaceBetween: rem * gr(1),
-  },
-  [width.xl]: {
-    slidesPerGroup: 6,
-    spaceBetween: rem * gr(2),
-  },
-};
+import { useEffect, useMemo, useState } from "react";
+
 const SliderIIIFWrapper = ({
   collectionId,
   customViewAll,
@@ -46,8 +19,8 @@ const SliderIIIFWrapper = ({
   }>();
   useEffect(() => {
     const controller = new AbortController();
-    // RC.2 declares options.credentials but does not pass it to fetch.
-    // Resolve the collection here to preserve authenticated cross-origin access.
+    // Fetch here (rather than handing Clover the URL) so a failed request
+    // still reaches the page's error boundary and stale requests are aborted.
     fetch(url, { credentials: "include", signal: controller.signal })
       .then(async (response) => {
         if (!response.ok)
@@ -60,24 +33,41 @@ const SliderIIIFWrapper = ({
       });
     return () => controller.abort();
   }, [url]);
+
+  const collection = resource?.url === url ? resource.collection : undefined;
+  const iiifContent = useMemo(() => {
+    if (!collection) return undefined;
+    return {
+      ...collection,
+      // Clover 3.x rendered nested collections and DC hid them with CSS;
+      // Clover 4 items carry no type attribute, so drop them here instead.
+      items: collection.items.filter((item) => item.type !== "Collection"),
+      // Clover 4's standalone Items links the resource's first homepage as
+      // "View all" (Clover 3.x's options.customViewAll).
+      homepage: [
+        {
+          id: customViewAll,
+          type: "Text",
+          format: "text/html",
+          label: collection.label,
+        },
+      ],
+    };
+  }, [collection, customViewAll]);
+
   if (resource?.url !== url) return null;
   if (resource.error) throw resource.error;
-  if (!resource.collection) return null;
-  const collection = resource.collection;
+  if (!iiifContent) return null;
+
   return (
     <div className={styles.styledSliderIIIFWrapper}>
-      <Slider
-        items={collection.items}
-        label={collection.label}
-        summary={collection.summary}
-        align="start"
-        options={{
-          breakpoints: breakpoints,
-          credentials: "include",
-          customViewAll,
-        }}
+      <Items
+        layout="slider"
+        iiifContent={iiifContent}
+        request={CLOVER_REQUEST}
       />
     </div>
   );
 };
+
 export default SliderIIIFWrapper;

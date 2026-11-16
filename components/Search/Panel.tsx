@@ -45,6 +45,7 @@ const SearchPanel = () => {
   const page = (router.query.page as string) || "1";
   const urlFacets = parseUrlFacets(router.query);
   const requestUrl = new URL(DC_API_SEARCH_URL);
+  const pipeline = process.env.NEXT_PUBLIC_OPENSEARCH_PIPELINE;
   const body: ApiSearchRequestBody = buildQuery(
     {
       size: SEARCH_RESULTS_PER_PAGE,
@@ -54,6 +55,11 @@ const SearchPanel = () => {
     true,
   );
   requestUrl.searchParams.append("page", page);
+  // Request as a "hybrid" OpenSearch query
+  // @ts-expect-error - 'hybrid' is not in Elasticsearch package types
+  if (!!body?.query?.hybrid && pipeline) {
+    requestUrl.searchParams.append("search_pipeline", pipeline);
+  }
   const apiPostRequestObject = {
     body,
     url: requestUrl.toString(),

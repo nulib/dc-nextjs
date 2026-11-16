@@ -17,7 +17,8 @@ export const collection403: HeroCollection = {
       label: { none: ["Access Restricted"] },
       summary: {
         none: [
-          `Sorry the page you are looking for has access restricted. If you think you reached this page in error, please <a href="${DC_URL}/contact">contact us</a>.`,
+          // IIIF (and Clover 4) read a value as HTML only when it is wrapped in a tag.
+          `<span>Sorry the page you are looking for has access restricted. If you think you reached this page in error, please <a href="${DC_URL}/contact">contact us</a>.</span>`,
         ],
       },
       thumbnail: [
@@ -72,7 +73,8 @@ export const collection404: HeroCollection = {
       label: { none: ["Page Not Found"] },
       summary: {
         none: [
-          `Sorry the page you are looking for does not exist. It\'s possible the resource, work, or collection is no longer available. If you think you reached this page in error, please <a href="${DC_URL}/contact">contact us</a>.`,
+          // IIIF (and Clover 4) read a value as HTML only when it is wrapped in a tag.
+          `<span>Sorry the page you are looking for does not exist. It\'s possible the resource, work, or collection is no longer available. If you think you reached this page in error, please <a href="${DC_URL}/contact">contact us</a>.</span>`,
         ],
       },
       thumbnail: [

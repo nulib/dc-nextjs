@@ -1,22 +1,17 @@
 import styles from "@/components/Clover/ViewerWrapper.module.css";
-import type {
-  CloverViewerProps,
-  ViewerConfigOptions,
-} from "@samvera/clover-iiif";
+import type { ContentStateOutput, DefaultProps } from "@nulib/clover";
 import Announcement from "@/components/Shared/Announcement";
-import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
+import { CLOVER_REQUEST } from "@/components/Clover/clover-request";
 import Container from "../Shared/Container";
 import { IconInfo } from "@/components/Shared/SVG/Icons";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
 import { useWorkState } from "@/context/work-context";
 export const CloverViewer = dynamic(
-  () => import("@samvera/clover-iiif/viewer"),
-  {
-    ssr: false,
-  },
+  () => import("@/components/Clover/CloverViewer"),
+  { ssr: false },
 );
+export type ViewerOptions = Partial<Omit<DefaultProps, "iiifContent">>;
 interface WrapperProps {
   isWorkReadingRoomOnly?: boolean;
   isLoggingContentState?: boolean;
@@ -25,9 +20,22 @@ interface WrapperProps {
   initialLabel?: string;
   initialSnippet?: string;
   searchQuery?: string;
-  viewerOptions?: ViewerConfigOptions;
+  viewerOptions?: ViewerOptions;
 }
-const EMPTY_VIEWER_OPTIONS: ViewerConfigOptions = {};
+const EMPTY_VIEWER_OPTIONS: ViewerOptions = {};
+// Viewer-specific panel sections; each still appears only where the resource
+// has data. The work page renders the metadata below the viewer, so, as with
+// Clover 3.x on DC, the About tab joins them only during a content search.
+const WORK_PANEL_SECTIONS: DefaultProps["panelSections"] = [
+  "contents",
+  "search",
+  "transcript",
+  "annotations",
+];
+const WORK_SEARCH_PANEL_SECTIONS: DefaultProps["panelSections"] = [
+  "about",
+  ...(WORK_PANEL_SECTIONS ?? []),
+];
 const WorkViewerWrapper: React.FC<WrapperProps> = ({
   isWorkReadingRoomOnly,
   isLoggingContentState = false,
@@ -40,107 +48,36 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
 }) => {
   const { workDispatch, workState } = useWorkState();
   const { manifest, work } = workState;
-  const viewerWrapperRef = useRef<HTMLDivElement>(null);
-  const hasContentSearch = Boolean(getContentSearchServiceUrl(manifest));
   const isAudioVideoWork =
     work?.work_type === "Audio" || work?.work_type === "Video";
-  const options: CloverViewerProps["options"] = useMemo(() => {
-    const informationPanel = {
-      open: Boolean(searchQuery),
-      // Clover only mounts the panel when About or annotations are available.
-      // About keeps the shell mounted for content searches with zero matches.
-      renderAbout: Boolean(searchQuery),
-      renderToggle: false,
-      renderContentSearch: hasContentSearch,
-      defaultTab: searchQuery
-        ? "manifest-content-search"
-        : "manifest-annotations",
-      ...(isAudioVideoWork && { annotationTabLabel: "Chapters" }),
-    };
-    return {
-      canvasHeight: "640px",
-      informationPanel,
-      openSeadragon: {
-        gestureSettingsMouse: {
-          scrollToZoom: false,
-        },
-      },
-      showIIIFBadge: false,
-      showMediaSearch: false,
-      showTitle: false,
-      withCredentials: true,
+  const hasAnnotations = Boolean(
+    manifest?.items?.some((canvas) => canvas.annotations?.length),
+  );
+  const options: ViewerOptions = useMemo(
+    () => ({
+      header: false,
+      // Clover 3.x showed the panel for works with annotations; Clover 4
+      // starts it closed unless told otherwise. Clover 4's Panel opens its
+      // Search section by itself when a searchQuery is present.
+      defaultPanelOpen: Boolean(searchQuery) || hasAnnotations,
+      panelLayout: "tabs",
+      panelSections: searchQuery
+        ? WORK_SEARCH_PANEL_SECTIONS
+        : WORK_PANEL_SECTIONS,
+      // Clover 3.x listed an A/V work's WebVTT under Annotations, which DC
+      // labelled "Chapters"; Clover 4 shows WebVTT as a Transcript section.
+      ...(isAudioVideoWork && {
+        panelLabels: { annotations: "Chapters", transcript: "Chapters" },
+      }),
+      // TODO: Clover 4 has no contentSearchCallback; typing in the Search
+      // section no longer mirrors the query into the URL (CONTENT_SEARCH_PARAM).
       ...viewerOptions,
-    };
-  }, [hasContentSearch, searchQuery, isAudioVideoWork, viewerOptions]);
-  useEffect(() => {
-    const wrapper = viewerWrapperRef.current;
-    if (!searchQuery || !wrapper) return;
-    // Clover's InformationPanel resets its active tab to About in a mount
-    // effect (and whenever annotations are absent), which runs after the
-    // Search tab first appears in the DOM. Keep re-selecting Search until the
-    // user interacts with the viewer themselves, so manual tab changes stick.
-    const MAX_SELECTIONS = 10;
-    let selections = 0;
-    let isSelecting = false;
-    const selectContentSearchTab = () => {
-      if (isSelecting || selections >= MAX_SELECTIONS) return;
-      const tab = wrapper.querySelector<HTMLButtonElement>(
-        '[role="tab"][aria-controls$="-content-search"]',
-      );
-      if (!tab || tab.getAttribute("aria-selected") === "true") return;
-      selections += 1;
-      isSelecting = true;
-      try {
-        tab.click();
-      } finally {
-        isSelecting = false;
-      }
-    };
-    const observer = new MutationObserver(selectContentSearchTab);
-    const stop = () => {
-      observer.disconnect();
-      wrapper.removeEventListener("pointerdown", stop, true);
-      wrapper.removeEventListener("keydown", stop, true);
-    };
-    observer.observe(wrapper, {
-      attributeFilter: ["aria-selected"],
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
-    wrapper.addEventListener("pointerdown", stop, true);
-    wrapper.addEventListener("keydown", stop, true);
-    selectContentSearchTab();
-    return stop;
-  }, [searchQuery]);
-  const handleContentSearchCallback = (query: string) => {
-    const url = new URL(window.location.href);
-    ["canvas", "label", "q", "snippet"].forEach((param) =>
-      url.searchParams.delete(param),
-    );
-    if (query) {
-      url.searchParams.set(CONTENT_SEARCH_PARAM, query);
-    } else {
-      url.searchParams.delete(CONTENT_SEARCH_PARAM);
-    }
-    // Clover invokes this callback on every keystroke. Updating Next router
-    // state here changes searchQuery and therefore Clover's key, remounting the
-    // entire viewer. Keep the address bar in sync without triggering a render;
-    // URL-driven searches still use the router and intentionally remount below.
-    window.history.replaceState(
-      window.history.state,
-      "",
-      `${url.pathname}${url.search}${url.hash}`,
-    );
-  };
-  const handleContentStateCallback: NonNullable<
-    CloverViewerProps["contentStateCallback"]
-  > = (contentState) => {
+    }),
+    [searchQuery, hasAnnotations, isAudioVideoWork, viewerOptions],
+  );
+  const handleContentStateChange = (contentState: ContentStateOutput) => {
     if (
       isLoggingContentState &&
-      contentState &&
-      "encoded" in contentState &&
-      typeof contentState.encoded === "string" &&
       workState?.contentState?.encoded !== contentState.encoded
     ) {
       workDispatch({
@@ -174,22 +111,15 @@ const WorkViewerWrapper: React.FC<WrapperProps> = ({
     <Container containerType="wide">
       <section
         data-testid="work-viewer-wrapper"
-        ref={viewerWrapperRef}
         className={styles.viewerWrapperStyled}
       >
         {resolvedIiifContent && (
           <CloverViewer
-            // Clover treats its initial search and default tab as initialization
-            // state, so a new URL-driven query needs a fresh viewer instance.
-            key={`content-search:${hasContentSearch}:${searchQuery || ""}`}
-            // @ts-ignore
-            contentSearchCallback={handleContentSearchCallback}
-            contentStateCallback={handleContentStateCallback}
+            {...options}
             iiifContent={resolvedIiifContent}
-            iiifContentSearchQuery={
-              searchQuery ? { q: searchQuery } : undefined
-            }
-            options={options}
+            onContentStateChange={handleContentStateChange}
+            request={CLOVER_REQUEST}
+            searchQuery={searchQuery || undefined}
           />
         )}
         {isWorkReadingRoomOnly && (

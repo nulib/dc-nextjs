@@ -1,8 +1,8 @@
-import { Metadata as CloverMetadata } from "@samvera/clover-iiif/primitives";
+import { Metadata as CloverMetadata } from "@nulib/clover";
 import styles from "@/components/Work/Metadata.module.css";
 import { DC_URL } from "@/lib/constants/endpoints";
 import Link from "next/link";
-import { MetadataItem } from "@iiif/presentation-3";
+import { InternationalString, MetadataItem } from "@iiif/presentation-3";
 import { WORK_METADATA_LABELS } from "@/lib/constants/works";
 import { appendHybridSearchParams } from "@/lib/chat-helpers";
 import useGenerativeAISearchToggle from "@/hooks/useGenerativeAISearchToggle";
@@ -36,19 +36,36 @@ export const ValueAsListItem: React.FC<ValueAsListItemProps> = ({
     </div>
   );
 };
+const allStrings = (value?: InternationalString | null) =>
+  value ? Object.values(value).flat() : [];
+
+// Clover 4 replaces 3.x's `customValueContent` label matching with a
+// `renderValue` callback; returning undefined falls back to Clover's rendering.
+const renderValue = (item: MetadataItem) => {
+  const labels = allStrings(item.label);
+  const match = WORK_METADATA_LABELS.find(({ label }) =>
+    labels.includes(label),
+  );
+  if (!match) return undefined;
+  return (
+    <>
+      {allStrings(item.value).map((value, index) => (
+        <ValueAsListItem
+          key={`${value}-${index}`}
+          searchParam={match.searchParam}
+          value={value}
+        />
+      ))}
+    </>
+  );
+};
+
 const WorkMetadata: React.FC<WorkMetadataProps> = ({ metadata }) => {
-  const formattedValues = WORK_METADATA_LABELS.map((value) => {
-    return {
-      Content: <ValueAsListItem searchParam={value.searchParam} />,
-      matchingLabel: { none: [value.label] },
-    };
-  });
   return (
     <CloverMetadata
-      customValueContent={formattedValues}
-      customValueDelimiter=""
+      renderValue={renderValue}
       data-testid="metadata"
-      metadata={metadata}
+      value={metadata}
       className={styles.metadataStyled}
     />
   );

@@ -1,7 +1,7 @@
 import styles from "@/components/Homepage/Overview.module.css";
 import { Button } from "@/components/Shared/Button/Button";
 import Container from "@/components/Shared/Container";
-import { Thumbnail } from "@samvera/clover-iiif/primitives";
+import { Thumbnail } from "@nulib/clover";
 import { overviewThumbnails } from "@/lib/constants/homepage";
 import { useRouter } from "next/router";
 const HomepageOverview = () => {
@@ -28,7 +28,7 @@ const HomepageOverview = () => {
           </div>
           <div className={styles.images}>
             {overviewThumbnails.map((item, index) => (
-              <Thumbnail thumbnail={item} key={index} />
+              <Thumbnail value={{ thumbnail: item }} key={index} />
             ))}
           </div>
         </div>

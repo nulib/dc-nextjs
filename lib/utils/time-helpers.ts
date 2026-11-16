@@ -18,6 +18,8 @@ export const cleanTime = (standardNotation: string) => {
 };
 
 export const convertTime = (duration: number) => {
+  // A time that isn't a number would make toISOString throw (RangeError).
+  if (!Number.isFinite(duration)) return "";
   const standardNotation: string = new Date(duration * 1000)
     .toISOString()
     .substr(11, 8);
@@ -26,3 +28,26 @@ export const convertTime = (duration: number) => {
 
 const zeroPad = (num: number, places: number) =>
   String(num).padStart(places, "0");
+
+interface TimeSelector {
+  t?: number | string;
+  value?: string;
+}
+
+/**
+ * The start time, in seconds, of a content state's selector. Clover 3 wrote a
+ * PointSelector (`{ t: 12.34 }`); Clover 4 writes a FragmentSelector with a
+ * media fragment (`{ value: "t=12.34" }`), which may also be a range
+ * (`t=12.34,30`) or name its format (`t=npt:12.34`). A region (`xywh=`) has
+ * no time.
+ */
+export const selectorStartTime = (
+  selector?: TimeSelector | null,
+): number | undefined => {
+  const time =
+    selector?.t ??
+    /(?:^|[?&#])t=(?:npt:)?([\d.]+)/.exec(selector?.value ?? "")?.[1];
+  if (time == null || time === "") return undefined;
+  const seconds = Number(time);
+  return Number.isFinite(seconds) ? seconds : undefined;
+};

@@ -9,6 +9,7 @@ import type { ToolDefinition } from "@/hooks/useWebMcpTool";
 import type { UrlFacets } from "@/types/context/filter-context";
 import { CONTENT_SEARCH_PARAM } from "@/lib/constants/works";
 import { getContentSearchServiceUrl } from "@/lib/iiif/manifest-helpers";
+import { getContentStateCanvasId } from "@/lib/iiif/content-state-helpers";
 import useWebMcpTool from "@/hooks/useWebMcpTool";
 import { useRouter } from "next/router";
 import { useWorkState } from "@/context/work-context";
@@ -386,14 +387,7 @@ export function CollectionPageWebMcpTools({
 
 const selectedCanvasId = (
   contentState: ReturnType<typeof useWorkState>["workState"]["contentState"],
-) => {
-  const target = contentState?.json?.target as
-    | { source?: string | { id?: string } }
-    | undefined;
-  return typeof target?.source === "string"
-    ? target.source
-    : target?.source?.id;
-};
+) => getContentStateCanvasId(contentState);
 
 const summarizeWork = (work: Work, canvasId?: string) => ({
   id: work.id,

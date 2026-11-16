@@ -5,7 +5,7 @@ import CopyText from "@/components/Shared/CopyText";
 import Heading from "@/components/Heading/Heading";
 import SharedSocial from "@/components/Shared/Social";
 import SharedTextArea from "@/components/Shared/TextArea";
-import { convertTime } from "@/lib/utils/time-helpers";
+import { convertTime, selectorStartTime } from "@/lib/utils/time-helpers";
 import { encodeContentState } from "@iiif/helpers";
 import { getContentStateMetadata } from "@/lib/iiif/content-state-helpers";
 import { useWorkState } from "@/context/work-context";
@@ -76,7 +76,15 @@ const WorkDialogContentState = () => {
   };
   // @ts-ignore
   const targetSelector = contentState?.json?.target?.selector;
-  const selectorValue = targetSelector?.t || targetSelector?.value;
+  const isTimeBased = ["Video", "Sound", "Audio"].includes(
+    metadata?.activeCanvasResourceType,
+  );
+  // Clover 4 writes a FragmentSelector ("t=12.34" or "xywh=…") where Clover 3
+  // wrote a PointSelector's `t`, so read the time out of either.
+  const startTime = isTimeBased ? selectorStartTime(targetSelector) : undefined;
+  const hasSelector = isTimeBased
+    ? startTime !== undefined
+    : Boolean(targetSelector?.t || targetSelector?.value);
   return (
     <section>
       <Heading as="h3" className={contentStateStyles.override0}>
@@ -106,7 +114,7 @@ const WorkDialogContentState = () => {
                   <em>({currentFileLabel})</em>
                 </span>
               </label>
-              {selectorValue && (
+              {hasSelector && (
                 <label aria-disabled={!isCanvasChecked}>
                   <input
                     type="checkbox"
@@ -114,12 +122,10 @@ const WorkDialogContentState = () => {
                     value="selector"
                     disabled={!isCanvasChecked}
                   />
-                  {["Video", "Sound", "Audio"].includes(
-                    metadata?.activeCanvasResourceType,
-                  ) ? (
+                  {isTimeBased ? (
                     <span>
                       Start {metadata.activeCanvasResourceLabel} at current time{" "}
-                      <em>{convertTime(selectorValue)}</em>
+                      <em>{convertTime(startTime ?? 0)}</em>
                     </span>
                   ) : (
                     <span>
